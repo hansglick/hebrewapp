@@ -1,0 +1,385 @@
+[
+  {
+    "titre": "אייל גולן - עיר נמל",
+    "lien_youtube": "https://www.youtube.com/watch?v=UAP9A-0HlqU",
+    "paroles": [
+      {
+        "index": 1,
+        "hebrew": "מסתובב ברחובות",
+        "french": "Je me promène dans les rues"
+      },
+      {
+        "index": 2,
+        "hebrew": "בין שקיעות של בין ערביים",
+        "french": "Entre les couchers de soleil du crépuscule"
+      },
+      {
+        "index": 3,
+        "hebrew": "הקולות והריחות",
+        "french": "Les voix et les odeurs"
+      },
+      {
+        "index": 4,
+        "hebrew": "מזכירים אותך בינתיים",
+        "french": "Me rappellent à toi en attendant"
+      },
+      {
+        "index": 5,
+        "hebrew": "איש זקן לבד יושב לו",
+        "french": "Un vieil homme est assis tout seul"
+      },
+      {
+        "index": 6,
+        "hebrew": "אני שאלתי מה כבד לו",
+        "french": "Je lui ai demandé ce qui lui pesait"
+      },
+      {
+        "index": 7,
+        "hebrew": "הוא סיפר שהיא הלכה",
+        "french": "Il a raconté qu'elle est partie"
+      },
+      {
+        "index": 8,
+        "hebrew": "כך ברגע נעלמה",
+        "french": "Comme ça, en un instant, elle a disparu"
+      },
+      {
+        "index": 9,
+        "hebrew": "ומאז הלב כואב לו",
+        "french": "Et depuis son cœur lui fait mal"
+      },
+      {
+        "index": 10,
+        "hebrew": "ואני בעיר נמל",
+        "french": "Et moi, dans une ville portuaire"
+      },
+      {
+        "index": 11,
+        "hebrew": "דייגים חוזרים בערב",
+        "french": "Les pêcheurs reviennent le soir"
+      },
+      {
+        "index": 12,
+        "hebrew": "בקבוק של וויסקי שוב ביד",
+        "french": "Une bouteille de whisky encore à la main"
+      },
+      {
+        "index": 13,
+        "hebrew": "כך אשכח מהלבד",
+        "french": "Ainsi j'oublierai la solitude"
+      },
+      {
+        "index": 14,
+        "hebrew": "שכואב אצלי כמו חרב",
+        "french": "Qui me blesse comme une épée"
+      },
+      {
+        "index": 15,
+        "hebrew": "ברוח מן הים",
+        "french": "Dans la brise venant de la mer"
+      },
+      {
+        "index": 16,
+        "hebrew": "מלטפת את המים",
+        "french": "Qui caresse l'eau"
+      },
+      {
+        "index": 17,
+        "hebrew": "לא עוזר לי פה הנוף",
+        "french": "Le paysage ici ne m'aide pas"
+      },
+      {
+        "index": 18,
+        "hebrew": "לא טברנה על החוף",
+        "french": "Ni la taverne sur la plage"
+      },
+      {
+        "index": 19,
+        "hebrew": "אם את לא שלי עדיין",
+        "french": "Si tu n'es pas encore à moi"
+      },
+      {
+        "index": 20,
+        "hebrew": "שתיתי קצת יותר מדי",
+        "french": "J'ai bu un peu trop"
+      },
+      {
+        "index": 21,
+        "hebrew": "ואיך פתאום עולה הבוקר",
+        "french": "Et comment soudain le matin se lève"
+      },
+      {
+        "index": 22,
+        "hebrew": "מסתובב בסמטאות",
+        "french": "Je me promène dans les ruelles"
+      },
+      {
+        "index": 23,
+        "hebrew": "מחפש טיפה של אושר",
+        "french": "Cherchant une goutte de bonheur"
+      },
+      {
+        "index": 24,
+        "hebrew": "איש אחד פושט ידיים",
+        "french": "Un homme tend les mains"
+      },
+      {
+        "index": 25,
+        "hebrew": "הוא מנגן ברחוב בינתיים",
+        "french": "Il joue dans la rue en attendant"
+      },
+      {
+        "index": 26,
+        "hebrew": "מנגינות של שיר ישן",
+        "french": "Les mélodies d'une vieille chanson"
+      },
+      {
+        "index": 27,
+        "hebrew": "ואומרים שרק הזמן",
+        "french": "Et on dit que seul le temps"
+      },
+      {
+        "index": 28,
+        "hebrew": "מנצח זוג עיניים",
+        "french": "Triomphe d'une paire d'yeux"
+      },
+      {
+        "index": 29,
+        "hebrew": "ואני בעיר נמל",
+        "french": "Et moi, dans une ville portuaire"
+      },
+      {
+        "index": 30,
+        "hebrew": "דייגים חוזרים בערב",
+        "french": "Les pêcheurs reviennent le soir"
+      },
+      {
+        "index": 31,
+        "hebrew": "בקבוק של וויסקי שוב ביד",
+        "french": "Une bouteille de whisky encore à la main"
+      },
+      {
+        "index": 32,
+        "hebrew": "כך אשכח מהלבד",
+        "french": "Ainsi j'oublierai la solitude"
+      },
+      {
+        "index": 33,
+        "hebrew": "שכואב אצלי כמו חרב",
+        "french": "Qui me blesse comme une épée"
+      },
+      {
+        "index": 34,
+        "hebrew": "באה רוח מן הים",
+        "french": "Une brise vient de la mer"
+      },
+      {
+        "index": 35,
+        "hebrew": "מלטפת את המים",
+        "french": "Qui caresse l'eau"
+      },
+      {
+        "index": 36,
+        "hebrew": "לא עוזר לי פה הנוף",
+        "french": "Le paysage ici ne m'aide pas"
+      },
+      {
+        "index": 37,
+        "hebrew": "לא טברנה על החוף",
+        "french": "Ni la taverne sur la plage"
+      },
+      {
+        "index": 38,
+        "hebrew": "אם את לא שלי עדיין",
+        "french": "Si tu n'es pas encore à moi"
+      }
+    ]
+  },
+  {
+    "titre": "עומר אדם - ריו דה ז'נרו",
+    "lien_youtube": "https://www.youtube.com/watch?v=LURly90-QFk",
+    "paroles": [
+      {
+        "index": 1,
+        "hebrew": "נפגשנו בבית קפה בשקיעה",
+        "french": "Nous nous sommes rencontrés dans un café au crépuscule"
+      },
+      {
+        "index": 2,
+        "hebrew": "וגם חברות שלה באו",
+        "french": "Et ses copines sont venues aussi"
+      },
+      {
+        "index": 3,
+        "hebrew": "הבושם שלה טוב קראתי לה מאמא",
+        "french": "Son parfum est si bon, je l'ai appelée Mama"
+      },
+      {
+        "index": 4,
+        "hebrew": "תגידי לי למה לבזבז את הזמן",
+        "french": "Dis-moi pourquoi perdre notre temps"
+      },
+      {
+        "index": 5,
+        "hebrew": "הפוך לשניים קצת אושר בעיניים",
+        "french": "Un café pour deux, un peu de joie dans les yeux"
+      },
+      {
+        "index": 6,
+        "hebrew": "ביקשתי פעמיים את השם שלה",
+        "french": "J'ai demandé son prénom par deux fois"
+      },
+      {
+        "index": 7,
+        "hebrew": "אוקיי מריה, נהג דקה מגיע",
+        "french": "D'accord Maria, un chauffeur arrive dans la minute"
+      },
+      {
+        "index": 8,
+        "hebrew": "תראי לי את העיר אני חייב רק להזהיר",
+        "french": "Fais-moi découvrir la ville, je dois juste te prévenir"
+      },
+      {
+        "index": 9,
+        "hebrew": "כי יש לי חברים טיפה משוגעים",
+        "french": "Car j'ai des amis un brin lunatiques"
+      },
+      {
+        "index": 10,
+        "hebrew": "הגענו לברזיל ומאז הם רק רוקדים",
+        "french": "Nous sommes arrivés au Brésil et depuis ils ne font que danser"
+      },
+      {
+        "index": 11,
+        "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
+        "french": "Tout le monde fait hop hop hop hop toute la nuit"
+      },
+      {
+        "index": 12,
+        "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
+        "french": "Alors appelle tes amies de Rio de Janeiro"
+      },
+      {
+        "index": 13,
+        "hebrew": "נשב פה בכיף עם יין ונרות",
+        "french": "Nous nous poserons ici avec du vin et des bougies"
+      },
+      {
+        "index": 14,
+        "hebrew": "הם יעשו לך הופ הופ כל הלילה",
+        "french": "Ils te feront danser hop hop toute la nuit"
+      },
+      {
+        "index": 15,
+        "hebrew": "תכירי זה אח יקר, ויש לו לב מזהב",
+        "french": "Je te présente un frère cher, il a un cœur en or"
+      },
+      {
+        "index": 16,
+        "hebrew": "הוא רק נראה בן עשרים, כפרה הוא אבא לארבע",
+        "french": "Il a juste l'air d'avoir vingt ans, chérie il est père de quatre enfants"
+      },
+      {
+        "index": 17,
+        "hebrew": "ואת מה איתך, עשרים ושתיים רואים לך בעיניים",
+        "french": "Et toi alors, vingt-deux ans ça se lit dans tes yeux"
+      },
+      {
+        "index": 18,
+        "hebrew": "את חיה בשמיים, אין דאגות",
+        "french": "Tu vis dans les cieux, sans aucune préoccupation"
+      },
+      {
+        "index": 19,
+        "hebrew": "אז מה מריה אודייה מאמא תראי לי את העיר כי",
+        "french": "Alors quoi Maria Oh-dieu Mama montre-moi la ville car"
+      },
+      {
+        "index": 20,
+        "hebrew": "יש לי חברים טיפה משוגעים",
+        "french": "J'ai des amis un brin lunatiques"
+      },
+      {
+        "index": 21,
+        "hebrew": "הגענו לברזיל ומאז הם רק רוקדים",
+        "french": "Nous sommes arrivés au Brésil et depuis ils ne font que danser"
+      },
+      {
+        "index": 22,
+        "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
+        "french": "Tout le monde fait hop hop hop hop toute la nuit"
+      },
+      {
+        "index": 23,
+        "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
+        "french": "Alors appelle tes amies de Rio de Janeiro"
+      },
+      {
+        "index": 24,
+        "hebrew": "נשב פה בכיף עם יין ונרות",
+        "french": "Nous nous poserons ici avec du vin et des bougies"
+      },
+      {
+        "index": 25,
+        "hebrew": "הם יעשו לך הופ הופ כל הלילה",
+        "french": "Ils te feront danser hop hop toute la nuit"
+      },
+      {
+        "index": 26,
+        "hebrew": "בריו דה ז'נרו תמיד פה חם",
+        "french": "À Rio de Janeiro il fait toujours chaud"
+      },
+      {
+        "index": 27,
+        "hebrew": "אז אל תשאירי אותי לבד",
+        "french": "Alors ne me laisse pas tout seul"
+      },
+      {
+        "index": 28,
+        "hebrew": "מריו דה ז'נרו עד מחר",
+        "french": "De Rio de Janeiro jusqu'à demain"
+      },
+      {
+        "index": 29,
+        "hebrew": "הכל נגמר כשחוזרים",
+        "french": "Tout s'achève quand on s'en retourne"
+      },
+      {
+        "index": 30,
+        "hebrew": "מקווה שנזכור הכל",
+        "french": "J'espère que nous n'oublierons rien"
+      },
+      {
+        "index": 31,
+        "hebrew": "יש לי חברים טיפה משוגעים",
+        "french": "J'ai des amis un brin lunatiques"
+      },
+      {
+        "index": 32,
+        "hebrew": "הגענו לברזיל ומאז הם רק שותים",
+        "french": "Nous sommes arrivés au Brésil et depuis ils ne font que boire"
+      },
+      {
+        "index": 33,
+        "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
+        "french": "Tout le monde fait hop hop hop hop toute la nuit"
+      },
+      {
+        "index": 34,
+        "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
+        "french": "Alors appelle tes amies de Rio de Janeiro"
+      },
+      {
+        "index": 35,
+        "hebrew": "נשב פה בכיף עם יין ונרות",
+        "french": "Nous nous poserons ici avec du vin et des bougies"
+      },
+      {
+        "index": 36,
+        "hebrew": "הם יעשו לך הופ הופ כל הלילה",
+        "french": "Ils te feront danser hop hop toute la nuit"
+      }
+    ]
+  }
+]
+

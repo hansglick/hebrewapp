@@ -1,0 +1,15 @@
+{
+    "verbatim": "גדי יוצאת מהמבחן כדי לאכול על הפסקה.",
+    "solution": "גדי יוצא מהמשרד לאכול ארוחת צהריים בהפסקה.",
+    "rating_completeness": 5,
+    "rating_hebrew": 2,
+    "errors_rating_hebrew": [
+        "Tu as conjugué le verbe sortir au féminin (יוצאת) alors que Gadi est un prénom masculin. Il fallait utiliser la forme masculine (יוצא).",
+        "L'utilisation de la préposition על (sur) devant le mot pause (הפסקה) est incorrecte. Pour dire 'pendant la pause', il faut utiliser la préposition ב, ce qui donne בהפסקה."
+    ],
+    "rating_comprehension": 2,
+    "errors_rating_comprehension": [
+        "Tu as dit que Gadi sort de l'examen (מהמבחן) au lieu de dire qu'il sort du bureau (מהמשרד) comme indiqué dans le texte.",
+        "La question demandait quand (מתי) Gadi sort. Bien que tu aies mentionné la pause, ta phrase indique qu'il sort 'pour manger sur la pause' au lieu de préciser clairement que l'action se déroule 'pendant la pause' (בהפסקה)."
+    ]
+}

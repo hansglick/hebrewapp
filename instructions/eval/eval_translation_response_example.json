@@ -1,0 +1,12 @@
+{
+    "sentence_to_translate": "מתי גדי יוצא מהמשרד לאכול ארוחת צהריים?",
+    "input_language": "hébreu",
+    "translation": "Quand Gadi est il sorti du bureau pour prendre son déjeuner?",
+    "output_language": "français",
+    "score": 3,
+    "observations": [
+        "Erreur de temps : le verbe hébreu יוצא est au présent (sort) et non au passé (est sorti).",
+        "Erreur de syntaxe en français : il manque un trait d'union à 'est-il'.",
+        "Le vocabulaire est globalement bien maîtrisé (bureau, déjeuner)."
+    ]
+}

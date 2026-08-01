@@ -1,0 +1,61 @@
+Le parcours user est semblable à un jeu classique
+
+L'utilisateur doit débloquer des leçons pour continuer à progresser.
+Le user commence avec la première leçon du premier chapitre débloquée.
+Pour débloquer une ou des leçons, il passer et réussir un examen.
+Lorsqu'il clique sur "examen" dans l'écran d'accueil, il peut choisir un examen à passer : 
+- Celui ci est représenté par la concaténation du numéro du chapitre et de la leçon séparé par un "." comme dans "2.10"
+- Un examen est un pack de 20 objets "compréhensions écrites" pour lesquelles le user doit avoir une moyenne d'au moins 14 sur 20 pour réussir.
+- Pour le moment, les objets "compréhensions écrites" lancés depuis l'option examen existent sous le mode "auto-évaluation" mais à terme ce sera une évaluation via une requête à l'api de gemini.
+- Lorsqu'un examen est réussi, alors la leçon suivante est débloquée ainsi que toutes les leçons inférieures dans l'ordre du cours (chapitre + Lesson)
+- Lorsqu'un examen est réussi, l'étudiant atteint le NIVEAU formé par le code de l'examen qu'il vient de réussir à savoir chapitre + "." + Lesson comme dans "2.10". On dit alors que tel user est de niveau 2.10. C'est une information qui doit être visible où que l'on soit dans l'application
+
+Les 20 objets compréhensions écrites d'un examen sont construites de cette manière : 
+- 50% sont rattachées à la leçon associées à l'examen, i.e. au même code comme "2.10"
+- 10% sont rattachées à la leçon précédente, i.e. "2.09" dans le cas où l'examen est le code 2.10
+- 10% sont rattachées à l'avant dernière leçon, i.e. "2.08"
+- 30% sont rattachées aux leçons qui précèdent l'avant dernière leçon au sein du même chapitre, i.e. de 2.01 à 2.07 dans l'exemple. Si l'examen est associé à une des 5 premières leçons d'un chapitre, on peut piocher dans les leçons du chapitre précédent (s'il existe)
+Remarque : 
+
+Examen spécial : 
+- L'examen qui clot un chapitre (donc associée à la dernière leçon d'un chapitre) possède 50 questions. Pour le réussir le user doit valider 70% des réponses. Les règles de distribution des questions s'appliquent de la manière suivante :
+  - 50% des questions sont issus du dernier quart des lecons
+  - 50% des questions sont issus des 75% des premières leçons
+
+Stratégies de tirage:
+De manière générale, lorsqu'est affiché un objet, un swipe gauche permet de sélectionner aléatoirement un objet du même type. Il s'avère que c'est légèrement plus complexe. Voici les différentes stratégies qui existent : 
+- pour les objets presse, chansons et expressions : pure aléatoire sur toute la liste possible
+- pour les objets verbe, mot, compréhension écrite, compréhension orale en provenance d'un chemin user apprentissage/chapitre/lecon : aléatoire dans la liste des objets associés à la leçon
+- pour les objets verbe, mot, compréhension écrite, compréhension orale en provenance d'un chemin révisions/lecon : voici la stratégie à adopter : 
+ - 50% sont des objets tirés au hasard provenant de la leçon associée
+ - 30% sont des objets tirés au hasard dans la liste des objets les plus mal évalués (difficulté) par le user (voir plus tard)
+ - 20% sont des objets tirés au hasard dans les leçons précédentes (de 0.01 à la leçon actuelle)
+
+
+Score de difficulté:
+Les objets verbe, mot, compréhension écrite et compréhension orale peuvent être évaluées soit par le user lui même soit par un professeur via une api gemini
+- Le système enregistre les 5 dernières évaluations/notes pour chaque combinaison [user x objet]
+- Pour chaque user, on calcule un poids pour chaque objet. Ce poids correspond à la somme des évaluations négatives pondérées par la récence de l'évaluation
+- Dans le cadre où la note est un entier compris entre 1 et 5, toute note inférieure à 4 est considérée négative
+- Le coefficient de récence est égale à [index de récence * (6 - index de récence)]. Ainsi le poids de la dernière évaluation négative est de 5. L'avant dernière est de 4 et ainsi de suite jusqu'à un pour l'évaluation la plus ancienne.
+- Ces poids sont utilisés pour mesurer la difficulté que représente l'objet pour l'étudiant. Ainsi la difficulté de l'objet pour un étudiant équivaut à la somme des évaluations négatives pondérées par le coefficient de récence.
+- Quand on tire un objet parmi les objets les plus difficiles pour un user, il s'agit d'un tirage pondéré par la difficulté de l'objet (le score de difficulté)
+
+
+Le God Mode :
+Dans la configuration, je dois pouvoir choisir un god mode avec le mot de passe "acoursdhebreu".
+Il me permet de naviguer partout dans l'application comme si j'avais validé l'examen le plus avancé du cours.
+
+Graphisme et configuration :
+Les choix de couleurs et des polices et de leur taille doivent être stockées dans un fichier config, que je pourrais modifier facilement sans avoir à te demander de le faire
+
+Boutons généraux:
+En haut à droite de l'écran, un menu doit pouvoir proposer les choix suivants :
+- configuration :
+  - mode bright / dark
+  - taille de la police
+- Statistiques (pour chaque objet mot, verbe, compréhension écrite, compréhension orale : un tableau qui présente les objets déjà évalués par le user classé par son score de difficulté. Doit être présente la valeurs des 5 dernières évaluations sous la forme d'une pastille verte (évaluation réussie) ou rouge (évaluation négative ou ratée)
+- Progression : une courbe qui montre l'évolution du niveau du user dans le temps. Celui-ci équivaut au code chapitre + Lesson séparé par un "."
+
+J'aimerais un bouton visible dans le coin haut gauche, "accueil" qui permette de retourner à l'écran d'accueil
+Il faudrait que le niveau du user soit affiché toujours ptete en haut au milieu. En cliquant dessus : on arriverait sur la fiche "niveau" du user. Le code associé. Le nombre de jours depuis qu'il est bloqué à ce niveau. Et un bouton qui lui propose de passer le prochain examen.

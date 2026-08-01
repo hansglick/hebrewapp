@@ -1,0 +1,1002 @@
+[
+    {
+        "hebreu_sans_nikud": "על הפנים",
+        "translitteration": "Sur le visage",
+        "traduction": "Catastrophique",
+        "contexte": "Utilisé pour décrire quelque chose de très mauvaise qualité, une situation désastreuse ou un sentiment de mal-être.",
+        "index": 0,
+        "prompt": "A cinematic, dramatic wide shot of a chaotic and disastrous scene in a dilapidated, crumbling office interior where everything has gone wrong: papers are flying everywhere, a computer is sparking on a desk, a water pipe has burst, and the floor is covered in debris. The lighting is moody and desaturated, highlighting the overwhelming sense of failure and catastrophe. In the center of the composition, the Hebrew text 'על הפנים' is elegantly integrated as a bold, weathered neon sign hanging on the cracked wall. The image features the verbatim Hebrew text: 'על הפנים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_0.png",
+        "imagename": "proverb_0.png"
+    },
+    {
+        "hebreu_sans_nikud": "חבל על הזמן",
+        "translitteration": "Dommage pour le temps",
+        "traduction": "Fantastique / Perte de temps",
+        "contexte": "En argot moderne, cela signifie que quelque chose est incroyable ou excellent. Au sens littéral, c'est une perte de temps.",
+        "index": 1,
+        "prompt": "A breathtaking, high-octane cinematic shot of a futuristic sports car drifting around a neon-lit corner in a vibrant, high-tech metropolis at night. The scene captures pure adrenaline, speed, and excellence, with light trails blending into the architecture. The atmosphere is electric and awe-inspiring, representing the modern slang meaning of 'incredible.' The image features the verbatim Hebrew text: 'חבל על הזמן' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_1.png",
+        "imagename": "proverb_1.png"
+    },
+    {
+        "hebreu_sans_nikud": "סוף העולם שמאלה",
+        "translitteration": "La fin du monde à gauche",
+        "traduction": "Au milieu de nulle part",
+        "contexte": "S'utilise pour décrire un endroit très éloigné, isolé ou difficile à trouver.",
+        "index": 2,
+        "prompt": "A cinematic wide shot of a desolate, dusty desert road stretching toward an infinite horizon under a vast, twilight sky. A single, weathered wooden signpost stands crookedly in the foreground, pointing toward a vast, empty wilderness. The atmosphere is quiet, lonely, and remote, capturing the feeling of being in the middle of nowhere. The image features the verbatim Hebrew text: 'סוף העולם שמאלה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_2.png",
+        "imagename": "proverb_2.png"
+    },
+    {
+        "hebreu_sans_nikud": "חי בסרט",
+        "translitteration": "Vit dans un film",
+        "traduction": "Déconnecté de la réalité",
+        "contexte": "Se dit d'une personne qui se fait des illusions, qui est prétentieuse ou qui ne voit pas la réalité en face.",
+        "index": 3,
+        "prompt": "A surreal cinematic scene showing a man wearing a cracked, dusty VR headset while sitting in the middle of a mundane, dilapidated urban street. He is reaching out to touch a vibrant, glowing, golden cinematic movie set that only exists in his mind, while the real world around him is grey, rainy, and crumbling. The contrast between his blissful, delusional expression and the bleak, gritty reality highlights his disconnection from the world. High contrast, photorealistic style with dramatic lighting. The image features the verbatim Hebrew text: 'חי בסרט' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_3.png",
+        "imagename": "proverb_3.png"
+    },
+    {
+        "hebreu_sans_nikud": "לאכול סרטים",
+        "translitteration": "Manger des films",
+        "traduction": "Se faire des films / Trop réfléchir",
+        "contexte": "S'emploie quand quelqu'un s'inquiète excessivement, panique ou s'imagine des scénarios improbables.",
+        "index": 4,
+        "prompt": "A surreal and cinematic scene featuring a stressed person sitting in a dimly lit room, staring intensely at a wall. From their head, a series of chaotic, vibrant, and exaggerated holographic film strips emerge, projecting dramatic and absurd imaginary scenarios into the air like a movie projector. The atmosphere is anxious and overwhelming, with a mix of dark shadows and flickering cinematic light. The image features the verbatim Hebrew text: 'לאכול סרטים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_4.png",
+        "imagename": "proverb_4.png"
+    },
+    {
+        "hebreu_sans_nikud": "פרה פרה",
+        "translitteration": "Vache vache",
+        "traduction": "Une chose à la fois",
+        "contexte": "Un conseil pour procéder par étapes, résoudre les problèmes un par un sans se précipiter.",
+        "index": 5,
+        "prompt": "A serene, artistic illustration of a person walking up a long, winding stone staircase one step at a time, looking calm and focused. The atmosphere is peaceful, with soft morning sunlight filtering through trees, symbolizing patience and steady progress. The composition is clean, minimalist, and metaphorical. The image features the verbatim Hebrew text: 'פרה פרה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_5.png",
+        "imagename": "proverb_5.png"
+    },
+    {
+        "hebreu_sans_nikud": "בוקר טוב אליהו",
+        "translitteration": "Bonjour Élie",
+        "traduction": "Tu te réveilles enfin",
+        "contexte": "Dit ironiquement à quelqu'un qui comprend, remarque ou fait quelque chose avec beaucoup de retard.",
+        "index": 6,
+        "prompt": "A cinematic, slightly humorous wide shot of a dusty, ancient calendar on a wall where the current month has long since passed, and a calendar page from six months ago is still displayed. In the foreground, a surreal, vibrant alarm clock is covered in thick, tangled spiderwebs and blooming desert flowers, symbolizing a very long time since it last rang. The lighting is soft and golden, highlighting the irony of the forgotten time. The image features the verbatim Hebrew text: 'בוקר טוב אליהו' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_6.png",
+        "imagename": "proverb_6.png"
+    },
+    {
+        "hebreu_sans_nikud": "שטויות במיץ עגבניות",
+        "translitteration": "Bêtises en jus de tomate",
+        "traduction": "N'importe quoi / Foutaises",
+        "contexte": "Utilisé pour qualifier des propos totalement absurdes, faux ou ridicules.",
+        "index": 7,
+        "prompt": "A surreal and humorous scene depicting a confused scientist in a laboratory holding a beaker filled with bright red, bubbling tomato juice that has sprouted comical, nonsensical objects like floating clocks and rubber ducks. The atmosphere is whimsical and absurd, with a vibrant, high-contrast color palette. The image features the verbatim Hebrew text: 'שטויות במיץ עגבניות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_7.png",
+        "imagename": "proverb_7.png"
+    },
+    {
+        "hebreu_sans_nikud": "קופץ מעל הפופיק",
+        "translitteration": "Saute au-dessus du nombril",
+        "traduction": "Avoir les yeux plus gros que le ventre",
+        "contexte": "Se dit de quelqu'un qui tente de faire quelque chose qui dépasse largement ses capacités ou ses moyens.",
+        "index": 8,
+        "prompt": "A cinematic, wide-angle shot of a determined but clearly overwhelmed amateur mountain climber attempting to scale a massive, jagged, and impossible vertical cliff face using only a tiny, flimsy wooden ladder that is clearly too short for the task. The person is sweating and straining, looking up at the daunting, misty summit that reaches far beyond the clouds. The scene is dramatic and metaphorical, emphasizing the gap between ambition and capability. The image features the verbatim Hebrew text: 'קופץ מעל הפופיק' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_8.png",
+        "imagename": "proverb_8.png"
+    },
+    {
+        "hebreu_sans_nikud": "על טעם ועל ריח אין להתווכח",
+        "translitteration": "Sur le goût et l'odeur il n'y a pas à débattre",
+        "traduction": "Les goûts et les couleurs ne se discutent pas",
+        "contexte": "Pour clore un débat sur des préférences personnelles ou subjectives.",
+        "index": 9,
+        "prompt": "A high-quality, artistic editorial illustration showing a diverse banquet table where two people are sitting opposite each other. One person is smiling while eating a spicy, vibrant, colorful dish, while the other person is enjoying a completely different, delicate, and monochromatic meal. The atmosphere is peaceful and respectful, capturing the essence of subjective preference. The background is a warm, soft-lit dining room. The image features the verbatim Hebrew text: 'על טעם ועל ריח אין להתווכח' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_9.png",
+        "imagename": "proverb_9.png"
+    },
+    {
+        "hebreu_sans_nikud": "יצא מכל החורים",
+        "translitteration": "Sorti de tous les trous",
+        "traduction": "En avoir ras le bol",
+        "contexte": "Exprime une grande lassitude ou un agacement extrême face à une situation répétitive.",
+        "index": 10,
+        "prompt": "A surreal and expressive cinematic shot of a weary office worker sitting at a desk overflowing with identical, repetitive stacks of gray paperwork. The character has their head resting on the desk, eyes closed in deep exhaustion, surrounded by an environment that feels stifling and monotonous. The lighting is cold and dim, emphasizing the feeling of burnout and mental fatigue. The image features the verbatim Hebrew text: 'יצא מכל החורים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_10.png",
+        "imagename": "proverb_10.png"
+    },
+    {
+        "hebreu_sans_nikud": "לעשות פיל מזבוב",
+        "translitteration": "Faire un éléphant d'une mouche",
+        "traduction": "En faire toute une montagne",
+        "contexte": "Quand quelqu'un exagère l'importance d'un petit problème.",
+        "index": 11,
+        "prompt": "A cinematic wide shot of a chaotic office environment where a frantic employee is gesturing wildly and overreacting to a tiny, insignificant paperclip lying on a desk. The atmosphere is tense and dramatic, with exaggerated lighting highlighting the absurdity of the situation. The background is slightly blurred to focus on the contrast between the minuscule object and the person's hysterical reaction. The image features the verbatim Hebrew text: 'לעשות פיל מזבוב' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_11.png",
+        "imagename": "proverb_11.png"
+    },
+    {
+        "hebreu_sans_nikud": "כפרה עליך",
+        "translitteration": "Expiation sur toi",
+        "traduction": "Mon chéri / Que Dieu te bénisse",
+        "contexte": "Terme d'affection très courant pour remercier quelqu'un ou lui montrer de la tendresse.",
+        "index": 12,
+        "prompt": "A warm, cinematic close-up shot capturing a tender moment between an elderly grandmother and her young grandson in a sun-drenched, rustic Mediterranean kitchen. The grandmother is gently cupping the child's face with her hands, both smiling with deep affection and genuine joy. Soft golden hour light streams through a window, highlighting the warmth and intimacy of the scene. The atmosphere is filled with love, comfort, and domestic peace. The image features the verbatim Hebrew text: 'כפרה עליך' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_12.png",
+        "imagename": "proverb_12.png"
+    },
+    {
+        "hebreu_sans_nikud": "עיניים שלי",
+        "translitteration": "Mes yeux",
+        "traduction": "Mon amour / Mon trésor",
+        "contexte": "Expression affectueuse pour désigner une personne très chère à son cœur.",
+        "index": 13,
+        "prompt": "A tender and cinematic close-up shot of two people sharing a warm, affectionate moment, capturing the essence of deep love and intimacy. The lighting is soft and golden, illuminating their expressions of mutual adoration and comfort. The composition is elegant and emotional, emphasizing a heartfelt connection. The image features the verbatim Hebrew text: 'עיניים שלי' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_13.png",
+        "imagename": "proverb_13.png"
+    },
+    {
+        "hebreu_sans_nikud": "על ראש הגנב בוער הכובע",
+        "translitteration": "Sur la tête du voleur brûle le chapeau",
+        "traduction": "Qui se sent morveux se mouche",
+        "contexte": "Se dit quand une personne coupable se trahit elle-même par sa réaction défensive.",
+        "index": 14,
+        "prompt": "A cinematic, moody scene in a dimly lit office where a nervous man sits at a desk, surrounded by colleagues. He is visibly sweating and fidgeting, looking over his shoulder with a guilty expression while clutching a stolen file. A spotlight shines directly on him, emphasizing his anxiety. The atmosphere is tense, capturing the moment a guilty person betrays themselves through defensive body language. The image features the verbatim Hebrew text: 'על ראש הגנב בוער הכובע' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_14.png",
+        "imagename": "proverb_14.png"
+    },
+    {
+        "hebreu_sans_nikud": "אין עשן בלי אש",
+        "translitteration": "Pas de fumée sans feu",
+        "traduction": "Il n'y a pas de fumée sans feu",
+        "contexte": "Signifie que les rumeurs ont souvent un fond de vérité.",
+        "index": 15,
+        "prompt": "A cinematic, moody scene in a dimly lit, vintage office room. In the center, a mahogany desk sits with a single glowing ember resting on a stack of old, confidential documents, with faint, wispy smoke rising from it, symbolizing a rumor starting to spread. The room is filled with shadows and sharp contrasts, evoking a sense of truth being uncovered. The atmosphere is mysterious and investigative. The image features the verbatim Hebrew text: 'אין עשן בלי אש' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_15.png",
+        "imagename": "proverb_15.png"
+    },
+    {
+        "hebreu_sans_nikud": "מים גנובים ימתקו",
+        "translitteration": "Les eaux volées seront douces",
+        "traduction": "Le fruit défendu est le plus savoureux",
+        "contexte": "Indique que ce qui est interdit ou secret est souvent plus attirant.",
+        "index": 16,
+        "prompt": "A cinematic, moody scene set in a dimly lit, opulent library at night. A young woman, illuminated by a single flickering candle, is reaching for a forbidden, ancient-looking book hidden behind a locked glass display case. Her expression is one of intense curiosity and thrill, capturing the allure of the forbidden. The atmosphere is rich with deep shadows, velvet textures, and gold accents. The image features the verbatim Hebrew text: 'מים גנובים ימתקו' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_16.png",
+        "imagename": "proverb_16.png"
+    },
+    {
+        "hebreu_sans_nikud": "אל תסתכל בקנקן אלא במה שיש בתוכו",
+        "translitteration": "Ne regarde pas la cruche mais ce qu'il y a dedans",
+        "traduction": "L'habit ne fait pas le moine",
+        "contexte": "Conseille de ne pas juger une personne ou une chose sur son apparence extérieure.",
+        "index": 17,
+        "prompt": "A cinematic, high-contrast shot focusing on a weathered, plain-looking wooden crate sitting on a dusty table. Inside the simple crate, overflowing with brilliant, glowing golden treasures, rare gemstones, and vibrant flowers, creating a sharp visual contrast between the dull exterior and the magnificent interior. The lighting is dramatic, highlighting the light emanating from within the container. The background is a soft-focus, moody workshop. The image features the verbatim Hebrew text: 'אל תסתכל בקנקן אלא במה שיש בתוכו' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_17.png",
+        "imagename": "proverb_17.png"
+    },
+    {
+        "hebreu_sans_nikud": "עבר חתול שחור",
+        "translitteration": "Un chat noir est passé",
+        "traduction": "Être en froid",
+        "contexte": "Se dit de deux personnes qui se sont disputées et ne s'entendent plus.",
+        "index": 18,
+        "prompt": "A cinematic, moody wide shot of two estranged friends sitting on opposite ends of a long, elegant wooden dining table in a dimly lit, sophisticated apartment. They are both looking away from each other, their body language conveying tension, coldness, and a palpable emotional distance. One person is looking out a rainy window while the other stares down at an untouched plate of food. The atmosphere is melancholic and silent, emphasizing the breakdown of their relationship. The image features the verbatim Hebrew text: 'עבר ביניהם חתול שחור' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_18.png",
+        "imagename": "proverb_18.png"
+    },
+    {
+        "hebreu_sans_nikud": "לדבר אל הקיר",
+        "translitteration": "Parler au mur",
+        "traduction": "Parler à un mur",
+        "contexte": "Quand on s'adresse à quelqu'un qui n'écoute pas ou refuse de comprendre.",
+        "index": 19,
+        "prompt": "A cinematic, moody wide shot of an office environment. A frustrated person is standing and gesturing passionately with their hands while explaining something to a colleague who is turned away, staring blankly at a solid, imposing brick wall, completely ignoring the speaker. The lighting emphasizes the cold, disconnect between the two individuals, highlighting the futility of the conversation. The atmosphere is heavy with silence and indifference. The image features the verbatim Hebrew text: 'לדבר אל הקיר' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_19.png",
+        "imagename": "proverb_19.png"
+    },
+    {
+        "hebreu_sans_nikud": "לשבור את הקרח",
+        "translitteration": "Casser la glace",
+        "traduction": "Rompre la glace",
+        "contexte": "Faire le premier pas pour détendre l'atmosphère lors d'une nouvelle rencontre.",
+        "index": 20,
+        "prompt": "A warm and inviting scene in a cozy, dimly lit lounge where two strangers are sitting across from each other at a small wooden table, sharing a friendly smile while holding steaming cups of coffee. The atmosphere is soft and comfortable, with warm ambient lighting emphasizing the moment of connection and the easing of tension. The image features the verbatim Hebrew text: 'לשבור את הקרח' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_20.png",
+        "imagename": "proverb_20.png"
+    },
+    {
+        "hebreu_sans_nikud": "להרוג שתי ציפורים במכה אחת",
+        "translitteration": "Tuer deux oiseaux d'un seul coup",
+        "traduction": "Faire d'une pierre deux coups",
+        "contexte": "Atteindre deux objectifs avec une seule action.",
+        "index": 21,
+        "prompt": "A conceptual and minimalist illustration representing efficiency and productivity. A professional business person stands in a modern, bright office, successfully completing a complex puzzle with one hand while simultaneously watering a thriving plant with the other, symbolizing achieving two goals with a single action. The scene is clean, brightly lit, and uses a professional color palette of soft blues and greens. The image features the verbatim Hebrew text: 'להרוג שתי ציפורים במכה אחת' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_21.png",
+        "imagename": "proverb_21.png"
+    },
+    {
+        "hebreu_sans_nikud": "ירד לו האסימון",
+        "translitteration": "Le jeton est descendu pour lui",
+        "traduction": "La pièce est tombée / Il a enfin compris",
+        "contexte": "Se dit de quelqu'un qui vient soudainement de comprendre quelque chose après un moment de confusion.",
+        "index": 22,
+        "prompt": "A cinematic close-up of a contemplative person in a dimly lit library, their face suddenly illuminated by a warm, golden spark of realization. They are looking into the distance with a wide-eyed expression of clarity, as if a complex puzzle has just been solved in their mind. The atmosphere is intellectual and serene, with soft bokeh lights in the background suggesting a sudden mental breakthrough. The image features the verbatim Hebrew text: 'ירד לו האסימון' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_22.png",
+        "imagename": "proverb_22.png"
+    },
+    {
+        "hebreu_sans_nikud": "לא דובים ולא יער",
+        "translitteration": "Ni ours ni forêt",
+        "traduction": "C'est de la pure fiction",
+        "contexte": "Pour affirmer qu'une histoire ou une rumeur est totalement fausse et inventée de toutes pièces.",
+        "index": 23,
+        "prompt": "A cinematic, surrealist composition depicting a theatrical stage where a grand, ornate curtain is being pulled back to reveal that there is absolutely nothing behind it except for an empty, dusty void. The scene emphasizes emptiness and the exposure of a lie, with dramatic spotlighting casting long shadows on a barren floorboards. The atmosphere is mysterious and conceptual, highlighting the idea of a fabricated story collapsing into nothingness. The image features the verbatim Hebrew text: 'לא דובים ולא יער' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_23.png",
+        "imagename": "proverb_23.png"
+    },
+    {
+        "hebreu_sans_nikud": "טחן מים",
+        "translitteration": "A moulu de l'eau",
+        "traduction": "Brasser de l'air / Coup d'épée dans l'eau",
+        "contexte": "Faire un travail inutile qui ne mène à aucun résultat.",
+        "index": 24,
+        "prompt": "A surreal and evocative scene illustrating the concept of futility: a weary office worker in a dimly lit, minimalist room sits at a desk endlessly turning a large, heavy industrial crank that is disconnected from any machinery, with gears spinning uselessly into thin air. The atmosphere is melancholic and cinematic, with soft dust motes dancing in a single shaft of light. The style is detailed, high-contrast digital art. The image features the verbatim Hebrew text: 'טחן מים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_24.png",
+        "imagename": "proverb_24.png"
+    },
+    {
+        "hebreu_sans_nikud": "שם פס",
+        "translitteration": "A mis une rayure",
+        "traduction": "S'en ficher royalement",
+        "contexte": "Ignorer complètement les règles, les attentes ou l'opinion des autres.",
+        "index": 25,
+        "prompt": "A cinematic, wide-angle shot of a rebellious young person walking confidently through a crowded, bustling city street during rush hour. While everyone around them is dressed in rigid, formal business attire and moving in a synchronized, orderly fashion, the protagonist is wearing vibrant, casual street clothes, listening to headphones, and walking in the opposite direction of the crowd, completely unfazed and ignoring the judgmental stares of passersby. The lighting is dramatic, with a spotlight effect on the protagonist to emphasize their individuality. The style is modern, high-contrast, and edgy. The image features the verbatim Hebrew text: 'שם פס' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_25.png",
+        "imagename": "proverb_25.png"
+    },
+    {
+        "hebreu_sans_nikud": "אכל אותה",
+        "translitteration": "L'a mangée",
+        "traduction": "S'être fait avoir / Être dans le pétrin",
+        "contexte": "Se dit de quelqu'un qui a subi un échec cuisant ou qui s'est fait arnaquer.",
+        "index": 26,
+        "prompt": "A cinematic, high-contrast shot of a dejected person sitting on a park bench in the rain, looking at a completely empty, opened wallet that has been picked clean, with a subtle look of realization and defeat on their face. The lighting is moody with cool blue tones, emphasizing a sense of misfortune and being trapped in a difficult situation. The atmosphere is melancholic and urban. The image features the verbatim Hebrew text: 'אכל אותה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_26.png",
+        "imagename": "proverb_26.png"
+    },
+    {
+        "hebreu_sans_nikud": "הלך עליו",
+        "translitteration": "C'est allé sur lui",
+        "traduction": "Il est fichu / Son compte est bon",
+        "contexte": "Pour indiquer que quelqu'un est dans une situation désespérée ou va subir de graves conséquences.",
+        "index": 27,
+        "prompt": "A cinematic, dramatic wide shot of a lone, exhausted explorer standing on a tiny, crumbling rock island in the middle of a vast, dark, turbulent ocean under a stormy, ominous sky. The person has a defeated posture, looking down at the rising dark waves that are about to submerge the rock. The atmosphere is gloomy, high-contrast, and hopeless, emphasizing a final, inescapable moment of peril. The image features the verbatim Hebrew text: 'הלך עליו' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_27.png",
+        "imagename": "proverb_27.png"
+    },
+    {
+        "hebreu_sans_nikud": "עשה לו בית ספר",
+        "translitteration": "Lui a fait une école",
+        "traduction": "Lui a donné une leçon",
+        "contexte": "Surpasser quelqu'un de manière humiliante ou lui montrer comment les choses doivent être faites.",
+        "index": 28,
+        "prompt": "A high-contrast, cinematic scene set on a modern professional basketball court. A young, confident player is effortlessly dribbling the ball around a struggling, older, and visibly frustrated opponent who has fallen to the floor, symbolizing total dominance and a lesson learned. The atmosphere is intense with dramatic stadium spotlighting and a blurred crowd in the background. The aesthetic is sharp, professional sports photography style. The image features the verbatim Hebrew text: 'עשה לו בית ספר' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_28.png",
+        "imagename": "proverb_28.png"
+    },
+    {
+        "hebreu_sans_nikud": "חיפש בנרות",
+        "translitteration": "A cherché avec des bougies",
+        "traduction": "Chercher de fond en comble",
+        "contexte": "Chercher quelque chose ou quelqu'un avec beaucoup d'efforts et de minutie.",
+        "index": 29,
+        "prompt": "A cinematic, moody wide shot of a dedicated private investigator in a cluttered, vintage office at night. The investigator is down on his hands and knees using a magnifying glass to meticulously examine the floorboards, with a warm, focused spotlight illuminating the area he is searching. The atmosphere is filled with mystery and intense concentration, with stacks of old dusty files and antique maps surrounding him. The image features the verbatim Hebrew text: 'חיפש בנרות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_29.png",
+        "imagename": "proverb_29.png"
+    },
+    {
+        "hebreu_sans_nikud": "יצא קרח מכאן ומכאן",
+        "translitteration": "Est sorti chauve d'ici et d'ici",
+        "traduction": "Perdre sur tous les tableaux",
+        "contexte": "Se dit de quelqu'un qui a essayé d'obtenir deux choses incompatibles et a fini par tout perdre.",
+        "index": 30,
+        "prompt": "A cinematic, wide-angle shot of a frustrated man standing in the middle of a crossroads, empty-handed, looking down at his two open, barren palms. On his left, a path leads to a golden treasure chest that has just slammed shut and locked, while on his right, a path leads to a beautiful garden that has suddenly withered away. The man is caught between these two failed opportunities, looking defeated and regretful. The lighting is dramatic, with twilight shadows emphasizing his loss. The atmosphere is melancholic and high-contrast. The image features the verbatim Hebrew text: 'יצא קרח מכאן ומכאן' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_30.png",
+        "imagename": "proverb_30.png"
+    },
+    {
+        "hebreu_sans_nikud": "תפס מרובה לא תפס",
+        "translitteration": "A attrapé beaucoup n'a pas attrapé",
+        "traduction": "Qui trop embrasse mal étreint",
+        "contexte": "Avertit que vouloir trop en faire ou trop obtenir mène souvent à l'échec.",
+        "index": 31,
+        "prompt": "A cinematic, wide-angle shot of a person standing in a cluttered, surreal workspace, desperately trying to hold a dozen colorful, glowing glass orbs in their arms, but they are slipping and shattering on the floor, symbolizing the failure of multitasking and greed. The lighting is dramatic with deep shadows, emphasizing the chaos and the loss of the items. The composition is artistic and metaphorical. The image features the verbatim Hebrew text: 'תפס מרובה לא תפס' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_31.png",
+        "imagename": "proverb_31.png"
+    },
+    {
+        "hebreu_sans_nikud": "מכה מתחת לחגורה",
+        "translitteration": "Un coup sous la ceinture",
+        "traduction": "Un coup bas",
+        "contexte": "Une attaque déloyale ou cruelle, souvent personnelle.",
+        "index": 32,
+        "prompt": "A cinematic, dramatic, and metaphorical illustration of an unfair betrayal in a professional setting. The scene shows a shadowy figure in a suit standing in a dim, high-contrast office, surreptitiously sabotaging a colleague's work by pulling a vital document from a stack, while the colleague is looking away, unaware. The mood is tense, cold, and noir-inspired, emphasizing the theme of a 'low blow' or underhanded tactics. The lighting focuses on the act of betrayal. The image features the verbatim Hebrew text: 'מכה מתחת לחגורה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_32.png",
+        "imagename": "proverb_32.png"
+    },
+    {
+        "hebreu_sans_nikud": "יצא לו מהאף",
+        "translitteration": "Lui est sorti par le nez",
+        "traduction": "En avoir par-dessus la tête",
+        "contexte": "Être complètement dégoûté ou fatigué d'une situation ou d'une chose.",
+        "index": 33,
+        "prompt": "A hyper-realistic close-up portrait of an exhausted and exasperated office worker sitting at a cluttered desk piled high with endless stacks of paperwork and buzzing glowing computer screens. The person has their head in their hands, eyes closed with a look of pure burnout, frustration, and complete mental fatigue. The lighting is cold and dim, emphasizing a sense of overwhelming monotony and deep irritation with their environment. The image features the verbatim Hebrew text: 'יצא לו מהאף' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_33.png",
+        "imagename": "proverb_33.png"
+    },
+    {
+        "hebreu_sans_nikud": "נפל בין הכיסאות",
+        "translitteration": "Est tombé entre les chaises",
+        "traduction": "Passer à la trappe",
+        "contexte": "Se dit d'un dossier ou d'une personne qui a été négligé à cause d'un manque de coordination entre plusieurs parties.",
+        "index": 34,
+        "prompt": "A high-angle, cinematic shot of a modern, cluttered corporate office corridor. In the center, a single, important-looking leather folder lies forgotten on the floor, abandoned in the dark gap between two heavy, expensive-looking executive chairs that are pushed apart. The lighting is moody and dramatic, with a spotlight hitting the folder while the surrounding office environment is slightly out of focus, emphasizing the feeling of bureaucratic neglect and lack of coordination. The style is hyper-realistic with a professional color palette of deep blues and warm amber highlights. The image features the verbatim Hebrew text: 'נפל בין הכיסאות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_34.png",
+        "imagename": "proverb_34.png"
+    },
+    {
+        "hebreu_sans_nikud": "עשה סלט",
+        "translitteration": "A fait une salade",
+        "traduction": "Faire un méli-mélo",
+        "contexte": "Mélanger des informations ou créer de la confusion dans une situation.",
+        "index": 35,
+        "prompt": "A surreal and conceptual scene depicting a chaotic office workspace where floating, disconnected documents, tangled computer cables, and scattered jigsaw puzzle pieces are swirling in a vortex of confusion. A frustrated professional stands in the center, overwhelmed by the disorganized swirl of information. The lighting is dramatic with a high-contrast style to emphasize the feeling of mental clutter and disorder. The image features the verbatim Hebrew text: 'עשה סלט' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_35.png",
+        "imagename": "proverb_35.png"
+    },
+    {
+        "hebreu_sans_nikud": "פתח את הלב",
+        "translitteration": "A ouvert le cœur",
+        "traduction": "Ouvrir son cœur / Se confier",
+        "contexte": "Parler sincèrement de ses sentiments ou de ses problèmes à quelqu'un.",
+        "index": 36,
+        "prompt": "A warm, cinematic scene set in a cozy, dimly lit study with soft golden evening light streaming through a window. Two close friends sit in comfortable armchairs facing each other, engaged in a deep, soul-baring conversation; one person is gesturing gently while the other listens with a look of profound empathy and understanding. The atmosphere is intimate, authentic, and vulnerable. The image features the verbatim Hebrew text: 'פתח את הלב' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_36.png",
+        "imagename": "proverb_36.png"
+    },
+    {
+        "hebreu_sans_nikud": "שבר את הראש",
+        "translitteration": "A cassé la tête",
+        "traduction": "Se casser la tête",
+        "contexte": "Réfléchir intensément pour résoudre un problème difficile.",
+        "index": 37,
+        "prompt": "A high-quality cinematic close-up of a thoughtful inventor sitting at a cluttered wooden desk late at night, illuminated by a warm desk lamp. The room is filled with complex blueprints, scattered mechanical parts, and half-empty coffee cups. The person has their hands on their forehead, deep in intense concentration, looking at a intricate puzzle of gears. The atmosphere is scholarly, focused, and scholarly. The image features the verbatim Hebrew text: 'שבר את הראש' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_37.png",
+        "imagename": "proverb_37.png"
+    },
+    {
+        "hebreu_sans_nikud": "קנה חתול בשק",
+        "translitteration": "A acheté un chat dans un sac",
+        "traduction": "Acheter chat en poche",
+        "contexte": "Acheter quelque chose sans l'avoir examiné au préalable, risquant ainsi une mauvaise surprise.",
+        "index": 38,
+        "prompt": "A high-quality, cinematic shot of a disappointed man standing in a vintage marketplace, looking inside a plain, rustic burlap sack he just purchased, only to find a mischievous, snarling stray cat inside instead of the valuable item he expected. The man has a look of shock and regret on his face. The atmosphere is slightly dim and moody, with soft golden light filtering through a market stall. The image features the verbatim Hebrew text: 'קנה חתול בשק' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_38.png",
+        "imagename": "proverb_38.png"
+    },
+    {
+        "hebreu_sans_nikud": "שיחק באש",
+        "translitteration": "A joué dans le feu",
+        "traduction": "Jouer avec le feu",
+        "contexte": "Prendre des risques inutiles et dangereux.",
+        "index": 39,
+        "prompt": "A cinematic, dramatic wide shot of a reckless high-stakes gambler standing on the edge of a crumbling cliff overlooking a dark, turbulent abyss, holding a burning match between his fingers that is slowly consuming a frayed rope holding his weight. The atmosphere is tense and ominous with sharp contrasts of deep shadows and flickering orange light. The image features the verbatim Hebrew text: 'שיחק באש' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_39.png",
+        "imagename": "proverb_39.png"
+    },
+    {
+        "hebreu_sans_nikud": "ירד מהעץ",
+        "translitteration": "Est descendu de l'arbre",
+        "traduction": "Mettre de l'eau dans son vin / Céder",
+        "contexte": "Renoncer à une position obstinée ou admettre son erreur pour résoudre un conflit.",
+        "index": 40,
+        "prompt": "A cinematic, metaphorical scene showing two rival negotiators in a modern, minimalist office space finally shaking hands across a long wooden table after a long, tense standoff. The atmosphere shifts from cold and dark to warm and illuminated, symbolizing the resolution of a conflict. One person is visibly relaxing their rigid posture, signifying the act of backing down from an stubborn position. The lighting is soft and golden, highlighting the moment of reconciliation. The image features the verbatim Hebrew text: 'ירד מהעץ' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_40.png",
+        "imagename": "proverb_40.png"
+    },
+    {
+        "hebreu_sans_nikud": "טיפה בים",
+        "translitteration": "Une goutte dans la mer",
+        "traduction": "Une goutte d'eau dans l'océan",
+        "contexte": "Une quantité insignifiante par rapport à ce qui est nécessaire.",
+        "index": 41,
+        "prompt": "A cinematic, wide-angle shot of a vast, infinite and dark deep-blue ocean stretching to the horizon under a twilight sky. In the foreground, a single, tiny, fragile wooden cup is held by a hand, containing only one solitary drop of water, appearing completely overwhelmed by the scale of the surrounding sea. The lighting is moody and dramatic with soft highlights on the water surface. The image features the verbatim Hebrew text: 'טיפה בים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_41.png",
+        "imagename": "proverb_41.png"
+    },
+    {
+        "hebreu_sans_nikud": "עמד על הרגליים האחוריות",
+        "translitteration": "S'est tenu sur les pattes arrière",
+        "traduction": "Monter sur ses grands chevaux / Tenir bon",
+        "contexte": "S'opposer fermement à quelque chose ou défendre sa position avec acharnement.",
+        "index": 42,
+        "prompt": "A cinematic, dramatic wide shot of a determined professional standing firmly in the center of a tense boardroom, arms crossed, body language radiating unshakable resolve and defiance against a group of shadowy, imposing figures attempting to push a document toward them. The atmosphere is high-contrast with sharp lighting, emphasizing the character's unwavering stance. The style is modern, realistic, and intense. The image features the verbatim Hebrew text: 'עמד על הרגליים האחוריות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_42.png",
+        "imagename": "proverb_42.png"
+    },
+    {
+        "hebreu_sans_nikud": "לקח ללב",
+        "translitteration": "A pris au cœur",
+        "traduction": "Prendre à cœur",
+        "contexte": "Être profondément affecté ou offensé par quelque chose.",
+        "index": 43,
+        "prompt": "A cinematic, emotional close-up of a person sitting alone in a dimly lit room, holding a glowing, fragile glass heart in their cupped hands. The person's expression is one of deep melancholy and vulnerability, with soft shadows accentuating their thoughtful features. The atmosphere is melancholic and introspective, with a muted color palette of deep blues and warm amber highlights. The lighting is focused entirely on the heart and the person's face. The image features the verbatim Hebrew text: 'לקח ללב' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_43.png",
+        "imagename": "proverb_43.png"
+    },
+    {
+        "hebreu_sans_nikud": "עשה שמיניות באוויר",
+        "translitteration": "A fait des huit en l'air",
+        "traduction": "Se plier en quatre",
+        "contexte": "Faire des efforts extraordinaires pour accomplir quelque chose ou aider quelqu'un.",
+        "index": 44,
+        "prompt": "A cinematic, wide-angle shot of a dedicated father in a cozy living room, balancing on one leg while simultaneously juggling school books, a toy, and a tray of snacks to appease his crying child, showing extreme effort and multitasking, warm dramatic lighting, high detail, realistic style. The image features the verbatim Hebrew text: 'עושה שמיניות באוויר' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_44.png",
+        "imagename": "proverb_44.png"
+    },
+    {
+        "hebreu_sans_nikud": "הלך פייפן",
+        "translitteration": "Est allé pipe",
+        "traduction": "Partir en fumée / Être fichu",
+        "contexte": "Se dit d'un plan qui a échoué ou d'un objet qui s'est cassé de manière irréparable.",
+        "index": 45,
+        "prompt": "A cinematic, high-detail shot of a complex mechanical clockwork engine that has suddenly burst into flames and is crumbling into charred, smoking debris on a workbench. Sparks are flying, and gears are scattered, symbolizing a catastrophic failure of a plan. The lighting is dramatic, with warm orange embers contrasting against a dark, industrial workshop background. The image features the verbatim Hebrew text: 'הלך פייפן' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_45.png",
+        "imagename": "proverb_45.png"
+    },
+    {
+        "hebreu_sans_nikud": "יצא מדעתו",
+        "translitteration": "Est sorti de son esprit",
+        "traduction": "Perdre la tête / Devenir fou",
+        "contexte": "Devenir extrêmement en colère ou perdre la raison.",
+        "index": 46,
+        "prompt": "A cinematic, surreal artistic composition depicting the moment of losing one's temper and sanity. The scene shows a man in a modern office environment standing amidst a swirl of floating, chaotic papers and distorted reality, with his expression showing intense, fiery frustration and eyes wide with agitation. The lighting is dramatic, with high-contrast shadows and flashes of red and deep blue to emphasize his internal turmoil. The atmosphere is tense and electric. The image features the verbatim Hebrew text: 'יצא מדעתו' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_46.png",
+        "imagename": "proverb_46.png"
+    },
+    {
+        "hebreu_sans_nikud": "נכנס באוזן אחת ויצא בשנייה",
+        "translitteration": "Est entré par une oreille et sorti par la deuxième",
+        "traduction": "Entrer par une oreille et sortir par l'autre",
+        "contexte": "Quand quelqu'un n'écoute pas ou ne retient pas ce qu'on lui dit.",
+        "index": 47,
+        "prompt": "A cinematic, surrealist conceptual illustration showing a distracted person sitting at a desk with a blank, unfocused expression, while colorful abstract sound waves representing words pass directly through their head from one side to the other without stopping, symbolizing information being ignored. The environment is a clean, modern, minimalist office space with soft lighting. The image features the verbatim Hebrew text: 'נכנס באוזן אחת ויצא בשנייה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_47.png",
+        "imagename": "proverb_47.png"
+    },
+    {
+        "hebreu_sans_nikud": "שם רגל",
+        "translitteration": "A mis un pied",
+        "traduction": "Faire un croche-pied / Saboter",
+        "contexte": "Faire échouer intentionnellement les plans de quelqu'un d'autre.",
+        "index": 48,
+        "prompt": "A cinematic, high-contrast shot of a sleek corporate office hallway. In the foreground, a shadowy figure in a tailored suit is seen surreptitiously placing a small, sharp obstacle on the floor in front of an unsuspecting colleague who is walking forward with a stack of important documents. The lighting is dramatic, emphasizing the tension and the act of sabotage. The scene uses a dark, moody color palette to convey betrayal and calculated malice. The image features the verbatim Hebrew text: 'שם רגל' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_48.png",
+        "imagename": "proverb_48.png"
+    },
+    {
+        "hebreu_sans_nikud": "עשה עיניים",
+        "translitteration": "A fait des yeux",
+        "traduction": "Faire les yeux doux",
+        "contexte": "Flirter avec quelqu'un ou essayer de le séduire par le regard.",
+        "index": 49,
+        "prompt": "A charming and romantic scene in a cozy Parisian-style sidewalk cafe at sunset. A young woman with a playful and captivating expression is leaning slightly forward, resting her chin on her hand, gazing intensely and flirtatiously into the eyes of a man sitting across from her who is smiling shyly. The atmosphere is warm and intimate with soft golden hour lighting, blurred city lights in the background, and a single red rose on the table. The image features the verbatim Hebrew text: 'עשה עיניים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_49.png",
+        "imagename": "proverb_49.png"
+    },
+    {
+        "hebreu_sans_nikud": "פה מפיק מרגליות",
+        "translitteration": "Une bouche produisant des perles",
+        "traduction": "Parler d'or (souvent ironique)",
+        "contexte": "Utilisé littéralement pour quelqu'un qui parle avec sagesse, mais très souvent ironiquement pour quelqu'un qui dit des gros mots.",
+        "index": 50,
+        "prompt": "A cinematic, satirical scene in a dimly lit, opulent 19th-century salon. A sophisticated man in a velvet suit stands with a haughty expression, holding a glass of wine, while a swarm of shimmering, golden pearls spills out from his mouth and floats in the air, but upon closer inspection, some of the pearls are cracked and reveal small, grotesque gargoyle faces, highlighting the ironic contrast between eloquence and crudeness. The lighting is dramatic, focusing on the contrast between the shiny gold and the dark, moody background. The image features the verbatim Hebrew text: 'פה מפיק מרגליות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_50.png",
+        "imagename": "proverb_50.png"
+    },
+    {
+        "hebreu_sans_nikud": "אבן נגף",
+        "translitteration": "Une pierre de trébuchement",
+        "traduction": "Une pierre d'achoppement",
+        "contexte": "Un obstacle qui empêche la progression ou la réussite d'un projet.",
+        "index": 51,
+        "prompt": "A cinematic, high-contrast conceptual shot showing a determined professional in a sleek modern office standing in front of a giant, jagged, glowing boulder that blocks the path forward, symbolizing a major project obstacle. The lighting is dramatic with cool blue tones, highlighting the frustration of the person looking at the barrier. The atmosphere is professional yet tense. The image features the verbatim Hebrew text: 'אבן נגף' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_51.png",
+        "imagename": "proverb_51.png"
+    },
+    {
+        "hebreu_sans_nikud": "אור בקצה המנהרה",
+        "translitteration": "Lumière au bout du tunnel",
+        "traduction": "La lumière au bout du tunnel",
+        "contexte": "Un signe d'espoir à la fin d'une période difficile.",
+        "index": 52,
+        "prompt": "A cinematic, wide-angle shot of a person walking out of a long, dark, cavernous tunnel into a vibrant, sun-drenched meadow filled with wildflowers and golden morning light. The contrast between the deep, moody shadows of the tunnel and the bright, hopeful landscape creates a powerful sense of relief and new beginnings. The atmosphere is ethereal, inspiring, and peaceful. The image features the verbatim Hebrew text: 'אור בקצה המנהרה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_52.png",
+        "imagename": "proverb_52.png"
+    },
+    {
+        "hebreu_sans_nikud": "אכל קש",
+        "translitteration": "A mangé de la paille",
+        "traduction": "En baver / Manger son pain noir",
+        "contexte": "Traverser une période très difficile ou subir de nombreuses épreuves.",
+        "index": 53,
+        "prompt": "A cinematic, atmospheric wide shot of a solitary, weary figure sitting on the cracked, dusty floor of a desolate, dimly lit room, hunched over with their head in their hands, conveying deep exhaustion and the weight of life's hardships. The color palette is muted, using desaturated tones of grey, brown, and deep shadows to emphasize the sense of struggle and isolation. The lighting is sparse, coming from a single, cold light source, highlighting the textures of the worn-out clothing and the rough environment. The image features the verbatim Hebrew text: 'אכל קש' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_53.png",
+        "imagename": "proverb_53.png"
+    },
+    {
+        "hebreu_sans_nikud": "בא לו בטוב",
+        "translitteration": "Lui est venu en bien",
+        "traduction": "Tomber à pic",
+        "contexte": "Se dit de quelque chose qui arrive exactement au bon moment ou qui convient parfaitement.",
+        "index": 54,
+        "prompt": "A cinematic, warm-toned scene depicting a tired hiker standing on a mountain trail under a scorching sun, suddenly finding a refreshing, ice-cold canteen of water left on a rock right when they need it most. The lighting is golden and hopeful, highlighting the perfect timing of the discovery. The image features the verbatim Hebrew text: 'בא לו בטוב' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_54.png",
+        "imagename": "proverb_54.png"
+    },
+    {
+        "hebreu_sans_nikud": "גילה את אמריקה",
+        "translitteration": "A découvert l'Amérique",
+        "traduction": "Enfoncer une porte ouverte",
+        "contexte": "Dit ironiquement à quelqu'un qui annonce comme une grande découverte quelque chose que tout le monde sait déjà.",
+        "index": 55,
+        "prompt": "A cinematic, satirical shot of a man standing in the middle of a bustling, modern metropolis, wearing an explorer's pith helmet and holding a telescope, looking intensely at a common, everyday object like a traffic light or a street sign with an expression of profound, wide-eyed astonishment. The people around him are walking by, looking at him with weary, unimpressed, or rolling eyes, clearly acknowledging that his 'discovery' is completely mundane. The scene is brightly lit with a vibrant, slightly humorous aesthetic. The image features the verbatim Hebrew text: 'גילה את אמריקה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_55.png",
+        "imagename": "proverb_55.png"
+    },
+    {
+        "hebreu_sans_nikud": "דיבר לעניין",
+        "translitteration": "A parlé à l'affaire",
+        "traduction": "Aller droit au but / Parler de façon pertinente",
+        "contexte": "S'exprimer de manière claire, logique et pertinente par rapport au sujet.",
+        "index": 56,
+        "prompt": "A minimalist and sophisticated conceptual illustration representing clarity and relevance. A single, sharp, glowing arrow pierces directly through the center of a complex, chaotic maze of tangled lines, hitting a perfect bullseye on a target. The scene uses a clean, modern aesthetic with a high-contrast color palette of deep navy blue and vibrant gold. The image features the verbatim Hebrew text: 'דיבר לעניין' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_56.png",
+        "imagename": "proverb_56.png"
+    },
+    {
+        "hebreu_sans_nikud": "הפך את הקערה על פיה",
+        "translitteration": "A retourné le bol sur sa bouche",
+        "traduction": "Renverser la vapeur",
+        "contexte": "Changer radicalement une situation, souvent en transformant une défaite imminente en victoire.",
+        "index": 57,
+        "prompt": "A cinematic, high-contrast scene depicting a dramatic turnaround in a competitive environment. In the foreground, a chess player who was clearly losing, with most of their pieces captured, suddenly makes a bold, decisive move that traps the opponent's king. The lighting highlights the player's focused and determined expression, contrasting with the dark, defeated atmosphere of the opponent's side of the table. The composition uses a dynamic angle to emphasize the sudden shift in momentum and the sense of an underdog reclaiming victory. The image features the verbatim Hebrew text: 'הפך את הקערה על פיה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_57.png",
+        "imagename": "proverb_57.png"
+    },
+    {
+        "hebreu_sans_nikud": "זרק בוץ",
+        "translitteration": "A jeté de la boue",
+        "traduction": "Traîner dans la boue",
+        "contexte": "Diffamer ou calomnier quelqu'un publiquement.",
+        "index": 58,
+        "prompt": "A cinematic, dramatic scene in a dimly lit, shadowy alleyway where a mysterious, silhouetted figure in a sharp business suit is casting dark, ink-like stains onto the pristine white silhouette of a person standing in the light, representing the act of public defamation and character assassination, high contrast noir aesthetic, sharp focus, atmospheric lighting, professional photography style. The image features the verbatim Hebrew text: 'זרק בוץ' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_58.png",
+        "imagename": "proverb_58.png"
+    },
+    {
+        "hebreu_sans_nikud": "חזר בתשובה",
+        "translitteration": "Est retourné en réponse",
+        "traduction": "Devenir pratiquant / Se repentir",
+        "contexte": "Se dit d'un Juif laïc qui décide d'adopter un mode de vie religieux orthodoxe.",
+        "index": 59,
+        "prompt": "A cinematic, deeply emotional scene showing a young man in modern casual clothing standing in a sunlit, quiet library of an ancient synagogue. He is gently holding a tallit (prayer shawl) and a pair of tefillin in his hands, looking towards a shelf filled with Torah scrolls with a sense of newfound peace and clarity. The lighting is warm and golden, highlighting the contrast between his contemporary appearance and the traditional spiritual environment. The image features the verbatim Hebrew text: 'חזר בתשובה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_59.png",
+        "imagename": "proverb_59.png"
+    },
+    {
+        "hebreu_sans_nikud": "חתך עניינים",
+        "translitteration": "A coupé les affaires",
+        "traduction": "Trancher dans le vif / Conclure",
+        "contexte": "Prendre une décision rapide pour faire avancer les choses sans perdre de temps.",
+        "index": 60,
+        "prompt": "A sharp, cinematic close-up of a decisive hand wielding a stylized, glowing samurai sword slicing through a tangled, chaotic knot of red ribbons that symbolize procrastination and indecision. The scene is set in a modern, minimalist office environment with sharp lighting and high contrast, conveying a sense of speed, efficiency, and clarity. The background is blurred to emphasize the clean cut. The image features the verbatim Hebrew text: 'חתך עניינים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_60.png",
+        "imagename": "proverb_60.png"
+    },
+    {
+        "hebreu_sans_nikud": "טמן את הראש בחול",
+        "translitteration": "A enfoui la tête dans le sable",
+        "traduction": "Faire l'autruche",
+        "contexte": "Refuser de voir la réalité en face ou ignorer un problème évident.",
+        "index": 61,
+        "prompt": "A high-contrast, surreal conceptual illustration of a businessman in a dark suit standing in the middle of a chaotic, burning city street filled with collapsing infrastructure and panic, but he is completely oblivious, standing perfectly still with his head buried deep inside a large, hollowed-out concrete block instead of sand, symbolizing the refusal to face reality. The atmosphere is cinematic and moody, with dramatic lighting highlighting the contrast between the surrounding disaster and his willful ignorance. The image features the verbatim Hebrew text: 'טמן את הראש בחול' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_61.png",
+        "imagename": "proverb_61.png"
+    },
+    {
+        "hebreu_sans_nikud": "יצא בשן ועין",
+        "translitteration": "Est sorti avec une dent et un œil",
+        "traduction": "S'en tirer de justesse avec des pertes",
+        "contexte": "Sortir d'une situation difficile en ayant subi de lourds dommages ou pertes.",
+        "index": 62,
+        "prompt": "A cinematic, dramatic wide shot of a weary adventurer emerging from the mouth of a dark, crumbling cave into a desolate landscape. The character is tattered, covered in soot and dust, carrying a broken sword and a torn backpack, symbolizing a narrow escape from a catastrophic ordeal. The lighting is moody with a sunset casting long, melancholic shadows, emphasizing the heavy price paid for survival. The atmosphere is solemn and gritty. The image features the verbatim Hebrew text: 'יצא בשן ועין' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_62.png",
+        "imagename": "proverb_62.png"
+    },
+    {
+        "hebreu_sans_nikud": "כל הזין",
+        "translitteration": "Tout le pénis",
+        "traduction": "C'est la merde / C'est la poisse",
+        "contexte": "Expression d'argot militaire très vulgaire pour exprimer une grande frustration face à une situation injuste ou pénible.",
+        "index": 63,
+        "prompt": "A cinematic, moody wide shot of a lone, exhausted soldier in a muddy, rain-drenched military trench at night. The soldier is sitting on a rusted ammunition crate, head in hands, looking defeated under a dim, flickering industrial floodlight. The atmosphere is oppressive, gritty, and bleak, with deep shadows and a desaturated color palette. The image features the verbatim Hebrew text: 'כל הזין' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_63.png",
+        "imagename": "proverb_63.png"
+    },
+    {
+        "hebreu_sans_nikud": "לא שם קצוץ",
+        "translitteration": "Ne met pas haché",
+        "traduction": "S'en battre l'œil",
+        "contexte": "Montrer une indifférence totale face à une situation ou à l'opinion des autres.",
+        "index": 64,
+        "prompt": "A cinematic, wide-angle shot of a cool, nonchalant person sitting on a park bench in the middle of a chaotic, busy city street. While people around them are rushing, arguing, and looking stressed, the main character is leaning back with their eyes closed, listening to music with headphones, completely oblivious and unbothered by the surrounding turmoil. The lighting is soft and golden, highlighting the contrast between the person's serene posture and the blurred motion of the frantic crowd. The image features the verbatim Hebrew text: 'לא שם קצוץ' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_64.png",
+        "imagename": "proverb_64.png"
+    },
+    {
+        "hebreu_sans_nikud": "מצא מחט בערימת שחת",
+        "translitteration": "A trouvé une aiguille dans une meule de foin",
+        "traduction": "Chercher une aiguille dans une botte de foin",
+        "contexte": "Tenter de trouver quelque chose de presque impossible à repérer.",
+        "index": 65,
+        "prompt": "A cinematic, wide-angle shot of a person standing in a vast, sprawling, and dimly lit industrial warehouse filled with thousands of identical, rusted metal filing cabinets, symbolizing the overwhelming difficulty of finding a single specific document. The person looks exhausted and small against the scale of the environment, holding a small magnifying glass, searching through an endless sea of drawers. The lighting is dramatic and moody, with a single spotlight highlighting the searcher. The image features the verbatim Hebrew text: 'מצא מחט בערימת שחת' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_65.png",
+        "imagename": "proverb_65.png"
+    },
+    {
+        "hebreu_sans_nikud": "נרדם בשמירה",
+        "translitteration": "S'est endormi pendant la garde",
+        "traduction": "Baisser la garde / Manquer à l'appel",
+        "contexte": "Ne pas faire attention au moment crucial, échouer dans ses responsabilités par inattention.",
+        "index": 66,
+        "prompt": "A cinematic, high-contrast shot of a high-stakes security control room at night. In the foreground, a security guard is slumped over in a chair, fast asleep, with his head resting on his desk while dozens of monitors behind him display critical red alerts and breached perimeters that he is completely ignoring. The atmosphere is tense, dark, and filled with glowing blue and red ambient light reflecting off the control consoles. The composition emphasizes the contrast between the urgent chaos on the screens and the negligence of the sleeping guard. The image features the verbatim Hebrew text: 'נרדם בשמירה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_66.png",
+        "imagename": "proverb_66.png"
+    },
+    {
+        "hebreu_sans_nikud": "סגר חשבון",
+        "translitteration": "A fermé un compte",
+        "traduction": "Régler ses comptes",
+        "contexte": "Se venger ou clarifier une situation conflictuelle avec quelqu'un.",
+        "index": 67,
+        "prompt": "A cinematic, moody noir-style scene depicting a tense confrontation in a dimly lit, rain-slicked alleyway at night. Two figures stand at a distance from each other, one holding a weathered ledger book that is being closed shut with a final, heavy motion, symbolizing the end of a long-standing conflict. The atmosphere is cold and dramatic with high-contrast lighting, long shadows, and reflections on the wet pavement. The focus is on the gesture of closure and resolution. The image features the verbatim Hebrew text: 'סגר חשבון' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_67.png",
+        "imagename": "proverb_67.png"
+    },
+    {
+        "hebreu_sans_nikud": "עשה פוזות",
+        "translitteration": "A fait des poses",
+        "traduction": "Faire son intéressant / Frimer",
+        "contexte": "Se comporter de manière arrogante ou théâtrale pour impressionner les autres.",
+        "index": 68,
+        "prompt": "A high-fashion, cinematic shot of a young man wearing an oversized, flashy designer coat and oversized sunglasses, standing in the middle of a crowded, blurred city street. He is posing with an exaggerated, arrogant posture, looking down his nose at the camera with a theatrical expression of self-importance. The lighting is dramatic, with sharp highlights emphasizing his expensive jewelry and confident smirk. The scene captures the essence of vanity and showing off. The image features the verbatim Hebrew text: 'עושה פוזות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_68.png",
+        "imagename": "proverb_68.png"
+    },
+    {
+        "hebreu_sans_nikud": "פתח דף חדש",
+        "translitteration": "A ouvert une nouvelle page",
+        "traduction": "Tourner la page / Repartir à zéro",
+        "contexte": "Prendre un nouveau départ après une période difficile ou une erreur.",
+        "index": 69,
+        "prompt": "A cinematic, wide-angle shot of a person standing at the edge of a sun-drenched, serene cliff overlooking a calm, vast ocean at sunrise. The person is letting go of a weathered, heavy old book that dissolves into golden light particles, symbolizing the release of the past. The atmosphere is hopeful, bright, and airy, with soft morning light illuminating the horizon. The image features the verbatim Hebrew text: 'פתח דף חדש' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_69.png",
+        "imagename": "proverb_69.png"
+    },
+    {
+        "hebreu_sans_nikud": "צחק כל הדרך אל הבנק",
+        "translitteration": "A ri tout le long du chemin vers la banque",
+        "traduction": "Rire jusqu'à la banque",
+        "contexte": "Gagner beaucoup d'argent facilement, souvent au détriment des critiques ou des sceptiques.",
+        "index": 70,
+        "prompt": "A cinematic, high-contrast shot of a sleek, confident business tycoon sitting in a luxurious leather armchair inside a grand office overlooking a bustling financial district at sunset. The person is holding a glass of expensive whiskey, wearing a sharp tailored suit, and has a subtle, triumphant smile. Stacks of gold bars and bundles of cash are neatly arranged on a mahogany desk, while blurred figures of critics and skeptics are visible through the office glass partition in the background, looking frustrated. The atmosphere is opulent and successful. The image features the verbatim Hebrew text: 'צוחק כל הדרך אל הבנק' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_70.png",
+        "imagename": "proverb_70.png"
+    },
+    {
+        "hebreu_sans_nikud": "קרא בין השורות",
+        "translitteration": "A lu entre les lignes",
+        "traduction": "Lire entre les lignes",
+        "contexte": "Comprendre le sens caché ou implicite d'un message.",
+        "index": 71,
+        "prompt": "A cinematic, moody scene in a dimly lit, vintage library. A person is holding an old, seemingly blank piece of parchment under a magnifying glass, revealing glowing, hidden golden symbols and secret messages that are invisible to the naked eye. The atmosphere is mysterious and intellectual, with deep shadows and soft, focused light emphasizing the discovery of hidden meaning. The image features the verbatim Hebrew text: 'קרא בין השורות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_71.png",
+        "imagename": "proverb_71.png"
+    },
+    {
+        "hebreu_sans_nikud": "ראה שחורות",
+        "translitteration": "A vu des noires",
+        "traduction": "Broyer du noir / Être pessimiste",
+        "contexte": "Avoir une vision très négative de l'avenir ou s'attendre au pire.",
+        "index": 72,
+        "prompt": "A cinematic, moody illustration of a lonely figure sitting on a park bench during a heavy, dark rainstorm at twilight. The person is hunched over, staring blankly at the ground, surrounded by a gloomy, monochromatic palette of charcoal grays and deep shadows, reflecting a profound sense of pessimism and dread for the future. The atmosphere is heavy with mist and cold light. The image features the verbatim Hebrew text: 'ראה שחורות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_72.png",
+        "imagename": "proverb_72.png"
+    },
+    {
+        "hebreu_sans_nikud": "שפך אור",
+        "translitteration": "A versé de la lumière",
+        "traduction": "Faire la lumière sur",
+        "contexte": "Clarifier une situation confuse ou apporter de nouvelles informations.",
+        "index": 73,
+        "prompt": "A cinematic, high-contrast scene set in a dimly lit, cluttered library filled with stacks of dusty, ancient scrolls and confusing maps. A single, powerful, warm beam of golden light pierces through a gap in the ceiling, illuminating a specific, previously obscured document on a central table, revealing a clear, golden glowing diagram that solves a mystery. The atmosphere is mystical, intellectual, and focused on the moment of discovery. The image features the verbatim Hebrew text: 'שפך אור' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_73.png",
+        "imagename": "proverb_73.png"
+    },
+    {
+        "hebreu_sans_nikud": "תפס את החבל בשני קצותיו",
+        "translitteration": "A attrapé la corde par ses deux bouts",
+        "traduction": "Vouloir le beurre et l'argent du beurre",
+        "contexte": "Essayer de profiter de deux situations contradictoires en même temps.",
+        "index": 74,
+        "prompt": "A surreal, conceptual illustration of a greedy businessman standing in the center of a split screen, frantically trying to balance two opposing worlds. On the left side, he is sitting in a luxurious, golden boardroom filled with opulence and wealth. On the right side, he is sitting in a peaceful, rustic garden trying to find spiritual enlightenment and simplicity. His body is physically stretched in two directions, illustrating the impossibility of his desire to have it all. The lighting is cinematic, highlighting the contrast between the sterile, cold metallic tones of the boardroom and the warm, vibrant greens of the garden. The image features the verbatim Hebrew text: 'תפס את החבל בשני קצותיו' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_74.png",
+        "imagename": "proverb_74.png"
+    },
+    {
+        "hebreu_sans_nikud": "אבד עליו הכלח",
+        "translitteration": "Son temps est perdu",
+        "traduction": "Être obsolète / Dépassé",
+        "contexte": "Se dit d'une idée, d'une méthode ou d'un objet qui n'est plus d'actualité.",
+        "index": 75,
+        "prompt": "A cinematic, high-contrast photograph of a dusty, abandoned room filled with obsolete technology. In the center, a vintage 1980s computer monitor with a thick, bulky frame sits on a wooden desk, surrounded by tangled cables and piles of yellowed paper. Through a nearby window, soft morning light reveals dust motes dancing in the air, highlighting the contrast between the forgotten, outdated machine and the modern, sleek world outside. The atmosphere is melancholic and nostalgic, emphasizing the transition of time. The image features the verbatim Hebrew text: 'אבד עליו הכלח' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_75.png",
+        "imagename": "proverb_75.png"
+    },
+    {
+        "hebreu_sans_nikud": "אגוז קשה לפיצוח",
+        "translitteration": "Une noix dure à craquer",
+        "traduction": "Un os dur à ronger",
+        "contexte": "Un problème difficile à résoudre ou une personne difficile à convaincre.",
+        "index": 76,
+        "prompt": "A high-stakes, cinematic scene in a dimly lit, sophisticated boardroom. A brilliant, composed individual sits calmly at a mahogany table, looking unfazed and impenetrable, while a group of frustrated negotiators in suits surround them, looking exhausted and unable to find a breakthrough. The atmosphere is tense and intellectual, highlighting the challenge of a person who is impossible to convince. The lighting is dramatic with deep shadows and sharp highlights. The image features the verbatim Hebrew text: 'אגוז קשה לפיצוח' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_76.png",
+        "imagename": "proverb_76.png"
+    },
+    {
+        "hebreu_sans_nikud": "אין חיה כזאת",
+        "translitteration": "Il n'y a pas un tel animal",
+        "traduction": "Ça n'existe pas",
+        "contexte": "Pour affirmer catégoriquement que quelque chose est impossible ou irréel.",
+        "index": 77,
+        "prompt": "A cinematic, surreal wide shot of a vast, empty desert landscape under a twilight sky where the horizon line is missing, creating a sense of impossible void. In the center, a single, ornate, empty antique picture frame floats mid-air, framing nothing but the shimmering, distorted air behind it, symbolizing the total absence of reality or possibility. The lighting is moody and ethereal with deep blues and soft golden highlights. The image features the verbatim Hebrew text: 'אין חיה כזאת' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_77.png",
+        "imagename": "proverb_77.png"
+    },
+    {
+        "hebreu_sans_nikud": "בא בימים",
+        "translitteration": "Venu dans les jours",
+        "traduction": "D'un âge avancé",
+        "contexte": "Expression respectueuse pour décrire une personne très âgée.",
+        "index": 78,
+        "prompt": "A warm, cinematic portrait of a dignified elderly man with a kind face, deep wrinkles, and silver hair, sitting peacefully on a wooden bench in a sun-drenched, tranquil garden during golden hour. He is holding a weathered book, resting his hands gently on his knees, radiating wisdom and serenity. The lighting is soft and nostalgic, highlighting the textures of his skin and his wool cardigan, evoking a sense of grace and long life. The composition is elegant and respectful, with a soft-focus background of blooming flowers and autumnal trees. The image features the verbatim Hebrew text: 'בא בימים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_78.png",
+        "imagename": "proverb_78.png"
+    },
+    {
+        "hebreu_sans_nikud": "גנב את ההצגה",
+        "translitteration": "A volé le spectacle",
+        "traduction": "Voler la vedette",
+        "contexte": "Attirer toute l'attention sur soi lors d'un événement, éclipsant les autres.",
+        "index": 79,
+        "prompt": "A cinematic, wide-angle shot of a grand, dimly lit theater stage during a formal gala performance. In the center, a single, spotlighted performer is dancing with immense charisma and energy, glowing in golden light. Around them, other performers are frozen in static, blurred poses, looking small and overshadowed. The audience in the foreground is mesmerized, with their faces illuminated by the stage light. The atmosphere is dramatic, luxurious, and high-contrast. The image features the verbatim Hebrew text: 'גנב את ההצגה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_79.png",
+        "imagename": "proverb_79.png"
+    },
+    {
+        "hebreu_sans_nikud": "דג במים עכורים",
+        "translitteration": "A pêché dans des eaux troubles",
+        "traduction": "Pêcher en eau trouble",
+        "contexte": "Tirer profit d'une situation confuse ou conflictuelle.",
+        "index": 80,
+        "prompt": "A cinematic, moody illustration of a cunning corporate executive in a sharp suit standing in a dimly lit, chaotic boardroom. The room is filled with swirling smoke and shadows, symbolizing a crisis or conflict. The executive is calmly collecting golden coins and important documents from the messy, cluttered table while others in the background are arguing and distracted. The artistic style is high-contrast, dramatic, and metaphorical, emphasizing the opportunistic nature of the character. The image features the verbatim Hebrew text: 'דג במים עכורים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_80.png",
+        "imagename": "proverb_80.png"
+    },
+    {
+        "hebreu_sans_nikud": "החזיר עטרה ליושנה",
+        "translitteration": "A rendu la couronne à son ancienneté",
+        "traduction": "Redorer le blason / Restaurer la gloire passée",
+        "contexte": "Rétablir une tradition, une institution ou une réputation à son niveau d'excellence d'autrefois.",
+        "index": 81,
+        "prompt": "A cinematic, wide-angle shot of a majestic, ancient stone library undergoing a meticulous restoration process. Sunlight streams through tall, ornate windows, illuminating golden dust motes. In the foreground, a master craftsman is carefully polishing a weathered, intricate crown made of gold and lapis lazuli, placing it back onto a central pedestal that was previously empty. The surrounding environment shows a blend of faded, historical architecture and newly restored, vibrant stone carvings, symbolizing the return to former glory. The atmosphere is reverent, hopeful, and grand. The image features the verbatim Hebrew text: 'החזיר עטרה ליושנה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_81.png",
+        "imagename": "proverb_81.png"
+    },
+    {
+        "hebreu_sans_nikud": "ויהי מה",
+        "translitteration": "Et que ce soit quoi",
+        "traduction": "Quoi qu'il arrive / Coûte que coûte",
+        "contexte": "Exprimer une détermination absolue à faire quelque chose, peu importe les obstacles.",
+        "index": 82,
+        "prompt": "A cinematic, wide-angle shot of a lone determined mountaineer climbing a steep, jagged cliff during a fierce, swirling snowstorm. The climber is focused and steady, ignoring the harsh elements and the precarious heights, symbolizing unwavering resolve and persistence against all odds. The lighting is dramatic, with cool blue tones contrasting with the warm, intense glow of the climber's determined expression. The composition is epic and heroic, emphasizing the solitary journey toward the summit. The image features the verbatim Hebrew text: 'ויהי מה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_82.png",
+        "imagename": "proverb_82.png"
+    },
+    {
+        "hebreu_sans_nikud": "זרק כפפה",
+        "translitteration": "A jeté un gant",
+        "traduction": "Jeter le gant / Lancer un défi",
+        "contexte": "Défier quelqu'un de faire quelque chose ou de prouver ses capacités.",
+        "index": 83,
+        "prompt": "A dramatic, cinematic wide shot of a high-stakes duel atmosphere in a modern urban rooftop setting at sunset. Two professional individuals face each other with intense gazes, one of them firmly placing a leather glove on the ground between them as a formal sign of challenge. The composition is sharp, focusing on the tension and the symbolic gesture. The lighting is golden hour, casting long shadows. The image features the verbatim Hebrew text: 'זרק כפפה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_83.png",
+        "imagename": "proverb_83.png"
+    },
+    {
+        "hebreu_sans_nikud": "חסר תקנה",
+        "translitteration": "Dépourvu de réparation",
+        "traduction": "Incorrigible / Irrécupérable",
+        "contexte": "Se dit d'une personne ou d'une situation qui ne peut plus être améliorée ou corrigée.",
+        "index": 84,
+        "prompt": "A surreal, cinematic scene depicting a person sitting calmly in an armchair in the middle of a room that is actively flooding and falling apart, with clocks melting on the walls and furniture floating away. The individual is indifferent, holding a broken cup, embodying the concept of being beyond repair or help. The lighting is moody with dramatic shadows, emphasizing a sense of permanent disarray. The image features the verbatim Hebrew text: 'חסר תקנה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_84.png",
+        "imagename": "proverb_84.png"
+    },
+    {
+        "hebreu_sans_nikud": "טלית שכולה תכלת",
+        "translitteration": "Un châle de prière entièrement bleu",
+        "traduction": "Blanc comme neige",
+        "contexte": "Souvent utilisé ironiquement pour désigner quelqu'un qui prétend être parfait ou innocent alors qu'il ne l'est pas.",
+        "index": 85,
+        "prompt": "A sophisticated, cinematic portrait of a charismatic politician or businessman in a luxurious office, wearing an impeccably clean, stark white suit that glows with an unnatural, artificial brightness. He has a sly, smug, and insincere smile, looking directly at the viewer with a fake expression of innocence. The room is dimly lit with deep shadows, contrasting with his blindingly bright clothes to suggest a facade of purity hiding a darker reality. The atmosphere is tense and satirical, high-contrast photography style. The image features the verbatim Hebrew text: 'טלית שכולה תכלת' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_85.png",
+        "imagename": "proverb_85.png"
+    },
+    {
+        "hebreu_sans_nikud": "ידו על העליונה",
+        "translitteration": "Sa main est sur la supérieure",
+        "traduction": "Avoir le dessus",
+        "contexte": "Être en position de force ou remporter la victoire dans un conflit.",
+        "index": 86,
+        "prompt": "A cinematic, low-angle shot of a determined chess player sitting at a grand marble table, having just made a winning move. Their opponent sits slumped back in defeat, looking at the board in disbelief. The lighting is dramatic, with a spotlight on the winning player, highlighting their confident posture and authoritative presence. The atmosphere is tense and professional. The image features the verbatim Hebrew text: 'ידו על העליונה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_86.png",
+        "imagename": "proverb_86.png"
+    },
+    {
+        "hebreu_sans_nikud": "כבשת הרש",
+        "translitteration": "La brebis du pauvre",
+        "traduction": "Le seul bien d'un pauvre",
+        "contexte": "Désigne la seule possession précieuse d'une personne vulnérable, souvent convoitée ou prise par quelqu'un de puissant.",
+        "index": 87,
+        "prompt": "A poignant, cinematic wide shot depicting a weathered, elderly person in rags sitting on a dusty street corner, protectively cradling a small, singular glowing locket that represents their only treasure. Looming in the background, a shadow of a wealthy, imposing figure in a sharp suit reaches out a hand toward the locket, symbolizing the greed of the powerful. The atmosphere is melancholic and dramatic with soft, directional lighting highlighting the contrast between the vulnerability of the poor and the arrogance of the rich. The image features the verbatim Hebrew text: 'כבשת הרש' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_87.png",
+        "imagename": "proverb_87.png"
+    },
+    {
+        "hebreu_sans_nikud": "לא לעולם חוסן",
+        "translitteration": "Pas pour toujours la force",
+        "traduction": "Rien ne dure éternellement",
+        "contexte": "Rappel que la richesse, le pouvoir ou la santé sont éphémères et peuvent disparaître.",
+        "index": 88,
+        "prompt": "A cinematic, dramatic composition showing a decaying, opulent golden throne sitting in the middle of a vast, desolate, shifting sand dune under a twilight sky. The throne is partially buried and crumbling, with ivy growing over the cold metal, symbolizing the inevitable erosion of power and wealth over time. The atmosphere is melancholic and philosophical, with soft, golden hour lighting highlighting the texture of the weathered stone and sand. The image features the verbatim Hebrew text: 'לא לעולם חוסן' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_88.png",
+        "imagename": "proverb_88.png"
+    },
+    {
+        "hebreu_sans_nikud": "מלח הארץ",
+        "translitteration": "Le sel de la terre",
+        "traduction": "Le sel de la terre",
+        "contexte": "Désigne les personnes les plus nobles, travailleuses et dévouées d'une société.",
+        "index": 89,
+        "prompt": "A cinematic, warm-toned portrait of an elderly, humble Israeli farmer standing in a sun-drenched, golden wheat field at dawn. He is wearing simple work clothes, his face etched with deep lines of hard work, wisdom, and kindness, holding a handful of rich, fertile soil that glows under the morning light. The atmosphere is serene, reverent, and heroic, emphasizing dedication and connection to the land. The image features the verbatim Hebrew text: 'מלח הארץ' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_89.png",
+        "imagename": "proverb_89.png"
+    },
+    {
+        "hebreu_sans_nikud": "נכנס לנעליים גדולות",
+        "translitteration": "Est entré dans de grandes chaussures",
+        "traduction": "Avoir de lourdes responsabilités à assumer",
+        "contexte": "Prendre la relève d'une personne très compétente ou respectée, ce qui rend la tâche difficile.",
+        "index": 90,
+        "prompt": "A cinematic wide shot of a young, determined professional standing in a grand, empty executive office, looking down at a pair of massive, oversized antique leather shoes placed on the floor in front of a heavy mahogany desk, symbolizing the daunting weight of a predecessor's legacy. The lighting is dramatic with rays of sunlight streaming through large windows, creating a sense of pressure and ambition. The image features the verbatim Hebrew text: 'נכנס לנעליים גדולות' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_90.png",
+        "imagename": "proverb_90.png"
+    },
+    {
+        "hebreu_sans_nikud": "סלע המחלוקת",
+        "translitteration": "Le rocher de la dispute",
+        "traduction": "La pomme de discorde",
+        "contexte": "Le sujet principal d'un désaccord ou d'un conflit entre plusieurs parties.",
+        "index": 91,
+        "prompt": "A dramatic, cinematic wide shot of a rugged, ancient rocky landscape under a stormy, moody sky. In the center, a massive, jagged boulder sits at a crossroads where two distinct, opposing paths diverge. Two groups of people are depicted from a distance on opposite sides of the boulder, gesturing intensely and pointing at the stone as if arguing over it, representing a deep conflict. The lighting is high-contrast, emphasizing the boulder as the central point of tension. The image features the verbatim Hebrew text: 'סלע המחלוקת' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_91.png",
+        "imagename": "proverb_91.png"
+    },
+    {
+        "hebreu_sans_nikud": "עקב אכילס",
+        "translitteration": "Le talon d'Achille",
+        "traduction": "Le talon d'Achille",
+        "contexte": "Le point faible ou la vulnérabilité d'une personne ou d'un système.",
+        "index": 92,
+        "prompt": "A cinematic, metaphorical close-up of a massive, intricate mechanical clockwork fortress that appears impenetrable. In the center, a single, glowing, fragile glass gear is exposed, acting as the critical point of failure that threatens to collapse the entire complex structure. The lighting is dramatic and moody, emphasizing the contrast between the cold, hard steel and the delicate, vulnerable glass piece. The image features the verbatim Hebrew text: 'עקב אכילס' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_92.png",
+        "imagename": "proverb_92.png"
+    },
+    {
+        "hebreu_sans_nikud": "פה אחד",
+        "translitteration": "Une seule bouche",
+        "traduction": "À l'unanimité",
+        "contexte": "Quand une décision est prise avec l'accord de toutes les personnes présentes.",
+        "index": 93,
+        "prompt": "A cinematic wide shot of a diverse group of professionals sitting around a large, polished wooden boardroom table, all nodding in unison with expressions of complete agreement and satisfaction. Sunlight streams through large windows, illuminating the room. The atmosphere is professional, harmonious, and collaborative. In the foreground, there is a subtle, elegant architectural detail where the Hebrew text is engraved into the wood. The image features the verbatim Hebrew text: 'פה אחד' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_93.png",
+        "imagename": "proverb_93.png"
+    },
+    {
+        "hebreu_sans_nikud": "צרת רבים חצי נחמה",
+        "translitteration": "Le malheur de beaucoup est une demi-consolation",
+        "traduction": "Un malheur partagé en est diminué de moitié",
+        "contexte": "Savoir que d'autres souffrent du même problème aide à le supporter.",
+        "index": 94,
+        "prompt": "A cinematic, emotional scene depicting a rainy, gray day in a city park where three strangers sit together on a wooden bench under a large, shared umbrella. Each person looks slightly downcast but finds comfort in the silent, empathetic presence of the others, creating a sense of solidarity and shared burden. The lighting is soft and melancholic with a warm glow emanating from the shared space under the umbrella. The atmosphere is quiet and contemplative. The image features the verbatim Hebrew text: 'צרת רבים חצי נחמה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_94.png",
+        "imagename": "proverb_94.png"
+    },
+    {
+        "hebreu_sans_nikud": "קול קורא במדבר",
+        "translitteration": "Une voix appelant dans le désert",
+        "traduction": "Prêcher dans le désert",
+        "contexte": "Donner des avertissements ou des conseils que personne n'écoute.",
+        "index": 95,
+        "prompt": "A cinematic, wide-angle shot of a lone, weary prophet-like figure standing on a desolate, rocky cliff overlooking an endless, empty desert at dusk. The figure is gesturing passionately toward the vast, silent horizon, but there is no one there to listen; only swirling dust and harsh shadows. The lighting is dramatic, with a fading orange sunset highlighting the isolation of the scene. The atmosphere is solemn and melancholic. The image features the verbatim Hebrew text: 'קול קורא במדבר' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_95.png",
+        "imagename": "proverb_95.png"
+    },
+    {
+        "hebreu_sans_nikud": "רחוק מהעין רחוק מהלב",
+        "translitteration": "Loin de l'œil loin du cœur",
+        "traduction": "Loin des yeux, loin du cœur",
+        "contexte": "L'absence prolongée affaiblit les sentiments affectifs.",
+        "index": 96,
+        "prompt": "A cinematic, melancholic wide shot of a dusty, abandoned old attic filled with soft, golden light filtering through a single window. In the center, a solitary, slightly faded photograph of a smiling couple rests on an old wooden table, partially covered by a thin layer of dust and a fallen dried autumn leaf. The background shows blurred, out-of-focus silhouettes of old furniture, symbolizing the erosion of memory and emotional distance. The atmosphere is nostalgic, quiet, and poignant. The image features the verbatim Hebrew text: 'רחוק מהעין רחוק מהלב' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_96.png",
+        "imagename": "proverb_96.png"
+    },
+    {
+        "hebreu_sans_nikud": "שתיקה כהודאה",
+        "translitteration": "Le silence comme aveu",
+        "traduction": "Qui ne dit mot consent",
+        "contexte": "Le fait de ne pas protester ou de se taire est interprété comme un accord ou un aveu de culpabilité.",
+        "index": 97,
+        "prompt": "A cinematic, high-contrast interior scene of a formal boardroom with dark wood paneling. A group of stern, shadowy figures are seated around a long table, all staring intensely at a single individual who sits with their head bowed, hands folded in complete silence. The atmosphere is heavy with tension, implying an accusation. The lighting focuses on the silent person, casting long, dramatic shadows. The image features the verbatim Hebrew text: 'שתיקה כהודאה' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_97.png",
+        "imagename": "proverb_97.png"
+    },
+    {
+        "hebreu_sans_nikud": "יצא המרצע מן השק",
+        "translitteration": "Le poinçon est sorti du sac",
+        "traduction": "Le pot aux roses est découvert",
+        "contexte": "La vérité, souvent désagréable ou cachée, a fini par éclater au grand jour.",
+        "index": 98,
+        "prompt": "A dramatic, high-contrast cinematic scene in a dimly lit, opulent study. A mahogany desk is covered in scattered, incriminating documents and golden coins. In the center, a luxurious silk velvet bag lies torn open, revealing a sharp, cold metal awl piercing through the fabric, symbolizing a hidden truth forcefully revealed. The atmosphere is tense, with a single beam of light illuminating the exposed secret. The image features the verbatim Hebrew text: 'יצא המרצע מן השק' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_98.png",
+        "imagename": "proverb_98.png"
+    },
+    {
+        "hebreu_sans_nikud": "טבע בכוס מים",
+        "translitteration": "S'est noyé dans un verre d'eau",
+        "traduction": "Se noyer dans un verre d'eau",
+        "contexte": "Être incapable de faire face à la moindre difficulté ou paniquer pour un rien.",
+        "index": 99,
+        "prompt": "A hyper-realistic close-up shot of a stressed office worker in a suit, sitting at a desk overflowing with a tiny, manageable stack of papers. The person is clutching their head in absolute panic and despair, looking as if they are facing a catastrophic disaster, while the environment remains calm and mundane. The lighting highlights the contrast between the person's extreme anxiety and the triviality of the situation. The image features the verbatim Hebrew text: 'טובע בכוס מים' displayed clearly as a caption or integrated typography in a bold, legible font. Strictly NO speech bubbles and NO other extraneous text anywhere in the image.",
+        "imagepath": "results/images/expressions/proverb_99.png",
+        "imagename": "proverb_99.png"
+    }
+]

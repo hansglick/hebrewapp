@@ -1,0 +1,44 @@
+{
+    "פעל": {
+        "text": "פעל",
+        "phonetique": "pa'al",
+        "sens": "Le binyan Paal, aussi appelé Qal (qui signifie léger), est la forme verbale la plus simple et la plus courante en hébreu. Il exprime généralement une action active de base, sans nuance particulière d'intensité ou de causalité. C'est le modèle fondamental à partir duquel de nombreux autres verbes sont construits. Par exemple, des actions quotidiennes comme manger, écrire, lire, dormir ou marcher utilisent cette forme. Il n'implique pas que l'action soit subie, causée par un tiers ou réfléchie. C'est tout simplement le degré zéro de l'action verbale, représentant l'état naturel, direct et fondamental du verbe dans la langue hébraïque moderne et biblique.",
+        "color": "purple"
+    },
+    "נפעל": {
+        "text": "נפעל",
+        "phonetique": "nif'al",
+        "sens": "Le binyan Nifal sert principalement de voix passive au binyan Paal. Lorsqu'une action est accomplie dans le Paal, le Nifal décrit cette même action mais du point de vue de celui qui la subit. Par exemple, si le Paal signifie écrire, le Nifal signifiera être écrit. Cependant, son rôle ne s'arrête pas là. Il peut aussi exprimer une action réfléchie (se faire quelque chose à soi-même) ou une action réciproque (faire quelque chose l'un à l'autre, comme se rencontrer ou se battre). Parfois, il décrit un changement d'état ou une action qui se produit d'elle-même, sans agent extérieur clairement défini.",
+        "color": "cyan"
+    },
+    "פיעל": {
+        "text": "פיעל",
+        "phonetique": "pi'el",
+        "sens": "Le binyan Piel est une forme active qui exprime souvent une action intensive, répétitive ou délibérée. Si le Paal décrit une action simple, le Piel vient renforcer cette action de manière significative. Par exemple, casser au Paal peut devenir briser en mille morceaux au Piel. Il est également très utilisé pour créer de nouveaux verbes à partir de noms ou d'adjectifs (verbes dénominatifs), permettant d'exprimer l'action de mettre en pratique ce nom. De plus, il peut avoir un sens causatif, indiquant qu'on amène quelqu'un ou quelque chose à un certain état, souvent lié à une action prolongée ou particulièrement soignée.",
+        "color": "orange"
+    },
+    "פועל": {
+        "text": "פועל",
+        "phonetique": "pu'al",
+        "sens": "Le binyan Pual est l'exact pendant passif du binyan Piel. Il n'a pas de signification indépendante propre, mais sert uniquement à exprimer qu'une action intensive, répétitive ou délibérée a été subie par le sujet. Si le Piel signifie raconter ou organiser, le Pual signifiera être raconté ou être organisé. Tout comme le Piel, il conserve cette notion d'intensité ou d'action prolongée, mais du point de vue du patient de l'action. Il est moins fréquent à l'oral dans la langue de tous les jours, mais reste absolument essentiel pour la littérature, le journalisme et pour exprimer des états résultants complexes.",
+        "color": "brown"
+    },
+    "הפעיל": {
+        "text": "הפעיל",
+        "phonetique": "hif'il",
+        "sens": "Le binyan Hifil est la forme causative par excellence en hébreu. Il exprime le fait de faire faire une action à quelqu'un d'autre ou de causer un état spécifique. Si un verbe au Paal signifie manger, au Hifil il signifiera faire manger, c'est-à-dire nourrir. S'il signifie descendre, le Hifil sera faire descendre. Il transforme très souvent un verbe intransitif (sans complément d'objet) en un verbe transitif. Le Hifil est également utilisé pour exprimer un changement d'état soudain ou l'acquisition d'une nouvelle caractéristique, comme rougir ou blanchir, montrant ainsi l'induction d'une action ou d'une transformation physique ou psychologique.",
+        "color": "red"
+    },
+    "הופעל": {
+        "text": "הופעל",
+        "phonetique": "huf'al",
+        "sens": "Le binyan Hufal est la forme passive correspondante au binyan Hifil. Il décrit une situation où le sujet subit l'action d'être amené à faire quelque chose ou d'être placé dans un certain état par un agent extérieur. Si le Hifil signifie dicter (faire écrire), le Hufal signifiera être dicté. S'il signifie jeter (faire tomber), le Hufal sera être jeté. C'est le binyan le moins utilisé en hébreu moderne parlé, souvent remplacé par d'autres tournures syntaxiques, mais il reste indispensable pour la compréhension écrite, les textes formels, la littérature et pour exprimer la passivité d'une action causative de manière précise.",
+        "color": "pink"
+    },
+    "התפעל": {
+        "text": "התפעל",
+        "phonetique": "hitpa'el",
+        "sens": "Le binyan Hitpael est principalement utilisé pour exprimer des actions réfléchies, c'est-à-dire des actions que le sujet accomplit sur lui-même, comme s'habiller, se laver ou se coiffer. Il sert aussi très souvent à exprimer la réciprocité, quand deux personnes ou plus agissent l'une sur l'autre, comme s'embrasser ou correspondre. De plus, le Hitpael peut décrire un processus de transformation personnelle, un changement d'état psychologique ou physique, ou encore le fait de feindre un état (faire semblant d'être malade). C'est un binyan très riche et dynamique, central pour exprimer l'interaction humaine et l'évolution interne du sujet dans la langue.",
+        "color": "green"
+    }
+}
