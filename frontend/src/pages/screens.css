@@ -111,6 +111,51 @@
   gap: 4px;
 }
 
+.toggle-group {
+  display: flex;
+  gap: 8px;
+}
+
+.toggle-group button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--textMuted);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.toggle-group button.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.eval-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 280px;
+}
+
+.eval-btn {
+  font-size: 1.6em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.eval-btn.success {
+  color: var(--success);
+}
+
+.eval-btn.danger {
+  color: var(--danger);
+}
+
 .words-list {
   list-style: none;
   padding: 0;

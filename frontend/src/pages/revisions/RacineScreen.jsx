@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getRandomRacine } from "../../api/content";
+import { useNavigate, useParams } from "react-router-dom";
+import { getRacine, getRandomRacine } from "../../api/content";
 import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import "../screens.css";
 
 export default function RacineScreen() {
   const navigate = useNavigate();
+  const { shoresh } = useParams(); // présent si on arrive sur une racine précise (ex: depuis un mot)
   const [racine, setRacine] = useState(null);
   const [view, setView] = useState("main"); // main | detail
 
   function loadRandom() {
     getRandomRacine().then(setRacine);
+    setView("main");
   }
 
   useEffect(() => {
-    loadRandom();
-  }, []);
+    if (shoresh) {
+      getRacine(shoresh).then(setRacine);
+      setView("main");
+    } else {
+      loadRandom();
+    }
+  }, [shoresh]);
 
   const swipeHandlers = useSwipe({
     onSwipeLeft: () => {
       if (view === "main") loadRandom();
     },
     onSwipeRight: () => {
-      if (view === "main") navigate("/revisions");
+      if (view === "main") navigate(-1);
     },
   });
 

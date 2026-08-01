@@ -26,15 +26,33 @@ export default function LeconDetailScreen() {
             Texte (absent de cette leçon)
           </div>
         )}
-        <div className="card" style={{ opacity: 0.5 }}>
-          Verbes (à venir — Phase 4)
-        </div>
-        <div className="card" style={{ opacity: 0.5 }}>
-          Mots (à venir — Phase 4)
-        </div>
-        <div className="card" style={{ opacity: 0.5 }}>
-          Évaluation (à venir — Phases 4/7)
-        </div>
+        {lecon.verbs.length > 0 ? (
+          <Link to={`/apprentissage/${chapId}/${code}/verbes`} className="card-link">
+            <div className="card">Verbes</div>
+          </Link>
+        ) : (
+          <div className="card" style={{ opacity: 0.5 }}>
+            Verbes (absents de cette leçon)
+          </div>
+        )}
+        {lecon.words.length > 0 ? (
+          <Link to={`/apprentissage/${chapId}/${code}/mots`} className="card-link">
+            <div className="card">Mots</div>
+          </Link>
+        ) : (
+          <div className="card" style={{ opacity: 0.5 }}>
+            Mots (absents de cette leçon)
+          </div>
+        )}
+        {lecon.phrases ? (
+          <Link to={`/apprentissage/${chapId}/${code}/evaluation`} className="card-link">
+            <div className="card">Évaluation</div>
+          </Link>
+        ) : (
+          <div className="card" style={{ opacity: 0.5 }}>
+            Évaluation (aucune phrase pour cette leçon)
+          </div>
+        )}
       </div>
     </section>
   );

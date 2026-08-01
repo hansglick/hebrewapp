@@ -27,3 +27,12 @@ export const getPresse = (index) => fetchJson(`/api/presse/${index}`);
 export const getChansons = () => fetchJson("/api/chansons");
 export const getRandomChanson = () => fetchJson("/api/chansons/random");
 export const getChanson = (position) => fetchJson(`/api/chansons/${position}`);
+
+export const getRandomMot = (lessonCode, mode = "exploration") =>
+  fetchJson(`/api/mots/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`);
+
+export const getRandomVerbe = (lessonCode, mode = "exploration") =>
+  fetchJson(`/api/verbes/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`);
+
+export const getRandomPhrase = (lessonCode) =>
+  fetchJson(`/api/phrases/random?lesson_code=${encodeURIComponent(lessonCode)}`);
