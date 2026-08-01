@@ -4,8 +4,11 @@ from fastapi.staticfiles import StaticFiles
 
 from app.config import FRONTEND_DEV_ORIGIN, RESULTS_DIR
 from app.data_loader import DATA_FILES, get_dataset
+from app.routers import chapters, content
 
 app = FastAPI(title="Hebrew App API")
+app.include_router(content.router)
+app.include_router(chapters.router)
 
 app.add_middleware(
     CORSMiddleware,
