@@ -8,24 +8,35 @@ import "../screens.css";
 export default function ExpressionScreen() {
   const navigate = useNavigate();
   const [expression, setExpression] = useState(null);
+  const [history, setHistory] = useState([]); // pile des expressions précédemment vues
   const [view, setView] = useState("image"); // image | detail
 
-  function loadRandom() {
+  useEffect(() => {
+    getRandomExpression().then(setExpression);
+  }, []);
+
+  function loadNext() {
+    setHistory((h) => (expression ? [...h, expression] : h));
     getRandomExpression().then(setExpression);
     setView("image");
   }
 
-  useEffect(() => {
-    loadRandom();
-  }, []);
+  function goBack() {
+    if (history.length === 0) {
+      navigate(-1);
+      return;
+    }
+    setExpression(history[history.length - 1]);
+    setHistory((h) => h.slice(0, -1));
+  }
 
   const swipeHandlers = useSwipe({
     onSwipeLeft: () => {
-      if (view === "image") loadRandom();
+      if (view === "detail") setView("image");
+      else goBack();
     },
     onSwipeRight: () => {
-      if (view === "detail") setView("image");
-      else navigate("/fun");
+      if (view === "image") loadNext();
     },
   });
 
