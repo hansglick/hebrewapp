@@ -1,12 +1,16 @@
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useConfig } from "../config/ConfigContext";
+import { getNiveau } from "../api/user";
 import "./Layout.css";
-
-// Niveau utilisateur : donnée statique en attendant la Phase 3 (persistance backend)
-const MOCK_NIVEAU = "0.01";
 
 export default function Layout() {
   const { themeMode, setThemeMode } = useConfig();
+  const [niveau, setNiveau] = useState(null);
+
+  useEffect(() => {
+    getNiveau().then(setNiveau);
+  }, []);
 
   return (
     <div className="app-shell">
@@ -15,7 +19,7 @@ export default function Layout() {
           Accueil
         </Link>
         <Link to="/niveau" className="header-niveau">
-          Niveau {MOCK_NIVEAU}
+          Niveau {niveau?.level ?? "…"}
         </Link>
         <button
           type="button"

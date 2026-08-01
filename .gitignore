@@ -1,6 +1,9 @@
 # Media (images/voice) - too heavy for git history, handled separately
 backend/results/
 
+# Runtime user data (SQLite DB) - local state, not source
+backend/*.sqlite3
+
 # Python
 __pycache__/
 *.pyc

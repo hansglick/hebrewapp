@@ -13,6 +13,7 @@ import FunChoiceScreen from "./pages/fun/FunChoiceScreen";
 import ExpressionScreen from "./pages/fun/ExpressionScreen";
 import PresseScreen from "./pages/fun/PresseScreen";
 import ChansonScreen from "./pages/fun/ChansonScreen";
+import NiveauScreen from "./pages/NiveauScreen";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path="fun/expressions" element={<ExpressionScreen />} />
         <Route path="fun/presse" element={<PresseScreen />} />
         <Route path="fun/chansons" element={<ChansonScreen />} />
-        <Route path="niveau" element={<Placeholder title="Fiche niveau" />} />
+        <Route path="niveau" element={<NiveauScreen />} />
         <Route path="binyans" element={<BinyanScreen />} />
       </Route>
     </Routes>
