@@ -47,6 +47,10 @@ function App() {
         <Route path="revisions" element={<RevisionsChoiceScreen />} />
         <Route path="revisions/mot" element={<MotScreen defaultMode="revision" />} />
         <Route path="revisions/verbe" element={<VerbeScreen defaultMode="revision" />} />
+        <Route
+          path="revisions/question-ecrite"
+          element={<QuestionEcriteScreen defaultMode="revision" />}
+        />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
         <Route path="examen" element={<Placeholder title="Examen" />} />
         <Route path="fun" element={<FunChoiceScreen />} />

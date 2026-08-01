@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRandomPhrase } from "../api/content";
-import { createEvaluation } from "../api/user";
+import { getNiveau, createEvaluation } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import "./screens.css";
 
-export default function QuestionEcriteScreen() {
-  const { code } = useParams();
+export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
+  const { code } = useParams(); // présent seulement si venu par une leçon précise
   const navigate = useNavigate();
+  const [niveau, setNiveau] = useState(null);
+  const [mode, setMode] = useState(defaultMode);
   const [evalMode, setEvalMode] = useState("auto"); // auto | prof (Phase 7)
   const [direction, setDirection] = useState("hebreu"); // hebreu = ->Hébreu (source français), francais = ->Français (source hébreu)
   const [revealed, setRevealed] = useState(false);
 
+  useEffect(() => {
+    getNiveau().then(setNiveau);
+  }, []);
+
+  const lessonCode = mode === "exploration" ? code ?? niveau?.level : niveau?.level;
+
   const { current: phrase, next, back } = useRandomBrowser(
-    () => getRandomPhrase(code),
-    [code]
+    () => (lessonCode ? getRandomPhrase(lessonCode, mode) : Promise.resolve(null)),
+    [lessonCode, mode]
   );
 
   useEffect(() => {
@@ -46,6 +54,22 @@ export default function QuestionEcriteScreen() {
 
   return (
     <section className="screen" {...swipeHandlers}>
+      <div className="toggle-group">
+        <button
+          type="button"
+          className={mode === "exploration" ? "active" : ""}
+          onClick={() => setMode("exploration")}
+        >
+          Exploration
+        </button>
+        <button
+          type="button"
+          className={mode === "revision" ? "active" : ""}
+          onClick={() => setMode("revision")}
+        >
+          Révision
+        </button>
+      </div>
       <div className="toggle-group">
         <button
           type="button"

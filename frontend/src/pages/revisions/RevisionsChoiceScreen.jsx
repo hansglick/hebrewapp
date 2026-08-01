@@ -12,9 +12,9 @@ export default function RevisionsChoiceScreen() {
         <Link to="/revisions/verbe" className="card-link">
           <div className="card">Verbe</div>
         </Link>
-        <div className="card" style={{ opacity: 0.5 }}>
-          Compréhension écrite (stratégie de tirage à définir)
-        </div>
+        <Link to="/revisions/question-ecrite" className="card-link">
+          <div className="card">Compréhension écrite</div>
+        </Link>
         <div className="card" style={{ opacity: 0.5 }}>
           Compréhension orale (stratégie de tirage à définir — Phase 7)
         </div>

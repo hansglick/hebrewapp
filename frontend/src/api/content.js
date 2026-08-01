@@ -34,5 +34,5 @@ export const getRandomMot = (lessonCode, mode = "exploration") =>
 export const getRandomVerbe = (lessonCode, mode = "exploration") =>
   fetchJson(`/api/verbes/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`);
 
-export const getRandomPhrase = (lessonCode) =>
-  fetchJson(`/api/phrases/random?lesson_code=${encodeURIComponent(lessonCode)}`);
+export const getRandomPhrase = (lessonCode, mode = "exploration") =>
+  fetchJson(`/api/phrases/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`);
