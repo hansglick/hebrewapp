@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRandomVerbe } from "../api/content";
 import { getNiveau, createEvaluation } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
+import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import "./screens.css";
 
@@ -17,7 +18,6 @@ export default function VerbeScreen({ defaultMode = "exploration" }) {
   const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [mode, setMode] = useState(defaultMode);
-  const [verbe, setVerbe] = useState(null);
   const [view, setView] = useState("main"); // main | temps
   const [temps, setTemps] = useState(null);
   const [personneKey, setPersonneKey] = useState(null);
@@ -27,23 +27,17 @@ export default function VerbeScreen({ defaultMode = "exploration" }) {
     getNiveau().then(setNiveau);
   }, []);
 
-  function loadRandomVerbe(nextMode = mode) {
-    const lessonCode = nextMode === "exploration" ? code ?? niveau?.level : niveau?.level;
-    if (!lessonCode) return;
-    getRandomVerbe(lessonCode, nextMode).then(setVerbe);
-    setView("main");
-    setRevealed(false);
-  }
+  const lessonCode = mode === "exploration" ? code ?? niveau?.level : niveau?.level;
+
+  const { current: verbe, next, back } = useRandomBrowser(
+    () => (lessonCode ? getRandomVerbe(lessonCode, mode) : Promise.resolve(null)),
+    [lessonCode, mode]
+  );
 
   useEffect(() => {
-    if (niveau) loadRandomVerbe(mode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [niveau]);
-
-  function handleModeChange(nextMode) {
-    setMode(nextMode);
-    loadRandomVerbe(nextMode);
-  }
+    setView("main");
+    setRevealed(false);
+  }, [verbe]);
 
   function pickRandomPersonne(t) {
     const keys = Object.keys(verbe.conjugaisons[t]);
@@ -70,16 +64,21 @@ export default function VerbeScreen({ defaultMode = "exploration" }) {
     }).then(nextPersonne);
   }
 
-  const mainSwipe = useSwipe({
-    onSwipeLeft: () => loadRandomVerbe(),
-    onSwipeRight: () => navigate(-1),
-  });
-
-  const tempsSwipe = useSwipe({
+  // Un seul useSwipe pour tout l'écran : deux instances actives simultanément
+  // attacheraient deux écouteurs clavier en parallèle sur window, chacun
+  // réagissant à la même touche indépendamment de la vue affichée.
+  const swipeHandlers = useSwipe({
     onSwipeLeft: () => {
-      if (mode === "revision") nextPersonne();
+      if (view === "temps") setView("main");
+      else if (!back()) navigate(-1);
     },
-    onSwipeRight: () => setView("main"),
+    onSwipeRight: () => {
+      if (view === "temps") {
+        if (mode === "revision") nextPersonne();
+      } else {
+        next();
+      }
+    },
   });
 
   if (!verbe) return null;
@@ -87,7 +86,7 @@ export default function VerbeScreen({ defaultMode = "exploration" }) {
   if (view === "temps") {
     const conjugaisonsTemps = verbe.conjugaisons[temps];
     return (
-      <section className="screen" {...tempsSwipe}>
+      <section className="screen" {...swipeHandlers}>
         <h1 className="hebrew">{verbe.pure}</h1>
         <p className="muted">{TEMPS_LABELS.find((t) => t.key === temps)?.label}</p>
 
@@ -134,19 +133,19 @@ export default function VerbeScreen({ defaultMode = "exploration" }) {
   }
 
   return (
-    <section className="screen" {...mainSwipe}>
+    <section className="screen" {...swipeHandlers}>
       <div className="toggle-group">
         <button
           type="button"
           className={mode === "exploration" ? "active" : ""}
-          onClick={() => handleModeChange("exploration")}
+          onClick={() => setMode("exploration")}
         >
           Exploration
         </button>
         <button
           type="button"
           className={mode === "revision" ? "active" : ""}
-          onClick={() => handleModeChange("revision")}
+          onClick={() => setMode("revision")}
         >
           Révision
         </button>

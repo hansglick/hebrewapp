@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRandomChanson } from "../../api/content";
 import { youtubeEmbedUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
+import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import "../screens.css";
 
 export default function ChansonScreen() {
   const navigate = useNavigate();
-  const [chanson, setChanson] = useState(null);
-
-  function loadRandom() {
-    getRandomChanson().then(setChanson);
-  }
-
-  useEffect(() => {
-    loadRandom();
-  }, []);
+  const { current: chanson, next, back } = useRandomBrowser(getRandomChanson);
 
   const swipeHandlers = useSwipe({
-    onSwipeLeft: loadRandom,
-    onSwipeRight: () => navigate("/fun"),
+    onSwipeLeft: () => {
+      if (!back()) navigate(-1);
+    },
+    onSwipeRight: () => next(),
   });
 
   if (!chanson) return null;

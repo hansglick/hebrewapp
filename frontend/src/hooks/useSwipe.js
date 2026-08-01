@@ -10,8 +10,9 @@ import { useEffect, useRef } from "react";
 // posé uniquement sur l'élément.
 //
 // Les flèches gauche/droite du clavier miment le même geste, pour tester
-// facilement sans souris/doigt (ex: navigateur desktop).
-export function useSwipe({ onSwipeLeft, onSwipeRight, threshold = 60 } = {}) {
+// facilement sans souris/doigt (ex: navigateur desktop). La touche espace
+// mime un clic sur l'image (onSpace), quand l'écran en a une.
+export function useSwipe({ onSwipeLeft, onSwipeRight, onSpace, threshold = 60 } = {}) {
   const startRef = useRef(null);
 
   function handleWindowPointerUp(e) {
@@ -40,11 +41,15 @@ export function useSwipe({ onSwipeLeft, onSwipeRight, threshold = 60 } = {}) {
 
       if (e.key === "ArrowLeft") onSwipeLeft?.();
       else if (e.key === "ArrowRight") onSwipeRight?.();
+      else if (e.key === " " && onSpace) {
+        e.preventDefault(); // évite le scroll de page déclenché par défaut
+        onSpace();
+      }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onSwipeLeft, onSwipeRight]);
+  }, [onSwipeLeft, onSwipeRight, onSpace]);
 
   return { onPointerDown };
 }

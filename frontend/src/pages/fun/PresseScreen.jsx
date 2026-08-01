@@ -1,31 +1,26 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { getRandomPresse } from "../../api/content";
 import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
+import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import "../screens.css";
 
 export default function PresseScreen() {
   const navigate = useNavigate();
-  const [presse, setPresse] = useState(null);
   const [view, setView] = useState("image"); // image | detail
-
-  function loadRandom() {
-    getRandomPresse().then(setPresse);
-    setView("image");
-  }
-
-  useEffect(() => {
-    loadRandom();
-  }, []);
+  const { current: presse, next, back } = useRandomBrowser(getRandomPresse);
 
   const swipeHandlers = useSwipe({
     onSwipeLeft: () => {
-      if (view === "image") loadRandom();
+      if (view === "detail") setView("image");
+      else if (!back()) navigate(-1);
     },
     onSwipeRight: () => {
-      if (view === "detail") setView("image");
-      else navigate("/fun");
+      if (view === "image") next();
+    },
+    onSpace: () => {
+      if (view === "image") setView("detail");
     },
   });
 

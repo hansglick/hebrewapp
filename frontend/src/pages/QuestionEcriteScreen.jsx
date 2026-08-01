@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRandomPhrase } from "../api/content";
 import { createEvaluation } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
+import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import "./screens.css";
 
@@ -11,30 +12,30 @@ export default function QuestionEcriteScreen() {
   const navigate = useNavigate();
   const [evalMode, setEvalMode] = useState("auto"); // auto | prof (Phase 7)
   const [direction, setDirection] = useState("hebreu"); // hebreu = ->Hébreu (source français), francais = ->Français (source hébreu)
-  const [phrase, setPhrase] = useState(null);
   const [revealed, setRevealed] = useState(false);
 
-  function loadRandom() {
-    getRandomPhrase(code).then(setPhrase);
-    setRevealed(false);
-  }
+  const { current: phrase, next, back } = useRandomBrowser(
+    () => getRandomPhrase(code),
+    [code]
+  );
 
   useEffect(() => {
-    loadRandom();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code]);
+    setRevealed(false);
+  }, [phrase]);
 
   function handleEvaluate(success) {
     createEvaluation({
       objectType: "phrase_auto",
       objectKey: `${phrase.lesson_code}|${phrase.position}|${direction}`,
       success,
-    }).then(loadRandom);
+    }).then(next);
   }
 
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => loadRandom(),
-    onSwipeRight: () => navigate(-1),
+    onSwipeLeft: () => {
+      if (!back()) navigate(-1);
+    },
+    onSwipeRight: () => next(),
   });
 
   if (!phrase) return null;

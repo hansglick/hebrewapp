@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRandomMot } from "../api/content";
 import { getNiveau, createEvaluation } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
+import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import "./screens.css";
 
@@ -12,39 +13,32 @@ export default function MotScreen({ defaultMode = "exploration" }) {
   const [niveau, setNiveau] = useState(null);
   const [langue, setLangue] = useState("hebreu");
   const [mode, setMode] = useState(defaultMode);
-  const [mot, setMot] = useState(null);
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
   }, []);
 
-  function loadRandom(nextMode = mode) {
-    const lessonCode = nextMode === "exploration" ? code ?? niveau?.level : niveau?.level;
-    if (!lessonCode) return;
-    getRandomMot(lessonCode, nextMode).then(setMot);
-    setRevealed(false);
-  }
+  const lessonCode = mode === "exploration" ? code ?? niveau?.level : niveau?.level;
+
+  const { current: mot, next, back } = useRandomBrowser(
+    () => (lessonCode ? getRandomMot(lessonCode, mode) : Promise.resolve(null)),
+    [lessonCode, mode]
+  );
 
   useEffect(() => {
-    if (niveau) loadRandom(mode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [niveau]);
-
-  function handleModeChange(nextMode) {
-    setMode(nextMode);
-    loadRandom(nextMode);
-  }
+    setRevealed(false);
+  }, [mot]);
 
   function handleEvaluate(success) {
-    createEvaluation({ objectType: "mot", objectKey: `${mot.key}|${langue}`, success }).then(
-      () => loadRandom()
-    );
+    createEvaluation({ objectType: "mot", objectKey: `${mot.key}|${langue}`, success }).then(next);
   }
 
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => loadRandom(),
-    onSwipeRight: () => navigate(-1),
+    onSwipeLeft: () => {
+      if (!back()) navigate(-1);
+    },
+    onSwipeRight: () => next(),
   });
 
   if (!mot) return null;
@@ -75,14 +69,14 @@ export default function MotScreen({ defaultMode = "exploration" }) {
         <button
           type="button"
           className={mode === "exploration" ? "active" : ""}
-          onClick={() => handleModeChange("exploration")}
+          onClick={() => setMode("exploration")}
         >
           Exploration
         </button>
         <button
           type="button"
           className={mode === "revision" ? "active" : ""}
-          onClick={() => handleModeChange("revision")}
+          onClick={() => setMode("revision")}
         >
           Révision
         </button>
