@@ -9,14 +9,14 @@ export default function RevisionsChoiceScreen() {
         <Link to="/revisions/mot" className="card-link">
           <div className="card">Mot</div>
         </Link>
-        <Link to="/revisions/racine" className="card-link">
-          <div className="card">Racine</div>
-        </Link>
         <Link to="/revisions/verbe" className="card-link">
           <div className="card">Verbe</div>
         </Link>
         <div className="card" style={{ opacity: 0.5 }}>
-          Vocabulaire (à venir — Phase 4)
+          Compréhension écrite (stratégie de tirage à définir)
+        </div>
+        <div className="card" style={{ opacity: 0.5 }}>
+          Compréhension orale (stratégie de tirage à définir — Phase 7)
         </div>
       </div>
     </section>

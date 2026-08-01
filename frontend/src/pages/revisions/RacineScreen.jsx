@@ -5,29 +5,22 @@ import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import "../screens.css";
 
+// Accessible uniquement depuis le lien "en savoir plus" d'un mot (racine précise).
+// Le swipe gauche permet ensuite de continuer à parcourir aléatoirement.
 export default function RacineScreen() {
   const navigate = useNavigate();
-  const { shoresh } = useParams(); // présent si on arrive sur une racine précise (ex: depuis un mot)
+  const { shoresh } = useParams();
   const [racine, setRacine] = useState(null);
   const [view, setView] = useState("main"); // main | detail
 
-  function loadRandom() {
-    getRandomRacine().then(setRacine);
-    setView("main");
-  }
-
   useEffect(() => {
-    if (shoresh) {
-      getRacine(shoresh).then(setRacine);
-      setView("main");
-    } else {
-      loadRandom();
-    }
+    getRacine(shoresh).then(setRacine);
+    setView("main");
   }, [shoresh]);
 
   const swipeHandlers = useSwipe({
     onSwipeLeft: () => {
-      if (view === "main") loadRandom();
+      if (view === "main") getRandomRacine().then(setRacine);
     },
     onSwipeRight: () => {
       if (view === "main") navigate(-1);

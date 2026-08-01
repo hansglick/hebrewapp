@@ -45,7 +45,6 @@ function App() {
           element={<QuestionEcriteScreen />}
         />
         <Route path="revisions" element={<RevisionsChoiceScreen />} />
-        <Route path="revisions/racine" element={<RacineScreen />} />
         <Route path="revisions/mot" element={<MotScreen defaultMode="revision" />} />
         <Route path="revisions/verbe" element={<VerbeScreen defaultMode="revision" />} />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
