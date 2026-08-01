@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 // Geste swipe gauche/droite via pointer events (fonctionne au doigt sur mobile
 // et à la souris en dev). onSwipeLeft/onSwipeRight sont appelés au relâchement
@@ -8,6 +8,9 @@ import { useRef } from "react";
 // conteneur du swipe épouse la taille de son contenu (image/texte), donc un
 // relâchement en dehors de cette zone ne remonterait pas jusqu'à un handler
 // posé uniquement sur l'élément.
+//
+// Les flèches gauche/droite du clavier miment le même geste, pour tester
+// facilement sans souris/doigt (ex: navigateur desktop).
 export function useSwipe({ onSwipeLeft, onSwipeRight, threshold = 60 } = {}) {
   const startRef = useRef(null);
 
@@ -29,6 +32,19 @@ export function useSwipe({ onSwipeLeft, onSwipeRight, threshold = 60 } = {}) {
     startRef.current = { x: e.clientX, y: e.clientY };
     window.addEventListener("pointerup", handleWindowPointerUp);
   }
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      const tag = e.target.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft") onSwipeLeft?.();
+      else if (e.key === "ArrowRight") onSwipeRight?.();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onSwipeLeft, onSwipeRight]);
 
   return { onPointerDown };
 }
