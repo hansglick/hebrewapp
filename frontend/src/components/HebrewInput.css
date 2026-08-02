@@ -1,0 +1,44 @@
+.hebrew-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.hebrew-input-textarea {
+  width: 100%;
+  font-family: var(--font-hebrew);
+  font-size: 1.1em;
+}
+
+.hebrew-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.hebrew-keyboard-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hebrew-key {
+  font-family: var(--font-hebrew);
+  min-width: 32px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.hebrew-key-space {
+  min-width: 100px;
+  font-family: var(--font-latin);
+}

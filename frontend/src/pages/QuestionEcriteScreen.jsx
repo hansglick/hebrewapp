@@ -6,6 +6,7 @@ import { evaluateTranslation } from "../api/gemini";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
+import HebrewInput from "../components/HebrewInput";
 import "./screens.css";
 
 export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
@@ -77,6 +78,7 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
   const isSourceHebrew = direction === "francais";
   const sourceText = isSourceHebrew ? phrase.hebrew : phrase.french;
   const targetText = isSourceHebrew ? phrase.french : phrase.hebrew;
+  const targetIsHebrew = !isSourceHebrew;
 
   return (
     <section className="screen" {...swipeHandlers}>
@@ -170,13 +172,22 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
         <>
           {!geminiResult && (
             <>
-              <textarea
-                value={studentSolution}
-                onChange={(e) => setStudentSolution(e.target.value)}
-                rows={3}
-                style={{ width: "100%", maxWidth: 320, fontFamily: "inherit" }}
-                placeholder="Ta traduction..."
-              />
+              {targetIsHebrew ? (
+                <HebrewInput
+                  value={studentSolution}
+                  onChange={setStudentSolution}
+                  rows={3}
+                  placeholder="Ta traduction..."
+                />
+              ) : (
+                <textarea
+                  value={studentSolution}
+                  onChange={(e) => setStudentSolution(e.target.value)}
+                  rows={3}
+                  style={{ width: "100%", maxWidth: 320, fontFamily: "inherit" }}
+                  placeholder="Ta traduction..."
+                />
+              )}
               <button
                 type="button"
                 className="link-btn"
