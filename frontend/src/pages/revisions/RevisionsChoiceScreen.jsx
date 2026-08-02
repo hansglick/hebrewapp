@@ -1,9 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSwipe } from "../../hooks/useSwipe";
 import "../screens.css";
 
 export default function RevisionsChoiceScreen() {
+  const navigate = useNavigate();
+
+  // Permet de revenir en avant (flèche droite) vers l'écran quitté via un
+  // retour arrière (ex: flèche gauche depuis Mot avec historique vide).
+  const swipeHandlers = useSwipe({
+    onSwipeRight: () => navigate(1),
+  });
+
   return (
-    <section className="screen">
+    <section className="screen" {...swipeHandlers}>
       <h1>Révisions</h1>
       <div className="tile-list">
         <Link to="/revisions/mot" className="card-link">

@@ -40,7 +40,9 @@ export default function MotScreen({ defaultMode = "exploration" }) {
     },
     onSwipeRight: () => next(),
     onSpace: () => {
-      if (mode === "revision" && !revealed) setRevealed(true);
+      if (mode !== "revision") return;
+      if (!revealed) setRevealed(true);
+      else if (mot.racine) navigate(`/racine/${encodeURIComponent(mot.racine)}`);
     },
   });
 

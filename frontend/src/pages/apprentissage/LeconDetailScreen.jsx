@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getLecon } from "../../api/content";
+import { useSwipe } from "../../hooks/useSwipe";
 import "../screens.css";
 
 export default function LeconDetailScreen() {
   const { chapId, code } = useParams();
+  const navigate = useNavigate();
   const [lecon, setLecon] = useState(null);
 
   useEffect(() => {
     getLecon(code).then(setLecon);
   }, [code]);
 
+  // Permet de revenir en avant (flèche droite) vers l'écran quitté via un
+  // retour arrière (ex: flèche gauche depuis Mots avec historique vide).
+  const swipeHandlers = useSwipe({
+    onSwipeRight: () => navigate(1),
+  });
+
   if (!lecon) return null;
 
   return (
-    <section className="screen">
+    <section className="screen" {...swipeHandlers}>
       <h1>Leçon {code}</h1>
       <div className="tile-list">
         {lecon.text ? (
