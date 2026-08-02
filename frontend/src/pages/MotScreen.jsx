@@ -13,7 +13,7 @@ export default function MotScreen({ defaultMode = "exploration" }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [niveau, setNiveau] = useState(null);
-  const [langue, setLangue] = useState("hebreu");
+  const [langue, setLangue] = usePersistedState("mot-screen-langue", "hebreu");
   const [mode, setMode] = usePersistedState("mot-screen-mode", defaultMode);
   const [revealed, setRevealed] = useState(false);
 
