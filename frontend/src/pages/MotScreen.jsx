@@ -39,6 +39,9 @@ export default function MotScreen({ defaultMode = "exploration" }) {
       if (!back()) navigate(-1);
     },
     onSwipeRight: () => next(),
+    onSpace: () => {
+      if (mode === "revision" && !revealed) setRevealed(true);
+    },
   });
 
   if (!mot) return null;
@@ -132,7 +135,7 @@ function HebrewAids({ racine, onSpeak }) {
         className="link-btn"
         onClick={() => navigate(`/racine/${encodeURIComponent(racine)}`)}
       >
-        {racine} — en savoir plus
+{racine} — voir la racine
       </button>
       <button type="button" className="link-btn" onClick={onSpeak}>
         🔊
