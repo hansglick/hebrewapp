@@ -29,11 +29,11 @@ export default function ChansonScreen() {
         allowFullScreen
         style={{ border: "none", borderRadius: 8 }}
       />
-      <div>
+      <div style={{ userSelect: "text" }}>
         {chanson.paroles.map((vers) => (
           <div key={vers.index} style={{ marginBottom: "1.5em" }}>
-            <p className="hebrew">{vers.hebrew}</p>
-            <p className="muted">{vers.french}</p>
+            <p className="hebrew" style={{ margin: 0 }}>{vers.hebrew}</p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>{vers.french}</p>
           </div>
         ))}
       </div>
