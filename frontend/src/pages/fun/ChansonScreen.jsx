@@ -31,7 +31,7 @@ export default function ChansonScreen() {
       />
       <div>
         {chanson.paroles.map((vers) => (
-          <div key={vers.index} style={{ marginBottom: 12 }}>
+          <div key={vers.index} style={{ marginBottom: "1.5em" }}>
             <p className="hebrew">{vers.hebrew}</p>
             <p className="muted">{vers.french}</p>
           </div>
