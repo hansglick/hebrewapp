@@ -18,6 +18,9 @@ import MotScreen from "./pages/MotScreen";
 import VerbeScreen from "./pages/VerbeScreen";
 import EvaluationChoiceScreen from "./pages/apprentissage/EvaluationChoiceScreen";
 import QuestionEcriteScreen from "./pages/QuestionEcriteScreen";
+import ExamenChoiceScreen from "./pages/examen/ExamenChoiceScreen";
+import ExamenLeconPickerScreen from "./pages/examen/ExamenLeconPickerScreen";
+import ExamenEcritScreen from "./pages/examen/ExamenEcritScreen";
 
 function App() {
   return (
@@ -52,7 +55,9 @@ function App() {
           element={<QuestionEcriteScreen defaultMode="revision" />}
         />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
-        <Route path="examen" element={<Placeholder title="Examen" />} />
+        <Route path="examen" element={<ExamenChoiceScreen />} />
+        <Route path="examen/ecrite" element={<ExamenLeconPickerScreen />} />
+        <Route path="examen/ecrite/:code" element={<ExamenEcritScreen />} />
         <Route path="fun" element={<FunChoiceScreen />} />
         <Route path="fun/expressions" element={<ExpressionScreen />} />
         <Route path="fun/presse" element={<PresseScreen />} />

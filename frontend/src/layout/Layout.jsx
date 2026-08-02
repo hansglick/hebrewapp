@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useConfig } from "../config/ConfigContext";
 import { getNiveau } from "../api/user";
 import "./Layout.css";
@@ -7,10 +7,14 @@ import "./Layout.css";
 export default function Layout() {
   const { themeMode, setThemeMode } = useConfig();
   const [niveau, setNiveau] = useState(null);
+  const location = useLocation();
 
+  // Layout reste monté d'une route à l'autre (Outlet), donc on recharge le
+  // niveau à chaque changement de page plutôt qu'une seule fois au montage —
+  // sinon un examen réussi ailleurs ne se reflèterait jamais ici sans reload.
   useEffect(() => {
     getNiveau().then(setNiveau);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="app-shell">

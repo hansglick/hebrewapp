@@ -36,3 +36,5 @@ export const getRandomVerbe = (lessonCode, mode = "exploration") =>
 
 export const getRandomPhrase = (lessonCode, mode = "exploration") =>
   fetchJson(`/api/phrases/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`);
+
+export const getExamen = (code) => fetchJson(`/api/examens/${encodeURIComponent(code)}`);

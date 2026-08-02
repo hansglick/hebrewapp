@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from app.config import FRONTEND_DEV_ORIGIN, RESULTS_DIR
 from app.data_loader import DATA_FILES, get_dataset
 from app.database import init_db
-from app.routers import chapters, content, evaluations, niveau, practice, tts
+from app.routers import chapters, content, evaluations, examens, niveau, practice, tts
 
 app = FastAPI(title="Hebrew App API")
 app.include_router(content.router)
@@ -14,6 +14,7 @@ app.include_router(evaluations.router)
 app.include_router(niveau.router)
 app.include_router(practice.router)
 app.include_router(tts.router)
+app.include_router(examens.router)
 
 app.add_middleware(
     CORSMiddleware,
