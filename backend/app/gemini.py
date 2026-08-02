@@ -93,14 +93,17 @@ def evaluate_oral(question_hebrew: str, texte_hebrew: str, audio_bytes: bytes, m
     response_class = _load_response_class("extract_oral_evaluation")
 
     client = _client()
-    suffix = _MIME_TO_SUFFIX.get(mime_type, ".webm")
+    base_mime_type = mime_type.split(";")[0].strip()
+    suffix = _MIME_TO_SUFFIX.get(base_mime_type, ".wav")
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         tmp.write(audio_bytes)
         tmp_path = tmp.name
 
     try:
-        uploaded = client.files.upload(file=tmp_path)
+        uploaded = client.files.upload(
+            file=tmp_path, config={"mime_type": base_mime_type}
+        )
         uploaded = _wait_until_active(client, uploaded)
         try:
             response = client.models.generate_content(

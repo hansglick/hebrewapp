@@ -30,7 +30,7 @@ export async function evaluateOral({ textCode, questionIndex, audioBlob }) {
   const formData = new FormData();
   formData.append("text_code", textCode);
   formData.append("question_index", questionIndex);
-  formData.append("audio", audioBlob, "recording.webm");
+  formData.append("audio", audioBlob, "recording.wav");
 
   const res = await fetch(`${API_URL}/api/gemini/oral`, {
     method: "POST",

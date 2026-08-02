@@ -4,6 +4,7 @@ import { getRandomQuestionOrale } from "../api/content";
 import { getNiveau } from "../api/user";
 import { evaluateOral } from "../api/gemini";
 import { mediaUrl } from "../api/media";
+import { blobToWavBlob } from "../utils/audioEncode";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import "./screens.css";
@@ -14,6 +15,7 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
   const [niveau, setNiveau] = useState(null);
   const [mode, setMode] = useState(defaultMode);
   const [isRecording, setIsRecording] = useState(false);
+  const [isConverting, setIsConverting] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [geminiResult, setGeminiResult] = useState(null);
   const [geminiError, setGeminiError] = useState(null);
@@ -44,9 +46,17 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
     const recorder = new MediaRecorder(stream);
     chunksRef.current = [];
     recorder.ondataavailable = (e) => chunksRef.current.push(e.data);
-    recorder.onstop = () => {
-      setAudioBlob(new Blob(chunksRef.current, { type: recorder.mimeType }));
+    recorder.onstop = async () => {
       stream.getTracks().forEach((t) => t.stop());
+      const rawBlob = new Blob(chunksRef.current, { type: recorder.mimeType });
+      setIsConverting(true);
+      try {
+        setAudioBlob(await blobToWavBlob(rawBlob));
+      } catch {
+        setGeminiError("Impossible de traiter l'enregistrement audio. Réessaie.");
+      } finally {
+        setIsConverting(false);
+      }
     };
     recorder.start();
     mediaRecorderRef.current = recorder;
@@ -114,7 +124,7 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
 
       {!geminiResult && (
         <>
-          {!audioBlob && !isRecording && (
+          {!audioBlob && !isRecording && !isConverting && (
             <button type="button" className="link-btn" onClick={startRecording}>
               🎙️ Enregistrer
             </button>
@@ -124,6 +134,7 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
               ⏹️ Arrêter
             </button>
           )}
+          {isConverting && <p className="muted">Traitement de l'enregistrement...</p>}
           {audioBlob && !isRecording && (
             <>
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
