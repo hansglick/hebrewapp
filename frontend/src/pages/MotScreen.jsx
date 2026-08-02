@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getRandomMot } from "../api/content";
 import { getNiveau, createEvaluation } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
@@ -11,6 +11,7 @@ import "./screens.css";
 export default function MotScreen({ defaultMode = "exploration" }) {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
   const navigate = useNavigate();
+  const location = useLocation();
   const [niveau, setNiveau] = useState(null);
   const [langue, setLangue] = useState("hebreu");
   const [mode, setMode] = usePersistedState("mot-screen-mode", defaultMode);
@@ -22,10 +23,27 @@ export default function MotScreen({ defaultMode = "exploration" }) {
 
   const lessonCode = mode === "exploration" ? code ?? niveau?.level : niveau?.level;
 
+  // Si on revient d'un écran racine (flèche gauche), location.state.restoreMot
+  // contient le mot exact quitté — évite de retomber sur un tirage aléatoire.
+  // Tant qu'on restaure, on fige lessonCode dans les deps : sinon la
+  // résolution asynchrone de `niveau` (undefined -> valeur réelle, juste
+  // après le montage) déclenche un second effet qui écraserait la
+  // restauration par un tirage aléatoire. `mode` reste réactif : un
+  // changement manuel de mode doit toujours déclencher un nouveau tirage.
+  const restoreMot = location.state?.restoreMot;
+  const browserDeps = restoreMot ? ["__restore__", mode] : [lessonCode, mode];
+
   const { current: mot, next, back } = useRandomBrowser(
     () => (lessonCode ? getRandomMot(lessonCode, mode) : Promise.resolve(null)),
-    [lessonCode, mode]
+    browserDeps,
+    restoreMot
   );
+
+  function viewRacine(racine) {
+    navigate(`/racine/${encodeURIComponent(racine)}`, {
+      state: { returnPath: location.pathname, mot },
+    });
+  }
 
   useEffect(() => {
     setRevealed(false);
@@ -43,7 +61,7 @@ export default function MotScreen({ defaultMode = "exploration" }) {
     onSpace: () => {
       if (mode !== "revision") return;
       if (!revealed) setRevealed(true);
-      else if (mot.racine) navigate(`/racine/${encodeURIComponent(mot.racine)}`);
+      else if (mot.racine) viewRacine(mot.racine);
     },
   });
 
@@ -93,7 +111,11 @@ export default function MotScreen({ defaultMode = "exploration" }) {
       {mode === "exploration" && (
         <>
           <p className={!isTopHebrew ? "hebrew" : ""}>{bottomText}</p>
-          <HebrewAids racine={mot.racine} onSpeak={() => speak(mot.original)} />
+          <HebrewAids
+            racine={mot.racine}
+            onSpeak={() => speak(mot.original)}
+            onViewRacine={() => viewRacine(mot.racine)}
+          />
         </>
       )}
 
@@ -106,7 +128,11 @@ export default function MotScreen({ defaultMode = "exploration" }) {
       {mode === "revision" && revealed && (
         <>
           <p className={!isTopHebrew ? "hebrew" : ""}>{bottomText}</p>
-          <HebrewAids racine={mot.racine} onSpeak={() => speak(mot.original)} />
+          <HebrewAids
+            racine={mot.racine}
+            onSpeak={() => speak(mot.original)}
+            onViewRacine={() => viewRacine(mot.racine)}
+          />
           <div className="eval-actions">
             <button
               type="button"
@@ -129,16 +155,11 @@ export default function MotScreen({ defaultMode = "exploration" }) {
   );
 }
 
-function HebrewAids({ racine, onSpeak }) {
-  const navigate = useNavigate();
+function HebrewAids({ racine, onSpeak, onViewRacine }) {
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-      <button
-        type="button"
-        className="link-btn"
-        onClick={() => navigate(`/racine/${encodeURIComponent(racine)}`)}
-      >
-{racine} — voir la racine
+      <button type="button" className="link-btn" onClick={onViewRacine}>
+        {racine} — voir la racine
       </button>
       <button type="button" className="link-btn" onClick={onSpeak}>
         🔊
