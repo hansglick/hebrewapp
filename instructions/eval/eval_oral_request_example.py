@@ -10,7 +10,7 @@ from google.genai import types
 import time
 
 
-mykey = "REDACTED_GEMINI_KEY"
+mykey = "YOUR_GEMINI_API_KEY"  # clé retirée (2026-08-02) : ne jamais commiter une vraie clé
 modelname = "gemini-3.1-pro-preview"
 client = genai.Client(api_key=mykey)
 

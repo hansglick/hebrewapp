@@ -8,8 +8,7 @@ import os
 import json
 from google.genai import types
 import time
-#mykey = "REDACTED_GEMINI_KEY"
-mykey = "REDACTED_GEMINI_KEY"
+mykey = "YOUR_GEMINI_API_KEY"  # clé retirée (2026-08-02) : ne jamais commiter une vraie clé
 promptfolder = "prompts"
 resultsfolder = "results/evaluations/translations"
 
