@@ -3,8 +3,8 @@ from datetime import datetime, timezone
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import DEFAULT_USER_ID, get_connection, set_user_level
+from app.lesson_order import all_lesson_codes_in_order
 
 router = APIRouter(prefix="/api", tags=["niveau"])
 
@@ -25,16 +25,8 @@ def _jours_bloque(level_since: str) -> int:
     return (datetime.now(timezone.utc) - since).days
 
 
-def _all_lesson_codes_in_order() -> list:
-    chapitres = get_dataset("chapitre")
-    codes = []
-    for chap_id in sorted(chapitres.keys(), key=int):
-        codes.extend(chapitres[chap_id]["lessons"])
-    return codes
-
-
 def _next_lesson_code(level: str):
-    codes = _all_lesson_codes_in_order()
+    codes = all_lesson_codes_in_order()
     if level not in codes:
         return None
     idx = codes.index(level)
@@ -69,13 +61,9 @@ def get_niveau():
 
 @router.put("/niveau", response_model=NiveauOut)
 def set_niveau(payload: NiveauUpdate):
+    set_user_level(payload.level)
     conn = get_connection()
     try:
-        conn.execute(
-            "UPDATE user_level SET level = ?, level_since = datetime('now') WHERE user_id = ?",
-            (payload.level, DEFAULT_USER_ID),
-        )
-        conn.commit()
         row = _get_niveau_row(conn)
         return _to_niveau_out(row)
     finally:

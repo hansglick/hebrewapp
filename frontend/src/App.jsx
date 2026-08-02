@@ -22,6 +22,7 @@ import QuestionOraleScreen from "./pages/QuestionOraleScreen";
 import ExamenChoiceScreen from "./pages/examen/ExamenChoiceScreen";
 import ExamenLeconPickerScreen from "./pages/examen/ExamenLeconPickerScreen";
 import ExamenEcritScreen from "./pages/examen/ExamenEcritScreen";
+import ExamenOralScreen from "./pages/examen/ExamenOralScreen";
 
 function App() {
   return (
@@ -65,8 +66,10 @@ function App() {
         />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
-        <Route path="examen/ecrite" element={<ExamenLeconPickerScreen />} />
+        <Route path="examen/ecrite" element={<ExamenLeconPickerScreen examType="ecrite" />} />
         <Route path="examen/ecrite/:code" element={<ExamenEcritScreen />} />
+        <Route path="examen/orale" element={<ExamenLeconPickerScreen examType="orale" />} />
+        <Route path="examen/orale/:code" element={<ExamenOralScreen />} />
         <Route path="fun" element={<FunChoiceScreen />} />
         <Route path="fun/expressions" element={<ExpressionScreen />} />
         <Route path="fun/presse" element={<PresseScreen />} />

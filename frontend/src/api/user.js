@@ -41,3 +41,19 @@ export async function getEvaluations({ objectType, objectKey, limit = 5 }) {
   if (!res.ok) throw new Error(`/api/evaluations -> ${res.status}`);
   return res.json();
 }
+
+export async function getExamenStatus(code) {
+  const res = await fetch(`${API_URL}/api/examens/${encodeURIComponent(code)}/status`);
+  if (!res.ok) throw new Error(`/api/examens/${code}/status -> ${res.status}`);
+  return res.json();
+}
+
+export async function passExamen(code, { examType, offline = false }) {
+  const res = await fetch(`${API_URL}/api/examens/${encodeURIComponent(code)}/pass`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ exam_type: examType, offline }),
+  });
+  if (!res.ok) throw new Error(`/api/examens/${code}/pass -> ${res.status}`);
+  return res.json();
+}

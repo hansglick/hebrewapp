@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getExamen } from "../../api/content";
-import { createEvaluation, updateNiveau } from "../../api/user";
+import { createEvaluation, passExamen } from "../../api/user";
 import { speak } from "../../utils/speech";
 import "../screens.css";
 
@@ -13,13 +13,14 @@ export default function ExamenEcritScreen() {
   const [results, setResults] = useState([]);
   const [direction, setDirection] = useState("hebreu");
   const [revealed, setRevealed] = useState(false);
+  const [offline, setOffline] = useState(false);
   const [finalResult, setFinalResult] = useState(null);
 
   useEffect(() => {
     getExamen(code).then(setExam);
   }, [code]);
 
-  function handleEvaluate(success) {
+  async function handleEvaluate(success) {
     const q = exam.questions[index];
     createEvaluation({
       objectType: "phrase_auto",
@@ -39,25 +40,49 @@ export default function ExamenEcritScreen() {
     const scoreCount = newResults.filter(Boolean).length;
     const ratio = scoreCount / exam.total_questions;
     const passed = ratio >= exam.pass_threshold;
+
+    let passResult = null;
     if (passed) {
-      updateNiveau(code);
+      passResult = await passExamen(code, { examType: "ecrit", offline });
     }
-    setFinalResult({ passed, scoreCount, total: exam.total_questions, ratio });
+    setFinalResult({ passed, scoreCount, total: exam.total_questions, ratio, passResult });
   }
 
   if (!exam) return null;
 
   if (finalResult) {
+    const { passed, passResult } = finalResult;
     return (
       <section className="screen">
-        <h1>{finalResult.passed ? "Examen réussi !" : "Examen non validé"}</h1>
+        <h1>
+          {passed
+            ? passResult?.niveau_updated
+              ? "Examen réussi !"
+              : "Écrit validé"
+            : "Examen non validé"}
+        </h1>
         <p>
           Score : {finalResult.scoreCount} / {finalResult.total} (
           {Math.round(finalResult.ratio * 100)}%)
         </p>
-        {finalResult.passed ? (
-          <p>Niveau {code} atteint.</p>
-        ) : (
+        {passed && passResult?.niveau_updated && (
+          <p>
+            Niveau {code} atteint{offline ? " (mode hors-ligne, examen oral non requis)" : ""}.
+          </p>
+        )}
+        {passed && !passResult?.niveau_updated && (
+          <>
+            <p>Il reste l'examen oral de cette leçon pour valider le niveau.</p>
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => navigate(`/examen/orale/${code}`)}
+            >
+              Passer l'oral
+            </button>
+          </>
+        )}
+        {!passed && (
           <p>Seuil requis : {Math.round(exam.pass_threshold * 100)}%. Retente quand tu veux.</p>
         )}
         <button type="button" className="link-btn" onClick={() => navigate("/examen/ecrite")}>
@@ -92,6 +117,22 @@ export default function ExamenEcritScreen() {
           onClick={() => setDirection("francais")}
         >
           -&gt; Français
+        </button>
+      </div>
+      <div className="toggle-group">
+        <button
+          type="button"
+          className={!offline ? "active" : ""}
+          onClick={() => setOffline(false)}
+        >
+          En ligne
+        </button>
+        <button
+          type="button"
+          className={offline ? "active" : ""}
+          onClick={() => setOffline(true)}
+        >
+          Mode hors-ligne
         </button>
       </div>
 

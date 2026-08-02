@@ -1,6 +1,7 @@
 import random
 
 from app.data_loader import get_dataset
+from app.lesson_order import all_lesson_codes_in_order
 
 QUESTIONS_REGULAR = 20
 QUESTIONS_SPECIAL = 50
@@ -24,8 +25,12 @@ def _sample(pool, n):
 
 
 def build_exam(code: str):
-    """Construit un pack d'examen pour le code de leçon donné (ex: '2.10').
-    Renvoie None si le code ne correspond à aucune leçon connue."""
+    """Construit un pack d'examen pour la leçon cible donnée (ex: '2.10').
+    Les questions ne portent jamais sur le contenu de la leçon cible
+    elle-même (pas encore débloquée) : 50% sur les 5 leçons qui la
+    précèdent immédiatement, 50% sur toutes les leçons encore antérieures
+    (depuis le chapitre 0, leçon 01). Renvoie None si le code ne correspond
+    à aucune leçon connue."""
     chapitres = get_dataset("chapitre")
     phrases_data = get_dataset("phrase")
 
@@ -37,50 +42,30 @@ def build_exam(code: str):
         return None
 
     is_special = lessons_in_chapter[-1] == code
+    total_questions = QUESTIONS_SPECIAL if is_special else QUESTIONS_REGULAR
 
-    if is_special:
-        total_questions = QUESTIONS_SPECIAL
-        n = len(lessons_in_chapter)
-        cut = n - n // 4
-        last_quarter = lessons_in_chapter[cut:]
-        first_part = lessons_in_chapter[:cut]
+    codes = all_lesson_codes_in_order()
+    idx = codes.index(code)
+    preceding = codes[:idx]
+    recent = preceding[-5:]
+    older = preceding[:-5] if len(preceding) > 5 else []
 
-        selected = _sample(_pool_for_lessons(phrases_data, last_quarter), 25)
-        selected += _sample(_pool_for_lessons(phrases_data, first_part), 25)
-    else:
-        total_questions = QUESTIONS_REGULAR
-        idx = lessons_in_chapter.index(code)
+    n_recent = total_questions // 2
+    n_older = total_questions - n_recent
 
-        # Si l'examen porte sur une des premières leçons du chapitre, on va
-        # chercher les leçons "précédentes" manquantes dans le chapitre d'avant.
-        reference = list(lessons_in_chapter)
-        if idx < 2 and int(chapter_num) > 0:
-            prev_chapter = str(int(chapter_num) - 1)
-            if prev_chapter in chapitres:
-                reference = chapitres[prev_chapter]["lessons"] + reference
-                idx = reference.index(code)
+    pool_recent = _pool_for_lessons(phrases_data, recent)
+    pool_older = _pool_for_lessons(phrases_data, older)
 
-        own_lesson = [code]
-        prev_lesson = [reference[idx - 1]] if idx >= 1 else []
-        avant_dernier = [reference[idx - 2]] if idx >= 2 else []
-        anterior = reference[: idx - 2] if idx >= 2 else []
+    selected = _sample(pool_recent, n_recent)
+    selected += _sample(pool_older, n_older)
 
-        pool_own = _pool_for_lessons(phrases_data, own_lesson)
-
-        selected = _sample(pool_own, 10)
-        selected += _sample(_pool_for_lessons(phrases_data, prev_lesson), 2)
-        selected += _sample(_pool_for_lessons(phrases_data, avant_dernier), 2)
-        selected += _sample(_pool_for_lessons(phrases_data, anterior), 6)
-
-        # Repli : un bucket vide (leçon sans phrase) est compensé par la leçon associée.
-        while len(selected) < total_questions and pool_own:
-            selected += _sample(pool_own, total_questions - len(selected))
-
-    # Dernier repli : compléter avec tout le pool du chapitre si besoin.
-    if len(selected) < total_questions:
-        fallback_pool = _pool_for_lessons(phrases_data, lessons_in_chapter)
-        while len(selected) < total_questions and fallback_pool:
-            selected += _sample(fallback_pool, total_questions - len(selected))
+    # Repli : si un des deux pools est insuffisant, on complète avec l'autre
+    # (jamais avec la leçon cible elle-même ou une leçon postérieure). Pour
+    # les tout premiers codes du livre, `preceding` peut être vide ou très
+    # court : l'examen aura alors moins de questions que `total_questions`.
+    combined = pool_recent + pool_older
+    while len(selected) < total_questions and combined:
+        selected += _sample(combined, total_questions - len(selected))
 
     random.shuffle(selected)
 
@@ -97,7 +82,7 @@ def build_exam(code: str):
     return {
         "code": code,
         "is_special": is_special,
-        "total_questions": total_questions,
+        "total_questions": len(questions),
         "pass_threshold": PASS_THRESHOLD,
         "questions": questions,
     }

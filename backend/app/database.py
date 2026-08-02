@@ -60,10 +60,37 @@ def init_db():
             """
         )
 
+        # Trace la réussite d'un examen (écrit ou oral) pour une leçon cible.
+        # Le niveau ne monte que lorsque les deux types sont réussis pour la
+        # même leçon (sauf mode hors-ligne, écrit seul).
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS exam_progress (
+                user_id INTEGER NOT NULL REFERENCES users(id),
+                lesson_code TEXT NOT NULL,
+                exam_type TEXT NOT NULL CHECK (exam_type IN ('ecrit', 'oral')),
+                passed_at TEXT NOT NULL DEFAULT (datetime('now')),
+                PRIMARY KEY (user_id, lesson_code, exam_type)
+            )
+            """
+        )
+
         conn.execute("INSERT OR IGNORE INTO users (id) VALUES (?)", (DEFAULT_USER_ID,))
         conn.execute(
             "INSERT OR IGNORE INTO user_level (user_id, level) VALUES (?, ?)",
             (DEFAULT_USER_ID, DEFAULT_LEVEL),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def set_user_level(level: str) -> None:
+    conn = get_connection()
+    try:
+        conn.execute(
+            "UPDATE user_level SET level = ?, level_since = datetime('now') WHERE user_id = ?",
+            (level, DEFAULT_USER_ID),
         )
         conn.commit()
     finally:

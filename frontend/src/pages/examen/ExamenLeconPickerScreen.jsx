@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getChapitres, getLecons } from "../../api/content";
 import "../screens.css";
 
-export default function ExamenLeconPickerScreen() {
+export default function ExamenLeconPickerScreen({ examType = "ecrite" }) {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ExamenLeconPickerScreen() {
           </p>
           <div className="tile-list">
             {g.lecons.map((l) => (
-              <Link key={l.code} to={`/examen/ecrite/${l.code}`} className="card-link">
+              <Link key={l.code} to={`/examen/${examType}/${l.code}`} className="card-link">
                 <div className="card">
                   {l.code}
                   {l.titre_texte ? ` — ${l.titre_texte}` : ""}

@@ -7,6 +7,7 @@ from app.data_loader import get_dataset
 from app.database import DEFAULT_USER_ID, get_connection
 from app.difficulty import compute_combo_difficulties, stratified_pick
 from app.gemini import evaluate_oral, evaluate_translation
+from app.text_questions import questions_for_text
 
 router = APIRouter(prefix="/api", tags=["gemini"])
 
@@ -63,29 +64,19 @@ def random_question_orale(lesson_code: str, mode: str = "exploration"):
 
     texts_data = get_dataset("text")
 
-    def _questions_for(text_code: str):
-        text = texts_data.get(text_code)
-        if not text:
-            return []
-        return [
-            (text_code, i)
-            for i, q in enumerate(text.get("questions", []))
-            if q.get("hebrew")
-        ]
-
     if mode == "exploration":
         own_code = lesson.get("text") or ""
-        own_pairs = _questions_for(own_code)
+        own_pairs = questions_for_text(texts_data, own_code)
         if not own_pairs:
             raise HTTPException(404, "Aucune question orale disponible pour cette leçon")
         text_code, q_index = random.choice(own_pairs)
     else:
         own_code = lesson.get("text") or ""
-        own_keys = [f"{tc}|{i}" for tc, i in _questions_for(own_code)]
+        own_keys = [f"{tc}|{i}" for tc, i in questions_for_text(texts_data, own_code)]
 
         cumulative_keys = []
         for tc in lesson.get("global_texts", []):
-            cumulative_keys.extend(f"{tc}|{i}" for _, i in _questions_for(tc))
+            cumulative_keys.extend(f"{tc}|{i}" for _, i in questions_for_text(texts_data, tc))
 
         difficulties = compute_combo_difficulties("oral")
         picked = stratified_pick(own_keys, cumulative_keys, difficulties)

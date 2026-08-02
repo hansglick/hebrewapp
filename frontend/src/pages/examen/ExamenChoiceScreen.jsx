@@ -9,9 +9,9 @@ export default function ExamenChoiceScreen() {
         <Link to="/examen/ecrite" className="card-link">
           <div className="card">Compréhension écrite</div>
         </Link>
-        <div className="card" style={{ opacity: 0.5 }}>
-          Compréhension orale (à venir — Phase 7)
-        </div>
+        <Link to="/examen/orale" className="card-link">
+          <div className="card">Compréhension orale</div>
+        </Link>
       </div>
     </section>
   );
