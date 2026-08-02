@@ -59,7 +59,7 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
       });
       setGeminiResult(result);
     } catch (e) {
-      setGeminiError("Erreur lors de l'évaluation par le professeur Gemini. Réessaie.");
+      setGeminiError(e.message);
     } finally {
       setLoadingGemini(false);
     }

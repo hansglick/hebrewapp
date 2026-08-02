@@ -3,6 +3,8 @@ import random
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
+from google.genai.errors import APIError
+
 from app.data_loader import get_dataset
 from app.database import DEFAULT_USER_ID, get_connection
 from app.difficulty import compute_combo_difficulties, stratified_pick
@@ -48,6 +50,8 @@ def gemini_translation(payload: TranslationEvalRequest):
         result = evaluate_translation(sentence_to_translate, payload.student_solution)
     except RuntimeError as exc:
         raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
 
     object_key = f"{payload.lesson_code}|{payload.position}|{payload.direction}"
     _record_evaluation("phrase_gemini", object_key, result["score"])
@@ -120,6 +124,8 @@ async def gemini_oral(
         )
     except RuntimeError as exc:
         raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
 
     aggregate_score = round(
         (result["rating_completeness"] + result["rating_hebrew"] + result["rating_comprehension"]) / 3

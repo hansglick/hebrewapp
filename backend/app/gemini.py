@@ -1,9 +1,11 @@
 import json
 import os
 import tempfile
+import time
 from functools import lru_cache
 
 from google import genai
+from google.genai.types import FileState
 from pydantic import Field, create_model
 
 from app.config import GEMINI_API_KEY, GEMINI_MODEL, PROMPTS_DIR
@@ -35,6 +37,24 @@ def _load_response_class(name: str):
         fields[field_name] = (field_type, Field(..., description=info["description"]))
 
     return create_model(config["nom_modele"], **fields)
+
+
+def _wait_until_active(client, uploaded, timeout: float = 30.0):
+    """Gemini traite un fichier uploadé de façon asynchrone (état PROCESSING
+    avant ACTIVE) ; l'utiliser dans generate_content trop tôt lève une
+    erreur 400 FAILED_PRECONDITION. On attend l'état ACTIVE (ou on échoue
+    explicitement après le délai/l'échec)."""
+    deadline = time.monotonic() + timeout
+    while uploaded.state == FileState.PROCESSING:
+        if time.monotonic() > deadline:
+            raise RuntimeError(
+                "Le traitement du fichier audio par Gemini a pris trop de temps, réessaie."
+            )
+        time.sleep(1)
+        uploaded = client.files.get(name=uploaded.name)
+    if uploaded.state != FileState.ACTIVE:
+        raise RuntimeError("Gemini n'a pas pu traiter le fichier audio envoyé.")
+    return uploaded
 
 
 @lru_cache(maxsize=1)
@@ -81,6 +101,7 @@ def evaluate_oral(question_hebrew: str, texte_hebrew: str, audio_bytes: bytes, m
 
     try:
         uploaded = client.files.upload(file=tmp_path)
+        uploaded = _wait_until_active(client, uploaded)
         try:
             response = client.models.generate_content(
                 model=GEMINI_MODEL,

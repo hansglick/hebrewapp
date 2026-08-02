@@ -1,5 +1,16 @@
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
+async function throwWithDetail(res, path) {
+  let detail = `${path} -> ${res.status}`;
+  try {
+    const body = await res.json();
+    if (body?.detail) detail = body.detail;
+  } catch {
+    // pas de corps JSON exploitable, on garde le message par défaut
+  }
+  throw new Error(detail);
+}
+
 export async function evaluateTranslation({ lessonCode, position, direction, studentSolution }) {
   const res = await fetch(`${API_URL}/api/gemini/translation`, {
     method: "POST",
@@ -11,7 +22,7 @@ export async function evaluateTranslation({ lessonCode, position, direction, stu
       student_solution: studentSolution,
     }),
   });
-  if (!res.ok) throw new Error(`/api/gemini/translation -> ${res.status}`);
+  if (!res.ok) await throwWithDetail(res, "/api/gemini/translation");
   return res.json();
 }
 
@@ -25,6 +36,6 @@ export async function evaluateOral({ textCode, questionIndex, audioBlob }) {
     method: "POST",
     body: formData,
   });
-  if (!res.ok) throw new Error(`/api/gemini/oral -> ${res.status}`);
+  if (!res.ok) await throwWithDetail(res, "/api/gemini/oral");
   return res.json();
 }

@@ -15,6 +15,7 @@ export default function ExamenOralScreen() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [geminiResult, setGeminiResult] = useState(null);
+  const [geminiError, setGeminiError] = useState(null);
   const [loadingGemini, setLoadingGemini] = useState(false);
   const [finalResult, setFinalResult] = useState(null);
   const mediaRecorderRef = useRef(null);
@@ -46,6 +47,7 @@ export default function ExamenOralScreen() {
   async function handleSubmit() {
     const q = exam.questions[index];
     setLoadingGemini(true);
+    setGeminiError(null);
     try {
       const result = await evaluateOral({
         textCode: q.text_code,
@@ -53,6 +55,8 @@ export default function ExamenOralScreen() {
         audioBlob,
       });
       setGeminiResult(result);
+    } catch (e) {
+      setGeminiError(e.message);
     } finally {
       setLoadingGemini(false);
     }
@@ -67,6 +71,7 @@ export default function ExamenOralScreen() {
     const newResults = [...results, success];
     setAudioBlob(null);
     setGeminiResult(null);
+    setGeminiError(null);
 
     if (index + 1 < exam.questions.length) {
       setResults(newResults);
@@ -174,15 +179,31 @@ export default function ExamenOralScreen() {
               </div>
             </>
           )}
+          {geminiError && (
+            <p className="muted" style={{ color: "var(--danger)" }}>
+              {geminiError}
+            </p>
+          )}
         </>
       )}
 
       {geminiResult && (
         <>
           <p className="muted hebrew">Verbatim : {geminiResult.verbatim}</p>
+          <p className="muted hebrew">Solution possible : {geminiResult.solution}</p>
           <p>Structure/complétude : {geminiResult.rating_completeness} / 5</p>
           <p>Hébreu (grammaire/orthographe) : {geminiResult.rating_hebrew} / 5</p>
+          <ul className="words-list">
+            {geminiResult.errors_rating_hebrew.map((e, i) => (
+              <li key={i}>{e}</li>
+            ))}
+          </ul>
           <p>Compréhension : {geminiResult.rating_comprehension} / 5</p>
+          <ul className="words-list">
+            {geminiResult.errors_rating_comprehension.map((e, i) => (
+              <li key={i}>{e}</li>
+            ))}
+          </ul>
           <button type="button" className="link-btn" onClick={handleNext}>
             Question suivante
           </button>
