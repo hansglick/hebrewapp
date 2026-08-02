@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRandomPhrase } from "../api/content";
 import { getNiveau, createEvaluation } from "../api/user";
+import { evaluateTranslation } from "../api/gemini";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
@@ -12,9 +13,13 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
   const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [mode, setMode] = useState(defaultMode);
-  const [evalMode, setEvalMode] = useState("auto"); // auto | prof (Phase 7)
+  const [evalMode, setEvalMode] = useState("auto"); // auto | prof
   const [direction, setDirection] = useState("hebreu"); // hebreu = ->Hébreu (source français), francais = ->Français (source hébreu)
   const [revealed, setRevealed] = useState(false);
+  const [studentSolution, setStudentSolution] = useState("");
+  const [geminiResult, setGeminiResult] = useState(null);
+  const [geminiError, setGeminiError] = useState(null);
+  const [loadingGemini, setLoadingGemini] = useState(false);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
@@ -29,7 +34,10 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
 
   useEffect(() => {
     setRevealed(false);
-  }, [phrase]);
+    setStudentSolution("");
+    setGeminiResult(null);
+    setGeminiError(null);
+  }, [phrase, evalMode]);
 
   function handleEvaluate(success) {
     createEvaluation({
@@ -37,6 +45,24 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
       objectKey: `${phrase.lesson_code}|${phrase.position}|${direction}`,
       success,
     }).then(next);
+  }
+
+  async function handleSubmitProf() {
+    setLoadingGemini(true);
+    setGeminiError(null);
+    try {
+      const result = await evaluateTranslation({
+        lessonCode: phrase.lesson_code,
+        position: phrase.position,
+        direction,
+        studentSolution,
+      });
+      setGeminiResult(result);
+    } catch (e) {
+      setGeminiError("Erreur lors de l'évaluation par le professeur Gemini. Réessaie.");
+    } finally {
+      setLoadingGemini(false);
+    }
   }
 
   const swipeHandlers = useSwipe({
@@ -78,8 +104,12 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
         >
           Auto-éval
         </button>
-        <button type="button" disabled style={{ opacity: 0.5 }}>
-          Prof éval (Phase 7)
+        <button
+          type="button"
+          className={evalMode === "prof" ? "active" : ""}
+          onClick={() => setEvalMode("prof")}
+        >
+          Prof éval
         </button>
       </div>
       <div className="toggle-group">
@@ -101,34 +131,84 @@ export default function QuestionEcriteScreen({ defaultMode = "exploration" }) {
 
       <p className={isSourceHebrew ? "hebrew-large" : ""}>{sourceText}</p>
 
-      {!revealed && (
-        <button type="button" className="link-btn" onClick={() => setRevealed(true)}>
-          ?
-        </button>
+      {evalMode === "auto" && (
+        <>
+          {!revealed && (
+            <button type="button" className="link-btn" onClick={() => setRevealed(true)}>
+              ?
+            </button>
+          )}
+
+          {revealed && (
+            <>
+              <p className={!isSourceHebrew ? "hebrew-large" : ""}>{targetText}</p>
+              <button type="button" className="link-btn" onClick={() => speak(phrase.hebrew)}>
+                🔊
+              </button>
+              <div className="eval-actions">
+                <button
+                  type="button"
+                  className="eval-btn danger"
+                  onClick={() => handleEvaluate(false)}
+                >
+                  ✗
+                </button>
+                <button
+                  type="button"
+                  className="eval-btn success"
+                  onClick={() => handleEvaluate(true)}
+                >
+                  ✓
+                </button>
+              </div>
+            </>
+          )}
+        </>
       )}
 
-      {revealed && (
+      {evalMode === "prof" && (
         <>
-          <p className={!isSourceHebrew ? "hebrew-large" : ""}>{targetText}</p>
-          <button type="button" className="link-btn" onClick={() => speak(phrase.hebrew)}>
-            🔊
-          </button>
-          <div className="eval-actions">
-            <button
-              type="button"
-              className="eval-btn danger"
-              onClick={() => handleEvaluate(false)}
-            >
-              ✗
-            </button>
-            <button
-              type="button"
-              className="eval-btn success"
-              onClick={() => handleEvaluate(true)}
-            >
-              ✓
-            </button>
-          </div>
+          {!geminiResult && (
+            <>
+              <textarea
+                value={studentSolution}
+                onChange={(e) => setStudentSolution(e.target.value)}
+                rows={3}
+                style={{ width: "100%", maxWidth: 320, fontFamily: "inherit" }}
+                placeholder="Ta traduction..."
+              />
+              <button
+                type="button"
+                className="link-btn"
+                disabled={loadingGemini || !studentSolution.trim()}
+                onClick={handleSubmitProf}
+              >
+                {loadingGemini ? "Envoi..." : "Envoyer"}
+              </button>
+              {geminiError && (
+                <p className="muted" style={{ color: "var(--danger)" }}>
+                  {geminiError}
+                </p>
+              )}
+            </>
+          )}
+
+          {geminiResult && (
+            <>
+              <p>
+                <strong>Note du professeur : {geminiResult.score} / 5</strong>
+              </p>
+              <p className="muted">Ta traduction : {geminiResult.translation}</p>
+              <ul className="words-list">
+                {geminiResult.observations.map((obs, i) => (
+                  <li key={i}>{obs}</li>
+                ))}
+              </ul>
+              <button type="button" className="link-btn" onClick={next}>
+                Question suivante
+              </button>
+            </>
+          )}
         </>
       )}
     </section>

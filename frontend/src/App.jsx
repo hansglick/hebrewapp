@@ -18,6 +18,7 @@ import MotScreen from "./pages/MotScreen";
 import VerbeScreen from "./pages/VerbeScreen";
 import EvaluationChoiceScreen from "./pages/apprentissage/EvaluationChoiceScreen";
 import QuestionEcriteScreen from "./pages/QuestionEcriteScreen";
+import QuestionOraleScreen from "./pages/QuestionOraleScreen";
 import ExamenChoiceScreen from "./pages/examen/ExamenChoiceScreen";
 import ExamenLeconPickerScreen from "./pages/examen/ExamenLeconPickerScreen";
 import ExamenEcritScreen from "./pages/examen/ExamenEcritScreen";
@@ -47,12 +48,20 @@ function App() {
           path="apprentissage/:chapId/:code/questions-ecrites"
           element={<QuestionEcriteScreen />}
         />
+        <Route
+          path="apprentissage/:chapId/:code/questions-orales"
+          element={<QuestionOraleScreen defaultMode="exploration" />}
+        />
         <Route path="revisions" element={<RevisionsChoiceScreen />} />
         <Route path="revisions/mot" element={<MotScreen defaultMode="revision" />} />
         <Route path="revisions/verbe" element={<VerbeScreen defaultMode="revision" />} />
         <Route
           path="revisions/question-ecrite"
           element={<QuestionEcriteScreen defaultMode="revision" />}
+        />
+        <Route
+          path="revisions/question-orale"
+          element={<QuestionOraleScreen defaultMode="revision" />}
         />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />

@@ -1,0 +1,29 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "sentence_to_translate": {
+            "type": "str",
+            "description": "La copie de la phrase à traduire."
+        },
+        "input_language": {
+            "type": "str",
+            "description": "La langue de la phrase à traduire ('français' ou 'hébreu')."
+        },
+        "translation": {
+            "type": "str",
+            "description": "La traduction proposée par l'étudiant."
+        },
+        "output_language": {
+            "type": "str",
+            "description": "La langue attendue de la phrase traduite. L'autre langue que celle correspondante à la phrase à traduire."
+        },
+        "score": {
+            "type": "int",
+            "description": "Une note allant de 1 à 5 représentant la qualité de la traduction de l'élève."
+        },
+        "observations": {
+            "type": "list[str]",
+            "description": "(en français) Une liste des observations ou des erreurs qui justifie la note. Elles doivent être énonncées de manière succinte, synthétique et factuelle."
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "verbatim": {
+            "type": "str",
+            "description": "Le verbatim de la réponse vocale en langue hébreu"
+        },
+        "solution": {
+            "type": "str",
+            "description": "une solution possible à la question. Assure-toi que cette solution soit une phrase complète en hébreu avec au moins un sujet, un verbe et un complément. Supprime les  nikud de la solution."
+        },
+        "rating_completeness": {
+            "type": "int",
+            "description": "Un score compris entre 1 et 5 qui représente la qualité de la structure et de la complétude de la réponse. L'étudiant doit formuler une phrase complète (incluant au minimum un sujet, un verbe et un complément) plutôt que de répondre par un mot isolé ou une bribe de phrase"
+        },
+        "rating_hebrew": {
+            "type": "int",
+            "description": "Un score compris entre 1 et 5 qui représente la qualité de la grammaire et de l'orthographe de la réponse, i.e. la réponse est elle grammaticalement et orthograpiquement correcte en hébreu?"
+        },
+        "errors_rating_hebrew": {
+            "type": "list[str]",
+            "description": "(en langue française principalement bien que des mots hébreux puissent y être insérés) La liste des erreurs grammaticales et d'orthographe contenues dans la réponse énoncées de manière factuelle et synthétique pertinent."
+        },
+        "rating_comprehension": {
+            "type": "int",
+            "description": "Un score compris entre 1 et 5 qui représente la compréhension du texte, i.e. l'étudiant a-t-il trouvé la réponse attendue?"
+        },
+        "errors_rating_comprehension": {
+            "type": "list[str]",
+            "description": "(en langue française principalement bien que des mots hébreux puissent y être insérés) La liste des erreurs de compréhension contenues dans la réponse ennoncées de manière factuelle."
+        }
+    }
+}

@@ -15,9 +15,9 @@ export default function RevisionsChoiceScreen() {
         <Link to="/revisions/question-ecrite" className="card-link">
           <div className="card">Compréhension écrite</div>
         </Link>
-        <div className="card" style={{ opacity: 0.5 }}>
-          Compréhension orale (stratégie de tirage à définir — Phase 7)
-        </div>
+        <Link to="/revisions/question-orale" className="card-link">
+          <div className="card">Compréhension orale</div>
+        </Link>
       </div>
     </section>
   );

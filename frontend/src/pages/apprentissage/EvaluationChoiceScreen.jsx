@@ -14,9 +14,12 @@ export default function EvaluationChoiceScreen() {
         >
           <div className="card">Questions écrites</div>
         </Link>
-        <div className="card" style={{ opacity: 0.5 }}>
-          Questions orales (à venir — Phase 7)
-        </div>
+        <Link
+          to={`/apprentissage/${chapId}/${code}/questions-orales`}
+          className="card-link"
+        >
+          <div className="card">Questions orales</div>
+        </Link>
       </div>
     </section>
   );
