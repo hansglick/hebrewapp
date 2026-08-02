@@ -4,6 +4,7 @@ import { getRandomMot } from "../api/content";
 import { getNiveau, createEvaluation } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
+import { usePersistedState } from "../hooks/usePersistedState";
 import { speak } from "../utils/speech";
 import "./screens.css";
 
@@ -12,7 +13,7 @@ export default function MotScreen({ defaultMode = "exploration" }) {
   const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [langue, setLangue] = useState("hebreu");
-  const [mode, setMode] = useState(defaultMode);
+  const [mode, setMode] = usePersistedState("mot-screen-mode", defaultMode);
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
