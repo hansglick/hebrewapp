@@ -64,8 +64,14 @@ def neighbors(current_set: int) -> tuple:
     partitions sont forcées à la même taille = min(sets en dessous, sets au
     dessus), en ne prenant que les sets immédiatement adjacents à
     `current_set` de ce côté (cf. exemple du user : depuis le set 9, la
-    partition inférieure fixée = sets 7 et 8, pas 1 à 8)."""
+    partition inférieure fixée = sets 7 et 8, pas 1 à 8).
+
+    Cas limite : depuis une extrémité (set 1 ou NUM_SETS), il n'existe aucun
+    set de ce côté (pool = 0) — on reste alors sur `current_set` plutôt que
+    de planter sur une liste vide."""
     pool = min(current_set - 1, NUM_SETS - current_set)
+    if pool == 0:
+        return current_set, current_set
     lower_range = list(range(current_set - pool, current_set))
     upper_range = list(range(current_set + 1, current_set + pool + 1))
     lower_median = lower_range[_median_index(len(lower_range))]
