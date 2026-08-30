@@ -51,6 +51,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Sur Render, RESULTS_DIR pointe vers le disque persistant monté : au tout
+# premier déploiement (avant que le disque ne soit peuplé), le dossier
+# n'existe pas encore et StaticFiles refuse de démarrer sans lui.
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 app.mount("/media", StaticFiles(directory=RESULTS_DIR), name="media")
 app.mount("/data-media", StaticFiles(directory=DATA_DIR), name="data-media")
 
