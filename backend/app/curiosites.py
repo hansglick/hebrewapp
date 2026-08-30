@@ -16,7 +16,6 @@ from functools import lru_cache
 
 from app.config import DATA_DIR
 from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID
 from app.lesson_order import all_lesson_codes_in_order, reference_lesson
 from app import curiosite_images
 
@@ -158,8 +157,8 @@ def pool_delta(curiosite_type: str, position: int) -> list[int]:
     return list(order[before:after])
 
 
-def current_lesson_position(conn) -> int:
-    row = conn.execute("SELECT level FROM user_level WHERE user_id = ?", (DEFAULT_USER_ID,)).fetchone()
+def current_lesson_position(conn, user_id: int) -> int:
+    row = conn.execute("SELECT level FROM user_level WHERE user_id = ?", (user_id,)).fetchone()
     level = row["level"] if row else None
     ref = reference_lesson(level) if level is not None else reference_lesson(None)
     pos = lesson_position(ref) if ref else None

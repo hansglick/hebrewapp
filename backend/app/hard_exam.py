@@ -1,7 +1,7 @@
 import random
 
 from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 from app.difficulty import _is_negative, define_difficulty_score
 from app.lesson_order import all_lesson_codes_in_order, level_score, sample_unique
 from app.quizz import build_quizz_options
@@ -14,7 +14,7 @@ TIMER_SECONDS = 10 * 60
 RATING_THRESHOLD = 4
 
 
-def _last_level_up_at(conn) -> str | None:
+def _last_level_up_at(conn, user_id: int) -> str | None:
     """Horodatage de la dernière VRAIE montée de niveau (écrit ET oral
     réussis sur un même code, faisant progresser dans le cours) — distinct
     d'une simple insertion dans level_history, qui trace aussi les
@@ -23,7 +23,7 @@ def _last_level_up_at(conn) -> str | None:
     champ "sens" sur level_history."""
     rows = conn.execute(
         "SELECT level, reached_at FROM level_history WHERE user_id = ? ORDER BY reached_at ASC, id ASC",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchall()
     last_up = None
     previous_score = None
@@ -42,24 +42,24 @@ def _last_level_up_at(conn) -> str | None:
     return last_up
 
 
-def is_unlocked(conn) -> bool:
+def is_unlocked(conn, user_id: int) -> bool:
     """Déverrouillé ⟺ la dernière VRAIE montée de niveau (écrit ET oral
     réussis, cf. _last_level_up_at) est plus récente que la dernière
     tentative de hard exam (ou qu'aucune tentative de hard exam n'existe
     encore). Pas de flag stocké : monter de niveau déverrouille, tenter le
     hard exam (réussite ou échec) reverrouille aussitôt. Réussir un seul
     format (écrit ou oral) sans faire progresser le niveau ne suffit pas."""
-    last_level_up = _last_level_up_at(conn)
+    last_level_up = _last_level_up_at(conn, user_id)
     if last_level_up is None:
         return False
     last_hard = conn.execute(
         "SELECT MAX(attempted_at) AS t FROM hard_exam_attempts WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()["t"]
     return last_hard is None or last_level_up > last_hard
 
 
-def _evaluated_difficulties(tab: str) -> dict:
+def _evaluated_difficulties(tab: str, user_id: int) -> dict:
     """{object_key: difficulty} pour tous les combos évalués au moins une
     fois d'un onglet Statistiques donné — même score que app.stats/
     app.difficulty, recalculé ici (pas de dépendance à build_stats, qui
@@ -75,7 +75,7 @@ def _evaluated_difficulties(tab: str) -> dict:
             WHERE user_id = ? AND object_type IN ({placeholders})
             ORDER BY object_key, created_at DESC, id DESC
             """,
-            (DEFAULT_USER_ID, *object_types),
+            (user_id, *object_types),
         ).fetchall()
     finally:
         conn.close()
@@ -92,10 +92,10 @@ def _evaluated_difficulties(tab: str) -> dict:
     return difficulties
 
 
-def _verbe_candidates() -> list:
+def _verbe_candidates(user_id: int) -> list:
     verbes = get_dataset("verbe")
     out = []
-    for key, difficulty in _evaluated_difficulties("verbe").items():
+    for key, difficulty in _evaluated_difficulties("verbe", user_id).items():
         parts = key.split("|")
         if len(parts) != 3:
             continue
@@ -123,10 +123,10 @@ def _verbe_candidates() -> list:
     return out
 
 
-def _traduction_candidates(direction: str, tab: str) -> list:
+def _traduction_candidates(direction: str, tab: str, user_id: int) -> list:
     phrases = get_dataset("phrase")
     out = []
-    for key, difficulty in _evaluated_difficulties(tab).items():
+    for key, difficulty in _evaluated_difficulties(tab, user_id).items():
         parts = key.split("|")
         if len(parts) != 3:
             continue
@@ -154,11 +154,11 @@ def _traduction_candidates(direction: str, tab: str) -> list:
     return out
 
 
-def _quizz_candidates(current_level: str) -> list:
+def _quizz_candidates(current_level: str, user_id: int) -> list:
     words = get_dataset("word")
     verbes = get_dataset("verbe")
     out = []
-    for key, difficulty in _evaluated_difficulties("quizz").items():
+    for key, difficulty in _evaluated_difficulties("quizz", user_id).items():
         item_type, _, item_key = key.partition(":")
         item = (words if item_type == "mot" else verbes).get(item_key)
         if item is None:
@@ -175,10 +175,10 @@ def _quizz_candidates(current_level: str) -> list:
     return out
 
 
-def _oral_candidates() -> list:
+def _oral_candidates(user_id: int) -> list:
     texts = get_dataset("text")
     out = []
-    for key, difficulty in _evaluated_difficulties("oral").items():
+    for key, difficulty in _evaluated_difficulties("oral", user_id).items():
         text_code, _, index_str = key.rpartition("|")
         text = texts.get(text_code)
         if text is None:
@@ -205,17 +205,17 @@ def _oral_candidates() -> list:
     return out
 
 
-def _all_evaluated_candidates(current_level: str) -> list:
+def _all_evaluated_candidates(current_level: str, user_id: int) -> list:
     # "mot" est exclu : ce type n'est proposé qu'en auto-évaluation ailleurs
     # dans l'app (aucune vérification objective), jugé trop peu fiable pour
     # un hard exam au seuil de 90%. "verbe" reste inclus mais noté par
     # comparaison écrite plutôt qu'auto-évaluation, cf. _note_and_success.
     return (
-        _verbe_candidates()
-        + _traduction_candidates("francais", "traduction.fr")
-        + _traduction_candidates("hebreu", "traduction.he")
-        + _quizz_candidates(current_level)
-        + _oral_candidates()
+        _verbe_candidates(user_id)
+        + _traduction_candidates("francais", "traduction.fr", user_id)
+        + _traduction_candidates("hebreu", "traduction.he", user_id)
+        + _quizz_candidates(current_level, user_id)
+        + _oral_candidates(user_id)
     )
 
 
@@ -348,8 +348,8 @@ def _fallback_pool(current_level: str) -> list:
     return pool
 
 
-def build_hard_exam(conn, current_level: str) -> dict:
-    evaluated = _all_evaluated_candidates(current_level)
+def build_hard_exam(conn, user_id: int, current_level: str) -> dict:
+    evaluated = _all_evaluated_candidates(current_level, user_id)
     selected = _pick_top(evaluated, N_QUESTIONS)
 
     if len(selected) < N_QUESTIONS:

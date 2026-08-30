@@ -1,8 +1,9 @@
 import random
 from functools import lru_cache
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from app.auth import get_current_user_id
 from app.config import DATA_DIR
 from app import curiosites
 from app.data_loader import get_dataset
@@ -54,10 +55,10 @@ def get_racine(shoresh: str):
 
 # --- Expression : liste, tirage aléatoire parmi les débloquées ---
 @router.get("/expressions/random")
-def random_expression():
+def random_expression(user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
-        position = curiosites.current_lesson_position(conn)
+        position = curiosites.current_lesson_position(conn, user_id)
     finally:
         conn.close()
     pool = curiosites.pool_cumulatif("expression", position)
@@ -82,10 +83,10 @@ def get_expression(index: int):
 
 # --- Presse : liste, tirage aléatoire parmi les débloquées ---
 @router.get("/presse/random")
-def random_presse():
+def random_presse(user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
-        position = curiosites.current_lesson_position(conn)
+        position = curiosites.current_lesson_position(conn, user_id)
     finally:
         conn.close()
     pool = curiosites.pool_cumulatif("presse", position)

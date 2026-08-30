@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 from app.difficulty import _is_negative, define_difficulty_score
 from app.lesson_order import recency_weights, reference_lesson
 
@@ -22,7 +22,7 @@ TAB_OBJECT_TYPES = {
 }
 
 
-def _fetch_evaluations_by_key(object_types: list[str]) -> dict[str, list]:
+def _fetch_evaluations_by_key(object_types: list[str], user_id: int) -> dict[str, list]:
     conn = get_connection()
     try:
         placeholders = ",".join("?" * len(object_types))
@@ -33,7 +33,7 @@ def _fetch_evaluations_by_key(object_types: list[str]) -> dict[str, list]:
             WHERE user_id = ? AND object_type IN ({placeholders})
             ORDER BY object_key, created_at DESC, id DESC
             """,
-            (DEFAULT_USER_ID, *object_types),
+            (user_id, *object_types),
         ).fetchall()
     finally:
         conn.close()
@@ -211,7 +211,7 @@ _BUILDERS = {
 TOP_N = 25
 
 
-def build_stats(tab: str, used_keys: set | None = None) -> list[dict] | None:
+def build_stats(tab: str, user_id: int, used_keys: set | None = None) -> list[dict] | None:
     """Classement décroissant de difficulté pour un onglet Statistiques
     donné, limité aux TOP_N objets les plus difficiles. Ne liste que les
     objets ayant au moins une évaluation enregistrée. Retourne None si
@@ -222,7 +222,7 @@ def build_stats(tab: str, used_keys: set | None = None) -> list[dict] | None:
     if object_types is None:
         return None
 
-    by_key = _fetch_evaluations_by_key(object_types)
+    by_key = _fetch_evaluations_by_key(object_types, user_id)
     rows = _BUILDERS[tab](by_key, used_keys)
     rows.sort(key=lambda r: r["difficulty"], reverse=True)
     rows = rows[:TOP_N]
@@ -231,24 +231,24 @@ def build_stats(tab: str, used_keys: set | None = None) -> list[dict] | None:
     return rows
 
 
-def _fetch_user_level() -> str | None:
+def _fetch_user_level(user_id: int) -> str | None:
     conn = get_connection()
     try:
         row = conn.execute(
-            "SELECT level FROM user_level WHERE user_id = ?", (DEFAULT_USER_ID,)
+            "SELECT level FROM user_level WHERE user_id = ?", (user_id,)
         ).fetchone()
     finally:
         conn.close()
     return row["level"] if row else None
 
 
-def build_recency_stats() -> list[dict]:
+def build_recency_stats(user_id: int) -> list[dict]:
     """Classement décroissant de récence (poids de récence, cf.
     lesson_order.recency_weights) tous types d'objets confondus (mot, verbe,
     traduction, oral), limité aux TOP_N objets les plus récents dans la
     progression du user — contrairement à build_stats, tous les objets des
     leçons débloquées sont inclus, évalués ou non."""
-    level = _fetch_user_level()
+    level = _fetch_user_level(user_id)
     if level is None:
         return []
     level = reference_lesson(level)

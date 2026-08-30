@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from app.auth import get_current_user_id
 from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 from app.text_questions import questions_for_text
 
 router = APIRouter(prefix="/api", tags=["chapters"])
@@ -70,7 +71,7 @@ def get_lecon(code: str):
 
 
 @router.get("/lecons/{code}/exploration")
-def get_lecon_exploration(code: str):
+def get_lecon_exploration(code: str, user_id: int = Depends(get_current_user_id)):
     """Progression d'exploration d'une leçon : B/A sur mots+verbes+
     traductions+texte+oral, "vu" au moins une fois tous modes confondus
     (cf. object_views, table alimentée par POST /api/object-views — oral
@@ -96,7 +97,7 @@ def get_lecon_exploration(code: str):
                 SELECT COUNT(*) AS n FROM object_views
                 WHERE user_id = ? AND object_type = ? AND object_key IN ({placeholders})
                 """,
-                (DEFAULT_USER_ID, object_type, *keys),
+                (user_id, object_type, *keys),
             ).fetchone()
             return row["n"]
 
@@ -130,7 +131,7 @@ def get_lecon_exploration(code: str):
                 SELECT COUNT(DISTINCT object_key) AS n FROM evaluations
                 WHERE user_id = ? AND object_type = 'oral' AND object_key LIKE ?
                 """,
-                (DEFAULT_USER_ID, f"{text_code}|%"),
+                (user_id, f"{text_code}|%"),
             ).fetchone()
             oral_seen = min(oral_row["n"], len(questions))
         categories["oral"] = {"seen": oral_seen, "total": len(questions)}

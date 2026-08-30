@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import {
   advanceOnboardingExam,
   getCurrentOnboardingExam,
+  skipOnboarding,
   startOnboardingExam,
 } from "../../api/onboarding";
+import { getIdentity } from "../../api/identity";
 import { evaluateOral, evaluateTranslation } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
 import { speak } from "../../utils/speech";
@@ -15,17 +17,6 @@ import { ChapitreLogo } from "../../components/ChapitreLogo";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
 import { displayLessonNumber } from "../../utils/lessonDisplay";
 import "../screens.css";
-
-// Un pseudo n'a besoin d'aucun autre caractère que le bloc hébreu Unicode
-// (lettres + niqqud + cantillation) et des espaces — même filtre que le
-// backend (routers/onboarding.py::_sanitize_pseudo), appliqué ici en plus au
-// clavier pour un retour immédiat.
-const NON_HEBREW_RE = /[^֐-׿\s]/g;
-const PSEUDO_MAX_LENGTH = 10;
-
-function sanitizePseudo(value) {
-  return value.replace(NON_HEBREW_RE, "").slice(0, PSEUDO_MAX_LENGTH);
-}
 
 function StarRating({ rating }) {
   return (
@@ -41,9 +32,10 @@ function StarRating({ rating }) {
 
 export default function OnboardingScreen({ onCompleted }) {
   const [phase, setPhase] = useState("loading"); // loading | intro | question | done
-  const [pseudo, setPseudo] = useState("");
   const [startError, setStartError] = useState(null);
   const [starting, setStarting] = useState(false);
+  const [skipping, setSkipping] = useState(false);
+  const pseudo = getIdentity()?.pseudo ?? "";
 
   const [questionNumber, setQuestionNumber] = useState(1);
   const [totalQuestions, setTotalQuestions] = useState(7);
@@ -84,12 +76,10 @@ export default function OnboardingScreen({ onCompleted }) {
   }
 
   async function handleStart() {
-    const cleaned = pseudo.trim();
-    if (!cleaned) return;
     setStarting(true);
     setStartError(null);
     try {
-      const data = await startOnboardingExam(cleaned);
+      const data = await startOnboardingExam();
       setQuestionNumber(data.question_number);
       setTotalQuestions(data.total_questions);
       setQuestion(data.question);
@@ -98,6 +88,20 @@ export default function OnboardingScreen({ onCompleted }) {
       setStartError(e.message);
     } finally {
       setStarting(false);
+    }
+  }
+
+  async function handleSkip() {
+    setSkipping(true);
+    setStartError(null);
+    try {
+      const data = await skipOnboarding();
+      setDoneResult(data);
+      setPhase("done");
+    } catch (e) {
+      setStartError(e.message);
+    } finally {
+      setSkipping(false);
     }
   }
 
@@ -185,23 +189,15 @@ export default function OnboardingScreen({ onCompleted }) {
   if (phase === "intro") {
     return (
       <section className="screen">
-        <h1>Bienvenue !</h1>
+        <h1 className="hebrew" style={{ direction: "rtl" }}>
+          שלום {pseudo}
+        </h1>
         <p className="muted" style={{ fontSize: "0.9em" }}>
-          Pour te proposer des leçons adaptées à ton niveau, tu vas répondre à 7 questions (traductions
-          écrites et questions orales). Réponds du mieux que tu peux — il n'y a pas de mauvaise surprise
+          Pour te proposer des leçons adaptées à ton niveau, tu peux répondre à 7 questions (traductions
+          écrites et questions orales) — réponds du mieux que tu peux, il n'y a pas de mauvaise surprise
           possible : si le niveau retenu s'avère trop facile, tu pourras toujours demander une équivalence
-          par la suite pour avancer plus vite.
+          par la suite pour avancer plus vite. Ou, si tu préfères, commence directement au niveau débutant.
         </p>
-        <p className="muted" style={{ fontSize: "0.85em", margin: 0 }}>
-          Ton pseudo (en hébreu, {PSEUDO_MAX_LENGTH} caractères maximum)
-        </p>
-        <HebrewInput
-          value={pseudo}
-          onChange={(v) => setPseudo(sanitizePseudo(v))}
-          rows={1}
-          placeholder="שם..."
-          showVoicePrefill={false}
-        />
         {startError && (
           <p className="muted" style={{ color: "var(--danger)" }}>
             {startError}
@@ -211,10 +207,19 @@ export default function OnboardingScreen({ onCompleted }) {
           type="button"
           className="exam-tile green"
           style={{ cursor: "pointer" }}
-          disabled={!pseudo.trim() || starting}
+          disabled={starting || skipping}
           onClick={handleStart}
         >
-          Examen pour évaluation de ton niveau
+          Évaluez votre niveau
+        </button>
+        <button
+          type="button"
+          className="link-btn"
+          style={{ fontSize: "0.9em" }}
+          disabled={starting || skipping}
+          onClick={handleSkip}
+        >
+          Commencez au niveau débutant
         </button>
       </section>
     );

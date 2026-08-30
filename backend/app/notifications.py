@@ -1,9 +1,7 @@
-from app.database import DEFAULT_USER_ID
-
 MAX_NOTIFICATIONS = 20
 
 
-def create_notification(conn, message: str, link: str | None = None) -> None:
+def create_notification(conn, user_id: int, message: str, link: str | None = None) -> None:
     """Insère une notification et élague au-delà des MAX_NOTIFICATIONS plus
     récentes — le user ne consulte jamais que les dernières, pas la peine
     d'en tracker davantage. `link` est une route frontend optionnelle (ex:
@@ -12,7 +10,7 @@ def create_notification(conn, message: str, link: str | None = None) -> None:
     de l'app)."""
     conn.execute(
         "INSERT INTO notifications (user_id, message, link) VALUES (?, ?, ?)",
-        (DEFAULT_USER_ID, message, link),
+        (user_id, message, link),
     )
     conn.execute(
         """
@@ -21,6 +19,6 @@ def create_notification(conn, message: str, link: str | None = None) -> None:
             SELECT id FROM notifications WHERE user_id = ? ORDER BY created_at DESC, id DESC LIMIT ?
         )
         """,
-        (DEFAULT_USER_ID, DEFAULT_USER_ID, MAX_NOTIFICATIONS),
+        (user_id, user_id, MAX_NOTIFICATIONS),
     )
     conn.commit()

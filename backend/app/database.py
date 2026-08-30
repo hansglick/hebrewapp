@@ -27,6 +27,17 @@ def get_connection() -> sqlite3.Connection:
     return conn
 
 
+def _bootstrap_user_state(conn: sqlite3.Connection, user_id: int, ignore_existing: bool = False) -> None:
+    """Lignes de progression par défaut d'un compte (wallet + niveau de
+    départ) — partagé entre le bootstrap du compte réel dans init_db() et la
+    création d'un nouveau compte testeur (register_user ci-dessous), pour ne
+    pas dupliquer la liste des tables concernées. N'ouvre pas sa propre
+    transaction : à committer par l'appelant."""
+    verb = "INSERT OR IGNORE" if ignore_existing else "INSERT"
+    conn.execute(f"{verb} INTO wallet_state (user_id) VALUES (?)", (user_id,))
+    conn.execute(f"{verb} INTO user_level (user_id, level) VALUES (?, ?)", (user_id, DEFAULT_LEVEL))
+
+
 def init_db():
     conn = get_connection()
     try:
@@ -46,6 +57,16 @@ def init_db():
             conn.execute("ALTER TABLE users ADD COLUMN pseudo TEXT")
         if "onboarding_completed_at" not in users_cols:
             conn.execute("ALTER TABLE users ADD COLUMN onboarding_completed_at TEXT")
+        # code PIN à 4 chiffres, garde-fou léger multi-utilisateurs (pas une
+        # vraie authentification) — cf. app.auth. NULL pour le compte réel
+        # (id=1) tant qu'il n'est pas passé par /api/auth/register pour en
+        # choisir un ; NULL est traité comme distinct par l'index UNIQUE
+        # ci-dessous, donc ne bloque aucune autre inscription.
+        if "pin" not in users_cols:
+            conn.execute("ALTER TABLE users ADD COLUMN pin TEXT")
+        conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS idx_users_pseudo_pin ON users(pseudo, pin)"
+        )
 
         # Log append-only : une ligne par évaluation. "success" pour les
         # auto-évaluations (mot/verbe/phrase, vrai/faux), "score" pour les
@@ -352,14 +373,7 @@ def init_db():
         )
 
         conn.execute("INSERT OR IGNORE INTO users (id) VALUES (?)", (DEFAULT_USER_ID,))
-        conn.execute(
-            "INSERT OR IGNORE INTO wallet_state (user_id) VALUES (?)",
-            (DEFAULT_USER_ID,),
-        )
-        conn.execute(
-            "INSERT OR IGNORE INTO user_level (user_id, level) VALUES (?, ?)",
-            (DEFAULT_USER_ID, DEFAULT_LEVEL),
-        )
+        _bootstrap_user_state(conn, DEFAULT_USER_ID, ignore_existing=True)
 
         # Backfill unique : aucune donnée historique n'existait avant
         # l'ajout de level_history, on recrée un premier point à partir du
@@ -407,9 +421,9 @@ def init_db():
 
 
 
-# Tables entièrement vidées par reset_account (mono-user : chaque ligne
-# appartient de toute façon à DEFAULT_USER_ID, donc un DELETE sans WHERE est
-# équivalent et plus simple).
+# Tables entièrement vidées par reset_account, restreint à user_id (cf.
+# get_current_user_id) — sans le WHERE, en multi-utilisateurs, le reset
+# d'un testeur effacerait la progression de TOUS les autres.
 _RESET_TABLES = (
     "evaluations",
     "exam_progress",
@@ -431,48 +445,78 @@ _RESET_TABLES = (
 )
 
 
-def reset_account() -> None:
-    """Remet le compte (mono-user) à zéro pour simuler un nouvel onboarding —
-    vide entièrement toute progression (niveau, examens, évaluations,
-    wallet, vues, pseudo) et réinsère les mêmes lignes de bootstrap que
-    init_db() (wallet_state, user_level=DEFAULT_LEVEL, premier point de
-    level_history). Action explicitement destructive, déclenchée uniquement
-    par le bouton "Réinitialiser mon compte" (cf. routers/onboarding.py)."""
+def reset_account(user_id: int) -> None:
+    """Remet CE compte à zéro pour simuler un nouvel onboarding — vide
+    entièrement sa progression (niveau, examens, évaluations, wallet, vues)
+    et réinsère les mêmes lignes de bootstrap que init_db()/register_user
+    (wallet_state, user_level=DEFAULT_LEVEL, premier point de
+    level_history). Le pseudo et le pin sont volontairement CONSERVÉS : ce
+    sont les identifiants de connexion, les effacer rendrait le compte
+    injoignable. Action destructive, déclenchée uniquement par le bouton
+    "Réinitialiser mon compte" (cf. routers/onboarding.py)."""
     conn = get_connection()
     try:
         for table in _RESET_TABLES:
-            conn.execute(f"DELETE FROM {table}")
+            conn.execute(f"DELETE FROM {table} WHERE user_id = ?", (user_id,))
         conn.execute(
-            "UPDATE users SET pseudo = NULL, onboarding_completed_at = NULL WHERE id = ?",
-            (DEFAULT_USER_ID,),
+            "UPDATE users SET onboarding_completed_at = NULL WHERE id = ?",
+            (user_id,),
         )
-        conn.execute(
-            "INSERT INTO wallet_state (user_id) VALUES (?)",
-            (DEFAULT_USER_ID,),
-        )
-        conn.execute(
-            "INSERT INTO user_level (user_id, level) VALUES (?, ?)",
-            (DEFAULT_USER_ID, DEFAULT_LEVEL),
-        )
+        _bootstrap_user_state(conn, user_id)
         conn.execute(
             "INSERT INTO level_history (user_id, level, reached_at) VALUES (?, ?, datetime('now'))",
-            (DEFAULT_USER_ID, DEFAULT_LEVEL),
+            (user_id, DEFAULT_LEVEL),
         )
         conn.commit()
     finally:
         conn.close()
 
 
-def set_user_level(level: str) -> None:
+def register_user(pseudo: str, pin: str) -> int:
+    """Crée un compte (pseudo, pin), ou réclame un compte existant dont le
+    pin n'a jamais été défini — cas du compte réel (id=1), migré vers ce
+    système sans jamais être passé par cet endpoint avant. Ne touche à
+    aucune donnée de progression dans ce dernier cas, uniquement la colonne
+    pin. Lève ValueError si le pseudo est déjà pris avec un pin différent."""
+    conn = get_connection()
+    try:
+        row = conn.execute("SELECT id, pin FROM users WHERE pseudo = ?", (pseudo,)).fetchone()
+        if row is None:
+            cur = conn.execute("INSERT INTO users (pseudo, pin) VALUES (?, ?)", (pseudo, pin))
+            user_id = cur.lastrowid
+            _bootstrap_user_state(conn, user_id)
+            conn.commit()
+            return user_id
+        if row["pin"] is None:
+            conn.execute("UPDATE users SET pin = ? WHERE id = ?", (pin, row["id"]))
+            conn.commit()
+            return row["id"]
+        if row["pin"] != pin:
+            raise ValueError("Ce pseudo est déjà utilisé.")
+        return row["id"]
+    finally:
+        conn.close()
+
+
+def login_user(pseudo: str, pin: str) -> int | None:
+    conn = get_connection()
+    try:
+        row = conn.execute("SELECT id FROM users WHERE pseudo = ? AND pin = ?", (pseudo, pin)).fetchone()
+        return row["id"] if row else None
+    finally:
+        conn.close()
+
+
+def set_user_level(user_id: int, level: str) -> None:
     conn = get_connection()
     try:
         conn.execute(
             "UPDATE user_level SET level = ?, level_since = datetime('now') WHERE user_id = ?",
-            (level, DEFAULT_USER_ID),
+            (level, user_id),
         )
         conn.execute(
             "INSERT INTO level_history (user_id, level, reached_at) VALUES (?, ?, datetime('now'))",
-            (DEFAULT_USER_ID, level),
+            (user_id, level),
         )
         conn.commit()
     finally:

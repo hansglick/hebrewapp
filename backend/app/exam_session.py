@@ -1,6 +1,6 @@
 import json
 
-from app.database import DEFAULT_LEVEL, DEFAULT_USER_ID, set_user_level
+from app.database import DEFAULT_LEVEL, set_user_level
 from app.exam import PASS_THRESHOLD
 from app.lesson_order import all_lesson_codes_in_order
 from app.notifications import create_notification
@@ -33,27 +33,27 @@ def _note_and_success(exam_type: str, question_type: str, answer: dict) -> tuple
     return note, all(r >= 4 for r in ratings)
 
 
-def _attempts_today(conn, code: str, exam_type: str) -> int:
+def _attempts_today(conn, user_id: int, code: str, exam_type: str) -> int:
     row = conn.execute(
         """
         SELECT COUNT(*) AS n FROM exam_attempts
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         AND date(attempted_at) = date('now')
         """,
-        (DEFAULT_USER_ID, code, exam_type),
+        (user_id, code, exam_type),
     ).fetchone()
     return row["n"]
 
 
-def _passed_exam_types(conn, code: str) -> set:
+def _passed_exam_types(conn, user_id: int, code: str) -> set:
     rows = conn.execute(
         "SELECT exam_type FROM exam_progress WHERE user_id = ? AND lesson_code = ?",
-        (DEFAULT_USER_ID, code),
+        (user_id, code),
     ).fetchall()
     return {row["exam_type"] for row in rows}
 
 
-def _attempt_history(conn, code: str, exam_type: str, limit: int = 3) -> list:
+def _attempt_history(conn, user_id: int, code: str, exam_type: str, limit: int = 3) -> list:
     """{id, passed} des `limit` dernières tentatives pour (code, exam_type),
     du plus ancien au plus récent — complété à gauche par des entrées
     {id: None, passed: None} (tentative pas encore faite) s'il y en a moins
@@ -65,13 +65,13 @@ def _attempt_history(conn, code: str, exam_type: str, limit: int = 3) -> list:
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         ORDER BY attempted_at DESC LIMIT ?
         """,
-        (DEFAULT_USER_ID, code, exam_type, limit),
+        (user_id, code, exam_type, limit),
     ).fetchall()
     recent = [{"id": row["id"], "passed": bool(row["passed"])} for row in reversed(rows)]
     return [{"id": None, "passed": None}] * (limit - len(recent)) + recent
 
 
-def _highest_fully_passed_code_excluding(conn, exclude_code: str) -> str:
+def _highest_fully_passed_code_excluding(conn, user_id: int, exclude_code: str) -> str:
     """Code le plus haut (hors `exclude_code`) encore pleinement validé
     (écrit ET oral dans exam_progress) — niveau de repli après une repasse
     ratée. `DEFAULT_LEVEL` si aucun (cas extrême : on rate la repasse du
@@ -79,13 +79,13 @@ def _highest_fully_passed_code_excluding(conn, exclude_code: str) -> str:
     for c in reversed(all_lesson_codes_in_order()):
         if c == exclude_code:
             continue
-        if {"ecrit", "oral"} <= _passed_exam_types(conn, c):
+        if {"ecrit", "oral"} <= _passed_exam_types(conn, user_id, c):
             return c
     return DEFAULT_LEVEL
 
 
 def get_or_create_session(
-    conn, code: str, exam_type: str, current_level: str, build_fn, god_mode: bool = False
+    conn, user_id: int, code: str, exam_type: str, current_level: str, build_fn, god_mode: bool = False
 ):
     """Renvoie (questions, answers, created_at, paused_seconds) de la
     tentative en cours pour (code, exam_type), en la créant si besoin.
@@ -104,7 +104,7 @@ def get_or_create_session(
         SELECT questions_json, answers_json, created_at, paused_seconds FROM exam_sessions
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         """,
-        (DEFAULT_USER_ID, code, exam_type),
+        (user_id, code, exam_type),
     ).fetchone()
     if row is not None:
         return (
@@ -114,7 +114,7 @@ def get_or_create_session(
             row["paused_seconds"],
         )
 
-    if not god_mode and _attempts_today(conn, code, exam_type) >= MAX_ATTEMPTS_PER_DAY:
+    if not god_mode and _attempts_today(conn, user_id, code, exam_type) >= MAX_ATTEMPTS_PER_DAY:
         raise DailyCapReached()
 
     exam = build_fn(code, current_level)
@@ -128,7 +128,7 @@ def get_or_create_session(
         INSERT INTO exam_sessions (user_id, lesson_code, exam_type, questions_json, answers_json)
         VALUES (?, ?, ?, ?, ?)
         """,
-        (DEFAULT_USER_ID, code, exam_type, json.dumps(questions), json.dumps(answers)),
+        (user_id, code, exam_type, json.dumps(questions), json.dumps(answers)),
     )
     conn.commit()
     row = conn.execute(
@@ -136,12 +136,14 @@ def get_or_create_session(
         SELECT created_at, paused_seconds FROM exam_sessions
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         """,
-        (DEFAULT_USER_ID, code, exam_type),
+        (user_id, code, exam_type),
     ).fetchone()
     return questions, answers, row["created_at"], row["paused_seconds"]
 
 
-def record_answer(conn, code: str, exam_type: str, question_index: int, answer: dict, pause_seconds: float = 0.0):
+def record_answer(
+    conn, user_id: int, code: str, exam_type: str, question_index: int, answer: dict, pause_seconds: float = 0.0
+):
     """Enregistre la réponse à une question de la tentative en cours pour
     (code, exam_type). Lève `AlreadyAnswered` si cet index a déjà une
     réponse, `ValueError` si l'index est hors limites, renvoie None si
@@ -159,7 +161,7 @@ def record_answer(conn, code: str, exam_type: str, question_index: int, answer: 
         SELECT questions_json, answers_json FROM exam_sessions
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         """,
-        (DEFAULT_USER_ID, code, exam_type),
+        (user_id, code, exam_type),
     ).fetchone()
     if row is None:
         return None
@@ -196,15 +198,15 @@ def record_answer(conn, code: str, exam_type: str, question_index: int, answer: 
             UPDATE exam_sessions SET answers_json = ?, paused_seconds = paused_seconds + ?
             WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
             """,
-            (json.dumps(answers), pause_seconds, DEFAULT_USER_ID, code, exam_type),
+            (json.dumps(answers), pause_seconds, user_id, code, exam_type),
         )
         conn.commit()
         return {"completed": False}
 
-    return _finalize(conn, code, exam_type, questions, answers)
+    return _finalize(conn, user_id, code, exam_type, questions, answers)
 
 
-def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -> dict:
+def _finalize(conn, user_id: int, code: str, exam_type: str, questions: list, answers: list) -> dict:
     """Note/valide une tentative dont toutes les réponses sont désormais
     présentes (complétion normale ou abandon) : log dans exam_attempts,
     montée de niveau éventuelle, suppression de la tentative en cours.
@@ -214,7 +216,7 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
     Capturé AVANT toute écriture : si ce (code, exam_type) était déjà
     certifié et que cette tentative échoue, c'est une repasse ratée —
     perte de la certification pour ce format + recalcul du niveau."""
-    was_already_certified = exam_type in _passed_exam_types(conn, code)
+    was_already_certified = exam_type in _passed_exam_types(conn, user_id, code)
 
     notes_successes = [
         _note_and_success(exam_type, q.get("type"), a) for q, a in zip(questions, answers)
@@ -233,7 +235,7 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
-            DEFAULT_USER_ID,
+            user_id,
             code,
             exam_type,
             int(passed),
@@ -246,7 +248,7 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
     attempt_id = cursor.lastrowid
     conn.execute(
         "DELETE FROM exam_sessions WHERE user_id = ? AND lesson_code = ? AND exam_type = ?",
-        (DEFAULT_USER_ID, code, exam_type),
+        (user_id, code, exam_type),
     )
 
     if passed:
@@ -257,13 +259,13 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
             ON CONFLICT(user_id, lesson_code, exam_type)
             DO UPDATE SET passed_at = excluded.passed_at
             """,
-            (DEFAULT_USER_ID, code, exam_type),
+            (user_id, code, exam_type),
         )
     elif was_already_certified:
         # Repasse ratée d'un format déjà certifié : perd sa certification.
         conn.execute(
             "DELETE FROM exam_progress WHERE user_id = ? AND lesson_code = ? AND exam_type = ?",
-            (DEFAULT_USER_ID, code, exam_type),
+            (user_id, code, exam_type),
         )
     conn.commit()
 
@@ -271,18 +273,18 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
     level_downgraded = False
     new_level = None
     current_level_row = conn.execute(
-        "SELECT level FROM user_level WHERE user_id = ?", (DEFAULT_USER_ID,)
+        "SELECT level FROM user_level WHERE user_id = ?", (user_id,)
     ).fetchone()
     current_level = current_level_row["level"] if current_level_row else None
 
-    passed_types = _passed_exam_types(conn, code)
+    passed_types = _passed_exam_types(conn, user_id, code)
     if {"ecrit", "oral"} <= passed_types:
         # Crédite les points de la leçon au wallet — une seule fois par
         # leçon (pas une fois par format) : la première fois que ce bloc
         # s'exécute pour ce `code` correspond à la vraie montée de niveau,
         # les fois suivantes à une repasse volontaire (points divisés par
         # deux à chaque fois, cf. app.wallet.enregistrer_examen_reussi).
-        wallet.enregistrer_examen_reussi(conn, code)
+        wallet.enregistrer_examen_reussi(conn, user_id, code)
 
         # Repasser (et réussir) un examen déjà validé plus bas que le niveau
         # actuel ne doit jamais faire redescendre le niveau — set_user_level
@@ -301,12 +303,12 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
             or (code in codes and codes.index(code) > codes.index(current_level))
         )
         if is_advance:
-            set_user_level(code)
+            set_user_level(user_id, code)
             niveau_updated = True
     elif was_already_certified and not passed:
-        fallback_level = _highest_fully_passed_code_excluding(conn, code)
+        fallback_level = _highest_fully_passed_code_excluding(conn, user_id, code)
         if fallback_level != current_level:
-            set_user_level(fallback_level)
+            set_user_level(user_id, fallback_level)
             level_downgraded = True
             new_level = fallback_level
         conn.commit()
@@ -318,7 +320,7 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         ORDER BY attempted_at DESC LIMIT 1
         """,
-        (DEFAULT_USER_ID, code, other_type),
+        (user_id, code, other_type),
     ).fetchone()
     other = None
     if other_row is not None:
@@ -343,7 +345,7 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
     )
     if niveau_updated:
         message += " Tu peux maintenant tenter le Hard Exam pour gagner un maximum de points."
-    create_notification(conn, message, link=f"/examen/copies/{attempt_id}")
+    create_notification(conn, user_id, message, link=f"/examen/copies/{attempt_id}")
 
     return {
         "completed": True,
@@ -359,11 +361,11 @@ def _finalize(conn, code: str, exam_type: str, questions: list, answers: list) -
         "level_downgraded": level_downgraded,
         "new_level": new_level,
         "history": {
-            "ecrit": _attempt_history(conn, code, "ecrit"),
-            "oral": _attempt_history(conn, code, "oral"),
+            "ecrit": _attempt_history(conn, user_id, code, "ecrit"),
+            "oral": _attempt_history(conn, user_id, code, "oral"),
         },
-        "attempts_remaining_ecrit": max(0, MAX_ATTEMPTS_PER_DAY - _attempts_today(conn, code, "ecrit")),
-        "attempts_remaining_oral": max(0, MAX_ATTEMPTS_PER_DAY - _attempts_today(conn, code, "oral")),
+        "attempts_remaining_ecrit": max(0, MAX_ATTEMPTS_PER_DAY - _attempts_today(conn, user_id, code, "ecrit")),
+        "attempts_remaining_oral": max(0, MAX_ATTEMPTS_PER_DAY - _attempts_today(conn, user_id, code, "oral")),
     }
 
 
@@ -398,7 +400,7 @@ def _abandoned_answer(exam_type: str, question: dict) -> dict:
     }
 
 
-def abandon_session(conn, code: str, exam_type: str) -> dict | None:
+def abandon_session(conn, user_id: int, code: str, exam_type: str) -> dict | None:
     """Comble d'un coup toutes les questions sans réponse d'une tentative en
     cours avec une réponse synthétique notée 1 (cf. `_abandoned_answer`),
     puis finalise exactement comme une complétion normale. Renvoie None si
@@ -408,7 +410,7 @@ def abandon_session(conn, code: str, exam_type: str) -> dict | None:
         SELECT questions_json, answers_json FROM exam_sessions
         WHERE user_id = ? AND lesson_code = ? AND exam_type = ?
         """,
-        (DEFAULT_USER_ID, code, exam_type),
+        (user_id, code, exam_type),
     ).fetchone()
     if row is None:
         return None
@@ -419,4 +421,4 @@ def abandon_session(conn, code: str, exam_type: str) -> dict | None:
         if answer is None:
             answers[i] = _abandoned_answer(exam_type, question)
 
-    return _finalize(conn, code, exam_type, questions, answers)
+    return _finalize(conn, user_id, code, exam_type, questions, answers)

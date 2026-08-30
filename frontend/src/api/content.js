@@ -1,10 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+import { apiFetch } from "./http";
 
-async function fetchJson(path) {
-  const res = await fetch(`${API_URL}${path}`);
-  if (!res.ok) throw new Error(`${path} -> ${res.status}`);
-  return res.json();
-}
+const fetchJson = (path) => apiFetch(path);
 
 export const getChapitres = () => fetchJson("/api/chapitres");
 export const getChapitre = (chapId) => fetchJson(`/api/chapitres/${chapId}`);

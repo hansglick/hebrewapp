@@ -1,10 +1,11 @@
 from typing import Literal
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 
+from app.auth import get_current_user_id
 from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 from app.difficulty import (
     aggregate_by_base_key,
     compute_combo_difficulties,
@@ -23,7 +24,7 @@ class ObjectViewIn(BaseModel):
 
 
 @router.post("/object-views")
-def mark_object_seen(payload: ObjectViewIn):
+def mark_object_seen(payload: ObjectViewIn, user_id: int = Depends(get_current_user_id)):
     """Marque un objet (mot/verbe/phrase/texte) comme vu au moins une fois —
     appelé en fire-and-forget par le frontend à chaque affichage, sert de
     signal pour la progression d'exploration d'une leçon (cf.
@@ -32,7 +33,7 @@ def mark_object_seen(payload: ObjectViewIn):
     try:
         conn.execute(
             "INSERT OR IGNORE INTO object_views (user_id, object_type, object_key) VALUES (?, ?, ?)",
-            (DEFAULT_USER_ID, payload.object_type, payload.object_key),
+            (user_id, payload.object_type, payload.object_key),
         )
         conn.commit()
     finally:
@@ -60,6 +61,7 @@ def random_mot(
     lesson_code: str = Query(...),
     mode: Literal["exploration", "revision"] = Query("exploration"),
     current: str | None = Query(None),
+    user_id: int = Depends(get_current_user_id),
 ):
     lesson = _get_lesson(lesson_code)
 
@@ -92,7 +94,7 @@ def random_mot(
                 recency_pool[f"{w}|{d}"] = weight
 
         difficulty_pool = {
-            k: v for k, v in compute_combo_difficulties("mot").items() if k in recency_pool
+            k: v for k, v in compute_combo_difficulties("mot", user_id).items() if k in recency_pool
         }
 
         combo, pool = weighted_pick(difficulty_pool, recency_pool)
@@ -120,6 +122,7 @@ def random_verbe(
     lesson_code: str = Query(...),
     mode: Literal["exploration", "revision"] = Query("exploration"),
     current: str | None = Query(None),
+    user_id: int = Depends(get_current_user_id),
 ):
     lesson = _get_lesson(lesson_code)
 
@@ -140,7 +143,7 @@ def random_verbe(
                 continue
             recency_pool[v] = weight
 
-        difficulty_pool_raw = aggregate_by_base_key(compute_combo_difficulties("verbe"))
+        difficulty_pool_raw = aggregate_by_base_key(compute_combo_difficulties("verbe", user_id))
         difficulty_pool = {k: v for k, v in difficulty_pool_raw.items() if k in recency_pool}
 
         key, draw_pool = weighted_pick(difficulty_pool, recency_pool)
@@ -175,8 +178,8 @@ def get_verbe(key: str):
 
 
 @router.get("/quizz/random")
-def random_quizz(lesson_code: str = Query(...)):
-    result = build_quizz_question(lesson_code)
+def random_quizz(lesson_code: str = Query(...), user_id: int = Depends(get_current_user_id)):
+    result = build_quizz_question(lesson_code, user_id)
     if result is None:
         raise HTTPException(404, "Aucun objet de vocabulaire disponible pour ce tirage")
     return result
@@ -188,6 +191,7 @@ def random_phrase(
     mode: Literal["exploration", "revision"] = Query("exploration"),
     current: str | None = Query(None),
     direction: Literal["hebreu", "francais"] | None = Query(None),
+    user_id: int = Depends(get_current_user_id),
 ):
     phrases_data = get_dataset("phrase")
 
@@ -224,7 +228,7 @@ def random_phrase(
                     recency_pool[f"{lc}|{i}|{d}"] = weight
 
         difficulty_pool = {
-            k: v for k, v in compute_combo_difficulties("phrase_auto").items() if k in recency_pool
+            k: v for k, v in compute_combo_difficulties("phrase_auto", user_id).items() if k in recency_pool
         }
 
         picked, draw_pool = weighted_pick(difficulty_pool, recency_pool)

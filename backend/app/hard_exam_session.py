@@ -1,6 +1,5 @@
 import json
 
-from app.database import DEFAULT_USER_ID
 from app.hard_exam import PASS_THRESHOLD, _note_and_success, build_hard_exam, is_unlocked
 from app import wallet
 
@@ -13,7 +12,7 @@ class AlreadyAnswered(Exception):
     pass
 
 
-def get_or_create_session(conn, current_level: str):
+def get_or_create_session(conn, user_id: int, current_level: str):
     """Renvoie (questions, answers, created_at, paused_seconds) de la
     tentative de hard exam en cours, en la créant si besoin. Une tentative
     déjà en cours peut toujours être reprise même si `is_unlocked` est
@@ -23,7 +22,7 @@ def get_or_create_session(conn, current_level: str):
     déverrouillage. Lève `NotUnlocked` sinon."""
     row = conn.execute(
         "SELECT questions_json, answers_json, created_at, paused_seconds FROM hard_exam_sessions WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()
     if row is not None:
         return (
@@ -33,30 +32,30 @@ def get_or_create_session(conn, current_level: str):
             row["paused_seconds"],
         )
 
-    if not is_unlocked(conn):
+    if not is_unlocked(conn, user_id):
         raise NotUnlocked()
 
-    exam = build_hard_exam(conn, current_level)
+    exam = build_hard_exam(conn, user_id, current_level)
     questions = exam["questions"]
     answers = [None] * len(questions)
     conn.execute(
         "INSERT INTO hard_exam_sessions (user_id, questions_json, answers_json) VALUES (?, ?, ?)",
-        (DEFAULT_USER_ID, json.dumps(questions), json.dumps(answers)),
+        (user_id, json.dumps(questions), json.dumps(answers)),
     )
     conn.commit()
     row = conn.execute(
         "SELECT created_at, paused_seconds FROM hard_exam_sessions WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()
     return questions, answers, row["created_at"], row["paused_seconds"]
 
 
-def record_answer(conn, question_index: int, answer: dict, pause_seconds: float = 0.0):
+def record_answer(conn, user_id: int, question_index: int, answer: dict, pause_seconds: float = 0.0):
     """Même logique que app.exam_session.record_answer, sans lesson_code ni
     exam_type (un seul hard exam global par user)."""
     row = conn.execute(
         "SELECT questions_json, answers_json FROM hard_exam_sessions WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()
     if row is None:
         return None
@@ -85,15 +84,15 @@ def record_answer(conn, question_index: int, answer: dict, pause_seconds: float 
     if any(a is None for a in answers):
         conn.execute(
             "UPDATE hard_exam_sessions SET answers_json = ?, paused_seconds = paused_seconds + ? WHERE user_id = ?",
-            (json.dumps(answers), pause_seconds, DEFAULT_USER_ID),
+            (json.dumps(answers), pause_seconds, user_id),
         )
         conn.commit()
         return {"completed": False}
 
-    return _finalize(conn, questions, answers)
+    return _finalize(conn, user_id, questions, answers)
 
 
-def _finalize(conn, questions: list, answers: list) -> dict:
+def _finalize(conn, user_id: int, questions: list, answers: list) -> dict:
     """Note la tentative complète, l'archive dans hard_exam_attempts et
     supprime la session en cours. Ne touche jamais user_level/
     exam_progress/evaluations : le hard exam est un défi à part, sans
@@ -109,14 +108,14 @@ def _finalize(conn, questions: list, answers: list) -> dict:
             (user_id, passed, score_ratio, average_note, questions_json, answers_json)
         VALUES (?, ?, ?, ?, ?, ?)
         """,
-        (DEFAULT_USER_ID, int(passed), success_ratio, average_note, json.dumps(questions), json.dumps(answers)),
+        (user_id, int(passed), success_ratio, average_note, json.dumps(questions), json.dumps(answers)),
     )
     attempt_id = cursor.lastrowid
-    conn.execute("DELETE FROM hard_exam_sessions WHERE user_id = ?", (DEFAULT_USER_ID,))
+    conn.execute("DELETE FROM hard_exam_sessions WHERE user_id = ?", (user_id,))
     conn.commit()
 
     if passed:
-        wallet.enregistrer_hard_exam_reussi(conn)
+        wallet.enregistrer_hard_exam_reussi(conn, user_id)
 
     return {
         "completed": True,
@@ -147,10 +146,10 @@ def _abandoned_answer(question: dict) -> dict:
     }
 
 
-def abandon_session(conn) -> dict | None:
+def abandon_session(conn, user_id: int) -> dict | None:
     row = conn.execute(
         "SELECT questions_json, answers_json FROM hard_exam_sessions WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()
     if row is None:
         return None
@@ -161,4 +160,4 @@ def abandon_session(conn) -> dict | None:
         if answer is None:
             answers[i] = _abandoned_answer(question)
 
-    return _finalize(conn, questions, answers)
+    return _finalize(conn, user_id, questions, answers)

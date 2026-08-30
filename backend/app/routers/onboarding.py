@@ -1,10 +1,10 @@
 import json
-import re
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
-from app.database import DEFAULT_USER_ID, get_connection, reset_account, set_user_level
+from app.auth import get_current_user_id
+from app.database import DEFAULT_LEVEL, get_connection, reset_account, set_user_level
 from app.lesson_order import reference_lesson
 from app.onboarding_exam import (
     STARTING_SET,
@@ -19,39 +19,25 @@ from app.onboarding_exam import (
 
 router = APIRouter(prefix="/api/onboarding", tags=["onboarding"])
 
-# Bloc hébreu Unicode (lettres + niqqud + cantillation) + espaces — un pseudo
-# n'a besoin de rien de plus, tout le reste est retiré silencieusement plutôt
-# que rejeté (évite un aller-retour de validation gênant pour une simple
-# saisie sur mobile).
-_NON_HEBREW_RE = re.compile(r"[^֐-׿\s]")
-
-
-def _sanitize_pseudo(raw: str) -> str:
-    return _NON_HEBREW_RE.sub("", raw).strip()
-
 
 @router.get("/status")
-def onboarding_status():
+def onboarding_status(user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
         row = conn.execute(
-            "SELECT pseudo, onboarding_completed_at FROM users WHERE id = ?", (DEFAULT_USER_ID,)
+            "SELECT pseudo, onboarding_completed_at FROM users WHERE id = ?", (user_id,)
         ).fetchone()
     finally:
         conn.close()
     return {"needs_onboarding": row["onboarding_completed_at"] is None, "pseudo": row["pseudo"]}
 
 
-class StartRequest(BaseModel):
-    pseudo: str
-
-
 @router.post("/exam/start")
-def start_exam(payload: StartRequest):
+def start_exam(user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
         row = conn.execute(
-            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (DEFAULT_USER_ID,)
+            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (user_id,)
         ).fetchone()
         if row is not None:
             return {
@@ -61,11 +47,6 @@ def start_exam(payload: StartRequest):
                 "question": json.loads(row["current_question_json"]),
             }
 
-        pseudo = _sanitize_pseudo(payload.pseudo)
-        if not pseudo:
-            raise HTTPException(400, "Pseudo invalide (caractères hébreux uniquement)")
-        conn.execute("UPDATE users SET pseudo = ? WHERE id = ?", (pseudo, DEFAULT_USER_ID))
-
         oral_slots = pick_oral_slots()
         question = draw_question(STARTING_SET, 1 in oral_slots)
         conn.execute(
@@ -74,7 +55,7 @@ def start_exam(payload: StartRequest):
                 (user_id, question_number, current_set, oral_slots_json, current_question_json, history_json)
             VALUES (?, 1, ?, ?, ?, ?)
             """,
-            (DEFAULT_USER_ID, STARTING_SET, json.dumps(oral_slots), json.dumps(question), json.dumps([])),
+            (user_id, STARTING_SET, json.dumps(oral_slots), json.dumps(question), json.dumps([])),
         )
         conn.commit()
         return {"completed": False, "question_number": 1, "total_questions": TOTAL_QUESTIONS, "question": question}
@@ -83,11 +64,11 @@ def start_exam(payload: StartRequest):
 
 
 @router.get("/exam/current")
-def current_exam():
+def current_exam(user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
         row = conn.execute(
-            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (DEFAULT_USER_ID,)
+            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (user_id,)
         ).fetchone()
     finally:
         conn.close()
@@ -109,11 +90,11 @@ class AdvanceRequest(BaseModel):
 
 
 @router.post("/exam/advance")
-def advance_exam(payload: AdvanceRequest):
+def advance_exam(payload: AdvanceRequest, user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
         row = conn.execute(
-            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (DEFAULT_USER_ID,)
+            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (user_id,)
         ).fetchone()
         if row is None:
             raise HTTPException(404, "Aucun examen d'entrée en cours")
@@ -129,11 +110,11 @@ def advance_exam(payload: AdvanceRequest):
         if payload.question_number >= TOTAL_QUESTIONS:
             final = final_set(row["current_set"], score)
             niveau = niveau_from_final_set(final)
-            set_user_level(niveau)
+            set_user_level(user_id, niveau)
             conn.execute(
-                "UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (DEFAULT_USER_ID,)
+                "UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (user_id,)
             )
-            conn.execute("DELETE FROM onboarding_exam_progress WHERE user_id = ?", (DEFAULT_USER_ID,))
+            conn.execute("DELETE FROM onboarding_exam_progress WHERE user_id = ?", (user_id,))
             conn.commit()
             return {
                 "completed": True,
@@ -153,7 +134,7 @@ def advance_exam(payload: AdvanceRequest):
             SET question_number = ?, current_set = ?, current_question_json = ?, history_json = ?
             WHERE user_id = ?
             """,
-            (next_question_number, next_set_index, json.dumps(question), json.dumps(history), DEFAULT_USER_ID),
+            (next_question_number, next_set_index, json.dumps(question), json.dumps(history), user_id),
         )
         conn.commit()
         return {
@@ -166,7 +147,23 @@ def advance_exam(payload: AdvanceRequest):
         conn.close()
 
 
+@router.post("/skip")
+def skip_onboarding(user_id: int = Depends(get_current_user_id)):
+    """Bouton "Commencez au niveau débutant" — même effet de bord que la fin
+    de l'examen (advance_exam, branche completed) mais sans passer par les 7
+    questions."""
+    set_user_level(user_id, DEFAULT_LEVEL)
+    conn = get_connection()
+    try:
+        conn.execute("UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (user_id,))
+        conn.execute("DELETE FROM onboarding_exam_progress WHERE user_id = ?", (user_id,))
+        conn.commit()
+    finally:
+        conn.close()
+    return {"reference_lesson": reference_lesson(DEFAULT_LEVEL)}
+
+
 @router.post("/reset")
-def reset_onboarding():
-    reset_account()
+def reset_onboarding(user_id: int = Depends(get_current_user_id)):
+    reset_account(user_id)
     return {"status": "ok"}

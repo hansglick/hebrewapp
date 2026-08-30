@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel, model_validator
 
-from app.database import DEFAULT_USER_ID, get_connection
+from app.auth import get_current_user_id
+from app.database import get_connection
 
 router = APIRouter(prefix="/api", tags=["evaluations"])
 
@@ -40,7 +41,7 @@ def _row_to_out(row) -> EvaluationOut:
 
 
 @router.post("/evaluations", response_model=EvaluationOut)
-def create_evaluation(payload: EvaluationCreate):
+def create_evaluation(payload: EvaluationCreate, user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
         cursor = conn.execute(
@@ -49,7 +50,7 @@ def create_evaluation(payload: EvaluationCreate):
             VALUES (?, ?, ?, ?, ?)
             """,
             (
-                DEFAULT_USER_ID,
+                user_id,
                 payload.object_type,
                 payload.object_key,
                 int(payload.success) if payload.success is not None else None,
@@ -70,6 +71,7 @@ def list_evaluations(
     object_type: str = Query(...),
     object_key: str = Query(...),
     limit: int = Query(5, ge=1, le=50),
+    user_id: int = Depends(get_current_user_id),
 ):
     conn = get_connection()
     try:
@@ -80,7 +82,7 @@ def list_evaluations(
             ORDER BY created_at DESC, id DESC
             LIMIT ?
             """,
-            (DEFAULT_USER_ID, object_type, object_key, limit),
+            (user_id, object_type, object_key, limit),
         ).fetchall()
         return [_row_to_out(row) for row in rows]
     finally:

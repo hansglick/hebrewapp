@@ -1,7 +1,8 @@
 import random
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from app.auth import get_current_user_id
 from app.database import get_connection
 from app import curiosites
 
@@ -38,7 +39,12 @@ def random_any_curiosite():
 
 
 @router.get("/{curiosite_type}/random")
-def random_curiosite(curiosite_type: str, lesson_code: str | None = None, current: int | None = None):
+def random_curiosite(
+    curiosite_type: str,
+    lesson_code: str | None = None,
+    current: int | None = None,
+    user_id: int = Depends(get_current_user_id),
+):
     """Tire un item au hasard dans le pool débloqué : le delta d'une leçon
     précise si `lesson_code` est fourni (tuile "Curiosité"), sinon le cumul
     débloqué à la position courante de l'étudiant (écrans "Fun")."""
@@ -52,7 +58,7 @@ def random_curiosite(curiosite_type: str, lesson_code: str | None = None, curren
     else:
         conn = get_connection()
         try:
-            position = curiosites.current_lesson_position(conn)
+            position = curiosites.current_lesson_position(conn, user_id)
         finally:
             conn.close()
         pool = curiosites.pool_cumulatif(curiosite_type, position)

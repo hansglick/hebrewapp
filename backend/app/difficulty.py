@@ -3,7 +3,7 @@ from collections import defaultdict
 
 from scipy.stats import beta
 
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 
 # Une note (1-5) est négative si < 4 ; un succès booléen est négatif si False.
 SCORE_NEGATIVE_THRESHOLD = 4
@@ -52,7 +52,7 @@ def define_difficulty_score(bool_list: list) -> float:
     return _median_beta((pos + 1, neg + 1))
 
 
-def compute_combo_difficulties(object_type: str) -> dict:
+def compute_combo_difficulties(object_type: str, user_id: int) -> dict:
     """Score de difficulté par combo exact (object_key), basé sur les 5
     dernières évaluations (cf. define_difficulty_score) — c'est ce score qui
     sert de poids lors du tirage pondéré par difficulté (stratified_pick)."""
@@ -65,7 +65,7 @@ def compute_combo_difficulties(object_type: str) -> dict:
             WHERE user_id = ? AND object_type = ?
             ORDER BY object_key, created_at DESC, id DESC
             """,
-            (DEFAULT_USER_ID, object_type),
+            (user_id, object_type),
         ).fetchall()
     finally:
         conn.close()

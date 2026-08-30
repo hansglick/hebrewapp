@@ -1,13 +1,14 @@
 import asyncio
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
 from google.genai.errors import APIError
 from openai import APIError as OpenAIAPIError
 
+from app.auth import get_current_user_id
 from app.data_loader import add_chanson, get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 from app.difficulty import compute_combo_difficulties, pick_sequential, weighted_pick
 from app.gemini import evaluate_oral, evaluate_report, evaluate_translation, extract_lyrics
 from app.openai_client import DICTIONNAIRE_PROMPT_FR, extract_verbatim
@@ -18,7 +19,7 @@ from app.youtube import extraire_cle_youtube
 router = APIRouter(prefix="/api", tags=["gemini"])
 
 
-def _record_evaluation(object_type: str, object_key: str, score: int):
+def _record_evaluation(user_id: int, object_type: str, object_key: str, score: int):
     conn = get_connection()
     try:
         conn.execute(
@@ -26,7 +27,7 @@ def _record_evaluation(object_type: str, object_key: str, score: int):
             INSERT INTO evaluations (user_id, object_type, object_key, success, score)
             VALUES (?, ?, ?, NULL, ?)
             """,
-            (DEFAULT_USER_ID, object_type, object_key, score),
+            (user_id, object_type, object_key, score),
         )
         conn.commit()
     finally:
@@ -41,7 +42,7 @@ class TranslationEvalRequest(BaseModel):
 
 
 @router.post("/gemini/translation")
-def gemini_translation(payload: TranslationEvalRequest):
+def gemini_translation(payload: TranslationEvalRequest, user_id: int = Depends(get_current_user_id)):
     phrases = get_dataset("phrase")
     pool = phrases.get(payload.lesson_code, [])
     if payload.position < 0 or payload.position >= len(pool):
@@ -58,7 +59,7 @@ def gemini_translation(payload: TranslationEvalRequest):
         raise HTTPException(502, f"Erreur Gemini : {exc.message}")
 
     object_key = f"{payload.lesson_code}|{payload.position}|{payload.direction}"
-    _record_evaluation("phrase_gemini", object_key, result["score"])
+    _record_evaluation(user_id, "phrase_gemini", object_key, result["score"])
 
     return result
 
@@ -93,7 +94,12 @@ def extract_chanson(payload: LyricsExtractRequest):
 
 
 @router.get("/questions-orales/random")
-def random_question_orale(lesson_code: str, mode: str = "exploration", current: str | None = None):
+def random_question_orale(
+    lesson_code: str,
+    mode: str = "exploration",
+    current: str | None = None,
+    user_id: int = Depends(get_current_user_id),
+):
     lessons = get_dataset("lesson")
     lesson = lessons.get(lesson_code)
     if lesson is None:
@@ -127,7 +133,7 @@ def random_question_orale(lesson_code: str, mode: str = "exploration", current: 
                 recency_pool[f"{tc}|{i}"] = weight
 
         difficulty_pool = {
-            k: v for k, v in compute_combo_difficulties("oral").items() if k in recency_pool
+            k: v for k, v in compute_combo_difficulties("oral", user_id).items() if k in recency_pool
         }
 
         picked, draw_pool = weighted_pick(difficulty_pool, recency_pool)
@@ -159,6 +165,7 @@ async def gemini_oral(
     text_code: str = Form(...),
     question_index: int = Form(...),
     audio: UploadFile = File(...),
+    user_id: int = Depends(get_current_user_id),
 ):
     texts_data = get_dataset("text")
     text = texts_data.get(text_code)
@@ -189,7 +196,7 @@ async def gemini_oral(
         (result["rating_completeness"] + result["rating_hebrew"] + result["rating_comprehension"]) / 3
     )
     object_key = f"{text_code}|{question_index}"
-    _record_evaluation("oral", object_key, aggregate_score)
+    _record_evaluation(user_id, "oral", object_key, aggregate_score)
 
     return result
 

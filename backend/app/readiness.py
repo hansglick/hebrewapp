@@ -12,7 +12,7 @@ difficulté (le même score Beta déjà utilisé partout ailleurs) des questions
 du périmètre."""
 
 from app.data_loader import get_dataset
-from app.database import DEFAULT_USER_ID, get_connection
+from app.database import get_connection
 from app.lesson_order import all_lesson_codes_in_order, exam_type_for, reference_lesson
 from app.stats import _fetch_evaluations_by_key, _score_and_last5
 
@@ -29,10 +29,10 @@ TRANSLATION_OBJECT_TYPES = ["phrase_auto", "phrase_gemini"]
 FR_TO_HE_DIRECTION = "hebreu"
 
 
-def _last_exam_cutoff(conn) -> str:
+def _last_exam_cutoff(conn, user_id: int) -> str:
     row = conn.execute(
         "SELECT MAX(reached_at) AS cutoff FROM level_history WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()
     return row["cutoff"] if row and row["cutoff"] else ""
 
@@ -55,13 +55,13 @@ def _scope_lessons(exam_format: str, reference_code: str) -> list[str]:
     return list(chapitre["lessons"]) if chapitre else [reference_code]
 
 
-def _eligible_fr_to_he_keys(conn, cutoff: str) -> dict[str, list]:
+def _eligible_fr_to_he_keys(conn, cutoff: str, user_id: int) -> dict[str, list]:
     """{object_key: evals} pour chaque combo fr->hé ayant au moins une
     évaluation postérieure à `cutoff` — `evals` garde tout l'historique du
     combo (pas seulement les évaluations post-cutoff), pour que le score de
     difficulté reste calculé exactement comme partout ailleurs dans l'app
     (5 dernières évaluations, sans filtrage de date)."""
-    by_key = _fetch_evaluations_by_key(TRANSLATION_OBJECT_TYPES)
+    by_key = _fetch_evaluations_by_key(TRANSLATION_OBJECT_TYPES, user_id)
     eligible = {}
     for key, evals in by_key.items():
         _, _, direction = key.split("|")
@@ -72,11 +72,11 @@ def _eligible_fr_to_he_keys(conn, cutoff: str) -> dict[str, list]:
     return eligible
 
 
-def compute_readiness() -> dict:
+def compute_readiness(user_id: int) -> dict:
     conn = get_connection()
     try:
         row = conn.execute(
-            "SELECT level FROM user_level WHERE user_id = ?", (DEFAULT_USER_ID,)
+            "SELECT level FROM user_level WHERE user_id = ?", (user_id,)
         ).fetchone()
         level = row["level"] if row else None
         reference_code = reference_lesson(level) if level is not None else reference_lesson(None)
@@ -84,8 +84,8 @@ def compute_readiness() -> dict:
             return {"status": "not_ready", "blocking": "total", "count": 0, "target": MIN_TOTAL_ANSWERED}
 
         exam_format = exam_type_for(reference_code)
-        cutoff = _last_exam_cutoff(conn)
-        eligible = _eligible_fr_to_he_keys(conn, cutoff)
+        cutoff = _last_exam_cutoff(conn, user_id)
+        eligible = _eligible_fr_to_he_keys(conn, cutoff, user_id)
     finally:
         conn.close()
 

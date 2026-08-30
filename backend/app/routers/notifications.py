@@ -1,20 +1,21 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from app.database import DEFAULT_USER_ID, get_connection
+from app.auth import get_current_user_id
+from app.database import get_connection
 from app.notifications import MAX_NOTIFICATIONS
 
 router = APIRouter(prefix="/api", tags=["notifications"])
 
 
 @router.get("/notifications/unread-count")
-def get_unread_count():
+def get_unread_count(user_id: int = Depends(get_current_user_id)):
     """Sans effet de bord — utilisé par le badge du header, qui ne doit pas
     marquer les notifications comme lues juste en les comptant."""
     conn = get_connection()
     try:
         row = conn.execute(
             "SELECT COUNT(*) AS n FROM notifications WHERE user_id = ? AND is_read = 0",
-            (DEFAULT_USER_ID,),
+            (user_id,),
         ).fetchone()
     finally:
         conn.close()
@@ -22,7 +23,7 @@ def get_unread_count():
 
 
 @router.get("/notifications")
-def list_notifications():
+def list_notifications(user_id: int = Depends(get_current_user_id)):
     """Les MAX_NOTIFICATIONS dernières, du plus récent au plus ancien. Le
     champ `read` de la réponse reflète l'état AVANT la mise à jour ci-dessous
     (calculé d'abord) — sinon tout apparaîtrait déjà lu dès ce premier appel,
@@ -34,7 +35,7 @@ def list_notifications():
             SELECT id, message, link, is_read, created_at FROM notifications
             WHERE user_id = ? ORDER BY created_at DESC, id DESC LIMIT ?
             """,
-            (DEFAULT_USER_ID, MAX_NOTIFICATIONS),
+            (user_id, MAX_NOTIFICATIONS),
         ).fetchall()
         result = [
             {
@@ -46,7 +47,7 @@ def list_notifications():
             }
             for row in rows
         ]
-        conn.execute("UPDATE notifications SET is_read = 1 WHERE user_id = ? AND is_read = 0", (DEFAULT_USER_ID,))
+        conn.execute("UPDATE notifications SET is_read = 1 WHERE user_id = ? AND is_read = 0", (user_id,))
         conn.commit()
     finally:
         conn.close()

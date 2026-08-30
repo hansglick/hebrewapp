@@ -6,6 +6,7 @@ from app.config import DATA_DIR, FRONTEND_DEV_ORIGIN, RESULTS_DIR
 from app.data_loader import DATA_FILES, get_dataset
 from app.database import init_db
 from app.routers import (
+    auth,
     chapters,
     content,
     curiosites,
@@ -24,6 +25,7 @@ from app.routers import (
 )
 
 app = FastAPI(title="Hebrew App API")
+app.include_router(auth.router)
 app.include_router(content.router)
 app.include_router(chapters.router)
 app.include_router(evaluations.router)

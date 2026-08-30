@@ -64,7 +64,7 @@ def build_quizz_options(
     return options
 
 
-def build_quizz_question(lesson_code: str) -> dict | None:
+def build_quizz_question(lesson_code: str, user_id: int) -> dict | None:
     """Tire un mot ou un verbe (pool fusionné Mot+Verbe de la leçon) pondéré
     50% difficulté / 50% récence — même mécanisme que random_mot/
     random_verbe, cf. app.difficulty.weighted_pick — puis construit un QCM
@@ -102,7 +102,7 @@ def build_quizz_question(lesson_code: str) -> dict | None:
         recency_pool[f"verbe:{v}"] = weight
 
     difficulty_pool = {
-        k: v for k, v in compute_combo_difficulties("quizz").items() if k in recency_pool
+        k: v for k, v in compute_combo_difficulties("quizz", user_id).items() if k in recency_pool
     }
 
     picked, draw_pool = weighted_pick(difficulty_pool, recency_pool)

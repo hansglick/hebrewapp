@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { abandonExamen, abandonExamenHard, getActiveLockdown, getNiveau } from "../api/user";
 import { getOnboardingStatus } from "../api/onboarding";
+import { clearIdentity, getIdentity } from "../api/identity";
 import OnboardingScreen from "../pages/onboarding/OnboardingScreen";
+import SignInScreen from "../pages/onboarding/SignInScreen";
 import { useWallet } from "../context/WalletContext";
 import { getUnreadNotificationCount } from "../api/content";
 import { DictionaryIcon } from "../components/DictionaryIcon";
@@ -11,7 +13,8 @@ import { DreidelIcon } from "../components/DreidelIcon";
 import { NotificationIcon } from "../components/NotificationIcon";
 import { ShekelIcon } from "../components/ShekelIcon";
 import { MagenDavidIcon } from "../components/MagenDavidIcon";
-import { SunIcon, MoonIcon } from "../components/SunMoonIcons";
+import { GearIcon } from "../components/GearIcon";
+import { ConfigModal } from "../components/ConfigModal";
 import { MobileMenuIcon } from "../components/MobileMenuIcon";
 import { useConfig } from "../config/ConfigContext";
 import { useExamTimer } from "../context/ExamTimerContext";
@@ -40,7 +43,14 @@ export default function Layout() {
   const [lockdown, setLockdown] = useState(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [configOpen, setConfigOpen] = useState(false);
   const [needsOnboarding, setNeedsOnboarding] = useState(null); // null = pas encore su
+  // Porte d'entrée avant même l'onboarding : sans identité stockée
+  // localement, le backend n'a aucun moyen de savoir quel compte servir
+  // (plus de fallback implicite, cf. app.auth.get_current_user_id) — tant
+  // qu'elle est fausse, aucun appel API scopé par utilisateur ne doit
+  // partir (voir les gardes `hasIdentity &&` ci-dessous).
+  const [hasIdentity, setHasIdentity] = useState(() => !!getIdentity());
   const { wallet, refreshWallet } = useWallet();
   const { themeMode, setThemeMode } = useConfig();
   const location = useLocation();
@@ -48,8 +58,8 @@ export default function Layout() {
   const { timer } = useExamTimer();
 
   useEffect(() => {
-    getOnboardingStatus().then((s) => setNeedsOnboarding(s.needs_onboarding));
-  }, []);
+    if (hasIdentity) getOnboardingStatus().then((s) => setNeedsOnboarding(s.needs_onboarding));
+  }, [hasIdentity]);
 
   // Layout reste monté d'une route à l'autre (Outlet), donc on recharge le
   // niveau à chaque changement de page plutôt qu'une seule fois au montage —
@@ -58,8 +68,8 @@ export default function Layout() {
   // terminé) ne change pas le pathname (toujours "/"), donc sans ça le
   // niveau affiché resterait celui d'avant l'examen d'entrée.
   useEffect(() => {
-    getNiveau().then(setNiveau);
-  }, [location.pathname, needsOnboarding]);
+    if (hasIdentity) getNiveau().then(setNiveau);
+  }, [location.pathname, needsOnboarding, hasIdentity]);
 
   // Referme le panneau mobile (compteurs/notifications/dictionnaire/thème)
   // dès qu'on change de page, pour ne pas le laisser ouvert par inadvertance.
@@ -72,8 +82,8 @@ export default function Layout() {
   // l'écran /notifications lui-même après consultation (marque tout comme lu
   // côté serveur, cf. getNotifications) pour faire retomber le badge.
   useEffect(() => {
-    getUnreadNotificationCount().then((r) => setUnreadCount(r.count));
-  }, [location.pathname, needsOnboarding]);
+    if (hasIdentity) getUnreadNotificationCount().then((r) => setUnreadCount(r.count));
+  }, [location.pathname, needsOnboarding, hasIdentity]);
 
   // Vérifie l'existence d'une tentative d'examen long/très long en cours à
   // chaque changement de route (couvre aussi un refresh, qui remonte Layout
@@ -82,26 +92,28 @@ export default function Layout() {
   // reste sur place pour afficher son récapitulatif) : sans ce polling, le
   // texte "Abandonner l'épreuve" resterait affiché après coup.
   useEffect(() => {
-    getActiveLockdown().then(setLockdown);
-  }, [location.pathname, needsOnboarding]);
+    if (hasIdentity) getActiveLockdown().then(setLockdown);
+  }, [location.pathname, needsOnboarding, hasIdentity]);
 
   useEffect(() => {
+    if (!hasIdentity) return;
     const id = setInterval(() => {
       getActiveLockdown().then(setLockdown);
     }, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [hasIdentity]);
 
   // Chaque appel déclenche aussi côté serveur le tick d'inactivité (perte de
   // cartes, notifications de palier) — cf. app.wallet.tick_inactivite_et_notifications.
   useEffect(() => {
-    refreshWallet();
-  }, [location.pathname, needsOnboarding, refreshWallet]);
+    if (hasIdentity) refreshWallet();
+  }, [location.pathname, needsOnboarding, hasIdentity, refreshWallet]);
 
   useEffect(() => {
+    if (!hasIdentity) return;
     const id = setInterval(refreshWallet, 30000);
     return () => clearInterval(id);
-  }, [refreshWallet]);
+  }, [hasIdentity, refreshWallet]);
 
   // Tant qu'une tentative long/très long est en cours, toute navigation
   // ailleurs (manuelle ou via refresh) ramène immédiatement sur sa question
@@ -111,6 +123,14 @@ export default function Layout() {
     const target = lockdownTarget(lockdown);
     if (location.pathname !== target) navigate(target, { replace: true });
   }, [lockdown, location.pathname, navigate]);
+
+  function handleLogout() {
+    clearIdentity();
+    setConfigOpen(false);
+    setMobileMenuOpen(false);
+    setHasIdentity(false);
+    setNeedsOnboarding(null);
+  }
 
   async function handleAbandon() {
     if (!lockdown) return;
@@ -126,6 +146,16 @@ export default function Layout() {
     const target = lockdownTarget(lockdown);
     setLockdown(null);
     navigate(target, { replace: true, state: { abandonResult: result } });
+  }
+
+  if (!hasIdentity) {
+    return (
+      <div className="app-shell">
+        <main className="app-content">
+          <SignInScreen onSignedIn={() => setHasIdentity(true)} />
+        </main>
+      </div>
+    );
   }
 
   if (needsOnboarding === null) return null;
@@ -283,20 +313,16 @@ export default function Layout() {
             <span className="exam-tile-tooltip">Portail de la culture judéo-israélienne</span>
           </button>
           <span className="header-divider" />
-          <div className="switch-wrap hide-on-mobile">
-            <SunIcon size={13} color={themeMode === "light" ? "#f3f4f6" : "#6b7280"} />
-            <button
-              type="button"
-              className={`switch${themeMode === "dark" ? " on" : ""}`}
-              role="switch"
-              aria-checked={themeMode === "dark"}
-              aria-label="Basculer clair / sombre"
-              onClick={() => setThemeMode(themeMode === "light" ? "dark" : "light")}
-            >
-              <span className="switch-knob" />
-            </button>
-            <MoonIcon size={13} color={themeMode === "dark" ? "#f3f4f6" : "#6b7280"} />
-          </div>
+          <button
+            type="button"
+            className="header-btn"
+            onClick={() => setConfigOpen(true)}
+            title="Configuration"
+            style={{ display: "inline-flex", alignItems: "center" }}
+          >
+            <GearIcon size={24} color="#a9d6f5" />
+            <span className="exam-tile-tooltip">Configuration</span>
+          </button>
           <button
             type="button"
             className="header-btn mobile-menu-btn persistent-icon-gear"
@@ -346,25 +372,18 @@ export default function Layout() {
                   <DictionaryIcon size={20} color="#f3f4f6" />
                   <span>Dictionnaire</span>
                 </button>
-                <div className="header-mobile-panel-row">
-                  <SunIcon size={16} color={themeMode === "light" ? "#f3f4f6" : "#6b7280"} />
-                  <button
-                    type="button"
-                    className={`switch${themeMode === "dark" ? " on" : ""}`}
-                    role="switch"
-                    aria-checked={themeMode === "dark"}
-                    aria-label="Basculer clair / sombre"
-                    onClick={() => setThemeMode(themeMode === "light" ? "dark" : "light")}
-                  >
-                    <span className="switch-knob" />
-                  </button>
-                  <MoonIcon size={16} color={themeMode === "dark" ? "#f3f4f6" : "#6b7280"} />
-                </div>
               </div>
             </>
           )}
         </div>
       </header>
+      <ConfigModal
+        isOpen={configOpen}
+        onClose={() => setConfigOpen(false)}
+        themeMode={themeMode}
+        setThemeMode={setThemeMode}
+        onLogout={handleLogout}
+      />
       <main className="app-content">
         <Outlet />
       </main>

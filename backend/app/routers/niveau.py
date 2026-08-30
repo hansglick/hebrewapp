@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
-from app.database import DEFAULT_USER_ID, get_connection, set_user_level
+from app.auth import get_current_user_id
+from app.database import get_connection, set_user_level
 from app.lesson_order import next_lesson_code, reference_lesson
 
 router = APIRouter(prefix="/api", tags=["niveau"])
@@ -30,10 +31,10 @@ def _jours_bloque(level_since: str) -> int:
     return (datetime.now(timezone.utc) - since).days
 
 
-def _get_niveau_row(conn):
+def _get_niveau_row(conn, user_id: int):
     return conn.execute(
         "SELECT level, level_since FROM user_level WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ).fetchone()
 
 
@@ -48,21 +49,21 @@ def _to_niveau_out(row) -> NiveauOut:
 
 
 @router.get("/niveau", response_model=NiveauOut)
-def get_niveau():
+def get_niveau(user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
     try:
-        row = _get_niveau_row(conn)
+        row = _get_niveau_row(conn, user_id)
         return _to_niveau_out(row)
     finally:
         conn.close()
 
 
 @router.put("/niveau", response_model=NiveauOut)
-def set_niveau(payload: NiveauUpdate):
-    set_user_level(payload.level)
+def set_niveau(payload: NiveauUpdate, user_id: int = Depends(get_current_user_id)):
+    set_user_level(user_id, payload.level)
     conn = get_connection()
     try:
-        row = _get_niveau_row(conn)
+        row = _get_niveau_row(conn, user_id)
         return _to_niveau_out(row)
     finally:
         conn.close()

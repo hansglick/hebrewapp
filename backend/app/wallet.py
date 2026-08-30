@@ -10,7 +10,6 @@ fournis par le user."""
 import json
 from datetime import datetime, timedelta, timezone
 
-from app.database import DEFAULT_USER_ID
 from app.lesson_order import all_lesson_codes_in_order, exam_type_for, reference_lesson
 from app.notifications import create_notification
 from app import celeb
@@ -52,11 +51,11 @@ def _parse_dt(value) -> datetime | None:
     return dt
 
 
-def _load_portefeuille(conn) -> engine.Portefeuille:
+def _load_portefeuille(conn, user_id: int) -> engine.Portefeuille:
     points_par_niveau: dict[int, list[engine.GainPoints]] = {}
     for row in conn.execute(
         "SELECT niveau, points, gagne_le FROM wallet_points WHERE user_id = ? ORDER BY niveau, id",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ):
         points_par_niveau.setdefault(row["niveau"], []).append(
             engine.GainPoints(points=row["points"], gagne_le=_parse_dt(row["gagne_le"]))
@@ -65,7 +64,7 @@ def _load_portefeuille(conn) -> engine.Portefeuille:
     tickets: dict[str, engine.Ticket] = {}
     for row in conn.execute(
         "SELECT id, nom, distribution_points_json, montant_total, achete_le FROM wallet_tickets WHERE user_id = ?",
-        (DEFAULT_USER_ID,),
+        (user_id,),
     ):
         distribution = {int(k): v for k, v in json.loads(row["distribution_points_json"]).items()}
         tickets[row["id"]] = engine.Ticket(
@@ -80,11 +79,11 @@ def _load_portefeuille(conn) -> engine.Portefeuille:
         row["card_index"]
         for row in conn.execute(
             "SELECT card_index FROM wallet_cards WHERE user_id = ? ORDER BY card_index",
-            (DEFAULT_USER_ID,),
+            (user_id,),
         )
     ]
 
-    state = conn.execute("SELECT * FROM wallet_state WHERE user_id = ?", (DEFAULT_USER_ID,)).fetchone()
+    state = conn.execute("SELECT * FROM wallet_state WHERE user_id = ?", (user_id,)).fetchone()
     codes = all_lesson_codes_in_order()
 
     return engine.Portefeuille(
@@ -109,20 +108,23 @@ def _load_portefeuille(conn) -> engine.Portefeuille:
     )
 
 
-def _persist(conn, portefeuille: engine.Portefeuille, event_type: str, payload: dict, last_period_warned: int | None = None) -> None:
+def _persist(
+    conn, user_id: int, portefeuille: engine.Portefeuille, event_type: str, payload: dict,
+    last_period_warned: int | None = None,
+) -> None:
     """Resync complet des tables wallet_* pour ce user + un événement
     append-only dans wallet_events, en une seule transaction. Volumétrie
     mono-user négligeable : pas besoin de diff incrémental, sauf pour
     wallet_cards où on préserve `acquired_at` des cartes déjà possédées."""
-    conn.execute("DELETE FROM wallet_points WHERE user_id = ?", (DEFAULT_USER_ID,))
+    conn.execute("DELETE FROM wallet_points WHERE user_id = ?", (user_id,))
     for niveau, gains in portefeuille.points_par_niveau.items():
         for gain in gains:
             conn.execute(
                 "INSERT INTO wallet_points (user_id, niveau, points, gagne_le) VALUES (?, ?, ?, ?)",
-                (DEFAULT_USER_ID, niveau, gain.points, gain.gagne_le.isoformat()),
+                (user_id, niveau, gain.points, gain.gagne_le.isoformat()),
             )
 
-    conn.execute("DELETE FROM wallet_tickets WHERE user_id = ?", (DEFAULT_USER_ID,))
+    conn.execute("DELETE FROM wallet_tickets WHERE user_id = ?", (user_id,))
     for ticket in portefeuille.tickets.values():
         conn.execute(
             """
@@ -131,7 +133,7 @@ def _persist(conn, portefeuille: engine.Portefeuille, event_type: str, payload: 
             """,
             (
                 ticket.identifiant,
-                DEFAULT_USER_ID,
+                user_id,
                 ticket.nom,
                 json.dumps(ticket.distribution()),
                 ticket.montant_total,
@@ -141,16 +143,16 @@ def _persist(conn, portefeuille: engine.Portefeuille, event_type: str, payload: 
 
     existing_cards = {
         row["card_index"]
-        for row in conn.execute("SELECT card_index FROM wallet_cards WHERE user_id = ?", (DEFAULT_USER_ID,))
+        for row in conn.execute("SELECT card_index FROM wallet_cards WHERE user_id = ?", (user_id,))
     }
     current_cards = set(portefeuille.possessions)
     for index in existing_cards - current_cards:
         conn.execute(
-            "DELETE FROM wallet_cards WHERE user_id = ? AND card_index = ?", (DEFAULT_USER_ID, index)
+            "DELETE FROM wallet_cards WHERE user_id = ? AND card_index = ?", (user_id, index)
         )
     for index in current_cards - existing_cards:
         conn.execute(
-            "INSERT INTO wallet_cards (user_id, card_index) VALUES (?, ?)", (DEFAULT_USER_ID, index)
+            "INSERT INTO wallet_cards (user_id, card_index) VALUES (?, ?)", (user_id, index)
         )
 
     fields = [
@@ -174,24 +176,24 @@ def _persist(conn, portefeuille: engine.Portefeuille, event_type: str, payload: 
     if last_period_warned is not None:
         fields.append("last_period_warned = ?")
         values.append(last_period_warned)
-    values.append(DEFAULT_USER_ID)
+    values.append(user_id)
     conn.execute(f"UPDATE wallet_state SET {', '.join(fields)} WHERE user_id = ?", values)
 
     conn.execute(
         "INSERT INTO wallet_events (user_id, type, payload_json) VALUES (?, ?, ?)",
-        (DEFAULT_USER_ID, event_type, json.dumps(payload)),
+        (user_id, event_type, json.dumps(payload)),
     )
     conn.commit()
 
 
-def _repeat_index(conn, code: str) -> int:
+def _repeat_index(conn, user_id: int, code: str) -> int:
     return conn.execute(
         "SELECT COUNT(*) AS n FROM wallet_lesson_points_awarded WHERE user_id = ? AND lesson_code = ?",
-        (DEFAULT_USER_ID, code),
+        (user_id, code),
     ).fetchone()["n"]
 
 
-def enregistrer_examen_reussi(conn, code: str) -> None:
+def enregistrer_examen_reussi(conn, user_id: int, code: str) -> None:
     """Crédite les points d'une leçon (rapide/long/très long) au wallet.
     Appelée uniquement quand écrit ET oral sont (à nouveau) tous deux
     validés pour `code` (cf. exam_session._finalize) : première fois =
@@ -204,25 +206,26 @@ def enregistrer_examen_reussi(conn, code: str) -> None:
     if code not in codes:
         return
     base = BASE_POINTS[exam_type_for(code)]
-    repeat_index = _repeat_index(conn, code)
+    repeat_index = _repeat_index(conn, user_id, code)
     points = base / (2**repeat_index)
     niveau = codes.index(code) + 1
 
-    portefeuille = _load_portefeuille(conn)
+    portefeuille = _load_portefeuille(conn, user_id)
     portefeuille.ajouter_points(niveau, points)
     conn.execute(
         "INSERT INTO wallet_lesson_points_awarded (user_id, lesson_code, points) VALUES (?, ?, ?)",
-        (DEFAULT_USER_ID, code, points),
+        (user_id, code, points),
     )
     _persist(
         conn,
+        user_id,
         portefeuille,
         "POINTS_GAGNES_EXAMEN",
         {"lesson_code": code, "niveau": niveau, "points": points, "repeat_index": repeat_index},
     )
 
 
-def enregistrer_hard_exam_reussi(conn) -> None:
+def enregistrer_hard_exam_reussi(conn, user_id: int) -> None:
     """Crédite les 25 points bonus (constante `bonus` du fichier de
     simulation) à chaque réussite du Hard Exam. Pas de division par deux :
     le Hard Exam ne peut de toute façon être retenté qu'après une nouvelle
@@ -232,23 +235,24 @@ def enregistrer_hard_exam_reussi(conn) -> None:
     if not codes:
         return
     current_level_row = conn.execute(
-        "SELECT level FROM user_level WHERE user_id = ?", (DEFAULT_USER_ID,)
+        "SELECT level FROM user_level WHERE user_id = ?", (user_id,)
     ).fetchone()
     current_level = current_level_row["level"] if current_level_row else None
     ref = reference_lesson(current_level) if current_level is not None else None
     niveau = codes.index(ref) + 1 if ref in codes else len(codes)
 
-    portefeuille = _load_portefeuille(conn)
+    portefeuille = _load_portefeuille(conn, user_id)
     portefeuille.ajouter_points(niveau, HARD_EXAM_BONUS_POINTS)
     _persist(
         conn,
+        user_id,
         portefeuille,
         "POINTS_GAGNES_HARD_EXAM",
         {"niveau": niveau, "points": HARD_EXAM_BONUS_POINTS},
     )
 
 
-def points_a_gagner(conn, code: str, exam_type: str) -> float:
+def points_a_gagner(conn, user_id: int, code: str, exam_type: str) -> float:
     """Preview sans mutation : combien de points cet examen rapportera s'il
     est réussi maintenant. 0 si l'autre format n'est pas encore validé (les
     points ne sont crédités qu'une fois les deux formats réussis, cf.
@@ -260,17 +264,17 @@ def points_a_gagner(conn, code: str, exam_type: str) -> float:
         row["exam_type"]
         for row in conn.execute(
             "SELECT exam_type FROM exam_progress WHERE user_id = ? AND lesson_code = ?",
-            (DEFAULT_USER_ID, code),
+            (user_id, code),
         )
     }
     passed_types_after = passed_types | {exam_type}
     if not {"ecrit", "oral"} <= passed_types_after:
         return 0.0
     base = BASE_POINTS[exam_type_for(code)]
-    return base / (2 ** _repeat_index(conn, code))
+    return base / (2 ** _repeat_index(conn, user_id, code))
 
 
-def recompense_info(conn, code: str) -> dict:
+def recompense_info(conn, user_id: int, code: str) -> dict:
     """Récapitulatif de la récompense d'une leçon pour la fiche d'examen :
     récompense initiale (barème rapide/long/très long), nombre de réussites
     déjà créditées (repeat_index, cf. `enregistrer_examen_reussi`) et
@@ -282,7 +286,7 @@ def recompense_info(conn, code: str) -> dict:
     if code not in codes:
         return {"recompense_initiale": 0, "deja_reussi": False, "nombre_reussites": 0, "recompense_actuelle": 0}
     base = BASE_POINTS[exam_type_for(code)]
-    repeat_index = _repeat_index(conn, code)
+    repeat_index = _repeat_index(conn, user_id, code)
     return {
         "recompense_initiale": base,
         "deja_reussi": repeat_index > 0,
@@ -291,19 +295,20 @@ def recompense_info(conn, code: str) -> dict:
     }
 
 
-def ouvrir_lot(conn, nom: str) -> dict:
+def ouvrir_lot(conn, user_id: int, nom: str) -> dict:
     """Achète et ouvre un lot en un seul geste : plus de ticket stocké
     entre-temps — `buy_ticket` + `Tirage` + `update_wallet` s'enchaînent sur
     le même portefeuille en mémoire, et seul le résultat final (points
     débités, cartes/gems crédités) est persisté. Lève
     `engine.SoldeInsuffisantError` si le solde est insuffisant, ou
     `ValueError` si `nom` n'est pas un métal connu."""
-    portefeuille = _load_portefeuille(conn)
+    portefeuille = _load_portefeuille(conn, user_id)
     ticket = portefeuille.buy_ticket(nom)
     resultat = engine.Tirage(portefeuille, ticket, VARIANCE_LOGNORMALE)
     portefeuille.update_wallet(resultat)
     _persist(
         conn,
+        user_id,
         portefeuille,
         "LOT_OUVERT",
         {
@@ -322,6 +327,7 @@ def ouvrir_lot(conn, nom: str) -> dict:
             morceaux.append(f"{resultat.nombre_gems} gem(s)")
         create_notification(
             conn,
+            user_id,
             f"Lot {nom} ouvert : vous avez gagné {' et '.join(morceaux)} ! "
             "Découvrez-les dans votre collection.",
             link="/jeu/cartes",
@@ -331,12 +337,12 @@ def ouvrir_lot(conn, nom: str) -> dict:
         "cartes_obtenues": list(resultat.cartes),
         "cartes_images": {i: celeb.image_relative_path(i) for i in resultat.cartes},
         "gems_obtenues": resultat.nombre_gems,
-        "wallet": etat_lecture(conn),
+        "wallet": etat_lecture(conn, user_id),
     }
 
 
-def etat_lecture(conn) -> dict:
-    portefeuille = _load_portefeuille(conn)
+def etat_lecture(conn, user_id: int) -> dict:
+    portefeuille = _load_portefeuille(conn, user_id)
     # Ordre de récence (la plus récemment acquise en premier) pour le
     # carrousel "Cabinet des Cartes" — distinct de `possessions` (ordre par
     # index, utilisé en interne par le moteur pour le tirage aléatoire).
@@ -344,7 +350,7 @@ def etat_lecture(conn) -> dict:
         row["card_index"]
         for row in conn.execute(
             "SELECT card_index FROM wallet_cards WHERE user_id = ? ORDER BY acquired_at DESC, card_index DESC",
-            (DEFAULT_USER_ID,),
+            (user_id,),
         )
     ]
     return {
@@ -359,20 +365,20 @@ def etat_lecture(conn) -> dict:
     }
 
 
-def voir_fiche_carte(conn, index: int) -> dict:
+def voir_fiche_carte(conn, user_id: int, index: int) -> dict:
     """Révèle la fiche (nom hébreu/latin + bio) d'une carte déjà possédée.
     La toute première consultation coûte 1 gem ; une fois débloquée, la
     fiche reste consultable gratuitement pour toujours (`fiche_unlocked`
     sur wallet_cards). Lève `ValueError` si la carte n'est pas possédée,
     `GemsInsuffisantsError` si elle n'est pas encore débloquée et qu'aucun
     gem n'est disponible — dans les deux cas, aucune mutation n'a lieu."""
-    portefeuille = _load_portefeuille(conn)
+    portefeuille = _load_portefeuille(conn, user_id)
     if index not in portefeuille.possessions:
         raise ValueError("Cette carte n'est pas dans votre collection")
 
     row = conn.execute(
         "SELECT fiche_unlocked FROM wallet_cards WHERE user_id = ? AND card_index = ?",
-        (DEFAULT_USER_ID, index),
+        (user_id, index),
     ).fetchone()
     already_unlocked = bool(row["fiche_unlocked"]) if row else False
 
@@ -386,10 +392,10 @@ def voir_fiche_carte(conn, index: int) -> dict:
             )
         portefeuille.gems -= 1
         portefeuille.version += 1
-        _persist(conn, portefeuille, "GEM_CONSOMME_FICHE", {"card_index": index})
+        _persist(conn, user_id, portefeuille, "GEM_CONSOMME_FICHE", {"card_index": index})
         conn.execute(
             "UPDATE wallet_cards SET fiche_unlocked = 1 WHERE user_id = ? AND card_index = ?",
-            (DEFAULT_USER_ID, index),
+            (user_id, index),
         )
         conn.commit()
         gems = portefeuille.gems
@@ -405,7 +411,7 @@ def voir_fiche_carte(conn, index: int) -> dict:
     }
 
 
-def tick_inactivite_et_notifications(conn, now: datetime | None = None) -> None:
+def tick_inactivite_et_notifications(conn, user_id: int, now: datetime | None = None) -> None:
     """Applique la perte de cartes due depuis la dernière visite et
     notifie (retour après une perte réelle, avertissement 8h avant le
     prochain palier). Appelée à chaque lecture du wallet (cf.
@@ -414,7 +420,7 @@ def tick_inactivite_et_notifications(conn, now: datetime | None = None) -> None:
     if now is None:
         now = datetime.now(timezone.utc)
 
-    portefeuille = _load_portefeuille(conn)
+    portefeuille = _load_portefeuille(conn, user_id)
     version_avant = portefeuille.version
 
     supprimees = portefeuille.update_status(now)
@@ -422,11 +428,12 @@ def tick_inactivite_et_notifications(conn, now: datetime | None = None) -> None:
         cartes_txt = ", ".join(f"#{i}" for i in sorted(supprimees))
         create_notification(
             conn,
+            user_id,
             f"Vous avez perdu {len(supprimees)} carte(s) pendant votre absence : {cartes_txt}.",
         )
 
     state = conn.execute(
-        "SELECT last_period_warned FROM wallet_state WHERE user_id = ?", (DEFAULT_USER_ID,)
+        "SELECT last_period_warned FROM wallet_state WHERE user_id = ?", (user_id,)
     ).fetchone()
     last_warned = state["last_period_warned"] if state else 0
 
@@ -442,6 +449,7 @@ def tick_inactivite_et_notifications(conn, now: datetime | None = None) -> None:
         minutes = int((restantes.total_seconds() % 3600) // 60)
         create_notification(
             conn,
+            user_id,
             f"Il vous reste {heures}h{minutes:02d} avant d'avoir perdu {palier['cumul']} carte(s) "
             "au total depuis le début de votre inactivité — reconnectez-vous pour repartir à zéro !",
         )
@@ -450,6 +458,7 @@ def tick_inactivite_et_notifications(conn, now: datetime | None = None) -> None:
     if portefeuille.version != version_avant or new_last_warned != last_warned:
         _persist(
             conn,
+            user_id,
             portefeuille,
             "INACTIVITE_TICK",
             {"cartes_perdues": list(supprimees)},

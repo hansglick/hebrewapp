@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from app import readiness
+from app.auth import get_current_user_id
 from app.stats import build_recency_stats, build_stats
 
 router = APIRouter(prefix="/api", tags=["stats"])
@@ -35,17 +36,17 @@ class RecencyRow(BaseModel):
 # Déclarée avant /stats/{tab} : sinon FastAPI matcherait "recence" comme
 # valeur du paramètre {tab} de la route générique ci-dessous.
 @router.get("/stats/recence", response_model=list[RecencyRow])
-def get_recency_stats():
-    return build_recency_stats()
+def get_recency_stats(user_id: int = Depends(get_current_user_id)):
+    return build_recency_stats(user_id)
 
 
 @router.get("/stats/{tab}", response_model=list[StatsRow])
-def get_stats(tab: str):
+def get_stats(tab: str, user_id: int = Depends(get_current_user_id)):
     used_keys = None
     if tab == "traduction.he":
-        result = readiness.compute_readiness()
+        result = readiness.compute_readiness(user_id)
         used_keys = set(result.get("used_keys", []))
-    rows = build_stats(tab, used_keys)
+    rows = build_stats(tab, user_id, used_keys)
     if rows is None:
         raise HTTPException(404, "Onglet de statistiques inconnu")
     return rows
