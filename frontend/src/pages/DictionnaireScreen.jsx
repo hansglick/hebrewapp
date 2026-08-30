@@ -119,12 +119,21 @@ export default function DictionnaireScreen() {
 
       {query.trim() && results.length === 0 && <p className="muted">Aucun résultat</p>}
 
-      <div className="tile-list">
+      {/* Pas de .tile-list ici : sa contrainte max-width:320px (destinée aux
+          listes de tuiles courtes) écraserait l'affichage desktop élargi de
+          RacineCard/VerbeCard (encadré + illustration + exemples, cf.
+          MotScreen où ces fiches ne sont pas non plus dans un .tile-list).
+          .card fixe déjà lui-même sa propre largeur de 320px, donc rien à
+          perdre pour la ligne de résultat elle-même. */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, width: "100%" }}>
         {results.map((r, i) => {
           const rowKey = `${r.hebrew}-${r.french}-${i}`;
           const panel = openPanel?.rowKey === rowKey ? openPanel : null;
           return (
-            <div key={rowKey} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div
+              key={rowKey}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, width: "100%" }}
+            >
               <div className="card">
                 <p
                   className="hebrew"
@@ -148,13 +157,14 @@ export default function DictionnaireScreen() {
                   >
                     <SpeakerIcon color="#64748b" />
                   </button>
-                  {r.type === "mot" && r.racine && (
+                </p>
+                {r.type === "mot" && r.racine && (
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
                     <button
                       type="button"
                       onClick={() => toggleMotRacineFiche(r, rowKey)}
                       className="hebrew"
                       style={{
-                        marginInlineStart: 8,
                         background: "none",
                         border: "none",
                         padding: 0,
@@ -166,8 +176,8 @@ export default function DictionnaireScreen() {
                     >
                       ש
                     </button>
-                  )}
-                </p>
+                  </div>
+                )}
                 {r.type === "verbe" && (
                   <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
                     <button
