@@ -26,6 +26,16 @@ export async function evaluateTranslation({ lessonCode, position, direction, stu
   return res.json();
 }
 
+export async function extractChansonLyrics(youtubeUrl) {
+  const res = await fetch(`${API_URL}/api/chansons/extract`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ youtube_url: youtubeUrl }),
+  });
+  if (!res.ok) await throwWithDetail(res, "/api/chansons/extract");
+  return res.json();
+}
+
 export async function evaluateOral({ textCode, questionIndex, audioBlob }) {
   const formData = new FormData();
   formData.append("text_code", textCode);
@@ -37,5 +47,29 @@ export async function evaluateOral({ textCode, questionIndex, audioBlob }) {
     body: formData,
   });
   if (!res.ok) await throwWithDetail(res, "/api/gemini/oral");
+  return res.json();
+}
+
+export async function extractVerbatim({ audioBlob, lang = "he", context }) {
+  const formData = new FormData();
+  formData.append("audio", audioBlob, "recording.wav");
+  formData.append("lang", lang);
+  if (context) formData.append("context", context);
+
+  const res = await fetch(`${API_URL}/api/gemini/verbatim`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) await throwWithDetail(res, "/api/gemini/verbatim");
+  return res.json();
+}
+
+export async function evaluateReport({ textCode, rapport }) {
+  const res = await fetch(`${API_URL}/api/gemini/rapport`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text_code: textCode, rapport }),
+  });
+  if (!res.ok) await throwWithDetail(res, "/api/gemini/rapport");
   return res.json();
 }

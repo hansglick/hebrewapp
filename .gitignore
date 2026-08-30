@@ -1,8 +1,11 @@
 # Media (images/voice) - too heavy for git history, handled separately
 backend/results/
 
+# Sources PDF de travail hors ligne - pas utilisées par l'app, juste lourdes
+backend/data/pdfs/
+
 # Runtime user data (SQLite DB) - local state, not source
-backend/*.sqlite3
+backend/**/*.sqlite3
 
 # Python
 __pycache__/

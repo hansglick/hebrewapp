@@ -8,6 +8,10 @@ export function mediaUrl(path) {
   return `${API_URL}/media/${cleaned}`;
 }
 
+export function dataMediaUrl(filename) {
+  return `${API_URL}/data-media/${filename}`;
+}
+
 export function youtubeEmbedUrl(watchUrl) {
   if (!watchUrl) return null;
   const match = watchUrl.match(/[?&]v=([^&]+)/);

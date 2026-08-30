@@ -30,6 +30,32 @@
   direction: rtl;
 }
 
+.translate-textarea::placeholder {
+  font-size: 0.5em;
+  color: var(--textMuted);
+}
+
+.hebrew-word-row {
+  display: inline-flex;
+  direction: ltr;
+  align-items: center;
+  gap: 8px;
+}
+
+.texte-hebrew {
+  font-family: var(--font-hebrew);
+  font-size: 1.105em;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.5;
+  margin: 0 0 0.5em;
+}
+
+.texte-french {
+  text-align: left;
+  margin: 0 0 0.5em;
+}
+
 .muted {
   color: var(--textMuted);
   font-size: 0.85em;
@@ -70,6 +96,24 @@
   font-size: 0.9em;
 }
 
+.speak-btn {
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.racine-badge {
+  border: none;
+  border-radius: 999px;
+  background: saddlebrown;
+  color: #fff;
+  padding: 4px 14px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
 .binyan-pill {
   display: inline-block;
   width: 14px;
@@ -79,7 +123,23 @@
   vertical-align: middle;
 }
 
+.progress-bar-track {
+  width: 100%;
+  max-width: 320px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
 .card {
+  position: relative;
   width: 100%;
   max-width: 320px;
   border: 1px solid var(--border);
@@ -87,6 +147,11 @@
   padding: 12px 14px;
   background: var(--surface);
   text-align: start;
+}
+
+.card:hover .exam-tile-tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 .card-row {
@@ -111,6 +176,67 @@
   gap: 4px;
 }
 
+.exam-tile {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.exam-tile.grey {
+  background: var(--surface);
+  color: var(--textMuted);
+}
+
+.exam-tile.red {
+  background: var(--danger);
+  color: #fff;
+}
+
+.exam-tile.green {
+  background: var(--success);
+  color: #fff;
+  cursor: default;
+}
+
+.exam-tile:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.exam-tile-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.75em;
+  font-weight: 400;
+  white-space: normal;
+  width: max-content;
+  max-width: 240px;
+  transition: opacity 0.15s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.exam-tile:hover .exam-tile-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
 .toggle-group {
   display: flex;
   gap: 8px;
@@ -133,6 +259,60 @@
   font-weight: 600;
 }
 
+.quizz-bubble {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.quizz-bubble.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.quizz-bubble.correct {
+  background: var(--success);
+  color: #fff;
+  border-color: var(--success);
+  font-weight: 600;
+}
+
+.quizz-bubble.wrong {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+  font-weight: 600;
+}
+
+.quizz-bubble:disabled {
+  cursor: default;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95em;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  accent-color: #64748b;
+  cursor: pointer;
+}
+
 .eval-actions {
   display: flex;
   justify-content: space-between;
@@ -141,7 +321,7 @@
 }
 
 .eval-btn {
-  font-size: 1.6em;
+  font-size: 1.07em;
   background: none;
   border: none;
   cursor: pointer;
@@ -156,6 +336,38 @@
   color: var(--danger);
 }
 
+.eval-btn.pulse {
+  border-radius: 50%;
+  animation: eval-pulse 0.4s ease-out;
+}
+
+@keyframes eval-pulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+/* Halo rouge pulsant en boucle autour du logo microphone pendant qu'une
+   conversation JDR est en cours (cf. MicrophoneIcon) — même technique que
+   .eval-btn.pulse (box-shadow currentColor -> transparent), mais en boucle
+   infinie plutôt qu'un flash unique. */
+.mic-pulse {
+  animation: mic-pulse-glow 1.6s ease-out infinite;
+}
+
+@keyframes mic-pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
 .words-list {
   list-style: none;
   padding: 0;
@@ -163,4 +375,176 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.racine-word-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: start;
+}
+
+/* Sur mobile, les fiches (tuiles/cartes) prennent toute la largeur
+   disponible plutôt que de rester plafonnées à 320px avec du vide autour. */
+@media (max-width: 600px) {
+  .tile-list,
+  .card,
+  .exam-tile,
+  .progress-bar-track {
+    max-width: 100%;
+  }
+
+  /* Certains écrans fixent une largeur d'image en style inline (220/280/320px)
+     — !important nécessaire pour la dépasser sur mobile. */
+  .screen-image {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Titre hébreu ajouté uniquement pour la colonne desktop de la presse
+     (cf. structure "haut-parleur en haut, titre en dessous") — sur mobile,
+     le titre hébreu reste incrusté dans l'image elle-même, pas de doublon. */
+  .presse-hebrew-title {
+    display: none;
+  }
+}
+
+/* Sur écran pc, les illustrations d'objets sont agrandies de 50% — les
+   valeurs inline "maxHeight: none" (curiosités/expressions/presse) restent
+   prioritaires sur ce max-height de base, donc seuls les écrans qui s'y fient
+   réellement (racine) en profitent ; .texte-image et .racine-image ciblent
+   les cas avec une hauteur inline dédiée. */
+@media (min-width: 601px) {
+  .screen-image {
+    max-height: 480px;
+  }
+
+  .card-illustration {
+    max-width: 480px;
+  }
+
+  .texte-image {
+    max-height: 576px !important;
+  }
+
+  .racine-image {
+    max-height: 673px !important;
+    /* object-fit:cover (hérité de .screen-image) recadrerait l'image si sa
+       hauteur naturelle à cette largeur dépassait le plafond ci-dessus —
+       "contain" garantit qu'elle reste entièrement visible, quel que soit
+       son ratio d'origine. */
+    object-fit: contain !important;
+  }
+
+  /* Objets "curiosité" (proverbe/tanakh/récit/landmark/blague/expression/
+     presse, quand ils ont une image) et "racine" : illustration à gauche /
+     texte à droite, séparés par une bordure verticale, colonnes de largeur
+     égale — profite de la largeur d'écran dispo au lieu d'empiler comme sur
+     mobile. .app-content plafonne tout à 480px normalement (:has()
+     nécessaire pour lever ce plafond seulement quand ce layout est présent). */
+  .app-content:has(.curiosite-split) {
+    max-width: 1072px;
+  }
+
+  .curiosite-split.card-illustration {
+    max-width: 1072px;
+  }
+
+  /* Taille par type d'objet, ajustée par rapport à la base 1072px :
+     expression -30% (~750px), presse -30% puis +15% (~863px), tanakh/récit
+     +20% (~1286px), racine (écran plein-écran) +50% puis +15% (~1849px),
+     racine (carte intégrée Mot/Verbe/Dictionnaire) -50% par rapport à ce
+     +50% puis +15% (~1156px). */
+  .app-content:has(.curiosite-split-expression) {
+    max-width: 750px;
+  }
+
+  .app-content:has(.curiosite-split-presse) {
+    max-width: 863px;
+  }
+
+  .app-content:has(.curiosite-split-tanakh),
+  .app-content:has(.curiosite-split-recit) {
+    max-width: 1286px;
+  }
+
+  .app-content:has(.curiosite-split-racine) {
+    max-width: 1849px;
+  }
+
+  .app-content:has(.curiosite-split-racine-card) {
+    max-width: 1156px;
+  }
+
+  .curiosite-split-tanakh.card-illustration,
+  .curiosite-split-recit.card-illustration {
+    max-width: 1286px;
+  }
+
+  .curiosite-split-racine-card.card-illustration {
+    max-width: 1156px;
+  }
+
+  /* RacineScreen n'a pas la classe "card" (contrairement à CuriositeScreen,
+     qui l'a en permanence, y compris sur mobile) — l'encadré ne doit
+     apparaître que sur desktop, donc reproduit ici plutôt que d'ajouter
+     "card" globalement. Uniquement sur le côté texte : l'illustration reste
+     nue à gauche, seul un trait vertical (déjà posé par .curiosite-media)
+     la sépare de l'encadré. */
+  .curiosite-split-racine .curiosite-content {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px !important;
+    background: var(--surface);
+  }
+
+  /* var(--border) est trop clair pour rester visible sur le fond blanc nu
+     du côté illustration (contrairement aux autres types, dont le fond
+     crème --surface derrière le trait lui donne du contraste). */
+  .curiosite-split-racine .curiosite-media {
+    border-inline-end-color: #b8b8bd !important;
+  }
+
+  .curiosite-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    text-align: initial;
+  }
+
+  .curiosite-split .curiosite-media {
+    padding-inline-end: 24px;
+    border-inline-end: 1px solid var(--border);
+  }
+
+  .curiosite-split .curiosite-media img {
+    max-width: 100% !important;
+  }
+
+  .curiosite-split .curiosite-media-hr {
+    display: none;
+  }
+
+  .curiosite-split .curiosite-content {
+    padding-inline-start: 24px;
+  }
+
+  /* Objets "expression" : espace illustration <-> encadré de la fiche
+     réduit de 50% (24px+24px de part et d'autre de la bordure -> 12px+12px). */
+  .curiosite-split-expression .curiosite-media {
+    padding-inline-end: 12px;
+  }
+
+  .curiosite-split-expression .curiosite-content {
+    padding-inline-start: 12px;
+  }
+
+  /* expression/presse gardent un `hr`, une `.card` (bordée, plafonnée à
+     320px par défaut) et une rangée d'action à largeur fixe pour leur
+     mobile — en colonne desktop, ces largeurs fixes n'ont plus lieu d'être. */
+  .curiosite-split .curiosite-content hr,
+  .curiosite-split .curiosite-content .card,
+  .curiosite-split .curiosite-content-row {
+    max-width: 100% !important;
+  }
 }

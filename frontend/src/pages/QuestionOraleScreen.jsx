@@ -1,36 +1,99 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRandomQuestionOrale } from "../api/content";
 import { getNiveau } from "../api/user";
 import { evaluateOral } from "../api/gemini";
 import { mediaUrl } from "../api/media";
+import { speak } from "../utils/speech";
 import { blobToWavBlob } from "../utils/audioEncode";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
+import { ActionHints } from "../components/ActionHints";
+import { AudioPlayer } from "../components/AudioPlayer";
+import { WaitingVideo } from "../components/WaitingVideo";
+import { PoolBadge } from "../components/PoolBadge";
 import "./screens.css";
 
-export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
+const GEMINI_TIMEOUT_MS = 30000;
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+// Les observations sont affichées en italique, mais un mot en hébreu au
+// milieu d'une phrase française perd en lisibilité en italique — on l'en
+// exempte pour qu'il ressorte mieux.
+function renderWithHebrewHighlight(text) {
+  return text
+    .split(/([֐-׿]+(?:[\s'"־][֐-׿]+)*)/g)
+    .map((part, i) =>
+      /[֐-׿]/.test(part) ? (
+        <span key={i} className="hebrew" style={{ fontStyle: "normal" }}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+}
+
+function computeGlobalNote(result) {
+  const ratings = [result.rating_completeness, result.rating_hebrew, result.rating_comprehension];
+  const average = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+  const comment = ratings.every((r) => r >= 4) ? "excellent" : "insuffisant";
+  return { average, comment };
+}
+
+function StarRating({ rating }) {
+  return (
+    <span aria-hidden="true">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+          ★
+        </span>
+      ))}
+    </span>
+  );
+}
+
+export default function QuestionOraleScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
   const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
-  const [mode, setMode] = useState(defaultMode);
   const [isRecording, setIsRecording] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [geminiResult, setGeminiResult] = useState(null);
   const [geminiError, setGeminiError] = useState(null);
+  const [timeoutMessage, setTimeoutMessage] = useState(null);
   const [loadingGemini, setLoadingGemini] = useState(false);
   const mediaRecorderRef = useRef(null);
+  const timedOutRef = useRef(false);
   const chunksRef = useRef([]);
+
+  // Sans ce useMemo, URL.createObjectURL recréerait une nouvelle URL à
+  // chaque re-render (ex: tout état local qui change ailleurs sur l'écran),
+  // ce qui force le <audio> à recharger et interrompt la lecture en cours.
+  const audioUrl = useMemo(() => (audioBlob ? URL.createObjectURL(audioBlob) : null), [audioBlob]);
+
+  // Le mode découle du chemin d'accès, cf. MotScreen.
+  const mode = code ? "exploration" : "revision";
 
   useEffect(() => {
     getNiveau().then(setNiveau);
   }, []);
 
-  const lessonCode = mode === "exploration" ? code ?? niveau?.level : niveau?.level;
+  const lessonCode = code ?? niveau?.reference_lesson;
 
   const { current: question, next, back } = useRandomBrowser(
-    () => (lessonCode ? getRandomQuestionOrale(lessonCode, mode) : Promise.resolve(null)),
+    (prevQuestion) =>
+      lessonCode
+        ? getRandomQuestionOrale(
+            lessonCode,
+            mode,
+            prevQuestion ? `${prevQuestion.text_code}|${prevQuestion.question_index}` : undefined
+          )
+        : Promise.resolve(null),
     [lessonCode, mode]
   );
 
@@ -38,6 +101,7 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
     setAudioBlob(null);
     setGeminiResult(null);
     setGeminiError(null);
+    setTimeoutMessage(null);
     setIsRecording(false);
   }, [question]);
 
@@ -71,17 +135,32 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
   async function handleSubmit() {
     setLoadingGemini(true);
     setGeminiError(null);
+    setTimeoutMessage(null);
+    timedOutRef.current = false;
+
+    const timeoutId = setTimeout(() => {
+      timedOutRef.current = true;
+      setLoadingGemini(false);
+      setTimeoutMessage("Le professeur Gemini est surbooké en ce moment, essayez à un autre moment");
+    }, GEMINI_TIMEOUT_MS);
+
     try {
       const result = await evaluateOral({
         textCode: question.text_code,
         questionIndex: question.question_index,
         audioBlob,
       });
-      setGeminiResult(result);
+      if (!timedOutRef.current) {
+        clearTimeout(timeoutId);
+        setGeminiResult(result);
+        setLoadingGemini(false);
+      }
     } catch (e) {
-      setGeminiError(e.message);
-    } finally {
-      setLoadingGemini(false);
+      if (!timedOutRef.current) {
+        clearTimeout(timeoutId);
+        setGeminiError(e.message);
+        setLoadingGemini(false);
+      }
     }
   }
 
@@ -94,62 +173,99 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
 
   if (!question) return null;
 
-  return (
-    <section className="screen" {...swipeHandlers}>
-      <div className="toggle-group">
-        <button
-          type="button"
-          className={mode === "exploration" ? "active" : ""}
-          onClick={() => setMode("exploration")}
-        >
-          Exploration
-        </button>
-        <button
-          type="button"
-          className={mode === "revision" ? "active" : ""}
-          onClick={() => setMode("revision")}
-        >
-          Révision
-        </button>
-      </div>
+  const globalNote = geminiResult ? computeGlobalNote(geminiResult) : null;
 
-      <button
-        type="button"
-        className="link-btn"
-        onClick={() => new Audio(mediaUrl(question.voicepath)).play()}
-      >
-        🔊 Écouter le texte
-      </button>
-      <p className="hebrew-large">{question.question_hebrew}</p>
+  return (
+    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+      {loadingGemini ? (
+        <WaitingVideo />
+      ) : (
+        <>
+      <ActionHints {...swipeHandlers.hints} />
+
+      {mode === "revision" && (
+        <PoolBadge pool={question.pool} chapter={question.chapter} lesson={question.lesson} />
+      )}
+
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <AudioPlayer src={mediaUrl(question.voicepath)} barMaxWidth={58.5} toggleSize={27} />
+        <button
+          type="button"
+          onClick={() => speak(question.question_hebrew)}
+          aria-label="Écouter la question"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 27,
+            height: 27,
+            borderRadius: "50%",
+            background: "#000",
+            color: "#fff",
+            fontWeight: 700,
+            fontSize: "1.1em",
+            border: "none",
+            padding: 0,
+            cursor: "pointer",
+          }}
+        >
+          ?
+        </button>
+        {!geminiResult && !audioBlob && !isRecording && !isConverting && (
+          <button
+            type="button"
+            className="speak-btn"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              color: "var(--textMuted)",
+              fontSize: "0.675em",
+            }}
+            onClick={startRecording}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                width: 27,
+                height: 27,
+                borderRadius: "50%",
+                background: "var(--danger)",
+              }}
+            />
+            Répondre
+          </button>
+        )}
+      </div>
 
       {!geminiResult && (
         <>
-          {!audioBlob && !isRecording && !isConverting && (
-            <button type="button" className="link-btn" onClick={startRecording}>
-              🎙️ Enregistrer
-            </button>
-          )}
           {isRecording && (
             <button type="button" className="link-btn" onClick={stopRecording}>
               ⏹️ Arrêter
             </button>
           )}
           {isConverting && <p className="muted">Traitement de l'enregistrement...</p>}
-          {audioBlob && !isRecording && (
+          {audioBlob && !isRecording && !loadingGemini && (
             <>
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <audio controls src={URL.createObjectURL(audioBlob)} />
+              <audio controls src={audioUrl} />
               <div style={{ display: "flex", gap: 12 }}>
-                <button type="button" className="link-btn" onClick={() => setAudioBlob(null)}>
+                <button
+                  type="button"
+                  className="speak-btn"
+                  style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
+                  onClick={() => setAudioBlob(null)}
+                >
                   Recommencer
                 </button>
                 <button
                   type="button"
-                  className="link-btn"
-                  disabled={loadingGemini}
+                  className="speak-btn"
+                  style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
                   onClick={handleSubmit}
                 >
-                  {loadingGemini ? "Envoi..." : "Envoyer"}
+                  Envoyer
                 </button>
               </div>
             </>
@@ -159,29 +275,174 @@ export default function QuestionOraleScreen({ defaultMode = "exploration" }) {
               {geminiError}
             </p>
           )}
+          {timeoutMessage && (
+            <p
+              className="muted"
+              style={{ fontStyle: "italic", fontSize: "0.8em", textAlign: "center" }}
+            >
+              {timeoutMessage}
+            </p>
+          )}
         </>
       )}
 
       {geminiResult && (
         <>
-          <p className="muted hebrew">Verbatim : {geminiResult.verbatim}</p>
-          <p className="muted hebrew">Solution possible : {geminiResult.solution}</p>
-          <p>Structure/complétude : {geminiResult.rating_completeness} / 5</p>
-          <p>Hébreu (grammaire/orthographe) : {geminiResult.rating_hebrew} / 5</p>
-          <ul className="words-list">
-            {geminiResult.errors_rating_hebrew.map((e, i) => (
-              <li key={i}>{e}</li>
-            ))}
-          </ul>
-          <p>Compréhension : {geminiResult.rating_comprehension} / 5</p>
-          <ul className="words-list">
-            {geminiResult.errors_rating_comprehension.map((e, i) => (
-              <li key={i}>{e}</li>
-            ))}
-          </ul>
-          <button type="button" className="link-btn" onClick={next}>
-            Question suivante
-          </button>
+          <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
+            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>
+              {geminiResult.verbatim}
+            </span>
+          </p>
+
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+
+          <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+            <tbody>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Complétude
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={geminiResult.rating_completeness} />
+                </td>
+              </tr>
+              {geminiResult.errors_rating_completeness?.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {geminiResult.errors_rating_completeness.map((e, i) => (
+                        <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Grammaire
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={geminiResult.rating_hebrew} />
+                </td>
+              </tr>
+              {geminiResult.errors_rating_hebrew.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {geminiResult.errors_rating_hebrew.map((e, i) => (
+                        <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Compréhension
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={geminiResult.rating_comprehension} />
+                </td>
+              </tr>
+              {geminiResult.errors_rating_comprehension.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {geminiResult.errors_rating_comprehension.map((e, i) => (
+                        <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ padding: "8px 0", border: "1px solid transparent" }}>
+                  <hr
+                    style={{
+                      width: "100%",
+                      border: "none",
+                      borderTop: "1px solid var(--border)",
+                      margin: 0,
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Note Globale
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={Math.round(globalNote.average)} />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colSpan={2}
+                  style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                >
+                  <ul
+                    style={{
+                      margin: 0,
+                      paddingInlineStart: "1.2em",
+                      fontStyle: "italic",
+                      fontSize: "0.85em",
+                      color: "var(--textMuted)",
+                    }}
+                  >
+                    <li>{capitalize(globalNote.comment)}</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
         </>
       )}
     </section>

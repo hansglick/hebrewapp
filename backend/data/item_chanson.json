@@ -1,385 +1,3635 @@
 [
-  {
-    "titre": "אייל גולן - עיר נמל",
-    "lien_youtube": "https://www.youtube.com/watch?v=UAP9A-0HlqU",
-    "paroles": [
-      {
-        "index": 1,
-        "hebrew": "מסתובב ברחובות",
-        "french": "Je me promène dans les rues"
-      },
-      {
-        "index": 2,
-        "hebrew": "בין שקיעות של בין ערביים",
-        "french": "Entre les couchers de soleil du crépuscule"
-      },
-      {
-        "index": 3,
-        "hebrew": "הקולות והריחות",
-        "french": "Les voix et les odeurs"
-      },
-      {
-        "index": 4,
-        "hebrew": "מזכירים אותך בינתיים",
-        "french": "Me rappellent à toi en attendant"
-      },
-      {
-        "index": 5,
-        "hebrew": "איש זקן לבד יושב לו",
-        "french": "Un vieil homme est assis tout seul"
-      },
-      {
-        "index": 6,
-        "hebrew": "אני שאלתי מה כבד לו",
-        "french": "Je lui ai demandé ce qui lui pesait"
-      },
-      {
-        "index": 7,
-        "hebrew": "הוא סיפר שהיא הלכה",
-        "french": "Il a raconté qu'elle est partie"
-      },
-      {
-        "index": 8,
-        "hebrew": "כך ברגע נעלמה",
-        "french": "Comme ça, en un instant, elle a disparu"
-      },
-      {
-        "index": 9,
-        "hebrew": "ומאז הלב כואב לו",
-        "french": "Et depuis son cœur lui fait mal"
-      },
-      {
-        "index": 10,
-        "hebrew": "ואני בעיר נמל",
-        "french": "Et moi, dans une ville portuaire"
-      },
-      {
-        "index": 11,
-        "hebrew": "דייגים חוזרים בערב",
-        "french": "Les pêcheurs reviennent le soir"
-      },
-      {
-        "index": 12,
-        "hebrew": "בקבוק של וויסקי שוב ביד",
-        "french": "Une bouteille de whisky encore à la main"
-      },
-      {
-        "index": 13,
-        "hebrew": "כך אשכח מהלבד",
-        "french": "Ainsi j'oublierai la solitude"
-      },
-      {
-        "index": 14,
-        "hebrew": "שכואב אצלי כמו חרב",
-        "french": "Qui me blesse comme une épée"
-      },
-      {
-        "index": 15,
-        "hebrew": "ברוח מן הים",
-        "french": "Dans la brise venant de la mer"
-      },
-      {
-        "index": 16,
-        "hebrew": "מלטפת את המים",
-        "french": "Qui caresse l'eau"
-      },
-      {
-        "index": 17,
-        "hebrew": "לא עוזר לי פה הנוף",
-        "french": "Le paysage ici ne m'aide pas"
-      },
-      {
-        "index": 18,
-        "hebrew": "לא טברנה על החוף",
-        "french": "Ni la taverne sur la plage"
-      },
-      {
-        "index": 19,
-        "hebrew": "אם את לא שלי עדיין",
-        "french": "Si tu n'es pas encore à moi"
-      },
-      {
-        "index": 20,
-        "hebrew": "שתיתי קצת יותר מדי",
-        "french": "J'ai bu un peu trop"
-      },
-      {
-        "index": 21,
-        "hebrew": "ואיך פתאום עולה הבוקר",
-        "french": "Et comment soudain le matin se lève"
-      },
-      {
-        "index": 22,
-        "hebrew": "מסתובב בסמטאות",
-        "french": "Je me promène dans les ruelles"
-      },
-      {
-        "index": 23,
-        "hebrew": "מחפש טיפה של אושר",
-        "french": "Cherchant une goutte de bonheur"
-      },
-      {
-        "index": 24,
-        "hebrew": "איש אחד פושט ידיים",
-        "french": "Un homme tend les mains"
-      },
-      {
-        "index": 25,
-        "hebrew": "הוא מנגן ברחוב בינתיים",
-        "french": "Il joue dans la rue en attendant"
-      },
-      {
-        "index": 26,
-        "hebrew": "מנגינות של שיר ישן",
-        "french": "Les mélodies d'une vieille chanson"
-      },
-      {
-        "index": 27,
-        "hebrew": "ואומרים שרק הזמן",
-        "french": "Et on dit que seul le temps"
-      },
-      {
-        "index": 28,
-        "hebrew": "מנצח זוג עיניים",
-        "french": "Triomphe d'une paire d'yeux"
-      },
-      {
-        "index": 29,
-        "hebrew": "ואני בעיר נמל",
-        "french": "Et moi, dans une ville portuaire"
-      },
-      {
-        "index": 30,
-        "hebrew": "דייגים חוזרים בערב",
-        "french": "Les pêcheurs reviennent le soir"
-      },
-      {
-        "index": 31,
-        "hebrew": "בקבוק של וויסקי שוב ביד",
-        "french": "Une bouteille de whisky encore à la main"
-      },
-      {
-        "index": 32,
-        "hebrew": "כך אשכח מהלבד",
-        "french": "Ainsi j'oublierai la solitude"
-      },
-      {
-        "index": 33,
-        "hebrew": "שכואב אצלי כמו חרב",
-        "french": "Qui me blesse comme une épée"
-      },
-      {
-        "index": 34,
-        "hebrew": "באה רוח מן הים",
-        "french": "Une brise vient de la mer"
-      },
-      {
-        "index": 35,
-        "hebrew": "מלטפת את המים",
-        "french": "Qui caresse l'eau"
-      },
-      {
-        "index": 36,
-        "hebrew": "לא עוזר לי פה הנוף",
-        "french": "Le paysage ici ne m'aide pas"
-      },
-      {
-        "index": 37,
-        "hebrew": "לא טברנה על החוף",
-        "french": "Ni la taverne sur la plage"
-      },
-      {
-        "index": 38,
-        "hebrew": "אם את לא שלי עדיין",
-        "french": "Si tu n'es pas encore à moi"
-      }
-    ]
-  },
-  {
-    "titre": "עומר אדם - ריו דה ז'נרו",
-    "lien_youtube": "https://www.youtube.com/watch?v=LURly90-QFk",
-    "paroles": [
-      {
-        "index": 1,
-        "hebrew": "נפגשנו בבית קפה בשקיעה",
-        "french": "Nous nous sommes rencontrés dans un café au crépuscule"
-      },
-      {
-        "index": 2,
-        "hebrew": "וגם חברות שלה באו",
-        "french": "Et ses copines sont venues aussi"
-      },
-      {
-        "index": 3,
-        "hebrew": "הבושם שלה טוב קראתי לה מאמא",
-        "french": "Son parfum est si bon, je l'ai appelée Mama"
-      },
-      {
-        "index": 4,
-        "hebrew": "תגידי לי למה לבזבז את הזמן",
-        "french": "Dis-moi pourquoi perdre notre temps"
-      },
-      {
-        "index": 5,
-        "hebrew": "הפוך לשניים קצת אושר בעיניים",
-        "french": "Un café pour deux, un peu de joie dans les yeux"
-      },
-      {
-        "index": 6,
-        "hebrew": "ביקשתי פעמיים את השם שלה",
-        "french": "J'ai demandé son prénom par deux fois"
-      },
-      {
-        "index": 7,
-        "hebrew": "אוקיי מריה, נהג דקה מגיע",
-        "french": "D'accord Maria, un chauffeur arrive dans la minute"
-      },
-      {
-        "index": 8,
-        "hebrew": "תראי לי את העיר אני חייב רק להזהיר",
-        "french": "Fais-moi découvrir la ville, je dois juste te prévenir"
-      },
-      {
-        "index": 9,
-        "hebrew": "כי יש לי חברים טיפה משוגעים",
-        "french": "Car j'ai des amis un brin lunatiques"
-      },
-      {
-        "index": 10,
-        "hebrew": "הגענו לברזיל ומאז הם רק רוקדים",
-        "french": "Nous sommes arrivés au Brésil et depuis ils ne font que danser"
-      },
-      {
-        "index": 11,
-        "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
-        "french": "Tout le monde fait hop hop hop hop toute la nuit"
-      },
-      {
-        "index": 12,
-        "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
-        "french": "Alors appelle tes amies de Rio de Janeiro"
-      },
-      {
-        "index": 13,
-        "hebrew": "נשב פה בכיף עם יין ונרות",
-        "french": "Nous nous poserons ici avec du vin et des bougies"
-      },
-      {
-        "index": 14,
-        "hebrew": "הם יעשו לך הופ הופ כל הלילה",
-        "french": "Ils te feront danser hop hop toute la nuit"
-      },
-      {
-        "index": 15,
-        "hebrew": "תכירי זה אח יקר, ויש לו לב מזהב",
-        "french": "Je te présente un frère cher, il a un cœur en or"
-      },
-      {
-        "index": 16,
-        "hebrew": "הוא רק נראה בן עשרים, כפרה הוא אבא לארבע",
-        "french": "Il a juste l'air d'avoir vingt ans, chérie il est père de quatre enfants"
-      },
-      {
-        "index": 17,
-        "hebrew": "ואת מה איתך, עשרים ושתיים רואים לך בעיניים",
-        "french": "Et toi alors, vingt-deux ans ça se lit dans tes yeux"
-      },
-      {
-        "index": 18,
-        "hebrew": "את חיה בשמיים, אין דאגות",
-        "french": "Tu vis dans les cieux, sans aucune préoccupation"
-      },
-      {
-        "index": 19,
-        "hebrew": "אז מה מריה אודייה מאמא תראי לי את העיר כי",
-        "french": "Alors quoi Maria Oh-dieu Mama montre-moi la ville car"
-      },
-      {
-        "index": 20,
-        "hebrew": "יש לי חברים טיפה משוגעים",
-        "french": "J'ai des amis un brin lunatiques"
-      },
-      {
-        "index": 21,
-        "hebrew": "הגענו לברזיל ומאז הם רק רוקדים",
-        "french": "Nous sommes arrivés au Brésil et depuis ils ne font que danser"
-      },
-      {
-        "index": 22,
-        "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
-        "french": "Tout le monde fait hop hop hop hop toute la nuit"
-      },
-      {
-        "index": 23,
-        "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
-        "french": "Alors appelle tes amies de Rio de Janeiro"
-      },
-      {
-        "index": 24,
-        "hebrew": "נשב פה בכיף עם יין ונרות",
-        "french": "Nous nous poserons ici avec du vin et des bougies"
-      },
-      {
-        "index": 25,
-        "hebrew": "הם יעשו לך הופ הופ כל הלילה",
-        "french": "Ils te feront danser hop hop toute la nuit"
-      },
-      {
-        "index": 26,
-        "hebrew": "בריו דה ז'נרו תמיד פה חם",
-        "french": "À Rio de Janeiro il fait toujours chaud"
-      },
-      {
-        "index": 27,
-        "hebrew": "אז אל תשאירי אותי לבד",
-        "french": "Alors ne me laisse pas tout seul"
-      },
-      {
-        "index": 28,
-        "hebrew": "מריו דה ז'נרו עד מחר",
-        "french": "De Rio de Janeiro jusqu'à demain"
-      },
-      {
-        "index": 29,
-        "hebrew": "הכל נגמר כשחוזרים",
-        "french": "Tout s'achève quand on s'en retourne"
-      },
-      {
-        "index": 30,
-        "hebrew": "מקווה שנזכור הכל",
-        "french": "J'espère que nous n'oublierons rien"
-      },
-      {
-        "index": 31,
-        "hebrew": "יש לי חברים טיפה משוגעים",
-        "french": "J'ai des amis un brin lunatiques"
-      },
-      {
-        "index": 32,
-        "hebrew": "הגענו לברזיל ומאז הם רק שותים",
-        "french": "Nous sommes arrivés au Brésil et depuis ils ne font que boire"
-      },
-      {
-        "index": 33,
-        "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
-        "french": "Tout le monde fait hop hop hop hop toute la nuit"
-      },
-      {
-        "index": 34,
-        "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
-        "french": "Alors appelle tes amies de Rio de Janeiro"
-      },
-      {
-        "index": 35,
-        "hebrew": "נשב פה בכיף עם יין ונרות",
-        "french": "Nous nous poserons ici avec du vin et des bougies"
-      },
-      {
-        "index": 36,
-        "hebrew": "הם יעשו לך הופ הופ כל הלילה",
-        "french": "Ils te feront danser hop hop toute la nuit"
-      }
-    ]
-  }
+    {
+        "key": "UAP9A-0HlqU",
+        "url": "https://www.youtube.com/watch?v=UAP9A-0HlqU",
+        "title_he": "אייל גולן - עיר נמל",
+        "title_fr": "",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "מסתובב ברחובות",
+                "french": "Je me promène dans les rues"
+            },
+            {
+                "index": 2,
+                "hebrew": "בין שקיעות של בין ערביים",
+                "french": "Entre les couchers de soleil du crépuscule"
+            },
+            {
+                "index": 3,
+                "hebrew": "הקולות והריחות",
+                "french": "Les voix et les odeurs"
+            },
+            {
+                "index": 4,
+                "hebrew": "מזכירים אותך בינתיים",
+                "french": "Me rappellent à toi en attendant"
+            },
+            {
+                "index": 5,
+                "hebrew": "איש זקן לבד יושב לו",
+                "french": "Un vieil homme est assis tout seul"
+            },
+            {
+                "index": 6,
+                "hebrew": "אני שאלתי מה כבד לו",
+                "french": "Je lui ai demandé ce qui lui pesait"
+            },
+            {
+                "index": 7,
+                "hebrew": "הוא סיפר שהיא הלכה",
+                "french": "Il a raconté qu'elle est partie"
+            },
+            {
+                "index": 8,
+                "hebrew": "כך ברגע נעלמה",
+                "french": "Comme ça, en un instant, elle a disparu"
+            },
+            {
+                "index": 9,
+                "hebrew": "ומאז הלב כואב לו",
+                "french": "Et depuis son cœur lui fait mal"
+            },
+            {
+                "index": 10,
+                "hebrew": "ואני בעיר נמל",
+                "french": "Et moi, dans une ville portuaire"
+            },
+            {
+                "index": 11,
+                "hebrew": "דייגים חוזרים בערב",
+                "french": "Les pêcheurs reviennent le soir"
+            },
+            {
+                "index": 12,
+                "hebrew": "בקבוק של וויסקי שוב ביד",
+                "french": "Une bouteille de whisky encore à la main"
+            },
+            {
+                "index": 13,
+                "hebrew": "כך אשכח מהלבד",
+                "french": "Ainsi j'oublierai la solitude"
+            },
+            {
+                "index": 14,
+                "hebrew": "שכואב אצלי כמו חרב",
+                "french": "Qui me blesse comme une épée"
+            },
+            {
+                "index": 15,
+                "hebrew": "ברוח מן הים",
+                "french": "Dans la brise venant de la mer"
+            },
+            {
+                "index": 16,
+                "hebrew": "מלטפת את המים",
+                "french": "Qui caresse l'eau"
+            },
+            {
+                "index": 17,
+                "hebrew": "לא עוזר לי פה הנוף",
+                "french": "Le paysage ici ne m'aide pas"
+            },
+            {
+                "index": 18,
+                "hebrew": "לא טברנה על החוף",
+                "french": "Ni la taverne sur la plage"
+            },
+            {
+                "index": 19,
+                "hebrew": "אם את לא שלי עדיין",
+                "french": "Si tu n'es pas encore à moi"
+            },
+            {
+                "index": 20,
+                "hebrew": "שתיתי קצת יותר מדי",
+                "french": "J'ai bu un peu trop"
+            },
+            {
+                "index": 21,
+                "hebrew": "ואיך פתאום עולה הבוקר",
+                "french": "Et comment soudain le matin se lève"
+            },
+            {
+                "index": 22,
+                "hebrew": "מסתובב בסמטאות",
+                "french": "Je me promène dans les ruelles"
+            },
+            {
+                "index": 23,
+                "hebrew": "מחפש טיפה של אושר",
+                "french": "Cherchant une goutte de bonheur"
+            },
+            {
+                "index": 24,
+                "hebrew": "איש אחד פושט ידיים",
+                "french": "Un homme tend les mains"
+            },
+            {
+                "index": 25,
+                "hebrew": "הוא מנגן ברחוב בינתיים",
+                "french": "Il joue dans la rue en attendant"
+            },
+            {
+                "index": 26,
+                "hebrew": "מנגינות של שיר ישן",
+                "french": "Les mélodies d'une vieille chanson"
+            },
+            {
+                "index": 27,
+                "hebrew": "ואומרים שרק הזמן",
+                "french": "Et on dit que seul le temps"
+            },
+            {
+                "index": 28,
+                "hebrew": "מנצח זוג עיניים",
+                "french": "Triomphe d'une paire d'yeux"
+            },
+            {
+                "index": 29,
+                "hebrew": "ואני בעיר נמל",
+                "french": "Et moi, dans une ville portuaire"
+            },
+            {
+                "index": 30,
+                "hebrew": "דייגים חוזרים בערב",
+                "french": "Les pêcheurs reviennent le soir"
+            },
+            {
+                "index": 31,
+                "hebrew": "בקבוק של וויסקי שוב ביד",
+                "french": "Une bouteille de whisky encore à la main"
+            },
+            {
+                "index": 32,
+                "hebrew": "כך אשכח מהלבד",
+                "french": "Ainsi j'oublierai la solitude"
+            },
+            {
+                "index": 33,
+                "hebrew": "שכואב אצלי כמו חרב",
+                "french": "Qui me blesse comme une épée"
+            },
+            {
+                "index": 34,
+                "hebrew": "באה רוח מן הים",
+                "french": "Une brise vient de la mer"
+            },
+            {
+                "index": 35,
+                "hebrew": "מלטפת את המים",
+                "french": "Qui caresse l'eau"
+            },
+            {
+                "index": 36,
+                "hebrew": "לא עוזר לי פה הנוף",
+                "french": "Le paysage ici ne m'aide pas"
+            },
+            {
+                "index": 37,
+                "hebrew": "לא טברנה על החוף",
+                "french": "Ni la taverne sur la plage"
+            },
+            {
+                "index": 38,
+                "hebrew": "אם את לא שלי עדיין",
+                "french": "Si tu n'es pas encore à moi"
+            }
+        ]
+    },
+    {
+        "key": "LURly90-QFk",
+        "url": "https://www.youtube.com/watch?v=LURly90-QFk",
+        "title_he": "עומר אדם - ריו דה ז'נרו",
+        "title_fr": "",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "נפגשנו בבית קפה בשקיעה",
+                "french": "Nous nous sommes rencontrés dans un café au crépuscule"
+            },
+            {
+                "index": 2,
+                "hebrew": "וגם חברות שלה באו",
+                "french": "Et ses copines sont venues aussi"
+            },
+            {
+                "index": 3,
+                "hebrew": "הבושם שלה טוב קראתי לה מאמא",
+                "french": "Son parfum est si bon, je l'ai appelée Mama"
+            },
+            {
+                "index": 4,
+                "hebrew": "תגידי לי למה לבזבז את הזמן",
+                "french": "Dis-moi pourquoi perdre notre temps"
+            },
+            {
+                "index": 5,
+                "hebrew": "הפוך לשניים קצת אושר בעיניים",
+                "french": "Un café pour deux, un peu de joie dans les yeux"
+            },
+            {
+                "index": 6,
+                "hebrew": "ביקשתי פעמיים את השם שלה",
+                "french": "J'ai demandé son prénom par deux fois"
+            },
+            {
+                "index": 7,
+                "hebrew": "אוקיי מריה, נהג דקה מגיע",
+                "french": "D'accord Maria, un chauffeur arrive dans la minute"
+            },
+            {
+                "index": 8,
+                "hebrew": "תראי לי את העיר אני חייב רק להזהיר",
+                "french": "Fais-moi découvrir la ville, je dois juste te prévenir"
+            },
+            {
+                "index": 9,
+                "hebrew": "כי יש לי חברים טיפה משוגעים",
+                "french": "Car j'ai des amis un brin lunatiques"
+            },
+            {
+                "index": 10,
+                "hebrew": "הגענו לברזיל ומאז הם רק רוקדים",
+                "french": "Nous sommes arrivés au Brésil et depuis ils ne font que danser"
+            },
+            {
+                "index": 11,
+                "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
+                "french": "Tout le monde fait hop hop hop hop toute la nuit"
+            },
+            {
+                "index": 12,
+                "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
+                "french": "Alors appelle tes amies de Rio de Janeiro"
+            },
+            {
+                "index": 13,
+                "hebrew": "נשב פה בכיף עם יין ונרות",
+                "french": "Nous nous poserons ici avec du vin et des bougies"
+            },
+            {
+                "index": 14,
+                "hebrew": "הם יעשו לך הופ הופ כל הלילה",
+                "french": "Ils te feront danser hop hop toute la nuit"
+            },
+            {
+                "index": 15,
+                "hebrew": "תכירי זה אח יקר, ויש לו לב מזהב",
+                "french": "Je te présente un frère cher, il a un cœur en or"
+            },
+            {
+                "index": 16,
+                "hebrew": "הוא רק נראה בן עשרים, כפרה הוא אבא לארבע",
+                "french": "Il a juste l'air d'avoir vingt ans, chérie il est père de quatre enfants"
+            },
+            {
+                "index": 17,
+                "hebrew": "ואת מה איתך, עשרים ושתיים רואים לך בעיניים",
+                "french": "Et toi alors, vingt-deux ans ça se lit dans tes yeux"
+            },
+            {
+                "index": 18,
+                "hebrew": "את חיה בשמיים, אין דאגות",
+                "french": "Tu vis dans les cieux, sans aucune préoccupation"
+            },
+            {
+                "index": 19,
+                "hebrew": "אז מה מריה אודייה מאמא תראי לי את העיר כי",
+                "french": "Alors quoi Maria Oh-dieu Mama montre-moi la ville car"
+            },
+            {
+                "index": 20,
+                "hebrew": "יש לי חברים טיפה משוגעים",
+                "french": "J'ai des amis un brin lunatiques"
+            },
+            {
+                "index": 21,
+                "hebrew": "הגענו לברזיל ומאז הם רק רוקדים",
+                "french": "Nous sommes arrivés au Brésil et depuis ils ne font que danser"
+            },
+            {
+                "index": 22,
+                "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
+                "french": "Tout le monde fait hop hop hop hop toute la nuit"
+            },
+            {
+                "index": 23,
+                "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
+                "french": "Alors appelle tes amies de Rio de Janeiro"
+            },
+            {
+                "index": 24,
+                "hebrew": "נשב פה בכיף עם יין ונרות",
+                "french": "Nous nous poserons ici avec du vin et des bougies"
+            },
+            {
+                "index": 25,
+                "hebrew": "הם יעשו לך הופ הופ כל הלילה",
+                "french": "Ils te feront danser hop hop toute la nuit"
+            },
+            {
+                "index": 26,
+                "hebrew": "בריו דה ז'נרו תמיד פה חם",
+                "french": "À Rio de Janeiro il fait toujours chaud"
+            },
+            {
+                "index": 27,
+                "hebrew": "אז אל תשאירי אותי לבד",
+                "french": "Alors ne me laisse pas tout seul"
+            },
+            {
+                "index": 28,
+                "hebrew": "מריו דה ז'נרו עד מחר",
+                "french": "De Rio de Janeiro jusqu'à demain"
+            },
+            {
+                "index": 29,
+                "hebrew": "הכל נגמר כשחוזרים",
+                "french": "Tout s'achève quand on s'en retourne"
+            },
+            {
+                "index": 30,
+                "hebrew": "מקווה שנזכור הכל",
+                "french": "J'espère que nous n'oublierons rien"
+            },
+            {
+                "index": 31,
+                "hebrew": "יש לי חברים טיפה משוגעים",
+                "french": "J'ai des amis un brin lunatiques"
+            },
+            {
+                "index": 32,
+                "hebrew": "הגענו לברזיל ומאז הם רק שותים",
+                "french": "Nous sommes arrivés au Brésil et depuis ils ne font que boire"
+            },
+            {
+                "index": 33,
+                "hebrew": "כולם עושים פה הופ הופ הופ הופ כל הלילה",
+                "french": "Tout le monde fait hop hop hop hop toute la nuit"
+            },
+            {
+                "index": 34,
+                "hebrew": "אז תתקשרי לחברות מריו דה ז'נרו",
+                "french": "Alors appelle tes amies de Rio de Janeiro"
+            },
+            {
+                "index": 35,
+                "hebrew": "נשב פה בכיף עם יין ונרות",
+                "french": "Nous nous poserons ici avec du vin et des bougies"
+            },
+            {
+                "index": 36,
+                "hebrew": "הם יעשו לך הופ הופ כל הלילה",
+                "french": "Ils te feront danser hop hop toute la nuit"
+            }
+        ]
+    },
+    {
+        "key": "Y-_XAt1OFNI",
+        "url": "https://www.youtube.com/watch?v=Y-_XAt1OFNI",
+        "title_he": "חנן בן ארי - אם תרצי",
+        "title_fr": "Hanan Ben Ari - Si tu le veux",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "בלילות, אנ'לא ישן כבר שבועות",
+                "french": "La nuit, je ne dors plus depuis des semaines"
+            },
+            {
+                "index": 2,
+                "hebrew": "רק מתהפך מצד לצד",
+                "french": "Je ne fais que me tourner d'un côté à l'autre"
+            },
+            {
+                "index": 3,
+                "hebrew": "ומפחד שיום אחד",
+                "french": "Et j'ai peur qu'un jour"
+            },
+            {
+                "index": 4,
+                "hebrew": "אני אקום ואת כבר לא תהיי",
+                "french": "Je me réveille et que tu ne sois plus là"
+            },
+            {
+                "index": 5,
+                "hebrew": "אני אצעק בכל העיר",
+                "french": "Je crierai dans toute la ville"
+            },
+            {
+                "index": 6,
+                "hebrew": "אשאל למי, מי שראה",
+                "french": "Je demanderai à quiconque a vu"
+            },
+            {
+                "index": 7,
+                "hebrew": "לאן הלכה האהבה",
+                "french": "Où est passé l'amour"
+            },
+            {
+                "index": 8,
+                "hebrew": "אם תרצי",
+                "french": "Si tu le veux"
+            },
+            {
+                "index": 9,
+                "hebrew": "אני אתן לך מנגינה",
+                "french": "Je te donnerai une mélodie"
+            },
+            {
+                "index": 10,
+                "hebrew": "שתנגן לך את הכל",
+                "french": "Qui te jouera tout"
+            },
+            {
+                "index": 11,
+                "hebrew": "אני אתן לך את הכל",
+                "french": "Je te donnerai tout"
+            },
+            {
+                "index": 12,
+                "hebrew": "אני נשבע לך, יד על הלב",
+                "french": "Je te le jure, la main sur le cœur"
+            },
+            {
+                "index": 13,
+                "hebrew": "הפעם זה על באמת",
+                "french": "Cette fois c'est pour de vrai"
+            },
+            {
+                "index": 14,
+                "hebrew": "מן הקצה אל הקצה",
+                "french": "D'un bout à l'autre"
+            },
+            {
+                "index": 15,
+                "hebrew": "אני חדש, אני רוצה",
+                "french": "Je suis un homme nouveau, je le veux"
+            },
+            {
+                "index": 16,
+                "hebrew": "רוצה ממש",
+                "french": "Je le veux vraiment"
+            },
+            {
+                "index": 17,
+                "hebrew": "אם תרצי",
+                "french": "Si tu le veux"
+            },
+            {
+                "index": 18,
+                "hebrew": "אני אתן לך מנגינה",
+                "french": "Je te donnerai une mélodie"
+            },
+            {
+                "index": 19,
+                "hebrew": "שתנגן לך את הכל",
+                "french": "Qui te jouera tout"
+            },
+            {
+                "index": 20,
+                "hebrew": "אני אתן לך את הכל",
+                "french": "Je te donnerai tout"
+            },
+            {
+                "index": 21,
+                "hebrew": "וגם אשיר לך",
+                "french": "Et je te chanterai aussi"
+            },
+            {
+                "index": 22,
+                "hebrew": "אם תרצי",
+                "french": "Si tu le veux"
+            },
+            {
+                "index": 23,
+                "hebrew": "אני אתן לך מנגינה",
+                "french": "Je te donnerai une mélodie"
+            },
+            {
+                "index": 24,
+                "hebrew": "שתרפא בך כל מכאוב",
+                "french": "Qui guérira en toi chaque douleur"
+            },
+            {
+                "index": 25,
+                "hebrew": "אני אלחין וגם אכתוב",
+                "french": "Je composerai et j'écrirai aussi"
+            },
+            {
+                "index": 26,
+                "hebrew": "וגם אשיר לך שיר",
+                "french": "Et je te chanterai aussi une chanson"
+            },
+            {
+                "index": 27,
+                "hebrew": "אשיר לך שיר",
+                "french": "Je te chanterai une chanson"
+            },
+            {
+                "index": 28,
+                "hebrew": "אשיר לך לה לה לה",
+                "french": "Je te chanterai la la la"
+            },
+            {
+                "index": 29,
+                "hebrew": "לעולם, אנ'לא עוזב אותך אף פעם",
+                "french": "Pour toujours, je ne te quitterai jamais"
+            },
+            {
+                "index": 30,
+                "hebrew": "גם אם נדמה שאין אותי",
+                "french": "Même s'il semble que je ne suis plus là"
+            },
+            {
+                "index": 31,
+                "hebrew": "לנצח את אהובתי",
+                "french": "Pour l'éternité tu es mon amour"
+            },
+            {
+                "index": 32,
+                "hebrew": "לנצח את אהובתי",
+                "french": "Pour l'éternité tu es mon amour"
+            },
+            {
+                "index": 33,
+                "hebrew": "אהובתי",
+                "french": "Mon amour"
+            }
+        ]
+    },
+    {
+        "key": "fBhA1LKKuNk",
+        "url": "https://www.youtube.com/watch?v=fBhA1LKKuNk",
+        "title_he": "אייל גולן - שלום אהובתי",
+        "title_fr": "Eyal Golan - Bonjour mon amour",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "שלום אהובתי",
+                "french": "Bonjour mon amour"
+            },
+            {
+                "index": 2,
+                "hebrew": "תראי אותי עומד על סף הדלת",
+                "french": "Regarde-moi debout sur le pas de la porte"
+            },
+            {
+                "index": 3,
+                "hebrew": "בעולם הזה היום הכל זמני",
+                "french": "Dans ce monde aujourd'hui tout est éphémère"
+            },
+            {
+                "index": 4,
+                "hebrew": "ורק את נשארת",
+                "french": "Et il n'y a que toi qui restes"
+            },
+            {
+                "index": 5,
+                "hebrew": "קשה להאמין",
+                "french": "Difficile à croire"
+            },
+            {
+                "index": 6,
+                "hebrew": "שבועיים גם השמש משקרת",
+                "french": "Depuis deux semaines même le soleil ment"
+            },
+            {
+                "index": 7,
+                "hebrew": "אני זוכר כשאת הלכת רחוק אני",
+                "french": "Je me souviens quand tu es partie loin, moi"
+            },
+            {
+                "index": 8,
+                "hebrew": "צעקתי בשקט",
+                "french": "J'ai crié en silence"
+            },
+            {
+                "index": 9,
+                "hebrew": "אין זמן יפה יותר",
+                "french": "Il n'y a pas de plus beau moment"
+            },
+            {
+                "index": 10,
+                "hebrew": "כשאת כבר במקום אחר",
+                "french": "Quand tu es déjà ailleurs"
+            },
+            {
+                "index": 11,
+                "hebrew": "אולי תבואי עד אליי",
+                "french": "Peut-être viendras-tu jusqu'à moi"
+            },
+            {
+                "index": 12,
+                "hebrew": "וכמה זה כואב",
+                "french": "Et comme ça fait mal"
+            },
+            {
+                "index": 13,
+                "hebrew": "הלוואי שמישהו יתקן לי את הלב",
+                "french": "Si seulement quelqu'un pouvait réparer mon cœur"
+            },
+            {
+                "index": 14,
+                "hebrew": "נראה לי שהוא לא עובד",
+                "french": "J'ai l'impression qu'il ne marche plus"
+            },
+            {
+                "index": 15,
+                "hebrew": "הוא מקולקל או מקולל",
+                "french": "Il est cassé ou maudit"
+            },
+            {
+                "index": 16,
+                "hebrew": "בלילה געגוע מתגנב",
+                "french": "La nuit, le manque se faufile"
+            },
+            {
+                "index": 17,
+                "hebrew": "עד למיטה שלי",
+                "french": "Jusque dans mon lit"
+            },
+            {
+                "index": 18,
+                "hebrew": "כבר אין יותר דמעות",
+                "french": "Il n'y a déjà plus de larmes"
+            },
+            {
+                "index": 19,
+                "hebrew": "ואין יפה שלי",
+                "french": "Et ma belle n'est plus là"
+            },
+            {
+                "index": 20,
+                "hebrew": "תגידי איך אפשר בכלל",
+                "french": "Dis-moi, comment est-ce même possible"
+            },
+            {
+                "index": 21,
+                "hebrew": "להיות שלך כשאין אותך",
+                "french": "D'être à toi quand tu n'es plus là"
+            },
+            {
+                "index": 22,
+                "hebrew": "כשאין אותך יותר",
+                "french": "Quand tu n'es plus là du tout"
+            },
+            {
+                "index": 23,
+                "hebrew": "שלום אהובתי",
+                "french": "Bonjour mon amour"
+            },
+            {
+                "index": 24,
+                "hebrew": "הלב שלי מזמן הרים ידיים",
+                "french": "Mon cœur a baissé les bras depuis longtemps"
+            },
+            {
+                "index": 25,
+                "hebrew": "אפילו עוד שקיעה של בין ערביים",
+                "french": "Même un autre coucher de soleil au crépuscule"
+            },
+            {
+                "index": 26,
+                "hebrew": "כבר לא מנחמת",
+                "french": "Ne me console plus"
+            },
+            {
+                "index": 27,
+                "hebrew": "אין זמן יפה יותר",
+                "french": "Il n'y a pas de plus beau moment"
+            },
+            {
+                "index": 28,
+                "hebrew": "כשאת כבר במקום אחר",
+                "french": "Quand tu es déjà ailleurs"
+            },
+            {
+                "index": 29,
+                "hebrew": "אולי תבואי עד אליי",
+                "french": "Peut-être viendras-tu jusqu'à moi"
+            },
+            {
+                "index": 30,
+                "hebrew": "וכמה זה כואב",
+                "french": "Et comme ça fait mal"
+            },
+            {
+                "index": 31,
+                "hebrew": "הלוואי שמישהו יתקן לי את הלב",
+                "french": "Si seulement quelqu'un pouvait réparer mon cœur"
+            },
+            {
+                "index": 32,
+                "hebrew": "נראה לי שהוא לא עובד",
+                "french": "J'ai l'impression qu'il ne marche plus"
+            },
+            {
+                "index": 33,
+                "hebrew": "הוא מקולקל או מקולל",
+                "french": "Il est cassé ou maudit"
+            },
+            {
+                "index": 34,
+                "hebrew": "בלילה געגוע מתגנב",
+                "french": "La nuit, le manque se faufile"
+            },
+            {
+                "index": 35,
+                "hebrew": "עד למיטה שלי",
+                "french": "Jusque dans mon lit"
+            },
+            {
+                "index": 36,
+                "hebrew": "כבר אין יותר דמעות",
+                "french": "Il n'y a déjà plus de larmes"
+            },
+            {
+                "index": 37,
+                "hebrew": "ואין יפה שלי",
+                "french": "Et ma belle n'est plus là"
+            },
+            {
+                "index": 38,
+                "hebrew": "תגידי איך אפשר בכלל",
+                "french": "Dis-moi, comment est-ce même possible"
+            },
+            {
+                "index": 39,
+                "hebrew": "להיות שלך כשאין אותך",
+                "french": "D'être à toi quand tu n'es plus là"
+            },
+            {
+                "index": 40,
+                "hebrew": "כשאין אותך יותר",
+                "french": "Quand tu n'es plus là du tout"
+            },
+            {
+                "index": 41,
+                "hebrew": "וכמה זה כואב",
+                "french": "Et comme ça fait mal"
+            },
+            {
+                "index": 42,
+                "hebrew": "הלוואי שמישהו יתקן לי את הלב",
+                "french": "Si seulement quelqu'un pouvait réparer mon cœur"
+            },
+            {
+                "index": 43,
+                "hebrew": "נראה לי שהוא לא עובד",
+                "french": "J'ai l'impression qu'il ne marche plus"
+            },
+            {
+                "index": 44,
+                "hebrew": "הוא מקולקל או מקולל",
+                "french": "Il est cassé ou maudit"
+            },
+            {
+                "index": 45,
+                "hebrew": "בלילה געגוע מתגנב",
+                "french": "La nuit, le manque se faufile"
+            },
+            {
+                "index": 46,
+                "hebrew": "עד למיטה שלי",
+                "french": "Jusque dans mon lit"
+            },
+            {
+                "index": 47,
+                "hebrew": "כבר אין יותר דמעות",
+                "french": "Il n'y a déjà plus de larmes"
+            },
+            {
+                "index": 48,
+                "hebrew": "ואין יפה שלי",
+                "french": "Et ma belle n'est plus là"
+            },
+            {
+                "index": 49,
+                "hebrew": "תגידי איך אפשר בכלל",
+                "french": "Dis-moi, comment est-ce même possible"
+            },
+            {
+                "index": 50,
+                "hebrew": "להיות שלך כשאין אותך",
+                "french": "D'être à toi quand tu n'es plus là"
+            },
+            {
+                "index": 51,
+                "hebrew": "כשאין אותך יותר",
+                "french": "Quand tu n'es plus là du tout"
+            }
+        ]
+    },
+    {
+        "key": "LtY23Aq1mTI",
+        "url": "https://www.youtube.com/watch?v=LtY23Aq1mTI",
+        "title_he": "אנה זק - לך לישון",
+        "title_fr": "Anna Zak - Va dormir",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "מישהו פה נזכר קצת מאוחר",
+                "french": "Quelqu'un ici s'est réveillé un peu tard"
+            },
+            {
+                "index": 2,
+                "hebrew": "כן, וזה לא אני",
+                "french": "Oui, et ce n'est pas moi"
+            },
+            {
+                "index": 3,
+                "hebrew": "זה לא בשבילי",
+                "french": "Ce n'est pas pour moi"
+            },
+            {
+                "index": 4,
+                "hebrew": "מישהו פה יצא קצת מכוער",
+                "french": "Quelqu'un ici s'est comporté de façon un peu moche"
+            },
+            {
+                "index": 5,
+                "hebrew": "כן, וזה לא אני",
+                "french": "Oui, et ce n'est pas moi"
+            },
+            {
+                "index": 6,
+                "hebrew": "זה לא בשבילי",
+                "french": "Ce n'est pas pour moi"
+            },
+            {
+                "index": 7,
+                "hebrew": "פחות אחד, יותר נחמד",
+                "french": "Un de moins, c'est bien plus sympa"
+            },
+            {
+                "index": 8,
+                "hebrew": "לחזור לבד הביתה",
+                "french": "De rentrer seule à la maison"
+            },
+            {
+                "index": 9,
+                "hebrew": "זה לא מסובך, רק אל תשלח",
+                "french": "Ce n'est pas compliqué, n'envoie juste pas"
+            },
+            {
+                "index": 10,
+                "hebrew": "לי הודעות בלילה",
+                "french": "De messages la nuit"
+            },
+            {
+                "index": 11,
+                "hebrew": "ערה? לך לישון",
+                "french": "T'es réveillée ? Va dormir"
+            },
+            {
+                "index": 12,
+                "hebrew": "בואי נצא? בחלום",
+                "french": "On sort ? Dans tes rêves"
+            },
+            {
+                "index": 13,
+                "hebrew": "בטוחה? במיליון",
+                "french": "T'es sûre ? À un million de pourcent"
+            },
+            {
+                "index": 14,
+                "hebrew": "אני שרה כל היום",
+                "french": "Je chante toute la journée"
+            },
+            {
+                "index": 15,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 16,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 17,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 18,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 19,
+                "hebrew": "מישהו פה יצא קצת מלוכלך",
+                "french": "Quelqu'un ici a joué un peu sale"
+            },
+            {
+                "index": 20,
+                "hebrew": "כן, אבל לא אני",
+                "french": "Oui, mais pas moi"
+            },
+            {
+                "index": 21,
+                "hebrew": "זה לא בשבילי",
+                "french": "Ce n'est pas pour moi"
+            },
+            {
+                "index": 22,
+                "hebrew": "ולמרות הכל חשבת שאתה מלאך",
+                "french": "Et malgré tout tu pensais être un ange"
+            },
+            {
+                "index": 23,
+                "hebrew": "כן, אבל לא אני",
+                "french": "Oui, mais pas moi"
+            },
+            {
+                "index": 24,
+                "hebrew": "זה לא בשבילי",
+                "french": "Ce n'est pas pour moi"
+            },
+            {
+                "index": 25,
+                "hebrew": "אהה, פחות אחד, יותר נחמד",
+                "french": "Ahh, un de moins, c'est bien plus sympa"
+            },
+            {
+                "index": 26,
+                "hebrew": "לחזור לבד הביתה",
+                "french": "De rentrer seule à la maison"
+            },
+            {
+                "index": 27,
+                "hebrew": "זה לא מסובך, רק אל תשלח",
+                "french": "Ce n'est pas compliqué, n'envoie juste pas"
+            },
+            {
+                "index": 28,
+                "hebrew": "לי הודעות בלילה",
+                "french": "De messages la nuit"
+            },
+            {
+                "index": 29,
+                "hebrew": "ערה? לך לישון",
+                "french": "T'es réveillée ? Va dormir"
+            },
+            {
+                "index": 30,
+                "hebrew": "בואי נצא? בחלום",
+                "french": "On sort ? Dans tes rêves"
+            },
+            {
+                "index": 31,
+                "hebrew": "בטוחה? במיליון",
+                "french": "T'es sûre ? À un million de pourcent"
+            },
+            {
+                "index": 32,
+                "hebrew": "אני שרה כל היום",
+                "french": "Je chante toute la journée"
+            },
+            {
+                "index": 33,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 34,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 35,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 36,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 37,
+                "hebrew": "לא תראה אותי בבאסה, לא תראה",
+                "french": "Tu ne me verras pas déprimer, tu ne verras pas"
+            },
+            {
+                "index": 38,
+                "hebrew": "לא תראה",
+                "french": "Tu ne verras pas"
+            },
+            {
+                "index": 39,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 40,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 41,
+                "hebrew": "רק אל תבקש ממני שוב סליחה",
+                "french": "Ne me demande juste pas pardon encore une fois"
+            },
+            {
+                "index": 42,
+                "hebrew": "וואלה זה מה יש, שיהיה בהצלחה",
+                "french": "Walla c'est comme ça, bonne chance"
+            },
+            {
+                "index": 43,
+                "hebrew": "מה שלא יהיה, אני כבר לא שלך",
+                "french": "Quoi qu'il arrive, je ne suis plus à toi"
+            },
+            {
+                "index": 44,
+                "hebrew": "לא, לא...",
+                "french": "Non, non..."
+            },
+            {
+                "index": 45,
+                "hebrew": "רגע, מה זאת אומרת? אז... יש לך מישהו?",
+                "french": "Attends, comment ça ? Alors... tu as quelqu'un ?"
+            },
+            {
+                "index": 46,
+                "hebrew": "לך לישון",
+                "french": "Va dormir"
+            },
+            {
+                "index": 47,
+                "hebrew": "בואי נצא? בחלום",
+                "french": "On sort ? Dans tes rêves"
+            },
+            {
+                "index": 48,
+                "hebrew": "בטוחה? במיליון",
+                "french": "T'es sûre ? À un million de pourcent"
+            },
+            {
+                "index": 49,
+                "hebrew": "אני שרה כל היום",
+                "french": "Je chante toute la journée"
+            },
+            {
+                "index": 50,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 51,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 52,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 53,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 54,
+                "hebrew": "לא תראה אותי בבאסה, לא תראה",
+                "french": "Tu ne me verras pas déprimer, tu ne verras pas"
+            },
+            {
+                "index": 55,
+                "hebrew": "לא תראה",
+                "french": "Tu ne verras pas"
+            },
+            {
+                "index": 56,
+                "hebrew": "בוא תראה מה פספסת, בוא תראה",
+                "french": "Viens voir ce que tu as raté, viens voir"
+            },
+            {
+                "index": 57,
+                "hebrew": "בוא תראה",
+                "french": "Viens voir"
+            },
+            {
+                "index": 58,
+                "hebrew": "אז מה, אין סיכוי את אומרת?",
+                "french": "Alors quoi, aucune chance tu dis ?"
+            },
+            {
+                "index": 59,
+                "hebrew": "לך, לך לישון",
+                "french": "Va, va dormir"
+            }
+        ]
+    },
+    {
+        "key": "mYzZsc5weyg",
+        "url": "https://www.youtube.com/watch?v=mYzZsc5weyg",
+        "title_he": "אופק אדנק וצגאי בוי - ככה זה",
+        "title_fr": "Ofek Adanek & Tzagay Boy - C'est comme ça",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "את יודעת שככה זה טוב",
+                "french": "Tu sais que c'est bien comme ça"
+            },
+            {
+                "index": 2,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 3,
+                "hebrew": "זה מתנגן לך בבית בשכונה וברחוב",
+                "french": "Ça tourne chez toi, dans le quartier et dans la rue"
+            },
+            {
+                "index": 4,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 5,
+                "hebrew": "שאת יוצאת לבלות עם חברות הן צועקות",
+                "french": "Quand tu sors faire la fête avec tes copines, elles crient"
+            },
+            {
+                "index": 6,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 7,
+                "hebrew": "אין מה לעשות, תני לי להסביר לך לפחות",
+                "french": "Il n'y a rien à faire, laisse-moi au moins t'expliquer"
+            },
+            {
+                "index": 8,
+                "hebrew": "למה זה ככה",
+                "french": "Pourquoi c'est comme ça"
+            },
+            {
+                "index": 9,
+                "hebrew": "אין אחד שיכול לעשות את זה כמוני בום בום צ'קה לאק",
+                "french": "Il n'y a personne qui peut le faire comme moi, boum boum chaka lak"
+            },
+            {
+                "index": 10,
+                "hebrew": "זה אופק אדנק משנה ת'משחק",
+                "french": "C'est Ofek Adanek qui change la donne"
+            },
+            {
+                "index": 11,
+                "hebrew": "אם את נדבקת אז אני נדבק",
+                "french": "Si tu me colles, alors je te colle"
+            },
+            {
+                "index": 12,
+                "hebrew": "אם את לא רוקדת אז אני נדפק",
+                "french": "Si tu ne danses pas, alors je suis foutu"
+            },
+            {
+                "index": 13,
+                "hebrew": "אם את מעשנת אני מארגן שק",
+                "french": "Si tu fumes, j'organise un pochon"
+            },
+            {
+                "index": 14,
+                "hebrew": "אני לא רוצה ללכת לא שומר מרחק",
+                "french": "Je ne veux pas partir, je ne garde pas mes distances"
+            },
+            {
+                "index": 15,
+                "hebrew": "לא שומע רק פאק, היטס ג'מייקן טאק",
+                "french": "Je n'entends pas juste 'fuck', c'est du parler jamaïcain"
+            },
+            {
+                "index": 16,
+                "hebrew": "אני באתי מקורי וזה לא מועתק",
+                "french": "Je suis venu original et ce n'est pas copié"
+            },
+            {
+                "index": 17,
+                "hebrew": "בום בום, בום צ'קה לאק",
+                "french": "Boum boum, boum chaka lak"
+            },
+            {
+                "index": 18,
+                "hebrew": "אין אני מרוסק",
+                "french": "Mec, je suis fracassé"
+            },
+            {
+                "index": 19,
+                "hebrew": "אני לא רוצה ללכת לא לזוז ממך קלאק",
+                "french": "Je ne veux pas partir, ni bouger de toi, clac"
+            },
+            {
+                "index": 20,
+                "hebrew": "לא רוצה ללכת לא לזוז ממך קלאק",
+                "french": "Je ne veux pas partir, ni bouger de toi, clac"
+            },
+            {
+                "index": 21,
+                "hebrew": "את יודעת שככה זה טוב",
+                "french": "Tu sais que c'est bien comme ça"
+            },
+            {
+                "index": 22,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 23,
+                "hebrew": "זה מתנגן לך בבית בשכונה וברחוב",
+                "french": "Ça tourne chez toi, dans le quartier et dans la rue"
+            },
+            {
+                "index": 24,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 25,
+                "hebrew": "שאת יוצאת לבלות עם חברות הן צועקות",
+                "french": "Quand tu sors faire la fête avec tes copines, elles crient"
+            },
+            {
+                "index": 26,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 27,
+                "hebrew": "אין מה לעשות, תני לי להסביר לך לפחות",
+                "french": "Il n'y a rien à faire, laisse-moi au moins t'expliquer"
+            },
+            {
+                "index": 28,
+                "hebrew": "למה זה ככה",
+                "french": "Pourquoi c'est comme ça"
+            },
+            {
+                "index": 29,
+                "hebrew": "צגאי בוי",
+                "french": "Tzagay Boy"
+            },
+            {
+                "index": 30,
+                "hebrew": "אם זה לא מובן אז תתנו לי להסביר",
+                "french": "Si ce n'est pas clair, alors laissez-moi expliquer"
+            },
+            {
+                "index": 31,
+                "hebrew": "זה הירוק צהוב אדום בתוך העיר",
+                "french": "C'est le vert, jaune, rouge dans la ville"
+            },
+            {
+                "index": 32,
+                "hebrew": "גם אם הקצב איטי אז הוא מאיר",
+                "french": "Même si le rythme est lent, il illumine"
+            },
+            {
+                "index": 33,
+                "hebrew": "תרימו יד ושימו לי ת'באוויר",
+                "french": "Levez la main et mettez-la en l'air pour moi"
+            },
+            {
+                "index": 34,
+                "hebrew": "היא לא נורמלית, בדיוק מה שבא לי",
+                "french": "Elle est folle, exactement ce dont j'ai envie"
+            },
+            {
+                "index": 35,
+                "hebrew": "היא זזה בלי אלכוהול עושה את זה אורגני",
+                "french": "Elle bouge sans alcool, elle le fait de façon organique"
+            },
+            {
+                "index": 36,
+                "hebrew": "אני מודל לוקאלי, מכור לה לפונאני",
+                "french": "Je suis un modèle local, accro à son punani"
+            },
+            {
+                "index": 37,
+                "hebrew": "אוהבת את האולדסקול אז אני אמרתי ש...",
+                "french": "Elle aime le old school alors j'ai dit que..."
+            },
+            {
+                "index": 38,
+                "hebrew": "מהמבט את תביני כבר מה את עושה לי",
+                "french": "D'un regard tu comprendras déjà ce que tu me fais"
+            },
+            {
+                "index": 39,
+                "hebrew": "So when you gonna give it up to me",
+                "french": "Alors quand vas-tu te donner à moi"
+            },
+            {
+                "index": 40,
+                "hebrew": "מעכשיו שאת כאן איתי",
+                "french": "À partir de maintenant que tu es là avec moi"
+            },
+            {
+                "index": 41,
+                "hebrew": "בייבי רק אל תשחקי",
+                "french": "Bébé, ne joue pas"
+            },
+            {
+                "index": 42,
+                "hebrew": "Like why",
+                "french": "Genre pourquoi"
+            },
+            {
+                "index": 43,
+                "hebrew": "שלא יהיה אוי ואבוי",
+                "french": "Pour qu'il n'y ait pas de drames"
+            },
+            {
+                "index": 44,
+                "hebrew": "אומרת אוהבת את טי בוי",
+                "french": "Elle dit qu'elle aime T Boy"
+            },
+            {
+                "index": 45,
+                "hebrew": "את יודעת שזה...",
+                "french": "Tu sais que c'est..."
+            },
+            {
+                "index": 46,
+                "hebrew": "את יודעת שזה...",
+                "french": "Tu sais que c'est..."
+            },
+            {
+                "index": 47,
+                "hebrew": "את יודעת שככה זה טוב",
+                "french": "Tu sais que c'est bien comme ça"
+            },
+            {
+                "index": 48,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 49,
+                "hebrew": "זה מתנגן לך בבית בשכונה וברחוב",
+                "french": "Ça tourne chez toi, dans le quartier et dans la rue"
+            },
+            {
+                "index": 50,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 51,
+                "hebrew": "שאת יוצאת לבלות עם חברות הן צועקות",
+                "french": "Quand tu sors faire la fête avec tes copines, elles crient"
+            },
+            {
+                "index": 52,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 53,
+                "hebrew": "אין מה לעשות, תני לי להסביר לך לפחות",
+                "french": "Il n'y a rien à faire, laisse-moi au moins t'expliquer"
+            },
+            {
+                "index": 54,
+                "hebrew": "למה זה ככה",
+                "french": "Pourquoi c'est comme ça"
+            },
+            {
+                "index": 55,
+                "hebrew": "אם הם שואלים תגיד שזה דאנסהול",
+                "french": "S'ils demandent, dis que c'est du dancehall"
+            },
+            {
+                "index": 56,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 57,
+                "hebrew": "אם אני צועק למיקרופון זה כי זה הסטייל",
+                "french": "Si je crie dans le micro, c'est parce que c'est le style"
+            },
+            {
+                "index": 58,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 59,
+                "hebrew": "אדנק וצגאי און דה מיקרופון ביי",
+                "french": "Adanek et Tzagay au micro, bye"
+            },
+            {
+                "index": 60,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            },
+            {
+                "index": 61,
+                "hebrew": "אם זה לא מובן",
+                "french": "Si ce n'est pas clair"
+            },
+            {
+                "index": 62,
+                "hebrew": "ככה זה",
+                "french": "C'est comme ça"
+            }
+        ]
+    },
+    {
+        "key": "agsItmAUZqs",
+        "url": "https://www.youtube.com/watch?v=agsItmAUZqs",
+        "title_he": "אייל גולן וניקוס ורטיס - כשאת איתו / Eyal Golan & Nikos Vertis - Ksheat Ito",
+        "title_fr": "Eyal Golan & Nikos Vertis - Quand tu es avec lui",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "פתאום הלכת ממני",
+                "french": "Soudain tu es partie loin de moi"
+            },
+            {
+                "index": 2,
+                "hebrew": "הלך איתך גם החלום",
+                "french": "Le rêve est parti עם toi aussi"
+            },
+            {
+                "index": 3,
+                "hebrew": "אל בית ריק חזרתי",
+                "french": "Je suis rentré dans une maison vide"
+            },
+            {
+                "index": 4,
+                "hebrew": "מכתב השארת לי",
+                "french": "Tu m'as laissé une lettre"
+            },
+            {
+                "index": 5,
+                "hebrew": "ובו אמרת את הכל",
+                "french": "Et dedans tu as tout dit"
+            },
+            {
+                "index": 6,
+                "hebrew": "כתבת שאת אוהבת אותי",
+                "french": "Tu as écrit que tu m'aimes"
+            },
+            {
+                "index": 7,
+                "hebrew": "שבאמת היית שלי",
+                "french": "Que tu étais vraiment à moi"
+            },
+            {
+                "index": 8,
+                "hebrew": "איך את עצמך מצאת איתו",
+                "french": "Comment as-tu pu te retrouver avec lui"
+            },
+            {
+                "index": 9,
+                "hebrew": "נתת לו את הכל",
+                "french": "Tu lui as tout donné"
+            },
+            {
+                "index": 10,
+                "hebrew": "אני לבד יושב לי",
+                "french": "Je suis assis tout seul"
+            },
+            {
+                "index": 11,
+                "hebrew": "וחושב לי, היכן טעיתי",
+                "french": "Et je réfléchis, où ai-je fait erreur"
+            },
+            {
+                "index": 12,
+                "hebrew": "היכן טעיתי, מה לא נכון עשיתי",
+                "french": "Où ai-je fait erreur, qu'ai-je fait de mal"
+            },
+            {
+                "index": 13,
+                "hebrew": "שכך פגעת בי",
+                "french": "Pour que tu me blesses ainsi"
+            },
+            {
+                "index": 14,
+                "hebrew": "ואל תחפשי לי",
+                "french": "Et ne me cherche pas"
+            },
+            {
+                "index": 15,
+                "hebrew": "כשאת תביני, אני אהיה רחוק",
+                "french": "Quand tu comprendras, je serai loin"
+            },
+            {
+                "index": 16,
+                "hebrew": "יום עובר לי ורק יותר כואב לי",
+                "french": "Un jour passe et ça me fait seulement plus mal"
+            },
+            {
+                "index": 17,
+                "hebrew": "הלב נשבר לי, כשאת איתו",
+                "french": "Mon cœur se brise, quand tu es avec lui"
+            },
+            {
+                "index": 18,
+                "hebrew": "Αυτό που μου συμβαίνει",
+                "french": "Ce qui m'arrive"
+            },
+            {
+                "index": 19,
+                "hebrew": "Φοβάμαι τόσο να το πω",
+                "french": "J'ai tellement peur de le dire"
+            },
+            {
+                "index": 20,
+                "hebrew": "Καρδιά μου πληγωμένη",
+                "french": "Mon cœur blessé"
+            },
+            {
+                "index": 21,
+                "hebrew": "Ας είναι αλήθεια αυτό που ζω",
+                "french": "Pourvu que ce que je vis soit vrai"
+            },
+            {
+                "index": 22,
+                "hebrew": "Αγάπη να 'ναι αληθινή",
+                "french": "Que ce soit un amour véritable"
+            },
+            {
+                "index": 23,
+                "hebrew": "Αιτία να 'ναι κι αφορμή",
+                "french": "Que ce soit la cause et la raison"
+            },
+            {
+                "index": 24,
+                "hebrew": "Σ' αυτά τα μάτια που κοιτώ",
+                "french": "Dans ces yeux que je regarde"
+            },
+            {
+                "index": 25,
+                "hebrew": "Τον έρωτα να βρω",
+                "french": "De trouver l'amour"
+            },
+            {
+                "index": 26,
+                "hebrew": "Αν είσαι ένα αστέρι",
+                "french": "Si tu es une étoile"
+            },
+            {
+                "index": 27,
+                "hebrew": "Που φως θα φέρει στην άδεια μου ζωή",
+                "french": "Qui apportera la lumière dans ma vie vide"
+            },
+            {
+                "index": 28,
+                "hebrew": "Ποτέ μη σβήσεις, ποτέ να μη μ' αφήσεις",
+                "french": "Ne t'éteins jamais, ne me quitte jamais"
+            },
+            {
+                "index": 29,
+                "hebrew": "Ποτέ να μη χαθεί η αγάπη αυτή",
+                "french": "Que cet amour ne se perde jamais"
+            },
+            {
+                "index": 30,
+                "hebrew": "Μα όνειρο αν είσαι",
+                "french": "Mais si tu es un rêve"
+            },
+            {
+                "index": 31,
+                "hebrew": "Τα φώτα ας σβήσουν στα όνειρα να ζω",
+                "french": "Que les lumières s'éteignent pour que je vive dans les rêves"
+            },
+            {
+                "index": 32,
+                "hebrew": "Μη ξημερώσει, ποτέ να μη τελειώσει",
+                "french": "Que le jour ne se lève pas, que ça ne se termine jamais"
+            },
+            {
+                "index": 33,
+                "hebrew": "Μέσα μου μείνε να σ' αγαπώ",
+                "french": "Reste en moi pour que je t'aime"
+            },
+            {
+                "index": 34,
+                "hebrew": "אני לבד יושב לי",
+                "french": "Je suis assis tout seul"
+            },
+            {
+                "index": 35,
+                "hebrew": "וחושב לי, היכן טעיתי",
+                "french": "Et je réfléchis, où ai-je fait erreur"
+            },
+            {
+                "index": 36,
+                "hebrew": "היכן טעיתי, מה לא נכון עשיתי",
+                "french": "Où ai-je fait erreur, qu'ai-je fait de mal"
+            },
+            {
+                "index": 37,
+                "hebrew": "שכך פגעת בי",
+                "french": "Pour que tu me blesses ainsi"
+            },
+            {
+                "index": 38,
+                "hebrew": "Μα όνειρο αν είσαι",
+                "french": "Mais si tu es un rêve"
+            },
+            {
+                "index": 39,
+                "hebrew": "Τα φώτα ας σβήσουν στα όνειρα να ζω",
+                "french": "Que les lumières s'éteignent pour que je vive dans les rêves"
+            },
+            {
+                "index": 40,
+                "hebrew": "Μη ξημερώσει, ποτέ να μη τελειώσει",
+                "french": "Que le jour ne se lève pas, que ça ne se termine jamais"
+            },
+            {
+                "index": 41,
+                "hebrew": "Μέσα μου μείνε να σ' αγαπώ",
+                "french": "Reste en moi pour que je t'aime"
+            }
+        ]
+    },
+    {
+        "key": "w6vEE4NxlYw",
+        "url": "https://www.youtube.com/watch?v=w6vEE4NxlYw",
+        "title_he": "עומר אדם - פרצופים",
+        "title_fr": "Omer Adam - Des manières (Visages)",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "וואי וואי וואי וואי וואי",
+                "french": "Waouh waouh waouh waouh waouh"
+            },
+            {
+                "index": 2,
+                "hebrew": "אספרסו קצר, הלילה ארוך",
+                "french": "Un expresso court, la nuit est longue"
+            },
+            {
+                "index": 3,
+                "hebrew": "חיוך מרומז, אני קצת נבוך",
+                "french": "Un sourire subtil, je suis un peu gêné"
+            },
+            {
+                "index": 4,
+                "hebrew": "ירח מלא, מאיר לי אותך",
+                "french": "La pleine lune t'éclaire pour moi"
+            },
+            {
+                "index": 5,
+                "hebrew": "עזבי ת'פחדים, בואי נברח",
+                "french": "Laisse tomber les peurs, viens on s'enfuit"
+            },
+            {
+                "index": 6,
+                "hebrew": "השקט שלי, הקצב שלך",
+                "french": "Mon silence, ton rythme"
+            },
+            {
+                "index": 7,
+                "hebrew": "ושנינו נוסעים, על החולות",
+                "french": "Et nous roulons tous les deux sur les dunes"
+            },
+            {
+                "index": 8,
+                "hebrew": "את עם העיניים, עושה לי וואי וואי וואי וואי וואי",
+                "french": "Toi avec tes yeux, tu me fais waouh waouh waouh waouh waouh"
+            },
+            {
+                "index": 9,
+                "hebrew": "בינינו, בינינו",
+                "french": "Entre nous, entre nous"
+            },
+            {
+                "index": 10,
+                "hebrew": "בשמלת פרחים, יפה כזאת",
+                "french": "Dans une robe à fleurs, si belle"
+            },
+            {
+                "index": 11,
+                "hebrew": "שותים את החיים כמו מים",
+                "french": "On boit la vie comme de l'eau"
+            },
+            {
+                "index": 12,
+                "hebrew": "עושה לי וואי וואי וואי וואי וואי",
+                "french": "Tu me fais waouh waouh waouh waouh waouh"
+            },
+            {
+                "index": 13,
+                "hebrew": "בינינו, בינינו",
+                "french": "Entre nous, entre nous"
+            },
+            {
+                "index": 14,
+                "hebrew": "פרצופים, פרצופים",
+                "french": "Des manières, des manières"
+            },
+            {
+                "index": 15,
+                "hebrew": "כל היום עושה לי פרצופים",
+                "french": "Toute la journée tu me fais des manières"
+            },
+            {
+                "index": 16,
+                "hebrew": "ואם את מלאך, גלי לי מה סוד",
+                "french": "Et si tu es un ange, révèle-moi ton secret"
+            },
+            {
+                "index": 17,
+                "hebrew": "בסוף זה יעלה לי, אבל בא לי מזה עוד",
+                "french": "À la fin ça va me coûter cher, mais j'en veux encore"
+            },
+            {
+                "index": 18,
+                "hebrew": "אימפריות נופלות, הכל פה זמני",
+                "french": "Les empires tombent, tout est éphémère ici"
+            },
+            {
+                "index": 19,
+                "hebrew": "בואי עכשיו, רק את ואני",
+                "french": "Viens maintenant, juste toi et moi"
+            },
+            {
+                "index": 20,
+                "hebrew": "תני נשיקה, אחת לפחות",
+                "french": "Donne-moi un bisou, au moins un"
+            }
+        ]
+    },
+    {
+        "key": "mxghINCFGd8",
+        "url": "https://www.youtube.com/watch?v=mxghINCFGd8",
+        "title_he": "תסמכו עלינו",
+        "title_fr": "Comptez sur nous",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "ארץ של שמש על הים התיכון",
+                "french": "Un pays de soleil sur la mer Méditerranée"
+            },
+            {
+                "index": 2,
+                "hebrew": "הגלים פה לא שקטים, זה אומר המון",
+                "french": "Les vagues ici ne sont pas calmes, ça veut dire beaucoup"
+            },
+            {
+                "index": 3,
+                "hebrew": "מהחול של הנגב ועד החרמון",
+                "french": "Du sable du Néguev jusqu'au mont Hermon"
+            },
+            {
+                "index": 4,
+                "hebrew": "בית חם ובו כולם אומרים שלום",
+                "french": "Un foyer chaleureux où tout le monde dit bonjour"
+            },
+            {
+                "index": 5,
+                "hebrew": "מול כל מכשול וכל חידה",
+                "french": "Face à chaque obstacle et chaque mystère"
+            },
+            {
+                "index": 6,
+                "hebrew": "עוד תקוותנו לא אבדה",
+                "french": "Notre espoir n'est pas encore perdu"
+            },
+            {
+                "index": 7,
+                "hebrew": "מה יוליד יום זאת לא נדע",
+                "french": "Ce que le jour nous réserve, nous ne le saurons pas"
+            },
+            {
+                "index": 8,
+                "hebrew": "ועל העם הזה תודה",
+                "french": "Et pour ce peuple, merci"
+            },
+            {
+                "index": 9,
+                "hebrew": "יחד תמיד במה שיהיה",
+                "french": "Toujours ensemble, quoi qu'il arrive"
+            },
+            {
+                "index": 10,
+                "hebrew": "עברנו הכל, נעבור גם את זה",
+                "french": "On a tout traversé, on traversera ça aussi"
+            },
+            {
+                "index": 11,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 12,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            },
+            {
+                "index": 13,
+                "hebrew": "יחד תמיד במה שיהיה",
+                "french": "Toujours ensemble, quoi qu'il arrive"
+            },
+            {
+                "index": 14,
+                "hebrew": "עברנו הכל, נעבור גם את זה",
+                "french": "On a tout traversé, on traversera ça aussi"
+            },
+            {
+                "index": 15,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 16,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            },
+            {
+                "index": 17,
+                "hebrew": "קפה במרפסת, אותה השבת",
+                "french": "Un café sur le balcon, ce même samedi"
+            },
+            {
+                "index": 18,
+                "hebrew": "הדרום היה כזה שקט כמעט",
+                "french": "Le Sud était si calme, ou presque"
+            },
+            {
+                "index": 19,
+                "hebrew": "לשמור על הדגל עוד פעם אחת",
+                "french": "Protéger le drapeau encore une fois"
+            },
+            {
+                "index": 20,
+                "hebrew": "כמה עוד אפשר הזמן עובר לאט",
+                "french": "Combien de temps encore, le temps passe lentement"
+            },
+            {
+                "index": 21,
+                "hebrew": "מול כל מכשול וכל חידה",
+                "french": "Face à chaque obstacle et chaque mystère"
+            },
+            {
+                "index": 22,
+                "hebrew": "עוד תקוותנו לא אבדה",
+                "french": "Notre espoir n'est pas encore perdu"
+            },
+            {
+                "index": 23,
+                "hebrew": "מה יוליד יום זאת לא נדע",
+                "french": "Ce que le jour nous réserve, nous ne le saurons pas"
+            },
+            {
+                "index": 24,
+                "hebrew": "ועל העם הזה תודה",
+                "french": "Et pour ce peuple, merci"
+            },
+            {
+                "index": 25,
+                "hebrew": "יחד תמיד במה שיהיה",
+                "french": "Toujours ensemble, quoi qu'il arrive"
+            },
+            {
+                "index": 26,
+                "hebrew": "עברנו הכל, נעבור גם את זה",
+                "french": "On a tout traversé, on traversera ça aussi"
+            },
+            {
+                "index": 27,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 28,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            },
+            {
+                "index": 29,
+                "hebrew": "יחד תמיד במה שיהיה",
+                "french": "Toujours ensemble, quoi qu'il arrive"
+            },
+            {
+                "index": 30,
+                "hebrew": "עברנו הכל, נעבור גם את זה",
+                "french": "On a tout traversé, on traversera ça aussi"
+            },
+            {
+                "index": 31,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 32,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            },
+            {
+                "index": 33,
+                "hebrew": "קטן עלייך, מידיי",
+                "french": "C'est du gâteau pour toi, vraiment"
+            },
+            {
+                "index": 34,
+                "hebrew": "שישי היית אשת חיל, בשבת בבוקר את קמה כמו לביאה לשמור על הבית",
+                "french": "Vendredi tu étais une femme vaillante, samedi matin tu te lèves comme une lionne pour garder la maison"
+            },
+            {
+                "index": 35,
+                "hebrew": "איך ששמת מדי זית",
+                "french": "Dès que tu as mis l'uniforme vert olive"
+            },
+            {
+                "index": 36,
+                "hebrew": "עם ישראל עוד חי",
+                "french": "Le peuple d'Israël est toujours vivant"
+            },
+            {
+                "index": 37,
+                "hebrew": "48, 23, את נלחמת באוויר, ביבשה ובמים",
+                "french": "48, 23, tu combats dans les airs, sur terre et sur l'eau"
+            },
+            {
+                "index": 38,
+                "hebrew": "לא רואה בעיניים",
+                "french": "Tu n'as peur de rien"
+            },
+            {
+                "index": 39,
+                "hebrew": "אחת מתצפתת, אחת מבקרת",
+                "french": "L'une observe, l'une contrôle"
+            },
+            {
+                "index": 40,
+                "hebrew": "אחת שחובשת, אחת מסתערת",
+                "french": "L'une soigne, l'une monte à l'assaut"
+            },
+            {
+                "index": 41,
+                "hebrew": "אחת במג\"ב ואחת בסיירת",
+                "french": "L'une chez les gardes-frontières et l'une dans les commandos"
+            },
+            {
+                "index": 42,
+                "hebrew": "אחת קרקל ואחת משגרת",
+                "french": "L'une au bataillon Caracal et l'une lance des missiles"
+            },
+            {
+                "index": 43,
+                "hebrew": "אתן שבעורף, אתן בחזית",
+                "french": "Vous qui êtes à l'arrière, vous qui êtes au front"
+            },
+            {
+                "index": 44,
+                "hebrew": "אתן נלחמות שהשקט יגיע",
+                "french": "Vous vous battez pour que le calme revienne"
+            },
+            {
+                "index": 45,
+                "hebrew": "ובינתיים אנחנו נדאג שלכל אחת שם יש אחד שמצדיע",
+                "french": "Et en attendant, on s'assurera que pour chacune là-bas, il y a quelqu'un qui la salue"
+            },
+            {
+                "index": 46,
+                "hebrew": "מול כל מכשול וכל חידה",
+                "french": "Face à chaque obstacle et chaque mystère"
+            },
+            {
+                "index": 47,
+                "hebrew": "עוד תקוותנו לא אבדה",
+                "french": "Notre espoir n'est pas encore perdu"
+            },
+            {
+                "index": 48,
+                "hebrew": "מה יוליד יום זאת לא נדע",
+                "french": "Ce que le jour nous réserve, nous ne le saurons pas"
+            },
+            {
+                "index": 49,
+                "hebrew": "ועל העם הזה תודה",
+                "french": "Et pour ce peuple, merci"
+            },
+            {
+                "index": 50,
+                "hebrew": "יחד תמיד במה שיהיה",
+                "french": "Toujours ensemble, quoi qu'il arrive"
+            },
+            {
+                "index": 51,
+                "hebrew": "עברנו הכל, נעבור גם את זה",
+                "french": "On a tout traversé, on traversera ça aussi"
+            },
+            {
+                "index": 52,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 53,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            },
+            {
+                "index": 54,
+                "hebrew": "יחד תמיד במה שיהיה",
+                "french": "Toujours ensemble, quoi qu'il arrive"
+            },
+            {
+                "index": 55,
+                "hebrew": "עברנו הכל, נעבור גם את זה",
+                "french": "On a tout traversé, on traversera ça aussi"
+            },
+            {
+                "index": 56,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 57,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            },
+            {
+                "index": 58,
+                "hebrew": "לא יפלו פנינו",
+                "french": "On ne baissera pas les bras"
+            },
+            {
+                "index": 59,
+                "hebrew": "תסמכו עלינו",
+                "french": "Comptez sur nous"
+            }
+        ]
+    },
+    {
+        "key": "l9njCn-b1co",
+        "url": "https://www.youtube.com/watch?v=l9njCn-b1co",
+        "title_he": "אגם בוחבוט - לימונדה",
+        "title_fr": "Agam Buhbut - Limonade",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "היום הולך להיות לי יום יפה",
+                "french": "Aujourd'hui va être une belle journée pour moi"
+            },
+            {
+                "index": 2,
+                "hebrew": "בא לי חופש, איזה זמן לנוח",
+                "french": "J'ai envie de vacances, d'un peu de temps pour me reposer"
+            },
+            {
+                "index": 3,
+                "hebrew": "תמיד השקט בא עם הקפה",
+                "french": "Le calme vient toujours avec le café"
+            },
+            {
+                "index": 4,
+                "hebrew": "היום בא לי מהרוח",
+                "french": "Aujourd'hui j'ai envie de me laisser porter par le vent"
+            },
+            {
+                "index": 5,
+                "hebrew": "הנה באה שמש לפנים",
+                "french": "Voilà le soleil qui tape en plein visage"
+            },
+            {
+                "index": 6,
+                "hebrew": "והלב שלי פתאום פורח",
+                "french": "Et mon cœur s'épanouit soudainement"
+            },
+            {
+                "index": 7,
+                "hebrew": "אתה בא אליי כמו הגלים",
+                "french": "Tu viens à moi comme les vagues"
+            },
+            {
+                "index": 8,
+                "hebrew": "תמיד נוגע ובורח",
+                "french": "Tu touches toujours et tu t'enfuis"
+            },
+            {
+                "index": 9,
+                "hebrew": "בא לי לימונדה",
+                "french": "J'ai envie d'une limonade"
+            },
+            {
+                "index": 10,
+                "hebrew": "הגוף שלי בצבע שוקולדה",
+                "french": "Mon corps est couleur chocolat"
+            },
+            {
+                "index": 11,
+                "hebrew": "בא לי קצב, לא רוצה בלדה",
+                "french": "J'ai envie de rythme, je ne veux pas de ballade"
+            },
+            {
+                "index": 12,
+                "hebrew": "אי אפשר להפסיק לרקוד, חם",
+                "french": "Impossible de s'arrêter de danser, il fait chaud"
+            },
+            {
+                "index": 13,
+                "hebrew": "בא לי לימונדה",
+                "french": "J'ai envie d'une limonade"
+            },
+            {
+                "index": 14,
+                "hebrew": "הגוף שלי בצבע שוקולדה",
+                "french": "Mon corps est couleur chocolat"
+            },
+            {
+                "index": 15,
+                "hebrew": "בא לי קצב, לא רוצה בלדה",
+                "french": "J'ai envie de rythme, je ne veux pas de ballade"
+            },
+            {
+                "index": 16,
+                "hebrew": "אי אפשר להפסיק לרקוד",
+                "french": "Impossible de s'arrêter de danser"
+            },
+            {
+                "index": 17,
+                "hebrew": "בוא, רק תגיד לי שאתה",
+                "french": "Viens, dis-moi juste que tu"
+            },
+            {
+                "index": 18,
+                "hebrew": "לא מפסיק לחשוב עלינו",
+                "french": "Ne cesses pas de penser à nous"
+            },
+            {
+                "index": 19,
+                "hebrew": "תגיד לי שאתה",
+                "french": "Dis-moi que tu"
+            },
+            {
+                "index": 20,
+                "hebrew": "תרקוד איתי הלילה",
+                "french": "Danseras avec moi ce soir"
+            },
+            {
+                "index": 21,
+                "hebrew": "לעוף איתך למעלה",
+                "french": "M'envoler avec toi vers le haut"
+            },
+            {
+                "index": 22,
+                "hebrew": "עם כל מה שקורה פה",
+                "french": "Avec tout ce qui se passe ici"
+            },
+            {
+                "index": 23,
+                "hebrew": "אני נשארת כאן",
+                "french": "Je reste ici"
+            },
+            {
+                "index": 24,
+                "hebrew": "אני נשארת",
+                "french": "Je reste"
+            },
+            {
+                "index": 25,
+                "hebrew": "עשרים ושבע מעלות בצל",
+                "french": "Vingt-sept degrés à l'ombre"
+            },
+            {
+                "index": 26,
+                "hebrew": "איזה חום נופל מהשמיים",
+                "french": "Quelle chaleur tombe du ciel"
+            },
+            {
+                "index": 27,
+                "hebrew": "מהבגדים רוצה להינצל",
+                "french": "Je veux me débarrasser de mes vêtements"
+            },
+            {
+                "index": 28,
+                "hebrew": "חייבת כבר לקפוץ למים",
+                "french": "Je dois déjà sauter dans l'eau"
+            },
+            {
+                "index": 29,
+                "hebrew": "מרחוק אתה תמיד שומר",
+                "french": "De loin tu veilles toujours"
+            },
+            {
+                "index": 30,
+                "hebrew": "ממני לא מזיז את העיניים",
+                "french": "Tu ne me quittes pas des yeux"
+            },
+            {
+                "index": 31,
+                "hebrew": "רוצה עכשיו לשתות מהר",
+                "french": "Je veux boire vite maintenant"
+            },
+            {
+                "index": 32,
+                "hebrew": "כבר התייבשו לי השפתיים",
+                "french": "Mes lèvres sont déjà desséchées"
+            },
+            {
+                "index": 33,
+                "hebrew": "בא לי לימונדה",
+                "french": "J'ai envie d'une limonade"
+            },
+            {
+                "index": 34,
+                "hebrew": "הגוף שלי בצבע שוקולדה",
+                "french": "Mon corps est couleur chocolat"
+            },
+            {
+                "index": 35,
+                "hebrew": "בא לי קצב, לא רוצה בלדה",
+                "french": "J'ai envie de rythme, je ne veux pas de ballade"
+            },
+            {
+                "index": 36,
+                "hebrew": "אי אפשר להפסיק לרקוד, חם",
+                "french": "Impossible de s'arrêter de danser, il fait chaud"
+            },
+            {
+                "index": 37,
+                "hebrew": "בא לי לימונדה",
+                "french": "J'ai envie d'une limonade"
+            },
+            {
+                "index": 38,
+                "hebrew": "הגוף שלי בצבע שוקולדה",
+                "french": "Mon corps est couleur chocolat"
+            },
+            {
+                "index": 39,
+                "hebrew": "בא לי קצב, לא רוצה בלדה",
+                "french": "J'ai envie de rythme, je ne veux pas de ballade"
+            },
+            {
+                "index": 40,
+                "hebrew": "אי אפשר להפסיק לרקוד",
+                "french": "Impossible de s'arrêter de danser"
+            },
+            {
+                "index": 41,
+                "hebrew": "בוא, רק תגיד לי שאתה",
+                "french": "Viens, dis-moi juste que tu"
+            },
+            {
+                "index": 42,
+                "hebrew": "לא מפסיק לחשוב עלינו",
+                "french": "Ne cesses pas de penser à nous"
+            },
+            {
+                "index": 43,
+                "hebrew": "תגיד לי שאתה",
+                "french": "Dis-moi que tu"
+            },
+            {
+                "index": 44,
+                "hebrew": "תרקוד איתי הלילה",
+                "french": "Danseras avec moi ce soir"
+            },
+            {
+                "index": 45,
+                "hebrew": "לעוף איתך למעלה",
+                "french": "M'envoler avec toi vers le haut"
+            },
+            {
+                "index": 46,
+                "hebrew": "עם כל מה שקורה פה",
+                "french": "Avec tout ce qui se passe ici"
+            },
+            {
+                "index": 47,
+                "hebrew": "אני נשארת כאן",
+                "french": "Je reste ici"
+            },
+            {
+                "index": 48,
+                "hebrew": "אני נשארת",
+                "french": "Je reste"
+            },
+            {
+                "index": 49,
+                "hebrew": "בוא, רק תגיד לי שאתה",
+                "french": "Viens, dis-moi juste que tu"
+            },
+            {
+                "index": 50,
+                "hebrew": "לא מפסיק לחשוב עלינו",
+                "french": "Ne cesses pas de penser à nous"
+            },
+            {
+                "index": 51,
+                "hebrew": "תגיד לי שאתה",
+                "french": "Dis-moi que tu"
+            },
+            {
+                "index": 52,
+                "hebrew": "תרקוד איתי הלילה",
+                "french": "Danseras avec moi ce soir"
+            },
+            {
+                "index": 53,
+                "hebrew": "לעוף איתך למעלה",
+                "french": "M'envoler avec toi vers le haut"
+            },
+            {
+                "index": 54,
+                "hebrew": "עם כל מה שקורה פה",
+                "french": "Avec tout ce qui se passe ici"
+            },
+            {
+                "index": 55,
+                "hebrew": "אני נשארת כאן",
+                "french": "Je reste ici"
+            },
+            {
+                "index": 56,
+                "hebrew": "אני נשארת",
+                "french": "Je reste"
+            }
+        ]
+    },
+    {
+        "key": "9PTH36lPuzg",
+        "url": "https://www.youtube.com/watch?v=9PTH36lPuzg",
+        "title_he": "אייל גולן - לבד",
+        "title_fr": "Eyal Golan - Seul",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "דיברנו שעות בשקט",
+                "french": "Nous avons parlé des heures en silence"
+            },
+            {
+                "index": 2,
+                "hebrew": "נשארתי ואת הולכת",
+                "french": "Je suis resté et tu pars"
+            },
+            {
+                "index": 3,
+                "hebrew": "איתך אי אפשר אחרת",
+                "french": "Avec toi, c'est impossible autrement"
+            },
+            {
+                "index": 4,
+                "hebrew": "איך אני לבד",
+                "french": "Comment puis-je être seul"
+            },
+            {
+                "index": 5,
+                "hebrew": "תגידי שאת בסדר",
+                "french": "Dis-moi que tu vas bien"
+            },
+            {
+                "index": 6,
+                "hebrew": "שעוד לא מצאת לך גבר",
+                "french": "Que tu ne t'es pas encore trouvé un homme"
+            },
+            {
+                "index": 7,
+                "hebrew": "סגור כמו אידיוט בחדר",
+                "french": "Enfermé comme un idiot dans la chambre"
+            },
+            {
+                "index": 8,
+                "hebrew": "איך אני לבד",
+                "french": "Comment puis-je être seul"
+            },
+            {
+                "index": 9,
+                "hebrew": "אז מה עושים עם כל הרעש",
+                "french": "Alors que fait-on de tout ce bruit"
+            },
+            {
+                "index": 10,
+                "hebrew": "שלא לקחת איתך",
+                "french": "Que tu n'as pas emporté avec toi"
+            },
+            {
+                "index": 11,
+                "hebrew": "היום כבר לא מוכרים פה שקט",
+                "french": "Aujourd'hui on ne vend plus de silence ici"
+            },
+            {
+                "index": 12,
+                "hebrew": "רק זורקים לפח",
+                "french": "On le jette seulement à la poubelle"
+            },
+            {
+                "index": 13,
+                "hebrew": "תני לי לעשות איתך שלום תדברי איתי",
+                "french": "Laisse-moi faire la paix avec toi, parle-moi"
+            },
+            {
+                "index": 14,
+                "hebrew": "אני חוזרת עוד היום רק תגידי לי",
+                "french": "Dis-moi juste : 'Je rentre aujourd'hui'"
+            },
+            {
+                "index": 15,
+                "hebrew": "אני כבר מחכה ליד הדלת",
+                "french": "J'attends déjà près de la porte"
+            },
+            {
+                "index": 16,
+                "hebrew": "תני לי לעשות איתך הכל תסתכלי עלי",
+                "french": "Laisse-moi tout faire avec toi, regarde-moi"
+            },
+            {
+                "index": 17,
+                "hebrew": "אני כבר לא פוחד ליפול תנסי אולי",
+                "french": "Je n'ai plus peur de tomber, essaie peut-être"
+            },
+            {
+                "index": 18,
+                "hebrew": "זה לא יפה לנו לבד",
+                "french": "La solitude ne nous va pas bien"
+            },
+            {
+                "index": 19,
+                "hebrew": "אז מה עם הגעגוע",
+                "french": "Alors qu'en est-il du manque"
+            },
+            {
+                "index": 20,
+                "hebrew": "עבר כבר כמעט שבוע",
+                "french": "Presque une semaine a déjà passé"
+            },
+            {
+                "index": 21,
+                "hebrew": "ואמא לא רגועה",
+                "french": "Et maman n'est pas rassurée"
+            },
+            {
+                "index": 22,
+                "hebrew": "איך אני לבד",
+                "french": "Comment puis-je être seul"
+            },
+            {
+                "index": 23,
+                "hebrew": "שמעתי שאת נשברת",
+                "french": "J'ai entendu dire que tu craques"
+            },
+            {
+                "index": 24,
+                "hebrew": "כמוני את עוד אוהבת",
+                "french": "Comme moi, tu aimes encore"
+            },
+            {
+                "index": 25,
+                "hebrew": "תגידי לי מה את אומרת",
+                "french": "Dis-moi ce que tu en dis"
+            },
+            {
+                "index": 26,
+                "hebrew": "איך אני לבד",
+                "french": "Comment puis-je être seul"
+            },
+            {
+                "index": 27,
+                "hebrew": "אז מה עושים עם כל הכעס",
+                "french": "Alors que fait-on de toute cette colère"
+            },
+            {
+                "index": 28,
+                "hebrew": "שלא לקחת איתך",
+                "french": "Que tu n'as pas emportée avec toi"
+            },
+            {
+                "index": 29,
+                "hebrew": "היום כבר לא מוכרים פה רגש",
+                "french": "Aujourd'hui on ne vend plus de sentiments ici"
+            },
+            {
+                "index": 30,
+                "hebrew": "רק זורקים לפח",
+                "french": "On les jette seulement à la poubelle"
+            },
+            {
+                "index": 31,
+                "hebrew": "תני לי לעשות איתך שלום תדברי איתי",
+                "french": "Laisse-moi faire la paix avec toi, parle-moi"
+            },
+            {
+                "index": 32,
+                "hebrew": "אני חוזרת עוד היום רק תגידי לי",
+                "french": "Dis-moi juste : 'Je rentre aujourd'hui'"
+            },
+            {
+                "index": 33,
+                "hebrew": "אני כבר מחכה ליד הדלת",
+                "french": "J'attends déjà près de la porte"
+            },
+            {
+                "index": 34,
+                "hebrew": "תני לי לעשות איתך הכל תסתכלי עלי",
+                "french": "Laisse-moi tout faire avec toi, regarde-moi"
+            },
+            {
+                "index": 35,
+                "hebrew": "אני כבר לא פוחד ליפול תנסי אולי",
+                "french": "Je n'ai plus peur de tomber, essaie peut-être"
+            },
+            {
+                "index": 36,
+                "hebrew": "זה לא יפה לנו לבד",
+                "french": "La solitude ne nous va pas bien"
+            },
+            {
+                "index": 37,
+                "hebrew": "תני לי לעשות איתך שלום תדברי איתי",
+                "french": "Laisse-moi faire la paix avec toi, parle-moi"
+            },
+            {
+                "index": 38,
+                "hebrew": "אני חוזרת עוד היום רק תגידי לי",
+                "french": "Dis-moi juste : 'Je rentre aujourd'hui'"
+            },
+            {
+                "index": 39,
+                "hebrew": "אני כבר מחכה ליד הדלת",
+                "french": "J'attends déjà près de la porte"
+            },
+            {
+                "index": 40,
+                "hebrew": "תני לי לעשות איתך הכל תסתכלי עלי",
+                "french": "Laisse-moi tout faire avec toi, regarde-moi"
+            },
+            {
+                "index": 41,
+                "hebrew": "אני כבר לא פוחד ליפול תנסי אולי",
+                "french": "Je n'ai plus peur de tomber, essaie peut-être"
+            },
+            {
+                "index": 42,
+                "hebrew": "זה לא יפה לנו לבד",
+                "french": "La solitude ne nous va pas bien"
+            }
+        ]
+    },
+    {
+        "key": "WgjfbRvr5C8",
+        "url": "https://www.youtube.com/watch?v=WgjfbRvr5C8",
+        "title_he": "עומר אדם - חי",
+        "title_fr": "Omer Adam - Vivant",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "שמעו אחיי, אני עוד חי",
+                "french": "Écoutez mes frères, je suis encore en vie"
+            },
+            {
+                "index": 2,
+                "hebrew": "ושתי עיניי עוד נישאות לאור",
+                "french": "Et mes deux yeux sont encore tournés vers la lumière"
+            },
+            {
+                "index": 3,
+                "hebrew": "רבים חוחיי, אך גם פרחיי",
+                "french": "Nombreuses sont mes épines, mais aussi mes fleurs"
+            },
+            {
+                "index": 4,
+                "hebrew": "ולפניי שנים רבות מספור",
+                "french": "Et devant moi des années innombrables"
+            },
+            {
+                "index": 5,
+                "hebrew": "אני שואל ומתפלל",
+                "french": "Je demande et je prie"
+            },
+            {
+                "index": 6,
+                "hebrew": "טוב שלא אבדה עוד התקווה",
+                "french": "C'est une bonne chose que l'espoir ne soit pas encore perdu"
+            },
+            {
+                "index": 7,
+                "hebrew": "עובר מזמור מדור לדור",
+                "french": "Un psaume se transmet de génération en génération"
+            },
+            {
+                "index": 8,
+                "hebrew": "כמעיין מאז ועד עולם",
+                "french": "Comme une source depuis toujours et pour l'éternité"
+            },
+            {
+                "index": 9,
+                "hebrew": "אני שואל ומתפלל",
+                "french": "Je demande et je prie"
+            },
+            {
+                "index": 10,
+                "hebrew": "טוב שלא אבדה עוד התקווה",
+                "french": "C'est une bonne chose que l'espoir ne soit pas encore perdu"
+            },
+            {
+                "index": 11,
+                "hebrew": "חי, חי, חי",
+                "french": "Vivant, vivant, vivant"
+            },
+            {
+                "index": 12,
+                "hebrew": "כן, אני עוד חי",
+                "french": "Oui, je suis encore en vie"
+            },
+            {
+                "index": 13,
+                "hebrew": "זה השיר שסבא",
+                "french": "C'est la chanson que grand-père"
+            },
+            {
+                "index": 14,
+                "hebrew": "שר אתמול לאבא",
+                "french": "Chantait hier à papa"
+            },
+            {
+                "index": 15,
+                "hebrew": "והיום אני",
+                "french": "Et aujourd'hui moi"
+            },
+            {
+                "index": 16,
+                "hebrew": "חי, חי, חי",
+                "french": "Vivant, vivant, vivant"
+            },
+            {
+                "index": 17,
+                "hebrew": "עם ישראל חי",
+                "french": "Le peuple d'Israël est vivant"
+            },
+            {
+                "index": 18,
+                "hebrew": "זה השיר שסבא",
+                "french": "C'est la chanson que grand-père"
+            },
+            {
+                "index": 19,
+                "hebrew": "שר אתמול לאבא",
+                "french": "Chantait hier à papa"
+            },
+            {
+                "index": 20,
+                "hebrew": "והיום אני",
+                "french": "Et aujourd'hui moi"
+            },
+            {
+                "index": 21,
+                "hebrew": "הומים ימיי ולילותיי",
+                "french": "Mes jours et mes nuits sont tumultueux"
+            },
+            {
+                "index": 22,
+                "hebrew": "ובשמיי עמוד האש עוד קם",
+                "french": "Et dans mon ciel, la colonne de feu se dresse encore"
+            },
+            {
+                "index": 23,
+                "hebrew": "אשיר בלי די, אפרוש ידיי",
+                "french": "Je chanterai sans fin, j'écarterai les bras"
+            },
+            {
+                "index": 24,
+                "hebrew": "לידידיי אשר מעבר ים",
+                "french": "Pour mes amis qui sont de l'autre côté de la mer"
+            },
+            {
+                "index": 25,
+                "hebrew": "אני שואל ומתפלל",
+                "french": "Je demande et je prie"
+            },
+            {
+                "index": 26,
+                "hebrew": "טוב שלא אבדה עוד התקווה",
+                "french": "C'est une bonne chose que l'espoir ne soit pas encore perdu"
+            },
+            {
+                "index": 27,
+                "hebrew": "חי, חי, חי",
+                "french": "Vivant, vivant, vivant"
+            },
+            {
+                "index": 28,
+                "hebrew": "כן, אני עוד חי",
+                "french": "Oui, je suis encore en vie"
+            },
+            {
+                "index": 29,
+                "hebrew": "זה השיר שסבא",
+                "french": "C'est la chanson que grand-père"
+            },
+            {
+                "index": 30,
+                "hebrew": "שר אתמול לאבא",
+                "french": "Chantait hier à papa"
+            },
+            {
+                "index": 31,
+                "hebrew": "והיום אני",
+                "french": "Et aujourd'hui moi"
+            },
+            {
+                "index": 32,
+                "hebrew": "חי, חי, חי",
+                "french": "Vivant, vivant, vivant"
+            },
+            {
+                "index": 33,
+                "hebrew": "עם ישראל חי",
+                "french": "Le peuple d'Israël est vivant"
+            },
+            {
+                "index": 34,
+                "hebrew": "זה השיר שסבא",
+                "french": "C'est la chanson que grand-père"
+            },
+            {
+                "index": 35,
+                "hebrew": "שר אתמול לאבא",
+                "french": "Chantait hier à papa"
+            },
+            {
+                "index": 36,
+                "hebrew": "והיום אני",
+                "french": "Et aujourd'hui moi"
+            },
+            {
+                "index": 37,
+                "hebrew": "חי",
+                "french": "Vivant"
+            },
+            {
+                "index": 38,
+                "hebrew": "חי",
+                "french": "Vivant"
+            },
+            {
+                "index": 39,
+                "hebrew": "אני עוד חי, חי, חי",
+                "french": "Je suis encore en vie, vivant, vivant"
+            }
+        ]
+    },
+    {
+        "key": "6DnLm4aqgz8",
+        "url": "https://www.youtube.com/watch?v=6DnLm4aqgz8",
+        "title_he": "חנניה - חנן בן ארי",
+        "title_fr": "Hanania - Hanan Ben Ari",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "כל מי שרוצה דברים אני הייתי קונה",
+                "french": "Tous ceux qui voulaient des choses, je les achetais"
+            },
+            {
+                "index": 2,
+                "hebrew": "אתה רוצה חיטה, אתה רוצה שעורה",
+                "french": "Tu veux du blé, tu veux de l'orge"
+            },
+            {
+                "index": 3,
+                "hebrew": "אתה רוצה שטיח, אתה רוצה...",
+                "french": "Tu veux un tapis, tu veux..."
+            },
+            {
+                "index": 4,
+                "hebrew": "מה שהיו רוצים הייתי קונה",
+                "french": "Ce qu'ils voulaient, je l'achetais"
+            },
+            {
+                "index": 5,
+                "hebrew": "זאת הייתה העבודה שלי כל החיים",
+                "french": "C'était mon travail toute ma vie"
+            },
+            {
+                "index": 6,
+                "hebrew": "מי מוכר ת'חם ברחובות",
+                "french": "Qui vend du chaud dans les rues"
+            },
+            {
+                "index": 7,
+                "hebrew": "בלי פנקס אדום ובלי טובות",
+                "french": "Sans carnet rouge et sans faveurs"
+            },
+            {
+                "index": 8,
+                "hebrew": "מי זה בא אליי בחלומות",
+                "french": "Qui est-ce qui vient à moi dans mes rêves"
+            },
+            {
+                "index": 9,
+                "hebrew": "בחגים, בשבתות",
+                "french": "Pendant les fêtes, les chabbats"
+            },
+            {
+                "index": 10,
+                "hebrew": "מי שומר עליי בלילה",
+                "french": "Qui veille sur moi la nuit"
+            },
+            {
+                "index": 11,
+                "hebrew": "חנניה",
+                "french": "Hanania"
+            },
+            {
+                "index": 12,
+                "hebrew": "אין אצלו אשראי, רק מזומן",
+                "french": "Chez lui pas de crédit, que du liquide"
+            },
+            {
+                "index": 13,
+                "hebrew": "השטרות מתחת למזרן",
+                "french": "Les billets sous le matelas"
+            },
+            {
+                "index": 14,
+                "hebrew": "מי עבד השם, לא עבד זמן",
+                "french": "Qui est serviteur de Dieu, pas esclave du temps"
+            },
+            {
+                "index": 15,
+                "hebrew": "תל אביב, אפגניסטן",
+                "french": "Tel Aviv, Afghanistan"
+            },
+            {
+                "index": 16,
+                "hebrew": "לא תמצאו עוד כמו חנניה",
+                "french": "Vous n'en trouverez pas d'autre comme Hanania"
+            },
+            {
+                "index": 17,
+                "hebrew": "מי עבד השם, לא עבד זמן",
+                "french": "Qui est serviteur de Dieu, pas esclave du temps"
+            },
+            {
+                "index": 18,
+                "hebrew": "תל אביב, אפגניסטן",
+                "french": "Tel Aviv, Afghanistan"
+            },
+            {
+                "index": 19,
+                "hebrew": "לא תמצאו עוד כמו חנניה",
+                "french": "Vous n'en trouverez pas d'autre comme Hanania"
+            },
+            {
+                "index": 20,
+                "hebrew": "חנניה",
+                "french": "Hanania"
+            },
+            {
+                "index": 21,
+                "hebrew": "כל המלאכים מזמרים בפמליה",
+                "french": "Tous les anges chantent dans la cour céleste"
+            },
+            {
+                "index": 22,
+                "hebrew": "ואתה יושב, מחייך מלמעלה",
+                "french": "Et toi tu es assis, souriant d'en haut"
+            },
+            {
+                "index": 23,
+                "hebrew": "אין אחד בפה, אחד בלב",
+                "french": "Il n'a pas une parole dans la bouche et une autre dans le cœur"
+            },
+            {
+                "index": 24,
+                "hebrew": "בלי מילים והוא אוהב",
+                "french": "Sans mots, et il aime"
+            },
+            {
+                "index": 25,
+                "hebrew": "רק מבט וכבר ידעת",
+                "french": "Juste un regard et tu savais déjà"
+            },
+            {
+                "index": 26,
+                "hebrew": "ציוני יותר מבן גוריון",
+                "french": "Plus sioniste que Ben Gourion"
+            },
+            {
+                "index": 27,
+                "hebrew": "לא משחק בקוביות",
+                "french": "Il ne jouait pas aux dés"
+            },
+            {
+                "index": 28,
+                "hebrew": "רק יגעת ומצאת",
+                "french": "Seulement l'effort et la récompense"
+            },
+            {
+                "index": 29,
+                "hebrew": "סבא לפחות ל-50",
+                "french": "Grand-père d'au moins 50 petits-enfants"
+            },
+            {
+                "index": 30,
+                "hebrew": "שקית ממתקים לכל שלישי",
+                "french": "Un sachet de bonbons chaque mardi"
+            },
+            {
+                "index": 31,
+                "hebrew": "יד ביד בפארק, איזה סבא",
+                "french": "Main dans la main au parc, quel grand-père"
+            },
+            {
+                "index": 32,
+                "hebrew": "מתהלכים בדרך השלום",
+                "french": "Se promenant sur le chemin de la paix"
+            },
+            {
+                "index": 33,
+                "hebrew": "ק\"נ מזמורים כל יום",
+                "french": "150 psaumes chaque jour"
+            },
+            {
+                "index": 34,
+                "hebrew": "ותיקון חצות בלילה",
+                "french": "Et le Tikkoun Hatsot la nuit"
+            },
+            {
+                "index": 35,
+                "hebrew": "חנניה",
+                "french": "Hanania"
+            },
+            {
+                "index": 36,
+                "hebrew": "כל המלאכים מזמרים בפמליה",
+                "french": "Tous les anges chantent dans la cour céleste"
+            },
+            {
+                "index": 37,
+                "hebrew": "ואתה יושב, מחייך מלמעלה",
+                "french": "Et toi tu es assis, souriant d'en haut"
+            },
+            {
+                "index": 38,
+                "hebrew": "יודע יום פטירתו",
+                "french": "Il connaît le jour de son décès"
+            },
+            {
+                "index": 39,
+                "hebrew": "מי קורא שמע על מיטתו",
+                "french": "Qui récite le Chema sur son lit"
+            },
+            {
+                "index": 40,
+                "hebrew": "מי תגן עלינו זכותו",
+                "french": "Que son mérite nous protège"
+            },
+            {
+                "index": 41,
+                "hebrew": "הלוואי אהיה כמותו",
+                "french": "Si seulement je pouvais être comme lui"
+            },
+            {
+                "index": 42,
+                "hebrew": "קצת כמו סבא חנניה",
+                "french": "Un peu comme grand-père Hanania"
+            },
+            {
+                "index": 43,
+                "hebrew": "מי תגן עלינו זכותו",
+                "french": "Que son mérite nous protège"
+            },
+            {
+                "index": 44,
+                "hebrew": "הלוואי אהיה כמותו",
+                "french": "Si seulement je pouvais être comme lui"
+            },
+            {
+                "index": 45,
+                "hebrew": "קצת כמו סבא חנניה",
+                "french": "Un peu comme grand-père Hanania"
+            }
+        ]
+    },
+    {
+        "key": "9rfjuQDKj-Y",
+        "url": "https://www.youtube.com/watch?v=9rfjuQDKj-Y",
+        "title_he": "ואז תראי",
+        "title_fr": "Et puis tu verras",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "סתם תהיתי איפה שלי בזמן האחרון",
+                "french": "Je me demandais juste où était la mienne ces derniers temps"
+            },
+            {
+                "index": 2,
+                "hebrew": "כולן דוגמניות היום וכולם בארון",
+                "french": "Aujourd'hui, elles sont toutes mannequins et tout le monde est dans le placard"
+            },
+            {
+                "index": 3,
+                "hebrew": "השאר מפחדים להיות עצמם בעיקרון",
+                "french": "Les autres ont peur d'être eux-mêmes en principe"
+            },
+            {
+                "index": 4,
+                "hebrew": "עשיתי את עצמי חיים ואין לי קוד קופון",
+                "french": "Je me suis fait une vie et je n'ai pas de code promo"
+            },
+            {
+                "index": 5,
+                "hebrew": "שאלתי שאלות אתה רצית שנדבר",
+                "french": "J'ai posé des questions, tu voulais qu'on parle"
+            },
+            {
+                "index": 6,
+                "hebrew": "איפה הנשיקה הראשונה שלי תל כביר",
+                "french": "Où est mon premier baiser, Tel Kabir"
+            },
+            {
+                "index": 7,
+                "hebrew": "למה את לבד את מרחפת באוויר",
+                "french": "Pourquoi es-tu seule, tu flottes dans les airs"
+            },
+            {
+                "index": 8,
+                "hebrew": "חלאס אין לי חברות אני שונאת להיות בעיר",
+                "french": "Ça suffit, je n'ai pas d'amies, je déteste être en ville"
+            },
+            {
+                "index": 9,
+                "hebrew": "שונאת להיות לבד אבל כולם משוגעים",
+                "french": "Je déteste être seule mais tout le monde est fou"
+            },
+            {
+                "index": 10,
+                "hebrew": "פה הלב שלי מקולקל אולי תשחק במגעים",
+                "french": "Ici mon cœur est cassé, peut-être que tu joueras avec les contacts"
+            },
+            {
+                "index": 11,
+                "hebrew": "שלו יש לי בעיה אני האחות של האחים",
+                "french": "Le sien, j'ai un problème, je suis la sœur des frères"
+            },
+            {
+                "index": 12,
+                "hebrew": "שלו יצאת בן זונה היית למרות שאתה איש טוב",
+                "french": "Le sien, tu as agi comme un fils de pute, tu l'as été même si tu es un mec bien"
+            },
+            {
+                "index": 13,
+                "hebrew": "וראיתי את הסוף שלנו כבר מההתחלה",
+                "french": "Et j'ai vu notre fin dès le début"
+            },
+            {
+                "index": 14,
+                "hebrew": "וקפצתי אל האש כמו מטורפת כמו חולה",
+                "french": "Et j'ai sauté dans le feu comme une folle, comme une malade"
+            },
+            {
+                "index": 15,
+                "hebrew": "ושמעתי איזה דוד טס",
+                "french": "Et j'ai entendu qu'un certain oncle a pris l'avion"
+            },
+            {
+                "index": 16,
+                "hebrew": "שאם שותים מהכוס אני טסה למקום אחר",
+                "french": "Que si on boit dans le verre, je m'envole vers un autre endroit"
+            },
+            {
+                "index": 17,
+                "hebrew": "ושמעתי אומר אדם",
+                "french": "Et j'ai entendu un homme dire"
+            },
+            {
+                "index": 18,
+                "hebrew": "ונלחמתי כמו ואן דאם",
+                "french": "Et je me suis battue comme Van Damme"
+            },
+            {
+                "index": 19,
+                "hebrew": "הוא מוציא ממני קצת יותר",
+                "french": "Il fait ressortir un peu plus de moi"
+            },
+            {
+                "index": 20,
+                "hebrew": "כשאני בלב העניינים אני לבד",
+                "french": "Quand je suis au cœur des choses, je suis seule"
+            },
+            {
+                "index": 21,
+                "hebrew": "וכשאני חושבת אני רעה עצוב",
+                "french": "Et quand je pense, je suis méchante, c'est triste"
+            },
+            {
+                "index": 22,
+                "hebrew": "מכתיבה לכולם את האמצע מהצד",
+                "french": "Je dicte le milieu à tout le monde depuis le côté"
+            },
+            {
+                "index": 23,
+                "hebrew": "נביאה של שקר לא יודעת מה חשוב",
+                "french": "Fausse prophétesse, je ne sais pas ce qui est important"
+            },
+            {
+                "index": 24,
+                "hebrew": "כמה אספר ממי למה מי אתה",
+                "french": "Combien je vais raconter, chéri, pourquoi, t'es qui toi"
+            },
+            {
+                "index": 25,
+                "hebrew": "אני מתגעגעת לילדות אתה זוכר",
+                "french": "L'enfance me manque, tu te souviens"
+            },
+            {
+                "index": 26,
+                "hebrew": "משהו בלב הזה הפך לממכר",
+                "french": "Quelque chose dans ce cœur est devenu addictif"
+            },
+            {
+                "index": 27,
+                "hebrew": "פה כמה אנשים טובים יצא לי לפטר",
+                "french": "Ici, j'ai dû virer quelques bonnes personnes"
+            },
+            {
+                "index": 28,
+                "hebrew": "וראיתי את הסוף שלנו כבר מההתחלה",
+                "french": "Et j'ai vu notre fin dès le début"
+            },
+            {
+                "index": 29,
+                "hebrew": "וקפצתי אל האש כמו מטורפת כמו חולה",
+                "french": "Et j'ai sauté dans le feu comme une folle, comme une malade"
+            },
+            {
+                "index": 30,
+                "hebrew": "ושמעתי איזה דוד טס",
+                "french": "Et j'ai entendu qu'un certain oncle a pris l'avion"
+            },
+            {
+                "index": 31,
+                "hebrew": "שאם שותים מהכוס אני טסה למקום אחר",
+                "french": "Que si on boit dans le verre, je m'envole vers un autre endroit"
+            },
+            {
+                "index": 32,
+                "hebrew": "ושמעתי אומר אדם",
+                "french": "Et j'ai entendu un homme dire"
+            },
+            {
+                "index": 33,
+                "hebrew": "ונלחמתי כמו ואן דאם",
+                "french": "Et je me suis battue comme Van Damme"
+            },
+            {
+                "index": 34,
+                "hebrew": "הוא מוציא ממני קצת יותר",
+                "french": "Il fait ressortir un peu plus de moi"
+            },
+            {
+                "index": 35,
+                "hebrew": "ושמעתי לי ענני",
+                "french": "Et j'ai entendu mes nuages"
+            },
+            {
+                "index": 36,
+                "hebrew": "ורגעתי עם עניי",
+                "french": "Et je me suis calmée avec mes yeux"
+            },
+            {
+                "index": 37,
+                "hebrew": "הוא מפחיד אותי כשהוא שותק",
+                "french": "Il me fait peur quand il se tait"
+            },
+            {
+                "index": 38,
+                "hebrew": "שמה את הצרות מפלסטיק",
+                "french": "Je mets les problèmes en plastique"
+            },
+            {
+                "index": 39,
+                "hebrew": "דבק של הזמן מספיק",
+                "french": "La colle du temps suffit"
+            },
+            {
+                "index": 40,
+                "hebrew": "שאני משמיעה את המתקשר",
+                "french": "Que je fais entendre celui qui appelle"
+            }
+        ]
+    },
+    {
+        "key": "7PE611GuMAk",
+        "url": "https://www.youtube.com/watch?v=7PE611GuMAk",
+        "title_he": "בן 32",
+        "title_fr": "32 ans",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "בינתיים בסדר הכל כרגיל",
+                "french": "Pour l'instant ça va, tout est comme d'habitude"
+            },
+            {
+                "index": 2,
+                "hebrew": "אני לא כועס כבר זה בטח הגיל",
+                "french": "Je ne suis plus en colère, c'est sûrement l'âge"
+            },
+            {
+                "index": 3,
+                "hebrew": "מגיע לי ערב מוציא את החרב לובש ת'חליפה ואין את מי להציל",
+                "french": "J'ai bien mérité une soirée, je sors l'épée, je mets le costume et il n'y a personne à sauver"
+            },
+            {
+                "index": 4,
+                "hebrew": "אבל יש מטוס, יש יין בן שלושים",
+                "french": "Mais il y a un avion, il y a du vin de trente ans d'âge"
+            },
+            {
+                "index": 5,
+                "hebrew": "ובן שלושים ושתיים שלא יודע מה עושים",
+                "french": "Et un mec de trente-deux ans qui ne sait pas quoi faire"
+            },
+            {
+                "index": 6,
+                "hebrew": "ועשר חברות שלה שלחות לי הודעות",
+                "french": "Et dix de ses copines m'envoient des messages"
+            },
+            {
+                "index": 7,
+                "hebrew": "שרק אומרים ת'שם שלי עולות לה הדמעות",
+                "french": "Que rien qu'en prononçant mon nom, les larmes lui montent"
+            },
+            {
+                "index": 8,
+                "hebrew": "אז למה היא איתו למה ככה בפנים",
+                "french": "Alors pourquoi est-elle avec lui, pourquoi est-elle comme ça à l'intérieur"
+            },
+            {
+                "index": 9,
+                "hebrew": "כאילו אין לנו כבוד כאילו אין כבר אלוהים",
+                "french": "Comme si on n'avait aucune fierté, comme s'il n'y avait plus de Dieu"
+            },
+            {
+                "index": 10,
+                "hebrew": "כבר קשה לי לעבוד לשמח אנשים",
+                "french": "C'est devenu dur pour moi de travailler, de rendre les gens heureux"
+            },
+            {
+                "index": 11,
+                "hebrew": "להגיד שיהיה טוב כשהחיים באמת קשים",
+                "french": "De dire que ça ira bien quand la vie est vraiment dure"
+            },
+            {
+                "index": 12,
+                "hebrew": "כי כשזה רע לה תמיד היא מתקשרת אליי",
+                "french": "Car quand ça va mal pour elle, elle m'appelle toujours"
+            },
+            {
+                "index": 13,
+                "hebrew": "וכשטוב לה איתו היא לא חושבת עליי",
+                "french": "Et quand ça va bien avec lui, elle ne pense pas à moi"
+            },
+            {
+                "index": 14,
+                "hebrew": "אני רוצה להמשיך וזה יקרה בקרוב",
+                "french": "Je veux aller de l'avant et ça arrivera bientôt"
+            },
+            {
+                "index": 15,
+                "hebrew": "היא במילא חוזרת אליי כדי לעזוב",
+                "french": "De toute façon, elle revient vers moi juste pour repartir"
+            },
+            {
+                "index": 16,
+                "hebrew": "בלילות הארוכים אני נשמתי אותה",
+                "french": "Dans les longues nuits, je l'ai respirée"
+            },
+            {
+                "index": 17,
+                "hebrew": "בימים הכי קשים אני נלחמתי איתה",
+                "french": "Dans les jours les plus durs, je me suis battu avec elle"
+            },
+            {
+                "index": 18,
+                "hebrew": "כשהיא נרדמת במיטה שלה הכל מסתובב",
+                "french": "Quand elle s'endort dans son lit, tout tourne"
+            },
+            {
+                "index": 19,
+                "hebrew": "וכואב לה בלב",
+                "french": "Et elle a mal au cœur"
+            },
+            {
+                "index": 20,
+                "hebrew": "היא חושבת עליי",
+                "french": "Elle pense à moi"
+            },
+            {
+                "index": 21,
+                "hebrew": "אז וואלה רק שים לב לא לפגוע לה בלב",
+                "french": "Alors franchement, fais juste attention à ne pas lui briser le cœur"
+            },
+            {
+                "index": 22,
+                "hebrew": "כי אם אתה תתקרב יותר מדי אתה תקבל אחת",
+                "french": "Car si tu t'approches de trop près, tu vas t'en prendre une"
+            },
+            {
+                "index": 23,
+                "hebrew": "מוריד בקבוק שארטרז ואז אני אורז",
+                "french": "Je descends une bouteille de Chartreuse et ensuite je fais mes valises"
+            },
+            {
+                "index": 24,
+                "hebrew": "אירופה לשנות טיפה את נקודת מבט",
+                "french": "L'Europe pour changer un peu de point de vue"
+            },
+            {
+                "index": 25,
+                "hebrew": "לוקח ת'כאב והגוצ'י ת'חלומות שהיו לי",
+                "french": "Je prends la douleur et le Gucci, les rêves que j'avais"
+            },
+            {
+                "index": 26,
+                "hebrew": "ת'חתונה שרצינו ביוון",
+                "french": "Le mariage qu'on voulait en Grèce"
+            },
+            {
+                "index": 27,
+                "hebrew": "את כל המשפטים שפגעו בי החברים שבגדו בי",
+                "french": "Toutes les phrases qui m'ont blessé, les amis qui m'ont trahi"
+            },
+            {
+                "index": 28,
+                "hebrew": "הולך רק עם עצמי הכי רחוק מכאן",
+                "french": "Je pars seul avec moi-même, le plus loin possible d'ici"
+            },
+            {
+                "index": 29,
+                "hebrew": "והיא כבר תסתדר",
+                "french": "Et elle se débrouillera"
+            },
+            {
+                "index": 30,
+                "hebrew": "אינשאללה היא תמצא כבר איזה חצי נחמה",
+                "french": "Si Dieu le veut, elle trouvera bien un peu de réconfort"
+            },
+            {
+                "index": 31,
+                "hebrew": "אין כוחות יותר לריב ולוותר",
+                "french": "Je n'ai plus la force de me disputer et de céder"
+            },
+            {
+                "index": 32,
+                "hebrew": "לרוץ כמו עיוור ישר לתוך המלחמה",
+                "french": "De courir comme un aveugle droit dans la guerre"
+            },
+            {
+                "index": 33,
+                "hebrew": "אני נתתי הכל עד הסוף עד אין סוף",
+                "french": "J'ai tout donné, jusqu'au bout, à l'infini"
+            },
+            {
+                "index": 34,
+                "hebrew": "וכלום לא הספיק לה כבר",
+                "french": "Et plus rien ne lui suffisait"
+            },
+            {
+                "index": 35,
+                "hebrew": "הגיע הזמן פשוט ללכת מכאן",
+                "french": "Il est temps de simplement partir d'ici"
+            },
+            {
+                "index": 36,
+                "hebrew": "מחליף דירה ואת המספר",
+                "french": "Je change d'appart et de numéro"
+            },
+            {
+                "index": 37,
+                "hebrew": "בלילות הארוכים אני נשמתי אותה",
+                "french": "Dans les longues nuits, je l'ai respirée"
+            },
+            {
+                "index": 38,
+                "hebrew": "בימים הכי קשים אני נלחמתי איתה",
+                "french": "Dans les jours les plus durs, je me suis battu avec elle"
+            },
+            {
+                "index": 39,
+                "hebrew": "כשהיא נרדמת במיטה שלה הכל מסתובב",
+                "french": "Quand elle s'endort dans son lit, tout tourne"
+            },
+            {
+                "index": 40,
+                "hebrew": "וכואב לה בלב",
+                "french": "Et elle a mal au cœur"
+            },
+            {
+                "index": 41,
+                "hebrew": "היא חושבת עליי",
+                "french": "Elle pense à moi"
+            }
+        ]
+    },
+    {
+        "key": "Zzwm2syZnnQ",
+        "url": "https://www.youtube.com/watch?v=Zzwm2syZnnQ",
+        "title_he": "עומר אדם - אז הלכתי",
+        "title_fr": "Omer Adam - Alors je suis parti",
+        "lyrics": [
+            {
+                "index": 1,
+                "hebrew": "את בטח לא זוכרת את אותו יום שלישי",
+                "french": "Tu ne te souviens sûrement pas de ce fameux mardi"
+            },
+            {
+                "index": 2,
+                "hebrew": "נחלת בנימין, לא אשכח",
+                "french": "Nahalat Binyamin, je n'oublierai pas"
+            },
+            {
+                "index": 3,
+                "hebrew": "רצית לקנות שרשרת בדוכן שלי",
+                "french": "Tu voulais acheter un collier à mon stand"
+            },
+            {
+                "index": 4,
+                "hebrew": "לראשונה פגשתי בך",
+                "french": "C'est là que je t'ai rencontrée pour la première fois"
+            },
+            {
+                "index": 5,
+                "hebrew": "עיניים צבע תכלת, סיפרת את במקור מהדרום",
+                "french": "Des yeux bleu azur, tu m'as dit que tu étais originaire du sud"
+            },
+            {
+                "index": 6,
+                "hebrew": "עברת לגור בשנקין, יש לך תואר במנהל ובלשון",
+                "french": "Tu as déménagé à Shenkin, tu as un diplôme en gestion et en linguistique"
+            },
+            {
+                "index": 7,
+                "hebrew": "ואיך נכנסת לחיי",
+                "french": "Et comment tu es entrée dans ma vie"
+            },
+            {
+                "index": 8,
+                "hebrew": "חשפת את כל סודותיי כבר מאותו הערב",
+                "french": "Tu as percé tous mes secrets dès ce soir-là"
+            },
+            {
+                "index": 9,
+                "hebrew": "ביקשת לפגוש את ההורים",
+                "french": "Tu as demandé à rencontrer mes parents"
+            },
+            {
+                "index": 10,
+                "hebrew": "אז הלכתי, חזרתי",
+                "french": "Alors je suis parti, je suis revenu"
+            },
+            {
+                "index": 11,
+                "hebrew": "אחוז בשיגעון",
+                "french": "Pris de folie"
+            },
+            {
+                "index": 12,
+                "hebrew": "תופס רכבת, נוסע דימונה לדרום",
+                "french": "Je prends un train, direction Dimona dans le sud"
+            },
+            {
+                "index": 13,
+                "hebrew": "מה את עושה לי",
+                "french": "Qu'est-ce que tu me fais"
+            },
+            {
+                "index": 14,
+                "hebrew": "מה את עושה לי",
+                "french": "Qu'est-ce que tu me fais"
+            },
+            {
+                "index": 15,
+                "hebrew": "את בטח לא זוכרת את אותו יום שישי",
+                "french": "Tu ne te souviens sûrement pas de ce fameux vendredi"
+            },
+            {
+                "index": 16,
+                "hebrew": "ארזת מזוודה ואמרת",
+                "french": "Tu as fait ta valise et tu as dit"
+            },
+            {
+                "index": 17,
+                "hebrew": "מרגיש לך כאן אחרת ואת חוזרת לשכונה שבה גדלת",
+                "french": "Que tu te sentais différente ici et que tu retournais dans le quartier où tu as grandi"
+            },
+            {
+                "index": 18,
+                "hebrew": "ואיך את לא מבינה",
+                "french": "Et comment tu ne comprends pas"
+            },
+            {
+                "index": 19,
+                "hebrew": "דחקת אותי לפינה",
+                "french": "Tu m'as mis au pied du mur"
+            },
+            {
+                "index": 20,
+                "hebrew": "אין לי ברירה אחרת",
+                "french": "Je n'ai pas d'autre choix"
+            },
+            {
+                "index": 21,
+                "hebrew": "אז הלכתי, חזרתי",
+                "french": "Alors je suis parti, je suis revenu"
+            },
+            {
+                "index": 22,
+                "hebrew": "אחוז בשיגעון",
+                "french": "Pris de folie"
+            },
+            {
+                "index": 23,
+                "hebrew": "תופס רכבת, נוסע דימונה לדרום",
+                "french": "Je prends un train, direction Dimona dans le sud"
+            },
+            {
+                "index": 24,
+                "hebrew": "מה את עושה לי",
+                "french": "Qu'est-ce que tu me fais"
+            },
+            {
+                "index": 25,
+                "hebrew": "מה את עושה לי",
+                "french": "Qu'est-ce que tu me fais"
+            },
+            {
+                "index": 26,
+                "hebrew": "הלכת וחזרת",
+                "french": "Tu es partie et tu es revenue"
+            },
+            {
+                "index": 27,
+                "hebrew": "את אחוזת שיגעון",
+                "french": "Tu es prise de folie"
+            },
+            {
+                "index": 28,
+                "hebrew": "את תופסת רכבת, נוסעת דימונה לדרום",
+                "french": "Tu prends un train, direction Dimona dans le sud"
+            },
+            {
+                "index": 29,
+                "hebrew": "מה אני עושה לך",
+                "french": "Qu'est-ce que je te fais"
+            },
+            {
+                "index": 30,
+                "hebrew": "אח, מה אני עושה לך",
+                "french": "Ah, qu'est-ce que je te fais"
+            },
+            {
+                "index": 31,
+                "hebrew": "דיברנו על חתונה",
+                "french": "On a parlé de mariage"
+            },
+            {
+                "index": 32,
+                "hebrew": "אני רציתי אולם בבת ים",
+                "french": "Je voulais une salle à Bat Yam"
+            },
+            {
+                "index": 33,
+                "hebrew": "ואת רצית באר שבע",
+                "french": "Et tu voulais Beer Sheva"
+            },
+            {
+                "index": 34,
+                "hebrew": "כל כך רצית באר שבע",
+                "french": "Tu voulais tellement Beer Sheva"
+            },
+            {
+                "index": 35,
+                "hebrew": "אז הלכתי, חזרתי",
+                "french": "Alors je suis parti, je suis revenu"
+            },
+            {
+                "index": 36,
+                "hebrew": "אחוז בשיגעון",
+                "french": "Pris de folie"
+            },
+            {
+                "index": 37,
+                "hebrew": "תופס רכבת, נוסע דימונה לדרום",
+                "french": "Je prends un train, direction Dimona dans le sud"
+            },
+            {
+                "index": 38,
+                "hebrew": "מה את עושה לי",
+                "french": "Qu'est-ce que tu me fais"
+            },
+            {
+                "index": 39,
+                "hebrew": "מה את עושה לי",
+                "french": "Qu'est-ce que tu me fais"
+            }
+        ]
+    }
 ]
-

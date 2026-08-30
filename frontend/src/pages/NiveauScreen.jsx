@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau } from "../api/user";
+import { displayLessonCode } from "../utils/lessonDisplay";
 import "./screens.css";
 
 export default function NiveauScreen() {
@@ -14,13 +15,13 @@ export default function NiveauScreen() {
 
   return (
     <section className="screen">
-      <h1>Niveau {niveau.level}</h1>
+      <h1>Niveau {displayLessonCode(niveau.level)}</h1>
       <p className="muted">
         Bloqué à ce niveau depuis {niveau.jours_bloque} jour(s)
       </p>
       {niveau.next_lesson_code ? (
-        <Link to={`/examen/ecrite/${niveau.next_lesson_code}`} className="card-link">
-          <div className="card">Passer le prochain examen ({niveau.next_lesson_code})</div>
+        <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
+          <div className="card">Passer le prochain examen ({displayLessonCode(niveau.next_lesson_code)})</div>
         </Link>
       ) : (
         <div className="card" style={{ opacity: 0.5 }}>

@@ -36,7 +36,7 @@ export function useRandomBrowser(fetchRandom, deps = [], initialCurrent) {
 
   function next() {
     setHistory((h) => (current ? [...h, current] : h));
-    fetchRandom().then(setCurrent);
+    fetchRandom(current).then(setCurrent);
   }
 
   function back() {

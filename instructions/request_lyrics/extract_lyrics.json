@@ -1,0 +1,17 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "url": {
+            "type": "str",
+            "description": "la copie de l'url youtube"
+        },
+        "title": {
+            "type": "list[str]",
+            "description": "Le titre de la vidéo youtube et sa traduction en français"
+        },        
+        "lyrics": {
+            "type": "list[list[str]]",
+            "description": "Les paroles en hébreu et leur traduction en français. Chaque vers doit être isolé au sein d'une liste dans laquelle le premier item correspondant au vers original en hébreu, et le second correspond à sa traduction en français. Veille à capturer correctement le sens des expressions idiomatiques et autres slang israélien."
+        }
+    }
+}

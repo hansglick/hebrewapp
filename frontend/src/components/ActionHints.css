@@ -1,0 +1,37 @@
+.action-hint {
+  position: fixed;
+  z-index: 10;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: var(--font-latin);
+  font-size: 0.7em;
+  color: var(--textMuted);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.action-hint-left {
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.action-hint-right {
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.action-hint-space {
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+}
+
+.action-hint-digits {
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+}

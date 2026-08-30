@@ -3,6 +3,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getRacine, getRandomRacine } from "../../api/content";
 import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
+import { speak } from "../../utils/speech";
+import { ActionHints } from "../../components/ActionHints";
 import "../screens.css";
 
 // Accessible uniquement depuis le lien d'un mot (racine précise).
@@ -36,22 +38,41 @@ export default function RacineScreen() {
   if (!racine) return null;
 
   return (
-    <section className="screen" {...swipeHandlers}>
-      <img
-        className="screen-image"
-        src={mediaUrl(racine.path)}
-        alt={racine.shoresh}
-        draggable={false}
-      />
-      <h1 className="hebrew-large">{racine.shoresh}</h1>
-      <p className="muted">{racine.sens}</p>
-      <ul className="words-list">
-        {racine.words.map((w) => (
-          <li key={w.hebrew} className="hebrew">
-            {w.hebrew} ({w.french})
-          </li>
-        ))}
-      </ul>
+    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+      <ActionHints {...swipeHandlers.hints} />
+      <div className="curiosite-split curiosite-split-racine">
+        <div className="curiosite-media">
+          <img
+            className="screen-image"
+            style={{ width: "100%" }}
+            src={mediaUrl(racine.path)}
+            alt={racine.shoresh}
+            draggable={false}
+          />
+        </div>
+
+        <div className="curiosite-content">
+          <h1 className="hebrew-large">{racine.shoresh}</h1>
+          <p className="muted">{racine.sens}</p>
+          <ul className="words-list">
+            {racine.words.map((w) => (
+              <li key={w.hebrew} className="racine-word-row">
+                <button type="button" className="speak-btn" onClick={() => speak(w.hebrew)}>
+                  🔊
+                </button>
+                <div>
+                  <p className="hebrew" style={{ margin: 0 }}>
+                    {w.hebrew}
+                  </p>
+                  <p className="muted" style={{ margin: "2px 0 0" }}>
+                    {w.french}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,0 +1,302 @@
+{
+    "13": {
+        "index": 13,
+        "hebrew_word": "פסח",
+        "french_word": "Pâques",
+        "explication": "Issu de l'hébreu 'Pessah' (passage), désignant la fête juive commémorant la sortie d'Egypte. Passé en grec puis en latin, le terme a été adopté par le christianisme pour désigner la résurrection du Christ, prenant la marque du pluriel en français (Pâques) pour se distinguer de la Pâque juive."
+    },
+    "14": {
+        "index": 14,
+        "hebrew_word": "קבלה",
+        "french_word": "Cabale",
+        "explication": "Dérivé de 'Qabbalah' (réception, tradition), désignant la tradition ésotérique juive. En français, le mot a subi un glissement de sens péjoratif au fil des siècles pour désigner un complot, une intrigue secrète ou une machination (monter une cabale)."
+    },
+    "15": {
+        "index": 15,
+        "hebrew_word": "כרוב",
+        "french_word": "Chérubin",
+        "explication": "Vient de 'Keruv' (pluriel Keruvim), une créature céleste ailée gardant l'Arche d'Alliance. En passant par le latin, le français a gardé la forme plurielle pour en faire un singulier. Le sens a glissé d'un ange majestueux vers la représentation d'un ange enfantin et potelé, puis au sens figuré, un bel enfant."
+    },
+    "16": {
+        "index": 16,
+        "hebrew_word": "שרף",
+        "french_word": "Séraphin",
+        "explication": "Issu de 'Saraf' (brûler), au pluriel 'Serafim'. Dans la Bible, ce sont des anges de haut rang associés au feu purificateur. Comme pour chérubin, le français a transformé le pluriel hébreu en singulier. Il désigne aujourd'hui un ange du premier chœur céleste ou une personne d'une grande pureté."
+    },
+    "17": {
+        "index": 17,
+        "hebrew_word": "הללויה",
+        "french_word": "Alléluia",
+        "explication": "Transcription directe de l'expression hébraïque 'Hallelu-Yah' signifiant 'Louez Yah' (Dieu). Intégré tel quel dans la liturgie chrétienne via le grec et le latin, il est devenu en français une exclamation de joie et d'allégresse, dépassant parfois le strict cadre religieux."
+    },
+    "18": {
+        "index": 18,
+        "hebrew_word": "הושע נא",
+        "french_word": "Hosanna",
+        "explication": "Vient de 'Hoshia na' (Sauve, de grâce !). Utilisé lors de la fête de Souccot, ce cri de supplication est devenu une acclamation de triomphe dans le christianisme. Le français l'utilise comme un chant de louange ou un cri de joie."
+    },
+    "19": {
+        "index": 19,
+        "hebrew_word": "רב",
+        "french_word": "Rabbin",
+        "explication": "Dérivé de 'Rav' (grand, maître) et de sa forme possessive 'Rabbi' (mon maître). Le suffixe '-in' en français provient du latin médiéval 'rabbinus'. Il désigne le chef spirituel d'une communauté juive, sans glissement de sens majeur."
+    },
+    "20": {
+        "index": 20,
+        "hebrew_word": "אב",
+        "french_word": "Abbé",
+        "explication": "Issu de l'araméen et de l'hébreu 'Av' (père), via le mot 'Abba' (papa, mon père). Passé au grec puis au latin, il désignait le supérieur d'un monastère. En français, le sens s'est élargi pour désigner tout prêtre séculier."
+    },
+    "21": {
+        "index": 21,
+        "hebrew_word": "לויתן",
+        "french_word": "Léviathan",
+        "explication": "De l'hébreu 'Livyatan', un monstre marin mythologique évoqué dans la Bible. En français, il désigne un monstre colossal, et par extension métaphorique, un Etat tout-puissant ou une organisation tentaculaire."
+    },
+    "22": {
+        "index": 22,
+        "hebrew_word": "בהמות",
+        "french_word": "Béhémoth",
+        "explication": "Issu de 'Behemot', pluriel de majesté de 'behemah' (bête, bétail). Dans le Livre de Job, il désigne une bête terrestre colossale. En français, il est utilisé pour qualifier un monstre gigantesque ou une entité énorme et lourde."
+    },
+    "23": {
+        "index": 23,
+        "hebrew_word": "זונין",
+        "french_word": "Zizanie",
+        "explication": "Provient de la racine sémitique et du mot hébreu mishnaïque 'Zunin' (une mauvaise herbe, l'ivraie), passé au grec puis au latin. Popularisé par la parabole évangélique, le mot a pris en français le sens figuré de discorde ou de désaccord (semer la zizanie)."
+    },
+    "24": {
+        "index": 24,
+        "hebrew_word": "שקל",
+        "french_word": "Sicle",
+        "explication": "Dérive de 'Shekel', une ancienne unité de poids et de monnaie au Proche-Orient, basée sur la racine peser. Le français l'a adopté via le latin 'siclus' pour désigner cette monnaie antique."
+    },
+    "49": {
+        "index": 49,
+        "hebrew_word": "מסכן",
+        "french_word": "Mesquin",
+        "explication": "Le mot francais 'mesquin' trouve ses racines lointaines dans l'hebreu 'misken' signifiant 'pauvre' ou 'miserable' (lui-meme lie a l'akkadien). Il a transite par l'arabe 'miskin', puis par les langues romanes (italien 'meschino', espagnol 'mezquino') avant d'arriver en francais. Semantiquement, le mot a subi un glissement pejoratif : de la pauvrete materielle, il est passe a une pauvrete morale, designant aujourd'hui une personne avare, etriquee ou manquant de generosite."
+    },
+    "50": {
+        "index": 50,
+        "hebrew_word": "שכר",
+        "french_word": "Cidre",
+        "explication": "Le mot 'cidre' derive de l'hebreu biblique 'shekhar', qui designait de maniere generique toute boisson enivrante ou fermentee autre que le vin. Ce terme a ete emprunte par le grec ancien sous la forme 'sikera', puis par le bas latin 'sicera'. En evoluant vers le francais, le mot a subi une specialisation semantique forte : il a perdu son sens general de 'boisson alcoolisee' pour designer exclusivement la boisson fermentee issue du jus de pomme."
+    },
+    "1": {
+        "index": 1,
+        "hebrew_word": "שבת",
+        "french_word": "Sabbat",
+        "explication": "Vient de l'hébreu shabbat (cesser, se reposer). En français, il désigne le jour de repos juif, mais a aussi glissé sémantiquement au Moyen Âge pour désigner des assemblées nocturnes de sorcières, reflétant l'antijudaïsme de l'époque, avant de prendre parfois le sens de grand tapage."
+    },
+    "2": {
+        "index": 2,
+        "hebrew_word": "יובל",
+        "french_word": "Jubilé",
+        "explication": "De l'hébreu yovel (bélier, puis corne de bélier utilisée pour annoncer l'année jubilaire). En français, via le latin jubilaeus (influencé par jubilare, pousser des cris de joie), il désigne une fête célébrant un cinquantenaire ou une période d'indulgence."
+    },
+    "3": {
+        "index": 3,
+        "hebrew_word": "תהו ובהו",
+        "french_word": "Tohu-bohu",
+        "explication": "De l'hébreu biblique tohu va-vohu (Genèse 1:2), désignant l'état informe et vide de la terre avant la création. En français, l'expression a glissé pour désigner un grand désordre, une confusion ou un bruit tumultueux."
+    },
+    "4": {
+        "index": 4,
+        "hebrew_word": "מקבר",
+        "french_word": "Macabre",
+        "explication": "Origine débattue mais souvent reliée à l'hébreu. Soit de Maccabées (via la danse des Maccabées), soit apparenté à la racine sémitique qever (tombeau) ou meqaber (fossoyeur). En français, il désigne ce qui évoque la mort ou le funèbre."
+    },
+    "5": {
+        "index": 5,
+        "hebrew_word": "ברוך הבא",
+        "french_word": "Brouhaha",
+        "explication": "Souvent attribué à une déformation populaire de la formule hébraïque Barukh haba (Béni soit celui qui vient), prononcée à la synagogue. Les non-juifs l'auraient perçue comme un bruit confus, d'où le sens français de rumeur confuse ou de vacarme."
+    },
+    "6": {
+        "index": 6,
+        "hebrew_word": "ספיר",
+        "french_word": "Saphir",
+        "explication": "De l'hébreu sapir, passé par le grec sappheiros puis le latin. Le terme désignait probablement le lapis-lazuli dans l'Antiquité avant de glisser en français pour désigner la pierre précieuse bleue (corindon) que nous connaissons aujourd'hui."
+    },
+    "7": {
+        "index": 7,
+        "hebrew_word": "ישפה",
+        "french_word": "Jaspe",
+        "explication": "De l'hébreu yashfeh, transmis via le grec iaspis et le latin. Il désigne une roche sédimentaire ou volcanique. Le mot a conservé son sens minéralogique à travers les siècles sans glissement sémantique majeur en français."
+    },
+    "8": {
+        "index": 8,
+        "hebrew_word": "מור",
+        "french_word": "Myrrhe",
+        "explication": "De l'hébreu mor (racine signifiant amer), passé par le grec murrha et le latin. Il désigne la résine aromatique. Le terme est resté fidèle à son sens d'origine, fortement associé aux contextes bibliques et liturgiques en français."
+    },
+    "9": {
+        "index": 9,
+        "hebrew_word": "קינמון",
+        "french_word": "Cinnamome",
+        "explication": "De l'hébreu qinnamon, emprunté au grec kinnamômon puis au latin. Il désigne une épice tirée de l'écorce de certains arbres, proche de la cannelle. Le terme est resté technique, botanique et littéraire en français."
+    },
+    "10": {
+        "index": 10,
+        "hebrew_word": "אזוב",
+        "french_word": "Hysope",
+        "explication": "De l'hébreu ezov, via le grec hyssôpos et le latin. Dans la Bible, c'est une plante utilisée pour les rites de purification. En français, le mot désigne une plante aromatique, conservant son aura purificatrice dans la littérature."
+    },
+    "11": {
+        "index": 11,
+        "hebrew_word": "כמון",
+        "french_word": "Cumin",
+        "explication": "De l'hébreu kammon, passé par le grec kuminon et le latin cuminum. Le mot a traversé les millénaires pour désigner la même plante aromatique et ses graines utilisées comme épice dans la gastronomie française."
+    },
+    "12": {
+        "index": 12,
+        "hebrew_word": "משיח",
+        "french_word": "Messie",
+        "explication": "De l'hébreu mashiach (oint, celui qui a reçu l'onction d'huile). Passé par le grec et le latin. En français, il désigne le libérateur attendu. Par glissement, il désigne au sens figuré toute personne attendue comme un sauveur providentiel."
+    },
+    "25": {
+        "index": 25,
+        "hebrew_word": "מן",
+        "french_word": "Manne",
+        "explication": "Le mot français manne provient de l'hébreu man (qu'est-ce que c'est ?), via le grec et le latin manna. S'il désigne originellement la nourriture miraculeuse des Hébreux dans le désert, il a glissé en français vers un sens figuré désignant un avantage inespéré, une aubaine ou une source de profit providentielle."
+    },
+    "26": {
+        "index": 26,
+        "hebrew_word": "גמל",
+        "french_word": "Chameau",
+        "explication": "Issu de l'hébreu gamal, le terme a transité par le grec kamelos puis le latin camelus avant de donner chameau en français. Outre la désignation de l'animal, le mot a acquis un glissement de sens familier et péjoratif en français pour qualifier une personne méchante, acariâtre ou difficile à supporter."
+    },
+    "27": {
+        "index": 27,
+        "hebrew_word": "אמן",
+        "french_word": "Amen",
+        "explication": "Emprunt direct à l'hébreu amen signifiant 'ainsi soit-il' ou 'en vérité', ce mot est passé tel quel dans le grec, le latin puis le français. Principalement utilisé comme formule de conclusion et d'adhésion dans la liturgie, il a donné l'expression familière 'dire amen à tout', signifiant accepter sans discuter ni esprit critique."
+    },
+    "28": {
+        "index": 28,
+        "hebrew_word": "פרוש",
+        "french_word": "Pharisien",
+        "explication": "Dérivé de l'hébreu parush (séparé), passé par le grec pharisaios et le latin pharisaeus. Historiquement, il désigne un membre d'une secte juive antique. Sous l'influence des textes évangéliques chrétiens, le mot a subi un fort glissement sémantique en français pour devenir le synonyme de personne hypocrite, formaliste ou d'une fausse dévotion."
+    },
+    "29": {
+        "index": 29,
+        "hebrew_word": "שומשום",
+        "french_word": "Sésame",
+        "explication": "Le mot sésame trouve ses racines dans les langues sémitiques, dont l'hébreu shumshum, transmis via le grec sesamon. Si le terme botanique est resté stable, son utilisation dans le conte d'Ali Baba (Sésame, ouvre-toi) lui a conféré un sens figuré très courant en français : un moyen d'accès infaillible, une clé ou un laissez-passer pour franchir un obstacle."
+    },
+    "30": {
+        "index": 30,
+        "hebrew_word": "כשר",
+        "french_word": "Casher",
+        "explication": "Provenant de l'hébreu kasher (apte, convenable), ce mot a été intégré plus récemment en français, souvent via le yiddish. Originellement lié aux lois alimentaires juives, il a développé un sens figuré familier (souvent à la forme négative) pour désigner quelque chose de légal, d'honnête ou de digne de confiance (ex: 'cette affaire n'est pas très casher')."
+    },
+    "31": {
+        "index": 31,
+        "hebrew_word": "גולם",
+        "french_word": "Golem",
+        "explication": "Issu de l'hébreu golem signifiant 'masse informe' ou 'embryon', le terme est arrivé en français par le biais du folklore juif d'Europe de l'Est. Désignant la créature d'argile animée par la magie, il a glissé sémantiquement pour qualifier une personne maladroite, un automate sans âme, ou une création technologique qui échappe au contrôle de son créateur."
+    },
+    "32": {
+        "index": 32,
+        "hebrew_word": "שיבולת",
+        "french_word": "Schibboleth",
+        "explication": "Tiré de l'hébreu shibboleth (épi ou courant d'eau), ce mot est célèbre pour son usage biblique comme mot de passe discriminant. En français, il a été adopté dans le vocabulaire de la linguistique et de la sociologie pour désigner une particularité lexicale ou phonétique permettant d'identifier l'origine sociale ou géographique d'un locuteur."
+    },
+    "33": {
+        "index": 33,
+        "hebrew_word": "שקמה",
+        "french_word": "Sycomore",
+        "explication": "Le sycomore vient de l'hébreu shikma (figuier-mûrier), passé par le grec sukomoros. En français, il y a eu un glissement botanique : si le terme désigne bien le figuier d'Orient dans les textes anciens, il est aujourd'hui couramment utilisé en Europe pour nommer une espèce d'érable (l'érable sycomore) en raison de la ressemblance de ses feuilles."
+    },
+    "34": {
+        "index": 34,
+        "hebrew_word": "ברקת",
+        "french_word": "Émeraude",
+        "explication": "L'émeraude tire son origine lointaine de la racine sémitique b-r-q (briller, éclair) qui a donné l'hébreu bareket (pierre brillante du pectoral du grand prêtre). Le mot a voyagé via le sanskrit, le persan, puis le grec smaragdos et le latin smaragdus. Le sens est resté celui de la pierre précieuse verte, avec une évolution phonétique spectaculaire."
+    },
+    "35": {
+        "index": 35,
+        "hebrew_word": "פטדה",
+        "french_word": "Topaze",
+        "explication": "Le mot topaze dérive probablement de l'hébreu pitdah (une des pierres du pectoral biblique), qui par métathèse ou association géographique a donné le grec topazion. En français, il désigne la pierre fine jaune. Le sens minéralogique est resté stable, bien que la pierre exacte désignée dans l'Antiquité ait pu différer de la topaze moderne."
+    },
+    "36": {
+        "index": 36,
+        "hebrew_word": "יין",
+        "french_word": "Vin",
+        "explication": "Le mot vin partage une racine méditerranéenne très ancienne avec l'hébreu yayin, qui a donné le grec oinos et le latin vinum. Bien qu'il s'agisse davantage d'un emprunt à un substrat commun qu'une dérivation directe de l'hébreu vers le français, le terme a conservé son sens originel de boisson issue de la fermentation du raisin, sans glissement sémantique majeur."
+    },
+    "37": {
+        "index": 37,
+        "hebrew_word": "בושם",
+        "french_word": "Baume",
+        "explication": "Le mot hébreu 'בושם' (bosem), signifiant parfum ou épice, a transité par le grec 'balsamon' puis le latin 'balsamum' pour donner 'baume' en français. Le sens s'est spécialisé pour désigner une résine aromatique apaisante, puis au sens figuré, un réconfort moral."
+    },
+    "38": {
+        "index": 38,
+        "hebrew_word": "הבנים",
+        "french_word": "Ébène",
+        "explication": "Issu de l'hébreu 'הבנים' (hovnim), qui désigne un bois précieux et sombre. Le terme a voyagé via le grec 'ebenos' et le latin 'ebenus'. En français, 'ébène' a conservé son sens originel tout en devenant un symbole de noirceur absolue."
+    },
+    "39": {
+        "index": 39,
+        "hebrew_word": "שק",
+        "french_word": "Sac",
+        "explication": "L'hébreu 'שק' (sak) désignait une étoffe grossière en poils de chèvre ou un contenant fait de cette toile. Emprunté par le grec 'sakkos' puis le latin 'saccus', il a donné 'sac' en français, conservant le sens de contenant souple, tout en perdant sa connotation exclusive de vêtement de deuil ou de pénitence."
+    },
+    "40": {
+        "index": 40,
+        "hebrew_word": "כתונת",
+        "french_word": "Tunique",
+        "explication": "L'hébreu 'כתונת' (ketonet) désigne un vêtement de corps ou une chemise. Ce mot sémitique a été emprunté par le grec sous la forme 'chitôn'. Il partage la même racine antique qui a influencé le latin 'tunica', donnant 'tunique' en français pour désigner ce vêtement antique."
+    },
+    "41": {
+        "index": 41,
+        "hebrew_word": "קנה",
+        "french_word": "Canne",
+        "explication": "Le mot hébreu 'קנה' (kaneh) signifie roseau ou tige. Il est passé au grec 'kanna' puis au latin 'canna', donnant 'canne' en français. Le sens s'est élargi du roseau naturel à tout bâton servant d'appui, tout en conservant l'idée de forme cylindrique."
+    },
+    "42": {
+        "index": 42,
+        "hebrew_word": "נרד",
+        "french_word": "Nard",
+        "explication": "L'hébreu 'נרד' (nered) désigne une plante aromatique. Via le grec 'nardos' et le latin 'nardus', le français a hérité du mot 'nard' pour désigner ce parfum précieux très prisé dans l'Antiquité, gardant son sens botanique et biblique intact."
+    },
+    "43": {
+        "index": 43,
+        "hebrew_word": "מנה",
+        "french_word": "Mine",
+        "explication": "L'hébreu 'מנה' (maneh) vient de la racine signifiant 'compter' et désignait une unité de poids ou de monnaie. Passé au grec 'mna' et au latin 'mina', le mot 'mine' en français désigne cette ancienne monnaie de compte antique."
+    },
+    "44": {
+        "index": 44,
+        "hebrew_word": "גט",
+        "french_word": "Ghetto",
+        "explication": "Bien que souvent attribuée au vénitien 'getto' (fonderie), une hypothèse étymologique forte relie 'ghetto' à l'hébreu 'גט' (get), signifiant 'divorce' ou 'séparation'. Le glissement de sens se ferait de la séparation juridique à la ségrégation spatiale d'une communauté."
+    },
+    "45": {
+        "index": 45,
+        "hebrew_word": "דלת",
+        "french_word": "Delta",
+        "explication": "La lettre hébraïque et phénicienne 'דלת' (dalet), qui signifie 'porte' (delet), a donné son nom à la lettre grecque 'delta'. En français, outre la lettre, 'delta' désigne l'embouchure d'un fleuve en raison de sa forme triangulaire, héritage direct de la graphie antique."
+    },
+    "46": {
+        "index": 46,
+        "hebrew_word": "יוד",
+        "french_word": "Iota",
+        "explication": "La lettre hébraïque 'יוד' (yod), la plus petite de l'alphabet, a donné la lettre grecque 'iota'. En français, l'expression 'pas un iota' provient directement de cette notion de petitesse, popularisée par une traduction biblique pour désigner la plus infime des choses."
+    },
+    "47": {
+        "index": 47,
+        "hebrew_word": "כותנה",
+        "french_word": "Coton",
+        "explication": "L'hébreu 'כותנה' (kutnah) partage une racine sémitique commune avec l'arabe 'qutn' (lin, plante textile). C'est par l'arabe, via l'espagnol ou l'italien, que le mot arrive en français sous la forme 'coton', spécialisant son sens sur cette fibre végétale spécifique."
+    },
+    "48": {
+        "index": 48,
+        "hebrew_word": "אלף",
+        "french_word": "Éléphant",
+        "explication": "Le mot hébreu 'אלף' (aleph) signifie 'bœuf' ou 'gros bétail'. Des linguistes postulent que le grec 'elephas' (éléphant) dérive de cette racine sémitique, les Grecs ayant assimilé ce grand mammifère inconnu à un 'gros bœuf'. Le français 'éléphant' en est le descendant direct."
+    }
+}

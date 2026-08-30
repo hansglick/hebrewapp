@@ -11,34 +11,120 @@
   width: 100%;
   font-family: var(--font-hebrew);
   font-size: 1.1em;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  outline: none;
+  box-sizing: border-box;
+}
+
+:root[data-theme="light"] .hebrew-input-textarea {
+  background: #fff;
+}
+
+.hebrew-input-textarea::placeholder {
+  font-size: 0.5em;
+  color: var(--textMuted);
 }
 
 .hebrew-keyboard {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
   align-items: center;
+  width: 100%;
 }
 
 .hebrew-keyboard-row {
   display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
+  gap: 0;
+  flex-wrap: nowrap;
   justify-content: center;
+  width: 100%;
 }
 
 .hebrew-key {
-  font-family: var(--font-hebrew);
-  min-width: 32px;
-  padding: 6px 8px;
+  display: flex;
+  flex: 0 0 32px;
+  width: 32px;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 6px 2px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--text);
+  border-radius: 0;
+  background: #000;
   cursor: pointer;
 }
 
-.hebrew-key-space {
-  min-width: 100px;
+.hebrew-key.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.hebrew-key-hebrew {
+  font-family: var(--font-hebrew);
+  font-size: 1em;
+  font-weight: 400;
+  color: #fff;
+}
+
+.hebrew-key-latin {
   font-family: var(--font-latin);
+  font-weight: 700;
+  font-size: 0.55em;
+  color: #9ca3af;
+}
+
+.hebrew-key-space {
+  flex: 0 0 auto;
+  width: 200px;
+  padding: 12px 4px;
+  font-family: var(--font-latin);
+  font-size: 0.85em;
+  color: #fff;
+}
+
+:root[data-theme="light"] .hebrew-key:not(.active) {
+  background: #fff;
+}
+
+:root[data-theme="light"] .hebrew-key-hebrew {
+  color: #000;
+}
+
+:root[data-theme="light"] .hebrew-key-space {
+  color: #000;
+}
+
+.hebrew-voice-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.hebrew-voice-dot {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.hebrew-voice-dot.recording {
+  animation: hebrew-voice-blink 1s ease-in-out infinite;
+}
+
+@keyframes hebrew-voice-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
 }

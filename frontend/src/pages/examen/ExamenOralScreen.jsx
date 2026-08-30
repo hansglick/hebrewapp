@@ -1,31 +1,168 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getExamenOral } from "../../api/content";
-import { passExamen } from "../../api/user";
-import { evaluateOral } from "../../api/gemini";
+import { answerExamen, getExamenStatus, getSessionExists } from "../../api/user";
+import { evaluateOral, evaluateReport } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
+import { speak } from "../../utils/speech";
 import { blobToWavBlob } from "../../utils/audioEncode";
+import { AudioPlayer } from "../../components/AudioPlayer";
+import { GeminiWaiting } from "../../components/GeminiWaiting";
+import { VoicePrefill } from "../../components/VoicePrefill";
+import { EvalWaitModeToggle } from "../../components/EvalWaitModeToggle";
+import { ExamenBilanScreen } from "./ExamenBilanScreen";
+import { useConfig } from "../../config/ConfigContext";
+import { displayLessonCode } from "../../utils/lessonDisplay";
+import { displayChapitreLabel } from "../../utils/chapitreDisplay";
+import { ShekelIcon } from "../../components/ShekelIcon";
 import "../screens.css";
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+// Les observations sont affichées en italique, mais un mot en hébreu au
+// milieu d'une phrase française perd en lisibilité en italique — on l'en
+// exempte pour qu'il ressorte mieux.
+function renderWithHebrewHighlight(text) {
+  return text
+    .split(/([֐-׿]+(?:[\s'"־][֐-׿]+)*)/g)
+    .map((part, i) =>
+      /[֐-׿]/.test(part) ? (
+        <span key={i} className="hebrew" style={{ fontStyle: "normal" }}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+}
+
+function computeGlobalNote(result) {
+  const ratings = [result.rating_completeness, result.rating_hebrew, result.rating_comprehension];
+  const average = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+  const comment = ratings.every((r) => r >= 4) ? "excellent" : "insuffisant";
+  return { average, comment };
+}
+
+// Le Résumé compte deux fois plus que les Détails dans la note globale du
+// rapport (pondération explicitement demandée par le user).
+function computeReportNote(answer) {
+  const average = (2 * answer.score_summary + answer.score_details) / 3;
+  const comment = average >= 4 ? "Satisfaisant" : "Insatisfaisant";
+  return { average, comment };
+}
+
+function StarRating({ rating }) {
+  return (
+    <span aria-hidden="true">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+          ★
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function firstUnanswered(answers) {
+  const i = answers.findIndex((a) => a === null);
+  return i === -1 ? answers.length - 1 : i;
+}
 
 export default function ExamenOralScreen() {
   const { code } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { godMode, evalWaitMode } = useConfig();
   const [exam, setExam] = useState(null);
   const [index, setIndex] = useState(0);
-  const [results, setResults] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
-  const [geminiResult, setGeminiResult] = useState(null);
   const [geminiError, setGeminiError] = useState(null);
   const [loadingGemini, setLoadingGemini] = useState(false);
   const [finalResult, setFinalResult] = useState(null);
-  const mediaRecorderRef = useRef(null);
-  const chunksRef = useRef([]);
+  const [attemptError, setAttemptError] = useState(null);
+  const [rapportText, setRapportText] = useState("");
+  const [confirmed, setConfirmed] = useState(null); // null=vérification en cours, true=go, false=confirmation requise
+  const [pointsAGagner, setPointsAGagner] = useState(null);
 
   useEffect(() => {
-    getExamenOral(code).then(setExam);
+    getExamenStatus(code).then((s) => setPointsAGagner(s.points_a_gagner_oral));
   }, [code]);
+  // Mode "attendre l'évaluation globale" (cf. Layout) : réponses (oral ou
+  // rapport) gardées ici en local, traitées les unes après les autres une
+  // fois toutes les questions couvertes. {[index]: {type, audioBlob?, rapportText?}}
+  const [pendingAnswers, setPendingAnswers] = useState({});
+  const [batchProgress, setBatchProgress] = useState(null);
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
+  const batchRunningRef = useRef(false);
+
+  // Layout re-render son enfant (via <Outlet/>) à chaque poll actif-lockdown
+  // (toutes les 5s pendant l'examen) — sans ce useMemo, URL.createObjectURL
+  // recréerait une nouvelle URL à chaque fois, ce qui force le <audio> à
+  // recharger et interrompt la lecture en cours.
+  const audioUrl = useMemo(() => (audioBlob ? URL.createObjectURL(audioBlob) : null), [audioBlob]);
+
+  // Une navigation accidentelle (ex: bouton "précédent" du navigateur)
+  // ramenant directement sur cette URL ne doit PAS suffire à tirer une
+  // nouvelle tentative : on vérifie d'abord si une tentative est déjà en
+  // cours (auquel cas on la reprend directement, aucune confirmation
+  // nécessaire) ; sinon on exige un clic explicite sur "Accepter" avant de
+  // consommer un essai (cf. l'effet suivant).
+  useEffect(() => {
+    if (location.state?.abandonResult) return;
+    setConfirmed(null);
+    getSessionExists(code).then((exists) => setConfirmed(exists.oral));
+  }, [code, location.state]);
+
+  useEffect(() => {
+    // Cf. ExamenEcritScreen : un abandon déclenché depuis Layout arrive ici
+    // avec le résultat déjà calculé, la session vient d'être supprimée.
+    if (location.state?.abandonResult) {
+      setFinalResult(location.state.abandonResult);
+      return;
+    }
+    if (confirmed !== true) return;
+    getExamenOral(code, godMode)
+      .then((data) => {
+        setExam(data);
+        setIndex(firstUnanswered(data.answers));
+      })
+      .catch((e) => setAttemptError(e.message));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [confirmed]);
+
+  // Cas le plus courant : l'abandon est déclenché depuis Layout PENDANT
+  // qu'on est déjà sur cet écran — le pathname ne change pas, donc l'effet
+  // ci-dessus (gardé sur [code]) ne se redéclenche pas. On surveille
+  // location.state séparément pour couvrir ce cas.
+  useEffect(() => {
+    if (location.state?.abandonResult) {
+      setFinalResult(location.state.abandonResult);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    setAudioBlob(null);
+    setGeminiError(null);
+    setIsRecording(false);
+    setRapportText("");
+  }, [index]);
+
+  // Mode "évaluation globale" : dès que la question courante a reçu une
+  // réponse (en attente localement), passe automatiquement à la suivante
+  // après 2s — le user n'a pas à cliquer "▶" lui-même.
+  useEffect(() => {
+    if (evalWaitMode !== "global" || finalResult || !exam) return undefined;
+    const isAnswered = exam.answers[index] !== null || pendingAnswers[index] !== undefined;
+    if (!isAnswered || index >= exam.questions.length - 1) return undefined;
+    const id = setTimeout(() => setIndex((i) => i + 1), 2000);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exam?.answers[index], pendingAnswers[index], evalWaitMode, index, finalResult]);
 
   async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -55,6 +192,10 @@ export default function ExamenOralScreen() {
   }
 
   async function handleSubmit() {
+    if (evalWaitMode === "global") {
+      setPendingAnswers((prev) => ({ ...prev, [index]: { type: "oral", audioBlob } }));
+      return;
+    }
     const q = exam.questions[index];
     setLoadingGemini(true);
     setGeminiError(null);
@@ -64,7 +205,14 @@ export default function ExamenOralScreen() {
         questionIndex: q.question_index,
         audioBlob,
       });
-      setGeminiResult(result);
+      const response = await answerExamen(code, { examType: "oral", questionIndex: index, answer: result });
+      setExam((prev) => ({
+        ...prev,
+        answers: prev.answers.map((a, i) => (i === index ? result : a)),
+      }));
+      if (response.completed) {
+        setFinalResult(response);
+      }
     } catch (e) {
       setGeminiError(e.message);
     } finally {
@@ -72,152 +220,643 @@ export default function ExamenOralScreen() {
     }
   }
 
-  async function handleNext() {
-    const success =
-      geminiResult.rating_completeness >= exam.rating_threshold &&
-      geminiResult.rating_hebrew >= exam.rating_threshold &&
-      geminiResult.rating_comprehension >= exam.rating_threshold;
-
-    const newResults = [...results, success];
-    setAudioBlob(null);
-    setGeminiResult(null);
-    setGeminiError(null);
-
-    if (index + 1 < exam.questions.length) {
-      setResults(newResults);
-      setIndex(index + 1);
+  async function handleSubmitRapport() {
+    if (evalWaitMode === "global") {
+      setPendingAnswers((prev) => ({ ...prev, [index]: { type: "rapport", rapportText } }));
       return;
     }
-
-    const scoreCount = newResults.filter(Boolean).length;
-    const ratio = scoreCount / exam.total_questions;
-    const passed = ratio >= exam.pass_threshold;
-
-    let passResult = null;
-    if (passed) {
-      passResult = await passExamen(code, { examType: "oral" });
+    const q = exam.questions[index];
+    setLoadingGemini(true);
+    setGeminiError(null);
+    try {
+      const geminiResult = await evaluateReport({ textCode: q.text_code, rapport: rapportText });
+      // Gemini ne renvoie aucun champ echo du rapport de l'étudiant : on le
+      // fusionne nous-mêmes plutôt que de risquer de lui faire "recopier"
+      // (cf. bug des paroles de chanson hallucinées plus tôt dans le projet).
+      const result = { ...geminiResult, rapport: rapportText };
+      const response = await answerExamen(code, { examType: "oral", questionIndex: index, answer: result });
+      setExam((prev) => ({
+        ...prev,
+        answers: prev.answers.map((a, i) => (i === index ? result : a)),
+      }));
+      if (response.completed) {
+        setFinalResult(response);
+      }
+    } catch (e) {
+      setGeminiError(e.message);
+    } finally {
+      setLoadingGemini(false);
     }
-    setFinalResult({ passed, scoreCount, total: exam.total_questions, ratio, passResult });
   }
 
-  if (!exam) return null;
+  // Traite séquentiellement les réponses laissées en attente (mode
+  // "évaluation globale"), une fois que toutes les questions de l'examen ont
+  // reçu une réponse — cf. l'effet juste après. Ré-appelable telle quelle
+  // pour réessayer après une erreur.
+  async function runBatch() {
+    if (batchRunningRef.current) return;
+    batchRunningRef.current = true;
+    setLoadingGemini(true);
+    setGeminiError(null);
+    try {
+      const indices = Object.keys(pendingAnswers)
+        .map(Number)
+        .filter((i) => exam.answers[i] === null)
+        .sort((a, b) => a - b);
+      let lastResponse = null;
+      for (const idx of indices) {
+        setBatchProgress({ current: idx + 1, total: exam.questions.length });
+        const q = exam.questions[idx];
+        const pending = pendingAnswers[idx];
+        let result;
+        if (pending.type === "rapport") {
+          const geminiResult = await evaluateReport({ textCode: q.text_code, rapport: pending.rapportText });
+          result = { ...geminiResult, rapport: pending.rapportText };
+        } else {
+          result = await evaluateOral({
+            textCode: q.text_code,
+            questionIndex: q.question_index,
+            audioBlob: pending.audioBlob,
+          });
+        }
+        const response = await answerExamen(code, { examType: "oral", questionIndex: idx, answer: result });
+        setExam((prev) => ({ ...prev, answers: prev.answers.map((a, i) => (i === idx ? result : a)) }));
+        lastResponse = response;
+      }
+      setBatchProgress(null);
+      if (lastResponse?.completed) setFinalResult(lastResponse);
+    } catch (e) {
+      setGeminiError(e.message);
+    } finally {
+      setLoadingGemini(false);
+      batchRunningRef.current = false;
+    }
+  }
 
+  // Déclenche runBatch() dès que toutes les questions ont une réponse
+  // (déjà notée côté serveur, ou en attente localement).
+  useEffect(() => {
+    if (evalWaitMode !== "global" || !exam || finalResult || batchRunningRef.current) return;
+    const allCovered = exam.questions.every((_, i) => exam.answers[i] !== null || pendingAnswers[i] !== undefined);
+    if (allCovered && Object.keys(pendingAnswers).length > 0) runBatch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingAnswers, exam, evalWaitMode, finalResult]);
+
+  // L'ordre compte : un abandon déclenché depuis Layout affiche directement
+  // le récapitulatif sans jamais charger `exam` (cf. effet ci-dessus).
   if (finalResult) {
-    const { passed, passResult } = finalResult;
+    return (
+      <ExamenBilanScreen code={code} finalResult={finalResult} onRetour={() => navigate(`/examen/cible/${code}`)} />
+    );
+  }
+
+  if (confirmed === false) {
     return (
       <section className="screen">
         <h1>
-          {passed
-            ? passResult?.niveau_updated
-              ? "Examen réussi !"
-              : "Oral validé"
-            : "Examen non validé"}
+          Lancer l'examen oral {displayChapitreLabel(code.split(".")[0])} - {displayLessonCode(code)}
         </h1>
-        <p>
-          Score : {finalResult.scoreCount} / {finalResult.total} (
-          {Math.round(finalResult.ratio * 100)}%)
+        <EvalWaitModeToggle />
+        <p className="muted" style={{ fontSize: "0.8em" }}>
+          {pointsAGagner > 0 ? (
+            <>
+              Vous gagnerez {Math.round(pointsAGagner)}{" "}
+              <ShekelIcon size={11} style={{ verticalAlign: -1 }} /> en réussissant cet
+              examen maintenant.
+            </>
+          ) : (
+            <>
+              0 <ShekelIcon size={11} style={{ verticalAlign: -1 }} /> pour l'instant (l'écrit
+              doit aussi être réussi pour que les points soient crédités).
+            </>
+          )}
         </p>
-        {passed && passResult?.niveau_updated && <p>Niveau {code} atteint.</p>}
-        {passed && !passResult?.niveau_updated && (
-          <>
-            <p>Il reste l'examen écrit de cette leçon pour valider le niveau.</p>
-            <button
-              type="button"
-              className="link-btn"
-              onClick={() => navigate(`/examen/ecrite/${code}`)}
-            >
-              Passer l'écrit
-            </button>
-          </>
-        )}
-        {!passed && (
-          <p>Seuil requis : {Math.round(exam.pass_threshold * 100)}%. Retente quand tu veux.</p>
-        )}
-        <button type="button" className="link-btn" onClick={() => navigate("/examen/orale")}>
-          Retour aux examens
-        </button>
+        <p className="muted" style={{ fontSize: "0.8em" }}>
+          Une fois l'examen lancé, si vous abandonnez l'épreuve, alors la note la plus faible sera assigné aux
+          questions auxquelles vous n'avez pas répondu. N'oubliez pas que vous avez seulement trois essais par
+          jour.
+        </p>
+        <div style={{ display: "flex", gap: 16 }}>
+          <button
+            type="button"
+            className="exam-tile green"
+            style={{ cursor: "pointer" }}
+            onClick={() => setConfirmed(true)}
+          >
+            Accepter
+          </button>
+          <button
+            type="button"
+            className="exam-tile red"
+            onClick={() => navigate(`/examen/cible/${code}`, { replace: true })}
+          >
+            Refuser
+          </button>
+        </div>
       </section>
     );
   }
 
+  if (!exam) return null;
+
   const q = exam.questions[index];
+  const answer = exam.answers[index];
+  const globalNote = answer && q.type !== "rapport" ? computeGlobalNote(answer) : null;
+  const reportNote = answer && q.type === "rapport" ? computeReportNote(answer) : null;
 
   return (
     <section className="screen">
-      <p className="muted">
-        Examen oral {code} — Question {index + 1} / {exam.questions.length}
-        {exam.is_special ? " (examen spécial)" : ""}
+      <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+        <tbody>
+          <tr>
+            <td style={{ border: "1px solid transparent", padding: "4px 8px", width: "25%", textAlign: "start" }}>
+              <button
+                type="button"
+                className="link-btn"
+                style={{ textDecoration: "none", color: "var(--text)" }}
+                disabled={index === 0}
+                onClick={() => setIndex(index - 1)}
+              >
+                ◀
+              </button>
+            </td>
+            <td className="muted" style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "center" }}>
+              Question {index + 1} / {exam.questions.length}
+            </td>
+            <td style={{ border: "1px solid transparent", padding: "4px 8px", width: "25%", textAlign: "end" }}>
+              <button
+                type="button"
+                className="link-btn"
+                style={{ textDecoration: "none", color: "var(--text)" }}
+                disabled={index === exam.questions.length - 1}
+                onClick={() => setIndex(index + 1)}
+              >
+                ▶
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr
+        style={{
+          width: "100%",
+          maxWidth: 320,
+          border: "none",
+          borderTop: "1px solid var(--border)",
+          margin: "1em 0 0",
+        }}
+      />
+
+      {loadingGemini ? (
+        <GeminiWaiting
+          key={batchProgress ? batchProgress.current : "single"}
+          showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
+          label={
+            batchProgress ? (
+              <>
+                Patientez quelques instants, votre professeur évalue votre copie
+                <br />
+                (question n° {batchProgress.current} / {batchProgress.total})
+              </>
+            ) : undefined
+          }
+        />
+      ) : (
+        <>
+      <p className="muted" style={{ fontSize: "0.7em", margin: 0 }}>
+        {q.text_code}
       </p>
 
-      <button
-        type="button"
-        className="link-btn"
-        onClick={() => new Audio(mediaUrl(q.voicepath)).play()}
-      >
-        🔊 Écouter le texte
-      </button>
-      <p className="hebrew-large">{q.question_hebrew}</p>
+      {attemptError && (
+        <p className="muted" style={{ color: "var(--danger)" }}>
+          {attemptError}
+        </p>
+      )}
 
-      {!geminiResult && (
+      {geminiError && (
         <>
-          {!audioBlob && !isRecording && !isConverting && (
-            <button type="button" className="link-btn" onClick={startRecording}>
-              🎙️ Enregistrer
+          <p className="muted" style={{ color: "var(--danger)" }}>
+            {geminiError}
+          </p>
+          {Object.keys(pendingAnswers).length > 0 && (
+            <button type="button" className="link-btn" onClick={runBatch}>
+              Réessayer
             </button>
           )}
+        </>
+      )}
+
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <AudioPlayer src={mediaUrl(q.voicepath)} barMaxWidth={58.5} toggleSize={27} />
+        {q.type !== "rapport" && (
+          <button
+            type="button"
+            onClick={() => speak(q.question_hebrew)}
+            aria-label="Écouter la question"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 27,
+              height: 27,
+              borderRadius: "50%",
+              background: "#000",
+              color: "#fff",
+              fontWeight: 700,
+              fontSize: "1.1em",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+          >
+            ?
+          </button>
+        )}
+        {q.type !== "rapport" && !answer && !pendingAnswers[index] && !audioBlob && !isRecording && !isConverting && (
+          <button
+            type="button"
+            className="speak-btn"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              color: "var(--textMuted)",
+              fontSize: "0.675em",
+            }}
+            onClick={startRecording}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                width: 27,
+                height: 27,
+                borderRadius: "50%",
+                background: "var(--danger)",
+              }}
+            />
+            Répondre
+          </button>
+        )}
+      </div>
+
+      {!answer && q.type === "rapport" && !pendingAnswers[index] && (
+        <>
+          <textarea
+            value={rapportText}
+            onChange={(e) => setRapportText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key !== "Enter") return;
+              e.preventDefault();
+              if (rapportText.trim() && !loadingGemini) handleSubmitRapport();
+            }}
+            rows={4}
+            placeholder="Écris ton compte-rendu en français..."
+            style={{ width: "100%", maxWidth: 320 }}
+            disabled={loadingGemini}
+          />
+          <VoicePrefill lang="fr" onChange={setRapportText} key={index} />
+          {!loadingGemini && (
+            <button
+              type="button"
+              className="speak-btn"
+              style={{
+                color: rapportText.trim() ? "var(--textMuted)" : "var(--textMuted)",
+                opacity: rapportText.trim() ? 1 : 0.4,
+                fontSize: "0.8em",
+              }}
+              disabled={!rapportText.trim()}
+              onClick={handleSubmitRapport}
+            >
+              Envoyer
+            </button>
+          )}
+        </>
+      )}
+
+      {!answer && pendingAnswers[index] && (
+        <p className="muted" style={{ fontStyle: "italic", fontSize: "0.8em" }}>
+          Réponse enregistrée — sera évaluée à la fin de l'examen.{" "}
+          <button
+            type="button"
+            className="link-btn"
+            style={{ fontSize: "1em", fontStyle: "italic" }}
+            onClick={() => {
+              setPendingAnswers((prev) => {
+                const next = { ...prev };
+                delete next[index];
+                return next;
+              });
+            }}
+          >
+            Modifier
+          </button>
+        </p>
+      )}
+
+      {!answer && q.type !== "rapport" && !pendingAnswers[index] && (
+        <>
           {isRecording && (
             <button type="button" className="link-btn" onClick={stopRecording}>
               ⏹️ Arrêter
             </button>
           )}
           {isConverting && <p className="muted">Traitement de l'enregistrement...</p>}
-          {audioBlob && !isRecording && (
+          {audioBlob && !isRecording && !loadingGemini && (
             <>
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <audio controls src={URL.createObjectURL(audioBlob)} />
+              <audio controls src={audioUrl} />
               <div style={{ display: "flex", gap: 12 }}>
-                <button type="button" className="link-btn" onClick={() => setAudioBlob(null)}>
+                <button
+                  type="button"
+                  className="speak-btn"
+                  style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
+                  onClick={() => setAudioBlob(null)}
+                >
                   Recommencer
                 </button>
                 <button
                   type="button"
-                  className="link-btn"
-                  disabled={loadingGemini}
+                  className="speak-btn"
+                  style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
                   onClick={handleSubmit}
                 >
-                  {loadingGemini ? "Envoi..." : "Envoyer"}
+                  Envoyer
                 </button>
               </div>
             </>
           )}
-          {geminiError && (
-            <p className="muted" style={{ color: "var(--danger)" }}>
-              {geminiError}
-            </p>
-          )}
         </>
       )}
 
-      {geminiResult && (
+      {answer && q.type === "rapport" && (
         <>
-          <p className="muted hebrew">Verbatim : {geminiResult.verbatim}</p>
-          <p className="muted hebrew">Solution possible : {geminiResult.solution}</p>
-          <p>Structure/complétude : {geminiResult.rating_completeness} / 5</p>
-          <p>Hébreu (grammaire/orthographe) : {geminiResult.rating_hebrew} / 5</p>
-          <ul className="words-list">
-            {geminiResult.errors_rating_hebrew.map((e, i) => (
-              <li key={i}>{e}</li>
-            ))}
-          </ul>
-          <p>Compréhension : {geminiResult.rating_comprehension} / 5</p>
-          <ul className="words-list">
-            {geminiResult.errors_rating_comprehension.map((e, i) => (
-              <li key={i}>{e}</li>
-            ))}
-          </ul>
-          <button type="button" className="link-btn" onClick={handleNext}>
-            Question suivante
-          </button>
+          <p style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
+            <span style={{ color: "var(--text)" }}>Rapport de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.rapport}</span>
+          </p>
+
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+
+          <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+            <tbody>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>Résumé</td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={answer.score_summary} />
+                </td>
+              </tr>
+              {answer.justification_summary.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {answer.justification_summary.map((e, i) => (
+                        <li key={i}>{e}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>Détails</td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={answer.score_details} />
+                </td>
+              </tr>
+              {answer.justification_details.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {answer.justification_details.map((e, i) => (
+                        <li key={i}>{e}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ padding: "8px 0", border: "1px solid transparent" }}>
+                  <hr
+                    style={{
+                      width: "100%",
+                      border: "none",
+                      borderTop: "1px solid var(--border)",
+                      margin: 0,
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Note Globale
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={Math.round(reportNote.average)} />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colSpan={2}
+                  style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                >
+                  <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontSize: "0.75em" }}>
+                    <li style={{ color: "var(--text)" }}>
+                      {reportNote.comment}{" "}
+                      <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>
+                        La note Résumé compte deux fois plus que la note Détails dans le calcul de la note globale.
+                      </span>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {answer && q.type !== "rapport" && (
+        <>
+          <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
+            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.verbatim}</span>
+          </p>
+
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+
+          <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+            <tbody>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Complétude
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={answer.rating_completeness} />
+                </td>
+              </tr>
+              {answer.errors_rating_completeness?.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {answer.errors_rating_completeness.map((e, i) => (
+                        <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Grammaire
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={answer.rating_hebrew} />
+                </td>
+              </tr>
+              {answer.errors_rating_hebrew.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {answer.errors_rating_hebrew.map((e, i) => (
+                        <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Compréhension
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={answer.rating_comprehension} />
+                </td>
+              </tr>
+              {answer.errors_rating_comprehension.length > 0 && (
+                <tr>
+                  <td
+                    colSpan={2}
+                    style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                  >
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingInlineStart: "1.2em",
+                        fontStyle: "italic",
+                        fontSize: "0.85em",
+                        color: "var(--textMuted)",
+                      }}
+                    >
+                      {answer.errors_rating_comprehension.map((e, i) => (
+                        <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ padding: "8px 0", border: "1px solid transparent" }}>
+                  <hr
+                    style={{
+                      width: "100%",
+                      border: "none",
+                      borderTop: "1px solid var(--border)",
+                      margin: 0,
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                  Note Globale
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                  <StarRating rating={Math.round(globalNote.average)} />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colSpan={2}
+                  style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                >
+                  <ul
+                    style={{
+                      margin: 0,
+                      paddingInlineStart: "1.2em",
+                      fontStyle: "italic",
+                      fontSize: "0.85em",
+                      color: "var(--textMuted)",
+                    }}
+                  >
+                    <li>{capitalize(globalNote.comment)}</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
         </>
       )}
     </section>

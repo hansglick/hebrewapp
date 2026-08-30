@@ -1,0 +1,402 @@
+{
+    "29": {
+        "index": 29,
+        "litteral": "Pourquoi l'ordinateur portable a-t-il commencé à courir en hurlant ? Parce qu'il a vu une souris sans fil.",
+        "sens": "Le jeu de mots repose sur le mot \"עכבר\" (akhbar) qui désigne à la fois l'animal (la souris) et le périphérique informatique (la souris d'ordinateur). L'ordinateur portable réagit avec la même phobie qu'un humain face à un rongeur, bien qu'il s'agisse ici d'une souris \"sans fil\" (אלחוטי).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a scared laptop running away from a wireless computer mouse, with the Hebrew word \"עכבר\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "למה המחשב הנייד התחיל לרוץ בצרחות? כי הוא ראה עכבר אלחוטי.",
+        "imagepath": "results/jokes/images/joke_image_29.png"
+    },
+    "30": {
+        "index": 30,
+        "litteral": "Pourquoi le numérateur et le dénominateur se disputent-ils toujours ? Parce qu'ils sont divisés dans leur opinion.",
+        "sens": "L'humour vient de l'expression \"חלוקים בדעתם\" (khalukim beda'atam) qui signifie \"être en désaccord\" ou \"avoir des opinions divergentes\". Le mot \"חלוקים\" vient de la racine ח-ל-ק qui signifie \"diviser\" ou \"partager\". C'est un clin d'œil mathématique parfait pour le numérateur (מונה) et le dénominateur (מכנה) qui sont littéralement séparés par une ligne de division.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a math fraction with a numerator and denominator arguing, with the Hebrew word \"חלוקים\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "למה המונה והמכנה תמיד מתווכחים? כי הם חלוקים בדעתם.",
+        "imagepath": "results/jokes/images/joke_image_30.png"
+    },
+    "31": {
+        "index": 31,
+        "litteral": "Pourquoi l'écran n'a-t-il jamais peur dans le noir ? Parce qu'il a un garde d'écran.",
+        "sens": "La blague joue sur le terme informatique \"שומר מסך\" (shomer masakh) qui se traduit par \"économiseur d'écran\". Littéralement, \"שומר\" signifie \"gardien\" ou \"protecteur\". L'écran n'a donc pas peur de l'obscurité car il possède son propre garde du corps personnel.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a brave computer monitor in the dark protected by a security guard, with the Hebrew phrase \"שומר מסך\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "למה המסך אף פעם לא מפחד בחושך? כי יש לו שומר מסך.",
+        "imagepath": "results/jokes/images/joke_image_31.png"
+    },
+    "32": {
+        "index": 32,
+        "litteral": "Pourquoi le soleil est-il considéré comme la meilleure élève de la classe ? Parce qu'elle brille toujours.",
+        "sens": "Le verbe \"זורחת\" (zorakhat), de la racine ז-ר-ח, signifie \"briller\" ou \"se lever\" en parlant du soleil. En hébreu comme en français, le verbe briller est utilisé au sens figuré pour décrire une personne très intelligente ou excellente dans son domaine. Le soleil (qui est un nom féminin en hébreu) est donc la meilleure élève car elle \"brille\" au sens propre comme au sens figuré.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a smiling sun sitting at a school desk with an excellent grade, with the Hebrew word \"זורחת\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "למה השמש נחשבת לתלמידה הכי טובה בכיתה? כי היא תמיד זורחת.",
+        "imagepath": "results/jokes/images/joke_image_32.png"
+    },
+    "33": {
+        "index": 33,
+        "litteral": "Pourquoi le bouton de multiplication est-il le plus riche de la calculatrice ? Parce qu'il multiplie toujours les profits.",
+        "sens": "Le jeu de mots s'articule autour du verbe \"מכפיל\" (makhpil - multiplie) et du mot \"רווחים\" (revakhim). En hébreu, \"רווחים\" possède un double sens : il peut signifier \"profits / bénéfices\" dans un contexte financier, ou \"espaces\" dans un contexte typographique. Le bouton de multiplication est riche car il multiplie littéralement les bénéfices.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a multiplication sign button wearing a top hat and holding money, with the Hebrew word \"מכפיל\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "למה כפתור הכפל הוא הכי עשיר במחשבון? כי הוא תמיד מכפיל את הרווחים.",
+        "imagepath": "results/jokes/images/joke_image_33.png"
+    },
+    "34": {
+        "index": 34,
+        "litteral": "Que dit-on à une mouche qui se marie ? Mazel zvouv !",
+        "sens": "Il s'agit d'une parodie phonétique de la célèbre expression de félicitations \"מזל טוב\" (Mazel Tov - Bonne chance). Le mot \"טוב\" (tov - bon) est remplacé par le mot \"זבוב\" (zvouv - mouche) qui rime parfaitement avec lui, créant ainsi une formule de vœux absurde et amusante pour des insectes.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing two flies getting married under a traditional canopy, with the Hebrew phrase \"מזל זבוב\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "מה אומרים לזבוב שמתחתן? מזל זבוב!",
+        "imagepath": "results/jokes/images/joke_image_34.png"
+    },
+    "35": {
+        "index": 35,
+        "litteral": "Qu'a dit la mer à la plage avant de partir ? Je reviens tout de suite, je fais juste une vague.",
+        "sens": "La blague utilise l'expression \"עושה גל\" (oseh gal - fait une vague). C'est une substitution humoristique à des expressions humaines courantes comme \"עושה סיבוב\" (faire un tour) ou \"לעשות שלום\" (faire un signe de la main). La mer, personnifiée, explique son mouvement de va-et-vient sur la plage en disant qu'elle va simplement \"faire une vague\".",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing the sea waving goodbye to the sandy beach, with the Hebrew word \"גל\" written. Do not include any text in any language other than Hebrew.",
+        "blague": "מה הים אמר לחוף לפני שהוא הלך? אני תיכף אשוב, אני רק עושה גל.",
+        "imagepath": "results/jokes/images/joke_image_35.png"
+    },
+    "36": {
+        "index": 36,
+        "litteral": "Pourquoi le foie ne comprend-il jamais les comédies ? Parce qu'il a un sens de l'humour lourd.",
+        "sens": "Le jeu de mots repose sur le mot 'כבד' (kaved). En tant que nom, il signifie 'foie' (l'organe). En tant qu'adjectif, il signifie 'lourd'. L'expression 'חוש הומור כבד' (un sens de l'humour lourd) signifie avoir un humour difficile ou ne pas comprendre les blagues, ce qui personnifie le foie de manière humoristique.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a confused liver character watching a comedy show, featuring the text \"כבד\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "למה הכבד אף פעם לא מבין קומדיות? כי יש לו חוש הומור כבד.",
+        "imagepath": "results/jokes/images/joke_image_36.png"
+    },
+    "37": {
+        "index": 37,
+        "litteral": "Qu'a dit le crayon à la gomme à la fin de l'année ? Arrête de m'effacer le passé.",
+        "sens": "Le jeu de mots joue sur la double signification de 'למחוק את העבר' (effacer le passé). Littéralement, la gomme efface ce que le crayon a écrit dans le passé. Métaphoriquement, cela signifie faire table rase ou oublier son histoire.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a pencil talking to an eraser that is erasing a trail of writing, featuring the text \"העבר\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "מה אמר העיפרון למחק בסוף השנה? תפסיק למחוק לי את העבר.",
+        "imagepath": "results/jokes/images/joke_image_37.png"
+    },
+    "38": {
+        "index": 38,
+        "litteral": "Comment appelle-t-on un oiseau qui joue à cache-cache toute la journée ? Un coucou.",
+        "sens": "Le jeu de mots repose sur le nom de l'oiseau 'קוקייה' (koukiya, le coucou) et le son 'קוקו' (koukou) qui est l'équivalent en hébreu du 'coucou' (peek-a-boo) que l'on dit en jouant à cache-cache avec les enfants.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a cuckoo bird playing hide and seek behind a tree, featuring the text \"קוקייה\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "איך קוראים לציפור שמשחקת במחבואים כל היום? קוקייה.",
+        "imagepath": "results/jokes/images/joke_image_38.png"
+    },
+    "39": {
+        "index": 39,
+        "litteral": "Pourquoi le réveil est-il allé se coucher tôt ? Parce qu'il était trop tendu.",
+        "sens": "Le mot 'מתוח' (matouakh) a un double sens. Il signifie 'tendu' ou 'stressé' pour une personne, mais il signifie aussi 'remonté' (comme le mécanisme à ressort d'une horloge ou d'un réveil mécanique).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a stressed and tightly wound mechanical alarm clock going to bed, featuring the text \"מתוח\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "למה השעון המעורר הלך לישון מוקדם? כי הוא היה מתוח מדי.",
+        "imagepath": "results/jokes/images/joke_image_39.png"
+    },
+    "40": {
+        "index": 40,
+        "litteral": "Quelle pâtisserie est la plus bavarde ? La pita, car tout est ouvert chez elle.",
+        "sens": "Le jeu de mots repose sur la racine פ-ת-ח (P-T-Kh) qui donne le mot 'פתוח' (patouakh, ouvert). Une pita a une 'poche' ouverte. L'expression 'הכל פתוח' (tout est ouvert) ou être ouvert signifie aussi être très bavard ou extraverti. Il y a aussi une ressemblance phonétique entre 'פיתה' (pita) et 'פתוח' (patouakh).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a talking pita bread with an open pocket, featuring the text \"פתוח\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "איזה מאפה הכי פטפטן? פיתה, כי הכל אצלה פתוח.",
+        "imagepath": "results/jokes/images/joke_image_40.png"
+    },
+    "41": {
+        "index": 41,
+        "litteral": "Quand les mathématiciens mangent-ils leur dessert ? À la fin du compte.",
+        "sens": "Le mot 'חשבון' (kheshbon) signifie à la fois 'l'addition' (au restaurant) et 'l'arithmétique' ou 'le calcul' (en mathématiques). Les mathématiciens mangent donc leur dessert à la fin du 'calcul' ou de 'l'addition'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a mathematician eating dessert next to a restaurant bill and math equations, featuring the text \"חשבון\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "מתי מתמטיקאים אוכלים את הקינוח שלהם? בסוף החשבון.",
+        "imagepath": "results/jokes/images/joke_image_41.png"
+    },
+    "42": {
+        "index": 42,
+        "litteral": "Pourquoi le coq a-t-il étudié l'économie à l'université ? Pour comprendre le marché.",
+        "sens": "Le mot 'שוק' (shouk / shok) est un homographe. Prononcé 'shouk', il signifie 'le marché' (l'économie). Prononcé 'shok', il signifie 'la cuisse' (souvent utilisé pour la cuisse de poulet, 'shok tarnegol'). Le coq étudie donc l'économie pour comprendre le marché ou la cuisse.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a rooster wearing glasses and reading an economics book about markets and chicken legs, featuring the text \"שוק\". Do not include any text in the image in any language other than Hebrew.",
+        "blague": "למה התרנגול למד כלכלה באוניברסיטה? כדי להבין את השוק.",
+        "imagepath": "results/jokes/images/joke_image_42.png"
+    },
+    "1": {
+        "index": 1,
+        "litteral": "Pourquoi le pain est-il allé chez le médecin ? Parce qu'il se sentait 'challah' (malade).",
+        "sens": "Le jeu de mots repose sur l'homophonie et le double sens. Le mot 'חלה' (challah) désigne le pain traditionnel juif du Shabbat. Cependant, 'חלה' (chala) est aussi la forme féminine du verbe 'être malade' ou l'adjectif 'malade' au féminin. L'expression 'הרגיש חולה' signifie 'se sentir malade'. Ici, le pain se sent 'חלה' (challah / malade).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a loaf of bread in a doctor office looking sick. The image must include the Hebrew text \"חלה\" and absolutely no text in any other language.",
+        "blague": "למה הלחם הלך לרופא? כי הוא הרגיש חלה.",
+        "imagepath": "results/jokes/images/joke_image_01.png"
+    },
+    "2": {
+        "index": 2,
+        "litteral": "Comment appelle-t-on une vache qui travaille aux urgences médicales ? Para-medic (Vache-médic).",
+        "sens": "Ce jeu de mots bilingue utilise le mot hébreu pour vache, 'פרה' (para). En l'associant au suffixe international 'medic', on obtient 'פרה-מדיק' (paramedic), qui signifie ambulancier ou secouriste. C'est une blague très courante en hébreu moderne.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a cow wearing a paramedic uniform next to an ambulance. The image must include the Hebrew text \"פרה-מדיק\" and absolutely no text in any other language.",
+        "blague": "איך קוראים לפרה שעובדת ברפואת חירום? פרה-מדיק.",
+        "imagepath": "results/jokes/images/joke_image_02.png"
+    },
+    "3": {
+        "index": 3,
+        "litteral": "Pourquoi la lune n'a-t-elle jamais faim à la fin du mois ? Parce qu'elle est toujours pleine.",
+        "sens": "Le jeu de mots repose sur l'adjectif 'מלא' (male), qui signifie 'plein'. En hébreu, on utilise ce mot pour parler de la pleine lune ('ירח מלא') mais aussi pour exprimer la satiété après avoir mangé (être 'plein' ou rassasié).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a full moon rubbing its belly after a big meal. The image must include the Hebrew text \"מלא\" and absolutely no text in any other language.",
+        "blague": "למה הירח אף פעם לא רעב בסוף החודש? כי הוא תמיד מלא.",
+        "imagepath": "results/jokes/images/joke_image_03.png"
+    },
+    "4": {
+        "index": 4,
+        "litteral": "Pourquoi l'ordinateur a-t-il soudainement eu froid ? Parce que quelqu'un a laissé les Windows ouverts.",
+        "sens": "C'est un jeu de mots basé sur l'anglais intégré à l'hébreu. 'Windows' désigne le système d'exploitation de l'ordinateur, mais signifie littéralement 'fenêtres' (חלונות en hébreu). L'ordinateur a froid car ses 'fenêtres' sont restées ouvertes.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a shivering computer with open glass windows on its screen. The image must include the Hebrew text \"חלונות\" and absolutely no text in any other language.",
+        "blague": "למה למחשב נהיה קר פתאום? כי מישהו השאיר את ה-Windows פתוחים.",
+        "imagepath": "results/jokes/images/joke_image_04.png"
+    },
+    "5": {
+        "index": 5,
+        "litteral": "Pourquoi le train a-t-il décidé d'aller chez le psychologue ? Parce qu'il sentait qu'il descendait des rails.",
+        "sens": "L'expression idiomatique 'לרדת מהפסים' (laredet meha-pasim) signifie littéralement 'dérailler' ou 'descendre des rails', ce qui s'applique au sens propre à un train ('רכבת'). Au sens figuré, cette expression signifie 'devenir fou' ou 'perdre la tête', justifiant la visite chez le psychologue.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a train sitting on a psychologist couch. The image must include the Hebrew text \"יורדת מהפסים\" and absolutely no text in any other language.",
+        "blague": "למה הרכבת החליטה ללכת לפסיכולוג? כי היא הרגישה שהיא יורדת מהפסים.",
+        "imagepath": "results/jokes/images/joke_image_05.png"
+    },
+    "6": {
+        "index": 6,
+        "litteral": "Comment appelle-t-on une fourmi qui pose trop de questions ? Nemalama (Fourmi-pourquoi).",
+        "sens": "C'est un mot-valise. Le mot pour fourmi est 'נמלה' (nemala) et le mot pour 'pourquoi' est 'למה' (lama). En fusionnant les deux, on obtient 'נמלמה' (nemalama), une fourmi curieuse qui demande toujours 'pourquoi ?'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a curious ant with question marks around its head. The image must include the Hebrew text \"נמלמה\" and absolutely no text in any other language.",
+        "blague": "איך קוראים לנמלה ששואלת יותר מדי שאלות? נמלמה.",
+        "imagepath": "results/jokes/images/joke_image_06.png"
+    },
+    "7": {
+        "index": 7,
+        "litteral": "Qu'est-ce que l'arbre a dit à son ami quand ils se sont rencontrés ? Tout est tronc !",
+        "sens": "L'expression argotique israélienne 'גזעי' (giz'i) signifie 'cool' ou 'génial', dérivée du mot 'גזע' (geza) qui veut dire 'tronc d'arbre'. L'arbre fait un jeu de mots sur sa propre nature en disant 'הכל גזע' (hakol geza) pour signifier que tout va bien ou que tout est cool.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing two trees greeting each other happily. The image must include the Hebrew text \"הכל גזע\" and absolutely no text in any other language.",
+        "blague": "מה העץ אמר לחבר שלו כשהם נפגשו? הכל גזע!",
+        "imagepath": "results/jokes/images/joke_image_07.png"
+    },
+    "43": {
+        "index": 43,
+        "litteral": "Où les astronautes aiment-ils passer le vendredi soir ? Au bar-espace.",
+        "sens": "Le jeu de mots repose sur l'association de \"בר\" (bar ou pub) et \"חלל\" (espace). Un \"בר-חלל\" est littéralement un bar situé dans l'espace, ce qui correspond parfaitement au contexte des astronautes. C'est également un clin d'oeil humoristique à la traduction littérale de la touche de clavier \"barre d'espace\" (space bar en anglais).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing an astronaut sitting at a pub in outer space, with the words \"בר\" and \"חלל\" floating around.",
+        "blague": "איפה אסטרונאוטים אוהבים לבלות בשישי בערב? בבר-חלל.",
+        "imagepath": "results/jokes/images/joke_image_43.png"
+    },
+    "44": {
+        "index": 44,
+        "litteral": "Pourquoi le lit est-il toujours en colère le matin ? Parce que tout le monde se lève sur lui du côté gauche.",
+        "sens": "L'expression idiomatique \"לקום על צד שמאל\" signifie littéralement \"se lever du côté gauche\", ce qui est l'équivalent français de \"se lever du pied gauche\" (se réveiller de mauvaise humeur). La blague prend cette expression au pied de la lettre : le lit est en colère car les gens se lèvent physiquement sur son côté gauche.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing an angry bed while a person wakes up and steps out on the left side, with the phrase \"לקום על צד שמאל\" written nearby.",
+        "blague": "למה המיטה תמיד כועסת בבוקר? כי כולם קמים עליה על צד שמאל.",
+        "imagepath": "results/jokes/images/joke_image_44.png"
+    },
+    "45": {
+        "index": 45,
+        "litteral": "Qu'a dit la porte à la clé ? Tu réussis toujours à me faire tourner.",
+        "sens": "Le verbe \"לסובב\" signifie tourner. Au sens propre, la clé tourne physiquement dans la serrure de la porte. Au sens figuré, l'expression \"לסובב מישהו\" signifie manipuler, embobiner ou faire tourner quelqu'un en bourrique. La porte se plaint donc d'être manipulée par la clé.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a door talking to a key that is turning in its lock, with the word \"לסובב\" highlighted.",
+        "blague": "מה אמרה הדלת למפתח? אתה תמיד מצליח לסובב אותי.",
+        "imagepath": "results/jokes/images/joke_image_45.png"
+    },
+    "46": {
+        "index": 46,
+        "litteral": "Pourquoi la planète Terre tourne-t-elle tout le temps ? Parce qu'elle cherche encore une place de parking à Tel Aviv.",
+        "sens": "Le verbe \"להסתובב\" signifie tourner sur soi-même (comme la Terre sur son axe), mais il est aussi couramment utilisé dans le langage familier pour dire \"tourner en rond\" ou \"chercher\" (comme chercher une place de parking). La blague joue sur cette double signification et sur la difficulté bien connue de se garer dans la ville de Tel Aviv.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing the planet Earth driving a car and sweating while looking for a parking spot, with the word \"מסתובב\" floating above.",
+        "blague": "למה כדור הארץ כל הזמן מסתובב? כי הוא עדיין מחפש חניה בתל אביב.",
+        "imagepath": "results/jokes/images/joke_image_46.png"
+    },
+    "47": {
+        "index": 47,
+        "litteral": "Qu'a dit le feu de circulation à la voiture ? Ne me regarde pas, je suis en train de changer de couleurs.",
+        "sens": "L'expression \"להחליף צבעים\" signifie littéralement \"changer de couleurs\", ce que fait un feu tricolore. Au sens figuré, cela signifie rougir de honte, pâlir ou être très gêné. Le feu agit donc comme s'il était en train de se déshabiller et demande de l'intimité à la voiture.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a shy traffic light covering its face from a car, with the phrase \"מחליף צבעים\" written next to it.",
+        "blague": "מה אמר הרמזור למכונית? אל תסתכלי עליי, אני בדיוק מחליף צבעים.",
+        "imagepath": "results/jokes/images/joke_image_47.png"
+    },
+    "48": {
+        "index": 48,
+        "litteral": "Pourquoi l'aveugle semble-t-il toujours pessimiste ? Parce qu'il voit toujours des choses noires.",
+        "sens": "L'expression \"לראות שחורות\" (voir des choses noires) est une métaphore courante en hébreu pour désigner le pessimisme, l'équivalent de \"broyer du noir\" en français. Pour une personne aveugle, cette expression devient littérale puisqu'elle est plongée dans l'obscurité.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a blind person with a cane and dark glasses, with a thought bubble filled with black color, and the phrase \"רואה שחורות\" written inside.",
+        "blague": "למה העיוור תמיד נשמע פסימי? כי הוא תמיד רואה שחורות.",
+        "imagepath": "results/jokes/images/joke_image_48.png"
+    },
+    "49": {
+        "index": 49,
+        "litteral": "Pourquoi le poisson a-t-il refusé de témoigner à la police ? Parce qu'il a décidé de se remplir la bouche d'eau.",
+        "sens": "L'expression \"למלא פיו מים\" (se remplir la bouche d'eau) est une expression idiomatique signifiant garder le silence, refuser de parler ou de témoigner. Pour un poisson qui vit dans l'eau, c'est une réalité physique constante, ce qui crée l'effet comique lors d'un interrogatoire de police.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a fish in an interrogation room with its mouth full of water, refusing to speak to a police officer, with the phrase \"למלא פיו מים\" displayed.",
+        "blague": "למה הדג סירב לתת עדות במשטרה? כי הוא החליט למלא פיו מים.",
+        "imagepath": "results/jokes/images/joke_image_49.png"
+    },
+    "50": {
+        "index": 50,
+        "litteral": "Pourquoi le savon reste-t-il toujours calme dans les situations de pression ? Parce qu'il prend tout en mousse.",
+        "sens": "Cette blague repose sur un jeu de mots. Pour dire 'prendre les choses avec calme', on dirait normalement 'לקחת הכל בקלות' (prendre tout facilement) ou 'לקחת הכל בקצב' (prendre tout à son rythme). Ici, le mot est remplacé par 'בקצף' (beketseph, en mousse), qui crée une sonorité amusante et un lien direct avec le savon (סבון, sabon). Sous la pression (לחץ, lahats), au lieu de stresser, le savon produit naturellement de la mousse (קצף, ketseph).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a calm and smiling bar of soap surrounded by bubbles and foam. The image must include the Hebrew words \"סבון\" and \"קצף\" written clearly. Do not include any text in any other language.",
+        "blague": "למה הסבון תמיד נשאר רגוע במצבי לחץ? כי הוא לוקח הכל בקצף.",
+        "imagepath": "results/jokes/images/joke_image_50.png"
+    },
+    "22": {
+        "index": 22,
+        "litteral": "Pourquoi le cercle ne voulait-il pas s'asseoir à côté du triangle ? Parce qu'il pensait qu'il était très carré.",
+        "sens": "Le jeu de mots repose sur le mot 'מרובע' (merouba). Au sens propre, il désigne la forme géométrique 'carré'. En argot, tout comme en français, il signifie 'coincé', 'conservateur' ou 'ennuyeux'. Le cercle trouve donc le triangle trop 'carré'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a circle looking suspiciously at a triangle, with the Hebrew word \"מרובע\" written above the triangle.",
+        "blague": "למה העיגול לא רצה לשבת ליד המשולש? כי הוא חשב שהוא נורא מרובע.",
+        "imagepath": "results/jokes/images/joke_image_22.png"
+    },
+    "23": {
+        "index": 23,
+        "litteral": "Quel genre de poisson est le plus adapté pour travailler dans une menuiserie ? Le poisson-marteau.",
+        "sens": "La blague joue sur le nom du requin-marteau en hébreu, 'דג פטיש' (dag patish), qui se traduit littéralement par 'poisson-marteau'. Le mot 'פטיש' (patish) signifiant 'marteau', c'est l'outil parfait pour travailler dans une menuiserie.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a hammerhead shark working in a carpentry shop, holding a hammer, with the Hebrew words \"דג פטיש\" written next to it.",
+        "blague": "איזה סוג של דג הכי מתאים לעבוד בנגריה? דג פטיש.",
+        "imagepath": "results/jokes/images/joke_image_23.png"
+    },
+    "24": {
+        "index": 24,
+        "litteral": "Pourquoi l'avocat est-il arrivé au tribunal avec un sac à dos ? Parce qu'il voulait fermer le dossier.",
+        "sens": "Le double sens repose sur le mot 'תיק' (tik). En hébreu courant, il signifie 'sac'. Dans le jargon juridique, il signifie 'dossier' ou 'affaire'. L'expression 'לסגור את התיק' (lisgor et ha-tik) signifie donc à la fois 'fermer le sac' et 'clore l'affaire'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a lawyer in a courtroom closing a backpack, with the Hebrew word \"תיק\" written on the backpack.",
+        "blague": "למה עורך הדין הגיע לבית המשפט עם תרמיל? כי הוא רצה לסגור את התיק.",
+        "imagepath": "results/jokes/images/joke_image_24.png"
+    },
+    "25": {
+        "index": 25,
+        "litteral": "Comment appelle-t-on un serpent qui travaille dans une pharmacie ? Un phar-masserpent.",
+        "sens": "C'est un mot-valise. 'רוקח' (rokeach) signifie 'pharmacien' et 'נחש' (nachash) signifie 'serpent'. En combinant les deux, on obtient 'רוק-חש' (rok-chash), un pharmacien-serpent, jouant sur la sonorité de la fin du mot serpent.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a snake wearing a pharmacist coat and dispensing medicine, with the Hebrew word \"רוק-חש\" written on the pharmacy counter.",
+        "blague": "איך קוראים לנחש שעובד בבית מרקחת? רוק-חש.",
+        "imagepath": "results/jokes/images/joke_image_25.png"
+    },
+    "26": {
+        "index": 26,
+        "litteral": "Pourquoi ne peut-on pas faire confiance à la fenêtre pour garder un secret ? Parce qu'elle est toujours transparente avec tout le monde.",
+        "sens": "Le jeu de mots utilise l'adjectif 'שקוף' (shakouf). Au sens propre, il signifie 'transparent', ce qui est la nature d'une fenêtre. Au sens figuré, il signifie 'évident', 'prévisible' ou 'qui ne cache rien', rendant impossible la garde d'un secret.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a window with a face whispering to a person, with the Hebrew word \"שקוף\" written on the glass.",
+        "blague": "למה אי אפשר לסמוך על החלון שישמור סוד? כי הוא תמיד שקוף עם כולם.",
+        "imagepath": "results/jokes/images/joke_image_26.png"
+    },
+    "27": {
+        "index": 27,
+        "litteral": "Pourquoi la fraction simple ne voulait-elle pas aller à l'école ? Parce qu'elle se sentait brisée.",
+        "sens": "Le jeu de mots repose sur la racine ש-ב-ר (Sh-B-R). 'שבר' (shever) désigne une 'fraction' en mathématiques, mais signifie aussi 'cassure'. L'adjectif 'שבור' (shavur) signifie 'cassé' ou 'brisé' (physiquement ou émotionnellement). La fraction se sent donc 'brisée'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a sad mathematical fraction character, with the Hebrew word \"שבור\" written next to it.",
+        "blague": "למה השבר הפשוט לא רצה ללכת לבית הספר? כי הוא הרגיש שבור.",
+        "imagepath": "results/jokes/images/joke_image_27.png"
+    },
+    "28": {
+        "index": 28,
+        "litteral": "Quel point est le plus esthétique dans une phrase ? Le grain de beauté.",
+        "sens": "Le jeu de mots s'articule autour du mot 'נקודה' (nekouda), qui signifie 'point' (le signe de ponctuation). L'expression 'נקודת חן' (nekoudat chen) signifie littéralement 'point de grâce' et désigne un 'grain de beauté'. C'est donc le 'point' le plus esthétique.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a punctuation period at the end of a sentence looking beautiful with a mole on its face, with the Hebrew words \"נקודת חן\" written above it.",
+        "blague": "איזה נקודה היא הכי אסתטית במשפט? נקודת חן.",
+        "imagepath": "results/jokes/images/joke_image_28.png"
+    },
+    "8": {
+        "index": 8,
+        "litteral": "Pourquoi l'orange va-t-elle toujours se coucher tôt ? Parce qu'elle se lève pressée.",
+        "sens": "Le jeu de mots repose sur l'adjectif 'סחוט' (sakhut). Au sens propre, il signifie 'pressé' (comme pour un jus d'orange). Au sens figuré et en argot, il signifie 'épuisé' ou 'vidé' (comme quelqu'un de très fatigué).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing an exhausted orange sleeping in a bed, with a glass of orange juice next to it, featuring the Hebrew word \"סחוט\" and absolutely no other text.",
+        "blague": "למה התפוז תמיד הולך לישון מוקדם? כי הוא קם סחוט.",
+        "imagepath": "results/jokes/images/joke_image_08.png"
+    },
+    "9": {
+        "index": 9,
+        "litteral": "Quel chien regarde toujours le côté positif de la vie ? Un chien guide.",
+        "sens": "Le jeu de mots joue sur l'expression 'כלב נחיה' (kelev nechiya) qui signifie 'chien guide'. Le mot 'נחיה' (nechiya, guidage) s'écrit exactement comme 'נחיה' (nichye), qui est le verbe 'vivre' à la première personne du pluriel au futur ('nous vivrons'). Cela donne une connotation très optimiste ('le chien du nous vivrons').",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a happy dog wearing a guide dog harness, looking at a bright sun, featuring the Hebrew word \"נחיה\" and absolutely no other text.",
+        "blague": "איזה כלב תמיד מסתכל על הצד החיובי של החיים? כלב נחיה.",
+        "imagepath": "results/jokes/images/joke_image_09.png"
+    },
+    "10": {
+        "index": 10,
+        "litteral": "Pourquoi les policiers aiment-ils travailler dans le jardin ? Pour attraper les mauvaises herbes.",
+        "sens": "L'expression 'עשבים שוטים' (asavim shotim) signifie littéralement 'mauvaises herbes'. En hébreu, cette même expression est utilisée métaphoriquement pour désigner les 'brebis galeuses' ou les criminels au sein d'une société. Les policiers attrapent donc ces 'mauvaises herbes' au sens propre comme au sens figuré.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a police officer in a garden pulling out a weed with handcuffs on it, featuring the Hebrew words \"עשבים שוטים\" and absolutely no other text.",
+        "blague": "למה שוטרים אוהבים לעבוד בגינה? כדי לתפוס את העשבים השוטים.",
+        "imagepath": "results/jokes/images/joke_image_10.png"
+    },
+    "11": {
+        "index": 11,
+        "litteral": "Quand le téléphone portable a-t-il enfin compris la blague ? Quand il a eu du réseau.",
+        "sens": "Le mot clé est 'קליטה' (klita). Dans le contexte technologique, il désigne la 'réception' ou le 'réseau' (pour un téléphone). Dans le contexte cognitif, il désigne la 'compréhension' ou la capacité à 'capter' une information ou une blague.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a smartphone laughing with full signal bars above it, featuring the Hebrew word \"קליטה\" and absolutely no other text.",
+        "blague": "מתי הטלפון הנייד סוף סוף הבין את הבדיחה? כשהייתה לו קליטה.",
+        "imagepath": "results/jokes/images/joke_image_11.png"
+    },
+    "12": {
+        "index": 12,
+        "litteral": "Quel type de banque est le plus populaire parmi les vampires ? La banque du sang.",
+        "sens": "Le jeu de mots est simple et repose sur le double sens du mot 'בנק' (bank). Il désigne à la fois une institution financière classique et une 'banque du sang' ('בנק הדם' - bank hadam) où l'on stocke le sang pour les transfusions, ce qui attire évidemment les vampires.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a friendly vampire standing next to a bank building that has a blood drop logo, featuring the Hebrew words \"בנק הדם\" and absolutely no other text.",
+        "blague": "איזה סוג של בנק הכי פופולרי בקרב ערפדים? בנק הדם.",
+        "imagepath": "results/jokes/images/joke_image_12.png"
+    },
+    "13": {
+        "index": 13,
+        "litteral": "Pourquoi la pistache s'est-elle tue lors de l'interrogatoire de police ? Parce que c'est une noix dure à craquer.",
+        "sens": "L'expression 'אגוז קשה לפיצוח' (egoz kashe lefitzuach) se traduit littéralement par 'une noix dure à craquer'. Comme en français, c'est une expression idiomatique qui désigne une personne difficile à faire parler ou un problème difficile à résoudre. La pistache étant une noix, le sens propre et le sens figuré se rejoignent parfaitement.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a tough-looking pistachio nut sitting in an interrogation room under a lamp, featuring the Hebrew words \"אגוז קשה לפיצוח\" and absolutely no other text.",
+        "blague": "למה הפיסטוק שתק בחקירת המשטרה? כי הוא אגוז קשה לפיצוח.",
+        "imagepath": "results/jokes/images/joke_image_13.png"
+    },
+    "14": {
+        "index": 14,
+        "litteral": "Quel sport est particulièrement aimé par les livres à la bibliothèque ? Le Karaté.",
+        "sens": "Le jeu de mots est phonétique et visuel. Le mot 'קרא-טה' (Karaté) est découpé pour faire apparaître la racine 'קרא' (kara), qui signifie 'lire' ou 'il a lu' en hébreu. Ainsi, le Karaté devient humoristiquement le sport de la lecture.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a book wearing a martial arts black belt and doing a karate kick, featuring the Hebrew word \"קרא-טה\" and absolutely no other text.",
+        "blague": "איזה ספורט אהוב במיוחד על ספרים בספרייה? קרא-טה.",
+        "imagepath": "results/jokes/images/joke_image_14.png"
+    },
+    "15": {
+        "index": 15,
+        "litteral": "Comment les oiseaux contournent-ils le système à la clinique ? Ils se poussent simplement dans la file d'attente.",
+        "sens": "Le jeu de mots repose sur le mot 'תור' (tor). En hébreu, ce mot signifie à la fois 'file d'attente' et 'tourterelle' (un type d'oiseau). L'expression 'נדחפות בתור' signifie 'se bousculer dans la file', mais peut être comprise littéralement comme 'se bousculer dans une tourterelle', ce qui crée l'effet comique avec les oiseaux.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing birds waiting in a line at a medical clinic and pushing each other, featuring the Hebrew text \"תור\" in a speech bubble, and absolutely no other text or letters in any other language.",
+        "blague": "איך ציפורים עוקפות את המערכת בקופת חולים? הן פשוט נדחפות בתור.",
+        "imagepath": "results/jokes/images/joke_image_15.png"
+    },
+    "16": {
+        "index": 16,
+        "litteral": "Pourquoi la tomate a-t-elle rougi dans le réfrigérateur ? Parce qu'elle a vu la sauce salade s'habiller.",
+        "sens": "Cette blague joue sur le mot 'מתלבש' (mitlabesh) qui signifie 's'habille'. C'est un clin d'œil à l'anglais où la sauce salade se dit 'salad dressing' (dressing signifiant aussi s'habiller). La tomate rougit de gêne car elle voit la sauce 's'habiller'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a blushing red tomato inside a fridge looking at a bottle of salad dressing that is putting on clothes, featuring the Hebrew text \"מתלבש\" next to it, and absolutely no other text or letters in any other language.",
+        "blague": "למה העגבנייה הסמיקה במקרר? כי היא ראתה את רוטב הסלט מתלבש.",
+        "imagepath": "results/jokes/images/joke_image_16.png"
+    },
+    "17": {
+        "index": 17,
+        "litteral": "Que dit une abeille à une autre quand il y a un problème ? Ne cherchons pas le dard.",
+        "sens": "Le jeu de mots utilise le terme 'עוקץ' (okets), qui désigne littéralement le 'dard' d'un insecte. En argot hébreu, 'עוקץ' signifie également 'une arnaque' ou 'le piège'. Ainsi, 'chercher le dard' signifie chercher l'arnaque, ce qui prend un sens littéral très drôle quand ce sont des abeilles qui parlent.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing two bees talking to each other with a concerned look, pointing to a stinger, featuring the Hebrew text \"עוקץ\" floating in the air, and absolutely no other text or letters in any other language.",
+        "blague": "מה דבורה אחת אומרת לשנייה כשיש בעיה? בואי לא נחפש את העוקץ.",
+        "imagepath": "results/jokes/images/joke_image_17.png"
+    },
+    "18": {
+        "index": 18,
+        "litteral": "Pourquoi est-il impossible d'avoir une dispute logique avec un pilote ? Parce qu'il vole toujours sur lui-même.",
+        "sens": "L'expression argotique 'עף על עצמו' (af al atzmo) se traduit littéralement par 'vole sur lui-même', mais elle est couramment utilisée pour décrire quelqu'un de très arrogant. Le jeu de mots fonctionne parfaitement avec un 'טייס' (pilote), dont le métier est justement de voler ('עף').",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing an arrogant pilot in uniform flying in the sky with his nose in the air, featuring the Hebrew text \"עף על עצמו\" in a thought bubble, and absolutely no other text or letters in any other language.",
+        "blague": "למה אי אפשר לנהל ויכוח הגיוני עם טייס? כי הוא תמיד עף על עצמו.",
+        "imagepath": "results/jokes/images/joke_image_18.png"
+    },
+    "19": {
+        "index": 19,
+        "litteral": "Quel organe du corps humain est le meilleur comédien ? La rate, car elle déchire tout simplement.",
+        "sens": "Le mot 'קורע' (korea) signifie littéralement 'déchire'. En argot, il est utilisé pour dire 'hilarant'. L'expression hébraïque 'לקרוע את הטחול' (déchirer la rate) est l'équivalent de 'se dilater la rate' en français, signifiant rire aux éclats. La rate ('טחול') est donc l'organe le plus 'déchirant' (hilarant).",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a human spleen holding a microphone like a stand-up comedian and laughing, featuring the Hebrew text \"קורע\" written next to it, and absolutely no other text or letters in any other language.",
+        "blague": "איזה איבר בגוף האדם הוא הקומיקאי הכי טוב? הטחול, כי הוא פשוט קורע.",
+        "imagepath": "results/jokes/images/joke_image_19.png"
+    },
+    "20": {
+        "index": 20,
+        "litteral": "Pourquoi le clavier boit-il autant de café ? Parce qu'il travaille en horaires de shift.",
+        "sens": "Le mot 'משמרות' (mishmarot) signifie 'équipes' ou 'quarts de travail'. Le mot 'שיפט' (shift) est un emprunt à l'anglais utilisé en hébreu pour désigner un quart de travail. C'est aussi le nom de la touche 'Maj' (Shift) sur un clavier d'ordinateur. Le clavier est donc fatigué car il fait des 'shifts'.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a computer keyboard drinking a cup of coffee with tired eyes, featuring the Hebrew text \"שיפט\" written on one of the keys, and absolutely no other text or letters in any other language.",
+        "blague": "למה המקלדת שותה כל כך הרבה קפה? כי היא עובדת במשמרות שיפט.",
+        "imagepath": "results/jokes/images/joke_image_20.png"
+    },
+    "21": {
+        "index": 21,
+        "litteral": "Quel véhicule a été inventé spécialement pour les chats ? Le chat-moteur.",
+        "sens": "C'est un mot-valise. Le mot 'חתולנוע' (khatul-noa) est la fusion de 'חתול' (khatul - chat) et de 'קטנוע' (katnoa - scooter) ou du suffixe '-נוע' (-noa - mobile/moteur). Cela crée un nouveau véhicule imaginaire : le scooter pour chat.",
+        "prompt": "A clean, flat vector art illustration in a simple educational style, showing a cute cat riding a motorized scooter, featuring the Hebrew text \"חתולנוע\" written on the side of the scooter, and absolutely no other text or letters in any other language.",
+        "blague": "איזה כלי רכב הומצא במיוחד בשביל חתולים? חתולנוע.",
+        "imagepath": "results/jokes/images/joke_image_21.png"
+    }
+}

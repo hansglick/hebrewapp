@@ -1,0 +1,21 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "score_summary": {
+            "type": "int",
+            "description": "Score entre 1 et 5 qui juge si le sens global du texte a bien été capturé par l'étudiant. Si tu estimes que son rapport résume le texte correctement, alors mets lui 5."
+        },
+        "justification_summary": {
+            "type": "list[str]",
+            "description": "(en langue française) La liste des remarques ou observations qui justifient le score 'summary' "
+        },        
+        "score_details": {
+            "type": "int",
+            "description": "Score entre 1 et 5 qui juge du niveau de détails que l'étudiant a réussi à rapporter. Si tous les détails sont présents, alors mets lui 5."
+        },
+        "jsuification_details": {
+            "type": "list[str]",
+            "description": "(en langue française) La liste des remarques ou observations qui justifient le score 'details' "
+        }
+    }
+}

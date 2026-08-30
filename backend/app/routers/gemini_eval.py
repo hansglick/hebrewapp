@@ -1,15 +1,19 @@
-import random
+import asyncio
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
 from google.genai.errors import APIError
+from openai import APIError as OpenAIAPIError
 
-from app.data_loader import get_dataset
+from app.data_loader import add_chanson, get_dataset
 from app.database import DEFAULT_USER_ID, get_connection
-from app.difficulty import compute_combo_difficulties, stratified_pick
-from app.gemini import evaluate_oral, evaluate_translation
+from app.difficulty import compute_combo_difficulties, pick_sequential, weighted_pick
+from app.gemini import evaluate_oral, evaluate_report, evaluate_translation, extract_lyrics
+from app.openai_client import DICTIONNAIRE_PROMPT_FR, extract_verbatim
+from app.lesson_order import recency_weights
 from app.text_questions import questions_for_text
+from app.youtube import extraire_cle_youtube
 
 router = APIRouter(prefix="/api", tags=["gemini"])
 
@@ -59,8 +63,37 @@ def gemini_translation(payload: TranslationEvalRequest):
     return result
 
 
+class LyricsExtractRequest(BaseModel):
+    youtube_url: str
+
+
+@router.post("/chansons/extract")
+def extract_chanson(payload: LyricsExtractRequest):
+    key = extraire_cle_youtube(payload.youtube_url)
+    if key is None:
+        raise HTTPException(400, "Cette adresse ne ressemble pas à une URL YouTube valide.")
+
+    chansons = get_dataset("chanson")
+    existing_position = next((i for i, c in enumerate(chansons) if c.get("key") == key), None)
+    if existing_position is not None:
+        return {"position": existing_position, **chansons[existing_position]}
+
+    try:
+        videodata = extract_lyrics(payload.youtube_url, key)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
+    except (KeyError, ValueError, TypeError):
+        raise HTTPException(502, "Réponse de Gemini invalide, réessaie.")
+
+    add_chanson(videodata)
+    position = len(get_dataset("chanson")) - 1
+    return {"position": position, **videodata}
+
+
 @router.get("/questions-orales/random")
-def random_question_orale(lesson_code: str, mode: str = "exploration"):
+def random_question_orale(lesson_code: str, mode: str = "exploration", current: str | None = None):
     lessons = get_dataset("lesson")
     lesson = lessons.get(lesson_code)
     if lesson is None:
@@ -73,17 +106,31 @@ def random_question_orale(lesson_code: str, mode: str = "exploration"):
         own_pairs = questions_for_text(texts_data, own_code)
         if not own_pairs:
             raise HTTPException(404, "Aucune question orale disponible pour cette leçon")
-        text_code, q_index = random.choice(own_pairs)
+        current_pair = None
+        if current:
+            text_code_part, sep, index_part = current.rpartition("|")
+            if sep and index_part.isdigit():
+                current_pair = (text_code_part, int(index_part))
+        text_code, q_index = pick_sequential(own_pairs, current_pair)
+        draw_pool = None
     else:
-        own_code = lesson.get("text") or ""
-        own_keys = [f"{tc}|{i}" for tc, i in questions_for_text(texts_data, own_code)]
-
-        cumulative_keys = []
+        # `global_texts` liste des lesson_code (= text_code, même format),
+        # déjà cumulative (inclut lesson_code lui-même) : chaque question
+        # reçoit le poids de récence du texte auquel elle appartient.
+        weights_by_lesson = recency_weights(lesson_code)
+        recency_pool = {}
         for tc in lesson.get("global_texts", []):
-            cumulative_keys.extend(f"{tc}|{i}" for _, i in questions_for_text(texts_data, tc))
+            weight = weights_by_lesson.get(tc)
+            if weight is None:
+                continue
+            for _, i in questions_for_text(texts_data, tc):
+                recency_pool[f"{tc}|{i}"] = weight
 
-        difficulties = compute_combo_difficulties("oral")
-        picked = stratified_pick(own_keys, cumulative_keys, difficulties)
+        difficulty_pool = {
+            k: v for k, v in compute_combo_difficulties("oral").items() if k in recency_pool
+        }
+
+        picked, draw_pool = weighted_pick(difficulty_pool, recency_pool)
         if picked is None:
             raise HTTPException(404, "Aucune question orale disponible pour ce tirage")
         text_code, q_index_str = picked.rsplit("|", 1)
@@ -91,7 +138,7 @@ def random_question_orale(lesson_code: str, mode: str = "exploration"):
 
     text = texts_data[text_code]
     question = text["questions"][q_index]
-    return {
+    result = {
         "text_code": text_code,
         "question_index": q_index,
         "question_hebrew": question["hebrew"],
@@ -99,6 +146,12 @@ def random_question_orale(lesson_code: str, mode: str = "exploration"):
         "texte_hebrew": text["text"],
         "voicepath": text["voicepath"],
     }
+    if draw_pool is not None:
+        chapter, _, lesson_num = text_code.partition(".")
+        result["chapter"] = chapter
+        result["lesson"] = lesson_num
+        result["pool"] = draw_pool
+    return result
 
 
 @router.post("/gemini/oral")
@@ -116,7 +169,12 @@ async def gemini_oral(
     audio_bytes = await audio.read()
 
     try:
-        result = evaluate_oral(
+        # evaluate_oral() est bloquant (upload + polling + appel Gemini
+        # synchrones) : l'exécuter directement bloquerait toute la boucle
+        # asyncio pendant ~10-30s, empêchant même la requête GET
+        # /waiting-vids de la vidéo d'attente d'aboutir pendant ce temps.
+        result = await asyncio.to_thread(
+            evaluate_oral,
             question["hebrew"],
             text["text"],
             audio_bytes,
@@ -132,5 +190,46 @@ async def gemini_oral(
     )
     object_key = f"{text_code}|{question_index}"
     _record_evaluation("oral", object_key, aggregate_score)
+
+    return result
+
+
+@router.post("/gemini/verbatim")
+async def gemini_verbatim(
+    audio: UploadFile = File(...), lang: str = Form("he"), context: str | None = Form(None)
+):
+    audio_bytes = await audio.read()
+    prompt = DICTIONNAIRE_PROMPT_FR if context == "dictionnaire" and lang == "fr" else None
+
+    try:
+        result = await asyncio.to_thread(
+            extract_verbatim, audio_bytes, audio.content_type or "audio/wav", language=lang, prompt=prompt
+        )
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc))
+    except OpenAIAPIError as exc:
+        raise HTTPException(502, f"Erreur OpenAI : {exc}")
+
+    return result
+
+
+class ReportEvalRequest(BaseModel):
+    text_code: str
+    rapport: str
+
+
+@router.post("/gemini/rapport")
+def gemini_rapport(payload: ReportEvalRequest):
+    texts_data = get_dataset("text")
+    text = texts_data.get(payload.text_code)
+    if text is None:
+        raise HTTPException(404, "Texte introuvable")
+
+    try:
+        result = evaluate_report(payload.rapport, text["text"])
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
 
     return result

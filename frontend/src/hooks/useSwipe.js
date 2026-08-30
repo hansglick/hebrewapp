@@ -51,5 +51,11 @@ export function useSwipe({ onSwipeLeft, onSwipeRight, onSpace, threshold = 60 } 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onSwipeLeft, onSwipeRight, onSpace]);
 
-  return { onPointerDown };
+  // Reflète quelles actions sont câblées sur cet écran, pour afficher un
+  // indicateur discret (ActionHints) — pas de spread direct sur le DOM,
+  // `hints` doit être extrait à part de `onPointerDown`.
+  return {
+    onPointerDown,
+    hints: { left: !!onSwipeLeft, right: !!onSwipeRight, space: !!onSpace },
+  };
 }

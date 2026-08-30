@@ -13,6 +13,7 @@ Plus précisément, tu dois renvoyer les informations suivantes :
 - le verbatim de la réponse vocale de l'étudiant
 - une solution possible à la question en hébreu. Assure-toi que cette solution soit une phrase complète avec au moins un sujet, un verbe et un complément
 - une score (comrpris entre 1 et 5) évaluant la structure et la complétude de la réponse. L'étudiant doit formuler une phrase complète (incluant au minimum un sujet, un verbe et un complément) plutôt que de répondre par un mot isolé ou une bribe de phrase.
+- (en langue française principalement bien que des mots hébreux puissent y être insérés) la liste des lacunes de structure et de complétude contenues dans la réponse de l'étudiant qui justifient ce score. Elles doivent être énoncées de manière succincte, synthétique et factuelle.
 - un score (comrpris entre 1 et 5) qui reflète  la qualité de la grammaire et de l'orthographe de la réponse, i.e. la réponse est elle grammaticalement et orthographiquement correcte en hébreu?
 - (en langue française principalement bien que des mots hébreux puissent y être insérés) la liste des erreurs grammaticales et d'orthographe contenues dans la réponse de l'étudiant qui justifient le score de qualité de l'orthographe et de la grammaire de la réponse. Elles doivent être énoncées de manière succinte, synthétique et factuelle.
 - une score (comrpris entre 1 et 5) qui reflète la compréhension du texte, i.e. le user a-t-il trouvé la réponse attendue?

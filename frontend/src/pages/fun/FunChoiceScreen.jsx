@@ -15,6 +15,18 @@ export default function FunChoiceScreen() {
         <Link to="/fun/chansons" className="card-link">
           <div className="card">Chansons</div>
         </Link>
+        <Link to="/fun/bible" className="card-link">
+          <div className="card">Bible</div>
+        </Link>
+        <Link to="/fun/blagues" className="card-link">
+          <div className="card">Blagues</div>
+        </Link>
+        <Link to="/fun/israel" className="card-link">
+          <div className="card">Visitez Israël</div>
+        </Link>
+        <Link to="/fun/mots-origine-hebraique" className="card-link">
+          <div className="card">Mot d'origine hébraïque</div>
+        </Link>
       </div>
     </section>
   );

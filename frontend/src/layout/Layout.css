@@ -8,29 +8,81 @@
   font-size: var(--font-size-base);
 }
 
+/* La barre de contrôle supérieure est un bandeau toujours en dark mode,
+   quel que soit le thème réel choisi par le user (desktop ou mobile) — seul
+   l'espace sous le bandeau (.app-content) suit le toggle. Couleurs codées en
+   dur (palette dark d'appConfig.js) plutôt que les var(--...) qui, elles,
+   suivent le thème réel. */
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 6px 16px;
+  background: #16171d;
+  border-bottom: 2.68px solid #a9d6f5;
 }
 
-.header-home {
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
   justify-self: start;
 }
 
-.header-config {
+.header-left-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-left-row .header-btn {
+  border: none;
+}
+
+.header-icons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   justify-self: end;
+}
+
+.header-icons .header-btn {
+  position: relative;
+  border: none;
+}
+
+.header-icons .header-btn:hover .exam-tile-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.header-icons .header-btn .exam-tile-tooltip {
+  top: 100%;
+  bottom: auto;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.header-divider {
+  width: 1px;
+  height: 20px;
+  background: #4b5563;
+  margin-inline: 12px;
+  flex-shrink: 0;
 }
 
 .header-btn,
 .header-niveau {
   background: none;
-  border: 1px solid var(--border);
+  border: 1px solid #2e303a;
   border-radius: 8px;
   padding: 6px 12px;
-  color: var(--text);
+  color: #f3f4f6;
   text-decoration: none;
   font-family: var(--font-latin);
   font-size: 0.9em;
@@ -38,8 +90,191 @@
 }
 
 .header-niveau {
-  justify-self: center;
   font-weight: 600;
+  font-size: 1.8em;
+  padding: 0;
+  border: none;
+  color: #f3f4f6;
+}
+
+.header-niveau-lesson-code {
+  color: #9ca3af !important;
+}
+
+.header-niveau img {
+  filter: invert(1) !important;
+  mix-blend-mode: screen !important;
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  justify-self: center;
+}
+
+.header-timer {
+  font-size: 1em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #f3f4f6;
+}
+
+.header-timer-red {
+  color: #ff6b6b;
+}
+
+.wallet-strip {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.87em;
+  color: #9ca3af;
+  flex-wrap: wrap;
+  text-align: start;
+}
+
+.wallet-strip-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.wallet-strip-item:hover .exam-tile-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.wallet-strip-item .exam-tile-tooltip {
+  top: 100%;
+  bottom: auto;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.switch-wrap .switch {
+  background: #999999;
+}
+
+.switch-wrap .switch-knob {
+  background: #a9d6f5;
+}
+
+.mobile-menu-btn {
+  display: none !important;
+}
+
+.header-mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}
+
+.header-mobile-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 220px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #1f2028;
+  border: 1px solid #2e303a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.header-mobile-panel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: none;
+  padding: 8px;
+  border-radius: 8px;
+  color: #f3f4f6;
+  font-family: var(--font-latin);
+  font-size: 0.85em;
+  cursor: pointer;
+  text-align: start;
+}
+
+.header-mobile-panel-row:hover {
+  background: #2e303a;
+}
+
+.header-mobile-panel .switch {
+  background: #444a58;
+  border-color: #444a58;
+}
+
+.header-mobile-panel .switch-knob {
+  background: #a9d6f5;
+}
+
+@media (max-width: 600px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .header-divider {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
+
+  .header-niveau {
+    font-size: 1.2em;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .header-niveau img {
+    display: none !important;
+  }
+
+  .persistent-icon-house svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .persistent-icon-culture svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .persistent-icon-house .icon-outline {
+    display: none;
+  }
+
+  .persistent-icon-house .icon-filled {
+    display: block !important;
+  }
+
+  .persistent-icon-culture > span {
+    background-color: #a9d6f5 !important;
+  }
+
+  .persistent-icon-gear {
+    margin-inline-start: -8px;
+  }
 }
 
 .app-content {

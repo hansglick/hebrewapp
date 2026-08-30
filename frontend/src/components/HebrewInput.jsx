@@ -1,56 +1,71 @@
 import { useEffect, useRef, useState } from "react";
+import { VoicePrefill } from "./VoicePrefill";
 import "./HebrewInput.css";
 
-// Translittération phonétique simple (clavier latin/AZERTY -> hébreu),
-// pensée pour un francophone qui tape au son plutôt qu'au clavier hébreu
-// positionnel. N'est pas exhaustive/parfaite (ambiguïtés c/k/q, e/a...)
-// mais suffisante pour saisir une réponse d'examen.
-const DIGRAPH_MAP = {
-  sh: "ש",
-  ch: "ח",
-  kh: "ח",
-  ts: "צ",
-  tz: "צ",
-  th: "ת",
-};
-
+// Mapping du clavier hébreu physique français AZERTY (cf.
+// instructions/keyboard/example.jpg — vrai sticker de clavier bilingue
+// hébreu/AZERTY vendu dans le commerce). Contrairement au clavier QWERTY,
+// AZERTY inverse physiquement A<->Q, Z<->W et M<->; : chaque lettre hébraïque
+// reste donc sur la MÊME touche physique que sur un clavier hébreu/QWERTY
+// standard, mais son étiquette latine change en conséquence (ex: la touche
+// physique "A/Q" porte ש sur un clavier hébreu/QWERTY ; sur AZERTY cette
+// même touche physique s'appelle "Q", donc q -> ש ici, pas a).
+// a et z tombent sur des touches de ponctuation du clavier hébreu (/ et '),
+// pas sur une lettre — comportement authentique du clavier réel, pas un
+// oubli. צ/ת/ץ sont sur les touches de ponctuation ,/;/ : (accessibles
+// uniquement via ces touches sur un vrai clavier, pas via une lettre a-z).
 const TRANSLIT_MAP = {
-  a: "א",
-  b: "ב",
-  c: "כ",
-  d: "ד",
-  e: "א",
-  f: "פ",
-  g: "ג",
-  h: "ה",
-  i: "י",
-  j: "ג",
-  k: "כ",
-  l: "ל",
-  m: "מ",
-  n: "נ",
-  o: "ו",
+  a: "/",
+  b: "נ",
+  c: "ב",
+  d: "ג",
+  e: "ק",
+  f: "כ",
+  g: "ע",
+  h: "י",
+  i: "ן",
+  j: "ח",
+  k: "ל",
+  l: "ך",
+  m: "ף",
+  n: "מ",
+  o: "ם",
   p: "פ",
-  q: "ק",
+  q: "ש",
   r: "ר",
-  s: "ס",
-  t: "ט",
+  s: "ד",
+  t: "א",
   u: "ו",
-  v: "ו",
-  w: "ו",
-  x: "קס",
-  y: "י",
-  z: "ז",
-  "'": "ע",
+  v: "ה",
+  w: "ז",
+  x: "ס",
+  y: "ט",
+  z: "'",
+  ",": "צ",
+  ";": "ת",
+  ":": "ץ",
 };
 
 const FINAL_FORMS = { כ: "ך", מ: "ם", נ: "ן", פ: "ף", צ: "ץ" };
 
-const KEYBOARD_ROWS = [
-  ["א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט", "י", "כ"],
-  ["ל", "מ", "נ", "ס", "ע", "פ", "צ", "ק", "ר", "ש", "ת"],
-  ["ך", "ם", "ן", "ף", "ץ"],
+// Disposition AZERTY : chaque touche affiche la lettre hébraïque qu'elle
+// produit (via TRANSLIT_MAP), pour que le clavier virtuel reflète exactement
+// ce que produirait la frappe physique (cf. handleBeforeInput). Les 3
+// dernières touches de la rangée du bas (, ; :) portent צ/ת/ץ, introuvables
+// sur une touche-lettre a-z d'un vrai clavier hébreu.
+const AZERTY_ROWS = [
+  ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p"],
+  ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m"],
+  ["w", "x", "c", "v", "b", "n", ",", ";", ":"],
 ];
+
+// Sur Windows, Alt Gr est le plus souvent transmis au navigateur comme un
+// Ctrl+Alt simultané plutôt qu'un vrai "AltGraph" détecté par
+// getModifierState (peu fiable selon navigateur/OS/disposition) — on
+// combine donc les deux signaux pour une détection robuste.
+function isAltGrPressed(e) {
+  return (e.getModifierState && e.getModifierState("AltGraph")) || (e.ctrlKey && e.altKey);
+}
 
 function finalizeWordAt(text, cursor) {
   const i = cursor - 1;
@@ -60,10 +75,14 @@ function finalizeWordAt(text, cursor) {
   return text.slice(0, i) + finalForm + text.slice(i + 1);
 }
 
-export default function HebrewInput({ value, onChange, rows = 3, placeholder }) {
-  const [showKeyboard, setShowKeyboard] = useState(false);
+export default function HebrewInput({ value, onChange, rows = 3, placeholder, showVoicePrefill = true }) {
+  const [activeKey, setActiveKey] = useState(null);
   const textareaRef = useRef(null);
-  const rawBufferRef = useRef("");
+  // Suivi de l'état de la touche Alt Gr (via keydown/keyup, seuls porteurs
+  // fiables de getModifierState — l'événement "beforeinput" n'expose aucun
+  // état de touche modificatrice) pour laisser passer "," et ":" tels quels
+  // quand Alt Gr est enfoncée, au lieu de les translittérer en צ/ץ.
+  const altGrRef = useRef(false);
 
   function insertAt(text, start, end) {
     const newValue = value.slice(0, start) + text + value.slice(end);
@@ -80,10 +99,7 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder }) 
   function handleBeforeInput(e) {
     const inputType = e.inputType;
     const data = e.data;
-    if (inputType !== "insertText" || !data || data.length !== 1) {
-      rawBufferRef.current = "";
-      return;
-    }
+    if (inputType !== "insertText" || !data || data.length !== 1) return;
 
     const el = e.target;
     const start = el.selectionStart;
@@ -94,7 +110,6 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder }) 
       const finalized = finalizeWordAt(value.slice(0, start), start);
       const newValue = finalized + value.slice(start);
       onChange(newValue.slice(0, start) + data + newValue.slice(end));
-      rawBufferRef.current = "";
       const pos = start + data.length;
       requestAnimationFrame(() => {
         el.setSelectionRange(pos, pos);
@@ -102,22 +117,12 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder }) 
       return;
     }
 
-    if (!/^[a-zA-Z']$/.test(data)) {
-      rawBufferRef.current = "";
-      return;
-    }
+    const key = /^[a-zA-Z]$/.test(data) ? data.toLowerCase() : data;
+    if ((key === "," || key === ":") && altGrRef.current) return;
+    if (!(key in TRANSLIT_MAP)) return;
 
     e.preventDefault();
-    const lower = data.toLowerCase();
-    const prevLatin = rawBufferRef.current;
-
-    if (prevLatin && start === end && start > 0 && DIGRAPH_MAP[prevLatin + lower]) {
-      insertAt(DIGRAPH_MAP[prevLatin + lower], start - 1, end);
-      rawBufferRef.current = "";
-    } else {
-      insertAt(TRANSLIT_MAP[lower] ?? data, start, end);
-      rawBufferRef.current = lower;
-    }
+    insertAt(TRANSLIT_MAP[key], start, end);
   }
 
   // React ne relaie pas correctement l'annulation (preventDefault) de
@@ -133,7 +138,38 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder }) 
   });
 
   function handleKeyDown(e) {
-    if (e.key === "Backspace" || e.key === "Delete") rawBufferRef.current = "";
+    const altGr = isAltGrPressed(e);
+    altGrRef.current = altGr;
+
+    // Alt Gr + "," ou ":" : on insère nous-mêmes le caractère littéral et on
+    // court-circuite tout le reste, plutôt que de dépendre de ce que le
+    // driver clavier du système déciderait de produire (pas fiable pour ces
+    // touches sur cette disposition bilingue).
+    if (altGr && (e.key === "," || e.key === ":")) {
+      e.preventDefault();
+      const el = textareaRef.current;
+      const start = el?.selectionStart ?? value.length;
+      const end = el?.selectionEnd ?? value.length;
+      insertAt(e.key, start, end);
+      return;
+    }
+
+    if (e.key === " ") {
+      setActiveKey(" ");
+      return;
+    }
+    const key = /^[a-zA-Z]$/.test(e.key) ? e.key.toLowerCase() : e.key;
+    if (key in TRANSLIT_MAP) setActiveKey(key);
+  }
+
+  function handleKeyUp(e) {
+    altGrRef.current = isAltGrPressed(e);
+    if (e.key === " ") {
+      setActiveKey(null);
+      return;
+    }
+    const key = /^[a-zA-Z]$/.test(e.key) ? e.key.toLowerCase() : e.key;
+    if (key in TRANSLIT_MAP) setActiveKey(null);
   }
 
   function handleBlur() {
@@ -145,57 +181,49 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder }) 
     const el = textareaRef.current;
     const start = el?.selectionStart ?? value.length;
     const end = el?.selectionEnd ?? value.length;
-    rawBufferRef.current = "";
     insertAt(letter, start, end);
   }
 
   return (
     <div className="hebrew-input">
+      {showVoicePrefill && <VoicePrefill lang="he" onChange={onChange} />}
+
       <textarea
         ref={textareaRef}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         onBlur={handleBlur}
         rows={rows}
         dir="rtl"
         className="hebrew-input-textarea"
         placeholder={placeholder}
       />
-      <button
-        type="button"
-        className="link-btn"
-        onClick={() => setShowKeyboard((s) => !s)}
-      >
-        ⌨️ Clavier hébreu
-      </button>
-      {showKeyboard && (
-        <div className="hebrew-keyboard">
-          {KEYBOARD_ROWS.map((row, i) => (
-            <div key={i} className="hebrew-keyboard-row">
-              {row.map((letter) => (
-                <button
-                  key={letter}
-                  type="button"
-                  className="hebrew-key"
-                  onClick={() => handleKeyClick(letter)}
-                >
-                  {letter}
-                </button>
-              ))}
-            </div>
-          ))}
-          <div className="hebrew-keyboard-row">
-            <button
-              type="button"
-              className="hebrew-key hebrew-key-space"
-              onClick={() => handleKeyClick(" ")}
-            >
-              espace
-            </button>
+      <div className="hebrew-keyboard">
+        {AZERTY_ROWS.map((row, i) => (
+          <div key={i} className="hebrew-keyboard-row">
+            {row.map((latin) => (
+              <button
+                key={latin}
+                type="button"
+                className={`hebrew-key${activeKey === latin ? " active" : ""}`}
+                onClick={() => handleKeyClick(TRANSLIT_MAP[latin])}
+              >
+                <span className="hebrew-key-hebrew">{TRANSLIT_MAP[latin]}</span>
+                <span className="hebrew-key-latin">{latin}</span>
+              </button>
+            ))}
           </div>
+        ))}
+        <div className="hebrew-keyboard-row">
+          <button
+            type="button"
+            className={`hebrew-key hebrew-key-space${activeKey === " " ? " active" : ""}`}
+            onClick={() => handleKeyClick(" ")}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 }

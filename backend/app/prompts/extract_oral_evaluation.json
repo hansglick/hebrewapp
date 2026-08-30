@@ -13,6 +13,10 @@
             "type": "int",
             "description": "Un score compris entre 1 et 5 qui représente la qualité de la structure et de la complétude de la réponse. L'étudiant doit formuler une phrase complète (incluant au minimum un sujet, un verbe et un complément) plutôt que de répondre par un mot isolé ou une bribe de phrase"
         },
+        "errors_rating_completeness": {
+            "type": "list[str]",
+            "description": "(en langue française principalement bien que des mots hébreux puissent y être insérés) La liste des lacunes de structure et de complétude contenues dans la réponse énoncées de manière factuelle et synthétique."
+        },
         "rating_hebrew": {
             "type": "int",
             "description": "Un score compris entre 1 et 5 qui représente la qualité de la grammaire et de l'orthographe de la réponse, i.e. la réponse est elle grammaticalement et orthograpiquement correcte en hébreu?"

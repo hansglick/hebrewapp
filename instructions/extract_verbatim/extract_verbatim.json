@@ -1,0 +1,9 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "verbatim": {
+            "type": "str",
+            "description": "Le verbatim de l'enregistrement vocal en langue hébreu. Supprime les nikud du verbatim. Contente-toi de retranscrire la parole de l'étudiant. N'imagine pas ce qu'il a voulu dire"
+        }
+    }
+}

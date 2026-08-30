@@ -1,0 +1,802 @@
+{
+    "61": {
+        "index": 61,
+        "landmark_english": "Abuhav Synagogue",
+        "landmark_hebrew": "בית הכנסת אבוהב",
+        "description": "Bienvenue à la synagogue Abuhav, un véritable joyau spirituel situé au cœur de la vieille ville mystique de Safed, dans le nord d'Israël. Construite au XVIe siècle par les disciples du rabbin espagnol Isaac Abuhav, cette synagogue historique est célèbre pour son architecture singulière, ses fresques murales colorées et ses trois arches saintes abritant des rouleaux de la Torah ancestraux. En y pénétrant, vous serez immédiatement envoûtés par l'atmosphère empreinte de kabbale et de ferveur religieuse. C'est un lieu incontournable pour comprendre l'héritage spirituel juif et admirer l'art religieux traditionnel de la Haute Galilée. Une visite inoubliable vous y attend !",
+        "prompt": "A highly detailed, realistic 3D render of the mystical interior of the Abuhav Synagogue in Safed, captured from a low-angle perspective to emphasize the beautifully preserved colorful frescoes and the majestic holy arks bathed in warm, ethereal morning light filtering through the windows, with elegant wooden pews in the foreground and a beautifully carved wooden plaque with the Hebrew text \"בית הכנסת אבוהב\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_061.png"
+    },
+    "62": {
+        "index": 62,
+        "landmark_english": "Agamon Hula",
+        "landmark_hebrew": "אגמון החולה",
+        "description": "Préparez-vous à être émerveillés par Agamon Hula, un parc naturel exceptionnel niché dans la majestueuse vallée de la Houla, en Haute Galilée. Ce site écologique est l'un des plus importants points d'observation d'oiseaux au monde. Chaque année, des centaines de milliers d'oiseaux migrateurs, dont les célèbres grues cendrées, y font escale entre l'Europe et l'Afrique. Vous pouvez explorer ce paradis verdoyant à vélo, en voiturette de golf ou lors d'une visite guidée en tracteur. C'est une expérience magique et apaisante, idéale pour les amoureux de la nature et les photographes. Un incontournable absolu du nord d'Israël !",
+        "prompt": "A breathtaking, realistic 3D render of the lush Agamon Hula nature park at golden hour, viewed from a slightly elevated angle overlooking the serene lake reflecting the vibrant sunset, with elegant common cranes standing gracefully in the grassy foreground and a rustic wooden trail sign with the Hebrew text \"אגמון החולה\" written on it perfectly integrated into the idyllic tourism campaign aesthetic.",
+        "imagepath": "results/landmarks/images/landmark_image_062.png"
+    },
+    "63": {
+        "index": 63,
+        "landmark_english": "Megiddo Ruins",
+        "landmark_hebrew": "תל מגידו",
+        "description": "Découvrez les ruines de Tel Megiddo, un site archéologique fascinant situé dans la vallée de Jezreel, au nord du pays. Classé au patrimoine mondial de l'UNESCO, ce monticule antique superpose les vestiges de plus de vingt-cinq civilisations différentes ! Connu sous le nom biblique d'Armageddon, Megiddo était une cité cananéenne puis israélite d'une importance stratégique majeure. L'incontournable de la visite est son impressionnant système d'approvisionnement en eau souterrain, un chef-d'œuvre d'ingénierie antique que vous pourrez traverser vous-mêmes. Venez marcher sur les traces du roi Salomon et plongez dans des millénaires d'histoire biblique et militaire palpitante.",
+        "prompt": "A sweeping, realistic 3D render of the ancient Megiddo Ruins under a clear blue sky, captured from a dramatic aerial angle showing the stratified archaeological mound and the famous underground water system entrance, with blooming wildflowers and ancient stones in the foreground where a weathered stone stele stands with the Hebrew text \"תל מגידו\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_063.png"
+    },
+    "64": {
+        "index": 64,
+        "landmark_english": "Beit She'an Roman Ruins",
+        "landmark_hebrew": "גן לאומי בית שאן",
+        "description": "Bienvenue au parc national de Beit She'an, situé à la croisée de la vallée du Jourdain et de la vallée de Jezreel. C'est l'une des cités antiques les plus vastes et les mieux préservées du Moyen-Orient ! En vous promenant dans ses rues pavées bordées de colonnes monumentales, vous ferez un véritable voyage dans le temps à l'époque romaine et byzantine. Admirez son magnifique théâtre romain, ses immenses thermes publics et les vestiges de ses temples grandioses. Ce site archéologique spectaculaire offre une immersion totale dans la vie quotidienne de l'Antiquité, une étape absolument incontournable pour tout passionné d'histoire.",
+        "prompt": "A spectacular, realistic 3D render of the Beit She'an Roman Ruins during a dramatic sunset that casts long golden shadows across the ancient paved streets, viewed from a ground-level perspective looking down the monumental colonnaded Cardo, with scattered fallen capitals in the foreground and a majestic marble pedestal with the Hebrew text \"גן לאומי בית שאן\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_064.png"
+    },
+    "65": {
+        "index": 65,
+        "landmark_english": "Caesarea Aqueduct",
+        "landmark_hebrew": "אמת המים בקיסריה",
+        "description": "Laissez-vous charmer par le majestueux aqueduc de Césarée, qui se dresse fièrement sur la magnifique plage de la côte méditerranéenne, à mi-chemin entre Tel Aviv et Haïfa. Construit par le roi Hérode le Grand et agrandi par les Romains, ce chef-d'œuvre d'ingénierie acheminait autrefois l'eau fraîche depuis les sources du mont Carmel jusqu'à la cité portuaire animée. Aujourd'hui, ses arches de pierre pittoresques offrent un contraste saisissant avec le bleu azur de la mer et le sable doré. C'est le lieu idéal pour une promenade romantique au coucher du soleil et pour capturer des photographies mémorables.",
+        "prompt": "A stunning, realistic 3D render of the Caesarea Aqueduct standing proudly on a pristine Mediterranean beach at twilight, shot from a low angle with gentle turquoise waves washing over the golden sand in the foreground, framing the picturesque stone arches where an ancient, subtly glowing stone slab has the Hebrew text \"אמת המים בקיסריה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_065.png"
+    },
+    "66": {
+        "index": 66,
+        "landmark_english": "Caesarea Roman Theater",
+        "landmark_hebrew": "התיאטרון הרומי בקיסריה",
+        "description": "Bienvenue au théâtre romain de Césarée, la pièce maîtresse du spectaculaire parc national situé sur la côte méditerranéenne. Construit sous le règne d'Hérode le Grand il y a plus de deux mille ans, il s'agit du plus ancien théâtre de ce type découvert en Israël. Face à l'immensité de la mer, ses gradins semi-circulaires pouvaient accueillir des milliers de spectateurs venus assister à des drames et des comédies classiques. Remarquablement restauré, ce lieu magique accueille encore aujourd'hui de grands concerts sous les étoiles. Sa beauté architecturale et son cadre maritime en font une merveille historique incontournable.",
+        "prompt": "A majestic, realistic 3D render of the Caesarea Roman Theater under a vibrant, cloud-streaked evening sky, captured from the top tiers to show the semi-circular stone seating cascading down toward the stage with the deep blue Mediterranean Sea in the background, featuring an elegant bronze plaque in the immediate foreground with the Hebrew text \"התיאטרון הרומי בקיסריה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_066.png"
+    },
+    "67": {
+        "index": 67,
+        "landmark_english": "Zippori National Park Mosaics",
+        "landmark_hebrew": "פסיפס ציפורי",
+        "description": "Explorez le parc national de Zippori, niché dans les collines verdoyantes de Basse Galilée, près de Nazareth. Ce site est surnommé la capitale de la mosaïque d'Israël, et pour cause ! Vous y découvrirez des sols en mosaïque d'une richesse et d'une finesse incomparables, datant des époques romaine et byzantine. L'incontournable est sans conteste la Mona Lisa de Galilée, un portrait féminin d'une beauté captivante formé de minuscules tesselles colorées. Zippori, ancienne ville cosmopolite où cohabitaient juifs, païens et chrétiens, vous offre une fascinante plongée dans l'art antique, la mythologie et l'histoire talmudique au cœur d'un paysage enchanteur.",
+        "prompt": "A photorealistic, realistic 3D render of the exquisite Zippori National Park mosaics, specifically focusing on a beautifully restored floor featuring the Mona Lisa of the Galilee, illuminated by soft, natural sunlight streaming through a canopy, viewed from a high-angle close-up with ancient pottery shards in the foreground and an elegant museum-style brass marker with the Hebrew text \"פסיפס ציפורי\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_067.png"
+    },
+    "68": {
+        "index": 68,
+        "landmark_english": "Horns of Hattin",
+        "landmark_hebrew": "קרני חיטין",
+        "description": "Voici les Cornes de Hattin, un volcan éteint situé en Basse Galilée, à l'ouest de la mer de Galilée. Ce site naturel aux deux sommets jumeaux offre un panorama à couper le souffle sur les paysages bibliques environnants. Mais c'est surtout son importance historique qui en fait un lieu incontournable : c'est ici qu'a eu lieu la célèbre bataille de Hattin en 1187. L'armée de Saladin y a vaincu les Croisés, marquant un tournant décisif dans l'histoire du Moyen-Orient. Gravir ce relief vous permet non seulement de profiter d'une randonnée spectaculaire, mais aussi de fouler le sol d'un événement épique !",
+        "prompt": "A cinematic, realistic 3D render of the Horns of Hattin under a dramatic, sun-drenched spring sky, captured from a sweeping wide angle that highlights the distinct twin peaks of the extinct volcano and the lush, green Galilean landscape, with vibrant wildflowers in the foreground and a rugged, natural basalt boulder with the Hebrew text \"קרני חיטין\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_068.png"
+    },
+    "69": {
+        "index": 69,
+        "landmark_english": "Gamla Nature Reserve",
+        "landmark_hebrew": "שמורת גמלא",
+        "description": "Bienvenue dans la réserve naturelle de Gamla, un véritable trésor situé sur le plateau du Golan. Ce site exceptionnel combine une nature sauvage époustouflante avec des ruines historiques dramatiques. Surnommée la Masada du Nord, l'ancienne cité juive de Gamla a héroïquement résisté aux Romains avant de tomber. En vous promenant, vous pourrez admirer la plus haute cascade d'Israël, qui se jette majestueusement dans le canyon, ainsi qu'une importante colonie de vautours fauves qui planent au-dessus de vos têtes. C'est l'endroit parfait pour les amoureux de randonnées, d'histoire antique et d'observation de la faune sauvage. Un paysage absolument grandiose !",
+        "prompt": "A breathtaking, realistic 3D render of the Gamla Nature Reserve's dramatic landscape, viewed from a precipice overlooking the deep canyon and the highest waterfall in Israel, with majestic griffon vultures soaring in the clear morning sky and a rustic wooden observation deck railing in the foreground with the Hebrew text \"שמורת גמלא\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_069.png"
+    },
+    "70": {
+        "index": 70,
+        "landmark_english": "Hexagon Pool",
+        "landmark_hebrew": "בריכת המשושים",
+        "description": "Découvrez la piscine des Hexagones, ou Breichat HaMeshushim, une merveille géologique cachée dans la réserve naturelle de la forêt de Yehudiya, sur le plateau du Golan. Au terme d'une magnifique randonnée à travers les paysages rocheux et verdoyants, vous atteindrez ce bassin naturel spectaculaire. Il doit son nom aux impressionnantes colonnes de basalte hexagonales qui bordent ses eaux rafraîchissantes, sculptées par des coulées de lave refroidies il y a des milliers d'années. S'y baigner lors des chaudes journées d'été est une expérience revigorante et unique. C'est un véritable joyau naturel qui récompense merveilleusement l'effort de la marche.",
+        "prompt": "A refreshing, realistic 3D render of the Hexagon Pool in the Golan Heights, captured from a low, dynamic angle just above the crystal-clear turquoise water reflecting the dappled sunlight, surrounded by the perfectly structured hexagonal basalt columns, with smooth wet rocks in the foreground where a natural stone sign has the Hebrew text \"בריכת המשושים\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_070.png"
+    },
+    "71": {
+        "index": 71,
+        "landmark_english": "Masada Fortress",
+        "landmark_hebrew": "מצדה",
+        "description": "Laissez-vous subjuguer par l'impressionnante forteresse de Masada, perchée sur un plateau rocheux isolé surplombant la mer Morte et le désert de Judée. Construite comme palais-refuge par Hérode le Grand, elle est surtout le symbole du dernier combat tragique des rebelles juifs face aux légions romaines. Que vous montiez à l'aube par le chemin du serpent pour admirer un lever de soleil inoubliable, ou que vous empruntiez le téléphérique, la vue panoramique est vertigineuse. Ses ruines préservées, comme les bains romains et les citernes, racontent une histoire poignante de résistance et de liberté. Un pèlerinage historique et visuel incontournable.",
+        "prompt": "A monumental, realistic 3D render of the Masada Fortress at the exact moment of a brilliant desert sunrise, viewed from an epic aerial angle to showcase the ancient ruins perched on the isolated rock plateau against the backdrop of the shimmering Dead Sea, with rugged desert rocks in the foreground and a weathered sandstone monument with the Hebrew text \"מצדה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_071.png"
+    },
+    "72": {
+        "index": 72,
+        "landmark_english": "Dead Sea Salt Formations",
+        "landmark_hebrew": "נטיפי המלח בים המלח",
+        "description": "Bienvenue sur les rives de la mer Morte, le point le plus bas de la Terre, pour y découvrir ses fascinantes formations de sel. Situé dans la vallée du Grand Rift, ce paysage surréaliste est parsemé de champignons de sel éclatants, de cristaux géants et de perles blanches qui contrastent magnifiquement avec l'eau turquoise et les montagnes dorées d'Edom. Ces sculptures naturelles, créées par l'évaporation intense et la forte salinité, offrent un décor digne d'une autre planète. Se promener au bord de ces eaux riches en minéraux est une expérience sensorielle et photogénique extraordinaire, absolument unique au monde.",
+        "prompt": "A surreal, realistic 3D render of the Dead Sea shore on a bright, sunny day, captured from a low angle to highlight the dazzling white salt mushrooms and giant crystals rising from the vivid turquoise water, with a crusty, textured salt formation in the extreme foreground featuring an elegantly embedded glass sign with the Hebrew text \"נטיפי המלח בים המלח\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_072.png"
+    },
+    "73": {
+        "index": 73,
+        "landmark_english": "David Waterfall",
+        "landmark_hebrew": "מפל דוד",
+        "description": "Plongez dans l'oasis luxuriante d'Ein Gedi, au cœur du désert de Judée, pour admirer la magnifique cascade de David. Nommée en l'honneur du roi biblique qui y trouva refuge, cette chute d'eau d'eau douce est une véritable anomalie miraculeuse au milieu des terres arides. Après une agréable randonnée familiale où vous croiserez certainement d'adorables damans des rochers et des bouquetins majestueux, vous serez récompensés par la fraîcheur de cette cascade vivifiante. C'est l'un des contrastes les plus saisissants d'Israël, mêlant le sable du désert à une végétation tropicale luxuriante. Un petit paradis rafraîchissant à ne surtout pas manquer !",
+        "prompt": "A vibrant, realistic 3D render of the David Waterfall in the lush Ein Gedi oasis, viewed from a serene eye-level perspective showing the crystal-clear water cascading down the rocky cliff surrounded by tropical greenery, with a curious Nubian ibex standing on a wet stone in the foreground next to a rustic wooden trail marker with the Hebrew text \"מפל דוד\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_073.png"
+    },
+    "74": {
+        "index": 74,
+        "landmark_english": "Makhtesh Ramon",
+        "landmark_hebrew": "מכתש רמון",
+        "description": "Préparez-vous à un choc visuel en découvrant le Makhtesh Ramon, situé dans le majestueux désert du Néguev, au sud du pays. Souvent confondu avec un cratère météoritique, il s'agit en réalité du plus grand cratère d'érosion karstique au monde ! Long de quarante kilomètres, ce phénomène géologique unique offre des paysages lunaires époustouflants, avec ses roches multicolores, ses sables prismatiques et ses formations basaltiques. Depuis le centre des visiteurs de Mitzpe Ramon, la vue plongeante est vertigineuse. Que ce soit pour la randonnée, le rappel, ou l'observation des étoiles dans un ciel d'une pureté absolue, c'est l'aventure désertique par excellence.",
+        "prompt": "A spectacular, realistic 3D render of the vast Makhtesh Ramon crater under a breathtaking starry night sky with a hint of twilight on the horizon, shot from the edge of the cliff to emphasize the sheer scale and colorful geological formations of the Negev desert, with desert flora in the foreground and a modern, softly illuminated metal sign with the Hebrew text \"מכתש רמון\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_074.png"
+    },
+    "75": {
+        "index": 75,
+        "landmark_english": "Solomon's Pillars",
+        "landmark_hebrew": "עמודי שלמה",
+        "description": "Terminez votre voyage par les impressionnants Piliers de Salomon, situés dans le spectaculaire parc de Timna, tout près de la mer Rouge et d'Eilat. Ces gigantesques formations rocheuses de grès rouge ont été sculptées naturellement par l'érosion éolienne et hydrique au fil des millénaires. Le site, autrefois un centre majeur d'extraction de cuivre dans l'Antiquité, est imprégné de légendes bibliques et de vestiges égyptiens, dont un ancien temple dédié à la déesse Hathor. Se tenir au pied de ces immenses falaises ocres, particulièrement magnifiques sous la lumière dorée du crépuscule, est une expérience majestueuse et profondément mystique.",
+        "prompt": "A majestic, realistic 3D render of Solomon's Pillars in Timna Park bathed in the rich, golden light of late afternoon, captured from a low angle looking up at the colossal, naturally sculpted red sandstone formations against a deep blue sky, with fine desert sand and scattered stones in the foreground where an ancient-looking copper plaque has the Hebrew text \"עמודי שלמה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_075.png"
+    },
+    "76": {
+        "index": 76,
+        "landmark_english": "Mushroom Rock",
+        "landmark_hebrew": "הפטרייה בתמנע",
+        "description": "Situé dans l'époustouflant parc de Timna, dans le désert du Néguev à environ 25 kilomètres au nord d'Eilat, le rocher champignon est une formation géologique naturelle fascinante. Sculpté au fil des millénaires par l'érosion du vent et de l'eau sur le grès rouge, il ressemble à s'y méprendre à un champignon géant. Ce site est incontournable car il témoigne de la puissance des forces naturelles dans un paysage aride aux couleurs chaudes. Autour de cette merveille, vous découvrirez également les vestiges d'anciennes mines de cuivre égyptiennes, rendant ce lieu à la fois géologiquement unique et historiquement captivant pour tous les visiteurs.",
+        "prompt": "A realistic 3D render of the iconic Mushroom Rock in Timna Park during a breathtaking golden hour, captured from a dramatic low angle with a foreground of vibrant red desert sand and scattered ancient copper ores, featuring an ancient stone marker with the Hebrew text \"הפטרייה בתמנע\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_076.png"
+    },
+    "77": {
+        "index": 77,
+        "landmark_english": "Red Canyon",
+        "landmark_hebrew": "הקניון האדום",
+        "description": "Niché dans les montagnes d'Eilat, à une vingtaine de minutes au nord-ouest de la ville balnéaire, le Canyon Rouge est l'un des sentiers de randonnée les plus spectaculaires d'Israël. Ses parois étroites, sculptées par les crues soudaines au fil du temps, dévoilent des couches de grès d'un rouge intense qui s'illuminent sous les rayons du soleil. Ce site est une merveille incontournable pour les amoureux de la nature, offrant une aventure accessible à travers des passages étroits équipés d'échelles et de rampes. C'est une immersion totale dans la beauté brute et colorée du désert du Néguev.",
+        "prompt": "A realistic 3D render of the spectacular Red Canyon in the Eilat mountains, bathed in brilliant midday sunlight filtering through the narrow, intense red sandstone walls, viewed from a dynamic wide angle with a rustic wooden trail sign in the foreground with the Hebrew text \"הקניון האדום\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_077.png"
+    },
+    "78": {
+        "index": 78,
+        "landmark_english": "Underwater Observatory Marine Park",
+        "landmark_hebrew": "המצפה התת ימי",
+        "description": "Situé à l'extrémité sud d'Eilat, sur les rives de la mer Rouge, l'Observatoire sous-marin est une fenêtre fascinante sur l'un des récifs coralliens les plus riches au monde. Ce parc marin offre une expérience unique : descendre sous le niveau de la mer sans se mouiller pour admirer des centaines d'espèces de poissons tropicaux, de raies et de tortues évoluant dans leur habitat naturel. Incontournable pour les familles et les passionnés de biologie marine, sa célèbre tour blanche emblématique vous permet d'observer la vie sous-marine vibrante du golfe d'Eilat tout en profitant d'une vue panoramique sur quatre pays.",
+        "prompt": "A realistic 3D render of the Underwater Observatory Marine Park in Eilat featuring a stunning split-level view under bright sunny weather, showcasing a vibrant foreground of colorful coral reefs and tropical fish beneath the crystal-clear Red Sea leading up to the iconic white tower, alongside a sleek, glowing underwater plaque with the Hebrew text \"המצפה התת ימי\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_078.png"
+    },
+    "79": {
+        "index": 79,
+        "landmark_english": "Coral Beach Nature Reserve",
+        "landmark_hebrew": "שמורת חוף האלמוגים",
+        "description": "Située sur la côte sud d'Eilat, la réserve naturelle de Coral Beach protège l'un des récifs coralliens les plus septentrionaux du monde. Ce site exceptionnel s'étend sur un peu plus d'un kilomètre le long de la mer Rouge et offre des conditions idéales pour la plongée en apnée. Ce qui rend cet endroit incontournable, c'est la proximité immédiate du récif avec la plage : il suffit de quelques pas dans l'eau cristalline pour se retrouver entouré de coraux colorés et d'une myriade de poissons tropicaux. C'est un véritable paradis aquatique préservé, parfait pour découvrir la biodiversité exceptionnelle du golfe.",
+        "prompt": "A breathtaking realistic 3D render of the Coral Beach Nature Reserve in Eilat under a flawless blue sky, captured from a low water-level angle with a pristine sandy beach and crystal-clear shallow waters revealing vibrant corals in the foreground, complete with a beautifully crafted wooden beach sign with the Hebrew text \"שמורת חוף האלמוגים\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_079.png"
+    },
+    "80": {
+        "index": 80,
+        "landmark_english": "Avdat Nabataean City Ruins",
+        "landmark_hebrew": "עבדת",
+        "description": "Perchée sur une colline dominant le désert du Néguev, le long de l'ancienne route de l'encens, Avdat est une fascinante cité nabatéenne classée au patrimoine mondial de l'UNESCO. Située au sud de Sde Boker, cette ville antique prospérait autrefois grâce au commerce des épices. Ses ruines remarquablement bien préservées comprennent des églises byzantines, un temple nabatéen, d'anciennes grottes et un pressoir à vin impressionnant. Visiter Avdat est incontournable pour comprendre l'ingéniosité de ce peuple du désert qui a su maîtriser l'agriculture dans un environnement aride. Le panorama depuis le sommet sur les vastes étendues désertiques est tout simplement époustouflant.",
+        "prompt": "A hyper-realistic 3D render of the ancient Avdat Nabataean City ruins perched on a Negev desert hill during a majestic sunset, captured from a sweeping high-angle perspective with ancient stone pillars and a wine press in the foreground, featuring a prominent, sunlit stone block with the Hebrew text \"עבדת\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_080.png"
+    },
+    "81": {
+        "index": 81,
+        "landmark_english": "Shivta Ruins",
+        "landmark_hebrew": "שבטה",
+        "description": "Située dans le nord-ouest du désert du Néguev, non loin de la frontière égyptienne, Shivta est une ancienne cité nabatéenne et byzantine inscrite au patrimoine mondial de l'UNESCO. Contrairement à d'autres sites situés sur la route de l'encens, Shivta n'était pas fortifiée et se distingue par son architecture civile et religieuse remarquablement préservée, notamment ses trois églises byzantines, ses rues pavées et ses maisons spacieuses. Ce site est incontournable pour son atmosphère paisible et mystérieuse, loin des foules. Il témoigne de l'ingéniosité agricole de ses anciens habitants qui ont su créer une oasis florissante au cœur d'un environnement désertique hostile.",
+        "prompt": "A serene, realistic 3D render of the Shivta Ruins in the Negev desert bathed in soft, golden morning light, viewed from an inviting eye-level perspective down an ancient paved street bordered by desert flora and well-preserved Byzantine architecture, featuring an elegant stone archway with the Hebrew text \"שבטה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_081.png"
+    },
+    "82": {
+        "index": 82,
+        "landmark_english": "Ben-Gurion's Tomb",
+        "landmark_hebrew": "קבר בן גוריון",
+        "description": "Situé dans le kibboutz de Sde Boker, au cœur du majestueux désert du Néguev, le tombeau de David Ben Gourion, premier Premier ministre d'Israël, et de son épouse Paula, est un lieu empreint de sérénité et d'histoire. Ce site national est incontournable non seulement pour son importance historique, symbolisant la vision sioniste de faire fleurir le désert, mais aussi pour son cadre naturel exceptionnel. Le parc magnifiquement entretenu qui entoure les tombes offre une vue panoramique époustouflante sur la vallée de Zin, un paysage lunaire de canyons et de falaises calcaires. C'est un lieu de recueillement et d'émerveillement face à la grandeur de la nature.",
+        "prompt": "A peaceful, realistic 3D render of Ben-Gurion's Tomb in Sde Boker on a clear, radiant day, framed from a slightly elevated angle to contrast the lush green grass and desert flowers in the foreground with the breathtaking lunar landscape of the Zin Valley in the background, including a polished stone memorial plaque with the Hebrew text \"קבר בן גוריון\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_082.png"
+    },
+    "83": {
+        "index": 83,
+        "landmark_english": "Mount Sodom",
+        "landmark_hebrew": "הר סדום",
+        "description": "Le Mont Sodome s'élève majestueusement sur la rive sud-ouest de la mer Morte, le point le plus bas de la Terre. Contrairement à la plupart des montagnes, cette formation géologique fascinante est composée presque entièrement de sel gemme, sculpté par les rares mais intenses pluies du désert. Ce lieu est incontournable pour ses paysages lunaires et ses grottes de sel spectaculaires. Historiquement et bibliquement lié à la destruction des villes de Sodome et Gomorrhe, il offre aux visiteurs une atmosphère mystérieuse. Randonner sur ses crêtes permet de profiter de vues panoramiques incroyables sur les eaux turquoise de la mer Morte et les montagnes jordaniennes.",
+        "prompt": "A dramatic, realistic 3D render of Mount Sodom overlooking the turquoise waters of the Dead Sea under a striking sunset sky, shot from a sweeping wide angle with glowing, rugged rock salt crystals in the foreground, featuring a smooth salt-stone slab with the Hebrew text \"הר סדום\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_083.png"
+    },
+    "84": {
+        "index": 84,
+        "landmark_english": "Lot's Wife Pillar",
+        "landmark_hebrew": "אשת לוט",
+        "description": "Située sur les pentes du Mont Sodome, près de la mer Morte, la colonne de la femme de Lot est une formation rocheuse en sel gemme qui se dresse face au paysage aride. Selon le récit biblique de la Genèse, l'épouse de Lot aurait été transformée en statue de sel pour s'être retournée sur la destruction de la ville de Sodome. Ce pilier naturel est un arrêt incontournable pour les voyageurs parcourant la route 90. Il mêle de manière fascinante la géologie unique de la région, façonnée par l'érosion éolienne et hydrique, aux mythes fondateurs qui imprègnent ce territoire chargé d'histoire.",
+        "prompt": "A highly detailed, realistic 3D render of the iconic Lot's Wife Pillar standing tall on the arid slopes of Mount Sodom under a brilliant blue desert sky, captured from a dramatic low angle with eroded salt formations in the foreground and a weathered metallic tourist sign with the Hebrew text \"אשת לוט\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_084.png"
+    },
+    "85": {
+        "index": 85,
+        "landmark_english": "Qumran Caves",
+        "landmark_hebrew": "מערות קומראן",
+        "description": "Perchées sur des falaises arides surplombant la rive nord-ouest de la mer Morte, les grottes de Qumran sont l'un des sites archéologiques les plus importants au monde. C'est ici, en 1947, qu'un berger bédouin a découvert les célèbres manuscrits de la mer Morte, les plus anciens textes bibliques jamais retrouvés. La visite de ce site est une expérience incontournable pour les passionnés d'histoire et de théologie. En explorant les ruines du village essénien adjacent et en observant ces grottes mystérieuses, on est transporté deux mille ans en arrière, au cœur d'une secte juive isolée ayant préservé un trésor spirituel inestimable.",
+        "prompt": "A mystical, realistic 3D render of the historic Qumran Caves nestled in arid cliffs near the Dead Sea during a breathtaking sunrise, framed from a rugged ledge with ancient, broken clay scroll jars in the foreground, including a prominent clay shard with the Hebrew text \"מערות קומראן\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_085.png"
+    },
+    "86": {
+        "index": 86,
+        "landmark_english": "Ashkelon National Park Ruins",
+        "landmark_hebrew": "גן לאומי אשקלון",
+        "description": "Situé sur la côte méditerranéenne, au sud de Tel-Aviv, le parc national d'Ashkelon est une magnifique oasis de nature abritant des trésors archéologiques millénaires. Ancienne grande cité cananéenne puis philistine, Ashkelon dévoile des vestiges impressionnants, dont la plus ancienne porte de ville voûtée au monde, datant de l'âge du bronze moyen. Ce site est incontournable car il combine parfaitement l'exploration historique, avec ses colonnes romaines parsemant le paysage, et la détente. Les visiteurs peuvent se promener sur des falaises verdoyantes surplombant la mer, pique-niquer à l'ombre des tamaris, et profiter d'une magnifique plage de sable fin chargée d'histoire.",
+        "prompt": "A vibrant, realistic 3D render of the Ashkelon National Park Ruins during a picturesque golden hour, captured from a scenic angle showcasing ancient Roman columns and lush green tamarisk trees in the foreground against the backdrop of the sparkling Mediterranean Sea, featuring an ancient marble column base with the Hebrew text \"גן לאומי אשקלון\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_086.png"
+    },
+    "87": {
+        "index": 87,
+        "landmark_english": "Beit Guvrin Bell Caves",
+        "landmark_hebrew": "מערות הפעמון בבית גוברין",
+        "description": "Situées dans les basses collines de Judée, au sud-ouest de Jérusalem, les grottes de la cloche du parc national de Beit Guvrin sont un chef-d'œuvre de l'ingéniosité humaine antique. Creusées par l'homme à l'époque byzantine et au début de la période islamique pour extraire de la craie, ces immenses cavités doivent leur nom à leur forme évasée spectaculaire. Ce parc, classé à l'UNESCO, est incontournable pour son atmosphère magique : la lumière du soleil pénètre par l'ouverture au sommet, illuminant les parois blanches dans un jeu d'ombres fascinant. C'est une exploration souterraine unique, témoignant d'une activité industrielle ancienne impressionnante.",
+        "prompt": "An ethereal, realistic 3D render of the Beit Guvrin Bell Caves, featuring a majestic sunbeam piercing through the top opening to illuminate the cavernous white chalk interiors, shot from a wide interior angle with a beautifully illuminated, ancient stone marker in the foreground with the Hebrew text \"מערות הפעמון בבית גוברין\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_087.png"
+    },
+    "88": {
+        "index": 88,
+        "landmark_english": "Soreq Stalactite Cave",
+        "landmark_hebrew": "מערת הנטיפים",
+        "description": "Également connue sous le nom de grotte d'Avshalom, la grotte de Soreq est nichée sur les pentes occidentales des monts de Judée, près de la ville de Beit Shemesh. Découverte par hasard en 1968, cette petite merveille géologique est l'une des grottes de stalactites les plus denses et impressionnantes au monde. Ce site est absolument incontournable pour son décor féérique : un éclairage soigné met en valeur des milliers de formations calcaires spectaculaires, certaines âgées de plus de 300 000 ans. Les formes variées, ressemblant parfois à des cascades pétrifiées ou à des créatures fantastiques, offrent un voyage magique au cœur de la terre.",
+        "prompt": "A magical, realistic 3D render of the Soreq Stalactite Cave illuminated by warm amber and cool blue theatrical lighting, captured from an immersive angle highlighting the intricate, densely packed stalactites and petrified waterfalls, featuring a sleek, glowing glass walkway rail in the foreground with the Hebrew text \"מערת הנטיפים\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_088.png"
+    },
+    "89": {
+        "index": 89,
+        "landmark_english": "Mount Shlomo Viewpoint",
+        "landmark_hebrew": "תצפית הר שלמה",
+        "description": "Dominant le paysage aride à l'extrême sud d'Israël, près d'Eilat, le point de vue du Mont Shlomo offre l'un des panoramas les plus spectaculaires de la région. Culminant à plus de 700 mètres d'altitude, ce sommet composé de roche granitique sombre contraste fortement avec les montagnes de grès rouge environnantes. Ce lieu est incontournable pour les amateurs de randonnée et de photographie. Une fois au sommet, l'effort est récompensé par une vue imprenable à 360 degrés englobant le désert du Néguev, les monts d'Édom en Jordanie, l'Égypte voisine et les eaux bleues scintillantes du golfe d'Aqaba.",
+        "prompt": "A breathtaking, realistic 3D render of the Mount Shlomo Viewpoint bathed in golden afternoon sunlight, captured from a high-altitude panoramic perspective featuring dark, jagged granite rocks in the foreground contrasting with the distant blue Gulf of Aqaba, and a heavy stone summit marker with the Hebrew text \"תצפית הר שלמה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_089.png"
+    },
+    "90": {
+        "index": 90,
+        "landmark_english": "Ein Avdat Waterfall",
+        "landmark_hebrew": "עין עבדת",
+        "description": "Nichée au creux d'un spectaculaire canyon de craie blanche dans le désert du Néguev, au sud de Sde Boker, la cascade d'Ein Avdat est une véritable oasis de vie miraculeuse. Alimentée par des sources souterraines naturelles, l'eau s'écoule toute l'année pour former de magnifiques bassins émeraude entourés d'une végétation luxuriante. Ce site est incontournable pour sa beauté saisissante et le contraste frappant entre l'eau rafraîchissante et l'aridité du désert environnant. C'est également un sanctuaire pour la faune locale, notamment les bouquetins majestueux qui escaladent les falaises. Une courte randonnée permet d'admirer ce joyau naturel apaisant et préservé.",
+        "prompt": "A stunning, realistic 3D render of the Ein Avdat Waterfall oasis hidden within a majestic white chalk canyon in the Negev desert, captured from a low angle across an emerald-green pool bordered by lush vegetation, featuring a smooth white chalk boulder in the foreground with the Hebrew text \"עין עבדת\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_090.png"
+    },
+    "1": {
+        "index": 1,
+        "landmark_english": "Western Wall (Kotel)",
+        "landmark_hebrew": "הכותל המערבי",
+        "description": "Bienvenue au Mur des Lamentations, ou Kotel, situé au cœur de la Vieille Ville de Jérusalem. Vestige majestueux du mur de soutènement de l'esplanade du Second Temple, c'est le lieu le plus sacré du judaïsme. En vous approchant de ses pierres millénaires, vous ressentirez une atmosphère spirituelle unique au monde, vibrante de ferveur et d'histoire. Ne manquez pas l'incontournable tradition qui consiste à glisser un petit papier contenant vos prières ou vos vœux entre les fissures de ses blocs colossaux. C'est une expérience profondément émouvante, peu importe vos croyances, qui vous connecte instantanément à l'âme millénaire de cette ville fascinante.",
+        "prompt": "A realistic 3D render of the Western Wall in Jerusalem during a golden hour sunset, viewed from a low angle with foreground olive branches, showcasing the ancient colossal stones glowing warmly, with the Hebrew text \"הכותל המערבי\" written on a glowing stone plaque in the foreground, creating a sublime, deeply spiritual tourist campaign aesthetic.",
+        "imagepath": "results/landmarks/images/landmark_image_001.png"
+    },
+    "2": {
+        "index": 2,
+        "landmark_english": "Dome of the Rock",
+        "landmark_hebrew": "כיפת הסלע",
+        "description": "Dominant l'horizon de Jérusalem depuis l'esplanade des Mosquées dans la Vieille Ville, le Dôme du Rocher est une véritable merveille architecturale. Ce sanctuaire islamique du septième siècle est mondialement célèbre pour sa spectaculaire coupole dorée qui scintille sous le soleil du Moyen-Orient et ses façades ornées de mosaïques bleues éblouissantes. Construit sur le mont du Temple, il abrite le rocher d'où le prophète Mahomet serait monté au ciel. Même si l'intérieur n'est pas accessible aux non-musulmans, flâner sur l'esplanade pour admirer de près la finesse de ses détails géométriques reste une étape visuelle et historique absolument incontournable de votre séjour.",
+        "prompt": "A breathtaking realistic 3D render of the Dome of the Rock on a bright, cloudless morning, captured from a high-angle perspective with vibrant foreground blooming flowers, highlighting its dazzling golden dome and intricate blue mosaics, with the Hebrew text \"כיפת הסלע\" written on an elegant brass signpost in the foreground, evoking a majestic and inviting travel advertisement.",
+        "imagepath": "results/landmarks/images/landmark_image_002.png"
+    },
+    "3": {
+        "index": 3,
+        "landmark_english": "Church of the Holy Sepulchre",
+        "landmark_hebrew": "כנסיית הקבר",
+        "description": "Située dans le quartier chrétien de la Vieille Ville, l'église du Saint-Sépulcre est le cœur battant de la chrétienté. Ce sanctuaire grandiose et complexe englobe le Golgotha, lieu de la crucifixion de Jésus, ainsi que son tombeau où se serait déroulée la résurrection. En franchissant ses portes, vous serez enveloppé par une atmosphère mystique, mêlant l'encens, les chants liturgiques et la ferveur des pèlerins venus du monde entier. Son architecture byzantine et croisée, ses chapelles sombres et ses mosaïques dorées en font un lieu d'une intensité rare. C'est un voyage poignant à travers la foi et l'histoire monumentale de Jérusalem.",
+        "prompt": "A hyper-realistic 3D render of the Church of the Holy Sepulchre's grand facade illuminated by dramatic, mystical sun rays breaking through soft morning mist, viewed from a slightly low angle with ancient cobblestones and a lit lantern in the foreground, with the Hebrew text \"כנסיית הקבר\" written on a weathered stone archway, creating an immersive and spiritual atmosphere for a tourism campaign.",
+        "imagepath": "results/landmarks/images/landmark_image_003.png"
+    },
+    "4": {
+        "index": 4,
+        "landmark_english": "Mount of Olives Viewpoint",
+        "landmark_hebrew": "תצפית הר הזיתים",
+        "description": "Pour saisir toute la majesté de Jérusalem, rien ne vaut la vue depuis le belvédère du mont des Oliviers, situé à l'est de la Vieille Ville. Ce point de vue panoramique exceptionnel vous offre une carte postale grandeur nature : vous y contemplerez le scintillant Dôme du Rocher, les murailles antiques et la vallée du Cédron en contrebas, abritant le plus ancien cimetière juif au monde. Je vous conseille vivement de vous y rendre en fin d'après-midi. Lorsque le soleil décline, les pierres de Jérusalem se parent d'une teinte dorée indescriptible, offrant un spectacle magique et véritablement inoubliable pour tout voyageur.",
+        "prompt": "A spectacular realistic 3D render from the Mount of Olives viewpoint overlooking the golden-hued Old City of Jerusalem at dusk, framed by lush olive tree leaves in the foreground, featuring a warm, inviting atmosphere with the Hebrew text \"תצפית הר הזיתים\" written on an elegant neon sign integrated into a scenic observation deck railing, perfect for a high-end travel promotion.",
+        "imagepath": "results/landmarks/images/landmark_image_004.png"
+    },
+    "5": {
+        "index": 5,
+        "landmark_english": "Tower of David Citadel",
+        "landmark_hebrew": "מגדל דוד",
+        "description": "Dressée fièrement près de la porte de Jaffa, à l'entrée de la Vieille Ville, la tour de David est l'ancienne citadelle de Jérusalem. Contrairement à ce que son nom suggère, elle fut construite par le roi Hérode et a traversé toutes les époques. Aujourd'hui, elle abrite un musée fascinant retraçant les trois mille ans d'histoire de la ville à travers ses cours et ses remparts. Ce qui rend ce lieu absolument incontournable, outre la vue imprenable depuis ses tours, c'est son spectacle nocturne son et lumière. Les murs millénaires s'animent de projections spectaculaires pour vous raconter l'épopée mythique de Jérusalem.",
+        "prompt": "A stunning realistic 3D render of the Tower of David Citadel at night, illuminated by a spectacular, colorful sound and light projection against the ancient stone walls, viewed from a dynamic ground-level angle with sleek modern pathways in the foreground, with the Hebrew text \"מגדל דוד\" written on a stylish illuminated glass display panel, blending ancient history with modern tourist appeal.",
+        "imagepath": "results/landmarks/images/landmark_image_005.png"
+    },
+    "6": {
+        "index": 6,
+        "landmark_english": "Mahane Yehuda Market",
+        "landmark_hebrew": "שוק מחנה יהודה",
+        "description": "Plongez dans le cœur vibrant de la Jérusalem moderne au marché de Mahane Yehuda. Situé à l'ouest du centre-ville, ce shouk bouillonnant est un véritable festival pour les sens. Le jour, vous y déambulerez parmi les étals colorés débordant de fruits frais, d'épices parfumées, de pâtisseries orientales et de pains tout juste sortis du four, dans un joyeux brouhaha typiquement moyen-oriental. Mais ce qui rend ce marché si unique, c'est sa transformation à la tombée de la nuit. Les rideaux de fer couverts de street art se baissent et laissent place à des bars à tapas et des restaurants branchés très festifs.",
+        "prompt": "A vibrant, realistic 3D render of the bustling Mahane Yehuda Market during a lively twilight evening, showcasing colorful stalls, fresh spices, and festive hanging lights from a dynamic eye-level perspective, with the Hebrew text \"שוק מחנה יהודה\" written on a bright, glowing retro neon sign hanging above the bustling walkway, capturing the energetic and attractive essence of modern Jerusalem.",
+        "imagepath": "results/landmarks/images/landmark_image_006.png"
+    },
+    "7": {
+        "index": 7,
+        "landmark_english": "Nachalat Shiva Street",
+        "landmark_hebrew": "נחלת שבעה",
+        "description": "Promenez-vous dans la rue Nachalat Shiva, l'un des tout premiers quartiers construits à l'extérieur des murailles de la Vieille Ville au dix-neuvième siècle. Située en plein centre-ville de Jérusalem, cette charmante allée piétonne pavée est un véritable havre de paix historique au milieu de l'effervescence urbaine. Vous serez séduit par son architecture pittoresque, ses petites cours cachées et ses bâtiments en pierre de taille. C'est le lieu idéal pour flâner, avec ses nombreuses boutiques d'artisanat local, ses galeries d'art et ses cafés animés. Le soir, la rue s'illumine et devient un point de rencontre incontournable pour les locaux et touristes.",
+        "prompt": "A charming realistic 3D render of the picturesque Nachalat Shiva Street on a warm, clear evening, featuring beautifully lit stone buildings, quaint cafes, and cobblestone pathways from a cozy pedestrian viewpoint, with the Hebrew text \"נחלת שבעה\" written on an elegant vintage street lamp banner in the foreground, radiating a romantic and inviting atmosphere for a travel campaign.",
+        "imagepath": "results/landmarks/images/landmark_image_007.png"
+    },
+    "8": {
+        "index": 8,
+        "landmark_english": "Shrine of the Book",
+        "landmark_hebrew": "היכל הספר",
+        "description": "Situé sur le campus du Musée d'Israël dans le quartier de Givat Ram, le Sanctuaire du Livre est une merveille architecturale et historique. Son dôme blanc immaculé, façonné pour ressembler au couvercle des jarres antiques dans lesquelles les précieux manuscrits ont été découverts, contraste avec un mur de basalte noir. À l'intérieur, vous découvrirez les célèbres manuscrits de la mer Morte, les plus anciens textes bibliques jamais retrouvés. La scénographie fascinante et l'importance inouïe de ces parchemins vieux de deux millénaires font de ce lieu un sanctuaire culturel captivant et un passage absolument obligatoire pour comprendre les racines de notre civilisation.",
+        "prompt": "A highly realistic 3D render of the Shrine of the Book showcasing its iconic white dome and contrasting black basalt wall under a brilliant blue sky with soft fluffy clouds, captured from a dramatic low angle with pristine reflective water in the foreground, with the Hebrew text \"היכל הספר\" written on a modern, sleek metallic informational plaque, emphasizing its architectural majesty.",
+        "imagepath": "results/landmarks/images/landmark_image_008.png"
+    },
+    "9": {
+        "index": 9,
+        "landmark_english": "Via Dolorosa",
+        "landmark_hebrew": "ויה דולורוזה",
+        "description": "La Via Dolorosa, ou Chemin de la Souffrance, serpente à travers les quartiers musulman et chrétien de la Vieille Ville. C'est le parcours traditionnel que Jésus aurait emprunté, portant sa croix, depuis le lieu de sa condamnation jusqu'au Golgotha. Longue d'environ six cents mètres, cette rue étroite et pavée est jalonnée par les quatorze stations du chemin de croix. Que vous soyez pèlerin ou simple passionné d'histoire, suivre les pas de milliers de croyants à travers l'effervescence du souk actuel est une expérience saisissante. Ce contraste entre la ferveur religieuse et la vie quotidienne trépidante est l'essence même de Jérusalem.",
+        "prompt": "A highly detailed, realistic 3D render of the narrow, atmospheric stone-paved street of the Via Dolorosa bathed in golden afternoon sunlight filtering through arched walkways, viewed from a captivating eye-level angle with ancient wooden doors in the foreground, with the Hebrew text \"ויה דולורוזה\" written on an ornate ceramic street sign attached to the ancient stone wall, evoking a profound sense of history.",
+        "imagepath": "results/landmarks/images/landmark_image_009.png"
+    },
+    "10": {
+        "index": 10,
+        "landmark_english": "Garden Tomb",
+        "landmark_hebrew": "קבר הגן",
+        "description": "À quelques pas au nord de la porte de Damas, à l'extérieur des remparts, se trouve le Tombeau du Jardin. Considéré par de nombreux protestants et évangéliques comme le véritable site de la crucifixion et de la résurrection de Jésus, ce lieu offre une atmosphère totalement différente de celle du Saint-Sépulcre. Ici, vous découvrirez un magnifique jardin paisible et verdoyant, abritant un ancien pressoir et une tombe taillée dans le roc. C'est un espace de recueillement intime et serein, parfait pour la méditation. Son cadre préservé permet de s'imaginer facilement les événements bibliques loin de l'agitation de la Vieille Ville.",
+        "prompt": "A serene and realistic 3D render of the lush, peaceful Garden Tomb setting during a gentle, misty dawn, featuring ancient rock-hewn walls and vibrant green foliage in the foreground from a tranquil eye-level perspective, with the Hebrew text \"קבר הגן\" written on a rustic wooden signpost welcoming visitors to this spiritual haven, designed for a breathtaking tourism campaign.",
+        "imagepath": "results/landmarks/images/landmark_image_010.png"
+    },
+    "11": {
+        "index": 11,
+        "landmark_english": "Room of the Last Supper (Cenacle)",
+        "landmark_hebrew": "חדר הסעודה האחרונה",
+        "description": "Sur le mont Sion, juste à l'extérieur de la porte de Sion, se dresse le Cénacle, connu comme la chambre de la Cène. C'est ici, selon la tradition, que Jésus aurait partagé son dernier repas avec ses disciples. L'architecture de cette grande salle à l'étage est remarquable, avec ses voûtes gothiques élégantes datant de l'époque des Croisés et ses éléments islamiques ajoutés plus tard, comme le mihrab. Ce lieu respire la spiritualité et témoigne de la complexité historique de Jérusalem, superposant les héritages chrétien et musulman au-dessus du tombeau du roi David. Une halte fascinante au carrefour des religions.",
+        "prompt": "A magnificent realistic 3D render of the interior of the Room of the Last Supper, highlighting its elegant Gothic vaults and warm ambient lighting from a wide-angle perspective, with foreground stone pillars softly out of focus, with the Hebrew text \"חדר הסעודה האחרונה\" written on a delicate, illuminated bronze plaque resting on a stone pedestal, creating a deeply historical and atmospheric visual.",
+        "imagepath": "results/landmarks/images/landmark_image_011.png"
+    },
+    "12": {
+        "index": 12,
+        "landmark_english": "Hurva Synagogue",
+        "landmark_hebrew": "בית הכנסת החורבה",
+        "description": "Au cœur du quartier juif de la Vieille Ville, la synagogue de la Hourva, ou la Ruine, domine la place de son impressionnante coupole blanche. Son histoire est celle d'une résilience extraordinaire : détruite au dix-huitième siècle, reconstruite, puis à nouveau dynamitée en 1948, elle a été magnifiquement restaurée et rouverte en 2010. Elle est aujourd'hui l'un des lieux de culte les plus importants et grandioses de Jérusalem. Je vous recommande d'admirer son arche sainte monumentale et de monter sur la galerie circulaire autour du dôme. Vous y profiterez d'une vue panoramique spectaculaire sur les toits de la Vieille Ville.",
+        "prompt": "A breathtaking realistic 3D render of the majestic Hurva Synagogue dominating the Jewish Quarter plaza under a clear, starry twilight sky, viewed from a dynamic low angle with warm street lanterns in the foreground, with the Hebrew text \"בית הכנסת החורבה\" written on a stylized light projection on the pristine white dome, exuding a sense of awe and resilience for a travel ad.",
+        "imagepath": "results/landmarks/images/landmark_image_012.png"
+    },
+    "13": {
+        "index": 13,
+        "landmark_english": "Montefiore Windmill",
+        "landmark_hebrew": "טחנת הרוח במשכנות שאננים",
+        "description": "Face aux grandioses murailles de la Vieille Ville, dans le quartier pittoresque de Mishkenot Sha'ananim, se dresse l'inattendue silhouette du moulin de Montefiore. Construit en 1857 par le philanthrope britannique Sir Moses Montefiore, il symbolise la toute première tentative d'installation juive en dehors des murs protecteurs de la ville pour fuir la surpopulation. Aujourd'hui restauré, ce moulin à vent est entouré de jardins somptueux et de maisons en pierre pleines de charme. C'est un endroit exceptionnel pour une promenade romantique au coucher du soleil, offrant l'une des vues les plus emblématiques et photogéniques sur le mont Sion et les remparts.",
+        "prompt": "A picturesque realistic 3D render of the historic Montefiore Windmill standing tall against a dramatic, colorful sunset sky, captured from a scenic eye-level angle with vibrant spring flowers and manicured gardens in the foreground, with the Hebrew text \"טחנת הרוח במשכנות שאננים\" written on a classic wrought-iron garden sign, perfectly capturing the romantic charm of Mishkenot Sha'ananim.",
+        "imagepath": "results/landmarks/images/landmark_image_013.png"
+    },
+    "14": {
+        "index": 14,
+        "landmark_english": "Chords Bridge",
+        "landmark_hebrew": "גשר המיתרים",
+        "description": "Dès votre arrivée à Jérusalem depuis l'autoroute, vous serez accueilli par le spectaculaire pont des Cordes, une œuvre magistrale de l'architecte Santiago Calatrava. Ce pont suspendu au design asymétrique est devenu le symbole éclatant de la Jérusalem moderne. Avec son mât élancé et ses dizaines de câbles blancs, il évoque la forme de la harpe du roi David, liant ainsi avec poésie le passé biblique au présent technologique. Conçu principalement pour le passage du tramway, il comporte aussi une voie piétonne. Traverser cette structure aérienne offre une perspective futuriste saisissante avant de plonger dans l'histoire millénaire de la ville.",
+        "prompt": "A striking, realistic 3D render of the modern Chords Bridge at golden hour, its soaring white cables resembling a harp against a vivid orange and purple sky, viewed from a dramatic low angle with blurred passing tramway lights in the foreground, with the Hebrew text \"גשר המיתרים\" written on a sleek, high-tech illuminated billboard seamlessly integrated into the bridge's base, highlighting Jerusalem's futuristic side.",
+        "imagepath": "results/landmarks/images/landmark_image_014.png"
+    },
+    "15": {
+        "index": 15,
+        "landmark_english": "Western Wall Tunnels",
+        "landmark_hebrew": "מנהרות הכותל",
+        "description": "Pour véritablement comprendre l'ampleur du mont du Temple, il faut descendre sous terre, dans les fascinants tunnels du Mur des Lamentations. Situé dans la Vieille Ville, ce complexe souterrain longe la partie cachée du mur de soutènement construit par Hérode. En parcourant ces galeries étroites, vous marcherez sur des rues pavées datant du Second Temple et toucherez des pierres de fondation colossales, dont l'une pèse près de six cents tonnes, un véritable mystère d'ingénierie antique. C'est un voyage archéologique incontournable et époustouflant qui vous plonge littéralement dans les fondations historiques, religieuses et architecturales de la Jérusalem d'il y a deux mille ans.",
+        "prompt": "A hyper-realistic 3D render of the mysterious and awe-inspiring Western Wall Tunnels, softly illuminated by warm, hidden architectural lighting that highlights the colossal ancient Herodian stones, viewed from a first-person perspective with smooth glass walkways in the foreground, with the Hebrew text \"מנהרות הכותל\" written on an interactive, glowing transparent display panel, inviting tourists into an unforgettable archaeological journey.",
+        "imagepath": "results/landmarks/images/landmark_image_015.png"
+    },
+    "31": {
+        "index": 31,
+        "landmark_english": "Neve Tzedek Neighborhood",
+        "landmark_hebrew": "נווה צדק",
+        "description": "Situé dans le sud-ouest de Tel Aviv, Neve Tzedek est le tout premier quartier juif construit en dehors des murailles de la vieille ville de Jaffa en 1887. Se promener dans ses ruelles étroites est une véritable plongée dans le temps. C'est un quartier pittoresque, magnifiquement restauré, où se mêlent l'architecture éclectique du début du vingtième siècle, des boutiques de créateurs, des galeries d'art et des cafés charmants. Son ambiance bohème et romantique en fait un lieu de promenade absolument incontournable pour ressentir l'âme historique et artistique de la ville blanche.",
+        "prompt": "A realistic 3D render of the picturesque Neve Tzedek neighborhood at golden hour, featuring beautifully restored eclectic early 20th-century architecture, narrow paved streets, blooming bougainvillea framing a charming boutique, and an elegant vintage street sign in the foreground with the Hebrew text \"נווה צדק\" written on it, captured from a cozy ground-level perspective to evoke a romantic and bohemian tourism campaign.",
+        "imagepath": "results/landmarks/images/landmark_image_031.png"
+    },
+    "32": {
+        "index": 32,
+        "landmark_english": "Rothschild Boulevard",
+        "landmark_hebrew": "שדרות רוטשילד",
+        "description": "Traversant le cœur battant de Tel Aviv, le boulevard Rothschild est l'une des artères les plus emblématiques et animées de la ville. Il est célèbre pour son impressionnante concentration de bâtiments de style Bauhaus, classés au patrimoine mondial de l'UNESCO. À l'ombre de ses immenses ficus, vous trouverez une promenade centrale piétonne très prisée, bordée de kiosques à café, de restaurants branchés et de start-ups innovantes. C'est également ici qu'a été signée la déclaration d'indépendance d'Israël en 1948. C'est l'endroit parfait pour observer la vie locale et comprendre le dynamisme tel-avivien.",
+        "prompt": "A highly detailed realistic 3D render of the vibrant Rothschild Boulevard on a sunny spring afternoon, shot from a low angle looking down the bustling pedestrian path lined with towering ficus trees, iconic white Bauhaus buildings, and chic coffee kiosks, featuring an elegant stone monument in the foreground with the Hebrew text \"שדרות רוטשילד\" written on it, capturing a lively and attractive tourist atmosphere.",
+        "imagepath": "results/landmarks/images/landmark_image_032.png"
+    },
+    "33": {
+        "index": 33,
+        "landmark_english": "Habima Square",
+        "landmark_hebrew": "כיכר הבימה",
+        "description": "Située à l'extrémité nord du fameux boulevard Rothschild, la place Habima est le véritable cœur culturel de Tel Aviv. Entièrement rénovée, elle abrite le théâtre national d'Israël, Habima, ainsi que le palais de la culture Charles Bronfman. Ce qui rend cette place si spéciale, c'est son magnifique jardin englouti, parsemé d'arbres et de fleurs, où les habitants aiment se retrouver pour écouter de la musique classique diffusée en plein air. C'est un espace urbain élégant, moderne et paisible, offrant une pause rafraîchissante et une architecture fascinante au milieu de l'effervescence de la ville.",
+        "prompt": "A breathtaking realistic 3D render of Habima Square under a clear twilight sky, showcasing the modern sunken garden with blooming flowers and the illuminated Habima National Theatre in the background, captured from a wide elevated angle with a sleek illuminated modern glass panel in the foreground with the Hebrew text \"כיכר הבימה\" written on it, creating a sophisticated and peaceful tourism advertisement.",
+        "imagepath": "results/landmarks/images/landmark_image_033.png"
+    },
+    "34": {
+        "index": 34,
+        "landmark_english": "Azrieli Center Towers",
+        "landmark_hebrew": "מגדלי עזריאלי",
+        "description": "Dominant fièrement l'horizon de Tel Aviv, les tours du centre Azrieli sont un symbole incontournable de la modernité israélienne. Situé dans le quartier d'affaires le long de l'autoroute Ayalon, ce complexe architectural unique se compose de trois gratte-ciels aux formes géométriques distinctes : un circulaire, un triangulaire et un carré. À la base, on trouve l'un des plus grands centres commerciaux du pays. L'attrait principal pour les visiteurs est l'observatoire situé au sommet de la tour circulaire, offrant une vue panoramique époustouflante à trois cent soixante degrés sur toute la métropole et la côte méditerranéenne.",
+        "prompt": "A majestic realistic 3D render of the iconic Azrieli Center Towers, one circular, one triangular, and one square, soaring into a vibrant sunset sky, viewed from a dynamic low angle that emphasizes their geometric modern glass facades reflecting the golden light, featuring a sleek high-tech glowing neon billboard on a nearby rooftop with the Hebrew text \"מגדלי עזריאלי\" written on it, radiating a dynamic metropolitan vibe.",
+        "imagepath": "results/landmarks/images/landmark_image_034.png"
+    },
+    "35": {
+        "index": 35,
+        "landmark_english": "Design Museum Holon",
+        "landmark_hebrew": "מוזיאון העיצוב חולון",
+        "description": "Situé à Holon, une ville dynamique juste au sud de Tel Aviv, le Design Museum est une merveille architecturale de renommée mondiale. Conçu par le célèbre architecte israélien Ron Arad, le bâtiment lui-même est une œuvre d'art, immédiatement reconnaissable grâce à ses cinq immenses rubans sinueux en acier Corten aux teintes rouges et orangées. Il s'agit du premier musée d'Israël entièrement dédié au design. Ses expositions temporaires, toujours innovantes et interactives, explorent la mode, le design industriel et les arts visuels. C'est un arrêt obligatoire pour tous les amateurs d'art contemporain et d'architecture.",
+        "prompt": "A photorealistic 3D render of the Design Museum Holon on a bright sunny day, highlighting Ron Arad's masterpiece of sweeping, sinuous red and orange Corten steel ribbons against a deep blue sky, viewed from a striking low angle with a minimalist brushed metal entrance plaque in the foreground with the Hebrew text \"מוזיאון העיצוב חולון\" written on it, perfectly embodying a high-end cultural tourism aesthetic.",
+        "imagepath": "results/landmarks/images/landmark_image_035.png"
+    },
+    "36": {
+        "index": 36,
+        "landmark_english": "Suspended Orange Tree in Jaffa",
+        "landmark_hebrew": "פסל עץ התפוז התלוי",
+        "description": "Niché au cœur des ruelles pavées de la vieille ville de Jaffa, l'Oranger Suspendu est une installation artistique surprenante et poétique créée par le sculpteur Ran Morin en 1993. Il s'agit d'un véritable oranger qui pousse dans une grande graine en forme d'œuf en argile, suspendue dans les airs par des câbles invisibles fixés aux bâtiments voisins. Cette œuvre fascinante symbolise le déracinement, la résilience et le lien complexe de l'homme avec la nature et la terre. C'est un joyau caché, parfait pour une photographie mémorable lors de votre exploration de l'antique cité portuaire.",
+        "prompt": "A magical realistic 3D render of the Suspended Orange Tree in Jaffa during a warm golden hour, showing the lush living tree growing from its egg-shaped clay pot hovering magically by invisible cables amidst ancient stone walls, captured from an intimate eye-level perspective with an antique brass plaque embedded in the cobblestone below with the Hebrew text \"פסל עץ התפוז התלוי\" written on it, evoking a poetic and enchanting travel experience.",
+        "imagepath": "results/landmarks/images/landmark_image_036.png"
+    },
+    "37": {
+        "index": 37,
+        "landmark_english": "Old Jaffa Zodiac Alleys",
+        "landmark_hebrew": "סמטאות יפו העתיקה",
+        "description": "Les ruelles du zodiaque constituent le cœur historique et enchanteur de la vieille ville de Jaffa, perchée sur une colline surplombant la mer Méditerranée au sud de Tel Aviv. Ce labyrinthe de petites rues étroites, pavées de pierres anciennes, tire son nom des douze signes astrologiques inscrits sur des plaques de céramique bleues. En vous y promenant, vous découvrirez des galeries d'art, des ateliers d'artisans, des boutiques de bijoux et des vestiges archéologiques vieux de plusieurs millénaires. L'atmosphère magique qui y règne offre un contraste saisissant avec la modernité trépidante de Tel Aviv.",
+        "prompt": "A stunning realistic 3D render of the enchanting Old Jaffa Zodiac Alleys at dusk, featuring narrow cobblestone pathways, ancient stone arches illuminated by warm glowing lanterns, and Mediterranean sea views in the distance, framed by a beautiful blue ceramic wall tile in the foreground with the Hebrew text \"סמטאות יפו העתיקה\" written on it, capturing a mysterious and romantic historical vibe.",
+        "imagepath": "results/landmarks/images/landmark_image_037.png"
+    },
+    "38": {
+        "index": 38,
+        "landmark_english": "Sarona Market",
+        "landmark_hebrew": "שרונה מרקט",
+        "description": "Situé en plein cœur de Tel Aviv, au pied des tours modernes du centre-ville, Sarona Market est le plus grand marché culinaire couvert d'Israël. Ce complexe vibrant a été construit dans l'ancienne colonie des Templiers allemands du dix-neuvième siècle, dont les pittoresques maisons à toits rouges ont été magnifiquement restaurées. Aujourd'hui, c'est un paradis pour les gourmets, rassemblant des dizaines d'échoppes proposant des produits locaux, des fromages artisanaux, des épices et des plats de chefs renommés. C'est l'endroit idéal pour déguster la richesse et la diversité de la gastronomie israélienne contemporaine.",
+        "prompt": "A vibrant realistic 3D render of the bustling Sarona Market on a clear evening, contrasting the restored 19th-century red-roofed Templer houses with the modern illuminated skyscrapers of Tel Aviv in the background, captured from an inviting eye-level angle with a stylish wooden entrance archway in the foreground with the Hebrew text \"שרונה מרקט\" written on it, promoting a lively culinary and architectural paradise.",
+        "imagepath": "results/landmarks/images/landmark_image_038.png"
+    },
+    "39": {
+        "index": 39,
+        "landmark_english": "Yarkon Park",
+        "landmark_hebrew": "פארק הירקון",
+        "description": "Véritable poumon vert de Tel Aviv, le parc Hayarkon s'étend tout au long de la partie nord de la ville, suivant les méandres de la rivière Yarkon jusqu'à la mer Méditerranée. C'est l'équivalent israélien de Central Park. Les habitants s'y pressent pour échapper à l'agitation urbaine, faire du vélo, pique-niquer à l'ombre des eucalyptus ou louer une barque sur la rivière. Le parc abrite également des jardins botaniques magnifiques, un jardin de roches et des installations sportives. C'est une oasis de tranquillité incontournable pour profiter d'une journée ensoleillée en plein air.",
+        "prompt": "A serene realistic 3D render of Yarkon Park on a bright and sunny morning, featuring lush green lawns, large eucalyptus trees casting gentle shadows, and a tranquil meandering river with small rowing boats, viewed from a sweeping panoramic angle with a beautifully carved wooden park sign in the flowery foreground with the Hebrew text \"פארק הירקון\" written on it, inviting tourists to a peaceful urban oasis.",
+        "imagepath": "results/landmarks/images/landmark_image_039.png"
+    },
+    "40": {
+        "index": 40,
+        "landmark_english": "Charles Clore Park",
+        "landmark_hebrew": "פארק צ'ארלס קלור",
+        "description": "S'étirant le long de la côte méditerranéenne, à la frontière entre Tel Aviv et la vieille ville de Jaffa, le parc Charles Clore est un magnifique espace vert en bord de mer. Avec ses vastes pelouses ondulantes, il offre une vue imprenable sur l'eau bleue et les anciens minarets de Jaffa. C'est un lieu de rassemblement très prisé par les familles locales pour les barbecues du week-end, le cerf-volant et la promenade au crépuscule. Venir ici en fin de journée pour admirer le coucher de soleil sur la mer est une expérience magique et absolument incontournable.",
+        "prompt": "A spectacular realistic 3D render of Charles Clore Park at sunset, showcasing vast rolling green lawns meeting the sparkling blue Mediterranean Sea with the ancient silhouette of Jaffa in the distance, captured from a dynamic sweeping angle with a sleek stone promenade barrier in the immediate foreground with the Hebrew text \"פארק צ'ארלס קלור\" written on it, exuding a perfect and relaxing seaside vacation atmosphere.",
+        "imagepath": "results/landmarks/images/landmark_image_040.png"
+    },
+    "41": {
+        "index": 41,
+        "landmark_english": "Tel Aviv Port",
+        "landmark_hebrew": "נמל תל אביב",
+        "description": "Situé à l'extrémité nord de la ville, là où la rivière Yarkon se jette dans la mer, le port de Tel Aviv, connu sous le nom de Namal, a été entièrement transformé. Autrefois zone industrielle, c'est aujourd'hui l'un des centres de divertissement les plus dynamiques d'Israël. Sa célèbre promenade en bois, conçue pour rappeler les vagues de l'océan, est bordée de restaurants branchés, de cafés, de boutiques de mode et de marchés fermiers le vendredi. L'ambiance festive, surtout au coucher du soleil et pendant la nuit, en fait une destination vibrante pour tous les visiteurs.",
+        "prompt": "A lively realistic 3D render of the Tel Aviv Port during a spectacular golden twilight, highlighting the iconic wave-shaped wooden promenade, bustling cafes, and the gentle crash of Mediterranean waves, viewed from a low dramatic angle showcasing a glowing modern neon sign integrated into the boardwalk with the Hebrew text \"נמל תל אביב\" written on it, perfectly capturing the vibrant coastal entertainment scene.",
+        "imagepath": "results/landmarks/images/landmark_image_041.png"
+    },
+    "42": {
+        "index": 42,
+        "landmark_english": "Bialik Square",
+        "landmark_hebrew": "כיכר ביאליק",
+        "description": "Nichée au cœur de Tel Aviv, non loin de la rue Allenby, la place Bialik est une véritable capsule temporelle de l'architecture et de l'histoire de la ville. Cette petite place élégante rassemble un mélange impressionnant de styles Bauhaus et éclectique. Elle porte le nom du poète national d'Israël, Haïm Nahman Bialik, dont la magnifique maison-musée s'y trouve. On y admire également l'ancien hôtel de ville de Tel Aviv, magnifiquement restauré. Calme, romantique et chargée de culture, c'est un arrêt indispensable pour comprendre les racines intellectuelles et architecturales de la première ville hébraïque.",
+        "prompt": "A charming realistic 3D render of Bialik Square bathed in the warm light of a late afternoon sun, focusing on the beautifully restored eclectic and Bauhaus architecture, including the historic town hall and Bialik's house, captured from a cozy pedestrian perspective with a classic cast-iron lamppost base in the foreground with the Hebrew text \"כיכר ביאליק\" written on it, conveying a romantic and culturally rich urban atmosphere.",
+        "imagepath": "results/landmarks/images/landmark_image_042.png"
+    },
+    "43": {
+        "index": 43,
+        "landmark_english": "Pagoda House",
+        "landmark_hebrew": "בית הפגודה",
+        "description": "Située sur la pittoresque place du Roi Albert au centre de Tel Aviv, la Maison de la Pagode est l'un des bâtiments les plus emblématiques et photographiés de la ville. Construite en 1924 par l'architecte Alexander Levy, elle est le parfait exemple du style architectural éclectique des débuts de Tel Aviv. Son allure fascinante mélange des éléments islamiques, classiques et une toiture rappelant une pagode japonaise, d'où son nom. Bien qu'elle soit une résidence privée et ne se visite pas de l'intérieur, sa beauté singulière et son histoire en font une curiosité architecturale incontournable.",
+        "prompt": "A photorealistic 3D render of the magnificent Pagoda House at King Albert Square on a crisp sunny day, beautifully showcasing its unique eclectic architecture with Islamic arches and the iconic Japanese-style pagoda roof, framed by lush urban greenery from a striking low-angle viewpoint, featuring an elegant historical stone marker at the gate with the Hebrew text \"בית הפגודה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_043.png"
+    },
+    "44": {
+        "index": 44,
+        "landmark_english": "Hassan Bek Mosque",
+        "landmark_hebrew": "מסגד חסן בק",
+        "description": "S'élevant majestueusement près du front de mer, à la lisière entre Tel Aviv et Jaffa, la mosquée Hassan Bek est un monument historique saisissant. Construite en 1916 pendant la période ottomane par le gouverneur de Jaffa, elle se distingue par son élégante architecture en pierre calcaire blanche sculptée et son minaret élancé qui contraste avec les hôtels modernes environnants. Elle témoigne de la riche histoire multiculturelle de la région. Bien que l'accès soit réservé aux fidèles musulmans, son extérieur impressionnant et son emplacement central en font un point de repère visuel fascinant lors de vos promenades côtières.",
+        "prompt": "A breathtaking realistic 3D render of the majestic Hassan Bek Mosque glowing under a warm late-afternoon sun, contrasting its elegant white carved limestone walls and slender minaret against the modern glass hotels and the blue Mediterranean Sea in the background, viewed from a respectful sweeping angle with a beautiful bronze plaque on a seaside stone wall with the Hebrew text \"מסגד חסן בק\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_044.png"
+    },
+    "45": {
+        "index": 45,
+        "landmark_english": "Baha'i Gardens Terraces",
+        "landmark_hebrew": "הגנים הבאהיים",
+        "description": "Suspendus sur les pentes du mont Carmel à Haïfa, dans le nord d'Israël, les somptueux jardins baha'is sont souvent considérés comme la huitième merveille du monde. Ce site classé au patrimoine mondial de l'UNESCO se compose de dix-neuf terrasses paysagées en cascade, descendant majestueusement vers la mer Méditerranée. Au centre brille le sanctuaire du Báb avec son dôme doré emblématique. La symétrie parfaite des fleurs, des pelouses et des fontaines offre une atmosphère de paix et de spiritualité absolue. La vue panoramique sur la baie de Haïfa depuis le sommet est tout simplement époustouflante et inoubliable.",
+        "prompt": "An awe-inspiring realistic 3D render of the Baha'i Gardens in Haifa on a pristine sunny day, cascading down the slopes of Mount Carmel with perfect floral symmetry toward the golden-domed Shrine of the Bab and the sparkling Mediterranean bay below, captured from a breathtaking high-angle panoramic view with an elegant white marble balustrade in the foreground with the Hebrew text \"הגנים הבאהיים\" written on it, serving as the ultimate majestic tourism postcard.",
+        "imagepath": "results/landmarks/images/landmark_image_045.png"
+    },
+    "91": {
+        "index": 91,
+        "landmark_english": "Apollonia National Park",
+        "landmark_hebrew": "אפולוניה",
+        "description": "Situé sur une falaise spectaculaire surplombant la mer Méditerranée, au nord d'Herzliya, le parc national d'Apollonia est un site archéologique fascinant. Ses ruines témoignent d'une riche histoire allant des Phéniciens aux Croisés. La pièce maîtresse du site est sans conteste la forteresse croisée du XIIIe siècle, d'où vous pourrez admirer des vues panoramiques époustouflantes sur la côte azur. Se promener à travers les vestiges antiques tout en respirant l'air marin offre une expérience unique. C'est un lieu incontournable pour les amateurs d'histoire et de nature, offrant des couchers de soleil inoubliables et une plongée captivante dans le passé de la région.",
+        "prompt": "A realistic 3D render of the breathtaking Apollonia National Park at sunset, captured from a dramatic low camera angle with ancient Crusader fortress ruins and vibrant coastal flora in the foreground, looking out over a spectacular cliff towards the azure Mediterranean Sea under a warm, golden-hued sky, featuring a weathered stone monument perfectly integrated into the ruins with the Hebrew text \"אפולוניה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_091.png"
+    },
+    "92": {
+        "index": 92,
+        "landmark_english": "Atlit Crusader Fortress",
+        "landmark_hebrew": "מבצר עתלית",
+        "description": "La forteresse croisée d'Atlit, également connue sous le nom de Château Pèlerin, est un monument historique exceptionnel situé sur la côte méditerranéenne, au sud de Haïfa. Construite au début du XIIIe siècle par les Templiers, elle s'avance majestueusement dans la mer sur une petite péninsule. Bien que son accès soit aujourd'hui restreint en raison de sa présence sur une base navale militaire, ses imposantes ruines visibles depuis la plage d'Atlit témoignent de la puissance et de l'ingénierie des Croisés. C'est l'une des forteresses les mieux préservées de cette époque en Israël, un site mystérieux et impressionnant qui captive l'imagination de tout visiteur.",
+        "prompt": "A realistic 3D render of the imposing Atlit Crusader Fortress jutting majestically into the Mediterranean Sea on a small peninsula, viewed from a sweeping wide angle on the sandy beach with crashing waves and scattered seashells in the foreground during a moody, misty morning, featuring an ancient, half-buried wooden shield on the shore with the Hebrew text \"מבצר עתלית\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_092.png"
+    },
+    "93": {
+        "index": 93,
+        "landmark_english": "Monfort Fortress",
+        "landmark_hebrew": "מבצר מונפורט",
+        "description": "Nichée au cœur des paysages verdoyants de la Haute Galilée, la forteresse de Montfort est un joyau caché perché sur un éperon rocheux entouré de vallées boisées. Ancienne forteresse de l'ordre Teutonique datant du XIIIe siècle, elle offre une escapade spectaculaire aux randonneurs et passionnés d'histoire. Accessible uniquement à pied via des sentiers pittoresques, le site récompense les courageux par une vue imprenable sur la rivière Kziv et la nature environnante. Son isolement et son architecture médiévale en ruine lui confèrent une atmosphère romantique et mystérieuse. Montfort est une étape incontournable pour découvrir la beauté sauvage et le passé fascinant du nord d'Israël.",
+        "prompt": "A realistic 3D render of the romantic medieval ruins of Monfort Fortress perched high on a rugged rocky spur surrounded by the lush, green wooded valleys of the Upper Galilee, viewed from an elevated, sweeping drone angle at golden hour with vibrant wild flora and a winding hiking trail in the foreground, featuring a beautifully carved wooden trail signpost with the Hebrew text \"מבצר מונפורט\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_093.png"
+    },
+    "94": {
+        "index": 94,
+        "landmark_english": "Belvoir Fortress",
+        "landmark_hebrew": "כוכב הירדן",
+        "description": "Surplombant majestueusement la vallée du Jourdain depuis les hauteurs de la Basse Galilée, la forteresse de Belvoir, ou Kokhav HaYarden, est un chef-d'œuvre de l'architecture militaire médiévale. Construite par les Chevaliers Hospitaliers au XIIe siècle, elle est la forteresse croisée la plus complète et la mieux conservée d'Israël. Sa conception concentrique innovante et ses douves profondes sont remarquables. Le site offre, comme son nom l'indique, une belle vue panoramique exceptionnelle sur les paysages bibliques, du lac de Tibériade jusqu'aux monts de Galaad. C'est une visite incontournable pour comprendre l'histoire des Croisades tout en profitant d'un cadre naturel absolument époustouflant.",
+        "prompt": "A realistic 3D render of the magnificent concentric Belvoir Fortress overlooking the vast Jordan Valley, captured from a striking aerial angle under a clear, bright blue sky with deep stone moats and wild grass in the foreground leading the eye toward the distant Sea of Galilee, featuring a majestic medieval stone archway seamlessly integrated into the ruins with the Hebrew text \"כוכב הירדן\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_094.png"
+    },
+    "95": {
+        "index": 95,
+        "landmark_english": "Mount Carmel Viewpoint",
+        "landmark_hebrew": "תצפית הר הכרמל",
+        "description": "Le point de vue du Mont Carmel, situé au-dessus de la charmante ville de Haïfa, offre l'un des panoramas les plus spectaculaires de tout Israël. Depuis ce promontoire verdoyant, vous embrasserez du regard la baie scintillante de Haïfa, le port animé, la côte méditerranéenne s'étendant vers le nord, et les magnifiques jardins baha'is en terrasses qui dévalent la pente. Le mont Carmel, souvent appelé la vigne de Dieu, est célèbre pour sa beauté naturelle luxuriante et son importance spirituelle. C'est un arrêt incontournable pour prendre des photos mémorables, respirer l'air pur de la montagne et admirer la rencontre parfaite entre la nature, la ville et la mer.",
+        "prompt": "A realistic 3D render of the spectacular Mount Carmel Viewpoint overlooking the sparkling bay of Haifa and the magnificent terraced Baha'i Gardens, captured from a high vantage point during a vibrant, clear spring afternoon with lush pine branches and colorful flowers in the foreground, featuring a sleek, modern panoramic viewing telescope stand with the Hebrew text \"תצפית הר הכרמל\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_095.png"
+    },
+    "96": {
+        "index": 96,
+        "landmark_english": "Ein Keshatot",
+        "landmark_hebrew": "עין קשתות",
+        "description": "Ein Keshatot, situé dans les paysages sauvages et captivants du plateau du Golan, est un site archéologique d'une beauté émouvante. Son attrait principal réside dans les vestiges magnifiquement restaurés d'une ancienne synagogue juive de l'époque byzantine, datant du VIe siècle. Le site tient son nom, qui signifie la source des arches, des arches romaines impressionnantes qui abritent une source d'eau fraîche à proximité. La restauration minutieuse de la synagogue, dont l'arche sainte ornée est un véritable chef-d'œuvre, permet de s'immerger dans la vie antique de la région. Avec ses vues panoramiques sur le lac de Tibériade, c'est un lieu spirituel et historique incontournable.",
+        "prompt": "A realistic 3D render of the ancient archaeological site of Ein Keshatot in the wild Golan Heights, showcasing the beautifully restored Byzantine synagogue and impressive Roman arches sheltering a crystal-clear water spring in the foreground, viewed from a serene eye-level angle during a tranquil sunrise, featuring a beautifully engraved stone basin with the Hebrew text \"עין קשתות\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_096.png"
+    },
+    "97": {
+        "index": 97,
+        "landmark_english": "Mary's Well in Nazareth",
+        "landmark_hebrew": "מעיין מרים",
+        "description": "Le Puits de Marie, situé au cœur de la ville animée de Nazareth en Basse Galilée, est un site d'une immense signification spirituelle et historique. Selon la tradition chrétienne orthodoxe, c'est à cette source que l'archange Gabriel serait apparu à la Vierge Marie pour lui annoncer qu'elle porterait l'enfant Jésus. Aujourd'hui, la structure moderne du puits marque l'emplacement de cette source antique qui alimentait toute la ville. Entouré de charmantes ruelles pavées, de boutiques locales et de l'église orthodoxe grecque de l'Annonciation, ce lieu emblématique offre une atmosphère paisible et recueillie, constituant une étape essentielle de tout pèlerinage ou visite culturelle en Terre Sainte.",
+        "prompt": "A realistic 3D render of the spiritually significant Mary's Well in the heart of bustling Nazareth, captured from an inviting, slightly low angle during a warm, sunlit afternoon with picturesque cobbled streets and traditional local pottery in the foreground, featuring an elegant stone plaque seamlessly built into the modern well structure with the Hebrew text \"מעיין מרים\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_097.png"
+    },
+    "98": {
+        "index": 98,
+        "landmark_english": "Tel Hazor Ruins",
+        "landmark_hebrew": "תל חצור",
+        "description": "Les ruines de Tel Hazor, situées dans la Haute Galilée au nord du lac de Tibériade, représentent le site archéologique biblique le plus grand et le plus riche d'Israël. Classé au patrimoine mondial de l'UNESCO, ce monticule antique dévoile les vestiges grandioses d'une cité cananéenne puis israélite d'une importance stratégique majeure, jadis décrite comme la tête de tous ces royaumes. Vous serez fasciné par l'impressionnant système d'approvisionnement en eau souterrain, un chef-d'œuvre d'ingénierie de l'âge du fer, ainsi que par les temples, palais et portes fortifiées. Tel Hazor est une visite absolument incontournable pour quiconque souhaite marcher dans les pas des récits de l'Ancien Testament.",
+        "prompt": "A realistic 3D render of the grand archaeological ruins of Tel Hazor in the Upper Galilee, captured from a sweeping wide angle under a dramatic, cloud-swept sky highlighting the monumental stone pillars and the impressive ancient underground water system entrance in the foreground, featuring a large, weathered basalt slab organically resting among the historical artifacts with the Hebrew text \"תל חצור\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_098.png"
+    },
+    "99": {
+        "index": 99,
+        "landmark_english": "Tel Be'er Sheva",
+        "landmark_hebrew": "תל באר שבע",
+        "description": "Situé à la lisière du désert du Néguev, dans le sud d'Israël, Tel Be'er Sheva est un site archéologique fascinant classé au patrimoine mondial de l'UNESCO. Il abrite les ruines exceptionnellement bien préservées d'une ville biblique de l'âge du fer. Lié aux patriarches Abraham, Isaac et Jacob, ce lieu offre un aperçu unique de l'urbanisme antique, avec ses rues circulaires, ses habitations traditionnelles et son impressionnant système de collecte d'eau souterrain. Le célèbre autel à cornes reconstitué témoigne des pratiques religieuses de l'époque. C'est un arrêt incontournable pour comprendre l'histoire biblique et admirer l'ingéniosité des anciennes civilisations face aux défis du désert.",
+        "prompt": "A realistic 3D render of the fascinating ancient ruins of Tel Be'er Sheva at the edge of the sun-drenched Negev desert, viewed from a dynamic elevated angle with the iconic reconstructed horned altar and sandy desert shrubs in the foreground, set against a clear, deep blue sky, featuring a rustic clay tablet beautifully integrated into the archaeological site with the Hebrew text \"תל באר שבע\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_099.png"
+    },
+    "100": {
+        "index": 100,
+        "landmark_english": "Sea of Galilee Shores",
+        "landmark_hebrew": "חופי הכנרת",
+        "description": "Les rives de la mer de Galilée, ou lac de Tibériade, situées dans le nord-est d'Israël, offrent un mélange unique de beauté naturelle sereine et d'histoire biblique profonde. Entouré par les collines ondulantes de la Galilée et du Golan, ce lac d'eau douce est le plus bas du monde. Ses plages pittoresques invitent à la détente, à la baignade et aux sports nautiques. Mais c'est aussi un lieu spirituel majeur, où Jésus a marché sur l'eau et prononcé ses enseignements. Explorer ses rives, c'est découvrir des sites incontournables comme Capharnaüm ou le mont des Béatitudes, tout en profitant de couchers de soleil magiques sur l'eau scintillante.",
+        "prompt": "A realistic 3D render of the serene Sea of Galilee Shores during a magical, vibrant sunset, captured from a low angle right above the rippling water with smooth, wet pebbles and a gently swaying wooden rowboat in the foreground, looking out towards the distant rolling hills of the Golan, featuring a weathered wooden dock post with the Hebrew text \"חופי הכנרת\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_100.png"
+    },
+    "16": {
+        "index": 16,
+        "landmark_english": "City of David Archaeological Park",
+        "landmark_hebrew": "עיר דוד",
+        "description": "Bienvenue a la Cite de David, le berceau historique de Jerusalem ! Situe juste au sud des remparts de la vieille ville, ce parc archeologique fascinant est l'endroit meme ou le roi David a etabli sa capitale il y a plus de trois mille ans. C'est une visite absolument incontournable pour comprendre les origines de la ville sainte. Vous pourrez y explorer d'anciennes habitations royales, des fortifications impressionnantes et surtout, vous aventurer dans le tunnel d'Ezechias, un aqueduc souterrain creuse dans la roche. Marcher dans ces vestiges antiques est une veritable immersion dans l'histoire biblique et l'archeologie millenaire.",
+        "prompt": "A realistic 3D render of the ancient City of David Archaeological Park during a breathtaking golden hour, featuring majestic stone ruins and ancient fortifications viewed from an epic low-angle perspective, with lush olive trees in the foreground and a beautifully weathered stone tablet with the Hebrew text \"עיר דוד\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_016.png"
+    },
+    "17": {
+        "index": 17,
+        "landmark_english": "Pool of Siloam",
+        "landmark_hebrew": "בריכת השילוח",
+        "description": "Decouvrez le bassin de Siloe, un site d'une immense importance spirituelle et historique, situe a l'extremite sud de la Cite de David a Jerusalem. Jadis, ce vaste reservoir alimente par la source de Gihon servait de mikve, un bain rituel, pour les milliers de pelerins juifs montant au Temple. C'est egalement un lieu central du Nouveau Testament, celebre pour le miracle de la guerison de l'aveugle-ne. Ses marches monumentales recemment mises au jour offrent un temoignage poignant de l'epoque du Second Temple. C'est un passage obligatoire pour ressentir l'effervescence religieuse de l'Antiquite au coeur de la Terre Sainte.",
+        "prompt": "A realistic 3D render of the historic Pool of Siloam with crystal-clear water reflecting the warm rays of a morning sun, viewed from a high angle showcasing the ancient monumental stone steps, with lush green ferns in the foreground and an elegant ancient limestone pillar with the Hebrew text \"בריכת השילוח\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_017.png"
+    },
+    "18": {
+        "index": 18,
+        "landmark_english": "Mount Scopus Viewpoint",
+        "landmark_hebrew": "תצפית הר הצופים",
+        "description": "Preparez-vous a etre ebloui par la vue depuis le mont Scopus, situe au nord-est de Jerusalem. Son nom meme signifie le lieu d'ou l'on regarde, et vous comprendrez vite pourquoi ! Ce belvedere exceptionnel offre le panorama le plus spectaculaire sur la vieille ville, avec le Dome du Rocher scintillant au soleil, et les collines environnantes. De l'autre cote, votre regard plongera vers l'aridite envoutante du desert de Judee, jusqu'a la mer Morte. Ce contraste saisissant entre la cite millenaire et l'immensite desertique fait de cette etape un moment photographique et contemplatif absolument magique et incontournable de votre voyage.",
+        "prompt": "A realistic 3D render of the spectacular Mount Scopus viewpoint overlooking the glowing Old City of Jerusalem and the distant Judean desert under a clear blue sky, featuring a modern observation deck in the foreground where a sleek metallic plaque with the Hebrew text \"תצפית הר הצופים\" written on it is beautifully integrated.",
+        "imagepath": "results/landmarks/images/landmark_image_018.png"
+    },
+    "19": {
+        "index": 19,
+        "landmark_english": "Lion's Gate",
+        "landmark_hebrew": "שער האריות",
+        "description": "Franchissez avec moi la celebre porte des Lions, situee sur la muraille est de la vieille ville de Jerusalem. Vous remarquerez immediatement les quatre pantheres sculptees de chaque cote, souvent confondues avec des lions, qui veillent sur cette entree depuis le seizieme siecle. Cette porte est un point de passage crucial : elle marque le debut traditionnel de la Via Dolorosa pour les pelerins chretiens marchant sur les pas du Christ. Elle est aussi chargee d'histoire moderne, car c'est par ici que les parachutistes israeliens sont entres lors de la guerre des Six Jours. Un lieu veritablement emblematique !",
+        "prompt": "A realistic 3D render of the iconic Lion's Gate of Jerusalem's Old City bathed in dramatic morning light, viewed from a slight upward angle to highlight the majestic carved stone panthers flanking the entrance, with vibrant bougainvillea flowers in the foreground and an antique forged iron sign with the Hebrew text \"שער האריות\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_019.png"
+    },
+    "20": {
+        "index": 20,
+        "landmark_english": "Damascus Gate",
+        "landmark_hebrew": "שער שכם",
+        "description": "Voici la porte de Damas, sans conteste la plus majestueuse et la plus animee des entrees de la vieille ville de Jerusalem. Situee sur la muraille nord, cette merveille de l'architecture ottomane du seizieme siecle est un veritable chef-d'oeuvre avec ses creneaux et ses tourelles imposantes. En la franchissant, vous plongez instantanement dans l'effervescence du quartier musulman et de son souk colore, vibrant au rythme des marchands et des senteurs d'epices. Sous la porte actuelle se cache meme une place de l'epoque romaine ! C'est le point de depart ideal pour une exploration authentique et sensorielle de la cite historique.",
+        "prompt": "A realistic 3D render of the magnificent Damascus Gate at twilight, showcasing its highly detailed Ottoman architecture and majestic turrets illuminated by warm golden lights, with a bustling cobblestone plaza and colorful spice stalls in the foreground, and a beautifully carved stone archway with the Hebrew text \"שער שכם\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_020.png"
+    },
+    "21": {
+        "index": 21,
+        "landmark_english": "Jaffa Gate",
+        "landmark_hebrew": "שער יפו",
+        "description": "La porte de Jaffa est votre porte d'entree principale vers l'histoire de Jerusalem. Situee sur le flanc ouest des remparts, elle tire son nom du port antique vers lequel la route menait. Juste a cote, vous serez frappe par la presence imposante de la Tour de David, l'ancienne citadelle de la ville. Fait unique, la muraille adjacente a ete percee a la fin du dix-neuvieme siecle pour permettre a l'empereur Guillaume II d'y entrer en caleche. Carrefour strategique entre les quartiers chretien et armenien, cette porte est le lieu de rendez-vous incontournable pour commencer toute visite de la vieille ville.",
+        "prompt": "A realistic 3D render of the monumental Jaffa Gate and the adjacent Tower of David bathed in bright Mediterranean sunshine, captured from an inviting eye-level perspective with vibrant blooming flower beds in the foreground, featuring a classic bronze tourist sign with the Hebrew text \"שער יפו\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_021.png"
+    },
+    "22": {
+        "index": 22,
+        "landmark_english": "Tomb of Zechariah",
+        "landmark_hebrew": "קבר זכריה",
+        "description": "Descendons maintenant dans la majestueuse vallee du Cedron, au pied du mont des Oliviers, pour admirer la tombe de Zacharie. Ce monument fascinant est en realite un monolithe geant : il n'a pas ete construit avec des pierres, mais entierement taille dans la roche vivante de la montagne ! Bien qu'attribue par la tradition au prophete Zacharie, il s'agit d'un monument funeraire datant de l'epoque du Second Temple. Son architecture melant influences juives et hellenistiques, avec ses colonnes ioniques surmontees d'un toit pyramidal, en fait l'une des merveilles antiques les plus impressionnantes et mysterieuses de la necropole de Jerusalem.",
+        "prompt": "A realistic 3D render of the monolithic Tomb of Zechariah in the Kidron Valley, intricately carved from the mountain's living rock and bathed in dramatic afternoon sunlight, with ancient olive branches framing the foreground and a large natural bedrock slab with the Hebrew text \"קבר זכריה\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_022.png"
+    },
+    "23": {
+        "index": 23,
+        "landmark_english": "Tomb of Absalom",
+        "landmark_hebrew": "יד אבשלום",
+        "description": "Juste a cote, toujours dans la mysterieuse vallee du Cedron, se dresse le monument le plus emblematique de cette ancienne necropole : la tombe d'Absalom. Cette structure monumentale du premier siecle attire immediatement le regard grace a son etonnant toit conique en forme d'entonnoir renverse. La legende populaire l'associe au fils rebelle du roi David, bien que l'archeologie date l'edifice de plusieurs siecles plus tard. La finesse de ses colonnes sculptees dans la roche et sa taille imposante temoignent de la richesse de Jerusalem a l'epoque greco-romaine. C'est un joyau architectural antique qu'il faut absolument voir de ses propres yeux.",
+        "prompt": "A realistic 3D render of the impressive Tomb of Absalom with its unique conical roof standing tall in a serene, sunlit valley, viewed from a low dramatic angle with lush wild grasses in the foreground, featuring a beautifully weathered ancient scroll carved in stone with the Hebrew text \"יד אבשלום\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_023.png"
+    },
+    "24": {
+        "index": 24,
+        "landmark_english": "Zedekiah's Cave",
+        "landmark_hebrew": "מערת צדקיהו",
+        "description": "Sous les rues animees de la vieille ville de Jerusalem se cache un secret spectaculaire : la grotte de Sedecias. L'entree de cette immense carriere de pierre souterraine se trouve tout pres de la porte de Damas. En vous enfoncant dans ses galeries sombres et mysterieuses, vous marcherez la ou les tailleurs de pierre extrayaient les blocs geants destines a la construction du Temple de Salomon. La legende raconte que le dernier roi de Juda, Sedecias, tenta de fuir par ce tunnel lors du siege babylonien. Ses vastes salles caverneuses offrent une aventure souterraine unique et rafraichissante, loin de la foule.",
+        "prompt": "A realistic 3D render of the mysterious underground Zedekiah's Cave illuminated by warm, cinematic torchlight highlighting the massive carved limestone walls, captured from a wide-angle perspective with rugged boulders in the foreground, and a glowing lantern illuminating a stone block with the Hebrew text \"מערת צדקיהו\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_024.png"
+    },
+    "25": {
+        "index": 25,
+        "landmark_english": "Haas Promenade",
+        "landmark_hebrew": "טיילת ארמון הנציב",
+        "description": "Pour l'une des vues les plus romantiques et grandioses du pays, je vous emmene sur la promenade Haas, situee sur la crete d'Armon Hanatziv au sud de Jerusalem. Ce magnifique parc paysager offre un panorama epoustouflant et degage sur la vieille ville, le mont des Oliviers et les collines plongeant vers le desert de Judee. C'est le lieu parfait pour une balade tranquille au coucher du soleil, lorsque les murailles de pierre de Jerusalem se teintent d'or. Ce belvedere paisible, entoure de pins et de jardins fleuris, est un veritable havre de paix et un spot photographique incontournable.",
+        "prompt": "A realistic 3D render of the romantic Haas Promenade at sunset, offering a breathtaking panoramic view of Jerusalem's golden walls, featuring landscaped stone pathways and fragrant pine trees in the foreground, with an elegant wooden park sign with the Hebrew text \"טיילת ארמון הנציב\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_025.png"
+    },
+    "26": {
+        "index": 26,
+        "landmark_english": "Tel Aviv Promenade",
+        "landmark_hebrew": "טיילת תל אביב",
+        "description": "Changeons de decor et bienvenue sur la Tayelet, la celebre promenade maritime de Tel-Aviv ! S'etendant sur des kilometres le long de la mer Mediterranee, elle relie le port antique de Jaffa au sud jusqu'au port moderne de Tel-Aviv au nord. C'est le coeur vibrant et sportif de la ville, ou locaux et touristes se croisent a velo, en footing ou simplement en flanant. Avec ses plages de sable fin d'un cote et ses hotels luxueux de l'autre, l'atmosphere y est perpetuellement estivale et joyeuse. Se promener ici en fin de journee pour admirer le coucher de soleil est magique.",
+        "prompt": "A realistic 3D render of the vibrant Tel Aviv Promenade during a spectacular pink and orange sunset over the Mediterranean Sea, featuring a lively beachfront with palm trees and modern bicycles in the foreground, and a stylish glowing neon sign with the Hebrew text \"טיילת תל אביב\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_026.png"
+    },
+    "27": {
+        "index": 27,
+        "landmark_english": "Dizengoff Square",
+        "landmark_hebrew": "כיכר דיזנגוף",
+        "description": "Au coeur battant de Tel-Aviv se trouve la place Dizengoff, un veritable symbole de la Ville Blanche. Entouree de magnifiques batiments emblematiques de l'architecture Bauhaus avec leurs balcons arrondis caracteristiques, cette place est un carrefour incontournable de la vie urbaine israelienne. Recemment renovee pour retrouver son niveau de rue d'origine, elle abrite en son centre la celebre fontaine coloree de l'artiste Yaacov Agam. Que ce soit pour faire une pause sur un banc a l'ombre des arbres, ecouter des musiciens de rue ou profiter des cafes environnants, la place Dizengoff offre une immersion totale dans l'art de vivre tel-avivien.",
+        "prompt": "A realistic 3D render of the bustling Dizengoff Square in Tel Aviv on a bright sunny day, showcasing the iconic colorful Agam fountain and surrounding white Bauhaus architecture, with stylish cafe tables in the foreground and a modern minimalist billboard with the Hebrew text \"כיכר דיזנגוף\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_027.png"
+    },
+    "28": {
+        "index": 28,
+        "landmark_english": "Jaffa Clock Tower",
+        "landmark_hebrew": "מגדל השעון ביפו",
+        "description": "En arrivant a Jaffa, vous ne pourrez pas manquer son majestueux monument emblematique : la tour de l'Horloge. Erigee au debut du vingtieme siecle en pierre calcaire, elle fut construite pour celebrer les vingt-cinq ans de regne du sultan ottoman Abdulhamid II. Situee a l'entree nord de la vieille ville, elle marque la frontiere entre le passe millenaire de Jaffa et la modernite de Tel-Aviv. Aujourd'hui, cette elegante tour est le point de ralliement ideal pour commencer votre exploration. Le quartier qui l'entoure regorge de boulangeries parfumees, de boutiques d'antiquites et d'une effervescence mediterraneenne qui vous charmera a coup sur.",
+        "prompt": "A realistic 3D render of the majestic Jaffa Clock Tower standing tall against a deep blue twilight sky, captured from a sweeping street-level perspective with bustling cobblestones and charming vintage bakery storefronts in the foreground, featuring an ornate vintage street lamp holding a sign with the Hebrew text \"מגדל השעון ביפו\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_028.png"
+    },
+    "29": {
+        "index": 29,
+        "landmark_english": "Jaffa Port",
+        "landmark_hebrew": "נמל יפו",
+        "description": "Preparez-vous a remonter le temps en visitant le port de Jaffa, l'un des plus anciens ports maritimes encore en activite au monde ! Situe au sud de Tel-Aviv, ce lieu mythique est mentionne dans la Bible, notamment dans l'histoire de Jonas. Aujourd'hui, les anciens hangars portuaires ont ete magnifiquement rehabilites pour accueillir des galeries d'art contemporain, des boutiques de createurs et d'excellents restaurants de fruits de mer. Flaner sur les quais au milieu des petits bateaux de pecheurs, avec la brise marine et la vue imprenable sur la skyline de Tel-Aviv, est une experience pittoresque et absolument incontournable.",
+        "prompt": "A realistic 3D render of the historic Jaffa Port on a sparkling sunny morning, featuring picturesque wooden fishing boats gently bobbing in the turquoise water with the modern Tel Aviv skyline in the background, anchored by a rustic wooden dock with the Hebrew text \"נמל יפו\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_029.png"
+    },
+    "30": {
+        "index": 30,
+        "landmark_english": "Carmel Market",
+        "landmark_hebrew": "שוק הכרמל",
+        "description": "Pour une veritable explosion de saveurs et de couleurs, suivez-moi au marche du Carmel, le celebre Shuk HaCarmel ! Situe en plein centre de Tel-Aviv, c'est le plus grand et le plus anime des marches de la ville. En deambulant dans ses allees bondees, vous serez enveloppe par les cris des marchands, les parfums d'epices orientales, les etals de fruits gorges de soleil et les patisseries allechantes. Au-dela des produits frais, le marche est devenu un haut lieu de la street-food israelienne, proposant des mets innovants et delicieux. C'est le coeur bouillonnant de Tel-Aviv, une experience sensorielle vibrante a ne pas manquer.",
+        "prompt": "A realistic 3D render of the vibrant Carmel Market bustling with energy, capturing cinematic sunbeams piercing through colorful fabric awnings to illuminate vibrant mounds of exotic spices and fresh fruits in the foreground, featuring a beautifully chalked rustic blackboard with the Hebrew text \"שוק הכרמל\" written on it.",
+        "imagepath": "results/landmarks/images/landmark_image_030.png"
+    },
+    "46": {
+        "index": 46,
+        "landmark_english": "German Colony Haifa",
+        "landmark_hebrew": "המושבה הגרמנית",
+        "description": "Située au pied de l'imposant mont Carmel à Haïfa, la Colonie Allemande est un quartier pittoresque et chargé d'histoire. Fondée au dix-neuvième siècle par les Templiers allemands, elle se distingue par ses charmantes maisons en pierre aux toits rouges, soigneusement restaurées. Ce lieu est absolument incontournable pour son alignement visuel parfait avec les somptueux jardins baha'is qui dégringolent la montagne. Aujourd'hui, c'est un centre névralgique animé, regorgeant de cafés, de restaurants et de boutiques. S'y promener au crépuscule, avec la vue illuminée sur le sanctuaire, offre une expérience magique et inoubliable au cœur d'une ville multiculturelle.",
+        "prompt": "A hyper-realistic 3D render of the picturesque German Colony in Haifa at twilight, captured from a low-angle perspective looking up a vibrant street lined with beautifully restored red-roofed stone houses, glowing cafes, and foreground cobblestones, leading the eye toward the illuminated Baha'i Gardens on Mount Carmel, featuring an elegant vintage street lamp with the Hebrew text \"המושבה הגרמנית\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_046.png"
+    },
+    "47": {
+        "index": 47,
+        "landmark_english": "Stella Maris Monastery",
+        "landmark_hebrew": "מנזר סטלה מאריס",
+        "description": "Perché majestueusement sur les hauteurs du mont Carmel à Haïfa, le monastère Stella Maris est un joyau spirituel et architectural. Ce sanctuaire carmélite du dix-neuvième siècle se dresse face à l'immensité de la mer Méditerranée, offrant un panorama à couper le souffle. À l'intérieur, vous serez éblouis par les magnifiques fresques colorées ornant le dôme et, surtout, par la grotte sacrée qu'il abrite, traditionnellement associée au prophète Élie. C'est un lieu incontournable qui allie une profonde sérénité religieuse à une beauté naturelle exceptionnelle. La visite invite à la contemplation tout en dominant la magnifique baie de la ville.",
+        "prompt": "A breathtaking realistic 3D render of the majestic Stella Maris Monastery perched on Mount Carmel overlooking the vast, sparkling Mediterranean Sea on a sun-drenched afternoon, framed by lush foreground pine branches and captured from an aerial drone angle, featuring a beautifully weathered stone archway with the Hebrew text \"מנזר סטלה מאריס\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_047.png"
+    },
+    "48": {
+        "index": 48,
+        "landmark_english": "Rosh Hanikra Grottoes",
+        "landmark_hebrew": "ראש הנקרה",
+        "description": "Tout au nord d'Israël, là où la côte méditerranéenne rencontre la frontière libanaise, se trouvent les spectaculaires grottes de Rosh Hanikra. Ce site géologique fascinant est célèbre pour ses falaises d'un blanc éclatant en craie, dans lesquelles la mer a sculpté au fil des millénaires un labyrinthe de grottes marines. Accessible par le téléphérique le plus escarpé du monde, la descente offre une vue plongeante sur les flots turquoise. À l'intérieur, le bruit assourdissant des vagues s'écrasant contre la roche crée une atmosphère mystique. C'est une merveille naturelle incontournable, vibrante de puissance et de beauté sauvage.",
+        "prompt": "An immersive realistic 3D render of the spectacular Rosh Hanikra Grottoes, looking out from deep inside the mystical sea caves where vibrant turquoise waves crash against glowing white chalk cliffs under a dramatic golden hour light, with a foreground rustic wooden boardwalk featuring a weathered signplate with the Hebrew text \"ראש הנקרה\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_048.png"
+    },
+    "49": {
+        "index": 49,
+        "landmark_english": "Akko Old City Walls",
+        "landmark_hebrew": "חומות עכו",
+        "description": "Situées sur la côte nord d'Israël, les imposantes murailles de la vieille ville d'Acre, ou Akko, sont un témoignage saisissant du passé tumultueux de la région. Bâties et renforcées principalement durant la période ottomane, ces fortifications massives sont célèbres pour avoir résisté au siège de Napoléon Bonaparte en 1799. En vous promenant sur ces remparts de pierre, vous profiterez d'une vue imprenable sur la mer Méditerranée d'un côté et sur les toits pittoresques de la cité historique de l'autre. C'est une balade incontournable pour plonger dans l'histoire épique et ressentir l'âme indomptable de cette ville fascinante.",
+        "prompt": "A majestic realistic 3D render of the imposing Akko Old City Walls bathed in the warm, golden light of a Mediterranean sunset, viewed from a sweeping wide angle over the crashing waves with ancient bronze cannons in the foreground, featuring a sturdy stone plaque embedded in the ancient fortifications with the Hebrew text \"חומות עכו\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_049.png"
+    },
+    "50": {
+        "index": 50,
+        "landmark_english": "Akko Knights' Halls",
+        "landmark_hebrew": "אולמות האבירים",
+        "description": "Dissimulés sous la vieille ville d'Acre, les impressionnants Halls des Chevaliers constituent un complexe souterrain extraordinaire datant de l'époque des Croisés. Autrefois quartier général de l'ordre des Hospitaliers, ce site archéologique méticuleusement restauré vous plonge directement au douzième siècle. Vous déambulerez à travers d'immenses salles voûtées, des cryptes mystérieuses et d'anciens réfectoires à l'architecture gothique remarquable. Ce qui rend ce lieu absolument incontournable, c'est son atmosphère envoûtante et son état de conservation exceptionnel, qui permettent d'imaginer avec une clarté saisissante la vie quotidienne des chevaliers. C'est un véritable voyage dans le temps au cœur de la côte israélienne.",
+        "prompt": "A highly detailed realistic 3D render of the enchanting Akko Knights' Halls, showcasing the magnificent underground Crusader architecture with soaring gothic vaulted ceilings and dramatic shafts of light piercing through dust motes, captured from a wide interior angle with a foreground ancient stone pillar with the Hebrew text \"אולמות האבירים\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_050.png"
+    },
+    "51": {
+        "index": 51,
+        "landmark_english": "Mount Arbel Viewpoint",
+        "landmark_hebrew": "תצפית הר ארבל",
+        "description": "S'élevant abruptement en Basse Galilée, près de la ville de Tibériade, le point de vue du mont Arbel offre sans doute le panorama le plus spectaculaire du nord d'Israël. Depuis le sommet de cette falaise vertigineuse, une vue imprenable se déploie sur les eaux scintillantes de la mer de Galilée, la vallée du Jourdain et les hauteurs du Golan en toile de fond. En plus de sa beauté naturelle époustouflante, le site abrite les vestiges d'une ancienne forteresse troglodyte creusée à même la roche. C'est une étape incontournable pour les amateurs de randonnée et de paysages grandioses.",
+        "prompt": "A stunning realistic 3D render of the Mount Arbel Viewpoint on a crystal-clear morning, captured from the cliff's edge to reveal a sweeping, vertigo-inducing panorama of the Sea of Galilee and the Jordan Valley below, with a foreground rugged rock formation featuring a metallic trail marker with the Hebrew text \"תצפית הר ארבל\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_051.png"
+    },
+    "52": {
+        "index": 52,
+        "landmark_english": "Church of the Transfiguration",
+        "landmark_hebrew": "כנסיית ההשתנות",
+        "description": "Couronnant le sommet arrondi du mont Thabor en Basse Galilée, la majestueuse église de la Transfiguration est un haut lieu de pèlerinage et de splendeur architecturale. Selon la tradition chrétienne, c'est ici que Jésus fut transfiguré devant ses disciples. Conçue par le célèbre architecte Antonio Barluzzi au début du vingtième siècle, la basilique impressionne par ses magnifiques mosaïques dorées et ses deux tours jumelles encadrant l'entrée. Ce lieu est incontournable non seulement pour sa profonde signification spirituelle et son atmosphère empreinte de paix, mais aussi pour les panoramas fantastiques qu'il offre sur toute la vallée de Jezréel.",
+        "prompt": "A serene realistic 3D render of the majestic Church of the Transfiguration crowning Mount Tabor on a bright, cloudless day, viewed from a low angle across lush, blooming foreground gardens that highlight its striking twin towers and intricate facade, featuring a beautifully polished stone monument with the Hebrew text \"כנסיית ההשתנות\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_052.png"
+    },
+    "53": {
+        "index": 53,
+        "landmark_english": "Capernaum Ruins",
+        "landmark_hebrew": "כפר נחום",
+        "description": "Situées sur la rive nord de la paisible mer de Galilée, les ruines de Capharnaüm représentent l'un des sites bibliques les plus fascinants d'Israël. Surnommée la ville de Jésus, elle fut le centre de son ministère en Galilée. Le site est dominé par les vestiges spectaculaires d'une imposante synagogue en calcaire blanc datant du quatrième siècle, qui contraste magnifiquement avec les anciennes maisons en basalte noir. Vous y découvrirez également les fondations de la maison de l'apôtre Pierre, surmontées aujourd'hui d'une église moderne en suspension. C'est un lieu incontournable qui mêle archéologie remarquable et intense émotion spirituelle.",
+        "prompt": "A captivating realistic 3D render of the ancient Capernaum Ruins under a brilliant blue sky, showcasing the stark contrast between the majestic white limestone synagogue columns and the surrounding black basalt foundations with the Sea of Galilee sparkling in the background, featuring an elegant bronze archaeological plaque with the Hebrew text \"כפר נחום\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_053.png"
+    },
+    "54": {
+        "index": 54,
+        "landmark_english": "Mount of Beatitudes",
+        "landmark_hebrew": "הר האושר",
+        "description": "Surplombant les rives sereines de la mer de Galilée dans le nord d'Israël, le mont des Béatitudes est un havre de paix d'une beauté exceptionnelle. C'est sur cette douce colline que Jésus aurait prononcé son célèbre Sermon sur la montagne. Le sommet est couronné par une élégante église octogonale, conçue par Antonio Barluzzi, dont les huit côtés symbolisent les huit béatitudes. Entouré de jardins luxuriants et fleuris, le site offre un panorama inoubliable sur le lac en contrebas. C'est une visite absolument incontournable pour ressentir une profonde tranquillité et admirer l'un des paysages les plus poétiques du pays.",
+        "prompt": "A tranquil realistic 3D render of the elegant octagonal church atop the Mount of Beatitudes during a soft, golden sunrise, surrounded by vibrant, blooming foreground gardens and overlooking the serene waters of the Sea of Galilee, featuring a smooth decorative garden stone with the Hebrew text \"הר האושר\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_054.png"
+    },
+    "55": {
+        "index": 55,
+        "landmark_english": "Yardenit Baptismal Site",
+        "landmark_hebrew": "ירדנית",
+        "description": "Situé à l'extrémité sud de la mer de Galilée, là où les eaux douces se jettent dans le fleuve Jourdain, Yardenit est un site de baptême emblématique et paisible. Entouré d'eucalyptus majestueux et d'une faune riveraine abondante, ce lieu attire des pèlerins du monde entier venus s'immerger dans ces eaux sacrées, sur les traces du baptême de Jésus. Les installations modernes et les escaliers aménagés rendent l'accès au fleuve sûr et serein. Même pour les simples curieux, c'est un arrêt incontournable pour observer la ferveur spirituelle environnante et profiter de la beauté verdoyante des rives du Jourdain.",
+        "prompt": "A peaceful realistic 3D render of the Yardenit Baptismal Site on the lush banks of the Jordan River, captured at eye-level over the gentle, emerald-green waters surrounded by majestic eucalyptus trees and dappled sunlight, featuring a welcoming wooden boardwalk railing with the Hebrew text \"ירדנית\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_055.png"
+    },
+    "56": {
+        "index": 56,
+        "landmark_english": "Nimrod Fortress",
+        "landmark_hebrew": "מבצר נמרוד",
+        "description": "Perchée sur une crête escarpée des contreforts du mont Hermon, dans le nord du plateau du Golan, la forteresse de Nimrod est le plus grand château médiéval d'Israël. Construite au treizième siècle par les souverains ayyoubides pour contrer la menace des Croisés, cette citadelle monumentale impressionne par ses tours massives, ses donjons bien préservés et ses passages secrets intrigants. Son emplacement stratégique en fait un site incontournable, offrant des vues panoramiques époustouflantes sur les vallées verdoyantes de Galilée. Explorer ses ruines mystérieuses, c'est plonger au cœur des épopées médiévales dans un cadre naturel d'une beauté sauvage et saisissante.",
+        "prompt": "An epic realistic 3D render of the monumental Nimrod Fortress perched on a rugged ridge in the Golan Heights during a dramatic, misty morning, captured from a dynamic low angle that emphasizes its massive medieval stone towers, featuring an ancient, weather-beaten stone arch with the Hebrew text \"מבצר נמרוד\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_056.png"
+    },
+    "57": {
+        "index": 57,
+        "landmark_english": "Banias Waterfall",
+        "landmark_hebrew": "מפל הבניאס",
+        "description": "Nichée dans une réserve naturelle verdoyante au pied du mont Hermon, dans le nord d'Israël, la cascade de Banias est la plus puissante et impressionnante chute d'eau du pays. Alimentée par la fonte des neiges, l'eau cristalline dévale les roches basaltiques avec une force spectaculaire, créant un bassin rafraîchissant entouré d'une végétation luxuriante de platanes et de figuiers. Un sentier suspendu en bois permet d'approcher la cascade au plus près. Associé aux ruines antiques voisines de Césarée de Philippe, ce site est incontournable pour les amoureux de la nature recherchant un havre de fraîcheur et de beauté brute.",
+        "prompt": "A vibrant realistic 3D render of the powerful Banias Waterfall cascading over dark basalt rocks into a refreshing, crystal-clear pool surrounded by a lush canopy of fig and plane trees, viewed from a slightly elevated angle with a foreground suspended wooden viewing deck featuring a beautifully carved wooden sign with the Hebrew text \"מפל הבניאס\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_057.png"
+    },
+    "58": {
+        "index": 58,
+        "landmark_english": "Tel Dan Nature Reserve",
+        "landmark_hebrew": "שמורת תל דן",
+        "description": "Située dans la Haute Galilée, près de la frontière nord, la réserve naturelle de Tel Dan est un véritable paradis terrestre. Elle abrite les sources bouillonnantes de la rivière Dan, le plus grand affluent du Jourdain, offrant des sentiers ombragés sous une canopée forestière dense et rafraîchissante. Ce qui rend ce lieu absolument incontournable, c'est la combinaison fascinante entre cette nature exubérante et des découvertes archéologiques majeures. Vous pourrez y admirer des portes cananéennes en briques crues datant de près de quatre mille ans, souvent appelées les portes d'Abraham. C'est une escapade parfaite alliant histoire biblique et splendeur écologique.",
+        "prompt": "A refreshing realistic 3D render of the Tel Dan Nature Reserve, depicting a lush, shaded forest canopy where bubbling spring waters flow around mossy rocks in the foreground, illuminated by magical rays of sunlight piercing through the leaves, featuring a natural, smooth river stone with the Hebrew text \"שמורת תל דן\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_058.png"
+    },
+    "59": {
+        "index": 59,
+        "landmark_english": "Mount Hermon Peak",
+        "landmark_hebrew": "הר חרמון",
+        "description": "Dominant fièrement l'extrême nord du pays, le sommet du mont Hermon est le point culminant d'Israël. Surnommé les yeux de la nation, ce géant montagneux offre des panoramas époustouflants s'étendant sur la Galilée, le plateau du Golan et au-delà des frontières. En hiver, le site se transforme en l'unique station de ski du pays, attirant les foules sur ses pentes enneigées. En été, il devient un paradis pour les randonneurs désirant explorer sa flore alpine rare et ses sentiers balayés par des vents frais. C'est une destination incontournable pour vivre une expérience alpine inattendue au Moyen-Orient.",
+        "prompt": "A spectacular realistic 3D render of the snowy Mount Hermon Peak on a pristine, sunny winter day, captured from a sweeping wide angle that showcases the breathtaking alpine panorama over the Golan Heights, with crisp foreground snowdrifts and a rustic wooden summit marker with the Hebrew text \"הר חרמון\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_059.png"
+    },
+    "60": {
+        "index": 60,
+        "landmark_english": "Safed Old City Alleys",
+        "landmark_hebrew": "סמטאות צפת העתיקה",
+        "description": "Perchée dans les montagnes de la Haute Galilée, la ville pittoresque de Safed, ou Tzfat, est le berceau mondial de la Kabbale mystique. Se perdre dans les ruelles pavées de sa vieille ville est une expérience envoûtante et hors du temps. Les murs de pierre peints en bleu azur pour éloigner le mauvais œil, les anciennes synagogues ashkénazes et séfarades richement ornées, ainsi que les galeries du quartier des artistes créent une atmosphère vibrante et spirituelle. C'est une étape incontournable pour s'imprégner de l'âme poétique d'Israël, chiner des œuvres d'art uniques et admirer les couchers de soleil spectaculaires.",
+        "prompt": "A highly atmospheric realistic 3D render of the picturesque Safed Old City Alleys at golden hour, capturing the enchanting, narrow cobblestone streets lined with vibrant, blue-painted stone walls and warm, glowing vintage lanterns, featuring an ornate wrought-iron hanging sign with the Hebrew text \"סמטאות צפת העתיקה\" written on.",
+        "imagepath": "results/landmarks/images/landmark_image_060.png"
+    }
+}

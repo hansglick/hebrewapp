@@ -5,6 +5,7 @@ import time
 from functools import lru_cache
 
 from google import genai
+from google.genai import types
 from google.genai.types import FileState
 from pydantic import Field, create_model
 
@@ -85,13 +86,61 @@ def evaluate_translation(sentence_to_translate: str, student_solution: str) -> d
     return json.loads(response.text)
 
 
-def evaluate_oral(question_hebrew: str, texte_hebrew: str, audio_bytes: bytes, mime_type: str) -> dict:
-    prompt = _load_prompt("extract_oral_evaluation").format(
-        question_hebrew=question_hebrew,
-        texte_hebrew=texte_hebrew,
-    )
-    response_class = _load_response_class("extract_oral_evaluation")
+def evaluate_report(rapport: str, texte: str) -> dict:
+    prompt = _load_prompt("extract_rapport").format(rapport=rapport, texte=texte)
+    response_class = _load_response_class("extract_rapport")
 
+    response = _client().models.generate_content(
+        model=GEMINI_MODEL,
+        contents=[prompt],
+        config={
+            "response_mime_type": "application/json",
+            "response_schema": response_class,
+            "temperature": 0.1,
+        },
+    )
+    return json.loads(response.text)
+
+
+def extract_lyrics(youtube_url: str, youtube_key: str) -> dict:
+    """Demande à Gemini d'extraire et traduire les paroles d'une vidéo
+    YouTube, et remet la réponse au format attendu par item_chanson.json."""
+    prompt = _load_prompt("extract_lyrics")
+    response_class = _load_response_class("extract_lyrics")
+
+    response = _client().models.generate_content(
+        model=GEMINI_MODEL,
+        contents=[
+            types.Part.from_uri(file_uri=youtube_url, mime_type="video/mp4"),
+            prompt,
+        ],
+        config={
+            "response_mime_type": "application/json",
+            "response_schema": response_class,
+            "temperature": 0.1,
+        },
+    )
+    data = json.loads(response.text)
+
+    title_he, title_fr = (list(data["title"]) + [""])[:2]
+    lyrics = [
+        {"index": idx + 1, "hebrew": he, "french": fr}
+        for idx, (he, fr) in enumerate(data["lyrics"])
+    ]
+    return {
+        "key": youtube_key,
+        # Gemini est invité à "recopier" l'url dans sa réponse, mais il lui
+        # arrive d'halluciner un autre identifiant de vidéo au passage — on
+        # ignore donc systématiquement data["url"] et on garde l'url d'origine
+        # fournie par le user, seule source fiable.
+        "url": youtube_url,
+        "title_he": title_he,
+        "title_fr": title_fr,
+        "lyrics": lyrics,
+    }
+
+
+def _generate_from_audio(prompt: str, response_class, audio_bytes: bytes, mime_type: str) -> dict:
     client = _client()
     base_mime_type = mime_type.split(";")[0].strip()
     suffix = _MIME_TO_SUFFIX.get(base_mime_type, ".wav")
@@ -121,3 +170,12 @@ def evaluate_oral(question_hebrew: str, texte_hebrew: str, audio_bytes: bytes, m
         os.remove(tmp_path)
 
     return json.loads(response.text)
+
+
+def evaluate_oral(question_hebrew: str, texte_hebrew: str, audio_bytes: bytes, mime_type: str) -> dict:
+    prompt = _load_prompt("extract_oral_evaluation").format(
+        question_hebrew=question_hebrew,
+        texte_hebrew=texte_hebrew,
+    )
+    response_class = _load_response_class("extract_oral_evaluation")
+    return _generate_from_audio(prompt, response_class, audio_bytes, mime_type)

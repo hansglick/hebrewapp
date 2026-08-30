@@ -1,0 +1,43 @@
+services:
+  - name: hebrew-app-backend
+    type: web
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    # Le système de fichiers d'un service Render est éphémère (remis à zéro
+    # à chaque déploiement) : la base SQLite et backend/results/ (non
+    # versionné, cf. .gitignore) doivent vivre sur ce disque monté plutôt
+    # que dans le repo. backend/results/ doit être peuplé manuellement une
+    # fois (SCP/SFTP/CLI Render) après le premier déploiement.
+    disk:
+      name: hebrew-app-data
+      mountPath: /var/data
+      sizeGB: 2
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      # URL du frontend déployé ci-dessous, une fois connue (CORS) — ex:
+      # https://hebrew-app-frontend.onrender.com
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: DB_PATH
+        value: /var/data/db.sqlite3
+      - key: RESULTS_DIR
+        value: /var/data/results
+
+  - name: hebrew-app-frontend
+    type: web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      # URL du backend ci-dessus, une fois connue — ex:
+      # https://hebrew-app-backend.onrender.com. Vite fige cette valeur au
+      # moment du build, pas à l'exécution : la redéfinir demande un
+      # nouveau déploiement du frontend.
+      - key: VITE_API_URL
+        sync: false

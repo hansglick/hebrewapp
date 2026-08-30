@@ -11,6 +11,8 @@ export const appConfig = {
       border: "#e5e4e7",
       success: "#2f9e44",
       danger: "#e03131",
+      warning: "#f08c00",
+      shekel: "#1d3557",
     },
     dark: {
       bg: "#16171d",
@@ -21,11 +23,14 @@ export const appConfig = {
       border: "#2e303a",
       success: "#40c057",
       danger: "#ff6b6b",
+      warning: "#ffa94d",
+      shekel: "#7dd3fc",
     },
   },
   fontFamily: {
     latin: "system-ui, 'Segoe UI', Roboto, sans-serif",
     hebrew: "'Arial Hebrew', 'Noto Sans Hebrew', system-ui, sans-serif",
+    hebrewBiblical: "'Frank Ruhl Libre', 'Times New Roman', serif",
   },
   fontSize: {
     small: 14,
