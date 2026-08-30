@@ -34,6 +34,14 @@ services:
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    # Sans ça, un accès direct (URL tapée, favori, F5 en pleine navigation)
+    # à une route autre que "/" renvoie 404 : le site statique cherche un
+    # fichier physique à ce chemin au lieu de laisser React Router décider
+    # côté client — toutes les routes doivent retomber sur index.html.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       # URL du backend ci-dessus, une fois connue — ex:
       # https://hebrew-app-backend.onrender.com. Vite fige cette valeur au
