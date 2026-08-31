@@ -85,6 +85,13 @@ export default function JdrScreen() {
   // sans ça, ws.onclose (déclenché de façon asynchrone par wsRef.current?.close()
   // dans stop()) écraserait le statut qu'on vient de positionner.
   const intentionalStopRef = useRef(false);
+  // Un message {type:"error"} du backend (ex: "Aucun jeu de rôle...") est
+  // plus parlant que le code de fermeture générique qui suit — à préserver
+  // dans ce cas précis. Mais "Erreur de connexion." (posé par onerror, qui
+  // ne porte lui-même aucun détail) ne doit JAMAIS bloquer l'affichage du
+  // code réel que onclose reçoit juste après, sans quoi ce diagnostic ne
+  // sert à rien.
+  const serverErrorRef = useRef(false);
 
   useEffect(() => {
     setJdr(null);
@@ -127,6 +134,7 @@ export default function JdrScreen() {
 
   async function start() {
     intentionalStopRef.current = false;
+    serverErrorRef.current = false;
     setRunning(true);
     setStatus("Connexion...");
 
@@ -190,6 +198,7 @@ export default function JdrScreen() {
         // réception) le replace à sa vraie place chronologique.
         addToHistory("user", msg.text, msg.ts);
       } else if (msg.type === "error") {
+        serverErrorRef.current = true;
         setStatus("Erreur : " + msg.message);
         addToHistory("error", msg.message, Date.now() / 1000);
       }
@@ -202,12 +211,8 @@ export default function JdrScreen() {
     // on l'affiche pour ne plus être aveugle sur un "échec de connexion".
     ws.onerror = () => setStatus("Erreur de connexion.");
     ws.onclose = (event) => {
-      if (intentionalStopRef.current) return;
-      setStatus((s) =>
-        s.startsWith("Erreur")
-          ? s
-          : `Connexion fermée (code ${event.code}${event.reason ? " — " + event.reason : ""}).`
-      );
+      if (intentionalStopRef.current || serverErrorRef.current) return;
+      setStatus(`Connexion fermée (code ${event.code}${event.reason ? " — " + event.reason : ""}).`);
     };
   }
 
