@@ -59,6 +59,11 @@ export default function JdrScreen() {
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState("Prêt.");
   const [aiBuffer, setAiBuffer] = useState("");
+  // Reste affichée après turn_complete, jusqu'à ce que la prochaine réplique
+  // de l'IA commence à arriver (aiBuffer redevient non-vide) — sans ça,
+  // l'encadré retombe à "…" dès la fin de chaque tour, ce qui laisse
+  // l'écran vide la plupart du temps entre deux répliques.
+  const [lastCompletedAi, setLastCompletedAi] = useState("");
   const [history, setHistory] = useState([]); // [{speaker, text, ts}], retrié à chaque ajout
 
   // Source de vérité synchrone pour le texte IA en cours d'accumulation —
@@ -175,7 +180,10 @@ export default function JdrScreen() {
         const finished = aiBufferRef.current;
         aiBufferRef.current = "";
         setAiBuffer("");
-        if (finished) addToHistory("ai", finished, msg.ts);
+        if (finished) {
+          addToHistory("ai", finished, msg.ts);
+          setLastCompletedAi(finished);
+        }
       } else if (msg.type === "user_transcript_final") {
         // Whisper renvoie le tour complet d'un coup, avec un léger retard
         // sur le flux Gemini — msg.ts (horodaté au début du tour, pas à la
@@ -187,10 +195,19 @@ export default function JdrScreen() {
       }
     };
 
+    // L'événement "error" d'un WebSocket navigateur ne transporte jamais de
+    // détail (ni code, ni raison — restriction volontaire du spec pour ne
+    // rien révéler d'un réseau tiers) : impossible de savoir ici pourquoi.
+    // "close", juste après, porte le vrai diagnostic (event.code/reason) —
+    // on l'affiche pour ne plus être aveugle sur un "échec de connexion".
     ws.onerror = () => setStatus("Erreur de connexion.");
-    ws.onclose = () => {
+    ws.onclose = (event) => {
       if (intentionalStopRef.current) return;
-      setStatus((s) => (s.startsWith("Erreur") ? s : "Connexion fermée."));
+      setStatus((s) =>
+        s.startsWith("Erreur")
+          ? s
+          : `Connexion fermée (code ${event.code}${event.reason ? " — " + event.reason : ""}).`
+      );
     };
   }
 
@@ -279,7 +296,7 @@ export default function JdrScreen() {
             transition: "background-color 0.2s",
           }}
         >
-          {renderWithAsteriskBold(aiBuffer || "…")}
+          {renderWithAsteriskBold(aiBuffer || lastCompletedAi || "…")}
         </div>
 
         <div
