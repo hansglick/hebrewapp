@@ -52,6 +52,10 @@ function base64ToInt16(b64) {
 // ouverte ne consomme du quota Gemini Live/Whisper indéfiniment.
 const MAX_DURATION_MS = 2 * 60 * 1000;
 
+function isErrorStatus(status) {
+  return status.startsWith("Micro refusé") || status.startsWith("Erreur") || status.startsWith("Connexion fermée");
+}
+
 export default function JdrScreen() {
   const { code } = useParams();
   const [jdr, setJdr] = useState(null);
@@ -294,7 +298,14 @@ export default function JdrScreen() {
         </div>
 
         {status && (
-          <p className="muted" style={{ margin: "8px 0 0", fontSize: "0.8em" }}>
+          <p
+            className="muted"
+            style={{
+              margin: "8px 0 0",
+              fontSize: "0.8em",
+              color: isErrorStatus(status) ? "var(--danger)" : undefined,
+            }}
+          >
             {status}
           </p>
         )}
