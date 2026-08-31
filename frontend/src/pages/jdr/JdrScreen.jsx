@@ -136,6 +136,25 @@ export default function JdrScreen() {
     intentionalStopRef.current = false;
     serverErrorRef.current = false;
     setRunning(true);
+    setStatus("Demande d'accès au micro...");
+
+    // Demandé ici, en tout premier, synchrone avec le clic — PAS dans
+    // ws.onopen (asynchrone, ne se déclenche qu'une fois la connexion
+    // établie). Certains navigateurs (Safari/WebKit en particulier)
+    // refusent silencieusement getUserMedia, sans jamais afficher la popup
+    // système, si l'appel a lieu en dehors du contexte d'activation
+    // utilisateur du clic d'origine — le micro clignote alors rouge puis
+    // vert sans aucune erreur visible.
+    let micStream;
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      setStatus("Micro refusé : " + e.message);
+      setRunning(false);
+      return;
+    }
+    micStreamRef.current = micStream;
+
     setStatus("Connexion...");
 
     autoStopTimeoutRef.current = setTimeout(() => {
@@ -146,30 +165,22 @@ export default function JdrScreen() {
     const ws = new WebSocket(jdrWebSocketUrl(code));
     wsRef.current = ws;
 
-    ws.onopen = async () => {
+    const micContext = new (window.AudioContext || window.webkitAudioContext)();
+    micContextRef.current = micContext;
+    const source = micContext.createMediaStreamSource(micStream);
+    const processor = micContext.createScriptProcessor(4096, 1, 1);
+    processorRef.current = processor;
+    processor.onaudioprocess = (e) => {
+      if (ws.readyState !== WebSocket.OPEN) return;
+      const input = e.inputBuffer.getChannelData(0);
+      const pcm16k = floatTo16kPCM(input, micContext.sampleRate);
+      ws.send(JSON.stringify({ type: "audio", data: int16ToBase64(pcm16k) }));
+    };
+    source.connect(processor);
+    processor.connect(micContext.destination);
+
+    ws.onopen = () => {
       setStatus("Connecté — parle en hébreu !");
-      let micStream;
-      try {
-        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      } catch (e) {
-        setStatus("Micro refusé : " + e.message);
-        stop();
-        return;
-      }
-      micStreamRef.current = micStream;
-      const micContext = new (window.AudioContext || window.webkitAudioContext)();
-      micContextRef.current = micContext;
-      const source = micContext.createMediaStreamSource(micStream);
-      const processor = micContext.createScriptProcessor(4096, 1, 1);
-      processorRef.current = processor;
-      processor.onaudioprocess = (e) => {
-        if (ws.readyState !== WebSocket.OPEN) return;
-        const input = e.inputBuffer.getChannelData(0);
-        const pcm16k = floatTo16kPCM(input, micContext.sampleRate);
-        ws.send(JSON.stringify({ type: "audio", data: int16ToBase64(pcm16k) }));
-      };
-      source.connect(processor);
-      processor.connect(micContext.destination);
     };
 
     ws.onmessage = (event) => {
