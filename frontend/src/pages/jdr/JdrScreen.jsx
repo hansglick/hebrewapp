@@ -153,7 +153,16 @@ export default function JdrScreen() {
     try {
       micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
     } catch (e) {
-      setStatus("Micro refusé : " + e.message);
+      // Sur Android, un rejet "Permission denied" sans jamais afficher la
+      // popup de permission du navigateur signifie presque toujours que
+      // l'accès au micro est bloqué au niveau du système, pas du site
+      // (Chrome ne peut alors même pas demander) — indiquer directement le
+      // chemin de réglage plutôt que de laisser un message technique seul.
+      const hint =
+        e.name === "NotAllowedError" || /permission denied/i.test(e.message)
+          ? " — rends-toi dans Paramètres > Applications > Chrome > Autorisations, et autorise l'utilisation du microphone."
+          : "";
+      setStatus("Micro refusé : " + e.message + hint);
       setRunning(false);
       return;
     }
