@@ -517,9 +517,20 @@ export default function ExamenEcritScreen() {
                 disabled={false}
               />
               {selectedQuizz && (
-                <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em" }}>
-                  Appuie sur Entrée pour valider
-                </p>
+                <button
+                  type="button"
+                  className="link-btn"
+                  style={{
+                    marginTop: 0,
+                    fontStyle: "italic",
+                    color: "var(--textMuted)",
+                    fontSize: "0.75em",
+                    textDecoration: "none",
+                  }}
+                  onClick={handleSubmitQuizz}
+                >
+                  Valider ma réponse
+                </button>
               )}
             </>
           )}
