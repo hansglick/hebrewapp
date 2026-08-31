@@ -1,16 +1,32 @@
-// Icône "configuration" (engrenage), dessinée à la main — bleu pastel par
-// défaut pour rester cohérent avec les autres accents de l'app (ex: icône
-// Culture, #a9d6f5).
-export function GearIcon({ size = 20, color = "#a9d6f5" }) {
+import { mediaUrl } from "../api/media";
+
+// Icône "configuration" (engrenage), fournie par l'utilisateur
+// (backend/results/logos/configuration.png — silhouette noire sur fond
+// transparent). Recolorée via mask-image plutôt qu'un filtre : le PNG sert
+// uniquement de forme (son canal alpha), la couleur vient de background,
+// donc `color` s'applique fidèlement quel que soit le contenu du fichier.
+// Même bleu que ShekelIcon (var(--shekel)) par défaut, pour rester cohérent
+// entre les deux icônes du bandeau supérieur.
+export function GearIcon({ size = 20, color = "var(--shekel)" }) {
+  const url = mediaUrl("logos/configuration.png");
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="3.2" stroke={color} strokeWidth="1.6" />
-      <path
-        d="M12 3.5v2.4M12 18.1v2.4M20.5 12h-2.4M5.9 12H3.5M17.66 6.34l-1.7 1.7M8.04 15.96l-1.7 1.7M17.66 17.66l-1.7-1.7M8.04 8.04l-1.7-1.7"
-        stroke={color}
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-    </svg>
+    <span
+      role="img"
+      aria-hidden="true"
+      style={{
+        display: "inline-block",
+        width: size,
+        height: size,
+        backgroundColor: color,
+        WebkitMaskImage: `url(${url})`,
+        maskImage: `url(${url})`,
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
   );
 }

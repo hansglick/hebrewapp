@@ -320,7 +320,7 @@ export default function Layout() {
             title="Configuration"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={24} color="#a9d6f5" />
+            <GearIcon size={24} />
             <span className="exam-tile-tooltip">Configuration</span>
           </button>
           <button
