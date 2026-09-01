@@ -146,24 +146,15 @@ export default function MotScreen() {
             gap: 14,
           }}
         >
-          <span className="hebrew-word-row">
-            <button
-              type="button"
-              className="speak-btn"
-              style={{ marginInlineEnd: "0.6em" }}
-              onClick={() => speak(mot.original)}
-            >
+          <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.4375em" }}>
+            {mot.original}
+          </span>
+
+          <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
+            <button type="button" className="speak-btn" onClick={() => speak(mot.original)}>
               <SpeakerIcon color="var(--text)" size={27} />
             </button>
-            <span className="hebrew" style={{ fontWeight: 700, fontSize: "3.25em" }}>
-              {mot.original}
-            </span>
-            <button
-              type="button"
-              className="speak-btn"
-              style={{ marginInlineStart: "0.6em" }}
-              onClick={toggleRacineInline}
-            >
+            <button type="button" className="speak-btn" onClick={toggleRacineInline}>
               <span className="racine-badge" style={{ background: "#64748b", fontWeight: 700 }}>
                 ש
               </span>
@@ -180,7 +171,7 @@ export default function MotScreen() {
             }}
           />
 
-          <span style={{ fontStyle: "italic", fontSize: "3.25em", color: "var(--textMuted)" }}>{mot.french}</span>
+          <span style={{ fontStyle: "italic", fontSize: "1.625em", color: "var(--textMuted)" }}>{mot.french}</span>
 
           {racineDetails && <RacineCard racine={racineDetails} />}
         </div>
