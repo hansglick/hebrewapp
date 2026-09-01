@@ -135,35 +135,55 @@ export default function MotScreen() {
       )}
 
       {mode === "exploration" && (
-        <>
-          <div className="hebrew-word-row">
+        <div
+          style={{
+            minHeight: "60vh",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 14,
+          }}
+        >
+          <span className="hebrew-word-row">
             <button
               type="button"
               className="speak-btn"
               style={{ marginInlineEnd: "0.6em" }}
+              onClick={() => speak(mot.original)}
+            >
+              <SpeakerIcon color="var(--text)" size={27} />
+            </button>
+            <span className="hebrew" style={{ fontWeight: 700, fontSize: "3.25em" }}>
+              {mot.original}
+            </span>
+            <button
+              type="button"
+              className="speak-btn"
+              style={{ marginInlineStart: "0.6em" }}
               onClick={toggleRacineInline}
             >
               <span className="racine-badge" style={{ background: "#64748b", fontWeight: 700 }}>
                 ש
               </span>
             </button>
-            <span className="hebrew" style={{ fontWeight: 700, fontSize: "1.3em" }}>
-              {mot.original}
-            </span>
-            <span style={{ color: "#64748b" }}>|</span>
-            <span style={{ fontStyle: "italic", fontSize: "1.3em" }}>{mot.french}</span>
-            <button
-              type="button"
-              className="speak-btn"
-              style={{ marginInlineStart: "0.6em" }}
-              onClick={() => speak(mot.original)}
-            >
-              <SpeakerIcon color="var(--text)" />
-            </button>
-          </div>
+          </span>
+
+          <hr
+            style={{
+              width: "70%",
+              maxWidth: 400,
+              border: "none",
+              borderTop: "1px solid var(--border)",
+              margin: 0,
+            }}
+          />
+
+          <span style={{ fontStyle: "italic", fontSize: "3.25em", color: "var(--textMuted)" }}>{mot.french}</span>
 
           {racineDetails && <RacineCard racine={racineDetails} />}
-        </>
+        </div>
       )}
 
       {mode === "revision" && (
