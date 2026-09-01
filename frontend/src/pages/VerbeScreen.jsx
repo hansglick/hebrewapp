@@ -155,7 +155,7 @@ export default function VerbeScreen() {
   const conjugaisonsTemps = temps ? verbe.conjugaisons?.[temps] : null;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ zoom: 1.5 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && !!temps && revealed} />
 
       {mode === "revision" && (
