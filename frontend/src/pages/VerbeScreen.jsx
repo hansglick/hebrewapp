@@ -163,19 +163,18 @@ export default function VerbeScreen() {
       )}
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+        <p
+          style={{
+            margin: 0,
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "calc(var(--font-size-hebrew-large) * 0.4355)",
+            color: "var(--textMuted)",
+          }}
+        >
+          {capitalize(verbe.traduction)}
+        </p>
         <h1 className="hebrew-large">
-          <span
-            style={{
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "0.335em",
-              color: "var(--textMuted)",
-              marginInlineEnd: 10,
-              verticalAlign: "middle",
-            }}
-          >
-            {capitalize(verbe.traduction)}
-          </span>
           <button
             type="button"
             className="speak-btn"
