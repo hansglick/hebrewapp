@@ -163,17 +163,6 @@ export default function VerbeScreen() {
       )}
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-        <p
-          style={{
-            margin: 0,
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: "calc(var(--font-size-hebrew-large) * 0.4355)",
-            color: "var(--textMuted)",
-          }}
-        >
-          {capitalize(verbe.traduction)}
-        </p>
         <h1 className="hebrew-large">
           <button
             type="button"
@@ -229,6 +218,17 @@ export default function VerbeScreen() {
             ש
           </button>
         </h1>
+        <p
+          style={{
+            margin: 0,
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "calc(var(--font-size-hebrew-large) * 0.4355)",
+            color: "var(--textMuted)",
+          }}
+        >
+          {capitalize(verbe.traduction)}
+        </p>
       </div>
 
       {binyanDetails && (
