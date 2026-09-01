@@ -231,23 +231,29 @@ export default function VerbeScreen() {
         </p>
       </div>
 
-      {/* zoom: 1/1.5 annule le zoom:1.5 posé sur .screen — ces deux fiches
-          doivent garder leur taille d'origine, seul le reste de l'écran a
-          été agrandi. */}
+      {/* zoom: 1/1.5 (sur le div interne) annule le zoom:1.5 posé sur
+          .screen — ces deux fiches doivent garder leur taille d'origine,
+          seul le reste de l'écran a été agrandi. marginTop: -8 (sur le div
+          externe, non zoomé, donc dans le même référentiel que le gap:16
+          de .screen) réduit de moitié l'espace au-dessus de la fiche. */}
       {binyanDetails && (
-        <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5 }}>
-          <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
-            {binyanDetails.text}
-          </p>
-          <p className="muted" style={{ margin: "4px 0 0" }}>
-            {binyanDetails.sens}
-          </p>
+        <div style={{ marginTop: -8 }}>
+          <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5 }}>
+            <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
+              {binyanDetails.text}
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              {binyanDetails.sens}
+            </p>
+          </div>
         </div>
       )}
 
       {racineDetails && (
-        <div style={{ zoom: 1 / 1.5 }}>
-          <RacineCard racine={racineDetails} />
+        <div style={{ marginTop: -8 }}>
+          <div style={{ zoom: 1 / 1.5 }}>
+            <RacineCard racine={racineDetails} />
+          </div>
         </div>
       )}
 
