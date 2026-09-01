@@ -163,7 +163,7 @@ export default function VerbeScreen() {
       )}
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-        <h1 className="hebrew-large">
+        <h1 className="hebrew-large" style={{ margin: 0 }}>
           <button
             type="button"
             className="speak-btn"
