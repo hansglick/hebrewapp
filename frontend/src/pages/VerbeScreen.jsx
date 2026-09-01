@@ -244,7 +244,7 @@ export default function VerbeScreen() {
 
       {racineDetails && <RacineCard racine={racineDetails} />}
 
-      <div className="toggle-group" style={{ marginTop: binyanDetails || racineDetails ? 28 : 12 }}>
+      <div className="toggle-group" style={{ marginTop: binyanDetails || racineDetails ? 28 : 6 }}>
         {TEMPS_LABELS.map((t) => (
           <button
             key={t.key}
