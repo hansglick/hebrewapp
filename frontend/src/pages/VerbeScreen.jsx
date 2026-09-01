@@ -249,8 +249,12 @@ export default function VerbeScreen() {
         </div>
       )}
 
+      {/* RacineCard fixe elle-même marginTop: 40 sur sa racine (utile dans
+          ses autres contextes — Dictionnaire, MotScreen) — vu à travers le
+          zoom: 1/1.5 ci-dessous, ça vaut 40/1.5 ici. On l'annule en plus du
+          -8 pour retomber au même niveau que la fiche binyan. */}
       {racineDetails && (
-        <div style={{ marginTop: -8 }}>
+        <div style={{ marginTop: -8 - 40 / 1.5 }}>
           <div style={{ zoom: 1 / 1.5 }}>
             <RacineCard racine={racineDetails} />
           </div>
