@@ -231,8 +231,11 @@ export default function VerbeScreen() {
         </p>
       </div>
 
+      {/* zoom: 1/1.5 annule le zoom:1.5 posé sur .screen — ces deux fiches
+          doivent garder leur taille d'origine, seul le reste de l'écran a
+          été agrandi. */}
       {binyanDetails && (
-        <div className="card" style={{ textAlign: "center" }}>
+        <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5 }}>
           <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
             {binyanDetails.text}
           </p>
@@ -242,7 +245,11 @@ export default function VerbeScreen() {
         </div>
       )}
 
-      {racineDetails && <RacineCard racine={racineDetails} />}
+      {racineDetails && (
+        <div style={{ zoom: 1 / 1.5 }}>
+          <RacineCard racine={racineDetails} />
+        </div>
+      )}
 
       <div className="toggle-group" style={{ marginTop: binyanDetails || racineDetails ? 28 : 6 }}>
         {TEMPS_LABELS.map((t) => (
