@@ -5,6 +5,7 @@ import { getNiveau, createEvaluation } from "../../api/user";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
+import { NextPrevButtons } from "../../components/NextPrevButtons";
 import { PoolBadge } from "../../components/PoolBadge";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import "../screens.css";
@@ -60,18 +61,24 @@ export default function QuizzScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizz, selected, submitted]);
 
+  function goPrevious() {
+    if (!back()) navigate(-1);
+  }
+  function goNext() {
+    next();
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => next(),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
   });
 
   if (!quizz) return null;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
       <PoolBadge pool={quizz.pool} chapter={quizz.chapter} lesson={quizz.lesson} />
       <hr
         style={{

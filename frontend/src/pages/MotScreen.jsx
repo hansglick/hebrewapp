@@ -6,6 +6,7 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import { ActionHints } from "../components/ActionHints";
+import { NextPrevButtons } from "../components/NextPrevButtons";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
 import { PoolBadge } from "../components/PoolBadge";
@@ -97,11 +98,16 @@ export default function MotScreen() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mode, revealed, mot]);
 
+  function goPrevious() {
+    if (!back()) navigate(-1);
+  }
+  function goNext() {
+    next();
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => next(),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
     onSpace:
       mode === "exploration"
         ? toggleRacineInline
@@ -117,8 +123,9 @@ export default function MotScreen() {
   const bottomText = isTopHebrew ? mot.french : mot.original;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && revealed} />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
 
       {mode === "revision" && <PoolBadge pool={mot.pool} chapter={mot.chapter} lesson={mot.lesson} />}
 

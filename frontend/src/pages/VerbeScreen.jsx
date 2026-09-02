@@ -6,6 +6,7 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import { ActionHints } from "../components/ActionHints";
+import { NextPrevButtons } from "../components/NextPrevButtons";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
 import { PoolBadge } from "../components/PoolBadge";
@@ -138,15 +139,18 @@ export default function VerbeScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, temps, revealed, personneKey]);
 
+  function goPrevious() {
+    if (temps) setTemps(null);
+    else if (!back()) navigate(-1);
+  }
+  function goNext() {
+    if (temps && mode === "revision") nextQuestion();
+    else next();
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (temps) setTemps(null);
-      else if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => {
-      if (temps && mode === "revision") nextQuestion();
-      else next();
-    },
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
     onSpace: mode === "revision" && temps && !revealed ? () => setRevealed(true) : undefined,
   });
 
@@ -155,7 +159,12 @@ export default function VerbeScreen() {
   const conjugaisonsTemps = temps ? verbe.conjugaisons?.[temps] : null;
 
   return (
-    <section className="screen" style={{ zoom: 1.5 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <>
+    {/* paddingBottom en unités "pré-zoom" (80px réels / 1.5) — cette section
+        est elle-même zoomée, un padding en px réels serait donc étiré à
+        120px au lieu des 80px de dégagement voulus sous les boutons
+        next/previous (rendus hors de cette section, cf. plus bas). */}
+    <section className="screen" style={{ zoom: 1.5, paddingBottom: 80 / 1.5 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && !!temps && revealed} />
 
       {mode === "revision" && (
@@ -421,5 +430,7 @@ export default function VerbeScreen() {
         </>
       )}
     </section>
+    <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+    </>
   );
 }

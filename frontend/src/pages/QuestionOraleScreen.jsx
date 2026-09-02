@@ -4,12 +4,12 @@ import { getRandomQuestionOrale } from "../api/content";
 import { getNiveau } from "../api/user";
 import { evaluateOral } from "../api/gemini";
 import { mediaUrl } from "../api/media";
-import { speak } from "../utils/speech";
 import { blobToWavBlob } from "../utils/audioEncode";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { ActionHints } from "../components/ActionHints";
-import { AudioPlayer } from "../components/AudioPlayer";
+import { NextPrevButtons } from "../components/NextPrevButtons";
+import { OralAnswerCapture } from "../components/OralAnswerCapture";
 import { WaitingVideo } from "../components/WaitingVideo";
 import { PoolBadge } from "../components/PoolBadge";
 import "./screens.css";
@@ -164,11 +164,16 @@ export default function QuestionOraleScreen() {
     }
   }
 
+  function goPrevious() {
+    if (!back()) navigate(-1);
+  }
+  function goNext() {
+    next();
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => next(),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
   });
 
   if (!question) return null;
@@ -176,100 +181,34 @@ export default function QuestionOraleScreen() {
   const globalNote = geminiResult ? computeGlobalNote(geminiResult) : null;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ flex: 1, paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       {loadingGemini ? (
         <WaitingVideo />
       ) : (
         <>
       <ActionHints {...swipeHandlers.hints} />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
 
       {mode === "revision" && (
         <PoolBadge pool={question.pool} chapter={question.chapter} lesson={question.lesson} />
       )}
 
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <AudioPlayer src={mediaUrl(question.voicepath)} barMaxWidth={58.5} toggleSize={27} />
-        <button
-          type="button"
-          onClick={() => speak(question.question_hebrew)}
-          aria-label="Écouter la question"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 27,
-            height: 27,
-            borderRadius: "50%",
-            background: "#000",
-            color: "#fff",
-            fontWeight: 700,
-            fontSize: "1.1em",
-            border: "none",
-            padding: 0,
-            cursor: "pointer",
-          }}
-        >
-          ?
-        </button>
-        {!geminiResult && !audioBlob && !isRecording && !isConverting && (
-          <button
-            type="button"
-            className="speak-btn"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              color: "var(--textMuted)",
-              fontSize: "0.675em",
-            }}
-            onClick={startRecording}
-          >
-            <span
-              style={{
-                display: "inline-block",
-                width: 27,
-                height: 27,
-                borderRadius: "50%",
-                background: "var(--danger)",
-              }}
-            />
-            Répondre
-          </button>
-        )}
-      </div>
+      <OralAnswerCapture
+        contentSrc={mediaUrl(question.voicepath)}
+        questionText={question.question_hebrew}
+        showRecorder={!geminiResult}
+        isRecording={isRecording}
+        isConverting={isConverting}
+        audioBlob={audioBlob}
+        audioUrl={audioUrl}
+        onStart={startRecording}
+        onStop={stopRecording}
+        onRecommencer={() => setAudioBlob(null)}
+        onEnvoyer={handleSubmit}
+      />
 
       {!geminiResult && (
         <>
-          {isRecording && (
-            <button type="button" className="link-btn" onClick={stopRecording}>
-              ⏹️ Arrêter
-            </button>
-          )}
-          {isConverting && <p className="muted">Traitement de l'enregistrement...</p>}
-          {audioBlob && !isRecording && !loadingGemini && (
-            <>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <audio controls src={audioUrl} />
-              <div style={{ display: "flex", gap: 12 }}>
-                <button
-                  type="button"
-                  className="speak-btn"
-                  style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
-                  onClick={() => setAudioBlob(null)}
-                >
-                  Recommencer
-                </button>
-                <button
-                  type="button"
-                  className="speak-btn"
-                  style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
-                  onClick={handleSubmit}
-                >
-                  Envoyer
-                </button>
-              </div>
-            </>
-          )}
           {geminiError && (
             <p className="muted" style={{ color: "var(--danger)" }}>
               {geminiError}

@@ -3,13 +3,13 @@
 // via un masque CSS plutôt que d'utiliser <img>, posée sur un badge rond.
 // Sert aussi de bouton démarrer/arrêter la conversation (JdrScreen) : vert
 // au repos, rouge + halo pulsant pendant que la conversation est en cours.
-export function MicrophoneIcon({ size = 32, badgeColor = "var(--success)", pulsing = false, onClick }) {
+export function MicrophoneIcon({ size = 32, badgeColor = "var(--success)", pulsing = false, onClick, ariaLabel }) {
   const iconSize = Math.round(size * 0.55);
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={pulsing ? "Arrêter la conversation" : "Démarrer la conversation"}
+      aria-label={ariaLabel ?? (pulsing ? "Arrêter la conversation" : "Démarrer la conversation")}
       className={pulsing ? "mic-pulse" : undefined}
       style={{
         display: "inline-flex",

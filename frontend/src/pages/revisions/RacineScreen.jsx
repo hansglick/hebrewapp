@@ -5,6 +5,7 @@ import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { speak } from "../../utils/speech";
 import { ActionHints } from "../../components/ActionHints";
+import { NextPrevButtons } from "../../components/NextPrevButtons";
 import "../screens.css";
 
 // Accessible uniquement depuis le lien d'un mot (racine précise).
@@ -23,23 +24,29 @@ export default function RacineScreen() {
     getRacine(shoresh).then(setRacine);
   }, [shoresh]);
 
+  function goPrevious() {
+    const { returnPath, mot } = location.state ?? {};
+    if (returnPath) {
+      navigate(returnPath, { state: { restoreMot: mot } });
+    } else {
+      navigate(-1);
+    }
+  }
+  function goNext() {
+    getRandomRacine().then(setRacine);
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      const { returnPath, mot } = location.state ?? {};
-      if (returnPath) {
-        navigate(returnPath, { state: { restoreMot: mot } });
-      } else {
-        navigate(-1);
-      }
-    },
-    onSwipeRight: () => getRandomRacine().then(setRacine),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
   });
 
   if (!racine) return null;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
       <div className="curiosite-split curiosite-split-racine">
         <div className="curiosite-media">
           <img

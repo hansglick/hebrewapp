@@ -1,0 +1,34 @@
+.next-prev-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.next-prev-slot {
+  display: flex;
+}
+
+.next-prev-btn {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.next-prev-btn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -4,6 +4,7 @@ import { youtubeEmbedUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
+import { NextPrevButtons } from "../../components/NextPrevButtons";
 import "../screens.css";
 
 export default function ChansonScreen() {
@@ -20,18 +21,24 @@ export default function ChansonScreen() {
     initialChanson
   );
 
+  function goPrevious() {
+    if (!back()) navigate(-1);
+  }
+  function goNext() {
+    next();
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => next(),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
   });
 
   if (!chanson) return null;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
         <h1 className="hebrew" style={{ margin: 0 }}>{chanson.title_he}</h1>
         {chanson.title_fr && (

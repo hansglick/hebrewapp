@@ -8,6 +8,7 @@ import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import HebrewInput from "../components/HebrewInput";
 import { ActionHints } from "../components/ActionHints";
+import { NextPrevButtons } from "../components/NextPrevButtons";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { WaitingVideo } from "../components/WaitingVideo";
 import { PoolBadge } from "../components/PoolBadge";
@@ -134,11 +135,16 @@ export default function QuestionEcriteScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, evalMode, revealed, phrase]);
 
+  function goPrevious() {
+    if (!back()) navigate(-1);
+  }
+  function goNext() {
+    next();
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => next(),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
     onSpace:
       mode === "revision" && evalMode === "auto" && !revealed
         ? () => setRevealed(true)
@@ -159,7 +165,7 @@ export default function QuestionEcriteScreen() {
   const targetIsHebrew = !isSourceHebrew;
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       {loadingGemini ? (
         <WaitingVideo />
       ) : (
@@ -168,6 +174,7 @@ export default function QuestionEcriteScreen() {
         {...swipeHandlers.hints}
         digits={mode === "revision" && evalMode === "auto" && revealed}
       />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
 
       {mode === "revision" && (
         <div style={{ marginTop: -20 }}>

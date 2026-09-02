@@ -4,11 +4,10 @@ import { getExamenHard, getExamenHardStatus } from "../../api/content";
 import { answerExamenHard } from "../../api/user";
 import { evaluateTranslation, evaluateTranslationsGrouped, evaluateOral, evaluateOralsGrouped } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
-import { speak } from "../../utils/speech";
 import { blobToWavBlob } from "../../utils/audioEncode";
 import HebrewInput from "../../components/HebrewInput";
 import "../../components/HebrewInput.css";
-import { AudioPlayer } from "../../components/AudioPlayer";
+import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { WaitingVideo } from "../../components/WaitingVideo";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import { EvalWaitModeToggle } from "../../components/EvalWaitModeToggle";
@@ -466,7 +465,7 @@ export default function ExamenHardPasserScreen() {
     q?.type === "verbe" && answer ? (answer.submitted || "").trim() === (q.conjugaison || "").trim() : false;
 
   return (
-    <section className="screen">
+    <section className="screen" style={{ flex: 1 }}>
       <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
         <tbody>
           <tr>
@@ -670,72 +669,24 @@ export default function ExamenHardPasserScreen() {
               <p className="muted" style={{ fontSize: "0.7em", margin: 0 }}>
                 {q.text_code}
               </p>
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <AudioPlayer src={mediaUrl(q.voicepath)} barMaxWidth={58.5} toggleSize={27} />
-                <button
-                  type="button"
-                  onClick={() => speak(q.question_hebrew)}
-                  aria-label="Écouter la question"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 27,
-                    height: 27,
-                    borderRadius: "50%",
-                    background: "#000",
-                    color: "#fff",
-                    fontWeight: 700,
-                    fontSize: "1.1em",
-                    border: "none",
-                    padding: 0,
-                    cursor: "pointer",
-                  }}
-                >
-                  ?
-                </button>
-                {!answer && !pendingAnswers[index] && !audioBlob && !isRecording && !isConverting && (
-                  <button
-                    type="button"
-                    className="speak-btn"
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--textMuted)", fontSize: "0.675em" }}
-                    onClick={startRecording}
-                  >
-                    <span style={{ display: "inline-block", width: 27, height: 27, borderRadius: "50%", background: "var(--danger)" }} />
-                    Répondre
-                  </button>
-                )}
-              </div>
+              <OralAnswerCapture
+                contentSrc={mediaUrl(q.voicepath)}
+                questionText={q.question_hebrew}
+                showRecorder={!answer && !pendingAnswers[index]}
+                isRecording={isRecording}
+                isConverting={isConverting}
+                audioBlob={audioBlob}
+                audioUrl={audioUrl}
+                onStart={startRecording}
+                onStop={stopRecording}
+                onRecommencer={() => setAudioBlob(null)}
+                onEnvoyer={handleSubmitOral}
+              />
 
               {!answer && pendingAnswers[index] && (
                 <p className="muted" style={{ fontStyle: "italic", fontSize: "0.8em" }}>
                   Réponse enregistrée — sera évaluée à la fin de l'examen.
                 </p>
-              )}
-
-              {!answer && !pendingAnswers[index] && (
-                <>
-                  {isRecording && (
-                    <button type="button" className="link-btn" onClick={stopRecording}>
-                      ⏹️ Arrêter
-                    </button>
-                  )}
-                  {isConverting && <p className="muted">Traitement de l'enregistrement...</p>}
-                  {audioBlob && !isRecording && !loadingGemini && (
-                    <>
-                      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                      <audio controls src={audioUrl} />
-                      <div style={{ display: "flex", gap: 12 }}>
-                        <button type="button" className="speak-btn" style={{ color: "var(--textMuted)", fontSize: "0.8em" }} onClick={() => setAudioBlob(null)}>
-                          Recommencer
-                        </button>
-                        <button type="button" className="speak-btn" style={{ color: "var(--textMuted)", fontSize: "0.8em" }} onClick={handleSubmitOral}>
-                          Envoyer
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </>
               )}
 
               {answer && (
