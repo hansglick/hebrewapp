@@ -268,10 +268,6 @@
     display: block !important;
   }
 
-  .persistent-icon-culture > span {
-    background-color: #a9d6f5 !important;
-  }
-
   .persistent-icon-gear {
     margin-inline-start: -8px;
   }

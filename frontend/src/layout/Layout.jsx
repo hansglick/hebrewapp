@@ -321,7 +321,7 @@ export default function Layout() {
             title="Configuration"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={24} />
+            <GearIcon size={24} color="#7dd3fc" />
             <span className="exam-tile-tooltip">Configuration</span>
           </button>
           <button
@@ -331,7 +331,7 @@ export default function Layout() {
             title="Plus d'options"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={24} />
+            <GearIcon size={24} color="#7dd3fc" />
           </button>
           {mobileMenuOpen && (
             <>
