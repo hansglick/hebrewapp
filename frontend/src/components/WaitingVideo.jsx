@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { getWaitingVids } from "../api/content";
 import { dataMediaUrl } from "../api/media";
+import { ChansonWaitingCard } from "./ChansonWaitingCard";
 
 // Joue en boucle une vidéo tirée au hasard parmi backend/data/waiting_vids,
 // pendant l'attente d'une réponse Gemini (remplace l'ancien EnvelopeLoader).
 // `label` permet de personnaliser le texte (ex: progression d'un traitement
 // par lot) ; pour tirer une NOUVELLE vidéo à chaque requête d'un lot, le
 // parent doit changer la prop `key` à chaque étape (force un vrai remount,
-// le tirage n'a lieu qu'au montage).
+// le tirage n'a lieu qu'au montage). Un bouton permet de basculer vers
+// ChansonWaitingCard (chanson aléatoire avec vidéo YouTube) pour patienter
+// autrement — cf. demande explicite du user.
 export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
   const [filename, setFilename] = useState(null);
   const [ready, setReady] = useState(false);
+  const [chansons, setChansons] = useState(false);
   const videoRef = useRef(null);
 
   // Garde d'annulation nécessaire à cause de StrictMode (main.jsx) : en dev,
@@ -56,6 +60,8 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
   // si la requête /api/waiting-vids traîne (ex: connexion occupée par un
   // gros upload audio en parallèle, cas des questions orales), l'utilisateur
   // ne voit strictement rien pendant toute l'attente.
+  if (chansons) return <ChansonWaitingCard />;
+
   return (
     <>
       <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em" }}>
@@ -85,6 +91,14 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
           }}
         />
       )}
+      <button
+        type="button"
+        className="link-btn"
+        style={{ fontSize: "0.75em" }}
+        onClick={() => setChansons(true)}
+      >
+        Patienter en chansons
+      </button>
     </>
   );
 }
