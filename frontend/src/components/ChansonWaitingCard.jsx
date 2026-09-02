@@ -29,29 +29,25 @@ export function ChansonWaitingCard() {
       )}
       <iframe
         key={chanson.url}
-        width="280"
-        height="158"
         src={`${youtubeEmbedUrl(chanson.url)}?autoplay=1`}
         title={chanson.title_he}
         allow="autoplay; encrypted-media"
         allowFullScreen
-        style={{ border: "none", borderRadius: 8, display: "block", margin: "0 auto" }}
+        style={{ width: "100%", aspectRatio: "16 / 9", border: "none", borderRadius: 8, display: "block" }}
       />
       <div
         style={{
-          maxHeight: 150,
-          overflowY: "auto",
-          textAlign: "start",
+          textAlign: "center",
           margin: "10px 0",
           userSelect: "text",
         }}
       >
         {chanson.lyrics.map((vers) => (
           <div key={vers.index} style={{ marginBottom: "0.7em" }}>
-            <p className="hebrew" style={{ margin: 0, fontSize: "0.85em" }}>
+            <p className="hebrew" style={{ margin: 0, fontSize: "1.105em" }}>
               {vers.hebrew}
             </p>
-            <p className="muted" style={{ margin: "2px 0 0", fontSize: "0.6em" }}>
+            <p className="muted" style={{ margin: "2px 0 0", fontSize: "0.78em" }}>
               {vers.french}
             </p>
           </div>

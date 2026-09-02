@@ -53,8 +53,8 @@ export default function ChansonScreen() {
       <div style={{ userSelect: "text" }}>
         {chanson.lyrics.map((vers) => (
           <div key={vers.index} style={{ marginBottom: "1.5em" }}>
-            <p className="hebrew" style={{ margin: 0 }}>{vers.hebrew}</p>
-            <p className="muted" style={{ margin: "4px 0 0", fontSize: "0.67em" }}>{vers.french}</p>
+            <p className="hebrew" style={{ margin: 0, fontSize: "1.3em" }}>{vers.hebrew}</p>
+            <p className="muted" style={{ margin: "4px 0 0", fontSize: "0.871em" }}>{vers.french}</p>
           </div>
         ))}
       </div>
