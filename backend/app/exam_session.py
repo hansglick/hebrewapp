@@ -272,6 +272,7 @@ def _finalize(conn, user_id: int, code: str, exam_type: str, questions: list, an
     niveau_updated = False
     level_downgraded = False
     new_level = None
+    points_gagnes = None
     current_level_row = conn.execute(
         "SELECT level FROM user_level WHERE user_id = ?", (user_id,)
     ).fetchone()
@@ -284,7 +285,7 @@ def _finalize(conn, user_id: int, code: str, exam_type: str, questions: list, an
         # s'exécute pour ce `code` correspond à la vraie montée de niveau,
         # les fois suivantes à une repasse volontaire (points divisés par
         # deux à chaque fois, cf. app.wallet.enregistrer_examen_reussi).
-        wallet.enregistrer_examen_reussi(conn, user_id, code)
+        points_gagnes = wallet.enregistrer_examen_reussi(conn, user_id, code)
 
         # Repasser (et réussir) un examen déjà validé plus bas que le niveau
         # actuel ne doit jamais faire redescendre le niveau — set_user_level
@@ -335,16 +336,15 @@ def _finalize(conn, user_id: int, code: str, exam_type: str, questions: list, an
     # user a pu fermer l'onglet en attendant (cf. record_answer, chaque
     # réponse est déjà persistée au fur et à mesure) et revient la consulter
     # via /notifications plus tard. Le lien pointe vers "Mes copies" pour
-    # cette tentative précise. Une seule notification par tentative, même en
-    # cas de montée de niveau (le message l'inclut plutôt que d'en émettre
-    # une deuxième).
+    # cette tentative précise. La disponibilité du Hard Exam à la montée de
+    # niveau n'est plus mentionnée ici : elle a sa propre notification
+    # d'action épinglée (cf. app.action_notifications), calculée à la volée
+    # depuis hard_exam.is_unlocked plutôt que dupliquée dans ce message.
     format_label = "écrit" if exam_type == "ecrit" else "oral"
     message = (
         f"Ta correction est prête : examen {format_label} "
         f"{'réussi' if passed else 'non réussi'} (moyenne {average_note:.1f}/5)."
     )
-    if niveau_updated:
-        message += " Tu peux maintenant tenter le Hard Exam pour gagner un maximum de points."
     create_notification(conn, user_id, message, link=f"/examen/copies/{attempt_id}")
 
     return {
@@ -360,6 +360,7 @@ def _finalize(conn, user_id: int, code: str, exam_type: str, questions: list, an
         "niveau_updated": niveau_updated,
         "level_downgraded": level_downgraded,
         "new_level": new_level,
+        "points_gagnes": points_gagnes,
         "history": {
             "ecrit": _attempt_history(conn, user_id, code, "ecrit"),
             "oral": _attempt_history(conn, user_id, code, "oral"),

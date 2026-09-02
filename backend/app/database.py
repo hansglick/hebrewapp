@@ -227,6 +227,11 @@ def init_db():
         notifications_cols = [r["name"] for r in conn.execute("PRAGMA table_info(notifications)").fetchall()]
         if "link" not in notifications_cols:
             conn.execute("ALTER TABLE notifications ADD COLUMN link TEXT")
+        # `read_at` : horodatage du passage à `is_read = 1` (cf.
+        # routers/notifications.py) — sert à purger une notification
+        # informative 30 minutes après sa lecture (app.notifications).
+        if "read_at" not in notifications_cols:
+            conn.execute("ALTER TABLE notifications ADD COLUMN read_at TEXT")
 
         # "Vu" au moins une fois (mot/verbe/phrase/texte affiché à l'écran,
         # tous modes confondus) — sert au calcul de la progression

@@ -193,18 +193,19 @@ def _repeat_index(conn, user_id: int, code: str) -> int:
     ).fetchone()["n"]
 
 
-def enregistrer_examen_reussi(conn, user_id: int, code: str) -> None:
-    """Crédite les points d'une leçon (rapide/long/très long) au wallet.
-    Appelée uniquement quand écrit ET oral sont (à nouveau) tous deux
-    validés pour `code` (cf. exam_session._finalize) : première fois =
-    vraie montée de niveau, fois suivantes = repasse volontaire via
-    "Demander une équivalence...". Chaque repasse divise les points par
-    deux par rapport à la base (pas de règle de ce type dans les fichiers
-    fournis — c'est une règle propre à cette intégration, demandée par le
-    user)."""
+def enregistrer_examen_reussi(conn, user_id: int, code: str) -> float:
+    """Crédite les points d'une leçon (rapide/long/très long) au wallet et
+    renvoie le montant crédité (pour l'écran de félicitations, cf.
+    exam_session._finalize). Appelée uniquement quand écrit ET oral sont (à
+    nouveau) tous deux validés pour `code` (cf. exam_session._finalize) :
+    première fois = vraie montée de niveau, fois suivantes = repasse
+    volontaire via "Demander une équivalence...". Chaque repasse divise les
+    points par deux par rapport à la base (pas de règle de ce type dans les
+    fichiers fournis — c'est une règle propre à cette intégration, demandée
+    par le user)."""
     codes = all_lesson_codes_in_order()
     if code not in codes:
-        return
+        return 0.0
     base = BASE_POINTS[exam_type_for(code)]
     repeat_index = _repeat_index(conn, user_id, code)
     points = base / (2**repeat_index)
@@ -223,6 +224,7 @@ def enregistrer_examen_reussi(conn, user_id: int, code: str) -> None:
         "POINTS_GAGNES_EXAMEN",
         {"lesson_code": code, "niveau": niveau, "points": points, "repeat_index": repeat_index},
     )
+    return points
 
 
 def enregistrer_hard_exam_reussi(conn, user_id: int) -> None:

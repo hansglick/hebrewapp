@@ -1,5 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { displayLessonCode } from "../../utils/lessonDisplay";
+import { NiveauUpScreen } from "./NiveauUpScreen";
 
 const FORMAT_LABELS = { ecrit: "écrit", oral: "oral" };
 
@@ -45,7 +47,11 @@ function AttemptPastilles({ history }) {
 export function ExamenBilanScreen({ code, finalResult, onRetour }) {
   const navigate = useNavigate();
   const { current, niveau_updated: niveauUpdated, history, attempt_id: attemptId } = finalResult;
-  const chapId = code.split(".")[0];
+  const [showFelicitations, setShowFelicitations] = useState(false);
+
+  if (showFelicitations) {
+    return <NiveauUpScreen code={code} finalResult={finalResult} />;
+  }
 
   return (
     <section className="screen">
@@ -100,9 +106,9 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
       <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--border)" }} />
 
       {niveauUpdated ? (
-        <Link to={`/apprentissage/${chapId}/${code}`} style={plainLinkStyle}>
-          Bravo, allez à la prochaine leçon
-        </Link>
+        <button type="button" style={plainLinkStyle} onClick={() => setShowFelicitations(true)}>
+          Bravo, continuer →
+        </button>
       ) : (
         <p style={{ margin: 0, fontSize: "0.75em", color: "var(--textMuted)", fontStyle: "italic" }}>
           Encore un peu d'efforts

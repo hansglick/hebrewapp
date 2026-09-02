@@ -1,4 +1,22 @@
 MAX_NOTIFICATIONS = 20
+READ_EXPIRY_MINUTES = 30
+
+
+def prune_expired(conn, user_id: int) -> None:
+    """Supprime les notifications informatives lues il y a plus de
+    READ_EXPIRY_MINUTES — les notifications d'action (cf.
+    app.action_notifications) ne sont jamais persistées, donc jamais
+    concernées par cette purge. Appelée en tête des deux endpoints de
+    routers/notifications.py."""
+    conn.execute(
+        f"""
+        DELETE FROM notifications
+        WHERE user_id = ? AND is_read = 1 AND read_at IS NOT NULL
+        AND read_at <= datetime('now', '-{READ_EXPIRY_MINUTES} minutes')
+        """,
+        (user_id,),
+    )
+    conn.commit()
 
 
 def create_notification(conn, user_id: int, message: str, link: str | None = None) -> None:
