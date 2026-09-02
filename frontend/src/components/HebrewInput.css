@@ -35,6 +35,25 @@
   width: 100%;
 }
 
+.hebrew-keyboard-mobile-hint {
+  display: none;
+  margin: 4px 0 0;
+  font-size: 0.7em;
+  font-style: italic;
+  color: var(--textMuted);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .hebrew-keyboard {
+    display: none;
+  }
+
+  .hebrew-keyboard-mobile-hint {
+    display: block;
+  }
+}
+
 .hebrew-keyboard-row {
   display: flex;
   gap: 0;

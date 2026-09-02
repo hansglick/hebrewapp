@@ -200,6 +200,12 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
         className="hebrew-input-textarea"
         placeholder={placeholder}
       />
+      {/* Clavier virtuel hébreu : caché sur mobile (cf. .hebrew-keyboard,
+          règle @media dans HebrewInput.css) — un téléphone Android a son
+          propre clavier hébreu système, pas la peine d'un pavé tactile
+          maison en plus. hebrew-keyboard-mobile-hint fait l'inverse
+          (masqué par défaut, affiché seulement sous ce même point de
+          rupture), donc jamais visible en même temps que le clavier. */}
       <div className="hebrew-keyboard">
         {AZERTY_ROWS.map((row, i) => (
           <div key={i} className="hebrew-keyboard-row">
@@ -224,6 +230,11 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
           />
         </div>
       </div>
+      <p className="hebrew-keyboard-mobile-hint">
+        Pas de clavier hébreu sur ton téléphone ? Sur Android : Paramètres &gt; Système &gt; Langues et saisie
+        &gt; Clavier virtuel &gt; Gboard &gt; Langues &gt; Ajouter un clavier &gt; Hébreu. Bascule ensuite dessus
+        avec l'icône de langue (globe) du clavier.
+      </p>
     </div>
   );
 }
