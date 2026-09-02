@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getLessonCuriosites } from "../../api/content";
 import { CURIOSITE_CONFIG } from "../fun/curiositeConfig";
-import { displayLessonCode } from "../../utils/lessonDisplay";
 import "../screens.css";
 
 // Nouveautés "curiosités" (proverbe/tanakh/récit/landmark/blague/expression/
@@ -20,7 +19,7 @@ export default function CuriositeListScreen() {
 
   return (
     <section className="screen">
-      <h1>Curiosité — {displayLessonCode(code)}</h1>
+      <h1>Curiosité</h1>
       <div className="tile-list">
         {types.map((type) => (
           <Link

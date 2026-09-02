@@ -89,6 +89,15 @@ export const getRandomCuriosite = (type, { lessonCode, current } = {}) => {
 export const getLessonCuriosites = (code) =>
   fetchJson(`/api/curiosites/lesson/${encodeURIComponent(code)}`);
 
+// Liste ordonnée (plus récemment débloqué en premier) des items débloqués à
+// la progression courante — parcours simple sans randomisation ni bouclage
+// (cf. écrans "Fun"/Culture, CuriositeScreen sans lessonCode).
+export const getCuriositePool = (type) =>
+  fetchJson(`/api/curiosites/${encodeURIComponent(type)}/pool`);
+
+export const getCuriositeItem = (type, index) =>
+  fetchJson(`/api/curiosites/${encodeURIComponent(type)}/${encodeURIComponent(index)}`);
+
 // Item vraiment aléatoire, tous types confondus, sans respecter le
 // déblocage progressif — sert à distraire le user pendant l'attente d'une
 // correction Gemini sur un examen long/très long (cf. GeminiWaiting).

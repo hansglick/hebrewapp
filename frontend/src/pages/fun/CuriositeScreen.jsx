@@ -1,41 +1,109 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getRandomCuriosite } from "../../api/content";
+import { getRandomCuriosite, getCuriositePool, getCuriositeItem } from "../../api/content";
 import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
+import { NextPrevButtons } from "../../components/NextPrevButtons";
 import { SpeakerIcon } from "../../components/SpeakerIcon";
 import { speak } from "../../utils/speech";
 import { CURIOSITE_CONFIG } from "./curiositeConfig";
 import "../screens.css";
 
+const BOUNDARY_MESSAGE =
+  "De nouveaux éléments se débloquent au fur et à mesure de ta progression dans le cours.";
+
 // Écran générique de parcours des contenus "curiosités" (proverbe, tanakh,
 // récit, landmark, blague) — un item à la fois, swipe/tap comme
-// ExpressionScreen. `lessonCode` restreint le tirage aux nouveautés de cette
-// leçon (tuile "Curiosité") ; sans lui, tirage dans tout ce qui est
-// débloqué à la progression courante du user (écrans "Fun").
+// ExpressionScreen. `lessonCode` restreint aux nouveautés de cette leçon
+// (tuile "Curiosité") : tirage aléatoire, comportement historique inchangé.
+// Sans lui (bouton "Culture") : parcours simple de tout ce qui est débloqué
+// à la progression courante, classé par récence décroissante, sans
+// randomisation ni bouclage — cf. demande explicite du user.
 export default function CuriositeScreen({ type, lessonCode }) {
   const navigate = useNavigate();
   const [showDetails, setShowDetails] = useState(false);
   const config = CURIOSITE_CONFIG[type];
 
-  const { current: item, next, back } = useRandomBrowser(
-    (prevItem) => getRandomCuriosite(type, { lessonCode, current: prevItem?.index }),
+  // Mode "leçon" — inchangé.
+  const { current: randomItem, next: randomNext, back: randomBack } = useRandomBrowser(
+    (prevItem) =>
+      lessonCode ? getRandomCuriosite(type, { lessonCode, current: prevItem?.index }) : Promise.resolve(null),
     [type, lessonCode]
   );
+
+  // Mode "Culture" — pool chargé une fois (ordre du plus récemment
+  // débloqué au plus ancien, déjà trié côté backend), puis simple pointeur
+  // dedans, jamais de nouveau tirage.
+  const [pool, setPool] = useState(null);
+  const [position, setPosition] = useState(0);
+  const [orderedItem, setOrderedItem] = useState(null);
+  const [atBoundary, setAtBoundary] = useState(null); // null | "start" | "end"
+
+  useEffect(() => {
+    if (lessonCode) return;
+    setPool(null);
+    setPosition(0);
+    setOrderedItem(null);
+    setAtBoundary(null);
+    getCuriositePool(type).then((data) => setPool(data.pool));
+  }, [type, lessonCode]);
+
+  useEffect(() => {
+    if (lessonCode || !pool || pool.length === 0) return;
+    getCuriositeItem(type, pool[position]).then(setOrderedItem);
+  }, [lessonCode, pool, position, type]);
+
+  const item = lessonCode ? randomItem : orderedItem;
 
   useEffect(() => {
     setShowDetails(false);
   }, [item]);
 
+  function goPrevious() {
+    if (lessonCode) {
+      if (!randomBack()) navigate(-1);
+      return;
+    }
+    if (position > 0) {
+      setAtBoundary(null);
+      setPosition((p) => p - 1);
+    } else {
+      setAtBoundary("start");
+    }
+  }
+  function goNext() {
+    if (lessonCode) {
+      randomNext();
+      return;
+    }
+    if (pool && position < pool.length - 1) {
+      setAtBoundary(null);
+      setPosition((p) => p + 1);
+    } else {
+      setAtBoundary("end");
+    }
+  }
+
   const swipeHandlers = useSwipe({
-    onSwipeLeft: () => {
-      if (!back()) navigate(-1);
-    },
-    onSwipeRight: () => next(),
+    onSwipeLeft: goPrevious,
+    onSwipeRight: goNext,
     onSpace: !showDetails ? () => setShowDetails(true) : undefined,
   });
+
+  // Mode "Culture" avec un pool vide (rien d'encore débloqué pour ce type) :
+  // même message que la borne de fin, pas de carte à afficher.
+  if (!lessonCode && pool && pool.length === 0) {
+    return (
+      <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+        <ActionHints {...swipeHandlers.hints} />
+        <p className="muted" style={{ textAlign: "center", fontStyle: "italic" }}>
+          {BOUNDARY_MESSAGE}
+        </p>
+      </section>
+    );
+  }
 
   if (!item) return null;
 
@@ -60,8 +128,15 @@ export default function CuriositeScreen({ type, lessonCode }) {
   );
 
   return (
-    <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
+      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+
+      {atBoundary && (
+        <p className="muted" style={{ textAlign: "center", fontStyle: "italic", fontSize: "0.85em" }}>
+          {BOUNDARY_MESSAGE}
+        </p>
+      )}
 
       {config.speakable &&
         !config.referenceValue &&

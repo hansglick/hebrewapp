@@ -74,6 +74,24 @@ def random_curiosite(
     return item
 
 
+@router.get("/{curiosite_type}/pool")
+def curiosite_pool(curiosite_type: str, user_id: int = Depends(get_current_user_id)):
+    """Liste ordonnée (plus récemment débloqué en premier) des items
+    débloqués à la progression courante du user — pour un parcours simple,
+    sans randomisation ni bouclage (écrans "Fun"/Culture, cf. demande
+    explicite du user). `pool_cumulatif` liste dans l'ordre de déblocage
+    (le plus ancien en premier) : on inverse pour la "récence décroissante"
+    demandée."""
+    _check_type(curiosite_type)
+    conn = get_connection()
+    try:
+        position = curiosites.current_lesson_position(conn, user_id)
+    finally:
+        conn.close()
+    pool = curiosites.pool_cumulatif(curiosite_type, position)
+    return {"pool": list(reversed(pool))}
+
+
 @router.get("/{curiosite_type}/{index}")
 def get_curiosite(curiosite_type: str, index: int):
     _check_type(curiosite_type)
