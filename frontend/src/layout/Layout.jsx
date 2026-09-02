@@ -15,7 +15,8 @@ import { ShekelIcon } from "../components/ShekelIcon";
 import { MagenDavidIcon } from "../components/MagenDavidIcon";
 import { GearIcon } from "../components/GearIcon";
 import { ConfigModal } from "../components/ConfigModal";
-import { MobileMenuIcon } from "../components/MobileMenuIcon";
+import { SunIcon, MoonIcon } from "../components/SunMoonIcons";
+import { SignOutIcon } from "../components/SignOutIcon";
 import { useConfig } from "../config/ConfigContext";
 import { useExamTimer } from "../context/ExamTimerContext";
 import { displayLessonNumber } from "../utils/lessonDisplay";
@@ -315,7 +316,7 @@ export default function Layout() {
           <span className="header-divider" />
           <button
             type="button"
-            className="header-btn"
+            className="header-btn hide-on-mobile"
             onClick={() => setConfigOpen(true)}
             title="Configuration"
             style={{ display: "inline-flex", alignItems: "center" }}
@@ -330,7 +331,7 @@ export default function Layout() {
             title="Plus d'options"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <MobileMenuIcon size={22} color="#f3f4f6" />
+            <GearIcon size={24} />
           </button>
           {mobileMenuOpen && (
             <>
@@ -371,6 +372,32 @@ export default function Layout() {
                 >
                   <DictionaryIcon size={20} color="#f3f4f6" />
                   <span>Dictionnaire</span>
+                </button>
+                <div className="header-mobile-panel-row" style={{ justifyContent: "space-between" }}>
+                  <span>Thème</span>
+                  <div className="switch-wrap">
+                    <SunIcon size={14} color={themeMode === "light" ? "#f3f4f6" : "#9ca3af"} />
+                    <button
+                      type="button"
+                      className={`switch${themeMode === "dark" ? " on" : ""}`}
+                      role="switch"
+                      aria-checked={themeMode === "dark"}
+                      aria-label="Basculer clair / sombre"
+                      onClick={() => setThemeMode(themeMode === "light" ? "dark" : "light")}
+                    >
+                      <span className="switch-knob" />
+                    </button>
+                    <MoonIcon size={14} color={themeMode === "dark" ? "#f3f4f6" : "#9ca3af"} />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="header-mobile-panel-row"
+                  onClick={handleLogout}
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <span>Déconnexion</span>
+                  <SignOutIcon size={20} color="#f3f4f6" />
                 </button>
               </div>
             </>

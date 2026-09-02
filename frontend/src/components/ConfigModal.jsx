@@ -1,4 +1,5 @@
 import { SunIcon, MoonIcon } from "./SunMoonIcons";
+import { SignOutIcon } from "./SignOutIcon";
 import "./ConfigModal.css";
 
 export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, onLogout }) {
@@ -38,8 +39,15 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, onLogout
         </div>
 
         <div className="config-modal-row">
-          <button type="button" className="link-btn" style={{ color: "var(--danger)" }} onClick={onLogout}>
-            Déconnexion
+          <span>Déconnexion</span>
+          <button
+            type="button"
+            className="link-btn"
+            style={{ padding: 0 }}
+            onClick={onLogout}
+            aria-label="Déconnexion"
+          >
+            <SignOutIcon size={26} />
           </button>
         </div>
       </div>
