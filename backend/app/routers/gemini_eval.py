@@ -1,4 +1,5 @@
 import asyncio
+import json
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
@@ -10,7 +11,15 @@ from app.auth import get_current_user_id
 from app.data_loader import add_chanson, get_dataset
 from app.database import get_connection
 from app.difficulty import compute_combo_difficulties, pick_sequential, weighted_pick
-from app.gemini import evaluate_oral, evaluate_report, evaluate_translation, extract_lyrics
+from app.gemini import (
+    evaluate_oral,
+    evaluate_orals_grouped,
+    evaluate_report,
+    evaluate_reports_grouped,
+    evaluate_translation,
+    evaluate_translations_grouped,
+    extract_lyrics,
+)
 from app.openai_client import DICTIONNAIRE_PROMPT_FR, extract_verbatim
 from app.lesson_order import recency_weights
 from app.text_questions import questions_for_text
@@ -62,6 +71,56 @@ def gemini_translation(payload: TranslationEvalRequest, user_id: int = Depends(g
     _record_evaluation(user_id, "phrase_gemini", object_key, result["score"])
 
     return result
+
+
+class TranslationGroupedItem(BaseModel):
+    identifiant: str
+    lesson_code: str
+    position: int
+    direction: str
+    student_solution: str
+
+
+@router.post("/gemini/translation/grouped")
+def gemini_translation_grouped(payload: list[TranslationGroupedItem], user_id: int = Depends(get_current_user_id)):
+    if not payload:
+        return []
+
+    phrases = get_dataset("phrase")
+    items = []
+    for entry in payload:
+        pool = phrases.get(entry.lesson_code, [])
+        if entry.position < 0 or entry.position >= len(pool):
+            raise HTTPException(404, "Phrase introuvable")
+        phrase = pool[entry.position]
+        sentence_to_translate = phrase["hebrew"] if entry.direction == "francais" else phrase["french"]
+        items.append(
+            {
+                "identifiant": entry.identifiant,
+                "sentence_to_translate": sentence_to_translate,
+                "student_solution": entry.student_solution,
+            }
+        )
+
+    try:
+        results = evaluate_translations_grouped(items)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
+
+    by_identifiant = {r["identifiant"]: r for r in results}
+    output = []
+    for entry in payload:
+        result = by_identifiant.get(entry.identifiant)
+        if result is None:
+            raise HTTPException(502, "Réponse Gemini incomplète, réessaie.")
+        merged = {**result, "translation": entry.student_solution}
+        object_key = f"{entry.lesson_code}|{entry.position}|{entry.direction}"
+        _record_evaluation(user_id, "phrase_gemini", object_key, merged["score"])
+        output.append(merged)
+
+    return output
 
 
 class LyricsExtractRequest(BaseModel):
@@ -201,6 +260,78 @@ async def gemini_oral(
     return result
 
 
+@router.post("/gemini/oral/grouped")
+async def gemini_oral_grouped(
+    items: str = Form(...),
+    audios: list[UploadFile] = File(...),
+    user_id: int = Depends(get_current_user_id),
+):
+    # `items` : JSON stringifié [{identifiant, text_code, question_index}] ;
+    # chaque fichier de `audios` porte son identifiant comme nom (sans
+    # extension, cf. evaluateOralsGrouped côté frontend) pour associer les
+    # deux sans avoir à nommer dynamiquement des champs de formulaire.
+    try:
+        entries = json.loads(items)
+    except (json.JSONDecodeError, TypeError):
+        raise HTTPException(400, "Champ 'items' invalide")
+    if not entries:
+        return []
+
+    texts_data = get_dataset("text")
+    entries_by_id = {}
+    grouped_by_text: dict[str, dict] = {}
+    for entry in entries:
+        identifiant = entry["identifiant"]
+        text_code = entry["text_code"]
+        question_index = entry["question_index"]
+        text = texts_data.get(text_code)
+        if text is None or question_index < 0 or question_index >= len(text.get("questions", [])):
+            raise HTTPException(404, "Question introuvable")
+        entries_by_id[identifiant] = entry
+        group = grouped_by_text.setdefault(text_code, {"identifiant_texte": text_code, "texte": text["text"], "questions": []})
+        group["questions"].append(
+            {"identifiant_question": identifiant, "question_hebrew": text["questions"][question_index]["hebrew"]}
+        )
+
+    audio_items = []
+    for upload in audios:
+        identifiant = (upload.filename or "").rsplit(".", 1)[0]
+        if identifiant not in entries_by_id:
+            raise HTTPException(400, "Fichier audio sans correspondance dans 'items'")
+        audio_items.append(
+            {
+                "identifiant_texte": entries_by_id[identifiant]["text_code"],
+                "identifiant_question": identifiant,
+                "audio_bytes": await upload.read(),
+                "mime_type": upload.content_type or "audio/webm",
+            }
+        )
+
+    try:
+        # Bloquant (upload + polling + appel Gemini synchrones) — cf.
+        # gemini_oral pour la même raison de délégation à un thread.
+        results = await asyncio.to_thread(evaluate_orals_grouped, list(grouped_by_text.values()), audio_items)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
+
+    by_identifiant = {r["identifiant_question"]: r for r in results}
+    output = []
+    for identifiant, entry in entries_by_id.items():
+        result = by_identifiant.get(identifiant)
+        if result is None:
+            raise HTTPException(502, "Réponse Gemini incomplète, réessaie.")
+        aggregate_score = round(
+            (result["rating_completeness"] + result["rating_hebrew"] + result["rating_comprehension"]) / 3
+        )
+        object_key = f"{entry['text_code']}|{entry['question_index']}"
+        _record_evaluation(user_id, "oral", object_key, aggregate_score)
+        output.append({**result, "identifiant": identifiant})
+
+    return output
+
+
 @router.post("/gemini/verbatim")
 async def gemini_verbatim(
     audio: UploadFile = File(...), lang: str = Form("he"), context: str | None = Form(None)
@@ -240,3 +371,40 @@ def gemini_rapport(payload: ReportEvalRequest):
         raise HTTPException(502, f"Erreur Gemini : {exc.message}")
 
     return result
+
+
+class ReportGroupedItem(BaseModel):
+    identifiant: str
+    text_code: str
+    rapport: str
+
+
+@router.post("/gemini/rapport/grouped")
+def gemini_rapport_grouped(payload: list[ReportGroupedItem]):
+    if not payload:
+        return []
+
+    texts_data = get_dataset("text")
+    items = []
+    for entry in payload:
+        text = texts_data.get(entry.text_code)
+        if text is None:
+            raise HTTPException(404, "Texte introuvable")
+        items.append({"identifiant": entry.identifiant, "texte": text["text"], "rapport": entry.rapport})
+
+    try:
+        results = evaluate_reports_grouped(items)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc))
+    except APIError as exc:
+        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
+
+    by_identifiant = {r["identifiant"]: r for r in results}
+    output = []
+    for entry in payload:
+        result = by_identifiant.get(entry.identifiant)
+        if result is None:
+            raise HTTPException(502, "Réponse Gemini incomplète, réessaie.")
+        output.append({**result, "rapport": entry.rapport})
+
+    return output

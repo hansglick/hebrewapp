@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getExamenHard, getExamenHardStatus } from "../../api/content";
 import { answerExamenHard } from "../../api/user";
-import { evaluateTranslation, evaluateOral } from "../../api/gemini";
+import { evaluateTranslation, evaluateTranslationsGrouped, evaluateOral, evaluateOralsGrouped } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
 import { speak } from "../../utils/speech";
 import { blobToWavBlob } from "../../utils/audioEncode";
@@ -306,28 +306,74 @@ export default function ExamenHardPasserScreen() {
         .map(Number)
         .filter((i) => exam.answers[i] === null)
         .sort((a, b) => a - b);
+      if (indices.length === 0) return;
+
+      const traductionIndices = indices.filter((idx) => pendingAnswers[idx].type === "traduction");
+      const oralIndices = indices.filter((idx) => pendingAnswers[idx].type !== "traduction");
       let lastResponse = null;
-      for (const idx of indices) {
-        setBatchProgress({ current: idx + 1, total: exam.questions.length });
-        const q = exam.questions[idx];
-        const pending = pendingAnswers[idx];
-        const pauseStart = Date.now();
-        let result;
-        if (pending.type === "traduction") {
-          result = await evaluateTranslation({
+
+      // Persiste les réponses d'un thème déjà évalué en groupé dès qu'il est
+      // prêt, plutôt que d'attendre les deux thèmes — si le second échoue
+      // ensuite, celui-ci reste déjà acquis (Réessayer ne relance que ce qui
+      // manque encore).
+      async function persistGroup(groupIndices, results, pauseSeconds) {
+        const byIdentifiant = new Map(results.map((r) => [r.identifiant, r]));
+        for (let i = 0; i < groupIndices.length; i++) {
+          const idx = groupIndices[i];
+          const result = byIdentifiant.get(String(idx));
+          const response = await answerExamenHard({
+            questionIndex: idx,
+            answer: result,
+            pauseSeconds: i === 0 ? pauseSeconds : 0,
+          });
+          setExam((prev) => ({ ...prev, answers: prev.answers.map((a, j) => (j === idx ? result : a)) }));
+          lastResponse = response;
+        }
+      }
+
+      // Un seul appel Gemini par thème présent (traduction / oral) plutôt
+      // qu'un par question (cf. plan "regroupement des évaluations").
+      if (traductionIndices.length > 0) {
+        setBatchProgress({
+          label: `Évaluation de ${
+            traductionIndices.length === 1 ? "votre traduction" : `vos ${traductionIndices.length} traductions`
+          }...`,
+        });
+        const items = traductionIndices.map((idx) => {
+          const q = exam.questions[idx];
+          return {
+            identifiant: String(idx),
             lessonCode: q.lesson_code,
             position: q.position,
             direction: q.direction,
-            studentSolution: pending.studentSolution,
-          });
-        } else {
-          result = await evaluateOral({ textCode: q.text_code, questionIndex: q.question_index, audioBlob: pending.audioBlob });
-        }
-        const pauseSeconds = (Date.now() - pauseStart) / 1000;
-        const response = await answerExamenHard({ questionIndex: idx, answer: result, pauseSeconds });
-        setExam((prev) => ({ ...prev, answers: prev.answers.map((a, i) => (i === idx ? result : a)) }));
-        lastResponse = response;
+            studentSolution: pendingAnswers[idx].studentSolution,
+          };
+        });
+        const pauseStart = Date.now();
+        const results = await evaluateTranslationsGrouped(items);
+        await persistGroup(traductionIndices, results, (Date.now() - pauseStart) / 1000);
       }
+
+      if (oralIndices.length > 0) {
+        setBatchProgress({
+          label: `Évaluation de ${
+            oralIndices.length === 1 ? "votre réponse orale" : `vos ${oralIndices.length} réponses orales`
+          }...`,
+        });
+        const items = oralIndices.map((idx) => {
+          const q = exam.questions[idx];
+          return {
+            identifiant: String(idx),
+            textCode: q.text_code,
+            questionIndex: q.question_index,
+            audioBlob: pendingAnswers[idx].audioBlob,
+          };
+        });
+        const pauseStart = Date.now();
+        const results = await evaluateOralsGrouped(items);
+        await persistGroup(oralIndices, results, (Date.now() - pauseStart) / 1000);
+      }
+
       setBatchProgress(null);
       if (lastResponse?.completed) setFinalResult(lastResponse);
     } catch (e) {
@@ -458,13 +504,13 @@ export default function ExamenHardPasserScreen() {
 
       {loadingGemini ? (
         <WaitingVideo
-          key={batchProgress ? batchProgress.current : "single"}
+          key={batchProgress ? "batch" : "single"}
           label={
             batchProgress ? (
               <>
                 Patientez quelques instants, votre professeur évalue votre copie
                 <br />
-                (question n° {batchProgress.current} / {batchProgress.total})
+                ({batchProgress.label})
               </>
             ) : undefined
           }

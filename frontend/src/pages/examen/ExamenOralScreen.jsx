@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getExamenOral } from "../../api/content";
 import { answerExamen, getExamenStatus, getSessionExists } from "../../api/user";
-import { evaluateOral, evaluateReport } from "../../api/gemini";
+import { evaluateOral, evaluateOralsGrouped, evaluateReport, evaluateReportsGrouped } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
 import { speak } from "../../utils/speech";
 import { blobToWavBlob } from "../../utils/audioEncode";
@@ -263,26 +263,59 @@ export default function ExamenOralScreen() {
         .map(Number)
         .filter((i) => exam.answers[i] === null)
         .sort((a, b) => a - b);
+      if (indices.length === 0) return;
+
+      const oralIndices = indices.filter((idx) => pendingAnswers[idx].type !== "rapport");
+      const rapportIndices = indices.filter((idx) => pendingAnswers[idx].type === "rapport");
       let lastResponse = null;
-      for (const idx of indices) {
-        setBatchProgress({ current: idx + 1, total: exam.questions.length });
-        const q = exam.questions[idx];
-        const pending = pendingAnswers[idx];
-        let result;
-        if (pending.type === "rapport") {
-          const geminiResult = await evaluateReport({ textCode: q.text_code, rapport: pending.rapportText });
-          result = { ...geminiResult, rapport: pending.rapportText };
-        } else {
-          result = await evaluateOral({
+
+      // Persiste les réponses d'un lot déjà évalué en groupé : dès qu'un
+      // thème est noté, on l'enregistre tout de suite plutôt que d'attendre
+      // les deux thèmes — si le second thème échoue ensuite, celui-ci reste
+      // déjà acquis (Réessayer ne relancera que ce qui manque encore).
+      async function persistGroup(groupIndices, results) {
+        const byIdentifiant = new Map(results.map((r) => [r.identifiant, r]));
+        for (const idx of groupIndices) {
+          const result = byIdentifiant.get(String(idx));
+          const response = await answerExamen(code, { examType: "oral", questionIndex: idx, answer: result });
+          setExam((prev) => ({ ...prev, answers: prev.answers.map((a, i) => (i === idx ? result : a)) }));
+          lastResponse = response;
+        }
+      }
+
+      // Un seul appel Gemini par thème présent (oral / rapport) plutôt qu'un
+      // par question (cf. plan "regroupement des évaluations").
+      if (oralIndices.length > 0) {
+        setBatchProgress({
+          label: `Évaluation de ${
+            oralIndices.length === 1 ? "votre réponse orale" : `vos ${oralIndices.length} réponses orales`
+          }...`,
+        });
+        const items = oralIndices.map((idx) => {
+          const q = exam.questions[idx];
+          return {
+            identifiant: String(idx),
             textCode: q.text_code,
             questionIndex: q.question_index,
-            audioBlob: pending.audioBlob,
-          });
-        }
-        const response = await answerExamen(code, { examType: "oral", questionIndex: idx, answer: result });
-        setExam((prev) => ({ ...prev, answers: prev.answers.map((a, i) => (i === idx ? result : a)) }));
-        lastResponse = response;
+            audioBlob: pendingAnswers[idx].audioBlob,
+          };
+        });
+        const results = await evaluateOralsGrouped(items);
+        await persistGroup(oralIndices, results);
       }
+
+      if (rapportIndices.length > 0) {
+        setBatchProgress({
+          label: `Évaluation de ${rapportIndices.length === 1 ? "votre résumé" : `vos ${rapportIndices.length} résumés`}...`,
+        });
+        const items = rapportIndices.map((idx) => {
+          const q = exam.questions[idx];
+          return { identifiant: String(idx), textCode: q.text_code, rapport: pendingAnswers[idx].rapportText };
+        });
+        const results = await evaluateReportsGrouped(items);
+        await persistGroup(rapportIndices, results);
+      }
+
       setBatchProgress(null);
       if (lastResponse?.completed) setFinalResult(lastResponse);
     } catch (e) {
@@ -410,14 +443,14 @@ export default function ExamenOralScreen() {
 
       {loadingGemini ? (
         <GeminiWaiting
-          key={batchProgress ? batchProgress.current : "single"}
+          key={batchProgress ? "batch" : "single"}
           showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
           label={
             batchProgress ? (
               <>
                 Patientez quelques instants, votre professeur évalue votre copie
                 <br />
-                (question n° {batchProgress.current} / {batchProgress.total})
+                ({batchProgress.label})
               </>
             ) : undefined
           }

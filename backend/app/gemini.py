@@ -40,6 +40,17 @@ def _load_response_class(name: str):
     return create_model(config["nom_modele"], **fields)
 
 
+def _wrap_list(item_class):
+    """Enveloppe un modèle d'item dans {"items": [...]} — Gemini répond plus
+    fiablement à un objet racine unique qu'à un tableau JSON nu en
+    response_schema (même pattern que les scripts prototypes de
+    instructions/grouped_requests, qui enveloppent chaque item dans
+    "expressions")."""
+    return create_model(
+        "ResultatGroupe", items=(list[item_class], Field(..., description="La liste des résultats, un par item soumis."))
+    )
+
+
 def _wait_until_active(client, uploaded, timeout: float = 30.0):
     """Gemini traite un fichier uploadé de façon asynchrone (état PROCESSING
     avant ACTIVE) ; l'utiliser dans generate_content trop tôt lève une
@@ -86,6 +97,25 @@ def evaluate_translation(sentence_to_translate: str, student_solution: str) -> d
     return json.loads(response.text)
 
 
+def evaluate_translations_grouped(items: list[dict]) -> list[dict]:
+    """items: [{"identifiant", "sentence_to_translate", "student_solution"}].
+    Une seule requête Gemini pour tout le lot (mode "évaluation globale")."""
+    prompt = _load_prompt("extract_translation_evaluation_grouped")
+    item_class = _load_response_class("extract_translation_evaluation_grouped")
+    response_class = _wrap_list(item_class)
+
+    response = _client().models.generate_content(
+        model=GEMINI_MODEL,
+        contents=[prompt, json.dumps(items, ensure_ascii=False)],
+        config={
+            "response_mime_type": "application/json",
+            "response_schema": response_class,
+            "temperature": 0.1,
+        },
+    )
+    return json.loads(response.text)["items"]
+
+
 def evaluate_report(rapport: str, texte: str) -> dict:
     prompt = _load_prompt("extract_rapport").format(rapport=rapport, texte=texte)
     response_class = _load_response_class("extract_rapport")
@@ -100,6 +130,25 @@ def evaluate_report(rapport: str, texte: str) -> dict:
         },
     )
     return json.loads(response.text)
+
+
+def evaluate_reports_grouped(items: list[dict]) -> list[dict]:
+    """items: [{"identifiant", "texte", "rapport"}]. Une seule requête Gemini
+    pour tout le lot (mode "évaluation globale")."""
+    prompt = _load_prompt("extract_rapport_grouped")
+    item_class = _load_response_class("extract_rapport_grouped")
+    response_class = _wrap_list(item_class)
+
+    response = _client().models.generate_content(
+        model=GEMINI_MODEL,
+        contents=[prompt, json.dumps(items, ensure_ascii=False)],
+        config={
+            "response_mime_type": "application/json",
+            "response_schema": response_class,
+            "temperature": 0.1,
+        },
+    )
+    return json.loads(response.text)["items"]
 
 
 def extract_lyrics(youtube_url: str, youtube_key: str) -> dict:
@@ -179,3 +228,52 @@ def evaluate_oral(question_hebrew: str, texte_hebrew: str, audio_bytes: bytes, m
     )
     response_class = _load_response_class("extract_oral_evaluation")
     return _generate_from_audio(prompt, response_class, audio_bytes, mime_type)
+
+
+def evaluate_orals_grouped(grouped_by_text: list[dict], audio_items: list[dict]) -> list[dict]:
+    """grouped_by_text: [{"identifiant_texte", "texte", "questions": [{"identifiant_question", "question_hebrew"}]}].
+    audio_items: [{"identifiant_texte", "identifiant_question", "audio_bytes", "mime_type"}].
+    Upload de chaque fichier vocal (bloquant, un par un, comme
+    _generate_from_audio) puis une seule requête Gemini finale pour tout le
+    lot (mode "évaluation globale")."""
+    client = _client()
+    prompt = _load_prompt("extract_oral_evaluation_grouped")
+    item_class = _load_response_class("extract_oral_evaluation_grouped")
+    response_class = _wrap_list(item_class)
+
+    contents = [prompt, json.dumps(grouped_by_text, ensure_ascii=False)]
+    tmp_paths = []
+    uploaded_files = []
+    try:
+        for item in audio_items:
+            base_mime_type = item["mime_type"].split(";")[0].strip()
+            suffix = _MIME_TO_SUFFIX.get(base_mime_type, ".wav")
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                tmp.write(item["audio_bytes"])
+                tmp_path = tmp.name
+            tmp_paths.append(tmp_path)
+
+            uploaded = client.files.upload(file=tmp_path, config={"mime_type": base_mime_type})
+            uploaded = _wait_until_active(client, uploaded)
+            uploaded_files.append(uploaded)
+
+            filename = f"response_{item['identifiant_texte']}_{item['identifiant_question']}{suffix}"
+            contents.append(f"Nom du fichier : {filename}")
+            contents.append(uploaded)
+
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=contents,
+            config={
+                "response_mime_type": "application/json",
+                "response_schema": response_class,
+                "temperature": 0.1,
+            },
+        )
+    finally:
+        for uploaded in uploaded_files:
+            client.files.delete(name=uploaded.name)
+        for tmp_path in tmp_paths:
+            os.remove(tmp_path)
+
+    return json.loads(response.text)["items"]

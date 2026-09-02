@@ -9,6 +9,22 @@ export async function evaluateTranslation({ lessonCode, position, direction, stu
   });
 }
 
+// Mode "évaluation globale" : regroupe tout un lot de traductions dans une
+// seule requête Gemini plutôt qu'une par question (cf. runBatch() des écrans
+// d'examen). `items`: [{identifiant, lessonCode, position, direction, studentSolution}].
+export async function evaluateTranslationsGrouped(items) {
+  return apiFetchJson(
+    "/api/gemini/translation/grouped",
+    items.map((it) => ({
+      identifiant: it.identifiant,
+      lesson_code: it.lessonCode,
+      position: it.position,
+      direction: it.direction,
+      student_solution: it.studentSolution,
+    }))
+  );
+}
+
 export async function extractChansonLyrics(youtubeUrl) {
   return apiFetchJson("/api/chansons/extract", { youtube_url: youtubeUrl });
 }
@@ -21,6 +37,22 @@ export async function evaluateOral({ textCode, questionIndex, audioBlob }) {
   return apiFetch("/api/gemini/oral", { method: "POST", body: formData });
 }
 
+// Mode "évaluation globale" : regroupe tout un lot de réponses orales dans
+// une seule requête Gemini. `items`: [{identifiant, textCode, questionIndex, audioBlob}].
+// Chaque fichier audio porte son identifiant comme nom (sans extension) pour
+// que le backend le rattache au bon item de `items` sans champ dynamique.
+export async function evaluateOralsGrouped(items) {
+  const formData = new FormData();
+  formData.append(
+    "items",
+    JSON.stringify(
+      items.map((it) => ({ identifiant: it.identifiant, text_code: it.textCode, question_index: it.questionIndex }))
+    )
+  );
+  items.forEach((it) => formData.append("audios", it.audioBlob, `${it.identifiant}.wav`));
+  return apiFetch("/api/gemini/oral/grouped", { method: "POST", body: formData });
+}
+
 export async function extractVerbatim({ audioBlob, lang = "he", context }) {
   const formData = new FormData();
   formData.append("audio", audioBlob, "recording.wav");
@@ -31,4 +63,13 @@ export async function extractVerbatim({ audioBlob, lang = "he", context }) {
 
 export async function evaluateReport({ textCode, rapport }) {
   return apiFetchJson("/api/gemini/rapport", { text_code: textCode, rapport });
+}
+
+// Mode "évaluation globale" : regroupe tout un lot de rapports dans une
+// seule requête Gemini. `items`: [{identifiant, textCode, rapport}].
+export async function evaluateReportsGrouped(items) {
+  return apiFetchJson(
+    "/api/gemini/rapport/grouped",
+    items.map((it) => ({ identifiant: it.identifiant, text_code: it.textCode, rapport: it.rapport }))
+  );
 }

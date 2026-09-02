@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getExamen } from "../../api/content";
 import { answerExamen, getExamenStatus, getSessionExists } from "../../api/user";
-import { evaluateTranslation } from "../../api/gemini";
+import { evaluateTranslation, evaluateTranslationsGrouped } from "../../api/gemini";
 import HebrewInput from "../../components/HebrewInput";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
@@ -259,25 +259,43 @@ export default function ExamenEcritScreen() {
         .map(Number)
         .filter((i) => exam.answers[i] === null)
         .sort((a, b) => a - b);
-      let lastResponse = null;
-      for (const idx of indices) {
-        setBatchProgress({ current: idx + 1, total: exam.questions.length });
+      if (indices.length === 0) return;
+
+      // Un seul appel Gemini pour tout le lot de traductions en attente,
+      // plutôt qu'un par question (cf. plan "regroupement des évaluations").
+      setBatchProgress({
+        label: `Évaluation de ${indices.length === 1 ? "votre traduction" : `vos ${indices.length} traductions`}...`,
+      });
+      const items = indices.map((idx) => {
         const q = exam.questions[idx];
-        const pauseStart = Date.now();
-        const result = await evaluateTranslation({
+        return {
+          identifiant: String(idx),
           lessonCode: q.lesson_code,
           position: q.position,
           direction: "hebreu",
           studentSolution: pendingAnswers[idx],
-        });
-        const pauseSeconds = (Date.now() - pauseStart) / 1000;
+        };
+      });
+      const pauseStart = Date.now();
+      const results = await evaluateTranslationsGrouped(items);
+      const pauseSeconds = (Date.now() - pauseStart) / 1000;
+      const byIdentifiant = new Map(results.map((r) => [r.identifiant, r]));
+
+      let lastResponse = null;
+      for (let i = 0; i < indices.length; i++) {
+        const idx = indices[i];
+        const result = byIdentifiant.get(String(idx));
         const response = await answerExamen(code, {
           examType: "ecrit",
           questionIndex: idx,
           answer: result,
-          pauseSeconds,
+          // Le temps d'attente Gemini n'est mesuré qu'une fois pour tout le
+          // lot (un seul appel groupé) : crédité entièrement sur le premier
+          // answerExamen de la passe, 0 sur les suivants — la somme
+          // accumulée côté serveur (paused_seconds) reste correcte.
+          pauseSeconds: i === 0 ? pauseSeconds : 0,
         });
-        setExam((prev) => ({ ...prev, answers: prev.answers.map((a, i) => (i === idx ? result : a)) }));
+        setExam((prev) => ({ ...prev, answers: prev.answers.map((a, j) => (j === idx ? result : a)) }));
         lastResponse = response;
       }
       setBatchProgress(null);
@@ -469,14 +487,14 @@ export default function ExamenEcritScreen() {
       {loadingGemini ? (
         <>
           <GeminiWaiting
-            key={batchProgress ? batchProgress.current : "single"}
+            key={batchProgress ? "batch" : "single"}
             showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
             label={
               batchProgress ? (
                 <>
                   Patientez quelques instants, votre professeur évalue votre copie
                   <br />
-                  (question n° {batchProgress.current} / {batchProgress.total})
+                  ({batchProgress.label})
                 </>
               ) : undefined
             }
