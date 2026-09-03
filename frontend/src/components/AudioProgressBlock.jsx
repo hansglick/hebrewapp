@@ -6,6 +6,7 @@ import "./AudioProgressBlock.css";
 // mediaUrl() y renverrait donc un 404 silencieux en production (cf. bug
 // rapporté par le user — icônes invisibles mais zone cliquable fonctionnelle).
 const LECTURE_ICON_URL = "/lecture.png";
+const PAUSE_ICON_URL = "/pause.png";
 const VOICE_ICON_URL = "/voice.png";
 
 // Brique "lecture d'un audio" pour les questions orales (révisions/examen/
@@ -57,6 +58,12 @@ export function AudioProgressBlock({ src, label }) {
     const rect = e.currentTarget.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
     audio.currentTime = ratio * duration;
+    // La boucle requestAnimationFrame qui met à jour `progress` ne tourne
+    // que pendant la lecture (isPlaying) — sans ce setProgress explicite,
+    // un seek fait pendant la pause déplacerait bien la tête de lecture
+    // mais l'onde resterait visuellement figée à son ancienne position, cf.
+    // demande explicite du user.
+    setProgress(ratio);
   }
 
   return (
@@ -69,9 +76,14 @@ export function AudioProgressBlock({ src, label }) {
           onClick={togglePlay}
           aria-label={isPlaying ? "Pause" : "Lecture"}
         >
+          {/* pause.png tant que la piste est en cours de lecture, lecture.png
+              sinon — cf. demande explicite du user. */}
           <span
             className="audio-progress-block-icon"
-            style={{ WebkitMaskImage: `url(${LECTURE_ICON_URL})`, maskImage: `url(${LECTURE_ICON_URL})` }}
+            style={{
+              WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+              maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+            }}
           />
         </button>
         <div className="audio-progress-block-wave" onClick={handleSeek}>
@@ -94,9 +106,16 @@ export function AudioProgressBlock({ src, label }) {
           />
         </div>
       </div>
+      {/* preload="metadata" (par défaut, un <audio> ne charge rien tant
+          qu'on ne lance pas la lecture) : sans lui, audio.duration reste
+          inconnu et handleSeek abandonne silencieusement — un clic sur
+          l'onde avant la toute première lecture (ou après une pause,
+          selon le navigateur) ne faisait donc rien, cf. demande explicite
+          du user. */}
       <audio
         ref={audioRef}
         src={src}
+        preload="metadata"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onEnded={() => {

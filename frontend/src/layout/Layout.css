@@ -240,6 +240,13 @@
 }
 
 @media (max-width: 600px) {
+  /* Réduit le padding horizontal de l'en-tête (24px de base) pour repousser
+     les logos house et configuration vers les extrémités de l'écran, cf.
+     demande explicite du user. */
+  .app-header-inner {
+    padding-inline: 8px;
+  }
+
   .hide-on-mobile {
     display: none !important;
   }
@@ -272,6 +279,17 @@
     height: 33px;
   }
 
+  /* padding-inline-end minimal (espace côté configuration, à droite) : ce
+     bouton a un contour visible (border, cf. .header-btn) — un padding plus
+     généreux resterait À L'INTÉRIEUR de ce contour (case vide collée au
+     chapter label) plutôt que de créer un vrai espace visuel ; c'est donc
+     margin-inline-start (ci-dessous), pas padding, qui écarte le contour
+     lui-même du chapter label, cf. demande explicite du user. */
+  .persistent-icon-culture {
+    padding-inline: 8px 4px;
+    margin-inline-start: 16px;
+  }
+
   .persistent-icon-house .icon-outline {
     display: none;
   }
@@ -280,8 +298,10 @@
     display: block !important;
   }
 
+  /* padding-inline-end réduit (18px de base) : rapproche le contour de ce
+     bouton du bord droit de l'écran, cf. demande explicite du user. */
   .persistent-icon-gear {
-    margin-inline-start: -8px;
+    padding-inline-end: 8px;
   }
 }
 

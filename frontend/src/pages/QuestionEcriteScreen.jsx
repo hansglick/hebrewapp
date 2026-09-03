@@ -8,10 +8,9 @@ import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import HebrewInput from "../components/HebrewInput";
 import { ActionHints } from "../components/ActionHints";
-import { BottomNavBar } from "../components/BottomNavBar";
+import { BottomNavBar, BottomNavToggle } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { WaitingVideo } from "../components/WaitingVideo";
-import { PoolBadge } from "../components/PoolBadge";
 import "./screens.css";
 
 // Les observations sont affichées en italique, mais un mot en hébreu au
@@ -167,6 +166,26 @@ export default function QuestionEcriteScreen() {
   const targetText = isSourceHebrew ? phrase.french : phrase.hebrew;
   const targetIsHebrew = !isSourceHebrew;
 
+  // Remplace les anciens boutons radio (sens de traduction + mode
+  // d'évaluation) — deux toggles sur la barre de contrôle inférieure, cf.
+  // demande explicite du user.
+  const revisionToggles = mode === "revision" && (
+    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+      <BottomNavToggle
+        leftLabel="FR"
+        rightLabel="HE"
+        value={direction === "hebreu"}
+        onChange={(isHebreu) => setDirection(isHebreu ? "hebreu" : "francais")}
+      />
+      <BottomNavToggle
+        leftLabel="Auto"
+        rightLabel="Teacher"
+        value={evalMode === "prof"}
+        onChange={(isProf) => setEvalMode(isProf ? "prof" : "auto")}
+      />
+    </div>
+  );
+
   return (
     <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)", flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       {loadingGemini ? (
@@ -177,13 +196,8 @@ export default function QuestionEcriteScreen() {
         {...swipeHandlers.hints}
         digits={mode === "revision" && evalMode === "auto" && revealed}
       />
-      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} center={revisionToggles} />
 
-      {mode === "revision" && (
-        <div style={{ marginTop: -20 }}>
-          <PoolBadge pool={phrase.pool} chapter={phrase.chapter} lesson={phrase.lesson} />
-        </div>
-      )}
 
       {/* Phrase française toujours au-dessus du trait, phrase hébreu
           toujours en dessous (avec son haut-parleur) — cf. demande
@@ -244,48 +258,6 @@ export default function QuestionEcriteScreen() {
 
       {mode === "revision" && (
         <>
-          <div className="radio-group" style={{ marginTop: -8, marginBottom: -8 }}>
-            <label style={{ fontSize: "0.475em", color: "var(--textMuted)" }}>
-              <input
-                type="radio"
-                name="direction"
-                checked={direction === "francais"}
-                onChange={() => setDirection("francais")}
-              />
-              Français
-            </label>
-            <label style={{ fontSize: "0.475em", color: "var(--textMuted)" }}>
-              <input
-                type="radio"
-                name="direction"
-                checked={direction === "hebreu"}
-                onChange={() => setDirection("hebreu")}
-              />
-              Hébreu
-            </label>
-          </div>
-
-          <div className="radio-group" style={{ marginTop: -8, marginBottom: -16 }}>
-            <label style={{ fontSize: "0.475em", color: "var(--textMuted)" }}>
-              <input
-                type="radio"
-                name="evalMode"
-                checked={evalMode === "auto"}
-                onChange={() => setEvalMode("auto")}
-              />
-              Auto-éval
-            </label>
-            <label style={{ fontSize: "0.475em", color: "var(--textMuted)" }}>
-              <input
-                type="radio"
-                name="evalMode"
-                checked={evalMode === "prof"}
-                onChange={() => setEvalMode("prof")}
-              />
-              Prof éval
-            </label>
-          </div>
-
           {evalMode === "prof" && (
             <>
               <hr
@@ -341,20 +313,26 @@ export default function QuestionEcriteScreen() {
         >
           {/* La phrase donnée (source) est toujours au-dessus du trait, la
               solution (cible à deviner) toujours en dessous — même
-              principe que MotScreen/révisions. Marges explicites (gap:0 sur
-              le conteneur) plutôt qu'un gap uniforme : à distance de boîte
-              égale, la police latine laisse plus d'espace de ligne visible
-              au-dessus du texte que la police hébraïque ou le badge "?" —
-              sans ce correctif le trait paraît plus proche du côté hébreu
-              que du côté français, cf. demande explicite du user. */}
+              principe que MotScreen/révisions. marginBottom:14 des deux
+              côtés (hébreu comme français) : le trait doit être à
+              équidistance des deux phrases, cf. demande explicite du user.
+              Haut-parleur au-dessus de la phrase hébreu (pas en dessous),
+              cf. demande explicite du user. */}
           {isSourceHebrew ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginBottom: 28 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginBottom: 14 }}>
+              {/* size 33 = 22 * 1.5 (+50%), cf. demande explicite du
+                  user. */}
+              <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
+                <SpeakerIcon size={33} color="var(--textMuted)" />
+              </button>
+              {/* Phrase hébreu toujours en noir (jamais grisée), cf.
+                  demande explicite du user. */}
               <p
                 className="hebrew"
                 style={{
                   margin: 0,
                   fontWeight: 700,
-                  color: "var(--textMuted)",
+                  color: "var(--text)",
                   fontSize: "2.16em",
                   direction: "rtl",
                   fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
@@ -362,9 +340,6 @@ export default function QuestionEcriteScreen() {
               >
                 {sourceText}
               </p>
-              <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                <SpeakerIcon size={22} color="var(--textMuted)" />
-              </button>
             </div>
           ) : (
             <p style={{ color: "var(--text)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
@@ -389,10 +364,12 @@ export default function QuestionEcriteScreen() {
               affichée ou non. La phrase source et le trait au-dessus ne
               bougent ainsi jamais lors de la révélation, cf. demande
               explicite du user. Le "?" (badge, aligné en haut de la
-              cellule) reçoit toujours l'espacement complet (comme
-              l'hébreu) ; le bloc "révélé" reçoit un marginTop réduit
-              lorsque la cible est en français (même raison que côté
-              source). */}
+              cellule) reçoit toujours l'espacement complet ; le bloc
+              "révélé" reçoit systématiquement le même marginTop réduit
+              (-14, qu'il soit en français ou en hébreu) pour que l'écart
+              trait -> solution soit identique à l'écart source -> trait
+              (marginBottom:14 côté source), cf. demande explicite du
+              user. */}
           <div style={{ display: "grid", justifyItems: "center", marginTop: 28 }}>
             <div
               style={{
@@ -422,7 +399,7 @@ export default function QuestionEcriteScreen() {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 8,
-                marginTop: targetIsHebrew ? 0 : -14,
+                marginTop: -14,
               }}
             >
               {targetIsHebrew ? (
@@ -440,15 +417,32 @@ export default function QuestionEcriteScreen() {
                   {targetText}
                 </p>
               ) : (
-                <p style={{ fontStyle: "italic", color: "var(--text)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
+                // Phrase française toujours en gris (jamais noire), cf.
+                // demande explicite du user.
+                <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
                   {targetText}
                 </p>
               )}
 
-              {/* Haut-parleur (si la cible est en hébreu), cross mark et
-                  check mark sur la même ligne, tous à +100% — cf. demande
-                  explicite du user. */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              {/* Haut-parleur (si la cible est en hébreu), wrong.png et
+                  right.png (au lieu des glyphes ✗/✓ texte) sur la même
+                  ligne — cf. demande explicite du user. className
+                  danger/success conservée (couleur du bouton lui-même, pas
+                  de l'image) pour que le halo .pulse (box-shadow en
+                  currentColor) continue de fonctionner sans changement.
+                  marginTop:32 (avec le gap:8 du conteneur, 40px au total)
+                  quelle que soit la cible (français ou hébreu) : même
+                  espace phrase -> logos des deux côtés, cf. demandes
+                  explicites du user. */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  marginTop: 32,
+                }}
+              >
                 {targetIsHebrew && (
                   <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
                     <SpeakerIcon size={44} color="var(--text)" />
@@ -457,18 +451,16 @@ export default function QuestionEcriteScreen() {
                 <button
                   type="button"
                   className={`eval-btn danger${pulse === "danger" ? " pulse" : ""}`}
-                  style={{ fontSize: "2.14em" }}
                   onClick={() => handleEvaluate(false)}
                 >
-                  ✗
+                  <img src="/wrong.png" alt="Faux" width={36} height={36} draggable={false} />
                 </button>
                 <button
                   type="button"
                   className={`eval-btn success${pulse === "success" ? " pulse" : ""}`}
-                  style={{ fontSize: "2.14em" }}
                   onClick={() => handleEvaluate(true)}
                 >
-                  ✓
+                  <img src="/right.png" alt="Vrai" width={36} height={36} draggable={false} />
                 </button>
               </div>
             </div>

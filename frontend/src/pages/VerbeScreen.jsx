@@ -9,7 +9,6 @@ import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
-import { PoolBadge } from "../components/PoolBadge";
 import "./screens.css";
 
 const TEMPS_LABELS = [
@@ -170,22 +169,6 @@ export default function VerbeScreen() {
     <section className="screen" style={{ zoom: 1.5, paddingBottom: "calc(var(--bottom-nav-height) * 2 / 1.5)" }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && !!temps && revealed} />
 
-      {/* marginTop (wrapper extérieur, donc vu uniquement à travers le
-          zoom:1.5 ambiant de .screen) rapproche le message de la borne
-          inférieure du bandeau. zoom:0.5 (wrapper intérieur séparé, pour ne
-          pas cumuler son propre facteur sur le marginTop ci-dessus) réduit
-          la police de moitié — 0.7em est déclaré en inline sur PoolBadge,
-          donc pas modifiable par une simple règle CSS sans !important,
-          même technique que les autres redimensionnements ponctuels de
-          composants partagés sur cet écran (ex: fiche binyan/racine).
-          Cf. demandes explicites du user. */}
-      {mode === "revision" && (
-        <div style={{ marginTop: -27 }}>
-          <div style={{ zoom: 0.5 }}>
-            <PoolBadge pool={verbe.pool} chapter={verbe.chapter} lesson={verbe.lesson} />
-          </div>
-        </div>
-      )}
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
         <h1 className="hebrew-large" style={{ margin: 0 }}>
@@ -412,6 +395,12 @@ export default function VerbeScreen() {
                 <tr>
                   <td />
                   <td style={{ textAlign: "center" }}>
+                    {/* wrong.png/right.png (au lieu des glyphes ✗/✓ texte)
+                        — cf. demande explicite du user. 24px (pas 36 comme
+                        les écrans non zoomés) : cette section vit dans le
+                        zoom:1.5 ambiant de l'écran (cf. plus haut), qui
+                        multiplie déjà tout ce qui y est exprimé — le rendu
+                        réel est donc bien 36px (24 * 1.5). */}
                     {revealed && (
                       <div style={{ display: "flex", justifyContent: "center", gap: 0 }}>
                         <button
@@ -419,14 +408,14 @@ export default function VerbeScreen() {
                           className={`eval-btn danger${pulse === "danger" ? " pulse" : ""}`}
                           onClick={() => handleEvaluate(false)}
                         >
-                          ✗
+                          <img src="/wrong.png" alt="Faux" width={24} height={24} draggable={false} />
                         </button>
                         <button
                           type="button"
                           className={`eval-btn success${pulse === "success" ? " pulse" : ""}`}
                           onClick={() => handleEvaluate(true)}
                         >
-                          ✓
+                          <img src="/right.png" alt="Vrai" width={24} height={24} draggable={false} />
                         </button>
                       </div>
                     )}

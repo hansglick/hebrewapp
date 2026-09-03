@@ -8,6 +8,7 @@ import "./VoicePrefill.css";
 // backend) : backend/results/ est gitignored et jamais déployé, un chemin
 // mediaUrl() y renverrait donc un 404 silencieux en production.
 const LECTURE_ICON_URL = "/lecture.png";
+const PAUSE_ICON_URL = "/pause.png";
 const VOICE_ICON_URL = "/voice.png";
 const SEND_ICON_URL = "/sendvocal.png";
 const ICON_SIZE = 40;
@@ -15,10 +16,12 @@ const ICON_SIZE = 40;
 // Pré-remplissage vocal générique : idle -> recording -> recorded ->
 // sending -> idle (le champ appelant est alors rempli avec le verbatim
 // renvoyé par l'API de transcription). Même langage visuel que la capture
-// de réponse orale (OralAnswerCapture/AudioProgressBlock) mais en compact,
-// sur une seule ligne : micro (gauche) / onde de progression / bouton
-// lecture, bouton envoyer empilé sous le bouton lecture — cf. demande
-// explicite du user.
+// de réponse orale (OralAnswerCapture/AudioProgressBlock), y compris le
+// même mécanisme lecture/pause et le seek au clic sur l'onde — cf. demande
+// explicite du user. Les 3 contrôles (lecture, onde, envoyer) sont
+// toujours affichés, à droite du micro, mais grisés et inertes tant
+// qu'aucun enregistrement n'existe (au lieu de n'apparaître qu'après),
+// cf. demande explicite du user.
 export function VoicePrefill({ onChange, lang = "he", context }) {
   const [voiceState, setVoiceState] = useState("idle");
   const [voiceBlob, setVoiceBlob] = useState(null);
@@ -100,6 +103,7 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
     const rect = e.currentTarget.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
     audio.currentTime = ratio * duration;
+    setProgress(ratio);
   }
 
   async function handleSendVoice() {
@@ -118,6 +122,7 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
   }
 
   const hasRecording = voiceState === "recorded" || voiceState === "sending";
+  const inertClass = hasRecording ? "" : " voice-prefill-inert";
 
   return (
     <div className="voice-prefill-block">
@@ -136,67 +141,68 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
           }
         />
 
-        {hasRecording ? (
-          <>
-            <div className="voice-prefill-wave" onClick={handleSeek}>
-              <span
-                className="voice-prefill-wave-icon voice-prefill-wave-bg"
-                style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
-              />
-              <span
-                className="voice-prefill-wave-icon voice-prefill-wave-fill"
-                style={{
-                  WebkitMaskImage: `url(${VOICE_ICON_URL})`,
-                  maskImage: `url(${VOICE_ICON_URL})`,
-                  clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-                  WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-                }}
-              />
-            </div>
+        <button
+          type="button"
+          className={`voice-prefill-toggle${inertClass}`}
+          onClick={hasRecording ? togglePlay : undefined}
+          disabled={!hasRecording}
+          aria-label={isPlaying ? "Pause" : "Lecture"}
+        >
+          <span
+            className="voice-prefill-icon"
+            style={{
+              WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+              maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+            }}
+          />
+        </button>
 
-            <div className="voice-prefill-play-column">
-              <button
-                type="button"
-                className="voice-prefill-toggle"
-                onClick={togglePlay}
-                aria-label={isPlaying ? "Pause" : "Lecture"}
-              >
-                <span
-                  className="voice-prefill-icon"
-                  style={{ WebkitMaskImage: `url(${LECTURE_ICON_URL})`, maskImage: `url(${LECTURE_ICON_URL})` }}
-                />
-              </button>
-              <button
-                type="button"
-                className="voice-prefill-send"
-                onClick={handleSendVoice}
-                disabled={voiceState !== "recorded"}
-                aria-label="Envoyer"
-              >
-                <img src={SEND_ICON_URL} alt="" style={{ width: ICON_SIZE * 0.78, height: ICON_SIZE * 0.78 }} />
-              </button>
-            </div>
+        <div
+          className={`voice-prefill-wave${inertClass}`}
+          onClick={hasRecording ? handleSeek : undefined}
+        >
+          <span
+            className="voice-prefill-wave-icon voice-prefill-wave-bg"
+            style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
+          />
+          <span
+            className="voice-prefill-wave-icon voice-prefill-wave-fill"
+            style={{
+              WebkitMaskImage: `url(${VOICE_ICON_URL})`,
+              maskImage: `url(${VOICE_ICON_URL})`,
+              clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+              WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+            }}
+          />
+        </div>
 
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <audio
-              ref={audioRef}
-              src={voiceUrl}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onEnded={() => {
-                setIsPlaying(false);
-                setProgress(1);
-              }}
-            />
-          </>
-        ) : (
-          <p className="muted voice-prefill-hint">
-            {voiceState === "recording"
-              ? "Enregistrement en cours..."
-              : "Touche le micro pour pré-remplir avec la voix"}
-          </p>
-        )}
+        <button
+          type="button"
+          className={`voice-prefill-send${inertClass}`}
+          onClick={handleSendVoice}
+          disabled={voiceState !== "recorded"}
+          aria-label="Envoyer"
+        >
+          <img src={SEND_ICON_URL} alt="" style={{ width: ICON_SIZE * 0.78, height: ICON_SIZE * 0.78 }} />
+        </button>
+
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <audio
+          ref={audioRef}
+          src={voiceUrl ?? undefined}
+          preload="metadata"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => {
+            setIsPlaying(false);
+            setProgress(1);
+          }}
+        />
       </div>
+
+      {voiceState === "recording" && (
+        <p className="muted voice-prefill-hint">Enregistrement en cours...</p>
+      )}
 
       {voiceState === "sending" && (
         <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em", margin: 0 }}>

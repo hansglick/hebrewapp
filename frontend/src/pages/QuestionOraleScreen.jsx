@@ -11,7 +11,6 @@ import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar } from "../components/BottomNavBar";
 import { OralAnswerCapture } from "../components/OralAnswerCapture";
 import { WaitingVideo } from "../components/WaitingVideo";
-import { PoolBadge } from "../components/PoolBadge";
 import "./screens.css";
 
 const GEMINI_TIMEOUT_MS = 30000;
@@ -192,9 +191,6 @@ export default function QuestionOraleScreen() {
       <ActionHints {...swipeHandlers.hints} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
-      {mode === "revision" && (
-        <PoolBadge pool={question.pool} chapter={question.chapter} lesson={question.lesson} />
-      )}
 
       <OralAnswerCapture
         contentSrc={mediaUrl(question.voicepath)}

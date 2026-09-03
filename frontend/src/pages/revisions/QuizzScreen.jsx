@@ -5,7 +5,6 @@ import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
 import { BottomNavBar } from "../../components/BottomNavBar";
-import { PoolBadge } from "../../components/PoolBadge";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import "../screens.css";
 
@@ -81,16 +80,11 @@ export default function QuizzScreen() {
     <>
     <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)", flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
-      {/* marginTop rapproche le message de la borne inférieure du bandeau,
-          cf. demande explicite du user. */}
-      <div style={{ marginTop: -32 }}>
-        <PoolBadge pool={quizz.pool} chapter={quizz.chapter} lesson={quizz.lesson} />
-      </div>
 
       {/* zoom: 1.6 (+100% de base, réduit de 20% cf. demande explicite du
-          user) sur tout sauf le PoolBadge ci-dessus — flex:1 +
-          justifyContent:center centre le bloc dans l'espace restant sous
-          le PoolBadge (même technique que VerbeScreen/OralAnswerCapture). */}
+          user) — flex:1 + justifyContent:center centre le bloc dans
+          l'espace disponible (même technique que VerbeScreen/
+          OralAnswerCapture). */}
       <div
         style={{
           zoom: 1.6,

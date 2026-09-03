@@ -384,16 +384,8 @@
   text-align: start;
 }
 
-/* Largeur par défaut (desktop) de l'encadré racine en révisions/mot — fixée
-   ici plutôt qu'en style inline sur l'élément (cf. MotScreen), pour que la
-   règle mobile ci-dessous (même sélecteur, dans le @media) puisse la
-   surcharger sans !important. */
-.mot-revision-racine {
-  width: 100%;
-}
-
-/* Largeur par défaut (desktop) du trait révisions/quizz — même raison que
-   .mot-revision-racine ci-dessus (évite le conflit avec la règle mobile). */
+/* Largeur par défaut (desktop) du trait révisions/quizz — évite le conflit
+   avec la règle mobile ci-dessous (même sélecteur, dans le @media). */
 .quizz-hr {
   width: 200px;
 }
@@ -406,20 +398,6 @@
   .exam-tile,
   .progress-bar-track {
     max-width: 100%;
-  }
-
-  /* Révisions/mot : l'encadré racine (position:absolute, cf. MotScreen)
-     hérite sa largeur (100%) d'un ancêtre étriqué (le conteneur zoomé,
-     shrink-to-fit) plutôt que de la largeur réelle de l'écran — sur mobile
-     il paraît donc bien plus petit que le reste de l'écran. Cet ancêtre
-     est zoomé à 2 (cf. MotScreen), et `zoom` multiplie aussi le calcul des
-     unités vw pour ses descendants (mesuré : 90vw y rend ~180vw réels) —
-     45vw (90/2) compense exactement ce facteur pour représenter les 90%
-     de largeur d'écran demandés, cf. demande explicite du user.
-     left:50%/translateX(-50%) (cf. MotScreen) le recentre sur l'écran
-     quelle que soit sa nouvelle largeur. */
-  .mot-revision-racine {
-    width: 45vw;
   }
 
   /* Révisions/quizz : le trait entre le mot français et les bulles de

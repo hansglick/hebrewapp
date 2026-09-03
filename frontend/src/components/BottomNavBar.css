@@ -86,3 +86,62 @@
 .bottom-nav-icon-prev {
   transform: scaleX(-1);
 }
+
+/* Variante avec contenu central (cf. BottomNavBar `center`) : les deux
+   flèches reviennent aux extrémités (padding de la barre) et l'espace du
+   milieu revient au contenu central plutôt qu'à un rapprochement vers le
+   centre (qui n'a plus lieu d'être une fois cet espace occupé), cf.
+   demande explicite du user. */
+.bottom-nav-bar-with-center {
+  justify-content: space-between;
+}
+
+.bottom-nav-center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toggle FR/HE ou Auto/Teacher — rond blanc sur un petit rail gris, avec
+   un libellé de chaque côté, cf. demande explicite du user. */
+.bottom-nav-toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bottom-nav-toggle-label {
+  color: #9ca3af;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.bottom-nav-toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: #4b4d57;
+  cursor: pointer;
+}
+
+.bottom-nav-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s ease;
+}
+
+.bottom-nav-toggle.on .bottom-nav-toggle-knob {
+  transform: translateX(16px);
+}
