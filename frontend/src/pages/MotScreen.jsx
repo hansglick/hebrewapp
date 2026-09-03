@@ -121,7 +121,11 @@ export default function MotScreen() {
   return (
     <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && revealed} />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+      {/* En exploration, les boutons sont positionnés sur la ligne
+          horizontale du mot (cf. plus bas, variante `inline`) plutôt
+          qu'au centre générique de l'écran, cf. demande explicite du
+          user. */}
+      {mode === "revision" && <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />}
 
       {mode === "revision" && (
         <div style={{ marginTop: -20 }}>
@@ -129,10 +133,15 @@ export default function MotScreen() {
         </div>
       )}
 
+      {/* flex:1 (plutôt que minHeight:60vh, qui ne remplit pas forcément
+          tout l'espace réellement disponible) : remplit toute la hauteur
+          restante de .app-content — déjà sous le bandeau immuable, exclu
+          par la mise en page flex parente — pour un centrage vertical
+          exact sur cet espace, cf. demande explicite du user. */}
       {mode === "exploration" && (
         <div
           style={{
-            minHeight: "60vh",
+            flex: 1,
             width: "100%",
             display: "flex",
             flexDirection: "column",
@@ -152,7 +161,10 @@ export default function MotScreen() {
               disposait avant ce changement — cf. bug rapporté par le
               user. */}
           <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-            <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.4375em" }}>
+            {/* Le mot hébreu est toujours au-dessus du trait, le mot
+                français toujours en dessous — cf. demande explicite du
+                user (retour à cette disposition). */}
+            <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em" }}>
               {mot.original}
             </span>
 
@@ -167,17 +179,24 @@ export default function MotScreen() {
               </button>
             </span>
 
-            <hr
-              style={{
-                width: "70%",
-                maxWidth: 400,
-                border: "none",
-                borderTop: "1px solid var(--border)",
-                margin: 0,
-              }}
-            />
+            {/* position:relative + les boutons next/prev en variante
+                `inline` : les positionne exactement sur cette ligne
+                horizontale plutôt qu'au centre générique de l'écran, cf.
+                demande explicite du user. */}
+            <div style={{ position: "relative", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <hr
+                style={{
+                  width: "70%",
+                  maxWidth: 400,
+                  border: "none",
+                  borderTop: "1px solid var(--border)",
+                  margin: 0,
+                }}
+              />
+              <NextPrevButtons onPrevious={goPrevious} onNext={goNext} variant="inline" />
+            </div>
 
-            <span style={{ fontStyle: "italic", fontSize: "1.625em", color: "var(--textMuted)" }}>{mot.french}</span>
+            <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textMuted)" }}>{mot.french}</span>
 
             {/* position:absolute (au lieu d'un enfant normal du flex
                 column) : n'affecte donc jamais la position des éléments
@@ -217,6 +236,7 @@ export default function MotScreen() {
         <div
           style={{
             zoom: 2,
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -224,6 +244,13 @@ export default function MotScreen() {
             position: "relative",
           }}
         >
+          {/* width:"100%" : sans elle, ce conteneur (position:relative,
+              zoom:2) n'a que la largeur de son contenu (mot hébreu/"?"),
+              donc le wrapper .mot-revision-racine (width:100% relatif à
+              CE conteneur, cf. screens.css) hériterait de cette même
+              largeur étriquée au lieu de la pleine largeur d'écran — même
+              bug que celui déjà corrigé côté exploration (leçon/mot), cf.
+              demande explicite du user ("calque-toi sur... leçon/mot"). */}
           {/* L'hébreu (mot.original) est toujours au-dessus du trait, le
               français (cible à deviner) toujours en dessous — cf. demande
               explicite du user. `mot.langue` reste sans effet sur la mise en
@@ -318,8 +345,14 @@ export default function MotScreen() {
           {racineDetails && (
             <div
               className="mot-revision-racine"
-              style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)" }}
+              style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", paddingBottom: 30 }}
             >
+              {/* paddingBottom (pas marginBottom : une marge de fin sur un
+                  élément position:absolute n'est pas comptée dans la zone
+                  défilable de l'ancêtre, contrairement au padding, qui fait
+                  partie de sa border-box) — laisse un peu d'air après
+                  l'encadré une fois scrollé en bas de page, cf. demande
+                  explicite du user. */}
               <div style={{ marginTop: -10 }}>
                 <div style={{ zoom: 1 / 2 }}>
                   <RacineCard racine={racineDetails} />

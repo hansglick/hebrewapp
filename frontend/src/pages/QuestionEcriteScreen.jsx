@@ -174,7 +174,10 @@ export default function QuestionEcriteScreen() {
         {...swipeHandlers.hints}
         digits={mode === "revision" && evalMode === "auto" && revealed}
       />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+      {/* En exploration, les boutons sont placés au-dessus de la phrase
+          française (cf. plus bas, variante `static`) plutôt qu'au centre
+          générique de l'écran, cf. demande explicite du user. */}
+      {mode === "revision" && <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />}
 
       {mode === "revision" && (
         <div style={{ marginTop: -20 }}>
@@ -199,7 +202,8 @@ export default function QuestionEcriteScreen() {
             gap: 10,
           }}
         >
-          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.44em" }}>
+          <NextPrevButtons onPrevious={goPrevious} onNext={goNext} variant="static" />
+          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.152em" }}>
             {phrase.french}
           </p>
           <hr

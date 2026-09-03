@@ -23,6 +23,16 @@
   padding: 6px 16px;
   background: #16171d;
   border-bottom: 2.68px solid #a9d6f5;
+  /* zoom (pas juste des tailles ponctuelles) : agrandit uniformément toute
+     la barre — sa hauteur ET son contenu (logos, code leçon, libellé
+     chapitre...) — de 50%, cf. demande explicite du user. Le panneau
+     mobile (.header-mobile-panel, position:absolute/percentages) suit
+     correctement ce zoom ; SEUL son fond plein-écran
+     (.header-mobile-backdrop, position:fixed) est rendu hors de ce
+     conteneur dans Layout.jsx, car zoom déforme les coordonnées d'un
+     position:fixed imbriqué (comportement déjà rencontré/documenté cette
+     session, cf. NextPrevButtons/VerbeScreen). */
+  zoom: 1.5;
 }
 
 .header-left {

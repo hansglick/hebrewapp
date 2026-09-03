@@ -7,16 +7,31 @@ import "./NextPrevButtons.css";
 const NEXT_ICON_URL = "/next.png";
 const PREVIOUS_ICON_URL = "/previous.png";
 
-// Boutons "précédent"/"suivant" fixés en bas de l'écran (sans toucher le
-// bord), présents sur tous les écrans "objet" (mot, verbe, chanson, texte,
-// binyan, racine, dictionnaire, curiosité, quizz, questions écrite/orale) —
-// mêmes actions que le swipe déjà en place sur ces écrans (cf. useSwipe),
-// juste une alternative cliquable. `onPrevious`/`onNext` absent => le
-// bouton correspondant n'est pas rendu, mais l'autre garde sa position
-// (deux emplacements fixes, jamais un seul bouton qui se recentre).
-export function NextPrevButtons({ onPrevious, onNext }) {
+// Boutons "précédent"/"suivant", présents sur tous les écrans "objet" (mot,
+// verbe, chanson, texte, binyan, racine, dictionnaire, curiosité, quizz,
+// questions écrite/orale) — mêmes actions que le swipe déjà en place sur
+// ces écrans (cf. useSwipe), juste une alternative cliquable.
+// `onPrevious`/`onNext` absent => le bouton correspondant n'est pas rendu,
+// mais l'autre garde sa position (deux emplacements fixes, jamais un seul
+// bouton qui se recentre).
+// `variant` :
+//  - "fixed" (défaut) : position:fixed, centré sur la hauteur de l'écran
+//    (hors bandeau).
+//  - "inline" : position:absolute sur un ancêtre position:relative propre à
+//    l'écran appelant, pour aligner les boutons sur un élément précis de
+//    son contenu (ex: la ligne horizontale de leçon/mot) plutôt que sur le
+//    centre de l'écran.
+//  - "static" : flux normal (pas de position), pleine largeur de son
+//    conteneur — pour placer les boutons à un endroit précis de la mise en
+//    page (ex: au-dessus d'une phrase, leçon/traduction) plutôt qu'en
+//    survol de l'écran.
+// Cf. demandes explicites du user.
+export function NextPrevButtons({ onPrevious, onNext, variant = "fixed" }) {
   return (
-    <div className="next-prev-bar" aria-hidden={!onPrevious && !onNext}>
+    <div
+      className={`next-prev-bar${variant !== "fixed" ? ` next-prev-bar-${variant}` : ""}`}
+      aria-hidden={!onPrevious && !onNext}
+    >
       <div className="next-prev-slot">
         {onPrevious && (
           <button type="button" className="next-prev-btn" onClick={onPrevious} aria-label="Précédent">

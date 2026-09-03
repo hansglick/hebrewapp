@@ -283,7 +283,10 @@ export default function VerbeScreen() {
         </div>
       )}
 
-      <div className="toggle-group" style={{ marginTop: binyanDetails || racineDetails ? 28 : 6 }}>
+      {/* zoom:0.8 (plutôt que toucher .toggle-group, classe partagée avec
+          StatistiquesScreen/VerbeCard) réduit ces boutons de 20% sans
+          affecter les autres écrans, cf. demande explicite du user. */}
+      <div className="toggle-group" style={{ marginTop: binyanDetails || racineDetails ? 28 : 6, zoom: 0.8 }}>
         {TEMPS_LABELS.map((t) => (
           <button
             key={t.key}
@@ -328,14 +331,14 @@ export default function VerbeScreen() {
                     margin: 0,
                     color: "var(--text)",
                     fontWeight: 600,
-                    fontSize: "calc(var(--font-size-hebrew-large) * 0.8)",
+                    fontSize: "calc(var(--font-size-hebrew-large) * 0.64)",
                   }}
                 >
                   {c.conjugaison}
                 </p>
                 <p
                   className="muted"
-                  style={{ margin: "2px 0 0", fontStyle: "italic", fontSize: "0.612em" }}
+                  style={{ margin: "2px 0 0", fontStyle: "italic", fontSize: "0.49em" }}
                 >
                   {capitalize(c.personne)}
                 </p>

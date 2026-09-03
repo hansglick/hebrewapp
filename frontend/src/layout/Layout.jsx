@@ -335,7 +335,6 @@ export default function Layout() {
           </button>
           {mobileMenuOpen && (
             <>
-              <div className="header-mobile-backdrop" onClick={() => setMobileMenuOpen(false)} />
               <div className="header-mobile-panel">
                 {wallet && (
                   <>
@@ -404,6 +403,12 @@ export default function Layout() {
           )}
         </div>
       </header>
+      {/* Rendu hors de <header> (zoomé, cf. Layout.css) : position:fixed
+          calculerait ses coordonnées dans le référentiel déformé par le
+          zoom ambiant sinon, cf. commentaire sur .app-header. */}
+      {mobileMenuOpen && (
+        <div className="header-mobile-backdrop" onClick={() => setMobileMenuOpen(false)} />
+      )}
       <ConfigModal
         isOpen={configOpen}
         onClose={() => setConfigOpen(false)}

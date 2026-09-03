@@ -51,15 +51,24 @@ const TRANSLIT_MAP = {
 
 const FINAL_FORMS = { כ: "ך", מ: "ם", נ: "ן", פ: "ף", צ: "ץ" };
 
+// Touches "brutes" du clavier virtuel : insèrent directement le caractère
+// lui-même plutôt qu'une lettre hébraïque translittérée — même résultat
+// que Alt Gr + touche sur un clavier physique (cf. handleBeforeInput,
+// altGrRef) pour ces mêmes touches. La touche ":" normale produit ץ (cf.
+// TRANSLIT_MAP) ; "colon" est le pendant qui produit ":" littéralement,
+// cf. demande explicite du user.
+const RAW_KEYS = { colon: ":" };
+
 // Disposition AZERTY : chaque touche affiche la lettre hébraïque qu'elle
 // produit (via TRANSLIT_MAP), pour que le clavier virtuel reflète exactement
 // ce que produirait la frappe physique (cf. handleBeforeInput). Les 3
-// dernières touches de la rangée du bas (, ; :) portent צ/ת/ץ, introuvables
-// sur une touche-lettre a-z d'un vrai clavier hébreu.
+// dernières touches lettre de la rangée du bas (, ; :) portent צ/ת/ץ,
+// introuvables sur une touche-lettre a-z d'un vrai clavier hébreu. "colon"
+// (RAW_KEYS) complète la rangée à 10 touches, comme les deux au-dessus.
 const AZERTY_ROWS = [
   ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m"],
-  ["w", "x", "c", "v", "b", "n", ",", ";", ":"],
+  ["w", "x", "c", "v", "b", "n", ",", ";", ":", "colon"],
 ];
 
 // Sur Windows, Alt Gr est le plus souvent transmis au navigateur comme un
@@ -235,17 +244,21 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
         <div className="hebrew-keyboard">
           {AZERTY_ROWS.map((row, i) => (
             <div key={i} className="hebrew-keyboard-row">
-              {row.map((latin) => (
-                <button
-                  key={latin}
-                  type="button"
-                  className={`hebrew-key${activeKey === latin ? " active" : ""}`}
-                  onClick={() => handleKeyClick(TRANSLIT_MAP[latin])}
-                >
-                  <span className="hebrew-key-hebrew">{TRANSLIT_MAP[latin]}</span>
-                  <span className="hebrew-key-latin">{latin}</span>
-                </button>
-              ))}
+              {row.map((latin) => {
+                const isRaw = latin in RAW_KEYS;
+                const insertChar = isRaw ? RAW_KEYS[latin] : TRANSLIT_MAP[latin];
+                return (
+                  <button
+                    key={latin}
+                    type="button"
+                    className={`hebrew-key${activeKey === latin ? " active" : ""}`}
+                    onClick={() => handleKeyClick(insertChar)}
+                  >
+                    <span className="hebrew-key-hebrew">{insertChar}</span>
+                    {!isRaw && <span className="hebrew-key-latin">{latin}</span>}
+                  </button>
+                );
+              })}
             </div>
           ))}
           <div className="hebrew-keyboard-row">
