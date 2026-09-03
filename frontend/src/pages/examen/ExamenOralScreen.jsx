@@ -399,48 +399,12 @@ export default function ExamenOralScreen() {
 
   return (
     <section className="screen" style={{ flex: 1 }}>
-      <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
-        <tbody>
-          <tr>
-            <td style={{ border: "1px solid transparent", padding: "4px 8px", width: "25%", textAlign: "start" }}>
-              <button
-                type="button"
-                className="link-btn"
-                style={{ textDecoration: "none", color: "var(--text)" }}
-                disabled={index === 0}
-                onClick={() => setIndex(index - 1)}
-              >
-                ◀
-              </button>
-            </td>
-            <td className="muted" style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "center" }}>
-              Question {index + 1} / {exam.questions.length}
-            </td>
-            <td style={{ border: "1px solid transparent", padding: "4px 8px", width: "25%", textAlign: "end" }}>
-              <button
-                type="button"
-                className="link-btn"
-                style={{ textDecoration: "none", color: "var(--text)" }}
-                disabled={index === exam.questions.length - 1}
-                onClick={() => setIndex(index + 1)}
-              >
-                ▶
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <hr
-        style={{
-          width: "100%",
-          maxWidth: 320,
-          border: "none",
-          borderTop: "1px solid var(--border)",
-          margin: "1em 0 0",
-        }}
-      />
-
+      {/* Le header "Question N/25" (navigation ◀▶) n'a de sens que pendant
+          la saisie des réponses — pendant l'évaluation (groupée ou non),
+          il restait affiché figé sur la dernière question, ce qui donnait
+          l'impression trompeuse d'une évaluation question par question
+          alors que l'appel Gemini groupé est bien unique — cf. bug
+          rapporté par le user. Masqué pendant loadingGemini. */}
       {loadingGemini ? (
         <GeminiWaiting
           key={batchProgress ? "batch" : "single"}
@@ -457,6 +421,47 @@ export default function ExamenOralScreen() {
         />
       ) : (
         <>
+          <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+            <tbody>
+              <tr>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", width: "25%", textAlign: "start" }}>
+                  <button
+                    type="button"
+                    className="link-btn"
+                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    disabled={index === 0}
+                    onClick={() => setIndex(index - 1)}
+                  >
+                    ◀
+                  </button>
+                </td>
+                <td className="muted" style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "center" }}>
+                  Question {index + 1} / {exam.questions.length}
+                </td>
+                <td style={{ border: "1px solid transparent", padding: "4px 8px", width: "25%", textAlign: "end" }}>
+                  <button
+                    type="button"
+                    className="link-btn"
+                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    disabled={index === exam.questions.length - 1}
+                    onClick={() => setIndex(index + 1)}
+                  >
+                    ▶
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr
+            style={{
+              width: "100%",
+              maxWidth: 320,
+              border: "none",
+              borderTop: "1px solid var(--border)",
+              margin: "1em 0 0",
+            }}
+          />
       <p className="muted" style={{ fontSize: "0.7em", margin: 0 }}>
         {q.text_code}
       </p>
