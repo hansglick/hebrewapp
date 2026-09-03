@@ -76,51 +76,78 @@ export default function QuizzScreen() {
   if (!quizz) return null;
 
   return (
-    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <>
+    <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
-      <PoolBadge pool={quizz.pool} chapter={quizz.chapter} lesson={quizz.lesson} />
-      <hr
+      {/* marginTop rapproche le message de la borne inférieure du bandeau,
+          cf. demande explicite du user. */}
+      <div style={{ marginTop: -32 }}>
+        <PoolBadge pool={quizz.pool} chapter={quizz.chapter} lesson={quizz.lesson} />
+      </div>
+
+      {/* zoom: 1.6 (+100% de base, réduit de 20% cf. demande explicite du
+          user) sur tout sauf le PoolBadge ci-dessus — flex:1 +
+          justifyContent:center centre le bloc dans l'espace restant sous
+          le PoolBadge (même technique que VerbeScreen/OralAnswerCapture). */}
+      <div
         style={{
-          width: 200,
-          border: "none",
-          borderTop: "1px solid var(--border)",
-          margin: 0,
+          zoom: 1.6,
+          flex: 1,
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 16,
         }}
-      />
+      >
+        <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{quizz.french}</p>
 
-      <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{quizz.french}</p>
-
-      <QuizzBubbles
-        options={quizz.options}
-        correctKey={quizz.key}
-        selectedKey={selected}
-        onSelect={submitted ? undefined : setSelected}
-        disabled={submitted}
-      />
-
-      {selected && !submitted && (
-        <button
-          type="button"
-          className="link-btn"
+        {/* width fixée en CSS (cf. .quizz-hr, screens.css) et non ici : un
+            style inline gagnerait toujours face à la règle @media,
+            empêchant l'override mobile de jamais s'appliquer. */}
+        <hr
+          className="quizz-hr"
           style={{
-            marginTop: 0,
-            fontStyle: "italic",
-            color: "var(--textMuted)",
-            fontSize: "0.75em",
-            textDecoration: "none",
+            border: "none",
+            borderTop: "1px solid var(--border)",
+            margin: 0,
           }}
-          onClick={handleSubmit}
-        >
-          Valider ma réponse
-        </button>
-      )}
+        />
 
-      {submitted && (
-        <p style={{ fontWeight: 600, color: selected === quizz.key ? "var(--success)" : "var(--danger)" }}>
-          {selected === quizz.key ? "Correct" : "Incorrect"}
-        </p>
-      )}
+        <QuizzBubbles
+          options={quizz.options}
+          correctKey={quizz.key}
+          selectedKey={selected}
+          onSelect={submitted ? undefined : setSelected}
+          disabled={submitted}
+        />
+
+        {selected && !submitted && (
+          <button
+            type="button"
+            className="link-btn"
+            style={{
+              marginTop: 0,
+              fontStyle: "italic",
+              color: "var(--textMuted)",
+              fontSize: "0.75em",
+              textDecoration: "none",
+            }}
+            onClick={handleSubmit}
+          >
+            Valider ma réponse
+          </button>
+        )}
+
+        {submitted && (
+          <p style={{ fontWeight: 600, color: selected === quizz.key ? "var(--success)" : "var(--danger)" }}>
+            {selected === quizz.key ? "Correct" : "Incorrect"}
+          </p>
+        )}
+      </div>
     </section>
+    <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+    </>
   );
 }

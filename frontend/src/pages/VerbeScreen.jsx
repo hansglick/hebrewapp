@@ -167,8 +167,21 @@ export default function VerbeScreen() {
     <section className="screen" style={{ zoom: 1.5, paddingBottom: 80 / 1.5 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && !!temps && revealed} />
 
+      {/* marginTop (wrapper extérieur, donc vu uniquement à travers le
+          zoom:1.5 ambiant de .screen) rapproche le message de la borne
+          inférieure du bandeau. zoom:0.5 (wrapper intérieur séparé, pour ne
+          pas cumuler son propre facteur sur le marginTop ci-dessus) réduit
+          la police de moitié — 0.7em est déclaré en inline sur PoolBadge,
+          donc pas modifiable par une simple règle CSS sans !important,
+          même technique que les autres redimensionnements ponctuels de
+          composants partagés sur cet écran (ex: fiche binyan/racine).
+          Cf. demandes explicites du user. */}
       {mode === "revision" && (
-        <PoolBadge pool={verbe.pool} chapter={verbe.chapter} lesson={verbe.lesson} />
+        <div style={{ marginTop: -27 }}>
+          <div style={{ zoom: 0.5 }}>
+            <PoolBadge pool={verbe.pool} chapter={verbe.chapter} lesson={verbe.lesson} />
+          </div>
+        </div>
       )}
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
@@ -362,43 +375,32 @@ export default function VerbeScreen() {
                     style={{
                       width: "50%",
                       verticalAlign: "middle",
-                      textAlign: "right",
+                      textAlign: "center",
                       fontStyle: "italic",
                       fontSize: "0.8em",
                     }}
                   >
                     {capitalize(conjugaisonsTemps[personneKey]?.personne ?? "")}
-                    {/* Toujours monté (visibility, pas de rendu conditionnel) pour
-                        que la cellule "personne" garde la même boîte, révélé ou non. */}
-                    <button
-                      type="button"
-                      className="speak-btn"
-                      onClick={() => setRevealed(true)}
-                      disabled={revealed}
-                      style={{
-                        fontStyle: "italic",
-                        color: "var(--textMuted)",
-                        visibility: revealed ? "hidden" : "visible",
-                      }}
-                    >
-                      {" "}
-                    </button>
                   </td>
                   <td style={{ width: "50%", verticalAlign: "middle", textAlign: "center" }}>
-                    {/* Toujours monté (visibility, pas de rendu conditionnel) pour
-                        que la hauteur de la ligne — donc la position de la
-                        personne — ne bouge pas quand la conjugaison apparaît. */}
-                    <p
-                      className="hebrew-large"
-                      style={{
-                        margin: 0,
-                        textAlign: "center",
-                        fontSize: "calc(var(--font-size-hebrew-large) * 0.8)",
-                        visibility: revealed ? "visible" : "hidden",
-                      }}
-                    >
-                      {conjugaisonsTemps[personneKey]?.conjugaison}
-                    </p>
+                    {!revealed ? (
+                      <button type="button" className="speak-btn" onClick={() => setRevealed(true)}>
+                        <span className="racine-badge" style={{ background: "#000", fontWeight: 700, padding: "3px 10px", fontSize: "0.85em" }}>
+                          ?
+                        </span>
+                      </button>
+                    ) : (
+                      <p
+                        className="hebrew-large"
+                        style={{
+                          margin: 0,
+                          textAlign: "center",
+                          fontSize: "calc(var(--font-size-hebrew-large) * 0.8)",
+                        }}
+                      >
+                        {conjugaisonsTemps[personneKey]?.conjugaison}
+                      </p>
+                    )}
                   </td>
                 </tr>
                 <tr>

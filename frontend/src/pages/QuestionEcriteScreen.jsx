@@ -165,7 +165,7 @@ export default function QuestionEcriteScreen() {
   const targetIsHebrew = !isSourceHebrew;
 
   return (
-    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       {loadingGemini ? (
         <WaitingVideo />
       ) : (
@@ -182,39 +182,52 @@ export default function QuestionEcriteScreen() {
         </div>
       )}
 
+      {/* Phrase française toujours au-dessus du trait, phrase hébreu
+          toujours en dessous (avec son haut-parleur) — cf. demande
+          explicite du user. Bloc centré au milieu de l'écran (largeur et
+          hauteur, desktop comme mobile) via flex:1 + justifyContent:center
+          sur ce conteneur (la section porte déjà flex:1). */}
       {mode === "exploration" && (
-        <>
-          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "0.96em" }}>
+        <div
+          style={{
+            flex: 1,
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+          }}
+        >
+          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.44em" }}>
             {phrase.french}
           </p>
-          <div
+          <hr
             style={{
-              marginTop: -3,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 8,
+              width: "70%",
+              maxWidth: 320,
+              border: "none",
+              borderTop: "1px solid var(--border)",
+              margin: 0,
+            }}
+          />
+          <p
+            className="hebrew"
+            style={{
+              margin: 0,
+              fontWeight: 700,
+              color: "var(--text)",
+              fontSize: "2.16em",
+              direction: "rtl",
+              fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
             }}
           >
-            <p
-              className="hebrew"
-              style={{
-                margin: 0,
-                fontWeight: 700,
-                color: "var(--text)",
-                fontSize: "1.44em",
-                direction: "rtl",
-                fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
-              }}
-            >
-              {phrase.hebrew}
-            </p>
-            <span style={{ color: "var(--textMuted)", fontWeight: 400, marginLeft: 6 }}>|</span>
-            <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-              <SpeakerIcon size={20.25} color="var(--text)" />
-            </button>
-          </div>
-        </>
+            {phrase.hebrew}
+          </p>
+          <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
+            <SpeakerIcon size={30} color="var(--text)" />
+          </button>
+        </div>
       )}
 
       {mode === "revision" && (
@@ -261,96 +274,178 @@ export default function QuestionEcriteScreen() {
             </label>
           </div>
 
-          <hr
-            style={{
-              width: "100%",
-              maxWidth: 320,
-              border: "none",
-              borderTop: "1px solid var(--border)",
-              margin: "1em 0 0",
-            }}
-          />
+          {evalMode === "prof" && (
+            <>
+              <hr
+                style={{
+                  width: "100%",
+                  maxWidth: 320,
+                  border: "none",
+                  borderTop: "1px solid var(--border)",
+                  margin: "1em 0 0",
+                }}
+              />
 
+              {isSourceHebrew ? (
+                <div style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  <p
+                    className="hebrew"
+                    style={{
+                      margin: 0,
+                      fontWeight: 700,
+                      color: "var(--textMuted)",
+                      fontSize: "1.44em",
+                      direction: "rtl",
+                      fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
+                    }}
+                  >
+                    {sourceText}
+                  </p>
+                  <span style={{ color: "var(--textMuted)", fontWeight: 400 }}>|</span>
+                  <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
+                    <SpeakerIcon size={20.25} color="var(--textMuted)" />
+                  </button>
+                </div>
+              ) : (
+                <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>
+                  {sourceText}
+                </p>
+              )}
+            </>
+          )}
+        </>
+      )}
+
+      {mode === "revision" && evalMode === "auto" && (
+        <div
+          style={{
+            flex: 1,
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {/* La phrase donnée (source) est toujours au-dessus du trait, la
+              solution (cible à deviner) toujours en dessous — même
+              principe que MotScreen/révisions. Marges explicites (gap:0 sur
+              le conteneur) plutôt qu'un gap uniforme : à distance de boîte
+              égale, la police latine laisse plus d'espace de ligne visible
+              au-dessus du texte que la police hébraïque ou le badge "?" —
+              sans ce correctif le trait paraît plus proche du côté hébreu
+              que du côté français, cf. demande explicite du user. */}
           {isSourceHebrew ? (
-            <div style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginBottom: 28 }}>
               <p
                 className="hebrew"
                 style={{
                   margin: 0,
                   fontWeight: 700,
                   color: "var(--textMuted)",
-                  fontSize: "1.44em",
+                  fontSize: "2.16em",
                   direction: "rtl",
                   fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
                 }}
               >
                 {sourceText}
               </p>
-              <span style={{ color: "var(--textMuted)", fontWeight: 400 }}>|</span>
               <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                <SpeakerIcon size={20.25} color="var(--textMuted)" />
+                <SpeakerIcon size={22} color="var(--textMuted)" />
               </button>
             </div>
           ) : (
-            <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>
+            <p style={{ color: "var(--text)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
               {sourceText}
             </p>
           )}
-        </>
-      )}
 
-      {mode === "revision" && evalMode === "auto" && (
-        <>
-          {!revealed && (
-            <button
-              type="button"
-              className="speak-btn"
-              style={{ marginTop: -8, fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.6em" }}
-              onClick={() => setRevealed(true)}
+          <hr
+            style={{
+              width: "70%",
+              maxWidth: 320,
+              border: "none",
+              borderTop: "1px solid var(--border)",
+              margin: 0,
+            }}
+          />
+
+          {/* Zone de révélation à hauteur fixe : le "?" et la solution
+              occupent la même cellule de grille (l'un en visibility:hidden,
+              l'autre visible) — la hauteur de la cellule est donc toujours
+              celle du contenu le plus grand (la solution), qu'elle soit
+              affichée ou non. La phrase source et le trait au-dessus ne
+              bougent ainsi jamais lors de la révélation, cf. demande
+              explicite du user. Le "?" (badge, aligné en haut de la
+              cellule) reçoit toujours l'espacement complet (comme
+              l'hébreu) ; le bloc "révélé" reçoit un marginTop réduit
+              lorsque la cible est en français (même raison que côté
+              source). */}
+          <div style={{ display: "grid", justifyItems: "center", marginTop: 28 }}>
+            <div
+              style={{
+                gridArea: "1 / 1",
+                visibility: revealed ? "hidden" : "visible",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                marginTop: 9,
+              }}
             >
-              Traduis
-            </button>
-          )}
+              <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={revealed}>
+                <span
+                  className="racine-badge"
+                  style={{ background: "#000", fontWeight: 700, fontSize: "1.4em", padding: "10px 24px" }}
+                >
+                  ?
+                </span>
+              </button>
+            </div>
 
-          {revealed && (
-            <>
+            <div
+              style={{
+                gridArea: "1 / 1",
+                visibility: revealed ? "visible" : "hidden",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 8,
+                marginTop: targetIsHebrew ? 0 : -14,
+              }}
+            >
               {targetIsHebrew ? (
-                <div
+                <p
+                  className="hebrew"
                   style={{
-                    marginTop: -8,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
+                    margin: 0,
+                    fontWeight: 700,
+                    color: "var(--text)",
+                    fontSize: "2.16em",
+                    direction: "rtl",
+                    fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
                   }}
                 >
-                  <p
-                    className="hebrew"
-                    style={{
-                      margin: 0,
-                      fontWeight: 700,
-                      color: "var(--text)",
-                      fontSize: "1.44em",
-                      direction: "rtl",
-                      fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
-                    }}
-                  >
-                    {targetText}
-                  </p>
-                  <span style={{ color: "var(--textMuted)", fontWeight: 400 }}>|</span>
-                  <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                    <SpeakerIcon size={20.25} color="var(--text)" />
-                  </button>
-                </div>
+                  {targetText}
+                </p>
               ) : (
-                <p style={{ fontStyle: "italic", color: "var(--text)", margin: 0, fontSize: "0.96em", marginTop: -8 }}>
+                <p style={{ fontStyle: "italic", color: "var(--text)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
                   {targetText}
                 </p>
               )}
-              <div style={{ display: "flex", justifyContent: "center", gap: 0 }}>
+
+              {/* Haut-parleur (si la cible est en hébreu), cross mark et
+                  check mark sur la même ligne, tous à +100% — cf. demande
+                  explicite du user. */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                {targetIsHebrew && (
+                  <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
+                    <SpeakerIcon size={44} color="var(--text)" />
+                  </button>
+                )}
                 <button
                   type="button"
                   className={`eval-btn danger${pulse === "danger" ? " pulse" : ""}`}
+                  style={{ fontSize: "2.14em" }}
                   onClick={() => handleEvaluate(false)}
                 >
                   ✗
@@ -358,14 +453,15 @@ export default function QuestionEcriteScreen() {
                 <button
                   type="button"
                   className={`eval-btn success${pulse === "success" ? " pulse" : ""}`}
+                  style={{ fontSize: "2.14em" }}
                   onClick={() => handleEvaluate(true)}
                 >
                   ✓
                 </button>
               </div>
-            </>
-          )}
-        </>
+            </div>
+          </div>
+        </div>
       )}
 
       {mode === "revision" && evalMode === "prof" && (
@@ -391,14 +487,8 @@ export default function QuestionEcriteScreen() {
               {!loadingGemini && (
                 <button
                   type="button"
-                  className="link-btn"
-                  style={{
-                    marginTop: 0,
-                    fontStyle: "italic",
-                    color: "var(--textMuted)",
-                    fontSize: "0.75em",
-                    textDecoration: "none",
-                  }}
+                  className="exam-tile green"
+                  style={{ marginTop: 0, cursor: studentSolution.trim() ? "pointer" : "default" }}
                   disabled={!studentSolution.trim()}
                   onClick={handleSubmitProf}
                 >
