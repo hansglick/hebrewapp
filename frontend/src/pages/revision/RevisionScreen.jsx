@@ -39,7 +39,9 @@ function base64ToInt16(b64) {
   return new Int16Array(bytes.buffer);
 }
 
-const MAX_DURATION_MS = 2 * 60 * 1000;
+// Coupe la conversation au bout de 5 minutes — évite qu'une session oubliée
+// ouverte ne consomme du quota Gemini Live/Whisper indéfiniment.
+const MAX_DURATION_MS = 5 * 60 * 1000;
 
 function isErrorStatus(status) {
   return status.startsWith("Micro refusé") || status.startsWith("Erreur") || status.startsWith("Connexion fermée");
@@ -128,7 +130,7 @@ export default function RevisionScreen() {
 
     autoStopTimeoutRef.current = setTimeout(() => {
       stop();
-      setStatus("Conversation terminée (durée maximale de 2 minutes atteinte).");
+      setStatus("Conversation terminée (durée maximale de 5 minutes atteinte).");
     }, MAX_DURATION_MS);
 
     const ws = new WebSocket(revisionWebSocketUrl(code));
