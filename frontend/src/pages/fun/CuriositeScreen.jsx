@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getRandomCuriosite, getCuriositePool, getCuriositeItem } from "../../api/content";
 import { mediaUrl } from "../../api/media";
@@ -22,7 +21,6 @@ const BOUNDARY_MESSAGE =
 // à la progression courante, classé par récence décroissante, sans
 // randomisation ni bouclage — cf. demande explicite du user.
 export default function CuriositeScreen({ type, lessonCode }) {
-  const navigate = useNavigate();
   const [showDetails, setShowDetails] = useState(false);
   const config = CURIOSITE_CONFIG[type];
 
@@ -63,7 +61,11 @@ export default function CuriositeScreen({ type, lessonCode }) {
 
   function goPrevious() {
     if (lessonCode) {
-      if (!randomBack()) navigate(-1);
+      // Sur la toute première curiosité de la session (pas encore
+      // d'historique), randomBack() ne fait rien plutôt que de sortir de
+      // l'écran (navigate(-1)) : previous/next ne doivent jamais faire
+      // quitter le type d'objet parcouru, cf. demande explicite du user.
+      randomBack();
       return;
     }
     if (position > 0) {
@@ -128,7 +130,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
   );
 
   return (
-    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)" }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 

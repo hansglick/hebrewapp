@@ -44,7 +44,7 @@ export default function RacineScreen() {
   if (!racine) return null;
 
   return (
-    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)" }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
       <div className="curiosite-split curiosite-split-racine">

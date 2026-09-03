@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getRandomChanson } from "../../api/content";
 import { youtubeEmbedUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
@@ -8,7 +8,6 @@ import { BottomNavBar } from "../../components/BottomNavBar";
 import "../screens.css";
 
 export default function ChansonScreen() {
-  const navigate = useNavigate();
   const location = useLocation();
   // Si on arrive depuis l'écran de recherche (chanson tout juste extraite),
   // location.state.initialChanson contient déjà l'objet complet — on
@@ -21,8 +20,12 @@ export default function ChansonScreen() {
     initialChanson
   );
 
+  // Sur la toute première chanson de la session (pas encore d'historique),
+  // back() ne fait rien plutôt que de sortir de l'écran (navigate(-1)) :
+  // previous/next ne doivent jamais faire quitter le type d'objet
+  // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    if (!back()) navigate(-1);
+    back();
   }
   function goNext() {
     next();
@@ -36,7 +39,7 @@ export default function ChansonScreen() {
   if (!chanson) return null;
 
   return (
-    <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)" }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>

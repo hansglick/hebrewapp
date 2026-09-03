@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getRandomVerbe, getBinyan, getRacine } from "../api/content";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
@@ -24,7 +24,6 @@ function capitalize(text) {
 
 export default function VerbeScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
-  const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [temps, setTemps] = useState("present");
   const [personneKey, setPersonneKey] = useState(null);
@@ -139,9 +138,13 @@ export default function VerbeScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, temps, revealed, personneKey]);
 
+  // Sur le tout premier verbe de la session (pas encore d'historique, et
+  // plus de "temps" à désélectionner), back() ne fait rien plutôt que de
+  // sortir de l'écran (navigate(-1)) : previous/next ne doivent jamais
+  // faire quitter le type d'objet parcouru, cf. demande explicite du user.
   function goPrevious() {
     if (temps) setTemps(null);
-    else if (!back()) navigate(-1);
+    else back();
   }
   function goNext() {
     if (temps && mode === "revision") nextQuestion();
@@ -160,11 +163,11 @@ export default function VerbeScreen() {
 
   return (
     <>
-    {/* paddingBottom en unités "pré-zoom" (80px réels / 1.5) — cette section
-        est elle-même zoomée, un padding en px réels serait donc étiré à
-        120px au lieu des 80px de dégagement voulus sous les boutons
-        next/previous (rendus hors de cette section, cf. plus bas). */}
-    <section className="screen" style={{ zoom: 1.5, paddingBottom: 80 / 1.5 }} onPointerDown={swipeHandlers.onPointerDown}>
+    {/* paddingBottom en unités "pré-zoom" (hauteur réelle de la barre / 1.5)
+        — cette section est elle-même zoomée, un padding en px réels serait
+        donc étiré d'autant sous les boutons next/previous (rendus hors de
+        cette section, cf. plus bas). */}
+    <section className="screen" style={{ zoom: 1.5, paddingBottom: "calc(var(--bottom-nav-height) * 2 / 1.5)" }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && !!temps && revealed} />
 
       {/* marginTop (wrapper extérieur, donc vu uniquement à travers le

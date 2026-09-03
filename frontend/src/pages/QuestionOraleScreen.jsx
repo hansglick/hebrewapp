@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getRandomQuestionOrale } from "../api/content";
 import { getNiveau } from "../api/user";
 import { evaluateOral } from "../api/gemini";
@@ -58,7 +58,6 @@ function StarRating({ rating }) {
 
 export default function QuestionOraleScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
-  const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
@@ -164,8 +163,12 @@ export default function QuestionOraleScreen() {
     }
   }
 
+  // Sur la toute première question de la session (pas encore d'historique),
+  // back() ne fait rien plutôt que de sortir de l'écran (navigate(-1)) :
+  // previous/next ne doivent jamais faire quitter le type d'objet
+  // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    if (!back()) navigate(-1);
+    back();
   }
   function goNext() {
     next();
@@ -181,7 +184,7 @@ export default function QuestionOraleScreen() {
   const globalNote = geminiResult ? computeGlobalNote(geminiResult) : null;
 
   return (
-    <section className="screen" style={{ flex: 1, paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)" }} onPointerDown={swipeHandlers.onPointerDown}>
       {loadingGemini ? (
         <WaitingVideo />
       ) : (

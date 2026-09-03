@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getRandomQuizz } from "../../api/content";
 import { getNiveau, createEvaluation } from "../../api/user";
 import { useSwipe } from "../../hooks/useSwipe";
@@ -11,7 +10,6 @@ import { QuizzBubbles } from "../../components/QuizzBubbles";
 import "../screens.css";
 
 export default function QuizzScreen() {
-  const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [selected, setSelected] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -61,8 +59,12 @@ export default function QuizzScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizz, selected, submitted]);
 
+  // Sur le tout premier quizz de la session (pas encore d'historique),
+  // back() ne fait rien plutôt que de sortir de l'écran (navigate(-1)) :
+  // previous/next ne doivent jamais faire quitter le type d'objet
+  // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    if (!back()) navigate(-1);
+    back();
   }
   function goNext() {
     next();
@@ -77,7 +79,7 @@ export default function QuizzScreen() {
 
   return (
     <>
-    <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)", flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
       {/* marginTop rapproche le message de la borne inférieure du bandeau,
           cf. demande explicite du user. */}

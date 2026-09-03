@@ -1,3 +1,14 @@
+/* Hauteur réelle de la barre (padding 10px haut+bas + bouton 40px + bordure
+   2.68px), en variable globale — chaque écran qui affiche <BottomNavBar/>
+   doit réserver un paddingBottom d'AU MOINS deux fois cette taille (cf.
+   screens.css/JSX des écrans "objet", `calc(var(--bottom-nav-height) * 2)`)
+   pour que son contenu ne se retrouve jamais masqué derrière la barre fixe
+   — une seule fois la hauteur ne suffisait pas dans tous les cas (ex:
+   leçon/mot, encadré racine coupé), cf. demande explicite du user. */
+:root {
+  --bottom-nav-height: 62.68px;
+}
+
 /* Barre de navigation précédent/suivant fixe en bas de l'écran — même
    principe que .app-header (Layout.css) mais en miroir en bas, fond noir
    opaque (pas de transparence, contrairement à l'ancien NextPrevButtons) —
@@ -16,14 +27,26 @@
   padding: 10px 24px;
 }
 
-/* Largeur à 50% de l'espace disponible (au lieu de 100%) : rapproche les
-   deux logos vers le centre de moitié par rapport à leur écart d'origine
-   (bord à bord de la barre) — cf. demande explicite du user. */
+/* Largeur à 25% de l'espace disponible sur desktop : un premier
+   rapprochement de 50% (100% -> 50%) avait déjà été fait ; ce second
+   rapprochement de 50% (50% -> 25%) applique la même réduction à nouveau,
+   cf. demande explicite du user. */
 .bottom-nav-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
+  width: 25%;
+}
+
+/* Sur mobile uniquement, les deux logos doivent au contraire s'écarter du
+   centre et se rapprocher des extrémités de l'écran (plus faciles à
+   atteindre au pouce) — même seuil que le reste de l'app (cf. screens.css),
+   cf. demande explicite du user. 100% : bord à bord de la barre (comme le
+   tout premier design, avant tout rapprochement). */
+@media (max-width: 600px) {
+  .bottom-nav-inner {
+    width: 100%;
+  }
 }
 
 .bottom-nav-slot {

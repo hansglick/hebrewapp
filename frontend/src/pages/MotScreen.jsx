@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getRandomMot, getRacine } from "../api/content";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
@@ -14,7 +14,6 @@ import "./screens.css";
 
 export default function MotScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
-  const navigate = useNavigate();
   const location = useLocation();
   const [niveau, setNiveau] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -98,8 +97,12 @@ export default function MotScreen() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mode, revealed, mot]);
 
+  // Sur le tout premier mot de la session (pas encore d'historique), back()
+  // ne fait rien plutôt que de sortir de l'écran (navigate(-1)) : previous/
+  // next ne doivent jamais faire quitter le type d'objet parcouru, cf.
+  // demande explicite du user.
   function goPrevious() {
-    if (!back()) navigate(-1);
+    back();
   }
   function goNext() {
     next();
@@ -119,7 +122,7 @@ export default function MotScreen() {
   if (!mot) return null;
 
   return (
-    <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)", flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && revealed} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
@@ -195,8 +198,26 @@ export default function MotScreen() {
                 garder le même espacement qu'avant ce changement — cf.
                 demande explicite du user ("espace nécessaire... une
                 certaine harmonie"). */}
+            {/* paddingBottom (pas marginBottom) sur ce wrapper position:absolute
+                lui-même — pas sur .screen — car un élément absolument
+                positionné qui déborde de la hauteur "en flux" de ses
+                ancêtres n'est rattrapé par la zone défilable du document
+                QUE via son propre padding (sa marge de fin, elle, ne compte
+                pas) : un paddingBottom ajouté ailleurs (.screen) ne repousse
+                jamais la vraie fin de page au-delà de CE bloc, cf. bug
+                rapporté par le user (encadré racine coupé par la barre). */}
             {racineDetails && (
-              <div style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", width: "100%", marginTop: 14 }}>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "100%",
+                  marginTop: 14,
+                  paddingBottom: "calc(var(--bottom-nav-height) * 2)",
+                }}
+              >
                 <RacineCard racine={racineDetails} />
               </div>
             )}
@@ -334,7 +355,17 @@ export default function MotScreen() {
           {racineDetails && (
             <div
               className="mot-revision-racine"
-              style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", paddingBottom: 30 }}
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: "50%",
+                transform: "translateX(-50%)",
+                // 1x (pas 2x) en unités CSS locales : ce wrapper vit dans le
+                // zoom:2 ambiant (cf. plus haut), qui double déjà tout ce qui
+                // y est exprimé — le rendu réel est donc bien 2x
+                // --bottom-nav-height, cf. demande explicite du user.
+                paddingBottom: "var(--bottom-nav-height)",
+              }}
             >
               {/* paddingBottom (pas marginBottom : une marge de fin sur un
                   élément position:absolute n'est pas comptée dans la zone

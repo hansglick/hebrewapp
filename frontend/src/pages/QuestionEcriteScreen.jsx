@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getRandomPhrase } from "../api/content";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
 import { evaluateTranslation } from "../api/gemini";
@@ -45,7 +45,6 @@ function StarRating({ rating }) {
 
 export default function QuestionEcriteScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
-  const navigate = useNavigate();
   const [niveau, setNiveau] = useState(null);
   const [direction, setDirection] = useState("hebreu"); // francais | hebreu — sens de traduction pratiqué
   const [evalMode, setEvalMode] = useState("auto"); // auto | prof
@@ -135,8 +134,12 @@ export default function QuestionEcriteScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, evalMode, revealed, phrase]);
 
+  // Sur la toute première phrase de la session (pas encore d'historique),
+  // back() ne fait rien plutôt que de sortir de l'écran (navigate(-1)) :
+  // previous/next ne doivent jamais faire quitter le type d'objet
+  // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    if (!back()) navigate(-1);
+    back();
   }
   function goNext() {
     next();
@@ -165,7 +168,7 @@ export default function QuestionEcriteScreen() {
   const targetIsHebrew = !isSourceHebrew;
 
   return (
-    <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)", flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       {loadingGemini ? (
         <WaitingVideo />
       ) : (
@@ -224,7 +227,16 @@ export default function QuestionEcriteScreen() {
           >
             {phrase.hebrew}
           </p>
-          <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
+          {/* marginTop en plus du gap:10 du flex column ambiant — augmente
+              spécifiquement l'espace phrase hébreu -> haut-parleur, sans
+              toucher aux autres écarts (français -> trait -> hébreu), cf.
+              demande explicite du user. */}
+          <button
+            type="button"
+            className="speak-btn"
+            style={{ marginTop: 24 }}
+            onClick={() => speak(phrase.hebrew)}
+          >
             <SpeakerIcon size={30} color="var(--text)" />
           </button>
         </div>
