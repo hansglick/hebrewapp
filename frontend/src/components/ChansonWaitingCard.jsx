@@ -1,24 +1,19 @@
-import { getRandomChanson } from "../api/content";
 import { youtubeEmbedUrl } from "../api/media";
-import { useRandomBrowser } from "../hooks/useRandomBrowser";
-import { useSwipe } from "../hooks/useSwipe";
 
-// Chanson aléatoire (vidéo YouTube + paroles hébreu/français) affichée dans
-// un encadré compact pendant l'attente d'une correction Gemini, en
-// alternative à la vidéo d'attente muette (cf. WaitingVideo, qui bascule
-// vers ce composant sur clic de "Patienter en chansons"). La vidéo se
-// relance automatiquement à chaque nouvelle chanson tirée (next(), swipe ou
-// bouton "Suivant") — `key={chanson.url}` sur l'iframe force un vrai
-// remount pour que `autoplay=1` reparte à chaque fois, un simple changement
-// de `src` sur le même élément n'étant pas garanti de le faire.
-export function ChansonWaitingCard() {
-  const { current: chanson, next } = useRandomBrowser(getRandomChanson);
-  const swipeHandlers = useSwipe({ onSwipeLeft: next, onSwipeRight: next });
-
+// Chanson affichée dans un encadré compact pendant l'attente d'une
+// correction Gemini, en alternative à la vidéo d'attente muette (cf.
+// WaitingVideo, qui bascule vers ce composant sur clic de "Patienter en
+// chansons" et pilote le tirage/la navigation — barre de contrôle
+// inférieure next/previous — pour que ce composant reste purement
+// présentationnel). La vidéo se relance automatiquement à chaque nouvelle
+// chanson tirée — `key={chanson.url}` sur l'iframe force un vrai remount
+// pour que `autoplay=1` reparte à chaque fois, un simple changement de
+// `src` sur le même élément n'étant pas garanti de le faire.
+export function ChansonWaitingCard({ chanson }) {
   if (!chanson) return null;
 
   return (
-    <div className="card" style={{ textAlign: "center" }} onPointerDown={swipeHandlers.onPointerDown}>
+    <div className="card" style={{ textAlign: "center" }}>
       <h2 className="hebrew" style={{ margin: 0, fontSize: "1.1em" }}>
         {chanson.title_he}
       </h2>
@@ -53,9 +48,6 @@ export function ChansonWaitingCard() {
           </div>
         ))}
       </div>
-      <button type="button" className="link-btn" onClick={next}>
-        Suivant →
-      </button>
     </div>
   );
 }

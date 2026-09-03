@@ -43,6 +43,7 @@ import JdrScreen from "./pages/jdr/JdrScreen";
 import ConversationChapitresListScreen from "./pages/jdr/ConversationChapitresListScreen";
 import ConversationLeconsListScreen from "./pages/jdr/ConversationLeconsListScreen";
 import RevisionScreen from "./pages/revision/RevisionScreen";
+import WaitingPreviewScreen from "./pages/dev/WaitingPreviewScreen";
 import JeuChoiceScreen from "./pages/jeu/JeuChoiceScreen";
 import RegleDuJeuScreen from "./pages/jeu/RegleDuJeuScreen";
 import LotterieScreen from "./pages/jeu/LotterieScreen";
@@ -86,6 +87,7 @@ function App() {
         <Route path="jdr/chapitre/:chapId" element={<ConversationLeconsListScreen />} />
         <Route path="jdr/:code" element={<JdrScreen />} />
         <Route path="revision-prof/:code" element={<RevisionScreen />} />
+        <Route path="dev/waiting-preview" element={<WaitingPreviewScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
         <Route path="examen/sauter" element={<ExamenSauterScreen />} />
         <Route path="examen/sauter/:chapId" element={<ExamenSauterChapitreScreen />} />

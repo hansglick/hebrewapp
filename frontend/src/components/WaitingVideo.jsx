@@ -1,21 +1,34 @@
 import { useEffect, useRef, useState } from "react";
-import { getWaitingVids } from "../api/content";
+import { getWaitingVids, getRandomChanson } from "../api/content";
 import { dataMediaUrl } from "../api/media";
+import { useRandomBrowser } from "../hooks/useRandomBrowser";
+import { BottomNavBar } from "./BottomNavBar";
 import { ChansonWaitingCard } from "./ChansonWaitingCard";
+import "./WaitingVideo.css";
+
+// Icône UI statique servie depuis frontend/public/ (pas via mediaUrl/le
+// backend) : backend/results/ est gitignored et jamais déployé.
+const MUSIC_ICON_URL = "/musique.png";
 
 // Joue en boucle une vidéo tirée au hasard parmi backend/data/waiting_vids,
 // pendant l'attente d'une réponse Gemini (remplace l'ancien EnvelopeLoader).
 // `label` permet de personnaliser le texte (ex: progression d'un traitement
 // par lot) ; pour tirer une NOUVELLE vidéo à chaque requête d'un lot, le
 // parent doit changer la prop `key` à chaque étape (force un vrai remount,
-// le tirage n'a lieu qu'au montage). Un bouton permet de basculer vers
+// le tirage n'a lieu qu'au montage). Une tuile permet de basculer vers
 // ChansonWaitingCard (chanson aléatoire avec vidéo YouTube) pour patienter
-// autrement — cf. demande explicite du user.
+// autrement, sans jamais masquer le message d'attente au-dessus — cf.
+// demande explicite du user.
 export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
   const [filename, setFilename] = useState(null);
   const [ready, setReady] = useState(false);
   const [chansons, setChansons] = useState(false);
   const videoRef = useRef(null);
+
+  // Levé ici (plutôt que dans ChansonWaitingCard) pour que la barre de
+  // contrôle inférieure (next/previous), rendue par ce composant, pilote
+  // la même chanson que la carte — cf. demande explicite du user.
+  const { current: chanson, next: nextChanson, back: backChanson } = useRandomBrowser(getRandomChanson);
 
   // Garde d'annulation nécessaire à cause de StrictMode (main.jsx) : en dev,
   // React monte chaque composant deux fois exprès (mount -> unmount simulé
@@ -56,49 +69,59 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
     video.play().catch(() => {});
   }, [filename]);
 
-  // Le texte s'affiche immédiatement, indépendamment de la vidéo : sinon,
-  // si la requête /api/waiting-vids traîne (ex: connexion occupée par un
-  // gros upload audio en parallèle, cas des questions orales), l'utilisateur
-  // ne voit strictement rien pendant toute l'attente.
-  if (chansons) return <ChansonWaitingCard />;
-
   return (
     <>
+      {/* Le texte s'affiche toujours, y compris en mode chansons : le user
+          doit continuer à voir que sa copie est en cours d'évaluation, cf.
+          demande explicite du user. */}
       <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em" }}>
         {label}
       </p>
-      {filename && (
-        <video
-          ref={videoRef}
-          src={dataMediaUrl(`waiting_vids/${filename}`)}
-          autoPlay
-          loop
-          muted
-          playsInline
-          width="280"
-          // Le rectangle noir de fond (background) restait visible avant que
-          // la première frame ne soit décodée — on le masque (opacity 0)
-          // jusqu'à l'évènement "loadeddata" pour ne montrer la vidéo qu'une
-          // fois réellement prête à s'afficher, jamais un cadre noir vide.
-          onLoadedData={() => setReady(true)}
-          style={{
-            borderRadius: 8,
-            width: 280,
-            height: "auto",
-            background: "#000",
-            opacity: ready ? 1 : 0,
-            transition: "opacity 0.15s",
-          }}
-        />
+
+      {chansons ? (
+        <>
+          <ChansonWaitingCard chanson={chanson} />
+          <BottomNavBar onPrevious={backChanson} onNext={nextChanson} />
+        </>
+      ) : (
+        <>
+          {/* La tuile doit être au-dessus de la vidéo (pas en dessous), cf.
+              demande explicite du user. */}
+          <button
+            type="button"
+            className="waiting-video-chansons-tile"
+            onClick={() => setChansons(true)}
+          >
+            <img className="waiting-video-chansons-icon" src={MUSIC_ICON_URL} alt="" />
+            <span className="waiting-video-chansons-label">Patienter en chansons</span>
+          </button>
+
+          {filename && (
+            <video
+              ref={videoRef}
+              src={dataMediaUrl(`waiting_vids/${filename}`)}
+              autoPlay
+              loop
+              muted
+              playsInline
+              width="280"
+              // Le rectangle noir de fond (background) restait visible avant que
+              // la première frame ne soit décodée — on le masque (opacity 0)
+              // jusqu'à l'évènement "loadeddata" pour ne montrer la vidéo qu'une
+              // fois réellement prête à s'afficher, jamais un cadre noir vide.
+              onLoadedData={() => setReady(true)}
+              style={{
+                borderRadius: 8,
+                width: 280,
+                height: "auto",
+                background: "#000",
+                opacity: ready ? 1 : 0,
+                transition: "opacity 0.15s",
+              }}
+            />
+          )}
+        </>
       )}
-      <button
-        type="button"
-        className="link-btn"
-        style={{ fontSize: "0.75em" }}
-        onClick={() => setChansons(true)}
-      >
-        Patienter en chansons
-      </button>
     </>
   );
 }

@@ -398,7 +398,13 @@ export default function ExamenOralScreen() {
   const reportNote = answer && q.type === "rapport" ? computeReportNote(answer) : null;
 
   return (
-    <section className="screen" style={{ flex: 1 }}>
+    <section
+      className="screen"
+      // paddingBottom en plus pendant l'attente (le mode "chansons" de
+      // GeminiWaiting/WaitingVideo y affiche sa propre barre de contrôle
+      // inférieure next/previous) — cf. demande explicite du user.
+      style={loadingGemini ? { flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)" } : { flex: 1 }}
+    >
       {/* Le header "Question N/25" (navigation ◀▶) n'a de sens que pendant
           la saisie des réponses — pendant l'évaluation (groupée ou non),
           il restait affiché figé sur la dernière question, ce qui donnait

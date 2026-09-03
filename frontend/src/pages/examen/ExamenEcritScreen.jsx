@@ -441,7 +441,13 @@ export default function ExamenEcritScreen() {
   const answer = exam.answers[index];
 
   return (
-    <section className="screen">
+    <section
+      className="screen"
+      // paddingBottom uniquement pendant l'attente (le mode "chansons" de
+      // GeminiWaiting/WaitingVideo y affiche sa propre barre de contrôle
+      // inférieure next/previous) — cf. demande explicite du user.
+      style={loadingGemini ? { paddingBottom: "calc(var(--bottom-nav-height) * 2)" } : undefined}
+    >
       {/* Le header "Question N/25" (navigation ◀▶) n'a de sens que pendant
           la saisie des réponses — pendant l'évaluation (groupée ou non),
           il restait affiché figé sur la dernière question, ce qui donnait
