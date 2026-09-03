@@ -21,26 +21,20 @@
   border-bottom: 2.68px solid #a9d6f5;
 }
 
-/* zoom porté par cet enfant plutôt que .app-header lui-même : posé
-   directement sur l'élément position:sticky, il cassait le "collage" en
-   haut d'écran sur mobile (position:sticky + zoom, comportement instable
-   sur certains navigateurs mobiles — desktop Chrome s'en accommodait,
-   pas mobile) — cf. bug rapporté par le user. .app-header reste donc un
-   simple conteneur sticky non zoomé, qui prend naturellement la hauteur
-   (agrandie) de cet enfant. Agrandit uniformément tout le contenu (logos,
-   code leçon, libellé chapitre...) de 50%, cf. demande explicite du user
-   précédente. Le panneau mobile (.header-mobile-panel,
-   position:absolute/percentages) suit correctement ce zoom ; SEUL son
-   fond plein-écran (.header-mobile-backdrop, position:fixed) est rendu
-   hors de ce conteneur dans Layout.jsx, car zoom déforme les coordonnées
-   d'un position:fixed imbriqué (comportement déjà rencontré/documenté
-   cette session, cf. NextPrevButtons/VerbeScreen). */
+/* Déplacer `zoom` sur cet enfant (au lieu de .app-header lui-même) n'a
+   PAS suffi à corriger le collage en haut d'écran sur mobile — même
+   imbriqué, zoom sur ce sous-arbre continuait de perturber le calcul de
+   la hauteur de l'ancêtre position:sticky sur certains navigateurs
+   mobiles (desktop Chrome s'en accommode, pas mobile), cf. bug rapporté
+   deux fois par le user. `zoom` est donc abandonné ici : chaque taille
+   (padding, police, icônes en JSX) est directement portée à sa valeur
+   ×1.5 ci-dessous et dans Layout.jsx, sans aucune propriété non standard
+   sur ce sous-arbre. */
 .app-header-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 6px 16px;
-  zoom: 1.5;
+  padding: 9px 24px;
 }
 
 .header-left {
@@ -88,7 +82,7 @@
 
 .header-divider {
   width: 1px;
-  height: 20px;
+  height: 30px;
   background: #4b5563;
   margin-inline: 12px;
   flex-shrink: 0;
@@ -99,17 +93,17 @@
   background: none;
   border: 1px solid #2e303a;
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: 9px 18px;
   color: #f3f4f6;
   text-decoration: none;
   font-family: var(--font-latin);
-  font-size: 0.9em;
+  font-size: 1.35em;
   cursor: pointer;
 }
 
 .header-niveau {
   font-weight: 600;
-  font-size: 1.8em;
+  font-size: 2.7em;
   padding: 0;
   border: none;
   color: #f3f4f6;
@@ -133,7 +127,7 @@
 }
 
 .header-timer {
-  font-size: 1em;
+  font-size: 1.5em;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: #f3f4f6;
@@ -150,7 +144,7 @@
   gap: 10px;
   padding: 0;
   font-family: inherit;
-  font-size: 0.87em;
+  font-size: 1.3em;
   color: #9ca3af;
   flex-wrap: wrap;
   text-align: start;
@@ -259,7 +253,7 @@
   }
 
   .header-niveau {
-    font-size: 1.2em;
+    font-size: 1.8em;
     justify-content: center;
     text-align: center;
   }
@@ -269,13 +263,13 @@
   }
 
   .persistent-icon-house svg {
-    width: 22px;
-    height: 22px;
+    width: 33px;
+    height: 33px;
   }
 
   .persistent-icon-culture svg {
-    width: 22px;
-    height: 22px;
+    width: 33px;
+    height: 33px;
   }
 
   .persistent-icon-house .icon-outline {

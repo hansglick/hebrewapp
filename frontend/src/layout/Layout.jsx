@@ -184,13 +184,13 @@ export default function Layout() {
               title="Accueil"
               style={{ display: "inline-flex", alignItems: "center" }}
             >
-              <HouseIcon size={24} color="#f3f4f6" mobileFillColor="#a9d6f5" />
+              <HouseIcon size={36} color="#f3f4f6" mobileFillColor="#a9d6f5" />
             </button>
             <span className="header-divider" />
             {wallet && (
               <div className="wallet-strip hide-on-mobile">
                 <button type="button" className="wallet-strip-item" onClick={() => navigate("/jeu")} title="Jeu">
-                  <ShekelIcon size={24} color="#7dd3fc" /> {Math.round(wallet.points)}
+                  <ShekelIcon size={36} color="#7dd3fc" /> {Math.round(wallet.points)}
                   <span className="exam-tile-tooltip">
                     Vous avez récolté {Math.round(wallet.points)} shekels
                   </span>
@@ -201,13 +201,13 @@ export default function Layout() {
                   onClick={() => navigate("/jeu/cartes")}
                   title="Ma collection"
                 >
-                  <MagenDavidIcon size={24} color="#7dd3fc" /> {wallet.nombre_cartes}
+                  <MagenDavidIcon size={36} color="#7dd3fc" /> {wallet.nombre_cartes}
                   <span className="exam-tile-tooltip">
                     Vous avez {wallet.nombre_cartes} cartes dans votre collection
                   </span>
                 </button>
                 <button type="button" className="wallet-strip-item" onClick={() => navigate("/jeu")} title="Jeu">
-                  <span style={{ fontSize: 21, lineHeight: 1 }}>💎</span> {wallet.gems}
+                  <span style={{ fontSize: 32, lineHeight: 1 }}>💎</span> {wallet.gems}
                   <span className="exam-tile-tooltip">Vous avez récolté {wallet.gems} gems</span>
                 </button>
               </div>
@@ -268,16 +268,16 @@ export default function Layout() {
             title="Notifications"
             style={{ display: "inline-flex", alignItems: "center", position: "relative" }}
           >
-            <NotificationIcon size={27} color="#f3f4f6" />
+            <NotificationIcon size={40} color="#f3f4f6" />
             <span className="exam-tile-tooltip">Notifications</span>
             {unreadCount > 0 && (
               <span
                 style={{
                   position: "absolute",
-                  top: -4,
-                  right: -6,
-                  minWidth: 16,
-                  height: 16,
+                  top: -6,
+                  right: -9,
+                  minWidth: 24,
+                  height: 24,
                   padding: "0 3px",
                   borderRadius: 999,
                   background: "var(--danger)",
@@ -301,7 +301,7 @@ export default function Layout() {
             title="Dictionnaire"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <DictionaryIcon size={27} color="#f3f4f6" />
+            <DictionaryIcon size={40} color="#f3f4f6" />
             <span className="exam-tile-tooltip">Dictionnaire</span>
           </button>
           <button
@@ -311,7 +311,7 @@ export default function Layout() {
             title="Culture"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <DreidelIcon size={27} color="#f3f4f6" />
+            <DreidelIcon size={40} color="#f3f4f6" />
             <span className="exam-tile-tooltip">Portail de la culture judéo-israélienne</span>
           </button>
           <span className="header-divider" />
@@ -322,7 +322,7 @@ export default function Layout() {
             title="Configuration"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={24} color="#7dd3fc" />
+            <GearIcon size={36} color="#7dd3fc" />
             <span className="exam-tile-tooltip">Configuration</span>
           </button>
           <button
@@ -332,7 +332,7 @@ export default function Layout() {
             title="Plus d'options"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={24} color="#7dd3fc" />
+            <GearIcon size={36} color="#7dd3fc" />
           </button>
           {mobileMenuOpen && (
             <>
