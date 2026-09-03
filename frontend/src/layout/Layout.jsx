@@ -174,6 +174,7 @@ export default function Layout() {
   return (
     <div className="app-shell">
       <header className="app-header">
+        <div className="app-header-inner">
         <div className="header-left">
           <div className="header-left-row">
             <button
@@ -401,6 +402,7 @@ export default function Layout() {
               </div>
             </>
           )}
+        </div>
         </div>
       </header>
       {/* Rendu hors de <header> (zoomé, cf. Layout.css) : position:fixed

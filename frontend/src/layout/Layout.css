@@ -17,21 +17,29 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  background: #16171d;
+  border-bottom: 2.68px solid #a9d6f5;
+}
+
+/* zoom porté par cet enfant plutôt que .app-header lui-même : posé
+   directement sur l'élément position:sticky, il cassait le "collage" en
+   haut d'écran sur mobile (position:sticky + zoom, comportement instable
+   sur certains navigateurs mobiles — desktop Chrome s'en accommodait,
+   pas mobile) — cf. bug rapporté par le user. .app-header reste donc un
+   simple conteneur sticky non zoomé, qui prend naturellement la hauteur
+   (agrandie) de cet enfant. Agrandit uniformément tout le contenu (logos,
+   code leçon, libellé chapitre...) de 50%, cf. demande explicite du user
+   précédente. Le panneau mobile (.header-mobile-panel,
+   position:absolute/percentages) suit correctement ce zoom ; SEUL son
+   fond plein-écran (.header-mobile-backdrop, position:fixed) est rendu
+   hors de ce conteneur dans Layout.jsx, car zoom déforme les coordonnées
+   d'un position:fixed imbriqué (comportement déjà rencontré/documenté
+   cette session, cf. NextPrevButtons/VerbeScreen). */
+.app-header-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 6px 16px;
-  background: #16171d;
-  border-bottom: 2.68px solid #a9d6f5;
-  /* zoom (pas juste des tailles ponctuelles) : agrandit uniformément toute
-     la barre — sa hauteur ET son contenu (logos, code leçon, libellé
-     chapitre...) — de 50%, cf. demande explicite du user. Le panneau
-     mobile (.header-mobile-panel, position:absolute/percentages) suit
-     correctement ce zoom ; SEUL son fond plein-écran
-     (.header-mobile-backdrop, position:fixed) est rendu hors de ce
-     conteneur dans Layout.jsx, car zoom déforme les coordonnées d'un
-     position:fixed imbriqué (comportement déjà rencontré/documenté cette
-     session, cf. NextPrevButtons/VerbeScreen). */
   zoom: 1.5;
 }
 
