@@ -6,7 +6,7 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import { ActionHints } from "../components/ActionHints";
-import { NextPrevButtons } from "../components/NextPrevButtons";
+import { BottomNavBar } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
 import { PoolBadge } from "../components/PoolBadge";
@@ -121,11 +121,7 @@ export default function MotScreen() {
   return (
     <section className="screen" style={{ paddingBottom: 80, flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && revealed} />
-      {/* En exploration, les boutons sont positionnés sur la ligne
-          horizontale du mot (cf. plus bas, variante `inline`) plutôt
-          qu'au centre générique de l'écran, cf. demande explicite du
-          user. */}
-      {mode === "revision" && <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />}
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
       {mode === "revision" && (
         <div style={{ marginTop: -20 }}>
@@ -179,22 +175,15 @@ export default function MotScreen() {
               </button>
             </span>
 
-            {/* position:relative + les boutons next/prev en variante
-                `inline` : les positionne exactement sur cette ligne
-                horizontale plutôt qu'au centre générique de l'écran, cf.
-                demande explicite du user. */}
-            <div style={{ position: "relative", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <hr
-                style={{
-                  width: "70%",
-                  maxWidth: 400,
-                  border: "none",
-                  borderTop: "1px solid var(--border)",
-                  margin: 0,
-                }}
-              />
-              <NextPrevButtons onPrevious={goPrevious} onNext={goNext} variant="inline" />
-            </div>
+            <hr
+              style={{
+                width: "70%",
+                maxWidth: 400,
+                border: "none",
+                borderTop: "1px solid var(--border)",
+                margin: 0,
+              }}
+            />
 
             <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textMuted)" }}>{mot.french}</span>
 

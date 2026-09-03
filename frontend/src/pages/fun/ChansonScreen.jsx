@@ -4,7 +4,7 @@ import { youtubeEmbedUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
-import { NextPrevButtons } from "../../components/NextPrevButtons";
+import { BottomNavBar } from "../../components/BottomNavBar";
 import "../screens.css";
 
 export default function ChansonScreen() {
@@ -38,7 +38,7 @@ export default function ChansonScreen() {
   return (
     <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
         <h1 className="hebrew" style={{ margin: 0 }}>{chanson.title_he}</h1>
         {chanson.title_fr && (

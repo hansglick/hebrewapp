@@ -1,0 +1,55 @@
+/* Barre de navigation précédent/suivant fixe en bas de l'écran — même
+   principe que .app-header (Layout.css) mais en miroir en bas, fond noir
+   opaque (pas de transparence, contrairement à l'ancien NextPrevButtons) —
+   cf. demande explicite du user. */
+.bottom-nav-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  background: #16171d;
+  border-top: 2.68px solid #a9d6f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+}
+
+.bottom-nav-slot {
+  display: flex;
+}
+
+.bottom-nav-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.bottom-nav-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Même bleu pastel que ShekelIcon/MagenDavidIcon (cf. GearIcon.jsx),
+     appliqué via mask-image (le PNG source ne sert que de forme/alpha) pour
+     garantir une couleur exactement identique, cf. demande explicite du
+     user. */
+  background-color: #7dd3fc;
+  -webkit-mask-image: url(/nextblue.png);
+  mask-image: url(/nextblue.png);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Symétrie axiale verticale (miroir gauche-droite) : le logo nextblue.png
+   pointe naturellement vers la droite, cf. demande explicite du user. */
+.bottom-nav-icon-prev {
+  transform: scaleX(-1);
+}

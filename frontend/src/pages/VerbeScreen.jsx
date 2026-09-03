@@ -6,7 +6,7 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import { ActionHints } from "../components/ActionHints";
-import { NextPrevButtons } from "../components/NextPrevButtons";
+import { BottomNavBar } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
 import { PoolBadge } from "../components/PoolBadge";
@@ -435,7 +435,7 @@ export default function VerbeScreen() {
         </>
       )}
     </section>
-    <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+    <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
     </>
   );
 }

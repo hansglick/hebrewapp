@@ -8,7 +8,7 @@ import { blobToWavBlob } from "../utils/audioEncode";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { ActionHints } from "../components/ActionHints";
-import { NextPrevButtons } from "../components/NextPrevButtons";
+import { BottomNavBar } from "../components/BottomNavBar";
 import { OralAnswerCapture } from "../components/OralAnswerCapture";
 import { WaitingVideo } from "../components/WaitingVideo";
 import { PoolBadge } from "../components/PoolBadge";
@@ -187,7 +187,7 @@ export default function QuestionOraleScreen() {
       ) : (
         <>
       <ActionHints {...swipeHandlers.hints} />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
       {mode === "revision" && (
         <PoolBadge pool={question.pool} chapter={question.chapter} lesson={question.lesson} />

@@ -8,7 +8,7 @@ import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import HebrewInput from "../components/HebrewInput";
 import { ActionHints } from "../components/ActionHints";
-import { NextPrevButtons } from "../components/NextPrevButtons";
+import { BottomNavBar } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { WaitingVideo } from "../components/WaitingVideo";
 import { PoolBadge } from "../components/PoolBadge";
@@ -174,10 +174,7 @@ export default function QuestionEcriteScreen() {
         {...swipeHandlers.hints}
         digits={mode === "revision" && evalMode === "auto" && revealed}
       />
-      {/* En exploration, les boutons sont placés au-dessus de la phrase
-          française (cf. plus bas, variante `static`) plutôt qu'au centre
-          générique de l'écran, cf. demande explicite du user. */}
-      {mode === "revision" && <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />}
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
       {mode === "revision" && (
         <div style={{ marginTop: -20 }}>
@@ -202,7 +199,6 @@ export default function QuestionEcriteScreen() {
             gap: 10,
           }}
         >
-          <NextPrevButtons onPrevious={goPrevious} onNext={goNext} variant="static" />
           <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.152em" }}>
             {phrase.french}
           </p>

@@ -5,7 +5,7 @@ import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
-import { NextPrevButtons } from "../../components/NextPrevButtons";
+import { BottomNavBar } from "../../components/BottomNavBar";
 import { SpeakerIcon } from "../../components/SpeakerIcon";
 import { speak } from "../../utils/speech";
 import { CURIOSITE_CONFIG } from "./curiositeConfig";
@@ -130,7 +130,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
   return (
     <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
       {atBoundary && (
         <p className="muted" style={{ textAlign: "center", fontStyle: "italic", fontSize: "0.85em" }}>

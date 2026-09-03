@@ -5,7 +5,7 @@ import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { speak } from "../../utils/speech";
 import { ActionHints } from "../../components/ActionHints";
-import { NextPrevButtons } from "../../components/NextPrevButtons";
+import { BottomNavBar } from "../../components/BottomNavBar";
 import "../screens.css";
 
 // Accessible uniquement depuis le lien d'un mot (racine précise).
@@ -46,7 +46,7 @@ export default function RacineScreen() {
   return (
     <section className="screen" style={{ paddingBottom: 80 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
-      <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
       <div className="curiosite-split curiosite-split-racine">
         <div className="curiosite-media">
           <img

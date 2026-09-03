@@ -5,7 +5,7 @@ import { getNiveau, createEvaluation } from "../../api/user";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
 import { ActionHints } from "../../components/ActionHints";
-import { NextPrevButtons } from "../../components/NextPrevButtons";
+import { BottomNavBar } from "../../components/BottomNavBar";
 import { PoolBadge } from "../../components/PoolBadge";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import "../screens.css";
@@ -147,7 +147,7 @@ export default function QuizzScreen() {
         )}
       </div>
     </section>
-    <NextPrevButtons onPrevious={goPrevious} onNext={goNext} />
+    <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
     </>
   );
 }
