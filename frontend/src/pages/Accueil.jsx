@@ -114,6 +114,14 @@ export default function Accueil() {
           </div>
         </Link>
 
+        {referenceLesson && (
+          <Link to={`/revision-prof/${referenceLesson}`} className="card-link">
+            <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
+              Révise avec ton professeur
+            </div>
+          </Link>
+        )}
+
         {niveau.next_lesson_code ? (
           <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
             <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>

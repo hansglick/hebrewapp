@@ -11,9 +11,19 @@
   background: #16171d;
   border-top: 2.68px solid #a9d6f5;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px 24px;
+}
+
+/* Largeur à 50% de l'espace disponible (au lieu de 100%) : rapproche les
+   deux logos vers le centre de moitié par rapport à leur écart d'origine
+   (bord à bord de la barre) — cf. demande explicite du user. */
+.bottom-nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
 }
 
 .bottom-nav-slot {

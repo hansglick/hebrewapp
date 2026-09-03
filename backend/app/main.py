@@ -19,6 +19,7 @@ from app.routers import (
     notifications,
     onboarding,
     practice,
+    revision,
     stats,
     tts,
     wallet,
@@ -45,6 +46,7 @@ app.include_router(notifications.router)
 app.include_router(wallet.router)
 app.include_router(curiosites.router)
 app.include_router(jdr.router)
+app.include_router(revision.router)
 
 app.add_middleware(
     CORSMiddleware,

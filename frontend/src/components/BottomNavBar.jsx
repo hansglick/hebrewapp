@@ -12,19 +12,21 @@ import "./BottomNavBar.css";
 export function BottomNavBar({ onPrevious, onNext }) {
   return (
     <div className="bottom-nav-bar" aria-hidden={!onPrevious && !onNext}>
-      <div className="bottom-nav-slot">
-        {onPrevious && (
-          <button type="button" className="bottom-nav-btn" onClick={onPrevious} aria-label="Précédent">
-            <span className="bottom-nav-icon bottom-nav-icon-prev" />
-          </button>
-        )}
-      </div>
-      <div className="bottom-nav-slot">
-        {onNext && (
-          <button type="button" className="bottom-nav-btn" onClick={onNext} aria-label="Suivant">
-            <span className="bottom-nav-icon" />
-          </button>
-        )}
+      <div className="bottom-nav-inner">
+        <div className="bottom-nav-slot">
+          {onPrevious && (
+            <button type="button" className="bottom-nav-btn" onClick={onPrevious} aria-label="Précédent">
+              <span className="bottom-nav-icon bottom-nav-icon-prev" />
+            </button>
+          )}
+        </div>
+        <div className="bottom-nav-slot">
+          {onNext && (
+            <button type="button" className="bottom-nav-btn" onClick={onNext} aria-label="Suivant">
+              <span className="bottom-nav-icon" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

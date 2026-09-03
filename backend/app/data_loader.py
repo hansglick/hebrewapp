@@ -24,6 +24,7 @@ DATA_FILES = {
     "blague": "item_blague.json",
     "hebreworiginword": "item_hebreworiginword.json",
     "jdr": "item_jdr.json",
+    "revision": "item_revision.json",
 }
 
 

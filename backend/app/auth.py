@@ -26,6 +26,15 @@ def sanitize_pseudo(raw: str) -> str:
     return _NON_HEBREW_RE.sub("", raw).strip()
 
 
+def get_user_id(pseudo: str, pin: str) -> int | None:
+    conn = get_connection()
+    try:
+        row = conn.execute("SELECT id FROM users WHERE pseudo = ? AND pin = ?", (pseudo, pin)).fetchone()
+    finally:
+        conn.close()
+    return row["id"] if row is not None else None
+
+
 def get_current_user_id(x_pseudo: str = Header(...), x_pin: str = Header(...)) -> int:
     # Les valeurs d'en-tête HTTP sont limitées à ASCII/Latin-1 par la norme —
     # un pseudo hébreu brut y serait rejeté ou tronqué (côté navigateur,
@@ -33,13 +42,7 @@ def get_current_user_id(x_pseudo: str = Header(...), x_pin: str = Header(...)) -
     # hors Latin-1). Le frontend envoie donc le pseudo encodé en
     # pourcentage (encodeURIComponent), à décoder ici avant comparaison.
     pseudo = unquote(x_pseudo)
-    conn = get_connection()
-    try:
-        row = conn.execute(
-            "SELECT id FROM users WHERE pseudo = ? AND pin = ?", (pseudo, x_pin)
-        ).fetchone()
-    finally:
-        conn.close()
-    if row is None:
+    user_id = get_user_id(pseudo, x_pin)
+    if user_id is None:
         raise HTTPException(401, "Identité inconnue")
-    return row["id"]
+    return user_id
