@@ -1,8 +1,11 @@
-import { mediaUrl } from "../api/media";
 import "./NextPrevButtons.css";
 
-const NEXT_ICON_URL = mediaUrl("logos/next.png");
-const PREVIOUS_ICON_URL = mediaUrl("logos/previous.png");
+// Icônes UI statiques servies depuis frontend/public/ (pas via mediaUrl/le
+// backend) : backend/results/ est gitignored et jamais déployé, un chemin
+// mediaUrl() y renverrait donc un 404 silencieux en production, cf. bug
+// rapporté par le user (boutons invisibles sur mobile en prod).
+const NEXT_ICON_URL = "/next.png";
+const PREVIOUS_ICON_URL = "/previous.png";
 
 // Boutons "précédent"/"suivant" fixés en bas de l'écran (sans toucher le
 // bord), présents sur tous les écrans "objet" (mot, verbe, chanson, texte,

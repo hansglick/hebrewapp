@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { AudioProgressBlock } from "./AudioProgressBlock";
 import { MicrophoneIcon } from "./MicrophoneIcon";
 import { ttsUrl } from "../utils/speech";
-import { mediaUrl } from "../api/media";
 import "./AudioProgressBlock.css";
 
-const SEND_ICON_URL = mediaUrl("logos/sendvocal.png");
+// Icône UI statique servie depuis frontend/public/, cf. AudioProgressBlock.jsx.
+const SEND_ICON_URL = "/sendvocal.png";
 
 // Les 3 briques "capture de réponse orale" (Contenu / Question / Réponse),
 // communes aux 3 écrans qui font répondre oralement à une question sur un

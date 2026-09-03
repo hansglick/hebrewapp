@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { mediaUrl } from "../api/media";
 import "./AudioProgressBlock.css";
 
-const LECTURE_ICON_URL = mediaUrl("logos/lecture.png");
-const VOICE_ICON_URL = mediaUrl("logos/voice.png");
+// Icônes UI statiques servies depuis frontend/public/ (pas via mediaUrl/le
+// backend) : backend/results/ est gitignored et jamais déployé, un chemin
+// mediaUrl() y renverrait donc un 404 silencieux en production (cf. bug
+// rapporté par le user — icônes invisibles mais zone cliquable fonctionnelle).
+const LECTURE_ICON_URL = "/lecture.png";
+const VOICE_ICON_URL = "/voice.png";
 
 // Brique "lecture d'un audio" pour les questions orales (révisions/examen/
 // hard exam) : bouton rond utilisant lecture.png, à côté l'onde voice.png

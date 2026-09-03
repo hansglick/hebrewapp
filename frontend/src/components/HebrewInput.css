@@ -35,23 +35,13 @@
   width: 100%;
 }
 
-.hebrew-keyboard-mobile-hint {
-  display: none;
-  margin: 4px 0 0;
-  font-size: 0.7em;
-  font-style: italic;
+/* Toggle manuel affiché/masqué du clavier virtuel (cf. HebrewInput.jsx) —
+   réutilise .config-modal-row/.switch (ConfigModal.css), même composant
+   visuel que Thème/God Mode, ici en pleine largeur du champ. */
+.hebrew-keyboard-toggle-row {
+  width: 100%;
+  font-size: 0.8em;
   color: var(--textMuted);
-  text-align: center;
-}
-
-@media (max-width: 600px) {
-  .hebrew-keyboard {
-    display: none;
-  }
-
-  .hebrew-keyboard-mobile-hint {
-    display: block;
-  }
 }
 
 .hebrew-keyboard-row {
@@ -116,34 +106,4 @@
 
 :root[data-theme="light"] .hebrew-key-space {
   color: #000;
-}
-
-.hebrew-voice-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.hebrew-voice-dot {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--danger);
-}
-
-.hebrew-voice-dot.recording {
-  animation: hebrew-voice-blink 1s ease-in-out infinite;
-}
-
-@keyframes hebrew-voice-blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.25;
-  }
 }

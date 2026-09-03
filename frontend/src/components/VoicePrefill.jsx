@@ -1,22 +1,55 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { extractVerbatim } from "../api/gemini";
 import { blobToWavBlob } from "../utils/audioEncode";
-import "./HebrewInput.css";
+import { MicrophoneIcon } from "./MicrophoneIcon";
+import "./VoicePrefill.css";
+
+// Icônes UI statiques servies depuis frontend/public/ (pas via mediaUrl/le
+// backend) : backend/results/ est gitignored et jamais déployé, un chemin
+// mediaUrl() y renverrait donc un 404 silencieux en production.
+const LECTURE_ICON_URL = "/lecture.png";
+const VOICE_ICON_URL = "/voice.png";
+const SEND_ICON_URL = "/sendvocal.png";
+const ICON_SIZE = 40;
 
 // Pré-remplissage vocal générique : idle -> recording -> recorded ->
 // sending -> idle (le champ appelant est alors rempli avec le verbatim
-// renvoyé par l'API de transcription). Extrait de HebrewInput.jsx pour être
-// réutilisable avec une langue différente (ex: "fr" pour un rapport écrit
-// en français à propos d'un enregistrement hébreu).
+// renvoyé par l'API de transcription). Même langage visuel que la capture
+// de réponse orale (OralAnswerCapture/AudioProgressBlock) mais en compact,
+// sur une seule ligne : micro (gauche) / onde de progression / bouton
+// lecture, bouton envoyer empilé sous le bouton lecture — cf. demande
+// explicite du user.
 export function VoicePrefill({ onChange, lang = "he", context }) {
   const [voiceState, setVoiceState] = useState("idle");
   const [voiceBlob, setVoiceBlob] = useState(null);
   const [voiceError, setVoiceError] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
   const voiceRecorderRef = useRef(null);
   const voiceChunksRef = useRef([]);
+  const audioRef = useRef(null);
 
   const voiceUrl = useMemo(() => (voiceBlob ? URL.createObjectURL(voiceBlob) : null), [voiceBlob]);
   useEffect(() => () => voiceUrl && URL.revokeObjectURL(voiceUrl), [voiceUrl]);
+
+  useEffect(() => {
+    setIsPlaying(false);
+    setProgress(0);
+  }, [voiceUrl]);
+
+  // Boucle requestAnimationFrame pour une progression fluide, cf.
+  // AudioProgressBlock (onTimeUpdate est trop peu fréquent).
+  useEffect(() => {
+    if (!isPlaying) return undefined;
+    let rafId;
+    function tick() {
+      const audio = audioRef.current;
+      if (audio && audio.duration) setProgress(audio.currentTime / audio.duration);
+      rafId = requestAnimationFrame(tick);
+    }
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [isPlaying]);
 
   async function startVoiceRecording() {
     setVoiceError(null);
@@ -45,9 +78,28 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
     }
   }
 
-  function handleVoiceDotClick() {
+  // Un seul bouton micro pour enregistrer ET ré-enregistrer : idle/recorded
+  // -> démarre un nouvel enregistrement (écrase l'ancien), recording ->
+  // arrête. Cf. demande explicite du user.
+  function handleMicClick() {
     if (voiceState === "recording") voiceRecorderRef.current?.stop();
-    else if (voiceState === "idle" || voiceState === "recorded") startVoiceRecording();
+    else startVoiceRecording();
+  }
+
+  function togglePlay() {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) audio.pause();
+    else audio.play();
+  }
+
+  function handleSeek(e) {
+    const audio = audioRef.current;
+    const duration = audio?.duration;
+    if (!audio || !duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * duration;
   }
 
   async function handleSendVoice() {
@@ -65,69 +117,91 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
     }
   }
 
+  const hasRecording = voiceState === "recorded" || voiceState === "sending";
+
   return (
-    <div className="hebrew-voice-block">
-      <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em", margin: 0 }}>
-        <button
-          type="button"
-          onClick={handleVoiceDotClick}
-          disabled={voiceState === "sending"}
-          aria-label={voiceState === "recording" ? "Arrêter l'enregistrement" : "Enregistrer une réponse vocale"}
-          style={{
-            display: "inline-flex",
-            verticalAlign: "middle",
-            background: "none",
-            border: "none",
-            padding: 0,
-            marginInlineEnd: 6,
-            cursor: voiceState === "sending" ? "default" : "pointer",
-          }}
-        >
-          <span
-            className={`hebrew-voice-dot${voiceState === "recording" ? " recording" : ""}`}
-            style={{ opacity: voiceState === "sending" ? 0.4 : 1 }}
-          />
-        </button>
-        | Pré-remplir avec la voix |{" "}
-        <button
-          type="button"
-          onClick={handleSendVoice}
-          disabled={voiceState !== "recorded"}
-          style={{
-            background: "none",
-            border: "none",
-            padding: 0,
-            font: "inherit",
-            fontStyle: "normal",
-            fontSize: "3em",
-            lineHeight: 1,
-            verticalAlign: "middle",
-            color: voiceState === "recorded" ? "skyblue" : "var(--textMuted)",
-            cursor: voiceState === "recorded" ? "pointer" : "default",
-          }}
-        >
-          ▶
-        </button>
-      </p>
+    <div className="voice-prefill-block">
+      <div className="voice-prefill-row">
+        <MicrophoneIcon
+          size={ICON_SIZE}
+          badgeColor="var(--danger)"
+          pulsing={voiceState === "recording"}
+          onClick={handleMicClick}
+          ariaLabel={
+            voiceState === "recording"
+              ? "Arrêter l'enregistrement"
+              : hasRecording
+              ? "Réenregistrer"
+              : "Enregistrer une réponse vocale"
+          }
+        />
 
-      {voiceState === "recording" && (
-        <p className="muted" style={{ fontStyle: "italic", fontSize: "0.7em", margin: 0 }}>
-          Enregistrement en cours... (touche le point rouge pour arrêter)
-        </p>
-      )}
+        {hasRecording ? (
+          <>
+            <div className="voice-prefill-wave" onClick={handleSeek}>
+              <span
+                className="voice-prefill-wave-icon voice-prefill-wave-bg"
+                style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
+              />
+              <span
+                className="voice-prefill-wave-icon voice-prefill-wave-fill"
+                style={{
+                  WebkitMaskImage: `url(${VOICE_ICON_URL})`,
+                  maskImage: `url(${VOICE_ICON_URL})`,
+                  clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                  WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                }}
+              />
+            </div>
 
-      {voiceState === "recorded" && voiceUrl && (
-        /* eslint-disable-next-line jsx-a11y/media-has-caption */
-        <audio controls src={voiceUrl} style={{ height: 28 }} />
-      )}
+            <div className="voice-prefill-play-column">
+              <button
+                type="button"
+                className="voice-prefill-toggle"
+                onClick={togglePlay}
+                aria-label={isPlaying ? "Pause" : "Lecture"}
+              >
+                <span
+                  className="voice-prefill-icon"
+                  style={{ WebkitMaskImage: `url(${LECTURE_ICON_URL})`, maskImage: `url(${LECTURE_ICON_URL})` }}
+                />
+              </button>
+              <button
+                type="button"
+                className="voice-prefill-send"
+                onClick={handleSendVoice}
+                disabled={voiceState !== "recorded"}
+                aria-label="Envoyer"
+              >
+                <img src={SEND_ICON_URL} alt="" style={{ width: ICON_SIZE * 0.78, height: ICON_SIZE * 0.78 }} />
+              </button>
+            </div>
+
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            <audio
+              ref={audioRef}
+              src={voiceUrl}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onEnded={() => {
+                setIsPlaying(false);
+                setProgress(1);
+              }}
+            />
+          </>
+        ) : (
+          <p className="muted voice-prefill-hint">
+            {voiceState === "recording"
+              ? "Enregistrement en cours..."
+              : "Touche le micro pour pré-remplir avec la voix"}
+          </p>
+        )}
+      </div>
 
       {voiceState === "sending" && (
-        <>
-          <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em", margin: 0 }}>
-            Envoi en cours ...
-          </p>
-          <img src="/sending-email.gif" alt="Envoi en cours" width="220" style={{ borderRadius: 8 }} />
-        </>
+        <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em", margin: 0 }}>
+          Envoi en cours ...
+        </p>
       )}
 
       {voiceError && (

@@ -1,0 +1,92 @@
+.voice-prefill-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 320px;
+  margin: 8px 0;
+}
+
+.voice-prefill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.voice-prefill-hint {
+  flex: 1;
+  margin: 0;
+  font-style: italic;
+  font-size: 0.75em;
+  text-align: start;
+}
+
+.voice-prefill-wave {
+  position: relative;
+  flex: 1;
+  height: 32px;
+  cursor: pointer;
+}
+
+.voice-prefill-wave-icon {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-size: auto 100%;
+  mask-size: auto 100%;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+}
+
+.voice-prefill-wave-bg {
+  background-color: var(--border);
+}
+
+.voice-prefill-wave-fill {
+  background-color: var(--accent);
+  /* Pas de transition : le clip-path suit currentTime à chaque frame
+     (requestAnimationFrame côté JS), cf. AudioProgressBlock.css. */
+}
+
+.voice-prefill-play-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.voice-prefill-toggle,
+.voice-prefill-send {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voice-prefill-send:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.voice-prefill-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--text);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}

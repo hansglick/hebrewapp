@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { VoicePrefill } from "./VoicePrefill";
 import "./HebrewInput.css";
+import "./ConfigModal.css";
+
+const KEYBOARD_VISIBLE_KEY = "hebrew-keyboard-visible";
 
 // Mapping du clavier hébreu physique français AZERTY (cf.
 // instructions/keyboard/example.jpg — vrai sticker de clavier bilingue
@@ -77,7 +80,18 @@ function finalizeWordAt(text, cursor) {
 
 export default function HebrewInput({ value, onChange, rows = 3, placeholder, showVoicePrefill = true }) {
   const [activeKey, setActiveKey] = useState(null);
+  // Affiché par défaut ; mémorisé (localStorage) car c'est un choix
+  // durable du user, pas un état ponctuel par question — cf. demande
+  // explicite du user (toggle manuel, plus de masquage automatique sur
+  // mobile ni d'aide contextuelle).
+  const [keyboardVisible, setKeyboardVisible] = useState(
+    () => localStorage.getItem(KEYBOARD_VISIBLE_KEY) !== "false"
+  );
   const textareaRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem(KEYBOARD_VISIBLE_KEY, keyboardVisible ? "true" : "false");
+  }, [keyboardVisible]);
   // Suivi de l'état de la touche Alt Gr (via keydown/keyup, seuls porteurs
   // fiables de getModifierState — l'événement "beforeinput" n'expose aucun
   // état de touche modificatrice) pour laisser passer "," et ":" tels quels
@@ -200,41 +214,49 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
         className="hebrew-input-textarea"
         placeholder={placeholder}
       />
-      {/* Clavier virtuel hébreu : caché sur mobile (cf. .hebrew-keyboard,
-          règle @media dans HebrewInput.css) — un téléphone Android a son
-          propre clavier hébreu système, pas la peine d'un pavé tactile
-          maison en plus. hebrew-keyboard-mobile-hint fait l'inverse
-          (masqué par défaut, affiché seulement sous ce même point de
-          rupture), donc jamais visible en même temps que le clavier. */}
-      <div className="hebrew-keyboard">
-        {AZERTY_ROWS.map((row, i) => (
-          <div key={i} className="hebrew-keyboard-row">
-            {row.map((latin) => (
-              <button
-                key={latin}
-                type="button"
-                className={`hebrew-key${activeKey === latin ? " active" : ""}`}
-                onClick={() => handleKeyClick(TRANSLIT_MAP[latin])}
-              >
-                <span className="hebrew-key-hebrew">{TRANSLIT_MAP[latin]}</span>
-                <span className="hebrew-key-latin">{latin}</span>
-              </button>
-            ))}
-          </div>
-        ))}
-        <div className="hebrew-keyboard-row">
-          <button
-            type="button"
-            className={`hebrew-key hebrew-key-space${activeKey === " " ? " active" : ""}`}
-            onClick={() => handleKeyClick(" ")}
-          />
-        </div>
+      {/* Toggle manuel (mémorisé) : plus de masquage automatique par
+          largeur d'écran ni d'aide contextuelle — cf. demande explicite
+          du user. */}
+      <div className="config-modal-row hebrew-keyboard-toggle-row">
+        <span>Clavier hébreu</span>
+        <button
+          type="button"
+          className={`switch${keyboardVisible ? " on" : ""}`}
+          role="switch"
+          aria-checked={keyboardVisible}
+          aria-label="Afficher/masquer le clavier hébreu"
+          onClick={() => setKeyboardVisible((v) => !v)}
+        >
+          <span className="switch-knob" />
+        </button>
       </div>
-      <p className="hebrew-keyboard-mobile-hint">
-        Pas de clavier hébreu sur ton téléphone ? Sur Android : Paramètres &gt; Système &gt; Langues et saisie
-        &gt; Clavier virtuel &gt; Gboard &gt; Langues &gt; Ajouter un clavier &gt; Hébreu. Bascule ensuite dessus
-        avec l'icône de langue (globe) du clavier.
-      </p>
+
+      {keyboardVisible && (
+        <div className="hebrew-keyboard">
+          {AZERTY_ROWS.map((row, i) => (
+            <div key={i} className="hebrew-keyboard-row">
+              {row.map((latin) => (
+                <button
+                  key={latin}
+                  type="button"
+                  className={`hebrew-key${activeKey === latin ? " active" : ""}`}
+                  onClick={() => handleKeyClick(TRANSLIT_MAP[latin])}
+                >
+                  <span className="hebrew-key-hebrew">{TRANSLIT_MAP[latin]}</span>
+                  <span className="hebrew-key-latin">{latin}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+          <div className="hebrew-keyboard-row">
+            <button
+              type="button"
+              className={`hebrew-key hebrew-key-space${activeKey === " " ? " active" : ""}`}
+              onClick={() => handleKeyClick(" ")}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
