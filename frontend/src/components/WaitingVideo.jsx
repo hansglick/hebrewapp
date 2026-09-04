@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getWaitingVids, getRandomChanson } from "../api/content";
 import { dataMediaUrl } from "../api/media";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
@@ -6,9 +7,21 @@ import { BottomNavBar } from "./BottomNavBar";
 import { ChansonWaitingCard } from "./ChansonWaitingCard";
 import "./WaitingVideo.css";
 
-// Icône UI statique servie depuis frontend/public/ (pas via mediaUrl/le
+// Icônes UI statiques servies depuis frontend/public/ (pas via mediaUrl/le
 // backend) : backend/results/ est gitignored et jamais déployé.
 const MUSIC_ICON_URL = "/musique.png";
+const MAIL_ICON_URL = "/sending_email.gif";
+
+// La correction (Gemini) est déjà entièrement calculée côté backend au fil
+// de la requête d'évaluation, indépendamment de cet écran : une
+// notification systématique est créée dès que la correction est prête (cf.
+// exam_session.py, "Notification systématique dès qu'une correction Gemini
+// est prête"), qu'on reste sur cette page ou non. Ce bouton se contente
+// donc de ramener le user à l'accueil pour qu'il puisse continuer à
+// naviguer dans l'app pendant l'attente, cf. demande explicite du user.
+const MAIL_TOOLTIP =
+  "Explore l'application et reçois tes résultats d'examen dans ta boîte mail, " +
+  "ATTENTION! tu dois rester sur l'application";
 
 // Joue en boucle une vidéo tirée au hasard parmi backend/data/waiting_vids,
 // pendant l'attente d'une réponse Gemini (remplace l'ancien EnvelopeLoader).
@@ -24,6 +37,7 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
   const [ready, setReady] = useState(false);
   const [chansons, setChansons] = useState(false);
   const videoRef = useRef(null);
+  const navigate = useNavigate();
 
   // Levé ici (plutôt que dans ChansonWaitingCard) pour que la barre de
   // contrôle inférieure (next/previous), rendue par ce composant, pilote
@@ -85,7 +99,7 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
         </>
       ) : (
         <>
-          {/* La tuile doit être au-dessus de la vidéo (pas en dessous), cf.
+          {/* Les tuiles doivent être au-dessus de la vidéo (pas en dessous), cf.
               demande explicite du user. */}
           <button
             type="button"
@@ -94,6 +108,16 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
           >
             <img className="waiting-video-chansons-icon" src={MUSIC_ICON_URL} alt="" />
             <span className="waiting-video-chansons-label">Patienter en chansons</span>
+          </button>
+
+          <button
+            type="button"
+            className="waiting-video-mail-tile"
+            title={MAIL_TOOLTIP}
+            onClick={() => navigate("/")}
+          >
+            <img className="waiting-video-mail-icon" src={MAIL_ICON_URL} alt="" />
+            <span className="waiting-video-mail-label">Recevoir les résultats par courrier</span>
           </button>
 
           {filename && (

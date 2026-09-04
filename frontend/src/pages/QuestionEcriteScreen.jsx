@@ -7,6 +7,8 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import HebrewInput from "../components/HebrewInput";
+import { VoicePrefill } from "../components/VoicePrefill";
+import { LabeledTile } from "../components/LabeledTile";
 import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar, BottomNavToggle } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
@@ -64,9 +66,9 @@ export default function QuestionEcriteScreen() {
   const lessonCode = code ?? niveau?.reference_lesson;
 
   const { current: phrase, next, back } = useRandomBrowser(
-    (prevPhrase) =>
+    (prevPhrase, seen) =>
       lessonCode
-        ? getRandomPhrase(lessonCode, mode, prevPhrase?.position, direction)
+        ? getRandomPhrase(lessonCode, mode, prevPhrase?.position, direction, seen)
         : Promise.resolve(null),
     [lessonCode, mode, direction]
   );
@@ -259,25 +261,15 @@ export default function QuestionEcriteScreen() {
       {mode === "revision" && (
         <>
           {evalMode === "prof" && (
-            <>
-              <hr
-                style={{
-                  width: "100%",
-                  maxWidth: 320,
-                  border: "none",
-                  borderTop: "1px solid var(--border)",
-                  margin: "1em 0 0",
-                }}
-              />
-
+            <LabeledTile label="Traduire la phrase">
               {isSourceHebrew ? (
-                <div style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   <p
                     className="hebrew"
                     style={{
                       margin: 0,
                       fontWeight: 700,
-                      color: "var(--textMuted)",
+                      color: "var(--text)",
                       fontSize: "1.44em",
                       direction: "rtl",
                       fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
@@ -291,11 +283,9 @@ export default function QuestionEcriteScreen() {
                   </button>
                 </div>
               ) : (
-                <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>
-                  {sourceText}
-                </p>
+                <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{sourceText}</p>
               )}
-            </>
+            </LabeledTile>
           )}
         </>
       )}
@@ -473,20 +463,34 @@ export default function QuestionEcriteScreen() {
           {!geminiResult && (
             <>
               {targetIsHebrew ? (
-                <HebrewInput
-                  key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
-                  value={studentSolution}
-                  onChange={setStudentSolution}
-                  rows={3}
-                />
+                <>
+                  <LabeledTile label="Pré-remplir avec la voix (optionnel)">
+                    <VoicePrefill
+                      key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
+                      lang="he"
+                      onChange={setStudentSolution}
+                    />
+                  </LabeledTile>
+                  <LabeledTile label="Réponse">
+                    <HebrewInput
+                      key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
+                      value={studentSolution}
+                      onChange={setStudentSolution}
+                      rows={3}
+                      showVoicePrefill={false}
+                    />
+                  </LabeledTile>
+                </>
               ) : (
-                <textarea
-                  className="translate-textarea"
-                  value={studentSolution}
-                  onChange={(e) => setStudentSolution(e.target.value)}
-                  rows={3}
-                  style={{ width: "100%", maxWidth: 320, fontFamily: "inherit" }}
-                />
+                <LabeledTile label="Réponse">
+                  <textarea
+                    className="translate-textarea"
+                    value={studentSolution}
+                    onChange={(e) => setStudentSolution(e.target.value)}
+                    rows={3}
+                    style={{ width: "100%", fontFamily: "inherit" }}
+                  />
+                </LabeledTile>
               )}
               {!loadingGemini && (
                 <button

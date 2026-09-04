@@ -189,10 +189,15 @@ export default function Layout() {
             <span className="header-divider" />
             {wallet && (
               <div className="wallet-strip hide-on-mobile">
-                <button type="button" className="wallet-strip-item" onClick={() => navigate("/jeu")} title="Jeu">
+                <button
+                  type="button"
+                  className="wallet-strip-item"
+                  onClick={() => navigate("/jeu/lotterie")}
+                  title="Boutique"
+                >
                   <ShekelIcon size={36} color="#7dd3fc" /> {Math.round(wallet.points)}
                   <span className="exam-tile-tooltip">
-                    Vous avez récolté {Math.round(wallet.points)} shekels
+                    Échanger tes {Math.round(wallet.points)} shekels contre des lots de cartes
                   </span>
                 </button>
                 <button
@@ -206,9 +211,16 @@ export default function Layout() {
                     Vous avez {wallet.nombre_cartes} cartes dans votre collection
                   </span>
                 </button>
-                <button type="button" className="wallet-strip-item" onClick={() => navigate("/jeu")} title="Jeu">
+                <button
+                  type="button"
+                  className="wallet-strip-item"
+                  onClick={() => navigate("/jeu/cartes")}
+                  title="Ma collection"
+                >
                   <span style={{ fontSize: 32, lineHeight: 1 }}>💎</span> {wallet.gems}
-                  <span className="exam-tile-tooltip">Vous avez récolté {wallet.gems} gems</span>
+                  <span className="exam-tile-tooltip">
+                    Vous avez récolté {wallet.gems} gems — voir ta collection de cartes
+                  </span>
                 </button>
               </div>
             )}
@@ -339,7 +351,11 @@ export default function Layout() {
               <div className="header-mobile-panel">
                 {wallet && (
                   <>
-                    <button type="button" className="header-mobile-panel-row" onClick={() => navigate("/jeu")}>
+                    <button
+                      type="button"
+                      className="header-mobile-panel-row"
+                      onClick={() => navigate("/jeu/lotterie")}
+                    >
                       <ShekelIcon size={20} color="#7dd3fc" />
                       <span>{Math.round(wallet.points)} shekels</span>
                     </button>
@@ -351,7 +367,11 @@ export default function Layout() {
                       <MagenDavidIcon size={20} color="#7dd3fc" />
                       <span>{wallet.nombre_cartes} cartes</span>
                     </button>
-                    <button type="button" className="header-mobile-panel-row" onClick={() => navigate("/jeu")}>
+                    <button
+                      type="button"
+                      className="header-mobile-panel-row"
+                      onClick={() => navigate("/jeu/cartes")}
+                    >
                       <span style={{ fontSize: 20, lineHeight: 1 }}>💎</span>
                       <span>{wallet.gems} gems</span>
                     </button>

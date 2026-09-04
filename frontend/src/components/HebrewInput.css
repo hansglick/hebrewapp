@@ -37,9 +37,18 @@
 
 /* Toggle manuel affiché/masqué du clavier virtuel (cf. HebrewInput.jsx) —
    réutilise .config-modal-row/.switch (ConfigModal.css), même composant
-   visuel que Thème/God Mode, ici en pleine largeur du champ. */
-.hebrew-keyboard-toggle-row {
+   visuel que Thème/God Mode, ici en pleine largeur du champ. justify-content
+   remis à flex-start (au lieu du space-between hérité de .config-modal-row,
+   pensé pour la largeur étroite de la modale de configuration) : sur un
+   champ large (ex: examen écrit), space-between écartait le toggle très
+   loin du texte "Clavier hébreu" — cf. demande explicite du user. Sélecteur
+   composé (les deux classes) : ConfigModal.css est importé après
+   HebrewInput.css (cf. HebrewInput.jsx), donc à spécificité égale sa règle
+   .config-modal-row l'emportait malgré cet override. */
+.config-modal-row.hebrew-keyboard-toggle-row {
   width: 100%;
+  justify-content: flex-start;
+  gap: 8px;
   font-size: 0.8em;
   color: var(--textMuted);
 }

@@ -530,12 +530,8 @@ export default function ExamenOralScreen() {
           {!loadingGemini && (
             <button
               type="button"
-              className="speak-btn"
-              style={{
-                color: rapportText.trim() ? "var(--textMuted)" : "var(--textMuted)",
-                opacity: rapportText.trim() ? 1 : 0.4,
-                fontSize: "0.8em",
-              }}
+              className="exam-tile green"
+              style={{ cursor: rapportText.trim() ? "pointer" : "default" }}
               disabled={!rapportText.trim()}
               onClick={handleSubmitRapport}
             >

@@ -20,7 +20,7 @@ export default function QuizzScreen() {
   const lessonCode = niveau?.reference_lesson;
 
   const { current: quizz, next, back } = useRandomBrowser(
-    () => (lessonCode ? getRandomQuizz(lessonCode) : Promise.resolve(null)),
+    (_prevQuizz, seen) => (lessonCode ? getRandomQuizz(lessonCode, seen) : Promise.resolve(null)),
     [lessonCode]
   );
 
@@ -116,24 +116,20 @@ export default function QuizzScreen() {
           correctKey={quizz.key}
           selectedKey={selected}
           onSelect={submitted ? undefined : setSelected}
+          onConfirm={submitted ? undefined : handleSubmit}
           disabled={submitted}
         />
 
+        {/* Double-tap (au lieu d'un bouton "Valider" séparé) : re-taper la
+            bulle déjà sélectionnée valide directement, cf. demande
+            explicite du user. */}
         {selected && !submitted && (
-          <button
-            type="button"
-            className="link-btn"
-            style={{
-              marginTop: 0,
-              fontStyle: "italic",
-              color: "var(--textMuted)",
-              fontSize: "0.75em",
-              textDecoration: "none",
-            }}
-            onClick={handleSubmit}
+          <p
+            className="muted"
+            style={{ margin: 0, fontStyle: "italic", fontSize: "0.375em" }}
           >
-            Valider ma réponse
-          </button>
+            Appuyez de nouveau sur la réponse pour valider votre choix
+          </p>
         )}
 
         {submitted && (

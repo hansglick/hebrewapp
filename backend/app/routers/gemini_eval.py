@@ -1,7 +1,7 @@
 import asyncio
 import json
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from pydantic import BaseModel
 
 from google.genai.errors import APIError
@@ -157,6 +157,7 @@ def random_question_orale(
     lesson_code: str,
     mode: str = "exploration",
     current: str | None = None,
+    seen: list[str] = Query(default=[]),
     user_id: int = Depends(get_current_user_id),
 ):
     lessons = get_dataset("lesson")
@@ -195,9 +196,10 @@ def random_question_orale(
             k: v for k, v in compute_combo_difficulties("oral", user_id).items() if k in recency_pool
         }
 
-        picked, draw_pool = weighted_pick(difficulty_pool, recency_pool)
+        picked, draw_pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
         if picked is None:
             raise HTTPException(404, "Aucune question orale disponible pour ce tirage")
+        draw_key = picked
         text_code, q_index_str = picked.rsplit("|", 1)
         q_index = int(q_index_str)
 
@@ -216,6 +218,7 @@ def random_question_orale(
         result["chapter"] = chapter
         result["lesson"] = lesson_num
         result["pool"] = draw_pool
+        result["draw_key"] = draw_key
     return result
 
 

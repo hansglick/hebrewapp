@@ -25,6 +25,11 @@
   justify-content: center;
   align-items: center;
   padding: 10px 24px;
+  /* Même correctif que .app-header (Layout.css) : calque GPU dédié pour
+     éviter le décalage visible pendant l'animation de la barre d'adresse
+     mobile, cf. demande explicite du user. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Largeur à 25% de l'espace disponible sur desktop : un premier

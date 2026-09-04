@@ -61,9 +61,11 @@ def random_mot(
     lesson_code: str = Query(...),
     mode: Literal["exploration", "revision"] = Query("exploration"),
     current: str | None = Query(None),
+    seen: list[str] = Query(default=[]),
     user_id: int = Depends(get_current_user_id),
 ):
     lesson = _get_lesson(lesson_code)
+    draw_key = None
 
     if mode == "exploration":
         pool = lesson["words"]
@@ -97,11 +99,12 @@ def random_mot(
             k: v for k, v in compute_combo_difficulties("mot", user_id).items() if k in recency_pool
         }
 
-        combo, pool = weighted_pick(difficulty_pool, recency_pool)
+        combo, pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
         if combo is None:
             key = langue = None
         else:
             key, langue = combo.rsplit("|", 1)
+            draw_key = combo
 
     if key is None:
         raise HTTPException(404, "Aucun mot disponible pour ce tirage")
@@ -114,6 +117,7 @@ def random_mot(
     if langue is not None:
         result["langue"] = langue
         result["pool"] = pool
+        result["draw_key"] = draw_key
     return result
 
 
@@ -122,6 +126,7 @@ def random_verbe(
     lesson_code: str = Query(...),
     mode: Literal["exploration", "revision"] = Query("exploration"),
     current: str | None = Query(None),
+    seen: list[str] = Query(default=[]),
     user_id: int = Depends(get_current_user_id),
 ):
     lesson = _get_lesson(lesson_code)
@@ -146,7 +151,7 @@ def random_verbe(
         difficulty_pool_raw = aggregate_by_base_key(compute_combo_difficulties("verbe", user_id))
         difficulty_pool = {k: v for k, v in difficulty_pool_raw.items() if k in recency_pool}
 
-        key, draw_pool = weighted_pick(difficulty_pool, recency_pool)
+        key, draw_pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
 
     if key is None:
         raise HTTPException(404, "Aucun verbe disponible pour ce tirage")
@@ -156,6 +161,7 @@ def random_verbe(
         raise HTTPException(404, "Verbe introuvable")
     if draw_pool is not None:
         verbe["pool"] = draw_pool
+        verbe["draw_key"] = key
     return verbe
 
 
@@ -178,8 +184,12 @@ def get_verbe(key: str):
 
 
 @router.get("/quizz/random")
-def random_quizz(lesson_code: str = Query(...), user_id: int = Depends(get_current_user_id)):
-    result = build_quizz_question(lesson_code, user_id)
+def random_quizz(
+    lesson_code: str = Query(...),
+    seen: list[str] = Query(default=[]),
+    user_id: int = Depends(get_current_user_id),
+):
+    result = build_quizz_question(lesson_code, user_id, set(seen))
     if result is None:
         raise HTTPException(404, "Aucun objet de vocabulaire disponible pour ce tirage")
     return result
@@ -191,6 +201,7 @@ def random_phrase(
     mode: Literal["exploration", "revision"] = Query("exploration"),
     current: str | None = Query(None),
     direction: Literal["hebreu", "francais"] | None = Query(None),
+    seen: list[str] = Query(default=[]),
     user_id: int = Depends(get_current_user_id),
 ):
     phrases_data = get_dataset("phrase")
@@ -231,10 +242,11 @@ def random_phrase(
             k: v for k, v in compute_combo_difficulties("phrase_auto", user_id).items() if k in recency_pool
         }
 
-        picked, draw_pool = weighted_pick(difficulty_pool, recency_pool)
+        picked, draw_pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
         if picked is None:
             raise HTTPException(404, "Aucune phrase disponible pour ce tirage")
 
+        draw_key = picked
         chosen_lesson_code, position_str, direction = picked.split("|")
         position = int(position_str)
 
@@ -244,4 +256,5 @@ def random_phrase(
     if direction is not None:
         result["direction"] = direction
         result["pool"] = draw_pool
+        result["draw_key"] = draw_key
     return result

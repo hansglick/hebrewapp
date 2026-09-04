@@ -43,7 +43,7 @@ export default function MotScreen() {
   const browserDeps = restoreMot ? ["__restore__", mode] : [lessonCode, mode];
 
   const { current: mot, next, back } = useRandomBrowser(
-    (prevMot) => (lessonCode ? getRandomMot(lessonCode, mode, prevMot?.key) : Promise.resolve(null)),
+    (prevMot, seen) => (lessonCode ? getRandomMot(lessonCode, mode, prevMot?.key, seen) : Promise.resolve(null)),
     browserDeps,
     restoreMot
   );
@@ -297,6 +297,9 @@ export default function MotScreen() {
                 </button>
               </div>
 
+              {/* gap:40 (au lieu de 14) : même espace mot français -> logos
+                  que révisions/traduction (phrase traduite -> logos), cf.
+                  demande explicite du user. */}
               <div
                 style={{
                   gridArea: "1 / 1",
@@ -304,7 +307,7 @@ export default function MotScreen() {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  gap: 14,
+                  gap: 40,
                 }}
               >
                 <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textMuted)" }}>{mot.french}</span>

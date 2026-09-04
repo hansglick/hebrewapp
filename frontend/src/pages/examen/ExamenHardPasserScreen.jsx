@@ -557,8 +557,8 @@ export default function ExamenHardPasserScreen() {
                   <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={1} placeholder="Conjugue !" />
                   <button
                     type="button"
-                    className="link-btn"
-                    style={{ fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.75em", textDecoration: "none" }}
+                    className="exam-tile green"
+                    style={{ cursor: studentSolution.trim() ? "pointer" : "default" }}
                     disabled={!studentSolution.trim()}
                     onClick={handleSubmitVerbe}
                   >
@@ -586,8 +586,10 @@ export default function ExamenHardPasserScreen() {
             </>
           )}
 
+          {/* zoom:1.6 : même taille/format que l'objet quizz en révisions
+              (cf. revisions/QuizzScreen), cf. demande explicite du user. */}
           {q.type === "quizz" && (
-            <>
+            <div style={{ zoom: 1.6 }}>
               <p style={{ color: "var(--text)", margin: "1em 0 0" }}>{q.french}</p>
               {!answer && (
                 <>
@@ -596,12 +598,16 @@ export default function ExamenHardPasserScreen() {
                     correctKey={q.key}
                     selectedKey={selectedQuizz}
                     onSelect={setSelectedQuizz}
+                    onConfirm={handleSubmitQuizz}
                     disabled={false}
                   />
+                  {/* Double-tap (au lieu d'un bouton "Valider" séparé) :
+                      re-taper la bulle déjà sélectionnée valide directement,
+                      cf. demande explicite du user. */}
                   {selectedQuizz && (
-                    <button type="button" className="link-btn" onClick={handleSubmitQuizz}>
-                      Valider
-                    </button>
+                    <p className="muted" style={{ margin: 0, fontStyle: "italic", fontSize: "0.375em" }}>
+                      Appuyez de nouveau sur la réponse pour valider votre choix
+                    </p>
                   )}
                 </>
               )}
@@ -613,7 +619,7 @@ export default function ExamenHardPasserScreen() {
                   </p>
                 </>
               )}
-            </>
+            </div>
           )}
 
           {q.type === "traduction" && (
@@ -635,8 +641,8 @@ export default function ExamenHardPasserScreen() {
               {!answer && !pendingAnswers[index] && (
                 <button
                   type="button"
-                  className="link-btn"
-                  style={{ fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.75em", textDecoration: "none" }}
+                  className="exam-tile green"
+                  style={{ cursor: studentSolution.trim() ? "pointer" : "default" }}
                   disabled={!studentSolution.trim()}
                   onClick={handleSubmitTraduction}
                 >

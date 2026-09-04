@@ -108,7 +108,18 @@ def pick_sequential(pool, current=None):
     return pool[0]
 
 
-def weighted_pick(difficulty_pool: dict, recency_pool: dict):
+def _without_seen(pool: dict, seen: set) -> dict:
+    """Retire du pool récence les clés déjà tirées dans la session en cours
+    (sans remise), cf. demande explicite du user. Si le pool entier a déjà
+    été vu, on retombe sur le pool complet (retirage avec remise) plutôt que
+    de bloquer le tirage — cf. demande explicite du user."""
+    if not seen:
+        return pool
+    filtered = {k: v for k, v in pool.items() if k not in seen}
+    return filtered or pool
+
+
+def weighted_pick(difficulty_pool: dict, recency_pool: dict, seen_recency: set | None = None):
     """Tirage 50% pondéré par difficulté / 50% pondéré par récence dans la
     progression du cours, avec repli sur l'autre pool s'il est vide.
 
@@ -116,6 +127,10 @@ def weighted_pick(difficulty_pool: dict, recency_pool: dict):
     déjà évalués au moins une fois (cf. compute_combo_difficulties).
     `recency_pool` : {clé: poids de récence} — tous les objets des leçons
     débloquées, évalués ou non (cf. lesson_order.recency_weights).
+    `seen_recency` : clés déjà tirées via LE POOL RÉCENCE dans la session de
+    révision en cours (jamais le pool difficulté, cf. demande explicite du
+    user) — exclues du tirage récence, sans remise, tant qu'il en reste
+    d'autres à tirer (cf. _without_seen).
 
     Retourne (clé tirée, pool d'origine) où pool ∈ {"difficulty", "recency",
     None} — None seulement si aucun pool n'a de quoi tirer."""
@@ -130,8 +145,9 @@ def weighted_pick(difficulty_pool: dict, recency_pool: dict):
         return random.choices(keys, weights=weights, k=1)[0], "difficulty"
 
     if recency_pool:
-        keys = list(recency_pool.keys())
-        weights = list(recency_pool.values())
+        pool = _without_seen(recency_pool, seen_recency or set())
+        keys = list(pool.keys())
+        weights = list(pool.values())
         return random.choices(keys, weights=weights, k=1)[0], "recency"
 
     keys = list(difficulty_pool.keys())

@@ -19,6 +19,12 @@
   z-index: 50;
   background: #16171d;
   border-bottom: 2.68px solid #a9d6f5;
+  /* Force un calque de composition GPU dédié : sans ça, certains navigateurs
+     mobiles repeignent la barre "en retard" par rapport au scroll pendant
+     l'animation de rétractation de la barre d'adresse, ce qui se voit comme
+     un léger décalage/tremblement — cf. demande explicite du user. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Déplacer `zoom` sur cet enfant (au lieu de .app-header lui-même) n'a
@@ -188,10 +194,21 @@
   display: none !important;
 }
 
+/* z-index DOIT rester < celui de .app-header (50) : .header-mobile-panel vit
+   à l'intérieur de <header>, qui est lui-même un contexte d'empilement
+   (position:sticky + z-index) — le z-index:100 du panneau n'est donc comparé
+   qu'aux AUTRES enfants de <header>, jamais directement à ce backdrop (un
+   frère de <header>, hors de ce contexte). Avec un z-index de 90 > 50, ce
+   backdrop passait donc au-dessus de tout <header> (y compris le panneau,
+   pourtant visuellement dessiné par-dessus) et interceptait silencieusement
+   tous les clics sur ses liens (dictionnaire, thème, déconnexion, shekels,
+   gems, cartes) — visible seulement au clic réel (souris/tactile), pas via
+   un .click() JS qui contourne le hit-testing. Cf. bug rapporté par le user
+   (devtools, simulation mobile). */
 .header-mobile-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 90;
+  z-index: 45;
 }
 
 .header-mobile-panel {

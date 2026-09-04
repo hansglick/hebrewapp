@@ -44,7 +44,8 @@ export default function VerbeScreen() {
   const lessonCode = code ?? niveau?.reference_lesson;
 
   const { current: verbe, next, back } = useRandomBrowser(
-    (prevVerbe) => (lessonCode ? getRandomVerbe(lessonCode, mode, prevVerbe?.key) : Promise.resolve(null)),
+    (prevVerbe, seen) =>
+      lessonCode ? getRandomVerbe(lessonCode, mode, prevVerbe?.key, seen) : Promise.resolve(null),
     [lessonCode, mode]
   );
 

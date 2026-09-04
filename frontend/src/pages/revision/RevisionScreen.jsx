@@ -246,11 +246,14 @@ export default function RevisionScreen() {
           </p>
         )}
 
+        {/* L'IA parle la plupart du temps en français -> justifié à gauche
+            (LTR), contrairement au JDR (cf. JdrScreen) dont la persona
+            parle en hébreu — cf. demande explicite du user. */}
         <div
           style={{
             marginTop: 12,
-            textAlign: "right",
-            direction: "rtl",
+            textAlign: "left",
+            direction: "ltr",
             background: running ? "var(--danger)" : "var(--success)",
             color: "#fff",
             borderRadius: 8,
@@ -262,11 +265,12 @@ export default function RevisionScreen() {
           {renderWithAsteriskBold(aiBuffer || lastCompletedAi || "…")}
         </div>
 
+        {/* Alignement par intervenant (pas un alignement uniforme pour tout
+            le journal) : l'IA (français) à gauche en LTR, l'étudiant
+            (hébreu) à droite en RTL — cf. demande explicite du user. */}
         <div
           style={{
             marginTop: 12,
-            textAlign: "right",
-            direction: "rtl",
             border: "1px solid var(--border)",
             background: "var(--bg)",
             borderRadius: 8,
@@ -278,7 +282,13 @@ export default function RevisionScreen() {
           }}
         >
           {history.map((entry, i) => (
-            <div key={i}>
+            <div
+              key={i}
+              style={{
+                textAlign: entry.speaker === "user" ? "right" : "left",
+                direction: entry.speaker === "user" ? "rtl" : "ltr",
+              }}
+            >
               {entry.speaker === "user" ? "🧑" : entry.speaker === "ai" ? "🤖" : "⚠️"}{" "}
               {entry.speaker === "ai" ? renderWithAsteriskBold(entry.text) : entry.text}
             </div>

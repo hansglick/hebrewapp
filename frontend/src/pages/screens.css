@@ -149,6 +149,34 @@
   text-align: start;
 }
 
+/* Tuile "Examen" de l'accueil : fond noir, texte blanc, quel que soit le
+   thème — cf. demande explicite du user. */
+.card-dark {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* 4 colonnes (Apprendre / Parler / Réviser / Examen) linéaires sur une même
+   ligne horizontale en desktop, empilées verticalement en mobile — même
+   seuil que le reste de l'app (cf. @media (max-width: 600px) plus bas),
+   cf. demande explicite du user. */
+.accueil-columns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .accueil-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .card:hover .exam-tile-tooltip {
   visibility: visible;
   opacity: 1;
@@ -269,10 +297,15 @@
   cursor: pointer;
 }
 
-.quizz-bubble.active {
-  background: var(--accent);
-  color: var(--bg);
-  border-color: var(--accent);
+/* 1er tap (sélection, en attente du 2e tap qui valide) : vert clair — le
+   2e tap sur la même bulle déclenche directement la validation, qui
+   affiche alors .correct (vert foncé, déjà défini ci-dessous) ou .wrong
+   (rouge) selon la réponse, cf. demande explicite du user (double-tap au
+   lieu d'un bouton "Valider"). */
+.quizz-bubble.selected {
+  background: var(--successLight);
+  color: var(--text);
+  border-color: var(--successLight);
   font-weight: 600;
 }
 

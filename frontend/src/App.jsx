@@ -43,7 +43,16 @@ import JdrScreen from "./pages/jdr/JdrScreen";
 import ConversationChapitresListScreen from "./pages/jdr/ConversationChapitresListScreen";
 import ConversationLeconsListScreen from "./pages/jdr/ConversationLeconsListScreen";
 import RevisionScreen from "./pages/revision/RevisionScreen";
+import ConversationProfChapitresListScreen from "./pages/revision/ConversationProfChapitresListScreen";
+import ConversationProfLeconsListScreen from "./pages/revision/ConversationProfLeconsListScreen";
+import ParlerScreen from "./pages/ParlerScreen";
 import WaitingPreviewScreen from "./pages/dev/WaitingPreviewScreen";
+import QuizzPreviewScreen from "./pages/dev/QuizzPreviewScreen";
+import DevIndexScreen from "./pages/dev/DevIndexScreen";
+import OnboardingPreviewScreen from "./pages/dev/OnboardingPreviewScreen";
+import NiveauUpPreviewScreen from "./pages/dev/NiveauUpPreviewScreen";
+import LotteriePreviewScreen from "./pages/dev/LotteriePreviewScreen";
+import SignInPreviewScreen from "./pages/dev/SignInPreviewScreen";
 import JeuChoiceScreen from "./pages/jeu/JeuChoiceScreen";
 import RegleDuJeuScreen from "./pages/jeu/RegleDuJeuScreen";
 import LotterieScreen from "./pages/jeu/LotterieScreen";
@@ -83,11 +92,20 @@ function App() {
         <Route path="revisions/statistiques" element={<StatistiquesScreen />} />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
         <Route path="dictionnaire" element={<DictionnaireScreen />} />
+        <Route path="parler" element={<ParlerScreen />} />
         <Route path="jdr" element={<ConversationChapitresListScreen />} />
         <Route path="jdr/chapitre/:chapId" element={<ConversationLeconsListScreen />} />
         <Route path="jdr/:code" element={<JdrScreen />} />
+        <Route path="revision-prof" element={<ConversationProfChapitresListScreen />} />
+        <Route path="revision-prof/chapitre/:chapId" element={<ConversationProfLeconsListScreen />} />
         <Route path="revision-prof/:code" element={<RevisionScreen />} />
+        <Route path="dev" element={<DevIndexScreen />} />
         <Route path="dev/waiting-preview" element={<WaitingPreviewScreen />} />
+        <Route path="dev/quizz-preview" element={<QuizzPreviewScreen />} />
+        <Route path="dev/onboarding-preview" element={<OnboardingPreviewScreen />} />
+        <Route path="dev/niveau-up-preview" element={<NiveauUpPreviewScreen />} />
+        <Route path="dev/lotterie-preview" element={<LotteriePreviewScreen />} />
+        <Route path="dev/signin-preview" element={<SignInPreviewScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
         <Route path="examen/sauter" element={<ExamenSauterScreen />} />
         <Route path="examen/sauter/:chapId" element={<ExamenSauterChapitreScreen />} />

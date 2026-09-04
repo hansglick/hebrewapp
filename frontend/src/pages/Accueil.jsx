@@ -4,6 +4,7 @@ import { getNiveau, getExamReadiness } from "../api/user";
 import { getLeconExploration, getExamenHardStatus } from "../api/content";
 import { getOnboardingStatus, resetAccount } from "../api/onboarding";
 import { ChapitreLogo } from "../components/ChapitreLogo";
+import { MaskIcon } from "../components/MaskIcon";
 import { ProgressBar } from "../components/ProgressBar";
 import { ShekelIcon } from "../components/ShekelIcon";
 import { displayChapitreLabel } from "../utils/chapitreDisplay";
@@ -11,6 +12,19 @@ import { displayLessonNumber } from "../utils/lessonDisplay";
 import { leconProgressMessage } from "../utils/leconProgressMessage";
 import { readinessDisplay } from "../utils/readinessMessage";
 import "./screens.css";
+
+// Icône sobre à l'extrémité gauche du titre de chaque tuile (pas de débord
+// ni de pulsation, contrairement aux tuiles d'attente d'examen — une tuile
+// d'accueil est utilisée en permanence, cf. demande explicite du user). Le
+// reste du contenu de la tuile (sous ce titre) reste centré comme avant.
+function TileTitle({ src, color, children }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+      <MaskIcon src={src} size={22} color={color} />
+      <span style={{ fontWeight: 600, fontSize: "1.1em" }}>{children}</span>
+    </div>
+  );
+}
 
 export default function Accueil() {
   const [niveau, setNiveau] = useState(null);
@@ -56,99 +70,109 @@ export default function Accueil() {
           שלום {pseudo}
         </h1>
       )}
-      <div className="tile-list" style={{ gap: 8 }}>
-        {referenceLesson && (
-          <Link to={`/apprentissage/${chapId}/${referenceLesson}`} className="card-link">
-            <div className="card" style={{ textAlign: "center" }}>
-              <ChapitreLogo chapId={chapId} size="3.4em" style={{ marginInlineStart: 0 }} />
-              <div style={{ fontWeight: 600, margin: "6px 0 10px" }}>
-                {displayChapitreLabel(chapId)} — {displayLessonNumber(referenceLesson)}
+
+      {/* Linéaire sur une même ligne horizontale en desktop, empilé
+          verticalement en mobile (cf. .accueil-columns, screens.css) — 4
+          colonnes : Apprendre / Parler / Réviser / Examen, cf. demande
+          explicite du user. */}
+      <div className="accueil-columns">
+        {/* Apprendre */}
+        <div className="tile-list" style={{ gap: 8, margin: 0 }}>
+          {referenceLesson && (
+            <Link to={`/apprentissage/${chapId}/${referenceLesson}`} className="card-link">
+              <div className="card" style={{ textAlign: "center" }}>
+                <TileTitle src="/openbook.png">Apprendre</TileTitle>
+                <ChapitreLogo chapId={chapId} size="3.4em" style={{ marginInlineStart: 0, marginTop: 10 }} />
+                <div style={{ fontWeight: 600, margin: "6px 0 10px" }}>
+                  {displayChapitreLabel(chapId)} — {displayLessonNumber(referenceLesson)}
+                </div>
+                {exploration && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
+                    <span style={{ fontWeight: 600, fontSize: "0.9em" }}>{Math.ceil(explorationPercent)}%</span>
+                    <ProgressBar value={explorationPercent} color={leconProgress.color} />
+                    <p className="muted" style={{ margin: 0 }}>
+                      Leçon en cours
+                    </p>
+                  </div>
+                )}
               </div>
-              {exploration && (
+            </Link>
+          )}
+          <Link
+            to="/apprentissage"
+            className="link-btn"
+            style={{ textAlign: "center", border: "none", background: "none", padding: 0 }}
+          >
+            Consulter les leçons précédentes
+          </Link>
+        </div>
+
+        {/* Parler (remplace les anciennes tuiles Conversation / Révise avec
+            ton professeur, désormais regroupées derrière ce choix, cf.
+            ParlerScreen). */}
+        <div className="tile-list" style={{ gap: 8, margin: 0 }}>
+          <Link to="/parler" className="card-link">
+            <div className="card" style={{ textAlign: "center" }}>
+              <TileTitle src="/speak.png">Parler</TileTitle>
+            </div>
+          </Link>
+        </div>
+
+        {/* Réviser */}
+        <div className="tile-list" style={{ gap: 8, margin: 0 }}>
+          <Link to="/revisions" className="card-link">
+            <div className="card" style={{ textAlign: "center" }}>
+              <div style={{ marginBottom: 10 }}>
+                <TileTitle src="/revision.png">Réviser</TileTitle>
+              </div>
+              {readinessInfo && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
-                  <span style={{ fontWeight: 600, fontSize: "0.9em" }}>{Math.ceil(explorationPercent)}%</span>
-                  <ProgressBar value={explorationPercent} color={leconProgress.color} />
+                  <span style={{ fontWeight: 600, fontSize: "0.9em" }}>{Math.ceil(readinessInfo.percent)}%</span>
+                  <ProgressBar value={readinessInfo.percent} color={readinessInfo.color} />
                   <p className="muted" style={{ margin: 0 }}>
-                    Leçon en cours
+                    Révise avant l'examen!
                   </p>
                 </div>
               )}
             </div>
           </Link>
-        )}
-        <Link
-          to="/apprentissage"
-          className="link-btn"
-          style={{ textAlign: "center", border: "none", background: "none", padding: 0 }}
-        >
-          Consulter les leçons précédentes
-        </Link>
-
-        {referenceLesson && (
-          <Link to={`/jdr/${referenceLesson}`} className="card-link">
-            <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-              Conversation
-            </div>
-          </Link>
-        )}
-        <Link
-          to="/jdr"
-          className="link-btn"
-          style={{ textAlign: "center", border: "none", background: "none", padding: 0 }}
-        >
-          Rejouer les conversations précédentes
-        </Link>
-
-        <Link to="/revisions" className="card-link">
-          <div className="card" style={{ textAlign: "center" }}>
-            <div style={{ fontWeight: 600, margin: "0 0 10px", fontSize: "1.1em" }}>Réviser</div>
-            {readinessInfo && (
-              <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
-                <span style={{ fontWeight: 600, fontSize: "0.9em" }}>{Math.ceil(readinessInfo.percent)}%</span>
-                <ProgressBar value={readinessInfo.percent} color={readinessInfo.color} />
-                <p className="muted" style={{ margin: 0 }}>
-                  Révise avant l'examen!
-                </p>
-              </div>
-            )}
-          </div>
-        </Link>
-
-        {referenceLesson && (
-          <Link to={`/revision-prof/${referenceLesson}`} className="card-link">
-            <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-              Révise avec ton professeur
-            </div>
-          </Link>
-        )}
-
-        {niveau.next_lesson_code ? (
-          <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
-            <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-              Passez l'examen !
-            </div>
-          </Link>
-        ) : (
-          <div className="card" style={{ textAlign: "center", opacity: 0.5 }}>
-            Dernier niveau du cours atteint
-          </div>
-        )}
-        <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
-          <Link
-            to="/examen/copies"
-            className="link-btn"
-            style={{ border: "none", background: "none", padding: 0 }}
-          >
-            Consulter mes copies
-          </Link>
-          <Link
-            to="/examen/sauter"
-            className="link-btn"
-            style={{ border: "none", background: "none", padding: 0 }}
-          >
-            Demander une équivalence
-          </Link>
         </div>
+
+        {/* Examen : fond noir, texte blanc, logo examhat recoloré en blanc
+            (cf. demande explicite du user). L'état "dernier niveau atteint"
+            garde le traitement grisé existant, sans le style noir/blanc. */}
+        <div className="tile-list" style={{ gap: 8, margin: 0 }}>
+          {niveau.next_lesson_code ? (
+            <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
+              <div className="card card-dark" style={{ textAlign: "center" }}>
+                <TileTitle src="/examhat.png" color="#fff">Examen</TileTitle>
+              </div>
+            </Link>
+          ) : (
+            <div className="card" style={{ textAlign: "center", opacity: 0.5 }}>
+              Dernier niveau du cours atteint
+            </div>
+          )}
+          <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
+            <Link
+              to="/examen/copies"
+              className="link-btn"
+              style={{ border: "none", background: "none", padding: 0 }}
+            >
+              Consulter mes copies
+            </Link>
+            <Link
+              to="/examen/sauter"
+              className="link-btn"
+              style={{ border: "none", background: "none", padding: 0 }}
+            >
+              Demander une équivalence
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="tile-list" style={{ gap: 8, marginTop: 24 }}>
         {hardStatus?.unlocked && (
           <Link to="/examen/hard" className="card-link">
             <div

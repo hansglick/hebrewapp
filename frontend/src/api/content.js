@@ -25,24 +25,38 @@ function withCurrent(path, current) {
     : path;
 }
 
-export const getRandomMot = (lessonCode, mode = "exploration", current) =>
+// Ajoute les draw_key déjà tirés via le pool récence de la session en cours
+// (cf. useRandomBrowser) — un paramètre `seen` répété par clé, lu côté
+// backend comme une liste (cf. weighted_pick, tirage sans remise).
+function withSeen(path, seen) {
+  if (!seen || seen.length === 0) return path;
+  return seen.reduce((acc, key) => `${acc}&seen=${encodeURIComponent(key)}`, path);
+}
+
+export const getRandomMot = (lessonCode, mode = "exploration", current, seen) =>
   fetchJson(
-    withCurrent(`/api/mots/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`, current)
+    withSeen(
+      withCurrent(`/api/mots/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`, current),
+      seen
+    )
   );
 
-export const getRandomVerbe = (lessonCode, mode = "exploration", current) =>
+export const getRandomVerbe = (lessonCode, mode = "exploration", current, seen) =>
   fetchJson(
-    withCurrent(`/api/verbes/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`, current)
+    withSeen(
+      withCurrent(`/api/verbes/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`, current),
+      seen
+    )
   );
 
-export const getRandomPhrase = (lessonCode, mode = "exploration", current, direction) => {
+export const getRandomPhrase = (lessonCode, mode = "exploration", current, direction, seen) => {
   let url = `/api/phrases/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`;
   if (direction) url += `&direction=${encodeURIComponent(direction)}`;
-  return fetchJson(withCurrent(url, current));
+  return fetchJson(withSeen(withCurrent(url, current), seen));
 };
 
-export const getRandomQuizz = (lessonCode) =>
-  fetchJson(`/api/quizz/random?lesson_code=${encodeURIComponent(lessonCode)}`);
+export const getRandomQuizz = (lessonCode, seen) =>
+  fetchJson(withSeen(`/api/quizz/random?lesson_code=${encodeURIComponent(lessonCode)}`, seen));
 
 export const getStats = (tab) => fetchJson(`/api/stats/${encodeURIComponent(tab)}`);
 export const getRecencyStats = () => fetchJson("/api/stats/recence");
@@ -65,11 +79,14 @@ export const getExamenCopie = (id) => fetchJson(`/api/examens/copies/${encodeURI
 
 export const getWaitingVids = () => fetchJson("/api/waiting-vids");
 
-export const getRandomQuestionOrale = (lessonCode, mode = "exploration", current) =>
+export const getRandomQuestionOrale = (lessonCode, mode = "exploration", current, seen) =>
   fetchJson(
-    withCurrent(
-      `/api/questions-orales/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`,
-      current
+    withSeen(
+      withCurrent(
+        `/api/questions-orales/random?lesson_code=${encodeURIComponent(lessonCode)}&mode=${mode}`,
+        current
+      ),
+      seen
     )
   );
 

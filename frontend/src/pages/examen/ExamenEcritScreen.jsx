@@ -535,32 +535,30 @@ export default function ExamenEcritScreen() {
             </>
           )}
 
+          {/* zoom:1.6 : même taille/format que l'objet quizz en révisions
+              (cf. revisions/QuizzScreen), cf. demande explicite du user. */}
           {!answer && q.type === "quizz" && (
-            <>
+            <div style={{ zoom: 1.6 }}>
               <QuizzBubbles
                 options={q.options}
                 correctKey={q.key}
                 selectedKey={selectedQuizz}
                 onSelect={setSelectedQuizz}
+                onConfirm={handleSubmitQuizz}
                 disabled={false}
               />
+              {/* Double-tap (au lieu d'un bouton "Valider" séparé) : re-taper
+                  la bulle déjà sélectionnée valide directement, cf. demande
+                  explicite du user. */}
               {selectedQuizz && (
-                <button
-                  type="button"
-                  className="link-btn"
-                  style={{
-                    marginTop: 0,
-                    fontStyle: "italic",
-                    color: "var(--textMuted)",
-                    fontSize: "0.75em",
-                    textDecoration: "none",
-                  }}
-                  onClick={handleSubmitQuizz}
+                <p
+                  className="muted"
+                  style={{ margin: 0, fontStyle: "italic", fontSize: "0.375em" }}
                 >
-                  Valider ma réponse
-                </button>
+                  Appuyez de nouveau sur la réponse pour valider votre choix
+                </p>
               )}
-            </>
+            </div>
           )}
 
           {!answer && q.type !== "quizz" && pendingAnswers[index] === undefined && (
@@ -574,14 +572,8 @@ export default function ExamenEcritScreen() {
               />
               <button
                 type="button"
-                className="link-btn"
-                style={{
-                  marginTop: 0,
-                  fontStyle: "italic",
-                  color: "var(--textMuted)",
-                  fontSize: "0.75em",
-                  textDecoration: "none",
-                }}
+                className="exam-tile green"
+                style={{ marginTop: 0, cursor: studentSolution.trim() ? "pointer" : "default" }}
                 disabled={!studentSolution.trim()}
                 onClick={handleSubmitOnline}
               >
@@ -616,8 +608,10 @@ export default function ExamenEcritScreen() {
             </p>
           )}
 
+          {/* zoom:1.6 : même taille/format que l'objet quizz en révisions
+              (cf. revisions/QuizzScreen), cf. demande explicite du user. */}
           {answer && q.type === "quizz" && (
-            <>
+            <div style={{ zoom: 1.6 }}>
               <QuizzBubbles
                 options={q.options}
                 correctKey={q.key}
@@ -632,7 +626,7 @@ export default function ExamenEcritScreen() {
               >
                 {answer.selected_key === q.key ? "Correct" : "Incorrect"}
               </p>
-            </>
+            </div>
           )}
 
           {answer && q.type !== "quizz" && (
