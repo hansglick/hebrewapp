@@ -7,6 +7,21 @@
   max-width: 320px;
 }
 
+/* Pas de gap ici (contrairement à .hebrew-input) : le champ et l'encadré
+   voix doivent se toucher, cf. demande explicite du user. Même ombre que la
+   tuile "Traduire la phrase" (cf. LabeledTile bordered/shadow), posée ici
+   sur ce conteneur plutôt que sur le textarea seul : quand le bloc
+   pré-remplir est affiché, sa hauteur (animée) s'ajoute à celle du
+   conteneur, donc l'ombre porte alors sur l'ensemble textarea+encadré
+   comme un seul bloc — sans rien à recalculer en JS, cf. demande explicite
+   du user. */
+.hebrew-input-with-voice {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
 .hebrew-input-textarea {
   width: 100%;
   font-family: var(--font-hebrew);
@@ -16,6 +31,88 @@
   border: 1px solid var(--border);
   outline: none;
   box-sizing: border-box;
+}
+
+/* Ouverture/fermeture animée : la technique grid-template-rows 0fr/1fr anime
+   une hauteur "auto" sans avoir à mesurer le contenu en JS — combinée à
+   overflow:hidden sur l'enfant, ça donne l'effet d'un tiroir qui "descend"
+   du champ de saisie à l'ouverture et y "remonte" à la fermeture, cf.
+   demande explicite du user. Le fondu (opacity) sur .voice-prefill-frame
+   accompagne ce mouvement. */
+.voice-prefill-frame-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  transition: grid-template-rows 0.28s ease;
+}
+
+.voice-prefill-frame-wrap.open {
+  grid-template-rows: 1fr;
+}
+
+.voice-prefill-frame-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Bordure grise reprenant la couleur du champ de saisie juste au-dessus
+   (var(--border), même token que .hebrew-input-textarea) — pas de bord
+   haut : prolonge directement cette bordure, pour que les deux se lisent
+   comme un seul bloc, cf. demande explicite du user. */
+.voice-prefill-frame {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 10px 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.voice-prefill-frame-wrap.open .voice-prefill-frame {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-prefill-frame-wrap,
+  .voice-prefill-frame {
+    transition: none;
+  }
+}
+
+.voice-prefill-frame .voice-prefill-block {
+  margin: 0;
+  max-width: none;
+}
+
+/* Les deux toggles (pré-remplir avec la voix / clavier hébreu) empilés avec
+   leurs interrupteurs alignés en colonne : grid à 2 colonnes partagée entre
+   les deux lignes (chacune en display:contents), la 1re colonne (max-content)
+   s'ajuste automatiquement au libellé le plus long des deux — cf. demande
+   explicite du user (déplacer le toggle "Clavier hébreu" pour l'aligner sous
+   l'autre, quel que soit le texte le plus long). */
+.hebrew-input-toggles {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 8px;
+  row-gap: 8px;
+  width: 100%;
+  font-size: 0.8em;
+  color: var(--textMuted);
+}
+
+.hebrew-input-toggle-row {
+  display: contents;
+}
+
+/* Libellés justifiés à gauche dans leur colonne (max-content, dimensionnée
+   sur le plus long des deux) : sans ça, le texte le plus court ("Clavier
+   hébreu") se retrouvait visuellement centré dans une colonne plus large
+   que lui — l'interrupteur associé, lui, ne bouge pas (2e colonne,
+   inchangée), cf. demande explicite du user. */
+.hebrew-input-toggle-row span {
+  text-align: left;
 }
 
 :root[data-theme="light"] .hebrew-input-textarea {

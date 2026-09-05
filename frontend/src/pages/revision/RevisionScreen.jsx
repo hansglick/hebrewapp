@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRevision, revisionWebSocketUrl } from "../../api/revision";
 import { MicrophoneIcon } from "../../components/MicrophoneIcon";
+import { useWakeLock } from "../../hooks/useWakeLock";
 import "../screens.css";
 
 // Même pipeline audio que JdrScreen (cf. ce fichier pour les commentaires
@@ -78,6 +79,10 @@ export default function RevisionScreen() {
   }, [code]);
 
   useEffect(() => stop, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Empêche l'écran de se verrouiller en pleine conversation (rapporté par
+  // le user) — cf. useWakeLock.
+  useWakeLock(running);
 
   function addToHistory(speaker, text, ts) {
     setHistory((prev) => [...prev, { speaker, text, ts }].sort((a, b) => a.ts - b.ts));

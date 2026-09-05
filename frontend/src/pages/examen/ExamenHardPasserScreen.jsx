@@ -245,6 +245,11 @@ export default function ExamenHardPasserScreen() {
   }
 
   async function startRecording() {
+    // Un seul bouton micro pour enregistrer ET ré-enregistrer (plus de
+    // bouton "Recommencer" séparé, cf. OralAnswerCapture) : l'ancien blob
+    // doit disparaître dès le début du nouvel enregistrement, pas
+    // seulement à la fin, cf. demande explicite du user.
+    setAudioBlob(null);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const recorder = new MediaRecorder(stream);
     chunksRef.current = [];
@@ -697,7 +702,6 @@ export default function ExamenHardPasserScreen() {
                 audioUrl={audioUrl}
                 onStart={startRecording}
                 onStop={stopRecording}
-                onRecommencer={() => setAudioBlob(null)}
                 onEnvoyer={handleSubmitOral}
               />
 

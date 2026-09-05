@@ -41,7 +41,11 @@ export async function evaluateOral({ textCode, questionIndex, audioBlob }) {
 // une seule requête Gemini. `items`: [{identifiant, textCode, questionIndex, audioBlob}].
 // Chaque fichier audio porte son identifiant comme nom (sans extension) pour
 // que le backend le rattache au bon item de `items` sans champ dynamique.
-export async function evaluateOralsGrouped(items) {
+// `examCode` : nécessaire pour qu'en cas de surcharge Gemini, le backend
+// puisse mettre le lot en attente de relance (cf. app.oral_retry) et
+// retrouver ensuite la bonne tentative d'examen à laquelle rattacher les
+// réponses — cf. demande explicite du user.
+export async function evaluateOralsGrouped(items, examCode) {
   const formData = new FormData();
   formData.append(
     "items",
@@ -49,8 +53,17 @@ export async function evaluateOralsGrouped(items) {
       items.map((it) => ({ identifiant: it.identifiant, text_code: it.textCode, question_index: it.questionIndex }))
     )
   );
+  formData.append("exam_code", examCode);
   items.forEach((it) => formData.append("audios", it.audioBlob, `${it.identifiant}.wav`));
   return apiFetch("/api/gemini/oral/grouped", { method: "POST", body: formData });
+}
+
+// Déclenché par le bouton de la notification d'action "retry_oral_grouped"
+// (cf. app.oral_retry) — relance en tâche de fond côté serveur, le user
+// n'a besoin de rester sur aucun écran particulier, cf. demande explicite
+// du user.
+export async function retryOralGroupedBatch(batchId) {
+  return apiFetch(`/api/gemini/oral/grouped/retry/${batchId}`, { method: "POST" });
 }
 
 export async function extractVerbatim({ audioBlob, lang = "he", context }) {

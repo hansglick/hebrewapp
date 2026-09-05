@@ -1,7 +1,7 @@
 import asyncio
 import json
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, UploadFile
 from pydantic import BaseModel
 
 from google.genai.errors import APIError
@@ -21,6 +21,7 @@ from app.gemini import (
     extract_lyrics,
 )
 from app.openai_client import DICTIONNAIRE_PROMPT_FR, extract_verbatim
+from app.oral_retry import get_batch_owner_and_status, is_overload_error, mark_running, persist_batch, run_retry_batch
 from app.lesson_order import recency_weights
 from app.text_questions import questions_for_text
 from app.youtube import extraire_cle_youtube
@@ -266,6 +267,7 @@ async def gemini_oral(
 @router.post("/gemini/oral/grouped")
 async def gemini_oral_grouped(
     items: str = Form(...),
+    exam_code: str = Form(...),
     audios: list[UploadFile] = File(...),
     user_id: int = Depends(get_current_user_id),
 ):
@@ -314,10 +316,23 @@ async def gemini_oral_grouped(
         # Bloquant (upload + polling + appel Gemini synchrones) — cf.
         # gemini_oral pour la même raison de délégation à un thread.
         results = await asyncio.to_thread(evaluate_orals_grouped, list(grouped_by_text.values()), audio_items)
-    except RuntimeError as exc:
-        raise HTTPException(503, str(exc))
-    except APIError as exc:
-        raise HTTPException(502, f"Erreur Gemini : {exc.message}")
+    except (RuntimeError, APIError) as exc:
+        if is_overload_error(exc):
+            # Surcharge/indisponibilité temporaire : on garde les
+            # enregistrements audio du user (persistés) pour une relance
+            # ultérieure via une notification d'action, plutôt que de tout
+            # perdre — cf. demande explicite du user.
+            persist_batch(user_id, exam_code, entries_by_id, audio_items)
+            raise HTTPException(
+                503,
+                "Le système de correction est actuellement surchargé. "
+                "Tu vas recevoir une notification pour relancer l'évaluation dès que possible.",
+            )
+        # Toute autre raison (filtre de sécurité, réponse malformée...) :
+        # message exact affiché au user pour qu'il ajuste sa prochaine
+        # tentative — cf. demande explicite du user.
+        message = exc.message if isinstance(exc, APIError) else str(exc)
+        raise HTTPException(502, f"Erreur Gemini : {message}")
 
     by_identifiant = {r["identifiant_question"]: r for r in results}
     output = []
@@ -333,6 +348,23 @@ async def gemini_oral_grouped(
         output.append({**result, "identifiant": identifiant})
 
     return output
+
+
+@router.post("/gemini/oral/grouped/retry/{batch_id}")
+def gemini_oral_grouped_retry(
+    batch_id: int, background_tasks: BackgroundTasks, user_id: int = Depends(get_current_user_id)
+):
+    """Déclenché par le bouton de la notification d'action (cf.
+    app.action_notifications) — relance en tâche de fond (le user peut
+    fermer l'onglet, il sera notifié du résultat), cf. demande explicite du
+    user."""
+    owner = get_batch_owner_and_status(batch_id)
+    if owner is None or owner[0] != user_id:
+        raise HTTPException(404, "Lot introuvable")
+    if not mark_running(batch_id):
+        raise HTTPException(409, "Cette relance est déjà en cours.")
+    background_tasks.add_task(run_retry_batch, batch_id, user_id)
+    return {"status": "queued"}
 
 
 @router.post("/gemini/verbatim")

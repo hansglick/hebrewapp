@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getJdr, jdrWebSocketUrl } from "../../api/jdr";
 import { mediaUrl } from "../../api/media";
 import { MicrophoneIcon } from "../../components/MicrophoneIcon";
+import { useWakeLock } from "../../hooks/useWakeLock";
 import "../screens.css";
 
 // L'IA entoure d'astérisques les mots hors du vocabulaire connu de
@@ -104,6 +105,10 @@ export default function JdrScreen() {
       .then(setJdr)
       .catch((e) => setLoadError(e.message));
   }, [code]);
+
+  // Empêche l'écran de se verrouiller en pleine conversation (rapporté par
+  // le user) — cf. useWakeLock.
+  useWakeLock(running);
 
   // Coupe proprement micro/websocket/lecture audio si on quitte l'écran en
   // pleine conversation (changement de route, retour en arrière...).

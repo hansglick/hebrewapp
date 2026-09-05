@@ -1,21 +1,39 @@
-// Encadré fond blanc avec une petite étiquette grise (texte blanc) posée à
-// cheval sur son bord supérieur gauche, façon légende — cf. révisions/
-// traduction (toggle "Teacher") et leçon/oral, cf. demandes explicites du
-// user.
+// Encadré fond blanc avec une petite étiquette (fond bleu nuit, police
+// blanche) posée à cheval sur son bord supérieur gauche, façon légende —
+// cf. révisions/traduction (toggle "Teacher") et questions orales, cf.
+// demandes explicites du user.
 // `bodyPadding` : personnalisable (ex: 0 pour un enfant qui a déjà sa
-// propre bordure, comme AudioProgressBlock en leçon/oral — la bordure
-// inférieure de la tuile doit alors toucher la bordure supérieure de la
-// piste audio, sans marge entre les deux, cf. demande explicite du user).
-export function LabeledTile({ label, children, bodyPadding = "18px 14px 14px" }) {
+// propre bordure, comme AudioProgressBlock en leçon/oral, ou la tuile
+// "Réponse" qui doit se poser directement sur l'encadré du champ de
+// saisie — la bordure inférieure de la tuile touche alors la bordure
+// supérieure de l'enfant, sans marge entre les deux, cf. demande explicite
+// du user).
+// `border` : par défaut aucune bordure sur l'encadré (seule l'étiquette
+// reste visible, cf. demande explicite du user pour la plupart des
+// tuiles) — activable au cas par cas (ex: la tuile "Traduire la phrase",
+// bordure bleu nuit, sans ombre — cf. demande explicite du user).
+// `borderColor` : bleu nuit par défaut (couleur de l'étiquette) ;
+// surchargée en gris pour les tuiles "piste audio" (Contenu/Question/
+// Réponse, cf. OralAnswerCapture), cf. demande explicite du user.
+const NAVY = "#1e3a5f";
+
+export function LabeledTile({
+  label,
+  children,
+  bodyPadding = "18px 14px 14px",
+  border = false,
+  borderColor = NAVY,
+  marginTop = 20,
+}) {
   return (
-    <div style={{ position: "relative", width: "100%", maxWidth: 320, marginTop: 20 }}>
+    <div style={{ position: "relative", width: "100%", maxWidth: 320, marginTop }}>
       <span
         style={{
           position: "absolute",
           top: -12,
           left: 12,
           zIndex: 1,
-          background: "#6b7280",
+          background: NAVY,
           color: "#fff",
           fontWeight: 600,
           fontSize: "0.7em",
@@ -25,13 +43,12 @@ export function LabeledTile({ label, children, bodyPadding = "18px 14px 14px" })
       >
         {label}
       </span>
-      {/* Plus de bordure sur l'encadré lui-même — seule l'étiquette (le
-          titre) reste visible, cf. demande explicite du user. */}
       <div
         style={{
           borderRadius: 10,
           background: "#fff",
           padding: bodyPadding,
+          border: border ? `1px solid ${borderColor}` : "none",
         }}
       >
         {children}

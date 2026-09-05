@@ -80,4 +80,25 @@ def get_action_notifications(conn, user_id: int) -> list[dict]:
             }
         )
 
+    # Lot d'évaluation orale groupée mis en attente après une surcharge
+    # Gemini (cf. app.oral_retry) : bouton de relance directement sur la
+    # notification (action + action_payload, pas un simple lien de
+    # navigation) — cf. demande explicite du user.
+    for row in conn.execute(
+        "SELECT id FROM oral_retry_batches WHERE user_id = ? AND status = 'pending'", (user_id,)
+    ):
+        notifications.append(
+            {
+                "id": f"action:oral_retry:{row['id']}",
+                "message": (
+                    "Le système de correction était surchargé lors de ta dernière tentative — "
+                    "clique pour renvoyer tes réponses orales à l'examinateur."
+                ),
+                "link": None,
+                "pinned": True,
+                "action": "retry_oral_grouped",
+                "action_payload": {"batch_id": row["id"]},
+            }
+        )
+
     return notifications

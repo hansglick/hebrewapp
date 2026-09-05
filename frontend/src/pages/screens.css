@@ -4,6 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* Centre verticalement le contenu de l'écran dans son propre espace —
+     .app-content (Layout.css) centre déjà le bloc .screen lui-même dans
+     l'espace entre les deux barres, mais .screen a son propre contexte flex
+     (min-height:60vh) : sans ce justify-content ici, ses enfants restaient
+     alignés en haut malgré ça, cf. demande explicite du user. Même
+     technique "safe" que .app-content (repli en haut si le contenu déborde
+     de 60vh, jamais de début de contenu inaccessible au scroll). */
+  justify-content: flex-start;
+  justify-content: safe center;
   gap: 16px;
   text-align: center;
   touch-action: pan-y;
@@ -33,6 +42,13 @@
 .translate-textarea::placeholder {
   font-size: 0.5em;
   color: var(--textMuted);
+}
+
+/* Même ombre que la tuile "Traduire la phrase" (cf. LabeledTile
+   bordered/shadow) et que le champ de saisie hébreu (cf.
+   .hebrew-input-with-voice) — cf. demande explicite du user. */
+.translate-textarea {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .hebrew-word-row {
@@ -230,12 +246,23 @@
 .exam-tile.green {
   background: var(--success);
   color: #fff;
+  border: none;
   cursor: default;
 }
 
 .exam-tile:disabled {
   cursor: default;
   opacity: 0.7;
+}
+
+/* Un simple opacity ne suffisait pas à lire clairement "grisé" sur fond
+   vert plein — fond vert pastel (pas un gris neutre) tant que le bouton est
+   désactivé (ex: "Envoyer ma réponse" avec un champ de saisie vide), cf.
+   demande explicite du user. */
+.exam-tile.green:disabled {
+  background: var(--successLight);
+  color: #fff;
+  opacity: 1;
 }
 
 .exam-tile-tooltip {

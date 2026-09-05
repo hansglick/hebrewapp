@@ -81,6 +81,10 @@ export default function ExamenOralScreen() {
   const [isConverting, setIsConverting] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [geminiError, setGeminiError] = useState(null);
+  // Distinct de geminiError : surcharge Gemini détectée (cf.
+  // app.oral_retry), l'écran affiché est alors très différent d'un simple
+  // message d'erreur — cf. demande explicite du user.
+  const [geminiOverloaded, setGeminiOverloaded] = useState(false);
   const [loadingGemini, setLoadingGemini] = useState(false);
   const [finalResult, setFinalResult] = useState(null);
   const [attemptError, setAttemptError] = useState(null);
@@ -165,6 +169,11 @@ export default function ExamenOralScreen() {
   }, [exam?.answers[index], pendingAnswers[index], evalWaitMode, index, finalResult]);
 
   async function startRecording() {
+    // Un seul bouton micro pour enregistrer ET ré-enregistrer (plus de
+    // bouton "Recommencer" séparé, cf. OralAnswerCapture) : l'ancien blob
+    // doit disparaître dès le début du nouvel enregistrement, pas
+    // seulement à la fin, cf. demande explicite du user.
+    setAudioBlob(null);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const recorder = new MediaRecorder(stream);
     chunksRef.current = [];
@@ -300,7 +309,7 @@ export default function ExamenOralScreen() {
             audioBlob: pendingAnswers[idx].audioBlob,
           };
         });
-        const results = await evaluateOralsGrouped(items);
+        const results = await evaluateOralsGrouped(items, code);
         await persistGroup(oralIndices, results);
       }
 
@@ -319,7 +328,11 @@ export default function ExamenOralScreen() {
       setBatchProgress(null);
       if (lastResponse?.completed) setFinalResult(lastResponse);
     } catch (e) {
-      setGeminiError(e.message);
+      // 503 = surcharge Gemini, le lot vient d'être mis en attente de
+      // relance côté serveur (cf. app.oral_retry) — écran dédié plutôt
+      // qu'un simple message d'erreur, cf. demande explicite du user.
+      if (e.status === 503) setGeminiOverloaded(true);
+      else setGeminiError(e.message);
     } finally {
       setLoadingGemini(false);
       batchRunningRef.current = false;
@@ -411,7 +424,27 @@ export default function ExamenOralScreen() {
           l'impression trompeuse d'une évaluation question par question
           alors que l'appel Gemini groupé est bien unique — cf. bug
           rapporté par le user. Masqué pendant loadingGemini. */}
-      {loadingGemini ? (
+      {geminiOverloaded ? (
+        // Écran dédié (pas juste un message d'erreur) : le service de
+        // correction est surchargé, mais rien n'est perdu — les réponses
+        // du user ont été mises en attente côté serveur pour une relance
+        // ultérieure, déclenchée depuis une notification épinglée — cf.
+        // demande explicite du user.
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textAlign: "center" }}>
+          <h2 style={{ margin: 0 }}>Système de correction surchargé</h2>
+          <p className="muted" style={{ margin: 0 }}>
+            Le service de correction est actuellement surchargé et n'a pas pu évaluer tes réponses orales pour
+            l'instant.
+          </p>
+          <p className="muted" style={{ margin: 0 }}>
+            Pas d'inquiétude : tes enregistrements sont conservés. Une notification épinglée va t'être envoyée avec
+            un bouton pour relancer l'évaluation dès que tu le souhaites.
+          </p>
+          <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+            Retour à l'accueil
+          </button>
+        </div>
+      ) : loadingGemini ? (
         <GeminiWaiting
           key={batchProgress ? "batch" : "single"}
           showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
@@ -506,7 +539,6 @@ export default function ExamenOralScreen() {
           audioUrl={audioUrl}
           onStart={startRecording}
           onStop={stopRecording}
-          onRecommencer={() => setAudioBlob(null)}
           onEnvoyer={handleSubmit}
         />
       )}

@@ -10,7 +10,13 @@ async function throwWithDetail(res, path) {
   } catch {
     // pas de corps JSON exploitable, on garde le message par défaut
   }
-  throw new Error(detail);
+  const error = new Error(detail);
+  // Statut HTTP conservé sur l'objet Error (pas seulement le message) : sert
+  // par exemple à distinguer une surcharge Gemini (503, mise en attente de
+  // relance côté serveur) d'une autre erreur, sans dépendre d'un message
+  // fragile à faire correspondre — cf. demande explicite du user.
+  error.status = res.status;
+  throw error;
 }
 
 // Point de passage unique pour tous les appels API — attache l'identité

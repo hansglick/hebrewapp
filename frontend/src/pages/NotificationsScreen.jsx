@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNotifications } from "../api/user";
+import { retryOralGroupedBatch } from "../api/gemini";
 import "./screens.css";
 
 function formatDate(sqliteDatetime) {
@@ -12,10 +13,25 @@ function formatDate(sqliteDatetime) {
 
 export default function NotificationsScreen() {
   const [notifications, setNotifications] = useState(null);
+  // Id de notification -> "sending" | "queued" | erreur (string) — état du
+  // bouton "Relancer" inline, cf. demande explicite du user (bouton
+  // directement sur la notification, pas un écran séparé).
+  const [retryState, setRetryState] = useState({});
 
   useEffect(() => {
     getNotifications().then(setNotifications);
   }, []);
+
+  async function handleRetry(notification) {
+    const { batch_id } = notification.action_payload;
+    setRetryState((s) => ({ ...s, [notification.id]: "sending" }));
+    try {
+      await retryOralGroupedBatch(batch_id);
+      setRetryState((s) => ({ ...s, [notification.id]: "queued" }));
+    } catch (e) {
+      setRetryState((s) => ({ ...s, [notification.id]: e.message }));
+    }
+  }
 
   return (
     <section className="screen">
@@ -54,6 +70,30 @@ export default function NotificationsScreen() {
                 <Link to={n.link} className="link-btn" style={{ display: "inline-block", marginTop: 6 }}>
                   Voir →
                 </Link>
+              )}
+              {n.action === "retry_oral_grouped" && (
+                <>
+                  {retryState[n.id] === "queued" ? (
+                    <p className="muted" style={{ margin: "6px 0 0", fontStyle: "italic", fontSize: "0.85em" }}>
+                      Relance lancée — tu seras notifié du résultat.
+                    </p>
+                  ) : (
+                    <button
+                      type="button"
+                      className="exam-tile green"
+                      style={{ marginTop: 6, width: "auto", cursor: "pointer" }}
+                      disabled={retryState[n.id] === "sending"}
+                      onClick={() => handleRetry(n)}
+                    >
+                      {retryState[n.id] === "sending" ? "Relance en cours..." : "Relancer l'évaluation"}
+                    </button>
+                  )}
+                  {retryState[n.id] && retryState[n.id] !== "sending" && retryState[n.id] !== "queued" && (
+                    <p className="muted" style={{ margin: "6px 0 0", color: "var(--danger)", fontSize: "0.85em" }}>
+                      {retryState[n.id]}
+                    </p>
+                  )}
+                </>
               )}
             </div>
           ))}

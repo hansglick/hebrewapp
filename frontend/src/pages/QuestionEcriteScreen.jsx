@@ -7,7 +7,6 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import HebrewInput from "../components/HebrewInput";
-import { VoicePrefill } from "../components/VoicePrefill";
 import { LabeledTile } from "../components/LabeledTile";
 import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar, BottomNavToggle } from "../components/BottomNavBar";
@@ -261,7 +260,7 @@ export default function QuestionEcriteScreen() {
       {mode === "revision" && (
         <>
           {evalMode === "prof" && (
-            <LabeledTile label="Traduire la phrase">
+            <LabeledTile label="Traduire la phrase" border>
               {isSourceHebrew ? (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   <p
@@ -463,26 +462,16 @@ export default function QuestionEcriteScreen() {
           {!geminiResult && (
             <>
               {targetIsHebrew ? (
-                <>
-                  <LabeledTile label="Pré-remplir avec la voix (optionnel)">
-                    <VoicePrefill
-                      key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
-                      lang="he"
-                      onChange={setStudentSolution}
-                    />
-                  </LabeledTile>
-                  <LabeledTile label="Réponse">
-                    <HebrewInput
-                      key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
-                      value={studentSolution}
-                      onChange={setStudentSolution}
-                      rows={3}
-                      showVoicePrefill={false}
-                    />
-                  </LabeledTile>
-                </>
+                <LabeledTile label="Réponse" bodyPadding={0}>
+                  <HebrewInput
+                    key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
+                    value={studentSolution}
+                    onChange={setStudentSolution}
+                    rows={3}
+                  />
+                </LabeledTile>
               ) : (
-                <LabeledTile label="Réponse">
+                <LabeledTile label="Réponse" bodyPadding={0}>
                   <textarea
                     className="translate-textarea"
                     value={studentSolution}
@@ -496,7 +485,7 @@ export default function QuestionEcriteScreen() {
                 <button
                   type="button"
                   className="exam-tile green"
-                  style={{ marginTop: 0, cursor: studentSolution.trim() ? "pointer" : "default" }}
+                  style={{ marginTop: 24, cursor: studentSolution.trim() ? "pointer" : "default" }}
                   disabled={!studentSolution.trim()}
                   onClick={handleSubmitProf}
                 >

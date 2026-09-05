@@ -377,6 +377,41 @@ def init_db():
             """
         )
 
+        # Lot d'évaluation orale groupée mis en attente après un échec par
+        # surcharge Gemini (429/503, ou timeout de traitement du fichier) —
+        # cf. app.oral_retry. `status`: pending (offert au user via une
+        # notification d'action) -> running (relance en cours en tâche de
+        # fond) -> repasse à pending si la relance échoue encore (le user
+        # peut réessayer autant de fois qu'il veut), supprimé une fois
+        # réussi (les réponses sont alors persistées normalement via
+        # exam_sessions, plus besoin de garder ce lot).
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS oral_retry_batches (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL REFERENCES users(id),
+                exam_code TEXT NOT NULL,
+                entries_json TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending',
+                created_at TEXT NOT NULL DEFAULT (datetime('now'))
+            )
+            """
+        )
+        # Fichiers audio du lot, dans une table séparée (BLOB) plutôt que
+        # dans entries_json — évite de base64-encoder des fichiers audio
+        # entiers dans une colonne texte.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS oral_retry_audios (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                batch_id INTEGER NOT NULL REFERENCES oral_retry_batches(id),
+                identifiant TEXT NOT NULL,
+                mime_type TEXT NOT NULL,
+                audio_blob BLOB NOT NULL
+            )
+            """
+        )
+
         conn.execute("INSERT OR IGNORE INTO users (id) VALUES (?)", (DEFAULT_USER_ID,))
         _bootstrap_user_state(conn, DEFAULT_USER_ID, ignore_existing=True)
 

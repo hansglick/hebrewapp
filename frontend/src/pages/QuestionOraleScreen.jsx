@@ -10,11 +10,7 @@ import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar } from "../components/BottomNavBar";
 import { OralAnswerCapture } from "../components/OralAnswerCapture";
-import { AudioProgressBlock } from "../components/AudioProgressBlock";
-import { MicrophoneIcon } from "../components/MicrophoneIcon";
-import { LabeledTile } from "../components/LabeledTile";
 import { WaitingVideo } from "../components/WaitingVideo";
-import { ttsUrl } from "../utils/speech";
 import "./screens.css";
 
 const GEMINI_TIMEOUT_MS = 30000;
@@ -109,6 +105,11 @@ export default function QuestionOraleScreen() {
   }, [question]);
 
   async function startRecording() {
+    // Un seul bouton micro pour enregistrer ET ré-enregistrer (plus de
+    // bouton "Recommencer" séparé, cf. OralAnswerCapture) : l'ancien blob
+    // doit disparaître dès le début du nouvel enregistrement, pas seulement
+    // à la fin, cf. demande explicite du user.
+    setAudioBlob(null);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const recorder = new MediaRecorder(stream);
     chunksRef.current = [];
@@ -197,95 +198,21 @@ export default function QuestionOraleScreen() {
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
 
-      {/* leçon/oral : même design que révisions/traduction (toggle
-          "Teacher") — encadrés blancs à étiquette grise pour
-          Contenu/Question/Réponse, bouton "Envoyer ma réponse" blanc sur
-          fond vert au lieu du simple logo d'envoi. révisions/oral (mode
-          "revision") garde l'habillage OralAnswerCapture existant, cf.
-          demande explicite du user (scope limité à leçon/oral). */}
-      {mode === "exploration" ? (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-          {/* bodyPadding:0 : la bordure de la brique audio (AudioProgressBlock,
-              cf. .audio-progress-block) doit toucher directement la bordure
-              de la tuile, sans marge entre les deux, cf. demande explicite
-              du user. */}
-          <LabeledTile label="Contenu" bodyPadding={0}>
-            <AudioProgressBlock src={mediaUrl(question.voicepath)} />
-          </LabeledTile>
-          <LabeledTile label="Question" bodyPadding={0}>
-            <AudioProgressBlock src={ttsUrl(question.question_hebrew)} />
-          </LabeledTile>
-
-          {!geminiResult && (
-            <>
-              <LabeledTile label="Réponse" bodyPadding={0}>
-                {audioBlob && !isConverting ? (
-                  <AudioProgressBlock src={audioUrl} />
-                ) : isConverting ? (
-                  <p className="muted" style={{ margin: "18px 14px", textAlign: "center" }}>
-                    Traitement de l'enregistrement...
-                  </p>
-                ) : (
-                  // Même brique que Contenu/Question (classes
-                  // .audio-progress-block partagées) mais avec le micro à la
-                  // place du bouton lecture, et l'onde toujours affichée —
-                  // grisée (aucun calque de couleur/progression) tant
-                  // qu'aucun enregistrement n'existe, cf. demande explicite
-                  // du user.
-                  <div className="audio-progress-block">
-                    <MicrophoneIcon
-                      size={80}
-                      badgeColor="var(--danger)"
-                      pulsing={isRecording}
-                      onClick={isRecording ? stopRecording : startRecording}
-                    />
-                    <div className="audio-progress-block-wave" style={{ cursor: "default" }}>
-                      <span
-                        className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
-                        style={{ WebkitMaskImage: "url(/voice.png)", maskImage: "url(/voice.png)" }}
-                      />
-                    </div>
-                  </div>
-                )}
-              </LabeledTile>
-
-              {audioBlob && !isConverting && (
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 24, marginTop: 20 }}>
-                  <MicrophoneIcon
-                    size={60}
-                    badgeColor="var(--danger)"
-                    pulsing={false}
-                    onClick={() => setAudioBlob(null)}
-                    ariaLabel="Recommencer"
-                  />
-                  <button
-                    type="button"
-                    className="exam-tile green"
-                    style={{ width: "auto", maxWidth: "none", padding: "14px 20px" }}
-                    onClick={handleSubmit}
-                  >
-                    Envoyer ma réponse
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      ) : (
-        <OralAnswerCapture
-          contentSrc={mediaUrl(question.voicepath)}
-          questionText={question.question_hebrew}
-          showRecorder={!geminiResult}
-          isRecording={isRecording}
-          isConverting={isConverting}
-          audioBlob={audioBlob}
-          audioUrl={audioUrl}
-          onStart={startRecording}
-          onStop={stopRecording}
-          onRecommencer={() => setAudioBlob(null)}
-          onEnvoyer={handleSubmit}
-        />
-      )}
+      {/* Même habillage pour les deux modes (leçon/oral et révisions/oral) —
+          cf. OralAnswerCapture, inspiré de l'écran des questions écrites
+          avec pré-remplissage vocal, demande explicite du user. */}
+      <OralAnswerCapture
+        contentSrc={mediaUrl(question.voicepath)}
+        questionText={question.question_hebrew}
+        showRecorder={!geminiResult}
+        isRecording={isRecording}
+        isConverting={isConverting}
+        audioBlob={audioBlob}
+        audioUrl={audioUrl}
+        onStart={startRecording}
+        onStop={stopRecording}
+        onEnvoyer={handleSubmit}
+      />
 
       {!geminiResult && (
         <>

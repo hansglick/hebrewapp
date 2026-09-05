@@ -14,9 +14,11 @@ const VOICE_ICON_URL = "/voice.png";
 // qui se colore progressivement de gauche à droite au fil de la lecture au
 // lieu d'une barre fine — même mécanique de progression qu'AudioPlayer
 // (un <audio> caché, isPlaying/progress via onPlay/onPause/onTimeUpdate,
-// clic sur l'onde = seek), habillage différent. `label` : "Contenu" /
-// "Question" / "Réponse" selon l'écran appelant (cf. OralAnswerCapture).
-export function AudioProgressBlock({ src, label }) {
+// clic sur l'onde = seek), habillage différent. Pas de label intégré :
+// l'appelant l'entoure d'un <LabeledTile> (étiquette posée sur la bordure +
+// ombre) pour "Contenu"/"Question"/"Réponse" — cf. OralAnswerCapture,
+// demande explicite du user.
+export function AudioProgressBlock({ src }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -68,7 +70,6 @@ export function AudioProgressBlock({ src, label }) {
 
   return (
     <div className="audio-progress-block">
-      {label && <span className="audio-progress-block-label">{label}</span>}
       <div className="audio-progress-block-row">
         <button
           type="button"

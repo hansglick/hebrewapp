@@ -4,6 +4,7 @@ import "./HebrewInput.css";
 import "./ConfigModal.css";
 
 const KEYBOARD_VISIBLE_KEY = "hebrew-keyboard-visible";
+const VOICE_PREFILL_VISIBLE_KEY = "voice-prefill-visible";
 
 // Mapping du clavier hébreu physique français AZERTY (cf.
 // instructions/keyboard/example.jpg — vrai sticker de clavier bilingue
@@ -89,18 +90,26 @@ function finalizeWordAt(text, cursor) {
 
 export default function HebrewInput({ value, onChange, rows = 3, placeholder, showVoicePrefill = true }) {
   const [activeKey, setActiveKey] = useState(null);
-  // Affiché par défaut ; mémorisé (localStorage) car c'est un choix
-  // durable du user, pas un état ponctuel par question — cf. demande
-  // explicite du user (toggle manuel, plus de masquage automatique sur
-  // mobile ni d'aide contextuelle).
+  // Masqué par défaut (toggle à gauche) tant que le user ne l'a jamais
+  // activé lui-même ; mémorisé ensuite (localStorage), cf. demande
+  // explicite du user.
   const [keyboardVisible, setKeyboardVisible] = useState(
-    () => localStorage.getItem(KEYBOARD_VISIBLE_KEY) !== "false"
+    () => localStorage.getItem(KEYBOARD_VISIBLE_KEY) === "true"
+  );
+  // Même logique de mémorisation que le clavier (toggle manuel, masqué par
+  // défaut, choix durable du user une fois activé) — cf. demande explicite
+  // du user.
+  const [voicePrefillVisible, setVoicePrefillVisible] = useState(
+    () => localStorage.getItem(VOICE_PREFILL_VISIBLE_KEY) === "true"
   );
   const textareaRef = useRef(null);
 
   useEffect(() => {
     localStorage.setItem(KEYBOARD_VISIBLE_KEY, keyboardVisible ? "true" : "false");
   }, [keyboardVisible]);
+  useEffect(() => {
+    localStorage.setItem(VOICE_PREFILL_VISIBLE_KEY, voicePrefillVisible ? "true" : "false");
+  }, [voicePrefillVisible]);
   // Suivi de l'état de la touche Alt Gr (via keydown/keyup, seuls porteurs
   // fiables de getModifierState — l'événement "beforeinput" n'expose aucun
   // état de touche modificatrice) pour laisser passer "," et ":" tels quels
@@ -209,35 +218,71 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
 
   return (
     <div className="hebrew-input">
-      {showVoicePrefill && <VoicePrefill lang="he" onChange={onChange} />}
+      {/* Encadré du pré-remplissage vocal collé sous le champ de saisie
+          (même conteneur, sans espace entre les deux) — cf. demande
+          explicite du user. */}
+      <div className="hebrew-input-with-voice">
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
+          onBlur={handleBlur}
+          rows={rows}
+          dir="rtl"
+          className="hebrew-input-textarea"
+          placeholder={placeholder}
+        />
+        {/* Toujours monté tant que showVoicePrefill est vrai (seule la classe
+            "open" change) : nécessaire pour l'animation d'ouverture/fermeture
+            ci-dessous — un démontage direct sauterait la transition. */}
+        {showVoicePrefill && (
+          <div className={`voice-prefill-frame-wrap${voicePrefillVisible ? " open" : ""}`}>
+            <div className="voice-prefill-frame-inner">
+              <div className="voice-prefill-frame">
+                <VoicePrefill lang="he" onChange={onChange} />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        onBlur={handleBlur}
-        rows={rows}
-        dir="rtl"
-        className="hebrew-input-textarea"
-        placeholder={placeholder}
-      />
-      {/* Toggle manuel (mémorisé) : plus de masquage automatique par
+      {/* Toggles manuels (mémorisés) : plus de masquage automatique par
           largeur d'écran ni d'aide contextuelle — cf. demande explicite
-          du user. */}
-      <div className="config-modal-row hebrew-keyboard-toggle-row">
-        <span>Clavier hébreu</span>
-        <button
-          type="button"
-          className={`switch${keyboardVisible ? " on" : ""}`}
-          role="switch"
-          aria-checked={keyboardVisible}
-          aria-label="Afficher/masquer le clavier hébreu"
-          onClick={() => setKeyboardVisible((v) => !v)}
-        >
-          <span className="switch-knob" />
-        </button>
+          du user. Pré-remplir avec la voix au-dessus de Clavier hébreu, les
+          deux interrupteurs alignés en colonne (cf. .hebrew-input-toggles,
+          grid dont la 1re colonne s'ajuste au libellé le plus long) — cf.
+          demande explicite du user. */}
+      <div className="hebrew-input-toggles">
+        {showVoicePrefill && (
+          <div className="hebrew-input-toggle-row">
+            <span>Pré-remplir avec la voix</span>
+            <button
+              type="button"
+              className={`switch${voicePrefillVisible ? " on" : ""}`}
+              role="switch"
+              aria-checked={voicePrefillVisible}
+              aria-label="Afficher/masquer le pré-remplissage vocal"
+              onClick={() => setVoicePrefillVisible((v) => !v)}
+            >
+              <span className="switch-knob" />
+            </button>
+          </div>
+        )}
+        <div className="hebrew-input-toggle-row">
+          <span>Clavier hébreu</span>
+          <button
+            type="button"
+            className={`switch${keyboardVisible ? " on" : ""}`}
+            role="switch"
+            aria-checked={keyboardVisible}
+            aria-label="Afficher/masquer le clavier hébreu"
+            onClick={() => setKeyboardVisible((v) => !v)}
+          >
+            <span className="switch-knob" />
+          </button>
+        </div>
       </div>
 
       {keyboardVisible && (

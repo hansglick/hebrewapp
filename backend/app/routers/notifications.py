@@ -47,6 +47,8 @@ def list_notifications(user_id: int = Depends(get_current_user_id)):
                 "read": False,
                 "pinned": True,
                 "created_at": None,
+                "action": a.get("action"),
+                "action_payload": a.get("action_payload"),
             }
             for a in get_action_notifications(conn, user_id)
         ]

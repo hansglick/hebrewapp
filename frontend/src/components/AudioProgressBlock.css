@@ -1,51 +1,22 @@
-/* Empile les tuiles (Contenu/Question/Réponse) sans aucun espace entre
-   elles, bordure haute/basse du groupe uniquement arrondie — même motif
-   qu'une liste de réglages iOS. Chaque tuile a son propre border (haut ET
-   bas) mais se chevauche de 1px avec la précédente (margin-top: -1px) pour
-   qu'il n'y ait jamais de double trait à la jonction, juste une seule
-   ligne d'1px comme demandé ("la borne inférieure de la tuile supérieure
-   doit toucher la borne supérieure de la tuile inférieure"). */
-.audio-progress-stack {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.audio-progress-stack > *:not(:first-child) {
-  margin-top: -1px;
-}
-
-.audio-progress-stack > *:first-child {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.audio-progress-stack > *:last-child {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
+/* Chaque brique (Contenu/Question/Réponse) est désormais une tuile séparée,
+   entourée d'un <LabeledTile> (étiquette posée sur la bordure + ombre) —
+   fond blanc/bordure grise/ombre déjà portés par LabeledTile lui-même
+   (border/shadow), ce conteneur ne gère donc plus que la mise en page
+   interne, cf. demande explicite du user. */
 .audio-progress-block {
   display: flex;
   align-items: center;
   gap: 14px;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--border);
-  border-radius: 0;
-  padding: 12px 14px;
-  background: var(--surface);
 }
 
-.audio-progress-block-label {
-  flex-shrink: 0;
-  /* Largeur fixe (pas juste flex-shrink:0) : "Contenu"/"Question"/"Réponse"
-     n'ont pas la même longueur — sans cette largeur commune, les logos qui
-     suivent ne seraient pas alignés verticalement d'une tuile à l'autre. */
-  width: 100px;
-  font-size: 1.125em;
-  font-weight: 700;
-  color: var(--textMuted);
+/* Grisé et inerte tant qu'aucun enregistrement n'existe (bouton lecture et
+   onde de la brique "Réponse") — même traitement que VoicePrefill (écrit,
+   pré-remplissage vocal), cf. demande explicite du user. */
+.audio-progress-block-inert {
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .audio-progress-block-row {
@@ -56,10 +27,11 @@
   min-width: 0;
 }
 
+/* Taille réduite de 20% (80px -> 64px), cf. demande explicite du user. */
 .audio-progress-block-toggle {
   flex-shrink: 0;
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   border: none;
   border-radius: 50%;
   background: none;
@@ -74,7 +46,9 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: var(--text);
+  /* Bleu nuit, même teinte que la bordure/étiquette des tuiles (#1e3a5f,
+     cf. LabeledTile.jsx) — cf. demande explicite du user. */
+  background-color: #1e3a5f;
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
