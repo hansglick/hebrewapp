@@ -6,9 +6,9 @@ import { displayChapitreLabel } from "../../utils/chapitreDisplay";
 import "../screens.css";
 
 const TYPE_COLORS = {
-  rapide: "var(--success)",
+  rapide: "var(--validationPleine)",
   long: "var(--warning)",
-  tres_long: "var(--danger)",
+  tres_long: "var(--annulationPleine)",
 };
 
 export default function ExamenSauterChapitreScreen() {

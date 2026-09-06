@@ -23,7 +23,7 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, onLogout
         <div className="config-modal-row">
           <span>Thème</span>
           <div className="switch-wrap">
-            <SunIcon size={14} color={themeMode === "light" ? "var(--text)" : "var(--textMuted)"} />
+            <SunIcon size={14} color={themeMode === "light" ? "var(--textPrimary)" : "var(--textSecondary)"} />
             <button
               type="button"
               className={`switch${themeMode === "dark" ? " on" : ""}`}
@@ -34,7 +34,7 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, onLogout
             >
               <span className="switch-knob" />
             </button>
-            <MoonIcon size={14} color={themeMode === "dark" ? "var(--text)" : "var(--textMuted)"} />
+            <MoonIcon size={14} color={themeMode === "dark" ? "var(--textPrimary)" : "var(--textSecondary)"} />
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import { getExamen } from "../../api/content";
 import { answerExamen, getExamenStatus, getSessionExists } from "../../api/user";
 import { evaluateTranslation, evaluateTranslationsGrouped } from "../../api/gemini";
 import HebrewInput from "../../components/HebrewInput";
+import { QuoteBlock } from "../../components/QuoteBlock";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import { EvalWaitModeToggle } from "../../components/EvalWaitModeToggle";
@@ -45,7 +46,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -458,6 +459,7 @@ export default function ExamenEcritScreen() {
         <GeminiWaiting
           key={batchProgress ? "batch" : "single"}
           showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
+          allowChansons={!!batchProgress}
           label={
             batchProgress ? (
               <>
@@ -477,7 +479,7 @@ export default function ExamenEcritScreen() {
                   <button
                     type="button"
                     className="link-btn"
-                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                     disabled={index === 0}
                     onClick={() => setIndex(index - 1)}
                   >
@@ -491,7 +493,7 @@ export default function ExamenEcritScreen() {
                   <button
                     type="button"
                     className="link-btn"
-                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                     disabled={index === exam.questions.length - 1}
                     onClick={() => setIndex(index + 1)}
                   >
@@ -507,24 +509,26 @@ export default function ExamenEcritScreen() {
               width: "100%",
               maxWidth: 320,
               border: "none",
-              borderTop: "1px solid var(--border)",
+              borderTop: "1px solid var(--cardBorder)",
               margin: "1em 0 0",
             }}
           />
 
-          <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>
-            {q.french}
-          </p>
+          <QuoteBlock>
+            <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+              {q.french}
+            </p>
+          </QuoteBlock>
 
           {attemptError && (
-            <p className="muted" style={{ color: "var(--danger)" }}>
+            <p className="muted" style={{ color: "var(--annulationPleine)" }}>
               {attemptError}
             </p>
           )}
 
           {geminiError && (
             <>
-              <p className="muted" style={{ color: "var(--danger)" }}>
+              <p className="muted" style={{ color: "var(--annulationPleine)" }}>
                 {geminiError}
               </p>
               {Object.keys(pendingAnswers).length > 0 && (
@@ -584,8 +588,8 @@ export default function ExamenEcritScreen() {
 
           {!answer && q.type !== "quizz" && pendingAnswers[index] !== undefined && (
             <p className="hebrew" style={{ fontSize: "0.8em", margin: "1em 0 0" }}>
-              <span style={{ color: "var(--text)" }}>Réponse enregistrée : </span>
-              <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{pendingAnswers[index]}</span>
+              <span style={{ color: "var(--textPrimary)" }}>Réponse enregistrée : </span>
+              <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{pendingAnswers[index]}</span>
               <br />
               <span className="muted" style={{ fontStyle: "italic", fontSize: "0.75em" }}>
                 Sera évaluée à la fin de l'examen.{" "}
@@ -621,7 +625,7 @@ export default function ExamenEcritScreen() {
               <p
                 style={{
                   fontWeight: 600,
-                  color: answer.selected_key === q.key ? "var(--success)" : "var(--danger)",
+                  color: answer.selected_key === q.key ? "var(--validationPleine)" : "var(--annulationPleine)",
                 }}
               >
                 {answer.selected_key === q.key ? "Correct" : "Incorrect"}
@@ -632,11 +636,11 @@ export default function ExamenEcritScreen() {
           {answer && q.type !== "quizz" && (
             <>
               <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-                <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.translation}</span>
+                <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
               </p>
 
-              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
               <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
                 <tbody>
@@ -660,7 +664,7 @@ export default function ExamenEcritScreen() {
                             paddingInlineStart: "1.2em",
                             fontStyle: "italic",
                             fontSize: "0.85em",
-                            color: "var(--textMuted)",
+                            color: "var(--textSecondary)",
                           }}
                         >
                           {answer.observations.map((obs, i) => (

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { AudioPlayer } from "../../components/AudioPlayer";
 import { ChapitreLogo } from "../../components/ChapitreLogo";
 import HebrewInput from "../../components/HebrewInput";
+import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
 import { displayLessonNumber } from "../../utils/lessonDisplay";
 import "../screens.css";
@@ -10,7 +10,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -20,6 +20,7 @@ function StarRating({ rating }) {
 
 const PHASES = [
   { key: "intro", label: "Intro" },
+  { key: "test-intro", label: "Modalités du test" },
   { key: "ecrit-question", label: "Question écrite" },
   { key: "ecrit-result", label: "Résultat écrit" },
   { key: "oral-question", label: "Question orale" },
@@ -48,7 +49,7 @@ export default function OnboardingPreviewScreen() {
             type="button"
             className="link-btn"
             style={{
-              border: "1px solid var(--border)",
+              border: "1px solid var(--cardBorder)",
               borderRadius: 8,
               padding: "4px 10px",
               fontSize: "0.8em",
@@ -68,17 +69,29 @@ export default function OnboardingPreviewScreen() {
           <h1 className="hebrew" style={{ direction: "rtl" }}>
             שלום דוגמה
           </h1>
+          <button type="button" className="exam-tile green" style={{ cursor: "pointer" }}>
+            Évaluer son niveau
+          </button>
+          <button type="button" className="exam-tile green pastel" style={{ cursor: "pointer" }}>
+            Commencer à la première leçon
+          </button>
+        </>
+      )}
+
+      {phase === "test-intro" && (
+        <>
+          <h1>Évaluation de ton niveau</h1>
           <p className="muted" style={{ fontSize: "0.9em" }}>
-            Pour te proposer des leçons adaptées à ton niveau, tu peux répondre à 7 questions (traductions
-            écrites et questions orales) — réponds du mieux que tu peux, il n'y a pas de mauvaise surprise
-            possible : si le niveau retenu s'avère trop facile, tu pourras toujours demander une équivalence
-            par la suite pour avancer plus vite. Ou, si tu préfères, commence directement au niveau débutant.
+            7 questions (un mélange de traductions écrites et de questions orales) pour te proposer des
+            leçons adaptées à ton niveau — réponds du mieux que tu peux, il n'y a pas de mauvaise surprise
+            possible : si le niveau retenu s'avère trop facile ou trop difficile, tu pourras toujours
+            demander une équivalence par la suite pour ajuster dans un sens comme dans l'autre.
           </p>
           <button type="button" className="exam-tile green" style={{ cursor: "pointer" }}>
-            Évaluez votre niveau
+            Commencer le test !
           </button>
-          <button type="button" className="link-btn" style={{ fontSize: "0.9em" }}>
-            Commencez au niveau débutant
+          <button type="button" className="exam-tile green pastel" style={{ cursor: "pointer" }}>
+            Je préfère commencer à la première leçon
           </button>
         </>
       )}
@@ -88,7 +101,14 @@ export default function OnboardingPreviewScreen() {
           <p className="muted" style={{ margin: 0 }}>
             Question 3 / 7
           </p>
-          <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>
+          <button
+            type="button"
+            className="exam-tile red pastel"
+            style={{ cursor: "pointer", maxWidth: 200, padding: "8px", fontSize: "0.85em" }}
+          >
+            Abandonner le test
+          </button>
+          <p style={{ color: "var(--textPrimary)", margin: "1em 0 0", fontSize: "0.96em" }}>
             Le chat mange une pomme dans le jardin.
           </p>
 
@@ -97,8 +117,8 @@ export default function OnboardingPreviewScreen() {
               <HebrewInput value={studentSolution} onChange={setStudentSolution} rows={3} placeholder="Traduis !" />
               <button
                 type="button"
-                className="link-btn"
-                style={{ marginTop: 0, fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.75em", textDecoration: "none" }}
+                className="exam-tile green"
+                style={{ marginTop: 0, cursor: "pointer" }}
               >
                 Envoyer ma réponse
               </button>
@@ -108,15 +128,15 @@ export default function OnboardingPreviewScreen() {
           {phase === "ecrit-result" && (
             <>
               <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-                <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{studentSolution}</span>
+                <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{studentSolution}</span>
               </p>
-              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
               <StarRating rating={4} />
               <button
                 type="button"
                 className="link-btn"
-                style={{ fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.96em", textDecoration: "none" }}
+                style={{ fontStyle: "italic", color: "var(--textSecondary)", fontSize: "0.96em", textDecoration: "none" }}
               >
                 Question suivante
               </button>
@@ -130,56 +150,41 @@ export default function OnboardingPreviewScreen() {
           <p className="muted" style={{ margin: 0 }}>
             Question 5 / 7
           </p>
-          <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: "1em" }}>
-            {/* src fictif : pas de vrai fichier audio en preview, seule la
-                chrome visuelle du lecteur importe ici. */}
-            <AudioPlayer src="" barMaxWidth={58.5} toggleSize={27} />
-            <button
-              type="button"
-              aria-label="Écouter la question"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 27,
-                height: 27,
-                borderRadius: "50%",
-                background: "#000",
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: "1.1em",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-              }}
-            >
-              ?
-            </button>
-          </div>
+          <button
+            type="button"
+            className="exam-tile red pastel"
+            style={{ cursor: "pointer", maxWidth: 200, padding: "8px", fontSize: "0.85em" }}
+          >
+            Abandonner le test
+          </button>
 
-          {phase === "oral-question" && (
-            <button
-              type="button"
-              className="speak-btn"
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--textMuted)", fontSize: "0.675em" }}
-            >
-              <span style={{ display: "inline-block", width: 27, height: 27, borderRadius: "50%", background: "var(--danger)" }} />
-              Répondre
-            </button>
-          )}
+          {/* src fictifs : pas de vrais fichiers audio en preview, seule la
+              chrome visuelle importe ici. */}
+          <OralAnswerCapture
+            contentSrc=""
+            questionText="שלום, מה שלומך?"
+            showRecorder={phase === "oral-question"}
+            isRecording={false}
+            isConverting={false}
+            audioBlob={null}
+            audioUrl={null}
+            onStart={() => {}}
+            onStop={() => {}}
+            onEnvoyer={() => {}}
+          />
 
           {phase === "oral-result" && (
             <>
               <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-                <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>שלום, אני אוכל תפוח</span>
+                <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>שלום, אני אוכל תפוח</span>
               </p>
-              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
               <StarRating rating={3} />
               <button
                 type="button"
                 className="link-btn"
-                style={{ fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.96em", textDecoration: "none" }}
+                style={{ fontStyle: "italic", color: "var(--textSecondary)", fontSize: "0.96em", textDecoration: "none" }}
               >
                 Voir mon niveau
               </button>

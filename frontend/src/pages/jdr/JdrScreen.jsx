@@ -267,7 +267,7 @@ export default function JdrScreen() {
   if (loadError) {
     return (
       <section className="screen">
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {loadError}
         </p>
       </section>
@@ -288,10 +288,10 @@ export default function JdrScreen() {
         />
 
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12, width: "100%" }}>
-          <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--border)" }}>
+          <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--cardBorder)" }}>
             <MicrophoneIcon
               size={48}
-              badgeColor={running ? "var(--danger)" : "var(--success)"}
+              badgeColor={running ? "var(--annulationPleine)" : "var(--validationPleine)"}
               pulsing={running}
               onClick={running ? stop : start}
             />
@@ -304,7 +304,7 @@ export default function JdrScreen() {
               fontSize: "0.8em",
               fontStyle: "italic",
               textAlign: "start",
-              color: "var(--textMuted)",
+              color: "var(--textSecondary)",
             }}
           >
             {jdr.objectif_etudiant}
@@ -317,7 +317,7 @@ export default function JdrScreen() {
             style={{
               margin: "8px 0 0",
               fontSize: "0.8em",
-              color: isErrorStatus(status) ? "var(--danger)" : undefined,
+              color: isErrorStatus(status) ? "var(--annulationPleine)" : undefined,
             }}
           >
             {status}
@@ -329,7 +329,7 @@ export default function JdrScreen() {
             marginTop: 12,
             textAlign: "right",
             direction: "rtl",
-            background: running ? "var(--danger)" : "var(--success)",
+            background: running ? "var(--annulationPleine)" : "var(--validationPleine)",
             color: "#fff",
             borderRadius: 8,
             padding: "10px 14px",
@@ -345,13 +345,13 @@ export default function JdrScreen() {
             marginTop: 12,
             textAlign: "right",
             direction: "rtl",
-            border: "1px solid var(--border)",
+            border: "1px solid var(--cardBorder)",
             background: "var(--bg)",
             borderRadius: 8,
             padding: "12px 14px",
             minHeight: 60,
             fontSize: "0.85em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
             whiteSpace: "pre-wrap",
           }}
         >

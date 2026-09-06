@@ -32,7 +32,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -75,7 +75,7 @@ export default function ExamenHardCopieDetailScreen() {
               <button
                 type="button"
                 className="link-btn"
-                style={{ textDecoration: "none", color: "var(--text)" }}
+                style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                 disabled={index === 0}
                 onClick={() => setIndex(index - 1)}
               >
@@ -89,7 +89,7 @@ export default function ExamenHardCopieDetailScreen() {
               <button
                 type="button"
                 className="link-btn"
-                style={{ textDecoration: "none", color: "var(--text)" }}
+                style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                 disabled={index === copie.questions.length - 1}
                 onClick={() => setIndex(index + 1)}
               >
@@ -100,7 +100,7 @@ export default function ExamenHardCopieDetailScreen() {
         </tbody>
       </table>
 
-      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--border)", margin: "1em 0 0" }} />
+      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "1em 0 0" }} />
 
       {q.type === "verbe" && (
         <>
@@ -108,22 +108,22 @@ export default function ExamenHardCopieDetailScreen() {
             <span className="hebrew" style={{ fontSize: "1.2em" }}>
               {q.verbe}
             </span>{" "}
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>({q.traduction})</span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>({q.traduction})</span>
           </p>
           <p className="muted" style={{ margin: "4px 0" }}>
             {q.temps} — {q.personne}
           </p>
           <p className="hebrew" style={{ fontSize: "0.9em", margin: "0.4em 0" }}>
-            <span style={{ color: "var(--text)" }}>Réponse : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.submitted || "—"}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.submitted || "—"}</span>
           </p>
-          <p style={{ fontWeight: 600, color: verbeCorrect ? "var(--success)" : "var(--danger)" }}>
+          <p style={{ fontWeight: 600, color: verbeCorrect ? "var(--validationPleine)" : "var(--annulationPleine)" }}>
             {verbeCorrect ? "Correct" : "Incorrect"}
           </p>
           {!verbeCorrect && (
             <p className="hebrew" style={{ fontSize: "0.9em", margin: 0 }}>
-              <span style={{ color: "var(--success)", fontWeight: 600 }}>{q.conjugaison}</span>{" "}
-              <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>(solution)</span>
+              <span style={{ color: "var(--validationPleine)", fontWeight: 600 }}>{q.conjugaison}</span>{" "}
+              <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>(solution)</span>
             </p>
           )}
         </>
@@ -131,9 +131,9 @@ export default function ExamenHardCopieDetailScreen() {
 
       {q.type === "quizz" && (
         <>
-          <p style={{ color: "var(--text)", margin: "1em 0 0" }}>{q.french}</p>
+          <p style={{ color: "var(--textPrimary)", margin: "1em 0 0" }}>{q.french}</p>
           <QuizzBubbles options={q.options} correctKey={q.key} selectedKey={answer.selected_key} disabled />
-          <p style={{ fontWeight: 600, color: answer.selected_key === q.key ? "var(--success)" : "var(--danger)" }}>
+          <p style={{ fontWeight: 600, color: answer.selected_key === q.key ? "var(--validationPleine)" : "var(--annulationPleine)" }}>
             {answer.selected_key === q.key ? "Correct" : "Incorrect"}
           </p>
         </>
@@ -141,14 +141,14 @@ export default function ExamenHardCopieDetailScreen() {
 
       {q.type === "traduction" && (
         <>
-          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: "1em 0 0", fontSize: "0.96em" }}>
+          <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: "1em 0 0", fontSize: "0.96em" }}>
             {q.direction === "hebreu" ? q.french : q.hebrew}
           </p>
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.translation}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
           </p>
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
           <StarRating rating={answer.score} />
           {answer.observations?.length > 0 && (
             <ul
@@ -157,7 +157,7 @@ export default function ExamenHardCopieDetailScreen() {
                 paddingInlineStart: "1.2em",
                 fontStyle: "italic",
                 fontSize: "0.85em",
-                color: "var(--textMuted)",
+                color: "var(--textSecondary)",
                 textAlign: "start",
               }}
             >
@@ -174,10 +174,10 @@ export default function ExamenHardCopieDetailScreen() {
           <p className="hebrew-large">{q.question_hebrew}</p>
           <AudioPlayer src={mediaUrl(q.voicepath)} barMaxWidth={58.5} toggleSize={27} />
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.verbatim}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
           </p>
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
               <tr>
@@ -189,7 +189,7 @@ export default function ExamenHardCopieDetailScreen() {
               {answer.errors_rating_completeness?.length > 0 && (
                 <tr>
                   <td colSpan={2} style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
-                    <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontStyle: "italic", fontSize: "0.85em", color: "var(--textMuted)" }}>
+                    <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontStyle: "italic", fontSize: "0.85em", color: "var(--textSecondary)" }}>
                       {answer.errors_rating_completeness.map((e, i) => (
                         <li key={i}>{renderWithHebrewHighlight(e)}</li>
                       ))}
@@ -206,7 +206,7 @@ export default function ExamenHardCopieDetailScreen() {
               {answer.errors_rating_hebrew?.length > 0 && (
                 <tr>
                   <td colSpan={2} style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
-                    <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontStyle: "italic", fontSize: "0.85em", color: "var(--textMuted)" }}>
+                    <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontStyle: "italic", fontSize: "0.85em", color: "var(--textSecondary)" }}>
                       {answer.errors_rating_hebrew.map((e, i) => (
                         <li key={i}>{renderWithHebrewHighlight(e)}</li>
                       ))}
@@ -223,7 +223,7 @@ export default function ExamenHardCopieDetailScreen() {
               {answer.errors_rating_comprehension?.length > 0 && (
                 <tr>
                   <td colSpan={2} style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
-                    <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontStyle: "italic", fontSize: "0.85em", color: "var(--textMuted)" }}>
+                    <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontStyle: "italic", fontSize: "0.85em", color: "var(--textSecondary)" }}>
                       {answer.errors_rating_comprehension.map((e, i) => (
                         <li key={i}>{renderWithHebrewHighlight(e)}</li>
                       ))}

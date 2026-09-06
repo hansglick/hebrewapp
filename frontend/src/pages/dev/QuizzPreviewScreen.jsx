@@ -26,8 +26,8 @@ export default function QuizzPreviewScreen() {
     <section className="screen">
       <h2 style={{ margin: 0 }}>Révisions (référence)</h2>
       <div style={{ zoom: 1.6, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-        <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{FAKE_QUIZZ.french}</p>
-        <hr style={{ width: 200, border: "none", borderTop: "1px solid var(--border)", margin: 0 }} />
+        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{FAKE_QUIZZ.french}</p>
+        <hr style={{ width: 200, border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
         <QuizzBubbles
           options={FAKE_QUIZZ.options}
           correctKey={FAKE_QUIZZ.key}
@@ -37,11 +37,11 @@ export default function QuizzPreviewScreen() {
         />
       </div>
 
-      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "2px dashed var(--border)", margin: "24px 0" }} />
+      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "2px dashed var(--cardBorder)", margin: "24px 0" }} />
 
       <h2 style={{ margin: 0 }}>Examen écrit (après correction)</h2>
       <div style={{ zoom: 1.6, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-        <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{FAKE_QUIZZ.french}</p>
+        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{FAKE_QUIZZ.french}</p>
         <QuizzBubbles
           options={FAKE_QUIZZ.options}
           correctKey={FAKE_QUIZZ.key}

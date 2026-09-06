@@ -49,14 +49,14 @@ export default function NotificationsScreen() {
               className="card"
               style={{
                 textAlign: "start",
-                ...(n.pinned ? { border: "2px solid var(--danger)" } : {}),
+                ...(n.pinned ? { border: "2px solid var(--annulationPleine)" } : {}),
               }}
             >
               <p
                 style={{
                   margin: 0,
                   fontWeight: n.pinned || !n.read ? 700 : 400,
-                  color: n.pinned ? "var(--danger)" : "var(--text)",
+                  color: n.pinned ? "var(--annulationPleine)" : "var(--textPrimary)",
                 }}
               >
                 {n.message}
@@ -89,7 +89,7 @@ export default function NotificationsScreen() {
                     </button>
                   )}
                   {retryState[n.id] && retryState[n.id] !== "sending" && retryState[n.id] !== "queued" && (
-                    <p className="muted" style={{ margin: "6px 0 0", color: "var(--danger)", fontSize: "0.85em" }}>
+                    <p className="muted" style={{ margin: "6px 0 0", color: "var(--annulationPleine)", fontSize: "0.85em" }}>
                       {retryState[n.id]}
                     </p>
                   )}

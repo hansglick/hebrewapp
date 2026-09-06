@@ -212,7 +212,7 @@ export default function RevisionScreen() {
   if (loadError) {
     return (
       <section className="screen">
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {loadError}
         </p>
       </section>
@@ -232,7 +232,7 @@ export default function RevisionScreen() {
         <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
           <MicrophoneIcon
             size={48}
-            badgeColor={running ? "var(--danger)" : "var(--success)"}
+            badgeColor={running ? "var(--annulationPleine)" : "var(--validationPleine)"}
             pulsing={running}
             onClick={running ? stop : start}
           />
@@ -244,7 +244,7 @@ export default function RevisionScreen() {
             style={{
               margin: "8px 0 0",
               fontSize: "0.8em",
-              color: isErrorStatus(status) ? "var(--danger)" : undefined,
+              color: isErrorStatus(status) ? "var(--annulationPleine)" : undefined,
             }}
           >
             {status}
@@ -259,7 +259,7 @@ export default function RevisionScreen() {
             marginTop: 12,
             textAlign: "left",
             direction: "ltr",
-            background: running ? "var(--danger)" : "var(--success)",
+            background: running ? "var(--annulationPleine)" : "var(--validationPleine)",
             color: "#fff",
             borderRadius: 8,
             padding: "10px 14px",
@@ -276,13 +276,13 @@ export default function RevisionScreen() {
         <div
           style={{
             marginTop: 12,
-            border: "1px solid var(--border)",
+            border: "1px solid var(--cardBorder)",
             background: "var(--bg)",
             borderRadius: 8,
             padding: "12px 14px",
             minHeight: 60,
             fontSize: "0.85em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
             whiteSpace: "pre-wrap",
           }}
         >

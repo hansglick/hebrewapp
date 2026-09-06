@@ -27,7 +27,7 @@ function Pastilles({ evaluations }) {
             width: 10,
             height: 10,
             borderRadius: "50%",
-            background: "var(--border)",
+            background: "var(--cardBorder)",
           }}
         />
       ))}
@@ -39,7 +39,7 @@ function Pastilles({ evaluations }) {
             width: 10,
             height: 10,
             borderRadius: "50%",
-            background: success ? "var(--success)" : "var(--danger)",
+            background: success ? "var(--validationPleine)" : "var(--annulationPleine)",
           }}
         />
       ))}
@@ -47,8 +47,8 @@ function Pastilles({ evaluations }) {
   );
 }
 
-const th = { textAlign: "start", padding: "4px 8px", borderBottom: "1px solid var(--border)" };
-const td = { padding: "6px 8px", borderBottom: "1px solid var(--border)" };
+const th = { textAlign: "start", padding: "4px 8px", borderBottom: "1px solid var(--cardBorder)" };
+const td = { padding: "6px 8px", borderBottom: "1px solid var(--cardBorder)" };
 
 function DifficultyTable({ rows, showReadinessColumn }) {
   return (
@@ -71,7 +71,7 @@ function DifficultyTable({ rows, showReadinessColumn }) {
               {row.verb ? (
                 <>
                   {row.verb}{" "}
-                  <span style={{ fontStyle: "italic", fontSize: "0.85em", color: "var(--textMuted)" }}>
+                  <span style={{ fontStyle: "italic", fontSize: "0.85em", color: "var(--textSecondary)" }}>
                     ({row.temps}, {row.personne})
                   </span>
                 </>

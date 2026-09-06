@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { extractVerbatim } from "../api/gemini";
 import { blobToWavBlob } from "../utils/audioEncode";
 import { MicrophoneIcon } from "./MicrophoneIcon";
+import { AudioTrackFooter, PLAYBACK_RATE_CYCLE } from "./AudioTrackFooter";
 import "./VoicePrefill.css";
 
 // Icônes UI statiques servies depuis frontend/public/ (pas via mediaUrl/le
@@ -28,6 +29,8 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
   const [voiceError, setVoiceError] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [rate, setRate] = useState(1);
   const voiceRecorderRef = useRef(null);
   const voiceChunksRef = useRef([]);
   const audioRef = useRef(null);
@@ -38,7 +41,13 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
   useEffect(() => {
     setIsPlaying(false);
     setProgress(0);
+    setDuration(0);
+    setRate(1);
   }, [voiceUrl]);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.playbackRate = rate;
+  }, [rate]);
 
   // Boucle requestAnimationFrame pour une progression fluide, cf.
   // AudioProgressBlock (onTimeUpdate est trop peu fréquent).
@@ -129,7 +138,7 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
       <div className="voice-prefill-row">
         <MicrophoneIcon
           size={ICON_SIZE}
-          badgeColor="var(--danger)"
+          badgeColor={voiceState === "recording" ? "var(--annulationPleine)" : "var(--validationPleine)"}
           pulsing={voiceState === "recording"}
           onClick={handleMicClick}
           ariaLabel={
@@ -191,12 +200,22 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
           ref={audioRef}
           src={voiceUrl ?? undefined}
           preload="metadata"
+          onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => {
             setIsPlaying(false);
             setProgress(1);
           }}
+        />
+      </div>
+
+      <div className={inertClass.trim()}>
+        <AudioTrackFooter
+          currentTime={progress * duration}
+          duration={duration}
+          rate={rate}
+          onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
         />
       </div>
 
@@ -211,7 +230,7 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
       )}
 
       {voiceError && (
-        <p className="muted" style={{ color: "var(--danger)", fontSize: "0.75em", margin: 0 }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)", fontSize: "0.75em", margin: 0 }}>
           {voiceError}
         </p>
       )}

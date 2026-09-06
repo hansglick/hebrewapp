@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getBinyan, getRacine } from "../api/content";
 import { speak } from "../utils/speech";
+import { BINYAN_COLORS } from "../config/appConfig";
 import { SpeakerIcon } from "./SpeakerIcon";
 import { RacineCard } from "./RacineCard";
 import "../pages/screens.css";
@@ -60,7 +61,7 @@ export function VerbeCard({ verbe }) {
           className="speak-btn hebrew"
           style={{
             fontSize: "0.7em",
-            color: "#64748b",
+            color: "var(--accent)",
             fontWeight: 700,
             padding: 0,
             border: "none",
@@ -71,13 +72,13 @@ export function VerbeCard({ verbe }) {
         >
           ש
         </button>
-        <span style={{ color: "var(--textMuted)", fontWeight: 400, fontSize: "0.7em" }}>|</span>
+        <span style={{ color: "var(--cardBorder)", fontWeight: 400, fontSize: "0.7em" }}>|</span>
         <button
           type="button"
           className="speak-btn hebrew"
           style={{
             fontSize: "0.7em",
-            color: verbe.binyan_color,
+            color: BINYAN_COLORS[verbe.binyan],
             fontWeight: 700,
             padding: 0,
             border: "none",
@@ -90,7 +91,7 @@ export function VerbeCard({ verbe }) {
         </button>
         <span
           className="binyan-pill"
-          style={{ backgroundColor: verbe.binyan_color, cursor: "pointer", margin: 0 }}
+          style={{ backgroundColor: BINYAN_COLORS[verbe.binyan], cursor: "pointer", margin: 0 }}
           onClick={toggleBinyanInline}
         />
         <span className="hebrew">{verbe.pure}</span>
@@ -100,14 +101,14 @@ export function VerbeCard({ verbe }) {
           style={{ display: "inline-flex", padding: 0, border: "none", background: "none", appearance: "none" }}
           onClick={() => speak(verbe.pure)}
         >
-          <SpeakerIcon color="#64748b" size={16} />
+          <SpeakerIcon color="var(--speakerIcon)" size={16} />
         </button>
         <span
           style={{
             fontStyle: "italic",
             fontWeight: 400,
             fontSize: "0.55em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
           }}
         >
           {capitalize(verbe.traduction)}
@@ -116,7 +117,7 @@ export function VerbeCard({ verbe }) {
 
       {binyanDetails && (
         <div className="card" style={{ textAlign: "center", marginTop: 12 }}>
-          <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
+          <p className="hebrew-large" style={{ margin: 0, color: BINYAN_COLORS[binyanDetails.text] }}>
             {binyanDetails.text}
           </p>
           <p className="muted" style={{ margin: "4px 0 0" }}>
@@ -135,7 +136,7 @@ export function VerbeCard({ verbe }) {
             className={temps === t.key ? "active" : ""}
             style={
               temps === t.key
-                ? { backgroundColor: verbe.binyan_color, borderColor: verbe.binyan_color }
+                ? { backgroundColor: BINYAN_COLORS[verbe.binyan], borderColor: BINYAN_COLORS[verbe.binyan] }
                 : undefined
             }
             onClick={() => setTemps(t.key)}
@@ -159,7 +160,7 @@ export function VerbeCard({ verbe }) {
                 className="hebrew-large"
                 style={{
                   margin: 0,
-                  color: "var(--text)",
+                  color: "var(--textPrimary)",
                   fontWeight: 600,
                   fontSize: "calc(var(--font-size-hebrew-large) * 0.7)",
                 }}

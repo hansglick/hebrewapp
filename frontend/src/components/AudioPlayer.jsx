@@ -1,15 +1,26 @@
 import { useEffect, useRef, useState } from "react";
+import { AudioTrackFooter, PLAYBACK_RATE_CYCLE } from "./AudioTrackFooter";
 import "./AudioPlayer.css";
 
 export function AudioPlayer({ src, barMaxWidth = 117, toggleSize = 36 }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [rate, setRate] = useState(1);
 
   useEffect(() => {
     setIsPlaying(false);
     setProgress(0);
+    setCurrentTime(0);
+    setDuration(0);
+    setRate(1);
   }, [src]);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.playbackRate = rate;
+  }, [rate]);
 
   function togglePlay() {
     const audio = audioRef.current;
@@ -28,29 +39,39 @@ export function AudioPlayer({ src, barMaxWidth = 117, toggleSize = 36 }) {
   }
 
   return (
-    <div className="audio-player" style={{ width: toggleSize + 10 + barMaxWidth }}>
-      <button
-        type="button"
-        className="audio-player-toggle"
-        style={{ width: toggleSize, height: toggleSize }}
-        onClick={togglePlay}
-        aria-label={isPlaying ? "Pause" : "Lecture"}
-      >
-        <span className={isPlaying ? "icon-pause" : "icon-play"} />
-      </button>
-      <div className="audio-player-bar" style={{ maxWidth: barMaxWidth }} onClick={handleSeek}>
-        <div className="audio-player-progress" style={{ width: `${progress * 100}%` }} />
+    <div style={{ width: toggleSize + 10 + barMaxWidth, flexShrink: 0 }}>
+      <div className="audio-player">
+        <button
+          type="button"
+          className="audio-player-toggle"
+          style={{ width: toggleSize, height: toggleSize }}
+          onClick={togglePlay}
+          aria-label={isPlaying ? "Pause" : "Lecture"}
+        >
+          <span className={isPlaying ? "icon-pause" : "icon-play"} />
+        </button>
+        <div className="audio-player-bar" style={{ maxWidth: barMaxWidth }} onClick={handleSeek}>
+          <div className="audio-player-progress" style={{ width: `${progress * 100}%` }} />
+        </div>
+        <audio
+          ref={audioRef}
+          src={src}
+          onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+          onTimeUpdate={(e) => {
+            const audio = e.currentTarget;
+            setCurrentTime(audio.currentTime);
+            if (audio.duration) setProgress(audio.currentTime / audio.duration);
+          }}
+        />
       </div>
-      <audio
-        ref={audioRef}
-        src={src}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
-        onTimeUpdate={(e) => {
-          const { currentTime, duration } = e.currentTarget;
-          if (duration) setProgress(currentTime / duration);
-        }}
+      <AudioTrackFooter
+        currentTime={currentTime}
+        duration={duration}
+        rate={rate}
+        onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
       />
     </div>
   );

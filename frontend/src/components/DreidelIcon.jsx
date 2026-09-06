@@ -1,9 +1,9 @@
 // Icône "Culture" (accès à l'écran Fun) — dreidel.png (backend/results/logos)
 // est une silhouette monochrome avec un vrai canal alpha : on la recolore
 // dynamiquement via un masque CSS plutôt que d'utiliser <img>, pour qu'elle
-// suive automatiquement le thème (var(--text)) en light comme en dark,
+// suive automatiquement le thème (var(--textPrimary)) en light comme en dark,
 // quelle que soit la couleur d'origine du fichier.
-export function DreidelIcon({ size = 20, color = "var(--text)" }) {
+export function DreidelIcon({ size = 20, color = "var(--textPrimary)" }) {
   return (
     <span
       aria-hidden="true"

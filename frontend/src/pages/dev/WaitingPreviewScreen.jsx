@@ -10,6 +10,7 @@ export default function WaitingPreviewScreen() {
   return (
     <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)" }}>
       <WaitingVideo
+        allowChansons
         label={
           <>
             Patientez quelques instants, votre professeur évalue votre copie

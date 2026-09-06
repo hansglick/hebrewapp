@@ -132,7 +132,7 @@ function setupMobileCounter(target) {
   badge.textContent = "+0";
   badge.style.cssText = `
     position:fixed; left:${rect.left + rect.width / 2}px; top:${rect.top - 8}px; transform:translate(-50%,-100%);
-    font-weight:700; color:#f5b301; font-size:14px; background:#16171d; border:1px solid #a9d6f5;
+    font-weight:700; color:#f5b301; font-size:14px; background:var(--chromeBg); border:1px solid var(--logoAccent);
     border-radius:999px; padding:2px 9px; pointer-events:none; z-index:996; white-space:nowrap;
   `;
   document.body.appendChild(badge);

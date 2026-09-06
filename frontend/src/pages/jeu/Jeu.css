@@ -11,9 +11,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  border: 1px solid var(--cardBorder);
+  background: var(--cardBg);
+  color: var(--textPrimary);
   font: inherit;
   font-weight: 600;
   padding: 14px 8px;
@@ -39,8 +39,8 @@
   width: 100%;
   max-width: 700px;
   margin-top: 16px;
-  background: radial-gradient(120% 100% at 50% 0%, var(--surface) 0%, var(--bg) 78%);
-  border: 1px solid var(--border);
+  background: radial-gradient(120% 100% at 50% 0%, var(--cardBg) 0%, var(--bg) 78%);
+  border: 1px solid var(--cardBorder);
   border-radius: 14px;
   min-height: 420px;
   display: flex;
@@ -208,9 +208,9 @@
   z-index: 50;
   font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
   font-size: 0.95rem;
-  color: var(--text);
-  background: color-mix(in srgb, var(--surface) 85%, transparent);
-  border: 1px solid var(--border);
+  color: var(--textPrimary);
+  background: color-mix(in srgb, var(--cardBg) 85%, transparent);
+  border: 1px solid var(--cardBorder);
   padding: 6px 16px;
   border-radius: 999px;
   white-space: nowrap;
@@ -226,7 +226,7 @@
   align-items: center;
 }
 .cab-empty {
-  color: var(--textMuted);
+  color: var(--textSecondary);
   font-size: 0.85em;
   text-align: center;
   padding: 24px 0;
@@ -249,9 +249,9 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  border: 1px solid var(--cardBorder);
+  background: var(--cardBg);
+  color: var(--textPrimary);
   font-size: 1.2rem;
   cursor: pointer;
   display: flex;
@@ -302,8 +302,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
+  background-color: var(--cardBg);
+  border: 1px solid var(--cardBorder);
   box-shadow: 0 20px 46px -16px rgba(0, 0, 0, 0.55);
   transition: box-shadow 0.4s ease;
 }
@@ -463,7 +463,7 @@
   width: max-content;
   max-width: 90%;
   text-align: center;
-  color: var(--textMuted);
+  color: var(--textSecondary);
   font-size: 0.78em;
   margin: 0;
 }
@@ -477,8 +477,8 @@
   width: 524px;
   max-width: calc(100% - 24px);
   box-sizing: border-box;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--cardBg);
+  border: 1px solid var(--cardBorder);
   border-radius: 16px;
   padding: 20px 46px 22px 22px;
   box-shadow: 0 30px 70px -18px rgba(0, 0, 0, 0.5);
@@ -503,48 +503,48 @@
   align-items: center;
   justify-content: center;
   background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--textMuted);
+  border: 1px solid var(--cardBorder);
+  color: var(--textSecondary);
   font-size: 0.85rem;
   line-height: 1;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
 .cab-fiche-close:hover {
-  color: var(--text);
+  color: var(--textPrimary);
 }
 .cab-fiche-hebreu {
   font-family: var(--font-hebrew);
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 2px;
-  color: var(--text);
+  color: var(--textPrimary);
   direction: rtl;
   text-align: right;
 }
 .cab-fiche-latin {
   font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
   font-size: 0.8rem;
-  color: var(--textMuted);
+  color: var(--textSecondary);
   margin: 0 0 12px;
   text-align: left;
 }
 .cab-fiche-apports {
   font-size: 0.88rem;
   line-height: 1.6;
-  color: var(--text);
+  color: var(--textPrimary);
   margin: 0;
   text-align: left;
 }
 .cab-fiche-loading,
 .cab-fiche-error {
-  color: var(--textMuted);
+  color: var(--textSecondary);
   font-size: 0.88rem;
   margin: 0;
   text-align: center;
 }
 .cab-fiche-error {
-  color: var(--danger);
+  color: var(--annulationPleine);
 }
 
 @media (max-width: 520px) {

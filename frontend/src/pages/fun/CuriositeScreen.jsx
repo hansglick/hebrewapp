@@ -125,7 +125,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
       className="speak-btn"
       onClick={() => speak(config.speakText ? config.speakText(item) : item[config.heroField])}
     >
-      <SpeakerIcon color="var(--text)" />
+      <SpeakerIcon color="var(--speakerIcon)" />
     </button>
   );
 
@@ -169,7 +169,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
                   {speakButton}
                 </div>
               )}
-              <hr className="curiosite-media-hr" style={{ border: "none", borderTop: "1px solid var(--border)", margin: "0 0 12px" }} />
+              <hr className="curiosite-media-hr" style={{ border: "none", borderTop: "1px solid var(--cardBorder)", margin: "0 0 12px" }} />
             </>
           )}
         </div>
@@ -189,7 +189,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
                   textAlign: "left",
                   fontSize: "0.8em",
                   fontStyle: "italic",
-                  color: "var(--textMuted)",
+                  color: "var(--textSecondary)",
                 }}
               >
                 {config.referenceValue(item)}
@@ -216,7 +216,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
             </div>
           )}
 
-          <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "12px 0 0" }} />
+          <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0 0" }} />
 
           {showDetails && (
             <ul
@@ -225,7 +225,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
                 paddingInlineStart: "1.2em",
                 textAlign: "left",
                 fontSize: "0.8em",
-                color: "var(--textMuted)",
+                color: "var(--textSecondary)",
               }}
             >
               {config.bullets.map((bullet) => (
@@ -235,7 +235,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
                       fontStyle: bullet.emphasis ? "normal" : "italic",
                       fontWeight: bullet.emphasis ? "bold" : undefined,
                       fontSize: "0.85em",
-                      color: "var(--text)",
+                      color: "var(--textPrimary)",
                     }}
                   >
                     {bullet.label} :

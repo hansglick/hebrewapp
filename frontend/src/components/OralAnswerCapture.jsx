@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AudioProgressBlock } from "./AudioProgressBlock";
-import { LabeledTile } from "./LabeledTile";
+import { SectionTitle } from "./QuoteBlock";
 import { MicrophoneIcon } from "./MicrophoneIcon";
+import { AudioTrackFooter, PLAYBACK_RATE_CYCLE } from "./AudioTrackFooter";
 import { ttsUrl } from "../utils/speech";
 import "./AudioProgressBlock.css";
 
@@ -9,6 +10,39 @@ import "./AudioProgressBlock.css";
 const LECTURE_ICON_URL = "/lecture.png";
 const PAUSE_ICON_URL = "/pause.png";
 const VOICE_ICON_URL = "/voice.png";
+
+// Taille de la pastille numérotée : 20 -> 25 (+25%, cf. demande explicite du
+// user). Constante partagée avec le calcul d'alignement sur l'axe du logo
+// (cf. titleAxisStyle) pour que les deux restent synchronisés.
+const STEP_BADGE_SIZE = 25;
+
+// Pastille numérotée avant le titre de chaque bloc audio, pour indiquer
+// clairement les étapes du processus (1: Écoute le contenu, 2: Écoute la
+// question, 3: Enregistre ta réponse) — couleurs fixes (pas des tokens de
+// thème), cohérent avec le fond blanc fixe des panneaux audio eux-mêmes,
+// cf. demande explicite du user.
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
 
 // Les 3 briques "capture de réponse orale" (Contenu / Question / Réponse),
 // communes aux écrans qui font répondre oralement à une question sur un
@@ -44,12 +78,20 @@ export function OralAnswerCapture({
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [rate, setRate] = useState(1);
   const hasRecording = !!audioBlob && !isConverting;
 
   useEffect(() => {
     setIsPlaying(false);
     setProgress(0);
+    setDuration(0);
+    setRate(1);
   }, [audioUrl]);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.playbackRate = rate;
+  }, [rate]);
 
   useEffect(() => {
     if (!isPlaying) return undefined;
@@ -85,79 +127,143 @@ export function OralAnswerCapture({
 
   const inertClass = hasRecording ? "" : " audio-progress-block-inert";
 
-  // Même format/taille/espacement que révisions/traduction (toggle
-  // "Teacher") : pas de largeur particulière (LabeledTile fixe déjà
-  // width:100%/maxWidth:320 et l'espacement entre tuiles), bordure + ombre
-  // directement sur chaque LabeledTile plutôt que sur le contenu, cf.
-  // demande explicite du user.
+  // Plus de mini tuile (étiquette posée sur la bordure) : un titre en gras
+  // au-dessus de l'encadré (cf. SectionTitle, même format que "Traduis"/
+  // "Réponse" des questions écrites), dans la couleur de fond de l'ancienne
+  // mini tuile (var(--tileAccent)). Plus de bordure sur l'encadré lui-même,
+  // fond blanc (cf. .audio-progress-block) — cf. demande explicite du user.
+  // Axe (centre) du logo lecture/micro juste en dessous : padding-left du
+  // panneau (14) + moitié de la largeur du bouton rond (64/2=32), cf.
+  // .audio-progress-block/-toggle. C'est la PASTILLE numérotée (premier
+  // élément du titre, cf. StepBadge) qui doit tomber sur cet axe, pas le
+  // titre entier — marginLeft = axe - moitié de la largeur de la pastille
+  // (20/2=10), cf. demande explicite du user.
+  const TITLE_AXIS_OFFSET = 46;
+  const titleAxisStyle = { marginLeft: TITLE_AXIS_OFFSET - STEP_BADGE_SIZE / 2 };
+
+  // Espace entre blocs +20% (40 -> 48), réparti pour moitié de chaque côté
+  // du trait séparateur (cf. dividerStyle) plutôt que d'ajouter sa hauteur
+  // par-dessus, pour que l'écart total entre deux blocs reste bien 48 et
+  // que le trait tombe à mi-chemin — cf. demande explicite du user.
+  const BLOCK_GAP = 48;
+  const HALF_GAP = BLOCK_GAP / 2;
+  const dividerStyle = {
+    width: "100%",
+    maxWidth: 320,
+    height: 1,
+    background: "var(--cardBorder)",
+    marginTop: HALF_GAP,
+  };
+
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <LabeledTile label="Contenu" border borderColor="var(--border)" marginTop={40}>
+      <div style={{ width: "100%", maxWidth: 320, marginTop: BLOCK_GAP }}>
+        <div style={titleAxisStyle}>
+          <SectionTitle fontSize="0.84em">
+            <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+            Ecoute le contenu
+          </SectionTitle>
+        </div>
         <AudioProgressBlock src={contentSrc} />
-      </LabeledTile>
-      <LabeledTile label="Question" border borderColor="var(--border)" marginTop={40}>
+      </div>
+
+      <div style={dividerStyle} />
+      <div style={{ width: "100%", maxWidth: 320, marginTop: HALF_GAP }}>
+        <div style={titleAxisStyle}>
+          <SectionTitle fontSize="0.84em">
+            <StepBadge number={2} background="#dbeafe" color="#1d4ed8" />
+            Ecoute la question
+          </SectionTitle>
+        </div>
         <AudioProgressBlock src={questionSrc} />
-      </LabeledTile>
+      </div>
 
       {showRecorder && (
-        <LabeledTile label="Réponse" border borderColor="var(--border)" marginTop={40}>
-          <div className="audio-progress-block">
-            <MicrophoneIcon
-              size={64}
-              badgeColor="var(--danger)"
-              pulsing={isRecording}
-              onClick={isRecording ? onStop : onStart}
-              ariaLabel={
-                isRecording ? "Arrêter l'enregistrement" : hasRecording ? "Réenregistrer" : "Enregistrer une réponse"
-              }
-            />
-
-            <button
-              type="button"
-              className={`audio-progress-block-toggle${inertClass}`}
-              onClick={hasRecording ? togglePlay : undefined}
-              disabled={!hasRecording}
-              aria-label={isPlaying ? "Pause" : "Lecture"}
-            >
-              <span
-                className="audio-progress-block-icon"
-                style={{
-                  WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
-                  maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
-                }}
-              />
-            </button>
-
-            <div className={`audio-progress-block-wave${inertClass}`} onClick={hasRecording ? handleSeek : undefined}>
-              <span
-                className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
-                style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
-              />
-              <span
-                className="audio-progress-block-wave-icon audio-progress-block-wave-fill"
-                style={{
-                  WebkitMaskImage: `url(${VOICE_ICON_URL})`,
-                  maskImage: `url(${VOICE_ICON_URL})`,
-                  clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-                  WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-                }}
-              />
+        <>
+          <div style={dividerStyle} />
+          <div style={{ width: "100%", maxWidth: 320, marginTop: HALF_GAP }}>
+            <div style={titleAxisStyle}>
+              <SectionTitle fontSize="0.84em">
+                <StepBadge number={3} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                Enregistre ta réponse
+              </SectionTitle>
             </div>
+            <div className="audio-progress-block-panel">
+              <div className="audio-progress-block">
+                <MicrophoneIcon
+                  size={64}
+                  badgeColor={isRecording ? "var(--annulationPleine)" : "var(--validationPleine)"}
+                  pulsing={isRecording}
+                  onClick={isRecording ? onStop : onStart}
+                  ariaLabel={
+                    isRecording
+                      ? "Arrêter l'enregistrement"
+                      : hasRecording
+                      ? "Réenregistrer"
+                      : "Enregistrer une réponse"
+                  }
+                />
 
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <audio
-              ref={audioRef}
-              src={audioUrl ?? undefined}
-              preload="metadata"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onEnded={() => {
-                setIsPlaying(false);
-                setProgress(1);
-              }}
-            />
+                <button
+                  type="button"
+                  className={`audio-progress-block-toggle${inertClass}`}
+                  onClick={hasRecording ? togglePlay : undefined}
+                  disabled={!hasRecording}
+                  aria-label={isPlaying ? "Pause" : "Lecture"}
+                >
+                  <span
+                    className="audio-progress-block-icon"
+                    style={{
+                      WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+                      maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+                    }}
+                  />
+                </button>
+
+                <div
+                  className={`audio-progress-block-wave${inertClass}`}
+                  onClick={hasRecording ? handleSeek : undefined}
+                >
+                  <span
+                    className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
+                    style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
+                  />
+                  <span
+                    className="audio-progress-block-wave-icon audio-progress-block-wave-fill"
+                    style={{
+                      WebkitMaskImage: `url(${VOICE_ICON_URL})`,
+                      maskImage: `url(${VOICE_ICON_URL})`,
+                      clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                      WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                    }}
+                  />
+                </div>
+
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <audio
+                  ref={audioRef}
+                  src={audioUrl ?? undefined}
+                  preload="metadata"
+                  onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  onEnded={() => {
+                    setIsPlaying(false);
+                    setProgress(1);
+                  }}
+                />
+              </div>
+              <div className={inertClass.trim()}>
+                <AudioTrackFooter
+                  currentTime={progress * duration}
+                  duration={duration}
+                  rate={rate}
+                  onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
+                />
+              </div>
+            </div>
           </div>
-        </LabeledTile>
+        </>
       )}
 
       {showRecorder && isConverting && (
@@ -175,7 +281,7 @@ export function OralAnswerCapture({
         <button
           type="button"
           className="exam-tile green"
-          style={{ marginTop: 40, cursor: hasRecording ? "pointer" : "default" }}
+          style={{ marginTop: 23.8, cursor: hasRecording ? "pointer" : "default" }}
           disabled={!hasRecording}
           onClick={onEnvoyer}
         >

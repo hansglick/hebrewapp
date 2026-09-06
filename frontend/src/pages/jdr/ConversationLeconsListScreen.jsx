@@ -58,7 +58,7 @@ export default function ConversationLeconsListScreen() {
                     </span>
                     <span>
                       <strong>Mission :</strong>{" "}
-                      <em style={{ color: "var(--textMuted)" }}>{jdrInfo.objectif_etudiant}</em>
+                      <em style={{ color: "var(--textSecondary)" }}>{jdrInfo.objectif_etudiant}</em>
                     </span>
                   </div>
                 )}

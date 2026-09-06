@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { AudioTrackFooter, PLAYBACK_RATE_CYCLE } from "./AudioTrackFooter";
 import "./AudioProgressBlock.css";
 
 // Icônes UI statiques servies depuis frontend/public/ (pas via mediaUrl/le
@@ -22,11 +23,19 @@ export function AudioProgressBlock({ src }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [rate, setRate] = useState(1);
 
   useEffect(() => {
     setIsPlaying(false);
     setProgress(0);
+    setDuration(0);
+    setRate(1);
   }, [src]);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.playbackRate = rate;
+  }, [rate]);
 
   // onTimeUpdate (utilisé initialement) ne se déclenche que ~4x/seconde
   // selon les navigateurs — trop peu fréquent pour un remplissage fluide,
@@ -69,60 +78,69 @@ export function AudioProgressBlock({ src }) {
   }
 
   return (
-    <div className="audio-progress-block">
-      <div className="audio-progress-block-row">
-        <button
-          type="button"
-          className="audio-progress-block-toggle"
-          onClick={togglePlay}
-          aria-label={isPlaying ? "Pause" : "Lecture"}
-        >
-          {/* pause.png tant que la piste est en cours de lecture, lecture.png
-              sinon — cf. demande explicite du user. */}
-          <span
-            className="audio-progress-block-icon"
-            style={{
-              WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
-              maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
-            }}
-          />
-        </button>
-        <div className="audio-progress-block-wave" onClick={handleSeek}>
-          <span
-            className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
-            style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
-          />
-          {/* Même image que le calque gris du dessous, révélée de gauche à
-              droite via clip-path plutôt qu'un width+overflow (qui aurait
-              nécessité que ce calque connaisse la largeur du conteneur
-              grand-parent pour ne pas être écrasé plutôt que rogné). */}
-          <span
-            className="audio-progress-block-wave-icon audio-progress-block-wave-fill"
-            style={{
-              WebkitMaskImage: `url(${VOICE_ICON_URL})`,
-              maskImage: `url(${VOICE_ICON_URL})`,
-              clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-              WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-            }}
-          />
+    <div className="audio-progress-block-panel">
+      <div className="audio-progress-block">
+        <div className="audio-progress-block-row">
+          <button
+            type="button"
+            className="audio-progress-block-toggle"
+            onClick={togglePlay}
+            aria-label={isPlaying ? "Pause" : "Lecture"}
+          >
+            {/* pause.png tant que la piste est en cours de lecture, lecture.png
+                sinon — cf. demande explicite du user. */}
+            <span
+              className="audio-progress-block-icon"
+              style={{
+                WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+                maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+              }}
+            />
+          </button>
+          <div className="audio-progress-block-wave" onClick={handleSeek}>
+            <span
+              className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
+              style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
+            />
+            {/* Même image que le calque gris du dessous, révélée de gauche à
+                droite via clip-path plutôt qu'un width+overflow (qui aurait
+                nécessité que ce calque connaisse la largeur du conteneur
+                grand-parent pour ne pas être écrasé plutôt que rogné). */}
+            <span
+              className="audio-progress-block-wave-icon audio-progress-block-wave-fill"
+              style={{
+                WebkitMaskImage: `url(${VOICE_ICON_URL})`,
+                maskImage: `url(${VOICE_ICON_URL})`,
+                clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+              }}
+            />
+          </div>
         </div>
+        {/* preload="metadata" (par défaut, un <audio> ne charge rien tant
+            qu'on ne lance pas la lecture) : sans lui, audio.duration reste
+            inconnu et handleSeek abandonne silencieusement — un clic sur
+            l'onde avant la toute première lecture (ou après une pause,
+            selon le navigateur) ne faisait donc rien, cf. demande explicite
+            du user. */}
+        <audio
+          ref={audioRef}
+          src={src}
+          preload="metadata"
+          onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => {
+            setIsPlaying(false);
+            setProgress(1);
+          }}
+        />
       </div>
-      {/* preload="metadata" (par défaut, un <audio> ne charge rien tant
-          qu'on ne lance pas la lecture) : sans lui, audio.duration reste
-          inconnu et handleSeek abandonne silencieusement — un clic sur
-          l'onde avant la toute première lecture (ou après une pause,
-          selon le navigateur) ne faisait donc rien, cf. demande explicite
-          du user. */}
-      <audio
-        ref={audioRef}
-        src={src}
-        preload="metadata"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => {
-          setIsPlaying(false);
-          setProgress(1);
-        }}
+      <AudioTrackFooter
+        currentTime={progress * duration}
+        duration={duration}
+        rate={rate}
+        onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
       />
     </div>
   );

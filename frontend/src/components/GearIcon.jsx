@@ -6,9 +6,9 @@
 // forme (son canal alpha), la couleur vient de background, donc `color`
 // s'applique fidèlement quel que soit le contenu du fichier. #7dd3fc = même
 // bleu pastel que ShekelIcon/MagenDavidIcon dans le bandeau supérieur
-// (Layout.jsx les fixe en dur à cette couleur, PAS var(--shekel) qui elle
+// (Layout.jsx les fixe en dur à cette couleur, PAS var(--logoAccent) qui elle
 // varie avec le thème — donc pas la bonne référence ici).
-export function GearIcon({ size = 20, color = "#7dd3fc" }) {
+export function GearIcon({ size = 20, color = "var(--logoAccent)" }) {
   const url = "/configuration.png";
   return (
     <span

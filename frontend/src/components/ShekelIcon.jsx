@@ -1,7 +1,7 @@
 // Icône "nouveau shekel" (₪) pour représenter les points gagnés — remplace
 // l'emoji 🪙 (pièce d'or), peu pertinent thématiquement pour une app d'hébreu.
 // Path Font Awesome Free (shekel-sign), même style que DictionaryIcon/ConfigIcon.
-export function ShekelIcon({ size = 20, color = "var(--shekel)", style }) {
+export function ShekelIcon({ size = 20, color = "var(--logoAccent)", style }) {
   return (
     <svg width={size} height={size} viewBox="0 0 640 640" aria-hidden="true" style={style}>
       <path

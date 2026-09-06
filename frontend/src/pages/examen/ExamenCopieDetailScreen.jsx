@@ -50,7 +50,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -92,7 +92,7 @@ export default function ExamenCopieDetailScreen() {
               <button
                 type="button"
                 className="link-btn"
-                style={{ textDecoration: "none", color: "var(--text)" }}
+                style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                 disabled={index === 0}
                 onClick={() => setIndex(index - 1)}
               >
@@ -106,7 +106,7 @@ export default function ExamenCopieDetailScreen() {
               <button
                 type="button"
                 className="link-btn"
-                style={{ textDecoration: "none", color: "var(--text)" }}
+                style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                 disabled={index === copie.questions.length - 1}
                 onClick={() => setIndex(index + 1)}
               >
@@ -122,21 +122,21 @@ export default function ExamenCopieDetailScreen() {
           width: "100%",
           maxWidth: 320,
           border: "none",
-          borderTop: "1px solid var(--border)",
+          borderTop: "1px solid var(--cardBorder)",
           margin: "1em 0 0",
         }}
       />
 
       {copie.format === "ecrit" && q.type === "quizz" ? (
         <>
-          <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>{q.french}</p>
+          <p style={{ color: "var(--textPrimary)", margin: "1em 0 0", fontSize: "0.96em" }}>{q.french}</p>
 
           <QuizzBubbles options={q.options} correctKey={q.key} selectedKey={answer.selected_key} disabled />
 
           <p
             style={{
               fontWeight: 600,
-              color: answer.selected_key === q.key ? "var(--success)" : "var(--danger)",
+              color: answer.selected_key === q.key ? "var(--validationPleine)" : "var(--annulationPleine)",
             }}
           >
             {answer.selected_key === q.key ? "Correct" : "Incorrect"}
@@ -144,16 +144,16 @@ export default function ExamenCopieDetailScreen() {
         </>
       ) : copie.format === "ecrit" ? (
         <>
-          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: "1em 0 0", fontSize: "0.96em" }}>
+          <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: "1em 0 0", fontSize: "0.96em" }}>
             {q.french}
           </p>
 
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.translation}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -177,7 +177,7 @@ export default function ExamenCopieDetailScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.observations.map((obs, i) => (
@@ -195,11 +195,11 @@ export default function ExamenCopieDetailScreen() {
           <AudioPlayer src={mediaUrl(q.voicepath)} barMaxWidth={58.5} toggleSize={27} />
 
           <p style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Rapport de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.rapport}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Rapport de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.rapport}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -221,7 +221,7 @@ export default function ExamenCopieDetailScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.justification_summary.map((e, i) => (
@@ -252,7 +252,7 @@ export default function ExamenCopieDetailScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.justification_details.map((e, i) => (
@@ -268,7 +268,7 @@ export default function ExamenCopieDetailScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--border)",
+                      borderTop: "1px solid var(--cardBorder)",
                       margin: 0,
                     }}
                   />
@@ -291,9 +291,9 @@ export default function ExamenCopieDetailScreen() {
                   style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
                 >
                   <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontSize: "0.75em" }}>
-                    <li style={{ color: "var(--text)" }}>
+                    <li style={{ color: "var(--textPrimary)" }}>
                       {computeReportNote(answer).comment}{" "}
-                      <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>
+                      <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
                         La note Résumé compte deux fois plus que la note Détails dans le calcul de la note globale.
                       </span>
                     </li>
@@ -309,11 +309,11 @@ export default function ExamenCopieDetailScreen() {
           <AudioPlayer src={mediaUrl(q.voicepath)} barMaxWidth={58.5} toggleSize={27} />
 
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.verbatim}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -337,7 +337,7 @@ export default function ExamenCopieDetailScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.errors_rating_completeness.map((e, i) => (
@@ -370,7 +370,7 @@ export default function ExamenCopieDetailScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.errors_rating_hebrew.map((e, i) => (
@@ -403,7 +403,7 @@ export default function ExamenCopieDetailScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.errors_rating_comprehension.map((e, i) => (
@@ -422,7 +422,7 @@ export default function ExamenCopieDetailScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--border)",
+                      borderTop: "1px solid var(--cardBorder)",
                       margin: 0,
                     }}
                   />
@@ -450,7 +450,7 @@ export default function ExamenCopieDetailScreen() {
                       paddingInlineStart: "1.2em",
                       fontStyle: "italic",
                       fontSize: "0.85em",
-                      color: "var(--textMuted)",
+                      color: "var(--textSecondary)",
                     }}
                   >
                     <li>{capitalize(computeGlobalNote(answer).comment)}</li>

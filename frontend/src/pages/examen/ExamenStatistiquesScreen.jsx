@@ -79,20 +79,20 @@ export default function ExamenStatistiquesScreen() {
       <div style={{ width: "100%", maxWidth: 480, position: "relative" }}>
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%">
           {/* Axes */}
-          <line x1={PAD_LEFT} y1={HEIGHT - PAD_BOTTOM} x2={WIDTH - PAD_RIGHT} y2={HEIGHT - PAD_BOTTOM} stroke="var(--border)" />
-          <line x1={PAD_LEFT} y1={PAD_TOP} x2={PAD_LEFT} y2={HEIGHT - PAD_BOTTOM} stroke="var(--border)" />
+          <line x1={PAD_LEFT} y1={HEIGHT - PAD_BOTTOM} x2={WIDTH - PAD_RIGHT} y2={HEIGHT - PAD_BOTTOM} stroke="var(--cardBorder)" />
+          <line x1={PAD_LEFT} y1={PAD_TOP} x2={PAD_LEFT} y2={HEIGHT - PAD_BOTTOM} stroke="var(--cardBorder)" />
 
           {/* Graduations min/max */}
-          <text x={PAD_LEFT} y={HEIGHT - PAD_BOTTOM + 16} fontSize="10" fill="var(--textMuted)" textAnchor="start">
+          <text x={PAD_LEFT} y={HEIGHT - PAD_BOTTOM + 16} fontSize="10" fill="var(--textSecondary)" textAnchor="start">
             {formatDate(minT)}
           </text>
-          <text x={WIDTH - PAD_RIGHT} y={HEIGHT - PAD_BOTTOM + 16} fontSize="10" fill="var(--textMuted)" textAnchor="end">
+          <text x={WIDTH - PAD_RIGHT} y={HEIGHT - PAD_BOTTOM + 16} fontSize="10" fill="var(--textSecondary)" textAnchor="end">
             {formatDate(maxT)}
           </text>
-          <text x={PAD_LEFT - 8} y={HEIGHT - PAD_BOTTOM} fontSize="10" fill="var(--textMuted)" textAnchor="end">
+          <text x={PAD_LEFT - 8} y={HEIGHT - PAD_BOTTOM} fontSize="10" fill="var(--textSecondary)" textAnchor="end">
             0
           </text>
-          <text x={PAD_LEFT - 8} y={PAD_TOP + 5} fontSize="10" fill="var(--textMuted)" textAnchor="end">
+          <text x={PAD_LEFT - 8} y={PAD_TOP + 5} fontSize="10" fill="var(--textSecondary)" textAnchor="end">
             {maxScore}
           </text>
 
@@ -101,7 +101,7 @@ export default function ExamenStatistiquesScreen() {
             x={(PAD_LEFT + (WIDTH - PAD_RIGHT)) / 2}
             y={HEIGHT - 6}
             fontSize="12"
-            fill="var(--textMuted)"
+            fill="var(--textSecondary)"
             textAnchor="middle"
           >
             Date
@@ -110,7 +110,7 @@ export default function ExamenStatistiquesScreen() {
             x={-HEIGHT / 2}
             y={14}
             fontSize="12"
-            fill="var(--textMuted)"
+            fill="var(--textSecondary)"
             textAnchor="middle"
             transform="rotate(-90)"
           >
@@ -146,7 +146,7 @@ export default function ExamenStatistiquesScreen() {
                 cx={cx}
                 cy={cy}
                 r="5"
-                fill={f.exam_type === "oral" ? "var(--danger)" : "var(--text)"}
+                fill={f.exam_type === "oral" ? "var(--annulationPleine)" : "var(--textPrimary)"}
                 style={{ cursor: "pointer" }}
                 onMouseEnter={() => showTooltip(cx, cy, `Échec ${label} — ${formatDate(f.date)}`)}
                 onMouseLeave={() => setHovered(null)}
@@ -162,7 +162,7 @@ export default function ExamenStatistiquesScreen() {
               left: `${hovered.leftPct}%`,
               top: `${hovered.topPct}%`,
               transform: "translate(-50%, -130%)",
-              background: "var(--text)",
+              background: "var(--textPrimary)",
               color: "var(--bg)",
               padding: "6px 10px",
               borderRadius: 8,
@@ -177,8 +177,8 @@ export default function ExamenStatistiquesScreen() {
         )}
       </div>
       <p className="muted" style={{ fontSize: "0.8em" }}>
-        <span style={{ color: "var(--text)" }}>●</span> échec écrit &nbsp;
-        <span style={{ color: "var(--danger)" }}>●</span> échec oral
+        <span style={{ color: "var(--textPrimary)" }}>●</span> échec écrit &nbsp;
+        <span style={{ color: "var(--annulationPleine)" }}>●</span> échec oral
       </p>
     </section>
   );

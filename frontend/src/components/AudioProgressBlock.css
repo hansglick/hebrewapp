@@ -1,8 +1,19 @@
-/* Chaque brique (Contenu/Question/Réponse) est désormais une tuile séparée,
-   entourée d'un <LabeledTile> (étiquette posée sur la bordure + ombre) —
-   fond blanc/bordure grise/ombre déjà portés par LabeledTile lui-même
-   (border/shadow), ce conteneur ne gère donc plus que la mise en page
-   interne, cf. demande explicite du user. */
+/* Chaque brique (Contenu/Question/Réponse) : plus de <LabeledTile> (mini
+   tuile + bordure), remplacé par un titre au-dessus (cf. OralAnswerCapture,
+   SectionTitle). Ce panneau porte l'habillage (fond blanc fixe — pas un
+   token de thème, cf. demande explicite du user — pas de bordure, coins
+   arrondis) et empile en colonne la rangée d'icônes (.audio-progress-block,
+   inchangée, toujours en ligne) et le pied compteur/vitesse (cf.
+   AudioTrackFooter) — un display:flex directement sur .audio-progress-block
+   aurait mis ce pied À CÔTÉ de la rangée plutôt qu'en dessous. */
+.audio-progress-block-panel {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+}
+
 .audio-progress-block {
   display: flex;
   align-items: center;
@@ -46,9 +57,9 @@
   display: block;
   width: 100%;
   height: 100%;
-  /* Bleu nuit, même teinte que la bordure/étiquette des tuiles (#1e3a5f,
+  /* Bleu nuit, même teinte que la bordure/étiquette des tuiles (var(--tileAccent),
      cf. LabeledTile.jsx) — cf. demande explicite du user. */
-  background-color: #1e3a5f;
+  background-color: var(--tileAccent);
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
@@ -80,7 +91,7 @@
 }
 
 .audio-progress-block-wave-bg {
-  background-color: var(--border);
+  background-color: var(--cardBorder);
 }
 
 .audio-progress-block-wave-fill {

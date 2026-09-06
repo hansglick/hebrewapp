@@ -16,6 +16,10 @@ export async function advanceOnboardingExam({ questionNumber, kind, result }) {
   return apiFetchJson("/api/onboarding/exam/advance", { question_number: questionNumber, kind, result });
 }
 
+export async function abandonOnboardingExam() {
+  return apiFetch("/api/onboarding/exam/abandon", { method: "POST" });
+}
+
 export async function skipOnboarding() {
   return apiFetch("/api/onboarding/skip", { method: "POST" });
 }

@@ -23,7 +23,7 @@ export default function PdfScreen() {
       <iframe
         title={`PDF leçon ${displayLessonNumber(code)}`}
         src={`${dataMediaUrl(`pdfs/${code}.pdf`)}#page=1`}
-        style={{ width: "100%", maxWidth: 800, height: "75vh", border: "1px solid var(--border)", borderRadius: 8 }}
+        style={{ width: "100%", maxWidth: 800, height: "75vh", border: "1px solid var(--cardBorder)", borderRadius: 8 }}
       />
     </section>
   );

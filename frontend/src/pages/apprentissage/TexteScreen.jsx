@@ -62,7 +62,7 @@ export default function TexteScreen() {
       <ActionHints {...swipeHandlers.hints} />
       <img
         className="screen-image texte-image"
-        style={{ maxHeight: 384, border: "2.68px solid var(--border)" }}
+        style={{ maxHeight: 384, border: "2.68px solid var(--cardBorder)" }}
         src={mediaUrl(texte.imagepath)}
         alt={texte.title}
         draggable={false}
@@ -91,7 +91,7 @@ export default function TexteScreen() {
         </div>
       </div>
 
-      <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: 0 }} />
+      <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
 
       {view === "hebrew" && (
         <div style={{ marginTop: "1.5em" }}>

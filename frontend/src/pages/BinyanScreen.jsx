@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getBinyans } from "../api/content";
+import { BINYAN_COLORS } from "../config/appConfig";
 import { useSwipe } from "../hooks/useSwipe";
 import { ActionHints } from "../components/ActionHints";
 import "./screens.css";
@@ -28,7 +29,7 @@ export default function BinyanScreen() {
       <ActionHints {...swipeHandlers.hints} />
       <h1 className="hebrew-large">
         {binyan.text}
-        <span className="binyan-pill" style={{ backgroundColor: binyan.color }} />
+        <span className="binyan-pill" style={{ backgroundColor: BINYAN_COLORS[binyan.text] }} />
       </h1>
       <p className="muted">{binyan.phonetique}</p>
       <p>{binyan.sens}</p>

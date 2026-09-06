@@ -3,18 +3,13 @@ import { loginAccount } from "../../api/auth";
 import { setIdentity } from "../../api/identity";
 import { sanitizePseudo } from "../../utils/pseudo";
 import HebrewInput from "../../components/HebrewInput";
-import RegisterScreen from "./RegisterScreen";
+import "./AuthScreens.css";
 
-export default function SignInScreen({ onSignedIn }) {
-  const [mode, setMode] = useState("signin"); // "signin" | "register"
+export default function SignInScreen({ onSignedIn, onBack }) {
   const [pseudo, setPseudo] = useState("");
   const [pin, setPin] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-
-  if (mode === "register") {
-    return <RegisterScreen onRegistered={onSignedIn} onBackToSignIn={() => setMode("signin")} />;
-  }
 
   async function handleSubmit() {
     const cleaned = pseudo.trim();
@@ -34,47 +29,34 @@ export default function SignInScreen({ onSignedIn }) {
 
   return (
     <section className="screen">
-      <h1>Connexion</h1>
-
       <p className="muted" style={{ fontSize: "0.85em", margin: 0 }}>
-        Ton pseudo (en hébreu)
+        Pseudo
       </p>
-      <HebrewInput value={pseudo} onChange={(v) => setPseudo(sanitizePseudo(v))} rows={1} placeholder="שם..." showVoicePrefill={false} />
+      <div className="auth-pseudo-input" style={{ width: "100%", maxWidth: 320 }}>
+        <HebrewInput value={pseudo} onChange={(v) => setPseudo(sanitizePseudo(v))} rows={1} placeholder="שם..." showVoicePrefill={false} />
+      </div>
 
       <p className="muted" style={{ fontSize: "0.85em", margin: "1em 0 0" }}>
-        Ton code
+        Password
       </p>
       <input
         type="password"
         inputMode="numeric"
+        className="auth-pin-input"
         value={pin}
         onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
-        style={{
-          width: "100%",
-          maxWidth: 320,
-          boxSizing: "border-box",
-          fontSize: "1.1em",
-          letterSpacing: "0.3em",
-          textAlign: "center",
-          background: "var(--surface)",
-          color: "var(--text)",
-          border: "1px solid var(--border)",
-          borderRadius: 8,
-          padding: "10px 12px",
-          outline: "none",
-        }}
       />
 
       {error && (
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {error}
         </p>
       )}
 
       <button
         type="button"
-        className="exam-tile green"
-        style={{ cursor: "pointer" }}
+        className="exam-tile green auth-submit-btn"
+        style={{ cursor: "pointer", marginTop: 24 }}
         disabled={!pseudo.trim() || pin.length !== 4 || submitting}
         onClick={handleSubmit}
       >
@@ -82,9 +64,8 @@ export default function SignInScreen({ onSignedIn }) {
       </button>
 
       <p className="muted" style={{ fontSize: "0.85em" }}>
-        Pas encore de compte ?{" "}
-        <button type="button" className="link-btn" style={{ fontSize: "1em", display: "inline" }} onClick={() => setMode("register")}>
-          Enregistrez-vous
+        <button type="button" className="link-btn" style={{ fontSize: "1em", display: "inline" }} onClick={onBack}>
+          Pas encore de compte
         </button>
       </p>
     </section>

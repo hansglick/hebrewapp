@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { abandonExamen, abandonExamenHard, getActiveLockdown, getNiveau } from "../api/user";
-import { getOnboardingStatus } from "../api/onboarding";
+import { getCurrentOnboardingExam } from "../api/onboarding";
 import { clearIdentity, getIdentity } from "../api/identity";
+import { clearLockdownEscape, isLockdownEscapeActive } from "../utils/lockdownEscape";
 import OnboardingScreen from "../pages/onboarding/OnboardingScreen";
-import SignInScreen from "../pages/onboarding/SignInScreen";
+import AuthFlow from "../pages/onboarding/AuthFlow";
 import { useWallet } from "../context/WalletContext";
 import { getUnreadNotificationCount } from "../api/content";
 import { DictionaryIcon } from "../components/DictionaryIcon";
@@ -45,7 +46,19 @@ export default function Layout() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [configOpen, setConfigOpen] = useState(false);
-  const [needsOnboarding, setNeedsOnboarding] = useState(null); // null = pas encore su
+  // true seulement si un test d'évaluation de niveau est réellement en
+  // cours (pas un simple "ce compte n'a jamais fini l'onboarding") — une
+  // connexion réussie va toujours direct à l'accueil, sans condition, cf.
+  // demande explicite du user ; seule une inscription (AuthFlow.onRegistered)
+  // ou un test réellement interrompu (refresh en plein milieu) y ramène.
+  const [showOnboarding, setShowOnboarding] = useState(null); // null = pas encore su
+  // Une inscription vient de fixer showOnboarding à true de façon
+  // synchrone (onRegistered) — sans ce garde, l'effet ci-dessous (déclenché
+  // par le même passage de hasIdentity à true) écraserait cette valeur en
+  // arrivant après coup avec `in_progress: false` (aucun test démarré pour
+  // l'instant), renvoyant le user tout droit à l'accueil au lieu de l'écran
+  // "Shalom".
+  const justRegisteredRef = useRef(false);
   // Porte d'entrée avant même l'onboarding : sans identité stockée
   // localement, le backend n'a aucun moyen de savoir quel compte servir
   // (plus de fallback implicite, cf. app.auth.get_current_user_id) — tant
@@ -59,18 +72,23 @@ export default function Layout() {
   const { timer } = useExamTimer();
 
   useEffect(() => {
-    if (hasIdentity) getOnboardingStatus().then((s) => setNeedsOnboarding(s.needs_onboarding));
+    if (!hasIdentity) return;
+    if (justRegisteredRef.current) {
+      justRegisteredRef.current = false;
+      return;
+    }
+    getCurrentOnboardingExam().then((r) => setShowOnboarding(r.in_progress));
   }, [hasIdentity]);
 
   // Layout reste monté d'une route à l'autre (Outlet), donc on recharge le
   // niveau à chaque changement de page plutôt qu'une seule fois au montage —
   // sinon un examen réussi ailleurs ne se reflèterait jamais ici sans reload.
-  // `needsOnboarding` en dépendance aussi : sa bascule à false (onboarding
+  // `showOnboarding` en dépendance aussi : sa bascule à false (onboarding
   // terminé) ne change pas le pathname (toujours "/"), donc sans ça le
   // niveau affiché resterait celui d'avant l'examen d'entrée.
   useEffect(() => {
     if (hasIdentity) getNiveau().then(setNiveau);
-  }, [location.pathname, needsOnboarding, hasIdentity]);
+  }, [location.pathname, showOnboarding, hasIdentity]);
 
   // Referme le panneau mobile (compteurs/notifications/dictionnaire/thème)
   // dès qu'on change de page, pour ne pas le laisser ouvert par inadvertance.
@@ -84,7 +102,7 @@ export default function Layout() {
   // côté serveur, cf. getNotifications) pour faire retomber le badge.
   useEffect(() => {
     if (hasIdentity) getUnreadNotificationCount().then((r) => setUnreadCount(r.count));
-  }, [location.pathname, needsOnboarding, hasIdentity]);
+  }, [location.pathname, showOnboarding, hasIdentity]);
 
   // Vérifie l'existence d'une tentative d'examen long/très long en cours à
   // chaque changement de route (couvre aussi un refresh, qui remonte Layout
@@ -94,7 +112,7 @@ export default function Layout() {
   // texte "Abandonner l'épreuve" resterait affiché après coup.
   useEffect(() => {
     if (hasIdentity) getActiveLockdown().then(setLockdown);
-  }, [location.pathname, needsOnboarding, hasIdentity]);
+  }, [location.pathname, showOnboarding, hasIdentity]);
 
   useEffect(() => {
     if (!hasIdentity) return;
@@ -108,7 +126,7 @@ export default function Layout() {
   // cartes, notifications de palier) — cf. app.wallet.tick_inactivite_et_notifications.
   useEffect(() => {
     if (hasIdentity) refreshWallet();
-  }, [location.pathname, needsOnboarding, hasIdentity, refreshWallet]);
+  }, [location.pathname, showOnboarding, hasIdentity, refreshWallet]);
 
   useEffect(() => {
     if (!hasIdentity) return;
@@ -118,9 +136,17 @@ export default function Layout() {
 
   // Tant qu'une tentative long/très long est en cours, toute navigation
   // ailleurs (manuelle ou via refresh) ramène immédiatement sur sa question
-  // — `replace: true` pour ne pas polluer l'historique de rebonds.
+  // — `replace: true` pour ne pas polluer l'historique de rebonds. Sauf si
+  // le user a explicitement choisi "Recevoir les résultats par courrier"
+  // pendant une évaluation groupée (cf. WaitingVideo) : la correction
+  // continue en arrière-plan, mais forcer son retour ici rendrait
+  // impossible la promesse du bouton — cf. bug rapporté par le user.
   useEffect(() => {
-    if (!lockdown) return;
+    if (!lockdown) {
+      clearLockdownEscape();
+      return;
+    }
+    if (isLockdownEscapeActive()) return;
     const target = lockdownTarget(lockdown);
     if (location.pathname !== target) navigate(target, { replace: true });
   }, [lockdown, location.pathname, navigate]);
@@ -130,7 +156,7 @@ export default function Layout() {
     setConfigOpen(false);
     setMobileMenuOpen(false);
     setHasIdentity(false);
-    setNeedsOnboarding(null);
+    setShowOnboarding(null);
   }
 
   async function handleAbandon() {
@@ -153,19 +179,26 @@ export default function Layout() {
     return (
       <div className="app-shell">
         <main className="app-content">
-          <SignInScreen onSignedIn={() => setHasIdentity(true)} />
+          <AuthFlow
+            onSignedIn={() => setHasIdentity(true)}
+            onRegistered={() => {
+              justRegisteredRef.current = true;
+              setShowOnboarding(true);
+              setHasIdentity(true);
+            }}
+          />
         </main>
       </div>
     );
   }
 
-  if (needsOnboarding === null) return null;
+  if (showOnboarding === null) return null;
 
-  if (needsOnboarding) {
+  if (showOnboarding) {
     return (
       <div className="app-shell">
         <main className="app-content">
-          <OnboardingScreen onCompleted={() => setNeedsOnboarding(false)} />
+          <OnboardingScreen onCompleted={() => setShowOnboarding(false)} />
         </main>
       </div>
     );
@@ -184,7 +217,7 @@ export default function Layout() {
               title="Accueil"
               style={{ display: "inline-flex", alignItems: "center" }}
             >
-              <HouseIcon size={36} color="#f3f4f6" mobileFillColor="#a9d6f5" />
+              <HouseIcon size={36} color="var(--chromeTextPrimary)" mobileFillColor="var(--chromeTextPrimary)" />
             </button>
             <span className="header-divider" />
             {wallet && (
@@ -195,7 +228,7 @@ export default function Layout() {
                   onClick={() => navigate("/jeu/lotterie")}
                   title="Boutique"
                 >
-                  <ShekelIcon size={36} color="#7dd3fc" /> {Math.round(wallet.points)}
+                  <ShekelIcon size={36} color="var(--logoAccent)" /> {Math.round(wallet.points)}
                   <span className="exam-tile-tooltip">
                     Échanger tes {Math.round(wallet.points)} shekels contre des lots de cartes
                   </span>
@@ -206,7 +239,7 @@ export default function Layout() {
                   onClick={() => navigate("/jeu/cartes")}
                   title="Ma collection"
                 >
-                  <MagenDavidIcon size={36} color="#7dd3fc" /> {wallet.nombre_cartes}
+                  <MagenDavidIcon size={36} color="var(--logoAccent)" /> {wallet.nombre_cartes}
                   <span className="exam-tile-tooltip">
                     Vous avez {wallet.nombre_cartes} cartes dans votre collection
                   </span>
@@ -233,7 +266,7 @@ export default function Layout() {
                 background: "none",
                 border: "none",
                 padding: 0,
-                color: "#ff6b6b",
+                color: "var(--chromeDanger)",
                 fontSize: "0.75em",
                 fontWeight: 600,
                 cursor: "pointer",
@@ -253,7 +286,7 @@ export default function Layout() {
                   style={{
                     fontStyle: "italic",
                     fontSize: "0.5em",
-                    color: "var(--textMuted)",
+                    color: "var(--textSecondary)",
                     marginInlineEnd: "0.6em",
                   }}
                 >
@@ -280,31 +313,37 @@ export default function Layout() {
             title="Notifications"
             style={{ display: "inline-flex", alignItems: "center", position: "relative" }}
           >
-            <NotificationIcon size={40} color="#f3f4f6" />
+            {/* Repère de positionnement propre à l'icône (pas au bouton, qui a
+                son propre padding, cf. .header-btn) : le badge doit venir
+                masquer légèrement le coin haut droit de l'enveloppe
+                elle-même, cf. demande explicite du user. */}
+            <span style={{ position: "relative", display: "inline-flex" }}>
+              <NotificationIcon size={40} color="var(--chromeTextPrimary)" />
+              {unreadCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: -2,
+                    right: -2,
+                    minWidth: 24,
+                    height: 24,
+                    padding: "0 3px",
+                    borderRadius: 999,
+                    background: "var(--annulationPleine)",
+                    color: "#fff",
+                    fontSize: "0.6em",
+                    fontWeight: 700,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    lineHeight: 1,
+                  }}
+                >
+                  {unreadCount}
+                </span>
+              )}
+            </span>
             <span className="exam-tile-tooltip">Notifications</span>
-            {unreadCount > 0 && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: -6,
-                  right: -9,
-                  minWidth: 24,
-                  height: 24,
-                  padding: "0 3px",
-                  borderRadius: 999,
-                  background: "var(--danger)",
-                  color: "#fff",
-                  fontSize: "0.6em",
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  lineHeight: 1,
-                }}
-              >
-                {unreadCount}
-              </span>
-            )}
           </button>
           <button
             type="button"
@@ -313,7 +352,7 @@ export default function Layout() {
             title="Dictionnaire"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <DictionaryIcon size={40} color="#f3f4f6" />
+            <DictionaryIcon size={40} color="var(--chromeTextPrimary)" />
             <span className="exam-tile-tooltip">Dictionnaire</span>
           </button>
           <button
@@ -323,7 +362,7 @@ export default function Layout() {
             title="Culture"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <DreidelIcon size={40} color="#f3f4f6" />
+            <DreidelIcon size={40} color="var(--chromeTextPrimary)" />
             <span className="exam-tile-tooltip">Portail de la culture judéo-israélienne</span>
           </button>
           <span className="header-divider" />
@@ -334,7 +373,7 @@ export default function Layout() {
             title="Configuration"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={36} color="#7dd3fc" />
+            <GearIcon size={36} color="var(--logoAccent)" />
             <span className="exam-tile-tooltip">Configuration</span>
           </button>
           <button
@@ -344,7 +383,7 @@ export default function Layout() {
             title="Plus d'options"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <GearIcon size={36} color="#7dd3fc" />
+            <GearIcon size={36} color="var(--logoAccent)" />
           </button>
           {mobileMenuOpen && (
             <>
@@ -356,7 +395,7 @@ export default function Layout() {
                       className="header-mobile-panel-row"
                       onClick={() => navigate("/jeu/lotterie")}
                     >
-                      <ShekelIcon size={20} color="#7dd3fc" />
+                      <ShekelIcon size={20} color="var(--logoAccent)" />
                       <span>{Math.round(wallet.points)} shekels</span>
                     </button>
                     <button
@@ -364,7 +403,7 @@ export default function Layout() {
                       className="header-mobile-panel-row"
                       onClick={() => navigate("/jeu/cartes")}
                     >
-                      <MagenDavidIcon size={20} color="#7dd3fc" />
+                      <MagenDavidIcon size={20} color="var(--logoAccent)" />
                       <span>{wallet.nombre_cartes} cartes</span>
                     </button>
                     <button
@@ -382,7 +421,7 @@ export default function Layout() {
                   className="header-mobile-panel-row"
                   onClick={() => navigate("/notifications")}
                 >
-                  <NotificationIcon size={20} color="#f3f4f6" />
+                  <NotificationIcon size={20} color="var(--chromeTextPrimary)" />
                   <span>Notifications{unreadCount > 0 ? ` (${unreadCount})` : ""}</span>
                 </button>
                 <button
@@ -390,13 +429,13 @@ export default function Layout() {
                   className="header-mobile-panel-row"
                   onClick={() => navigate("/dictionnaire")}
                 >
-                  <DictionaryIcon size={20} color="#f3f4f6" />
+                  <DictionaryIcon size={20} color="var(--chromeTextPrimary)" />
                   <span>Dictionnaire</span>
                 </button>
                 <div className="header-mobile-panel-row" style={{ justifyContent: "space-between" }}>
                   <span>Thème</span>
                   <div className="switch-wrap">
-                    <SunIcon size={14} color={themeMode === "light" ? "#f3f4f6" : "#9ca3af"} />
+                    <SunIcon size={14} color={themeMode === "light" ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)"} />
                     <button
                       type="button"
                       className={`switch${themeMode === "dark" ? " on" : ""}`}
@@ -407,7 +446,7 @@ export default function Layout() {
                     >
                       <span className="switch-knob" />
                     </button>
-                    <MoonIcon size={14} color={themeMode === "dark" ? "#f3f4f6" : "#9ca3af"} />
+                    <MoonIcon size={14} color={themeMode === "dark" ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)"} />
                   </div>
                 </div>
                 <button
@@ -417,7 +456,7 @@ export default function Layout() {
                   style={{ justifyContent: "space-between" }}
                 >
                   <span>Déconnexion</span>
-                  <SignOutIcon size={20} color="#f3f4f6" />
+                  <SignOutIcon size={20} color="var(--chromeTextPrimary)" />
                 </button>
               </div>
             </>

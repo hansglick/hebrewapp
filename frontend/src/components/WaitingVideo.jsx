@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getWaitingVids, getRandomChanson } from "../api/content";
 import { dataMediaUrl } from "../api/media";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
+import { activateLockdownEscape } from "../utils/lockdownEscape";
 import { BottomNavBar } from "./BottomNavBar";
 import { ChansonWaitingCard } from "./ChansonWaitingCard";
 import "./WaitingVideo.css";
@@ -28,11 +29,13 @@ const MAIL_TOOLTIP =
 // `label` permet de personnaliser le texte (ex: progression d'un traitement
 // par lot) ; pour tirer une NOUVELLE vidéo à chaque requête d'un lot, le
 // parent doit changer la prop `key` à chaque étape (force un vrai remount,
-// le tirage n'a lieu qu'au montage). Une tuile permet de basculer vers
-// ChansonWaitingCard (chanson aléatoire avec vidéo YouTube) pour patienter
-// autrement, sans jamais masquer le message d'attente au-dessus — cf.
-// demande explicite du user.
-export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
+// le tirage n'a lieu qu'au montage). `allowChansons` : une tuile permet de
+// basculer vers ChansonWaitingCard (chanson aléatoire avec vidéo YouTube)
+// pour patienter autrement, sans jamais masquer le message d'attente
+// au-dessus — mais seulement quand les réponses sont évaluées en bloc à la
+// fin de l'examen (attente plus longue), jamais pour l'attente d'une
+// réponse unique évaluée immédiatement, cf. demande explicite du user.
+export function WaitingVideo({ label = "Patientez quelques instants ...", allowChansons = false }) {
   const [filename, setFilename] = useState(null);
   const [ready, setReady] = useState(false);
   const [chansons, setChansons] = useState(false);
@@ -101,20 +104,25 @@ export function WaitingVideo({ label = "Patientez quelques instants ..." }) {
         <>
           {/* Les tuiles doivent être au-dessus de la vidéo (pas en dessous), cf.
               demande explicite du user. */}
-          <button
-            type="button"
-            className="waiting-video-chansons-tile"
-            onClick={() => setChansons(true)}
-          >
-            <img className="waiting-video-chansons-icon" src={MUSIC_ICON_URL} alt="" />
-            <span className="waiting-video-chansons-label">Patienter en chansons</span>
-          </button>
+          {allowChansons && (
+            <button
+              type="button"
+              className="waiting-video-chansons-tile"
+              onClick={() => setChansons(true)}
+            >
+              <img className="waiting-video-chansons-icon" src={MUSIC_ICON_URL} alt="" />
+              <span className="waiting-video-chansons-label">Patienter en chansons</span>
+            </button>
+          )}
 
           <button
             type="button"
             className="waiting-video-mail-tile"
             title={MAIL_TOOLTIP}
-            onClick={() => navigate("/")}
+            onClick={() => {
+              activateLockdownEscape();
+              navigate("/");
+            }}
           >
             <img className="waiting-video-mail-icon" src={MAIL_ICON_URL} alt="" />
             <span className="waiting-video-mail-label">Recevoir les résultats par courrier</span>

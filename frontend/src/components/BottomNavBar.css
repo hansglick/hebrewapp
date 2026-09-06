@@ -19,8 +19,8 @@
   right: 0;
   bottom: 0;
   z-index: 20;
-  background: #16171d;
-  border-top: 2.68px solid #a9d6f5;
+  background: var(--chromeBg);
+  border-top: 2.68px solid var(--logoAccent);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +75,7 @@
      appliqué via mask-image (le PNG source ne sert que de forme/alpha) pour
      garantir une couleur exactement identique, cf. demande explicite du
      user. */
-  background-color: #7dd3fc;
+  background-color: var(--logoAccent);
   -webkit-mask-image: url(/nextblue.png);
   mask-image: url(/nextblue.png);
   -webkit-mask-size: contain;
@@ -118,7 +118,7 @@
 }
 
 .bottom-nav-toggle-label {
-  color: #9ca3af;
+  color: var(--chromeTextSecondary);
   font-size: 0.7em;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -132,7 +132,7 @@
   padding: 0;
   border: none;
   border-radius: 999px;
-  background: #4b4d57;
+  background: var(--chromeToggleTrack);
   cursor: pointer;
 }
 
@@ -143,7 +143,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--chromeTextPrimary);
   transition: transform 0.15s ease;
 }
 

@@ -7,7 +7,7 @@ import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
 import HebrewInput from "../components/HebrewInput";
-import { LabeledTile } from "../components/LabeledTile";
+import { QuoteBlock, SectionTitle } from "../components/QuoteBlock";
 import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar, BottomNavToggle } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
@@ -35,7 +35,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -217,7 +217,7 @@ export default function QuestionEcriteScreen() {
             gap: 10,
           }}
         >
-          <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.152em" }}>
+          <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.152em" }}>
             {phrase.french}
           </p>
           <hr
@@ -225,7 +225,7 @@ export default function QuestionEcriteScreen() {
               width: "70%",
               maxWidth: 320,
               border: "none",
-              borderTop: "1px solid var(--border)",
+              borderTop: "1px solid var(--cardBorder)",
               margin: 0,
             }}
           />
@@ -234,7 +234,7 @@ export default function QuestionEcriteScreen() {
             style={{
               margin: 0,
               fontWeight: 700,
-              color: "var(--text)",
+              color: "var(--textPrimary)",
               fontSize: "2.16em",
               direction: "rtl",
               fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
@@ -252,7 +252,7 @@ export default function QuestionEcriteScreen() {
             style={{ marginTop: 24 }}
             onClick={() => speak(phrase.hebrew)}
           >
-            <SpeakerIcon size={30} color="var(--text)" />
+            <SpeakerIcon size={30} color="var(--speakerIcon)" />
           </button>
         </div>
       )}
@@ -260,7 +260,7 @@ export default function QuestionEcriteScreen() {
       {mode === "revision" && (
         <>
           {evalMode === "prof" && (
-            <LabeledTile label="Traduire la phrase" border>
+            <QuoteBlock>
               {isSourceHebrew ? (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   <p
@@ -268,7 +268,7 @@ export default function QuestionEcriteScreen() {
                     style={{
                       margin: 0,
                       fontWeight: 700,
-                      color: "var(--text)",
+                      color: "var(--textSecondary)",
                       fontSize: "1.44em",
                       direction: "rtl",
                       fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
@@ -276,15 +276,17 @@ export default function QuestionEcriteScreen() {
                   >
                     {sourceText}
                   </p>
-                  <span style={{ color: "var(--textMuted)", fontWeight: 400 }}>|</span>
+                  <span style={{ color: "var(--cardBorder)", fontWeight: 400 }}>|</span>
                   <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                    <SpeakerIcon size={20.25} color="var(--textMuted)" />
+                    <SpeakerIcon size={20.25} color="var(--speakerIcon)" />
                   </button>
                 </div>
               ) : (
-                <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{sourceText}</p>
+                <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+                  {sourceText}
+                </p>
               )}
-            </LabeledTile>
+            </QuoteBlock>
           )}
         </>
       )}
@@ -312,7 +314,7 @@ export default function QuestionEcriteScreen() {
               {/* size 33 = 22 * 1.5 (+50%), cf. demande explicite du
                   user. */}
               <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                <SpeakerIcon size={33} color="var(--textMuted)" />
+                <SpeakerIcon size={33} color="var(--speakerIcon)" />
               </button>
               {/* Phrase hébreu toujours en noir (jamais grisée), cf.
                   demande explicite du user. */}
@@ -321,7 +323,7 @@ export default function QuestionEcriteScreen() {
                 style={{
                   margin: 0,
                   fontWeight: 700,
-                  color: "var(--text)",
+                  color: "var(--textPrimary)",
                   fontSize: "2.16em",
                   direction: "rtl",
                   fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
@@ -331,7 +333,7 @@ export default function QuestionEcriteScreen() {
               </p>
             </div>
           ) : (
-            <p style={{ color: "var(--text)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
+            <p style={{ color: "var(--textPrimary)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
               {sourceText}
             </p>
           )}
@@ -341,7 +343,7 @@ export default function QuestionEcriteScreen() {
               width: "70%",
               maxWidth: 320,
               border: "none",
-              borderTop: "1px solid var(--border)",
+              borderTop: "1px solid var(--cardBorder)",
               margin: 0,
             }}
           />
@@ -397,7 +399,7 @@ export default function QuestionEcriteScreen() {
                   style={{
                     margin: 0,
                     fontWeight: 700,
-                    color: "var(--text)",
+                    color: "var(--textPrimary)",
                     fontSize: "2.16em",
                     direction: "rtl",
                     fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
@@ -408,7 +410,7 @@ export default function QuestionEcriteScreen() {
               ) : (
                 // Phrase française toujours en gris (jamais noire), cf.
                 // demande explicite du user.
-                <p style={{ fontStyle: "italic", color: "var(--textMuted)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
+                <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
                   {targetText}
                 </p>
               )}
@@ -434,7 +436,7 @@ export default function QuestionEcriteScreen() {
               >
                 {targetIsHebrew && (
                   <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                    <SpeakerIcon size={44} color="var(--text)" />
+                    <SpeakerIcon size={44} color="var(--speakerIcon)" />
                   </button>
                 )}
                 <button
@@ -462,16 +464,18 @@ export default function QuestionEcriteScreen() {
           {!geminiResult && (
             <>
               {targetIsHebrew ? (
-                <LabeledTile label="Réponse" bodyPadding={0}>
+                <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                  <SectionTitle>Réponse</SectionTitle>
                   <HebrewInput
                     key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
                     value={studentSolution}
                     onChange={setStudentSolution}
                     rows={3}
                   />
-                </LabeledTile>
+                </div>
               ) : (
-                <LabeledTile label="Réponse" bodyPadding={0}>
+                <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                  <SectionTitle>Réponse</SectionTitle>
                   <textarea
                     className="translate-textarea"
                     value={studentSolution}
@@ -479,7 +483,7 @@ export default function QuestionEcriteScreen() {
                     rows={3}
                     style={{ width: "100%", fontFamily: "inherit" }}
                   />
-                </LabeledTile>
+                </div>
               )}
               {!loadingGemini && (
                 <button
@@ -493,7 +497,7 @@ export default function QuestionEcriteScreen() {
                 </button>
               )}
               {geminiError && (
-                <p className="muted" style={{ color: "var(--danger)" }}>
+                <p className="muted" style={{ color: "var(--annulationPleine)" }}>
                   {geminiError}
                 </p>
               )}
@@ -503,14 +507,14 @@ export default function QuestionEcriteScreen() {
           {geminiResult && targetIsHebrew && (
             <>
               <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-                <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>
+                <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
                   {geminiResult.translation}
                 </span>
               </p>
 
               <hr
-                style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }}
+                style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
               />
 
               <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
@@ -535,7 +539,7 @@ export default function QuestionEcriteScreen() {
                             paddingInlineStart: "1.2em",
                             fontStyle: "italic",
                             fontSize: "0.85em",
-                            color: "var(--textMuted)",
+                            color: "var(--textSecondary)",
                           }}
                         >
                           {geminiResult.observations.map((obs, i) => (
@@ -549,7 +553,7 @@ export default function QuestionEcriteScreen() {
               </table>
 
               <hr
-                style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }}
+                style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
               />
 
               <button
@@ -557,7 +561,7 @@ export default function QuestionEcriteScreen() {
                 className="link-btn"
                 style={{
                   fontStyle: "italic",
-                  color: "var(--textMuted)",
+                  color: "var(--textSecondary)",
                   fontSize: "0.96em",
                   textDecoration: "none",
                 }}
@@ -581,7 +585,7 @@ export default function QuestionEcriteScreen() {
               </ul>
 
               <hr
-                style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }}
+                style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
               />
 
               <button
@@ -589,7 +593,7 @@ export default function QuestionEcriteScreen() {
                 className="link-btn"
                 style={{
                   fontStyle: "italic",
-                  color: "var(--textMuted)",
+                  color: "var(--textSecondary)",
                   fontSize: "0.96em",
                   textDecoration: "none",
                 }}

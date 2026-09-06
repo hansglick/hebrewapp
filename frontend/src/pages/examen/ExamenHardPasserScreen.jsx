@@ -7,6 +7,7 @@ import { mediaUrl } from "../../api/media";
 import { blobToWavBlob } from "../../utils/audioEncode";
 import HebrewInput from "../../components/HebrewInput";
 import "../../components/HebrewInput.css";
+import { QuoteBlock } from "../../components/QuoteBlock";
 import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { WaitingVideo } from "../../components/WaitingVideo";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
@@ -49,7 +50,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -400,14 +401,14 @@ export default function ExamenHardPasserScreen() {
   if (finalResult) {
     return (
       <section className="screen">
-        <h1 style={{ fontWeight: 700, color: finalResult.passed ? "var(--success)" : "var(--danger)" }}>
+        <h1 style={{ fontWeight: 700, color: finalResult.passed ? "var(--validationPleine)" : "var(--annulationPleine)" }}>
           {finalResult.passed ? "Réussi" : "Echec"}
         </h1>
         <ul style={{ margin: 0, paddingInlineStart: "1.2em", textAlign: "start" }}>
           <li>Note moyenne : {finalResult.average_note.toFixed(1)} / 5</li>
           <li>Taux de bonnes réponses : {Math.round(finalResult.success_ratio * 100)}%</li>
         </ul>
-        <p style={{ margin: 0, fontSize: "0.75em", color: "var(--textMuted)", fontStyle: "italic" }}>
+        <p style={{ margin: 0, fontSize: "0.75em", color: "var(--textSecondary)", fontStyle: "italic" }}>
           Seuil requis : {Math.round((finalResult.pass_threshold ?? 0.9) * 100)}%
         </p>
         {finalResult.attempt_id != null && (
@@ -447,7 +448,7 @@ export default function ExamenHardPasserScreen() {
   if (attemptError) {
     return (
       <section className="screen">
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {attemptError}
         </p>
         <button type="button" className="link-btn" onClick={() => navigate("/examen")}>
@@ -486,6 +487,7 @@ export default function ExamenHardPasserScreen() {
       {loadingGemini ? (
         <WaitingVideo
           key={batchProgress ? "batch" : "single"}
+          allowChansons={!!batchProgress}
           label={
             batchProgress ? (
               <>
@@ -505,7 +507,7 @@ export default function ExamenHardPasserScreen() {
                   <button
                     type="button"
                     className="link-btn"
-                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                     disabled={index === 0}
                     onClick={() => setIndex(index - 1)}
                   >
@@ -520,7 +522,7 @@ export default function ExamenHardPasserScreen() {
                   <button
                     type="button"
                     className="link-btn"
-                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                     disabled={index === exam.questions.length - 1}
                     onClick={() => setIndex(index + 1)}
                   >
@@ -531,11 +533,11 @@ export default function ExamenHardPasserScreen() {
             </tbody>
           </table>
 
-          <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--border)", margin: "1em 0 0" }} />
+          <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "1em 0 0" }} />
 
           {geminiError && (
             <>
-              <p className="muted" style={{ color: "var(--danger)" }}>
+              <p className="muted" style={{ color: "var(--annulationPleine)" }}>
                 {geminiError}
               </p>
               {Object.keys(pendingAnswers).length > 0 && (
@@ -552,7 +554,7 @@ export default function ExamenHardPasserScreen() {
                 <span className="hebrew" style={{ fontSize: "1.2em" }}>
                   {q.verbe}
                 </span>{" "}
-                <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>({q.traduction})</span>
+                <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>({q.traduction})</span>
               </p>
               <p className="muted" style={{ margin: "4px 0" }}>
                 {q.temps} — {q.personne}
@@ -574,16 +576,16 @@ export default function ExamenHardPasserScreen() {
               {answer && (
                 <>
                   <p className="hebrew" style={{ fontSize: "0.9em", margin: "0.4em 0" }}>
-                    <span style={{ color: "var(--text)" }}>Réponse : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.submitted || "—"}</span>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse : </span>
+                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.submitted || "—"}</span>
                   </p>
-                  <p style={{ fontWeight: 600, color: verbeCorrect ? "var(--success)" : "var(--danger)" }}>
+                  <p style={{ fontWeight: 600, color: verbeCorrect ? "var(--validationPleine)" : "var(--annulationPleine)" }}>
                     {verbeCorrect ? "Correct" : "Incorrect"}
                   </p>
                   {!verbeCorrect && (
                     <p className="hebrew" style={{ fontSize: "0.9em", margin: 0 }}>
-                      <span style={{ color: "var(--success)", fontWeight: 600 }}>{q.conjugaison}</span>{" "}
-                      <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>(solution)</span>
+                      <span style={{ color: "var(--validationPleine)", fontWeight: 600 }}>{q.conjugaison}</span>{" "}
+                      <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>(solution)</span>
                     </p>
                   )}
                 </>
@@ -595,7 +597,7 @@ export default function ExamenHardPasserScreen() {
               (cf. revisions/QuizzScreen), cf. demande explicite du user. */}
           {q.type === "quizz" && (
             <div style={{ zoom: 1.6 }}>
-              <p style={{ color: "var(--text)", margin: "1em 0 0" }}>{q.french}</p>
+              <p style={{ color: "var(--textPrimary)", margin: "1em 0 0" }}>{q.french}</p>
               {!answer && (
                 <>
                   <QuizzBubbles
@@ -619,7 +621,7 @@ export default function ExamenHardPasserScreen() {
               {answer && (
                 <>
                   <QuizzBubbles options={q.options} correctKey={q.key} selectedKey={answer.selected_key} disabled />
-                  <p style={{ fontWeight: 600, color: answer.selected_key === q.key ? "var(--success)" : "var(--danger)" }}>
+                  <p style={{ fontWeight: 600, color: answer.selected_key === q.key ? "var(--validationPleine)" : "var(--annulationPleine)" }}>
                     {answer.selected_key === q.key ? "Correct" : "Incorrect"}
                   </p>
                 </>
@@ -629,7 +631,17 @@ export default function ExamenHardPasserScreen() {
 
           {q.type === "traduction" && (
             <>
-              <p style={{ color: "var(--text)", margin: "1em 0 0" }}>{q.direction === "hebreu" ? q.french : q.hebrew}</p>
+              <QuoteBlock>
+                <p
+                  style={{
+                    color: "var(--textSecondary)",
+                    margin: 0,
+                    fontStyle: q.direction === "hebreu" ? "italic" : "normal",
+                  }}
+                >
+                  {q.direction === "hebreu" ? q.french : q.hebrew}
+                </p>
+              </QuoteBlock>
               {!answer && !pendingAnswers[index] && q.direction === "hebreu" && (
                 <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={3} placeholder="Traduis !" />
               )}
@@ -662,8 +674,8 @@ export default function ExamenHardPasserScreen() {
               {answer && (
                 <>
                   <p className="hebrew" style={{ fontSize: "0.8em", margin: "1em 0 0" }}>
-                    <span style={{ color: "var(--text)" }}>Réponse : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.translation}</span>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse : </span>
+                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
                   </p>
                   <StarRating rating={answer.score} />
                   {answer.observations?.length > 0 && (
@@ -673,7 +685,7 @@ export default function ExamenHardPasserScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                         textAlign: "start",
                       }}
                     >
@@ -714,8 +726,8 @@ export default function ExamenHardPasserScreen() {
               {answer && (
                 <>
                   <p className="hebrew" style={{ fontSize: "0.8em", margin: "1em 0 0" }}>
-                    <span style={{ color: "var(--text)" }}>Réponse : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.verbatim}</span>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse : </span>
+                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
                   </p>
                   <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
                     <tbody>

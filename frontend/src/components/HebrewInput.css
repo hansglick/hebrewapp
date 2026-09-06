@@ -1,3 +1,6 @@
+/* Fond de la page (pas celui d'un éventuel LabeledTile parent, ex: la tuile
+   "Réponse") : sans ce fond explicite, le cardBg de ce parent apparaissait
+   par transparence sous les toggles, cf. demande explicite du user. */
 .hebrew-input {
   display: flex;
   flex-direction: column;
@@ -5,6 +8,7 @@
   gap: 8px;
   width: 100%;
   max-width: 320px;
+  background: var(--bg);
 }
 
 /* Pas de gap ici (contrairement à .hebrew-input) : le champ et l'encadré
@@ -26,9 +30,9 @@
   width: 100%;
   font-family: var(--font-hebrew);
   font-size: 1.1em;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: var(--inputBg);
+  color: var(--textPrimary);
+  border: 1px solid var(--tileAccent);
   outline: none;
   box-sizing: border-box;
 }
@@ -55,14 +59,14 @@
   min-height: 0;
 }
 
-/* Bordure grise reprenant la couleur du champ de saisie juste au-dessus
-   (var(--border), même token que .hebrew-input-textarea) — pas de bord
+/* Bordure reprenant la couleur du champ de saisie juste au-dessus
+   (var(--tileAccent), même token que .hebrew-input-textarea) — pas de bord
    haut : prolonge directement cette bordure, pour que les deux se lisent
    comme un seul bloc, cf. demande explicite du user. */
 .voice-prefill-frame {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--border);
+  border: 1px solid var(--tileAccent);
   border-top: none;
   border-radius: 0 0 8px 8px;
   padding: 10px 12px;
@@ -99,7 +103,7 @@
   row-gap: 8px;
   width: 100%;
   font-size: 0.8em;
-  color: var(--textMuted);
+  color: var(--textSecondary);
 }
 
 .hebrew-input-toggle-row {
@@ -115,13 +119,37 @@
   text-align: left;
 }
 
-:root[data-theme="light"] .hebrew-input-textarea {
-  background: #fff;
-}
+/* inputBg suit déjà le thème (blanc en clair, surface en sombre) — plus
+   besoin d'un override spécifique au clair, cf. appConfig.js. */
 
 .hebrew-input-textarea::placeholder {
   font-size: 0.5em;
-  color: var(--textMuted);
+  color: var(--textSecondary);
+}
+
+/* Même animation "tiroir" que .voice-prefill-frame-wrap (grid-template-rows
+   0fr/1fr + fondu) — cf. demande explicite du user. */
+.hebrew-keyboard-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  transition: grid-template-rows 0.28s ease;
+}
+
+.hebrew-keyboard-wrap.open {
+  grid-template-rows: 1fr;
+}
+
+.hebrew-keyboard-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hebrew-keyboard-wrap,
+  .hebrew-keyboard {
+    transition: none;
+  }
 }
 
 .hebrew-keyboard {
@@ -130,6 +158,12 @@
   gap: 0;
   align-items: center;
   width: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.hebrew-keyboard-wrap.open .hebrew-keyboard {
+  opacity: 1;
 }
 
 /* Toggle manuel affiché/masqué du clavier virtuel (cf. HebrewInput.jsx) —
@@ -147,7 +181,7 @@
   justify-content: flex-start;
   gap: 8px;
   font-size: 0.8em;
-  color: var(--textMuted);
+  color: var(--textSecondary);
 }
 
 .hebrew-keyboard-row {
@@ -168,9 +202,9 @@
   justify-content: center;
   gap: 0;
   padding: 6px 2px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--cardBorder);
   border-radius: 0;
-  background: #000;
+  background: var(--keyBg);
   cursor: pointer;
 }
 
@@ -183,14 +217,14 @@
   font-family: var(--font-hebrew);
   font-size: 1em;
   font-weight: 400;
-  color: #fff;
+  color: var(--keyText);
 }
 
 .hebrew-key-latin {
   font-family: var(--font-latin);
   font-weight: 700;
   font-size: 0.55em;
-  color: #9ca3af;
+  color: var(--chromeTextSecondary);
 }
 
 .hebrew-key-space {
@@ -199,17 +233,5 @@
   padding: 12px 4px;
   font-family: var(--font-latin);
   font-size: 0.85em;
-  color: #fff;
-}
-
-:root[data-theme="light"] .hebrew-key:not(.active) {
-  background: #fff;
-}
-
-:root[data-theme="light"] .hebrew-key-hebrew {
-  color: #000;
-}
-
-:root[data-theme="light"] .hebrew-key-space {
-  color: #000;
+  color: var(--keyText);
 }

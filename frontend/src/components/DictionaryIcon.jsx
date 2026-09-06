@@ -1,7 +1,7 @@
 // Icône "dictionnaire" (livre ouvert), dessinée à la main plutôt qu'un emoji
 // 📕 coloré (même piège de rendu que ConfigIcon/SpeakerIcon) — rouge par
 // défaut, cf. demande explicite du user ("logo rouge").
-export function DictionaryIcon({ size = 20, color = "var(--danger)" }) {
+export function DictionaryIcon({ size = 20, color = "var(--annulationPleine)" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path

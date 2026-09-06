@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  abandonOnboardingExam,
   advanceOnboardingExam,
   getCurrentOnboardingExam,
   skipOnboarding,
@@ -8,10 +9,9 @@ import {
 import { getIdentity } from "../../api/identity";
 import { evaluateOral, evaluateTranslation } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
-import { speak } from "../../utils/speech";
 import { blobToWavBlob } from "../../utils/audioEncode";
 import HebrewInput from "../../components/HebrewInput";
-import { AudioPlayer } from "../../components/AudioPlayer";
+import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { ChapitreLogo } from "../../components/ChapitreLogo";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
@@ -22,7 +22,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -31,10 +31,11 @@ function StarRating({ rating }) {
 }
 
 export default function OnboardingScreen({ onCompleted }) {
-  const [phase, setPhase] = useState("loading"); // loading | intro | question | done
+  const [phase, setPhase] = useState("loading"); // loading | intro | test-intro | question | done
   const [startError, setStartError] = useState(null);
   const [starting, setStarting] = useState(false);
   const [skipping, setSkipping] = useState(false);
+  const [abandoning, setAbandoning] = useState(false);
   const pseudo = getIdentity()?.pseudo ?? "";
 
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -51,6 +52,11 @@ export default function OnboardingScreen({ onCompleted }) {
   const [audioBlob, setAudioBlob] = useState(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
+  // Layout re-render son enfant à chaque poll actif-lockdown — sans ce
+  // useMemo, URL.createObjectURL recréerait une nouvelle URL à chaque fois,
+  // ce qui force le <audio> à recharger et interrompt la lecture en cours
+  // (cf. ExamenOralScreen, même remarque).
+  const audioUrl = useMemo(() => (audioBlob ? URL.createObjectURL(audioBlob) : null), [audioBlob]);
 
   const [doneResult, setDoneResult] = useState(null);
 
@@ -167,6 +173,18 @@ export default function OnboardingScreen({ onCompleted }) {
     }
   }
 
+  async function handleAbandonTest() {
+    if (!window.confirm("Abandonner le test ? Les questions restantes recevront la note minimale.")) return;
+    setAbandoning(true);
+    try {
+      const response = await abandonOnboardingExam();
+      setDoneResult(response);
+      setPhase("done");
+    } finally {
+      setAbandoning(false);
+    }
+  }
+
   async function handleNext() {
     const response = await advanceOnboardingExam({
       questionNumber,
@@ -192,14 +210,40 @@ export default function OnboardingScreen({ onCompleted }) {
         <h1 className="hebrew" style={{ direction: "rtl" }}>
           שלום {pseudo}
         </h1>
+        <button
+          type="button"
+          className="exam-tile green"
+          style={{ cursor: "pointer" }}
+          disabled={skipping}
+          onClick={() => setPhase("test-intro")}
+        >
+          Évaluer son niveau
+        </button>
+        <button
+          type="button"
+          className="exam-tile green pastel"
+          style={{ cursor: "pointer" }}
+          disabled={skipping}
+          onClick={handleSkip}
+        >
+          Commencer à la première leçon
+        </button>
+      </section>
+    );
+  }
+
+  if (phase === "test-intro") {
+    return (
+      <section className="screen">
+        <h1>Évaluation de ton niveau</h1>
         <p className="muted" style={{ fontSize: "0.9em" }}>
-          Pour te proposer des leçons adaptées à ton niveau, tu peux répondre à 7 questions (traductions
-          écrites et questions orales) — réponds du mieux que tu peux, il n'y a pas de mauvaise surprise
-          possible : si le niveau retenu s'avère trop facile, tu pourras toujours demander une équivalence
-          par la suite pour avancer plus vite. Ou, si tu préfères, commence directement au niveau débutant.
+          7 questions (un mélange de traductions écrites et de questions orales) pour te proposer des
+          leçons adaptées à ton niveau — réponds du mieux que tu peux, il n'y a pas de mauvaise surprise
+          possible : si le niveau retenu s'avère trop facile ou trop difficile, tu pourras toujours
+          demander une équivalence par la suite pour ajuster dans un sens comme dans l'autre.
         </p>
         {startError && (
-          <p className="muted" style={{ color: "var(--danger)" }}>
+          <p className="muted" style={{ color: "var(--annulationPleine)" }}>
             {startError}
           </p>
         )}
@@ -210,16 +254,16 @@ export default function OnboardingScreen({ onCompleted }) {
           disabled={starting || skipping}
           onClick={handleStart}
         >
-          Évaluez votre niveau
+          Commencer le test !
         </button>
         <button
           type="button"
-          className="link-btn"
-          style={{ fontSize: "0.9em" }}
+          className="exam-tile green pastel"
+          style={{ cursor: "pointer" }}
           disabled={starting || skipping}
           onClick={handleSkip}
         >
-          Commencez au niveau débutant
+          Je préfère commencer à la première leçon
         </button>
       </section>
     );
@@ -259,15 +303,25 @@ export default function OnboardingScreen({ onCompleted }) {
         <GeminiWaiting />
       ) : (
         <>
+          <button
+            type="button"
+            className="exam-tile red pastel"
+            style={{ cursor: "pointer", maxWidth: 200, padding: "8px", fontSize: "0.85em" }}
+            disabled={abandoning}
+            onClick={handleAbandonTest}
+          >
+            Abandonner le test
+          </button>
+
           {geminiError && (
-            <p className="muted" style={{ color: "var(--danger)" }}>
+            <p className="muted" style={{ color: "var(--annulationPleine)" }}>
               {geminiError}
             </p>
           )}
 
           {question.kind === "ecrit" && (
             <>
-              <p style={{ color: "var(--text)", margin: "1em 0 0", fontSize: "0.96em" }}>{question.french}</p>
+              <p style={{ color: "var(--textPrimary)", margin: "1em 0 0", fontSize: "0.96em" }}>{question.french}</p>
 
               {!result && (
                 <>
@@ -280,8 +334,8 @@ export default function OnboardingScreen({ onCompleted }) {
                   />
                   <button
                     type="button"
-                    className="link-btn"
-                    style={{ marginTop: 0, fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.75em", textDecoration: "none" }}
+                    className="exam-tile green"
+                    style={{ marginTop: 0, cursor: studentSolution.trim() ? "pointer" : "default" }}
                     disabled={!studentSolution.trim()}
                     onClick={handleSubmitEcrit}
                   >
@@ -293,10 +347,10 @@ export default function OnboardingScreen({ onCompleted }) {
               {result && (
                 <>
                   <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                    <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{result.translation}</span>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{result.translation}</span>
                   </p>
-                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
                   <StarRating rating={result.score} />
                 </>
               )}
@@ -305,69 +359,26 @@ export default function OnboardingScreen({ onCompleted }) {
 
           {question.kind === "oral" && (
             <>
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <AudioPlayer src={mediaUrl(question.voicepath)} barMaxWidth={58.5} toggleSize={27} />
-                <button
-                  type="button"
-                  onClick={() => speak(question.question_hebrew)}
-                  aria-label="Écouter la question"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 27,
-                    height: 27,
-                    borderRadius: "50%",
-                    background: "#000",
-                    color: "#fff",
-                    fontWeight: 700,
-                    fontSize: "1.1em",
-                    border: "none",
-                    padding: 0,
-                    cursor: "pointer",
-                  }}
-                >
-                  ?
-                </button>
-              </div>
-
-              {!result && !isRecording && !isConverting && !audioBlob && (
-                <button
-                  type="button"
-                  className="speak-btn"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--textMuted)", fontSize: "0.675em" }}
-                  onClick={startRecording}
-                >
-                  <span style={{ display: "inline-block", width: 27, height: 27, borderRadius: "50%", background: "var(--danger)" }} />
-                  Répondre
-                </button>
-              )}
-
-              {isRecording && (
-                <button type="button" className="link-btn" onClick={stopRecording}>
-                  ⏹️ Arrêter
-                </button>
-              )}
-              {isConverting && <p className="muted">Traitement de l'enregistrement...</p>}
-
-              {!result && audioBlob && !isRecording && (
-                <div style={{ display: "flex", gap: 12 }}>
-                  <button type="button" className="speak-btn" style={{ color: "var(--textMuted)", fontSize: "0.8em" }} onClick={() => setAudioBlob(null)}>
-                    Recommencer
-                  </button>
-                  <button type="button" className="speak-btn" style={{ color: "var(--textMuted)", fontSize: "0.8em" }} onClick={handleSubmitOral}>
-                    Envoyer
-                  </button>
-                </div>
-              )}
+              <OralAnswerCapture
+                contentSrc={mediaUrl(question.voicepath)}
+                questionText={question.question_hebrew}
+                showRecorder={!result}
+                isRecording={isRecording}
+                isConverting={isConverting}
+                audioBlob={audioBlob}
+                audioUrl={audioUrl}
+                onStart={startRecording}
+                onStop={stopRecording}
+                onEnvoyer={handleSubmitOral}
+              />
 
               {result && (
                 <>
                   <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                    <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{result.verbatim}</span>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{result.verbatim}</span>
                   </p>
-                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
                   <StarRating
                     rating={Math.round(
                       (result.rating_completeness + result.rating_hebrew + result.rating_comprehension) / 3
@@ -382,7 +393,7 @@ export default function OnboardingScreen({ onCompleted }) {
             <button
               type="button"
               className="link-btn"
-              style={{ fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.96em", textDecoration: "none" }}
+              style={{ fontStyle: "italic", color: "var(--textSecondary)", fontSize: "0.96em", textDecoration: "none" }}
               onClick={handleNext}
             >
               {questionNumber < totalQuestions ? "Question suivante" : "Voir mon niveau"}

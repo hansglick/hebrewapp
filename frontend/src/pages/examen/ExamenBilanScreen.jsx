@@ -5,13 +5,13 @@ import { NiveauUpScreen } from "./NiveauUpScreen";
 
 const FORMAT_LABELS = { ecrit: "écrit", oral: "oral" };
 
-const labelStyle = { fontStyle: "italic", color: "var(--textMuted)", fontSize: "0.75em" };
-const valueStyle = { color: "var(--text)", fontSize: "0.75em" };
+const labelStyle = { fontStyle: "italic", color: "var(--textSecondary)", fontSize: "0.75em" };
+const valueStyle = { color: "var(--textPrimary)", fontSize: "0.75em" };
 const plainLinkStyle = {
   background: "none",
   border: "none",
   padding: 0,
-  color: "var(--text)",
+  color: "var(--textPrimary)",
   fontSize: "0.75em",
   fontStyle: "normal",
   textDecoration: "none",
@@ -36,7 +36,7 @@ function AttemptPastilles({ history }) {
           style={{
             margin: 0,
             cursor: h.id != null ? "pointer" : "default",
-            backgroundColor: h.passed === null ? "var(--textMuted)" : h.passed ? "var(--success)" : "var(--danger)",
+            backgroundColor: h.passed === null ? "var(--textSecondary)" : h.passed ? "var(--validationPleine)" : "var(--annulationPleine)",
           }}
         />
       ))}
@@ -70,7 +70,7 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
         </li>
         <li>
           <span style={labelStyle}>Statut : </span>
-          <span style={{ color: current.passed ? "var(--success)" : "var(--danger)", fontSize: "0.75em" }}>
+          <span style={{ color: current.passed ? "var(--validationPleine)" : "var(--annulationPleine)", fontSize: "0.75em" }}>
             {current.passed ? "Réussite" : "Échec"}
           </span>
         </li>
@@ -83,7 +83,7 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
         )}
       </ul>
 
-      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--border)" }} />
+      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)" }} />
 
       <h2 style={{ fontSize: "1.1em", fontWeight: 400, margin: 0 }}>Situation</h2>
       <ul style={{ margin: 0, paddingInlineStart: "1.2em", textAlign: "start" }}>
@@ -103,14 +103,14 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
         </li>
       </ul>
 
-      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--border)" }} />
+      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)" }} />
 
       {niveauUpdated ? (
         <button type="button" style={plainLinkStyle} onClick={() => setShowFelicitations(true)}>
           Bravo, continuer →
         </button>
       ) : (
-        <p style={{ margin: 0, fontSize: "0.75em", color: "var(--textMuted)", fontStyle: "italic" }}>
+        <p style={{ margin: 0, fontSize: "0.75em", color: "var(--textSecondary)", fontStyle: "italic" }}>
           Encore un peu d'efforts
         </p>
       )}

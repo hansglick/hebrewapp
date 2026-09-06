@@ -7,7 +7,7 @@ export function readinessDisplay(readiness) {
   if (readiness.status === "not_ready") {
     return {
       percent: (100 * readiness.count) / readiness.target,
-      color: "var(--textMuted)",
+      color: "var(--textSecondary)",
       message: "Tu n'as pas encore suffisamment révisé",
     };
   }

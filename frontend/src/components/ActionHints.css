@@ -3,11 +3,11 @@
   z-index: 10;
   padding: 3px 10px;
   border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--cardBg);
+  border: 1px solid var(--cardBorder);
   font-family: var(--font-latin);
   font-size: 0.7em;
-  color: var(--textMuted);
+  color: var(--textSecondary);
   white-space: nowrap;
   pointer-events: none;
 }

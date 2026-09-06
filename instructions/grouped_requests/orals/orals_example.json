@@ -1,0 +1,34 @@
+[
+  {
+    "identifiant": "a",
+    "texte": "La forêt amazonienne, souvent appelée le poumon de la Terre, est une vaste région d'Amérique du Sud. Elle abrite une biodiversité incroyable, avec des millions d'espèces végétales et animales. Malheureusement, la déforestation menace cet écosystème fragile, ce qui a des conséquences directes sur le changement climatique mondial.",
+    "questions_list": [
+      {
+        "questionid": "1",
+        "question_value": "Quel est le surnom souvent donné à la forêt amazonienne ?"
+      },
+      {
+        "questionid": "2",
+        "question_value": "Quelles sont les conséquences de la déforestation mentionnées dans le texte ?"
+      }
+    ]
+  },
+  {
+    "identifiant": "b",
+    "texte": "L'invention de l'imprimerie par Johannes Gutenberg au quinzième siècle a révolutionné la diffusion des connaissances. Avant cette découverte, les livres étaient copiés à la main par des moines, ce qui prenait énormément de temps. L'imprimerie a permis de produire des textes en grande quantité et à moindre coût.",
+    "questions_list": [
+      {
+        "questionid": "1",
+        "question_value": "Qui a inventé l'imprimerie et à quelle époque ?"
+      },
+      {
+        "questionid": "2",
+        "question_value": "Comment les livres étaient-ils reproduits avant cette invention ?"
+      },
+      {
+        "questionid": "4",
+        "question_value": "Quels ont été les principaux avantages de l'imprimerie selon le texte ?"
+      }
+    ]
+  }
+]

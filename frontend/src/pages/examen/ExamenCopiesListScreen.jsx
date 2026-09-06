@@ -7,8 +7,8 @@ import "../screens.css";
 const FORMAT_LABELS = { ecrit: "Écrit", oral: "Oral" };
 const TYPE_LABELS = { rapide: "Rapide", long: "Long", tres_long: "Très long" };
 
-const th = { textAlign: "start", padding: "4px 8px", borderBottom: "1px solid var(--border)" };
-const td = { padding: "6px 8px", borderBottom: "1px solid var(--border)" };
+const th = { textAlign: "start", padding: "4px 8px", borderBottom: "1px solid var(--cardBorder)" };
+const td = { padding: "6px 8px", borderBottom: "1px solid var(--cardBorder)" };
 
 export default function ExamenCopiesListScreen() {
   const [copies, setCopies] = useState(null);

@@ -11,7 +11,7 @@
   height: 36px;
   border: none;
   border-radius: 50%;
-  background: #64748b;
+  background: var(--speakerIcon);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +47,7 @@
   max-width: 117px;
   height: 6px;
   border-radius: 999px;
-  background: var(--border);
+  background: var(--cardBorder);
   cursor: pointer;
 }
 

@@ -57,7 +57,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -448,6 +448,7 @@ export default function ExamenOralScreen() {
         <GeminiWaiting
           key={batchProgress ? "batch" : "single"}
           showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
+          allowChansons={!!batchProgress}
           label={
             batchProgress ? (
               <>
@@ -467,7 +468,7 @@ export default function ExamenOralScreen() {
                   <button
                     type="button"
                     className="link-btn"
-                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                     disabled={index === 0}
                     onClick={() => setIndex(index - 1)}
                   >
@@ -481,7 +482,7 @@ export default function ExamenOralScreen() {
                   <button
                     type="button"
                     className="link-btn"
-                    style={{ textDecoration: "none", color: "var(--text)" }}
+                    style={{ textDecoration: "none", color: "var(--textPrimary)" }}
                     disabled={index === exam.questions.length - 1}
                     onClick={() => setIndex(index + 1)}
                   >
@@ -497,7 +498,7 @@ export default function ExamenOralScreen() {
               width: "100%",
               maxWidth: 320,
               border: "none",
-              borderTop: "1px solid var(--border)",
+              borderTop: "1px solid var(--cardBorder)",
               margin: "1em 0 0",
             }}
           />
@@ -506,14 +507,14 @@ export default function ExamenOralScreen() {
       </p>
 
       {attemptError && (
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {attemptError}
         </p>
       )}
 
       {geminiError && (
         <>
-          <p className="muted" style={{ color: "var(--danger)" }}>
+          <p className="muted" style={{ color: "var(--annulationPleine)" }}>
             {geminiError}
           </p>
           {Object.keys(pendingAnswers).length > 0 && (
@@ -596,11 +597,11 @@ export default function ExamenOralScreen() {
       {answer && q.type === "rapport" && (
         <>
           <p style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Rapport de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.rapport}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Rapport de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.rapport}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -622,7 +623,7 @@ export default function ExamenOralScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.justification_summary.map((e, i) => (
@@ -653,7 +654,7 @@ export default function ExamenOralScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.justification_details.map((e, i) => (
@@ -669,7 +670,7 @@ export default function ExamenOralScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--border)",
+                      borderTop: "1px solid var(--cardBorder)",
                       margin: 0,
                     }}
                   />
@@ -692,9 +693,9 @@ export default function ExamenOralScreen() {
                   style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
                 >
                   <ul style={{ margin: 0, paddingInlineStart: "1.2em", fontSize: "0.75em" }}>
-                    <li style={{ color: "var(--text)" }}>
+                    <li style={{ color: "var(--textPrimary)" }}>
                       {reportNote.comment}{" "}
-                      <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>
+                      <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
                         La note Résumé compte deux fois plus que la note Détails dans le calcul de la note globale.
                       </span>
                     </li>
@@ -709,11 +710,11 @@ export default function ExamenOralScreen() {
       {answer && q.type !== "rapport" && (
         <>
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>{answer.verbatim}</span>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -737,7 +738,7 @@ export default function ExamenOralScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.errors_rating_completeness.map((e, i) => (
@@ -770,7 +771,7 @@ export default function ExamenOralScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.errors_rating_hebrew.map((e, i) => (
@@ -803,7 +804,7 @@ export default function ExamenOralScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {answer.errors_rating_comprehension.map((e, i) => (
@@ -822,7 +823,7 @@ export default function ExamenOralScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--border)",
+                      borderTop: "1px solid var(--cardBorder)",
                       margin: 0,
                     }}
                   />
@@ -850,7 +851,7 @@ export default function ExamenOralScreen() {
                       paddingInlineStart: "1.2em",
                       fontStyle: "italic",
                       fontSize: "0.85em",
-                      color: "var(--textMuted)",
+                      color: "var(--textSecondary)",
                     }}
                   >
                     <li>{capitalize(globalNote.comment)}</li>

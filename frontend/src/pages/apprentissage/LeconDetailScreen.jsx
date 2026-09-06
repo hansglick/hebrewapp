@@ -29,7 +29,7 @@ export default function LeconDetailScreen() {
   function notVisitedStyle(category) {
     const c = exploration?.categories?.[category];
     if (!c || c.total === 0 || c.seen > 0) return undefined;
-    return { border: "2px solid var(--danger)" };
+    return { border: "2px solid var(--annulationPleine)" };
   }
 
   return (

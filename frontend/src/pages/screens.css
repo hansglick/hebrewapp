@@ -19,11 +19,26 @@
   user-select: none;
 }
 
+/* Remonte l'ensemble du contenu de l'écran principal (Accueil) de quelques
+   pixels — scopé à cet écran seul (pas .screen, partagé par tous les
+   écrans) pour éviter le scroll sur mobile, cf. demande explicite du user. */
+.accueil-screen {
+  margin-top: -16px;
+}
+
+/* Idem pour les questions orales (révisions/leçon) : remonte le contenu de
+   sorte à réduire de moitié l'espace mesuré entre la bordure inférieure de
+   la barre de contrôle et le titre "Contenu" du premier bloc audio (88px
+   -> 44px) — cf. demande explicite du user. */
+.question-orale-screen {
+  margin-top: -44px;
+}
+
 .screen-image {
   max-width: 100%;
   max-height: 320px;
   border-radius: 12px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--cardBorder);
   object-fit: cover;
   -webkit-user-drag: none;
   user-drag: none;
@@ -41,14 +56,18 @@
 
 .translate-textarea::placeholder {
   font-size: 0.5em;
-  color: var(--textMuted);
+  color: var(--textSecondary);
 }
 
 /* Même ombre que la tuile "Traduire la phrase" (cf. LabeledTile
    bordered/shadow) et que le champ de saisie hébreu (cf.
-   .hebrew-input-with-voice) — cf. demande explicite du user. */
+   .hebrew-input-with-voice) — cf. demande explicite du user. Bordure au
+   même token que .hebrew-input-textarea (var(--tileAccent), couleur du
+   titre "Réponse"), pour la même raison. */
 .translate-textarea {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--tileAccent);
+  box-sizing: border-box;
 }
 
 .hebrew-word-row {
@@ -73,7 +92,7 @@
 }
 
 .muted {
-  color: var(--textMuted);
+  color: var(--textSecondary);
   font-size: 0.85em;
 }
 
@@ -89,11 +108,11 @@
 .tile-list button {
   display: block;
   padding: 14px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--cardBorder);
   border-radius: 10px;
   text-decoration: none;
-  color: var(--text);
-  background: var(--surface);
+  color: var(--textPrimary);
+  background: var(--cardBg);
   font-size: 1em;
   cursor: pointer;
 }
@@ -144,7 +163,7 @@
   max-width: 320px;
   height: 10px;
   border-radius: 999px;
-  background: var(--border);
+  background: var(--cardBorder);
   overflow: hidden;
 }
 
@@ -158,10 +177,10 @@
   position: relative;
   width: 100%;
   max-width: 320px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--cardBorder);
   border-radius: 10px;
   padding: 12px 14px;
-  background: var(--surface);
+  background: var(--cardBg);
   text-align: start;
 }
 
@@ -206,7 +225,7 @@
 }
 
 .card-link {
-  color: var(--text);
+  color: var(--textPrimary);
   text-decoration: none;
   font-weight: 600;
 }
@@ -214,7 +233,7 @@
 .card-details {
   margin-top: 8px;
   font-size: 0.85em;
-  color: var(--textMuted);
+  color: var(--textSecondary);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -224,7 +243,7 @@
   position: relative;
   width: 100%;
   max-width: 320px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--cardBorder);
   border-radius: 10px;
   padding: 14px;
   font-size: 1em;
@@ -234,17 +253,17 @@
 }
 
 .exam-tile.grey {
-  background: var(--surface);
-  color: var(--textMuted);
+  background: var(--cardBg);
+  color: var(--textSecondary);
 }
 
 .exam-tile.red {
-  background: var(--danger);
+  background: var(--annulationPleine);
   color: #fff;
 }
 
 .exam-tile.green {
-  background: var(--success);
+  background: var(--validationPleine);
   color: #fff;
   border: none;
   cursor: default;
@@ -260,9 +279,26 @@
    désactivé (ex: "Envoyer ma réponse" avec un champ de saisie vide), cf.
    demande explicite du user. */
 .exam-tile.green:disabled {
-  background: var(--successLight);
+  background: var(--validationGrisee);
   color: #fff;
   opacity: 1;
+}
+
+/* Boutons "discrets" volontairement pastel même actifs (pas seulement
+   grisés) — ex: "Commencer à la première leçon" / "Abandonner le test",
+   cf. demande explicite du user. */
+.exam-tile.green.pastel {
+  background: var(--validationGrisee);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.exam-tile.red.pastel {
+  background: var(--annulationGrisee);
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 .exam-tile-tooltip {
@@ -275,7 +311,7 @@
   margin-bottom: 8px;
   padding: 8px 12px;
   border-radius: 8px;
-  background: var(--text);
+  background: var(--textPrimary);
   color: var(--bg);
   font-size: 0.75em;
   font-weight: 400;
@@ -298,9 +334,9 @@
 }
 
 .toggle-group button {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--textMuted);
+  border: 1px solid var(--cardBorder);
+  background: var(--cardBg);
+  color: var(--textSecondary);
   border-radius: 999px;
   padding: 4px 12px;
   font-size: 0.85em;
@@ -315,9 +351,9 @@
 }
 
 .quizz-bubble {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  border: 1px solid var(--cardBorder);
+  background: var(--cardBg);
+  color: var(--textPrimary);
   border-radius: 999px;
   padding: 6px 14px;
   font-size: 1em;
@@ -330,23 +366,23 @@
    (rouge) selon la réponse, cf. demande explicite du user (double-tap au
    lieu d'un bouton "Valider"). */
 .quizz-bubble.selected {
-  background: var(--successLight);
-  color: var(--text);
-  border-color: var(--successLight);
+  background: var(--validationGrisee);
+  color: var(--textPrimary);
+  border-color: var(--validationGrisee);
   font-weight: 600;
 }
 
 .quizz-bubble.correct {
-  background: var(--success);
+  background: var(--validationPleine);
   color: #fff;
-  border-color: var(--success);
+  border-color: var(--validationPleine);
   font-weight: 600;
 }
 
 .quizz-bubble.wrong {
-  background: var(--danger);
+  background: var(--annulationPleine);
   color: #fff;
-  border-color: var(--danger);
+  border-color: var(--annulationPleine);
   font-weight: 600;
 }
 
@@ -369,7 +405,7 @@
 }
 
 .radio-group input[type="radio"] {
-  accent-color: #64748b;
+  accent-color: var(--speakerIcon);
   cursor: pointer;
 }
 
@@ -389,11 +425,11 @@
 }
 
 .eval-btn.success {
-  color: var(--success);
+  color: var(--validationPleine);
 }
 
 .eval-btn.danger {
-  color: var(--danger);
+  color: var(--annulationPleine);
 }
 
 .eval-btn.pulse {
@@ -569,13 +605,13 @@
      nue à gauche, seul un trait vertical (déjà posé par .curiosite-media)
      la sépare de l'encadré. */
   .curiosite-split-racine .curiosite-content {
-    border: 1px solid var(--border);
+    border: 1px solid var(--cardBorder);
     border-radius: 10px;
     padding: 12px 14px !important;
-    background: var(--surface);
+    background: var(--cardBg);
   }
 
-  /* var(--border) est trop clair pour rester visible sur le fond blanc nu
+  /* var(--cardBorder) est trop clair pour rester visible sur le fond blanc nu
      du côté illustration (contrairement aux autres types, dont le fond
      crème --surface derrière le trait lui donne du contraste). */
   .curiosite-split-racine .curiosite-media {
@@ -591,7 +627,7 @@
 
   .curiosite-split .curiosite-media {
     padding-inline-end: 24px;
-    border-inline-end: 1px solid var(--border);
+    border-inline-end: 1px solid var(--cardBorder);
   }
 
   .curiosite-split .curiosite-media img {

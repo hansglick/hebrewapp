@@ -5,6 +5,7 @@ import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
 import { speak } from "../utils/speech";
+import { BINYAN_COLORS } from "../config/appConfig";
 import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
@@ -179,12 +180,12 @@ export default function VerbeScreen() {
             style={{ marginInlineEnd: 10, verticalAlign: "middle" }}
             onClick={() => speak(verbe.pure)}
           >
-            <SpeakerIcon color="#64748b" />
+            <SpeakerIcon color="var(--speakerIcon)" />
           </button>
           {verbe.pure}
           <span
             className="binyan-pill"
-            style={{ backgroundColor: verbe.binyan_color, cursor: "pointer" }}
+            style={{ backgroundColor: BINYAN_COLORS[verbe.binyan], cursor: "pointer" }}
             onClick={toggleBinyanInline}
           />
           <button
@@ -194,7 +195,7 @@ export default function VerbeScreen() {
               fontSize: "0.5em",
               marginInlineStart: 1,
               verticalAlign: "middle",
-              color: verbe.binyan_color,
+              color: BINYAN_COLORS[verbe.binyan],
               fontWeight: 700,
             }}
             onClick={toggleBinyanInline}
@@ -203,7 +204,7 @@ export default function VerbeScreen() {
           </button>
           <span
             style={{
-              color: "var(--textMuted)",
+              color: "var(--cardBorder)",
               fontWeight: 400,
               fontSize: "0.5em",
               marginInlineStart: 4,
@@ -219,7 +220,7 @@ export default function VerbeScreen() {
               fontSize: "0.5em",
               marginInlineStart: 4,
               verticalAlign: "middle",
-              color: "#64748b",
+              color: "var(--accent)",
               fontWeight: 700,
             }}
             onClick={toggleRacineInline}
@@ -233,7 +234,7 @@ export default function VerbeScreen() {
             fontStyle: "italic",
             fontWeight: 400,
             fontSize: "calc(var(--font-size-hebrew-large) * 0.4355)",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
           }}
         >
           {capitalize(verbe.traduction)}
@@ -281,7 +282,7 @@ export default function VerbeScreen() {
             className={temps === t.key ? "active" : ""}
             style={
               temps === t.key
-                ? { backgroundColor: verbe.binyan_color, borderColor: verbe.binyan_color }
+                ? { backgroundColor: BINYAN_COLORS[verbe.binyan], borderColor: BINYAN_COLORS[verbe.binyan] }
                 : undefined
             }
             onClick={() => openTemps(t.key)}
@@ -296,7 +297,7 @@ export default function VerbeScreen() {
           width: "100%",
           maxWidth: 320,
           border: "none",
-          borderTop: "1px solid var(--border)",
+          borderTop: "1px solid var(--cardBorder)",
           margin: "1em 0 0",
         }}
       />
@@ -316,7 +317,7 @@ export default function VerbeScreen() {
                   className="hebrew-large"
                   style={{
                     margin: 0,
-                    color: "var(--text)",
+                    color: "var(--textPrimary)",
                     fontWeight: 600,
                     fontSize: "calc(var(--font-size-hebrew-large) * 0.64)",
                   }}
@@ -356,7 +357,7 @@ export default function VerbeScreen() {
                       onClick={() => speak(conjugaisonsTemps[personneKey]?.conjugaison)}
                       style={{ visibility: revealed ? "visible" : "hidden" }}
                     >
-                      <SpeakerIcon color="var(--text)" />
+                      <SpeakerIcon color="var(--speakerIcon)" />
                     </button>
                   </td>
                 </tr>

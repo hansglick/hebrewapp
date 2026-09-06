@@ -1,0 +1,27 @@
+[
+  {
+    "identifiant": "1",
+    "sentence_to_translate": "Je vais à la plage demain avec mes amis.",
+    "answer": "אני הולך לים אתמול עם החברים שלי."
+  },
+  {
+    "identifiant": "2",
+    "sentence_to_translate": "J'aime beaucoup manger des pommes rouges.",
+    "answer": "אני אוהב הרבה לאכול תפוחים אדום."
+  },
+  {
+    "identifiant": "3",
+    "sentence_to_translate": "Le chat dort sur le lit.",
+    "answer": "חתול ישנה במיטה."
+  },
+  {
+    "identifiant": "4",
+    "sentence_to_translate": "Nous apprenons l'hébreu chaque jour.",
+    "answer": "אנחנו לומד עברית כל היום."
+  },
+  {
+    "identifiant": "5",
+    "sentence_to_translate": "Où se trouve la gare la plus proche ?",
+    "answer": "איפה רכבת תחנה קרוב?"
+  }
+]

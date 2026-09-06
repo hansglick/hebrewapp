@@ -1,0 +1,32 @@
+/* Parité largeur/hauteur entre champs de saisie et bouton, cf. demande
+   explicite du user — un <textarea>, un <input> et un <button> ne
+   s'alignent jamais de façon fiable via seuls padding/font-size, d'où une
+   hauteur explicite identique sur les 3. */
+.auth-pin-input {
+  width: 100%;
+  max-width: 320px;
+  height: 52px;
+  box-sizing: border-box;
+  font-size: 1.1em;
+  letter-spacing: 0.3em;
+  text-align: center;
+  background: var(--cardBg);
+  color: var(--textPrimary);
+  border: 1px solid var(--cardBorder);
+  border-radius: 10px;
+  outline: none;
+}
+
+/* Cible .hebrew-input-textarea (composant partagé HebrewInput) sans
+   toucher à son CSS global, utilisé ailleurs dans l'app avec ses
+   dimensions actuelles. */
+.auth-pseudo-input .hebrew-input-textarea {
+  height: 52px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.auth-submit-btn {
+  height: 52px;
+  box-sizing: border-box;
+}

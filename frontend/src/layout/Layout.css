@@ -3,22 +3,23 @@
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  color: var(--text);
+  color: var(--textPrimary);
   font-family: var(--font-latin);
   font-size: var(--font-size-base);
 }
 
-/* La barre de contrôle supérieure est un bandeau toujours en dark mode,
-   quel que soit le thème réel choisi par le user (desktop ou mobile) — seul
-   l'espace sous le bandeau (.app-content) suit le toggle. Couleurs codées en
-   dur (palette dark d'appConfig.js) plutôt que les var(--...) qui, elles,
-   suivent le thème réel. */
+/* La barre de contrôle supérieure est un bandeau toujours dans les mêmes
+   teintes sombres, quel que soit le thème réel choisi par le user (desktop
+   ou mobile) — seul l'espace sous le bandeau (.app-content) suit le toggle.
+   Tokens `--chrome*` (appConfig.js) plutôt que les var(--...) habituels
+   (qui, eux, suivent le thème réel) : mêmes valeurs qu'avant cette
+   migration, juste centralisées pour rester skinnables plus tard. */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #16171d;
-  border-bottom: 2.68px solid #a9d6f5;
+  background: var(--chromeBg);
+  border-bottom: 2.68px solid var(--logoAccent);
   /* Force un calque de composition GPU dédié : sans ça, certains navigateurs
      mobiles repeignent la barre "en retard" par rapport au scroll pendant
      l'animation de rétractation de la barre d'adresse, ce qui se voit comme
@@ -89,7 +90,7 @@
 .header-divider {
   width: 1px;
   height: 30px;
-  background: #4b5563;
+  background: var(--chromeDivider);
   margin-inline: 12px;
   flex-shrink: 0;
 }
@@ -97,10 +98,10 @@
 .header-btn,
 .header-niveau {
   background: none;
-  border: 1px solid #2e303a;
+  border: 1px solid var(--chromePanelBorder);
   border-radius: 8px;
   padding: 9px 18px;
-  color: #f3f4f6;
+  color: var(--chromeTextPrimary);
   text-decoration: none;
   font-family: var(--font-latin);
   font-size: 1.35em;
@@ -112,11 +113,11 @@
   font-size: 2.7em;
   padding: 0;
   border: none;
-  color: #f3f4f6;
+  color: var(--chromeTextPrimary);
 }
 
 .header-niveau-lesson-code {
-  color: #9ca3af !important;
+  color: var(--chromeTextSecondary) !important;
 }
 
 .header-niveau img {
@@ -136,11 +137,11 @@
   font-size: 1.5em;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: #f3f4f6;
+  color: var(--chromeTextPrimary);
 }
 
 .header-timer-red {
-  color: #ff6b6b;
+  color: var(--chromeDanger);
 }
 
 .wallet-strip {
@@ -151,7 +152,7 @@
   padding: 0;
   font-family: inherit;
   font-size: 1.3em;
-  color: #9ca3af;
+  color: var(--chromeTextSecondary);
   flex-wrap: wrap;
   text-align: start;
 }
@@ -183,11 +184,11 @@
 }
 
 .switch-wrap .switch {
-  background: #999999;
+  background: var(--themeToggleTrack);
 }
 
 .switch-wrap .switch-knob {
-  background: #a9d6f5;
+  background: var(--themeToggleKnob);
 }
 
 .mobile-menu-btn {
@@ -223,8 +224,8 @@
   min-width: 220px;
   padding: 10px;
   border-radius: 10px;
-  background: #1f2028;
-  border: 1px solid #2e303a;
+  background: var(--chromeBg);
+  border: 1px solid var(--chromePanelBorder);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
@@ -236,7 +237,7 @@
   background: none;
   padding: 8px;
   border-radius: 8px;
-  color: #f3f4f6;
+  color: var(--chromeTextPrimary);
   font-family: var(--font-latin);
   font-size: 0.85em;
   cursor: pointer;
@@ -244,16 +245,16 @@
 }
 
 .header-mobile-panel-row:hover {
-  background: #2e303a;
+  background: var(--chromePanelBorder);
 }
 
 .header-mobile-panel .switch {
-  background: #444a58;
-  border-color: #444a58;
+  background: var(--chromeToggleTrack);
+  border-color: var(--chromeToggleTrack);
 }
 
 .header-mobile-panel .switch-knob {
-  background: #a9d6f5;
+  background: var(--chromeTextPrimary);
 }
 
 @media (max-width: 600px) {

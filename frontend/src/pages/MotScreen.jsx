@@ -163,10 +163,10 @@ export default function MotScreen() {
 
             <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
               <button type="button" className="speak-btn" onClick={() => speak(mot.original)}>
-                <SpeakerIcon color="var(--text)" size={27} />
+                <SpeakerIcon color="var(--speakerIcon)" size={27} />
               </button>
               <button type="button" className="speak-btn" onClick={toggleRacineInline}>
-                <span className="racine-badge" style={{ background: "#64748b", fontWeight: 700 }}>
+                <span className="hebrew" style={{ fontWeight: 700, fontSize: "1.4em", color: "var(--accent)" }}>
                   ש
                 </span>
               </button>
@@ -177,12 +177,12 @@ export default function MotScreen() {
                 width: "70%",
                 maxWidth: 400,
                 border: "none",
-                borderTop: "1px solid var(--border)",
+                borderTop: "1px solid var(--cardBorder)",
                 margin: 0,
               }}
             />
 
-            <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textMuted)" }}>{mot.french}</span>
+            <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{mot.french}</span>
 
             {/* position:absolute (au lieu d'un enfant normal du flex
                 column) : n'affecte donc jamais la position des éléments
@@ -245,10 +245,10 @@ export default function MotScreen() {
 
             <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
               <button type="button" className="speak-btn" onClick={() => speak(mot.original)}>
-                <SpeakerIcon color="var(--text)" size={27} />
+                <SpeakerIcon color="var(--speakerIcon)" size={27} />
               </button>
               <button type="button" className="speak-btn" onClick={toggleRacineInline}>
-                <span className="racine-badge" style={{ background: "#64748b", fontWeight: 700 }}>
+                <span className="hebrew" style={{ fontWeight: 700, fontSize: "1.4em", color: "var(--accent)" }}>
                   ש
                 </span>
               </button>
@@ -259,7 +259,7 @@ export default function MotScreen() {
                 width: "70%",
                 maxWidth: 400,
                 border: "none",
-                borderTop: "1px solid var(--border)",
+                borderTop: "1px solid var(--cardBorder)",
                 margin: 0,
               }}
             />
@@ -310,7 +310,7 @@ export default function MotScreen() {
                   gap: 40,
                 }}
               >
-                <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textMuted)" }}>{mot.french}</span>
+                <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{mot.french}</span>
                 {/* wrong.png/right.png (au lieu des glyphes ✗/✓ texte) —
                     cf. demande explicite du user. className danger/success
                     conservée (couleur du bouton lui-même, pas de l'image)

@@ -137,7 +137,7 @@ export default function DictionnaireScreen() {
               <div className="card">
                 <p
                   className="hebrew"
-                  style={{ margin: 0, fontSize: "1.1em", direction: "rtl", textAlign: "right", color: "var(--text)" }}
+                  style={{ margin: 0, fontSize: "1.1em", direction: "rtl", textAlign: "right", color: "var(--textPrimary)" }}
                 >
                   {r.hebrew_nikud ?? r.hebrew}
                   <button
@@ -155,7 +155,7 @@ export default function DictionnaireScreen() {
                       cursor: "pointer",
                     }}
                   >
-                    <SpeakerIcon color="#64748b" />
+                    <SpeakerIcon color="var(--speakerIcon)" />
                   </button>
                 </p>
                 {r.type === "mot" && r.racine && (
@@ -168,7 +168,7 @@ export default function DictionnaireScreen() {
                         background: "none",
                         border: "none",
                         padding: 0,
-                        color: "var(--danger)",
+                        color: "var(--annulationPleine)",
                         fontWeight: 700,
                         cursor: "pointer",
                         fontSize: "1em",

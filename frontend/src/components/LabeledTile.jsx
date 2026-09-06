@@ -12,17 +12,19 @@
 // reste visible, cf. demande explicite du user pour la plupart des
 // tuiles) — activable au cas par cas (ex: la tuile "Traduire la phrase",
 // bordure bleu nuit, sans ombre — cf. demande explicite du user).
-// `borderColor` : bleu nuit par défaut (couleur de l'étiquette) ;
-// surchargée en gris pour les tuiles "piste audio" (Contenu/Question/
-// Réponse, cf. OralAnswerCapture), cf. demande explicite du user.
-const NAVY = "#1e3a5f";
+// `borderColor` : bleu nuit par défaut (couleur de l'étiquette), y compris
+// pour les tuiles "piste audio" (Contenu/Question/Réponse, cf.
+// OralAnswerCapture) — cf. demande explicite du user (cluster "lecture +
+// minituile + bordure" : les 3 éléments partagent la même couleur). Le
+// fond de l'encadré suit désormais le thème (cardBg) comme les autres
+// encadrés de l'app, au lieu d'un blanc fixe.
 
 export function LabeledTile({
   label,
   children,
   bodyPadding = "18px 14px 14px",
   border = false,
-  borderColor = NAVY,
+  borderColor = "var(--tileAccent)",
   marginTop = 20,
 }) {
   return (
@@ -33,7 +35,7 @@ export function LabeledTile({
           top: -12,
           left: 12,
           zIndex: 1,
-          background: NAVY,
+          background: "var(--tileAccent)",
           color: "#fff",
           fontWeight: 600,
           fontSize: "0.7em",
@@ -46,7 +48,7 @@ export function LabeledTile({
       <div
         style={{
           borderRadius: 10,
-          background: "#fff",
+          background: "var(--cardBg)",
           padding: bodyPadding,
           border: border ? `1px solid ${borderColor}` : "none",
         }}

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau, getExamReadiness } from "../api/user";
-import { getLeconExploration, getExamenHardStatus } from "../api/content";
+import { getLeconExploration } from "../api/content";
 import { getOnboardingStatus, resetAccount } from "../api/onboarding";
 import { ChapitreLogo } from "../components/ChapitreLogo";
 import { MaskIcon } from "../components/MaskIcon";
 import { ProgressBar } from "../components/ProgressBar";
-import { ShekelIcon } from "../components/ShekelIcon";
 import { displayChapitreLabel } from "../utils/chapitreDisplay";
 import { displayLessonNumber } from "../utils/lessonDisplay";
 import { leconProgressMessage } from "../utils/leconProgressMessage";
@@ -30,14 +29,12 @@ export default function Accueil() {
   const [niveau, setNiveau] = useState(null);
   const [exploration, setExploration] = useState(null);
   const [readiness, setReadiness] = useState(null);
-  const [hardStatus, setHardStatus] = useState(null);
   const [confirmingReset, setConfirmingReset] = useState(false);
   const [pseudo, setPseudo] = useState(null);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
     getExamReadiness().then(setReadiness);
-    getExamenHardStatus().then(setHardStatus);
     getOnboardingStatus().then((s) => setPseudo(s.pseudo));
   }, []);
 
@@ -64,10 +61,10 @@ export default function Accueil() {
   const readinessInfo = readinessDisplay(readiness);
 
   return (
-    <section className="screen">
+    <section className="screen accueil-screen">
       {pseudo && (
-        <h1 className="hebrew" style={{ margin: "0 0 8px", direction: "rtl" }}>
-          שלום {pseudo}
+        <h1 className="hebrew" style={{ margin: "0 0 8px", direction: "rtl", fontWeight: 400 }}>
+          שלום <span style={{ fontWeight: 700 }}>{pseudo}</span>
         </h1>
       )}
 
@@ -172,21 +169,11 @@ export default function Accueil() {
         </div>
       </div>
 
+      {/* Plus de tuile "Hard Exam" ici : elle ne "vit" que dans les
+          notifications épinglées (cf. app.action_notifications), qui
+          suffisent déjà à signaler sa disponibilité — cf. demande explicite
+          du user. */}
       <div className="tile-list" style={{ gap: 8, marginTop: 24 }}>
-        {hardStatus?.unlocked && (
-          <Link to="/examen/hard" className="card-link">
-            <div
-              className="card"
-              style={{ textAlign: "center", fontWeight: 600, background: "var(--danger)", color: "#fff" }}
-            >
-              Hard Exam
-              <span className="exam-tile-tooltip">
-                Gagne encore plus de <ShekelIcon size={12} style={{ verticalAlign: -1 }} /> avec cet examen bonus!
-              </span>
-            </div>
-          </Link>
-        )}
-
         <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
           {confirmingReset ? (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
@@ -194,7 +181,7 @@ export default function Accueil() {
                 Toute ta progression sera perdue et tu recommenceras depuis l'onboarding. Confirmer ?
               </p>
               <div style={{ display: "flex", gap: 16 }}>
-                <button type="button" className="link-btn" style={{ color: "var(--danger)" }} onClick={handleReset}>
+                <button type="button" className="link-btn" style={{ color: "var(--annulationPleine)" }} onClick={handleReset}>
                   Oui, réinitialiser
                 </button>
                 <button type="button" className="link-btn" onClick={() => setConfirmingReset(false)}>
@@ -206,7 +193,7 @@ export default function Accueil() {
             <button
               type="button"
               className="link-btn"
-              style={{ color: "var(--textMuted)", fontSize: "0.8em" }}
+              style={{ color: "var(--textSecondary)", fontSize: "0.8em" }}
               onClick={() => setConfirmingReset(true)}
             >
               Réinitialiser mon compte

@@ -213,6 +213,22 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
     const el = textareaRef.current;
     const start = el?.selectionStart ?? value.length;
     const end = el?.selectionEnd ?? value.length;
+
+    // Même logique que handleBeforeInput pour l'espace : finalise la lettre
+    // qui précède (מ/כ/נ/פ/צ -> forme sofit) avant de l'insérer — sinon un
+    // mot tapé entièrement via le clavier virtuel ne serait jamais finalisé
+    // avant le blur final du champ, cf. bug rapporté par le user.
+    if (letter === " ") {
+      const finalized = finalizeWordAt(value.slice(0, start), start);
+      const newValue = finalized + value.slice(start);
+      onChange(newValue.slice(0, start) + letter + newValue.slice(end));
+      const pos = start + letter.length;
+      requestAnimationFrame(() => {
+        el?.setSelectionRange(pos, pos);
+      });
+      return;
+    }
+
     insertAt(letter, start, end);
   }
 
@@ -285,36 +301,49 @@ export default function HebrewInput({ value, onChange, rows = 3, placeholder, sh
         </div>
       </div>
 
-      {keyboardVisible && (
-        <div className="hebrew-keyboard">
-          {AZERTY_ROWS.map((row, i) => (
-            <div key={i} className="hebrew-keyboard-row">
-              {row.map((latin) => {
-                const isRaw = latin in RAW_KEYS;
-                const insertChar = isRaw ? RAW_KEYS[latin] : TRANSLIT_MAP[latin];
-                return (
-                  <button
-                    key={latin}
-                    type="button"
-                    className={`hebrew-key${activeKey === latin ? " active" : ""}`}
-                    onClick={() => handleKeyClick(insertChar)}
-                  >
-                    <span className="hebrew-key-hebrew">{insertChar}</span>
-                    {!isRaw && <span className="hebrew-key-latin">{latin}</span>}
-                  </button>
-                );
-              })}
+      {/* Toujours monté (seule la classe "open" change) : même technique que
+          .voice-prefill-frame-wrap, nécessaire pour l'animation d'ouverture/
+          fermeture — un démontage direct sauterait la transition, cf.
+          demande explicite du user (même animation que le bloc pré-remplir). */}
+      <div className={`hebrew-keyboard-wrap${keyboardVisible ? " open" : ""}`}>
+        <div className="hebrew-keyboard-inner">
+          <div className="hebrew-keyboard">
+            {AZERTY_ROWS.map((row, i) => (
+              <div key={i} className="hebrew-keyboard-row">
+                {row.map((latin) => {
+                  const isRaw = latin in RAW_KEYS;
+                  const insertChar = isRaw ? RAW_KEYS[latin] : TRANSLIT_MAP[latin];
+                  return (
+                    <button
+                      key={latin}
+                      type="button"
+                      className={`hebrew-key${activeKey === latin ? " active" : ""}`}
+                      // Empêche le bouton de voler le focus au textarea (comportement
+                      // par défaut au mousedown) : sans ça, chaque clic déclenche un
+                      // blur -> finalizeWordAt en plein milieu du mot (la lettre tout
+                      // juste tapée se retrouve en forme finale alors que d'autres
+                      // lettres suivent), cf. bug rapporté par le user.
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => handleKeyClick(insertChar)}
+                    >
+                      <span className="hebrew-key-hebrew">{insertChar}</span>
+                      {!isRaw && <span className="hebrew-key-latin">{latin}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+            <div className="hebrew-keyboard-row">
+              <button
+                type="button"
+                className={`hebrew-key hebrew-key-space${activeKey === " " ? " active" : ""}`}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => handleKeyClick(" ")}
+              />
             </div>
-          ))}
-          <div className="hebrew-keyboard-row">
-            <button
-              type="button"
-              className={`hebrew-key hebrew-key-space${activeKey === " " ? " active" : ""}`}
-              onClick={() => handleKeyClick(" ")}
-            />
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

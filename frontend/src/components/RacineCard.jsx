@@ -12,7 +12,7 @@ function highlightRacine(sens, shoresh) {
   return (
     <>
       {sens.slice(0, idx)}
-      <strong style={{ color: "var(--text)" }}>{shoresh}</strong>
+      <strong style={{ color: "var(--textPrimary)" }}>{shoresh}</strong>
       {sens.slice(idx + shoresh.length)}
     </>
   );
@@ -38,12 +38,12 @@ export function RacineCard({ racine }) {
         <p className="muted" style={{ margin: "8px 0 0", textAlign: "center" }}>
           {highlightRacine(racine.sens, racine.shoresh)}
         </p>
-        <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "1.2em 0 0" }} />
+        <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", margin: "1.2em 0 0" }} />
         <ul className="words-list" style={{ marginTop: "1.5em", marginBottom: "1.5em" }}>
           {racine.words.map((w) => (
             <li key={w.hebrew} className="racine-word-row">
               <button type="button" className="speak-btn" onClick={() => speak(w.hebrew)}>
-                <SpeakerIcon color="#64748b" />
+                <SpeakerIcon color="var(--speakerIcon)" />
               </button>
               <div>
                 <p className="hebrew" style={{ margin: 0 }}>

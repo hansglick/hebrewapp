@@ -18,12 +18,12 @@ export default function ExamenHardScreen() {
     <section className="screen">
       <h1>Hard Exam</h1>
       <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320, fontSize: "0.85em" }}>
-        <p style={{ margin: 0, fontWeight: 600, color: "var(--text)" }}>Modalités :</p>
+        <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Modalités :</p>
         <ul
           style={{
             margin: "4px 0 0",
             paddingInlineStart: "1.2em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
             fontStyle: "italic",
             fontSize: "0.8em",
           }}

@@ -97,7 +97,7 @@ export default function QuizzScreen() {
           gap: 16,
         }}
       >
-        <p style={{ color: "var(--text)", margin: 0, fontSize: "0.96em" }}>{quizz.french}</p>
+        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{quizz.french}</p>
 
         {/* width fixée en CSS (cf. .quizz-hr, screens.css) et non ici : un
             style inline gagnerait toujours face à la règle @media,
@@ -106,7 +106,7 @@ export default function QuizzScreen() {
           className="quizz-hr"
           style={{
             border: "none",
-            borderTop: "1px solid var(--border)",
+            borderTop: "1px solid var(--cardBorder)",
             margin: 0,
           }}
         />
@@ -133,7 +133,7 @@ export default function QuizzScreen() {
         )}
 
         {submitted && (
-          <p style={{ fontWeight: 600, color: selected === quizz.key ? "var(--success)" : "var(--danger)" }}>
+          <p style={{ fontWeight: 600, color: selected === quizz.key ? "var(--validationPleine)" : "var(--annulationPleine)" }}>
             {selected === quizz.key ? "Correct" : "Incorrect"}
           </p>
         )}

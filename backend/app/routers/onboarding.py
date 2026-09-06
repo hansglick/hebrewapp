@@ -147,6 +147,44 @@ def advance_exam(payload: AdvanceRequest, user_id: int = Depends(get_current_use
         conn.close()
 
 
+@router.post("/exam/abandon")
+def abandon_exam(user_id: int = Depends(get_current_user_id)):
+    """Bouton "Abandonner le test" — part du principe que le user aurait
+    répondu négativement (pire note possible) à la question courante et à
+    toutes celles restantes jusqu'à la fin, cf. demande explicite du user.
+    Reproduit exactement la branche "completed" de advance_exam, avec des
+    scores simulés au lieu de vrais résultats Gemini."""
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT * FROM onboarding_exam_progress WHERE user_id = ?", (user_id,)
+        ).fetchone()
+        if row is None:
+            raise HTTPException(404, "Aucun examen d'entrée en cours")
+
+        current_set = row["current_set"]
+        current_q = row["question_number"]
+        history = json.loads(row["history_json"])
+        score = 1  # pire note possible sur l'échelle 1-5
+        while current_q < TOTAL_QUESTIONS:
+            history.append({"question_number": current_q, "set": current_set, "kind": "abandon", "score": score})
+            current_set = next_set(current_set, score)
+            current_q += 1
+        history.append({"question_number": current_q, "set": current_set, "kind": "abandon", "score": score})
+
+        final = final_set(current_set, score)
+        niveau = niveau_from_final_set(final)
+        set_user_level(user_id, niveau)
+        conn.execute(
+            "UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (user_id,)
+        )
+        conn.execute("DELETE FROM onboarding_exam_progress WHERE user_id = ?", (user_id,))
+        conn.commit()
+        return {"completed": True, "niveau": niveau, "reference_lesson": reference_lesson(niveau), "history": history}
+    finally:
+        conn.close()
+
+
 @router.post("/skip")
 def skip_onboarding(user_id: int = Depends(get_current_user_id)):
     """Bouton "Commencez au niveau débutant" — même effet de bord que la fin

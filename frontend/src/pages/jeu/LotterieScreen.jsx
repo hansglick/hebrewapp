@@ -51,7 +51,7 @@ export default function LotterieScreen() {
   return (
     <section className="screen">
       {error && (
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {error}
         </p>
       )}

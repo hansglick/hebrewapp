@@ -20,7 +20,7 @@ function FullHistoryPastilles({ history }) {
         <span
           key={i}
           className="binyan-pill"
-          style={{ margin: 0, backgroundColor: passed ? "var(--success)" : "var(--danger)" }}
+          style={{ margin: 0, backgroundColor: passed ? "var(--validationPleine)" : "var(--annulationPleine)" }}
         />
       ))}
     </span>
@@ -97,7 +97,7 @@ export default function ExamenCibleScreen() {
         </h1>
         <p className="muted">
           Pour accéder à cet examen, tu dois d'abord réussir l'examen{" "}
-          <span style={{ color: "var(--text)", fontStyle: "normal" }}>
+          <span style={{ color: "var(--textPrimary)", fontStyle: "normal" }}>
             {displayLessonCode(status.entry_gate)}
           </span>{" "}
           (dernière leçon du chapitre précédent), dans les deux formats écrit et oral.
@@ -116,16 +116,16 @@ export default function ExamenCibleScreen() {
   return (
     <section className="screen">
       <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
-        <span className="binyan-pill" style={{ backgroundColor: "var(--success)", marginInlineStart: 0 }} />
+        <span className="binyan-pill" style={{ backgroundColor: "var(--validationPleine)", marginInlineStart: 0 }} />
         Examen {displayLessonNumber(code)} - {displayChapitreLabel(chapId)}
       </h1>
       <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320, fontSize: "0.85em" }}>
-        <p style={{ margin: 0, fontWeight: 600, color: "var(--text)" }}>Modalités de l'examen :</p>
+        <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Modalités de l'examen :</p>
         <ul
           style={{
             margin: "4px 0 0",
             paddingInlineStart: "1.2em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
             fontStyle: "italic",
           }}
         >
@@ -171,7 +171,7 @@ export default function ExamenCibleScreen() {
           )}
         </ul>
 
-        <p style={{ margin: "1.5em 0 0", fontWeight: 600, color: "var(--text)" }}>
+        <p style={{ margin: "1.5em 0 0", fontWeight: 600, color: "var(--textPrimary)" }}>
           Porte sur la leçon {code.split(".")[1]} du chapitre {code.split(".")[0]} ainsi que les leçons
           antérieures. Soit :
         </p>
@@ -179,7 +179,7 @@ export default function ExamenCibleScreen() {
           style={{
             margin: "4px 0 0",
             paddingInlineStart: "1.2em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
             fontStyle: "italic",
           }}
         >
@@ -194,7 +194,7 @@ export default function ExamenCibleScreen() {
 
       {status.ecrit_passed && status.oral_passed && (
         <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320, fontSize: "0.85em" }}>
-          <p style={{ margin: 0, fontWeight: 600, color: "var(--text)" }}>Examen déjà réussi :</p>
+          <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Examen déjà réussi :</p>
           <ul style={{ margin: "4px 0 0", paddingInlineStart: "1.2em" }}>
             <li>
               Écrit — dernière note réussie :{" "}
@@ -225,7 +225,7 @@ export default function ExamenCibleScreen() {
               <button type="button" className="link-btn" onClick={() => setRetryUnlocked(true)}>
                 Repasser l'examen
               </button>{" "}
-              <span style={{ fontSize: "0.85em", color: "var(--textMuted)", fontStyle: "italic" }}>
+              <span style={{ fontSize: "0.85em", color: "var(--textSecondary)", fontStyle: "italic" }}>
                 Attention : en cas d'échec, tu retomberais au niveau {displayLessonCode(status.fallback_level)}.
               </span>
             </p>

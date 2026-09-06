@@ -36,7 +36,7 @@ export default function ChansonRechercheScreen() {
             gap: 6,
             marginBottom: "1em",
             fontSize: "0.85em",
-            color: "var(--text)",
+            color: "var(--textPrimary)",
           }}
           disabled={!youtubeUrl.trim()}
           onClick={handleExtract}
@@ -58,10 +58,10 @@ export default function ChansonRechercheScreen() {
           width: "100%",
           maxWidth: 320,
           padding: "8px 10px",
-          border: "1px solid var(--border)",
+          border: "1px solid var(--cardBorder)",
           borderRadius: 8,
-          background: "var(--surface)",
-          color: "var(--text)",
+          background: "var(--cardBg)",
+          color: "var(--textPrimary)",
         }}
       />
 
@@ -73,7 +73,7 @@ export default function ChansonRechercheScreen() {
           marginTop: -8,
           fontStyle: "italic",
           fontSize: "0.7em",
-          color: "var(--textMuted)",
+          color: "var(--textSecondary)",
           textAlign: "center",
         }}
       >
@@ -83,7 +83,7 @@ export default function ChansonRechercheScreen() {
       {loading && <WaitingVideo />}
 
       {error && (
-        <p className="muted" style={{ color: "var(--danger)" }}>
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {error}
         </p>
       )}

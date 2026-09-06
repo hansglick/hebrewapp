@@ -70,20 +70,20 @@ export function NiveauUpScreen({ code, finalResult }) {
       </h1>
 
       <div ref={gainsCardRef} className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320 }}>
-        <p style={{ margin: 0, fontWeight: 600, color: "var(--text)" }}>Tes gains :</p>
+        <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Tes gains :</p>
         <ul
           style={{
             margin: "4px 0 0",
             paddingInlineStart: "1.2em",
-            color: "var(--textMuted)",
+            color: "var(--textSecondary)",
             fontSize: "0.85em",
           }}
         >
           <li>
             {/* Gains de l'examen : gras + vert, cf. demande explicite du user. */}
-            <strong style={{ color: "var(--success)" }}>
+            <strong style={{ color: "var(--validationPleine)" }}>
               + {Math.round(finalResult.points_gagnes ?? 0)}{" "}
-              <ShekelIcon size={12} style={{ verticalAlign: -1 }} color="var(--success)" />
+              <ShekelIcon size={12} style={{ verticalAlign: -1 }} color="var(--validationPleine)" />
             </strong>{" "}
             gagnés à l'instant
           </li>
@@ -91,8 +91,8 @@ export function NiveauUpScreen({ code, finalResult }) {
             <>
               <li>
                 {/* Total actuel : vert (pas gras), cf. demande explicite du user. */}
-                <span style={{ color: "var(--success)" }}>
-                  {Math.round(wallet.points)} <ShekelIcon size={12} style={{ verticalAlign: -1 }} color="var(--success)" />
+                <span style={{ color: "var(--validationPleine)" }}>
+                  {Math.round(wallet.points)} <ShekelIcon size={12} style={{ verticalAlign: -1 }} color="var(--validationPleine)" />
                 </span>{" "}
                 au total
               </li>
@@ -112,7 +112,7 @@ export function NiveauUpScreen({ code, finalResult }) {
 
       {hardStatus?.unlocked && (
         <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320 }}>
-          <p style={{ margin: 0, fontWeight: 600, color: "var(--text)" }}>Envie d'un défi ?</p>
+          <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Envie d'un défi ?</p>
           <p className="muted" style={{ margin: "4px 0 0", fontSize: "0.85em", fontStyle: "italic" }}>
             Le Hard Exam regroupe les {hardStatus.total_questions} questions les plus difficiles pour toi
             (chronométré, {hardStatus.timer_minutes} min, un seul essai) — à gagner :{" "}

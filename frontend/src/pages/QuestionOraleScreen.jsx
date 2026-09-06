@@ -47,7 +47,7 @@ function StarRating({ rating }) {
   return (
     <span aria-hidden="true">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textMuted)" }}>
+        <span key={i} style={{ color: i <= rating ? "#f5b301" : "var(--textSecondary)" }}>
           ★
         </span>
       ))}
@@ -189,7 +189,11 @@ export default function QuestionOraleScreen() {
   const globalNote = geminiResult ? computeGlobalNote(geminiResult) : null;
 
   return (
-    <section className="screen" style={{ flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)" }} onPointerDown={swipeHandlers.onPointerDown}>
+    <section
+      className="screen question-orale-screen"
+      style={{ flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)" }}
+      onPointerDown={swipeHandlers.onPointerDown}
+    >
       {loadingGemini ? (
         <WaitingVideo />
       ) : (
@@ -217,7 +221,7 @@ export default function QuestionOraleScreen() {
       {!geminiResult && (
         <>
           {geminiError && (
-            <p className="muted" style={{ color: "var(--danger)" }}>
+            <p className="muted" style={{ color: "var(--annulationPleine)" }}>
               {geminiError}
             </p>
           )}
@@ -235,13 +239,13 @@ export default function QuestionOraleScreen() {
       {geminiResult && (
         <>
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-            <span style={{ color: "var(--text)" }}>Réponse de l'étudiant : </span>
-            <span style={{ fontStyle: "italic", color: "var(--textMuted)" }}>
+            <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
               {geminiResult.verbatim}
             </span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--border)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -265,7 +269,7 @@ export default function QuestionOraleScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {geminiResult.errors_rating_completeness.map((e, i) => (
@@ -298,7 +302,7 @@ export default function QuestionOraleScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {geminiResult.errors_rating_hebrew.map((e, i) => (
@@ -331,7 +335,7 @@ export default function QuestionOraleScreen() {
                         paddingInlineStart: "1.2em",
                         fontStyle: "italic",
                         fontSize: "0.85em",
-                        color: "var(--textMuted)",
+                        color: "var(--textSecondary)",
                       }}
                     >
                       {geminiResult.errors_rating_comprehension.map((e, i) => (
@@ -350,7 +354,7 @@ export default function QuestionOraleScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--border)",
+                      borderTop: "1px solid var(--cardBorder)",
                       margin: 0,
                     }}
                   />
@@ -378,7 +382,7 @@ export default function QuestionOraleScreen() {
                       paddingInlineStart: "1.2em",
                       fontStyle: "italic",
                       fontSize: "0.85em",
-                      color: "var(--textMuted)",
+                      color: "var(--textSecondary)",
                     }}
                   >
                     <li>{capitalize(globalNote.comment)}</li>
