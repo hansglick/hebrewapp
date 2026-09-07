@@ -83,6 +83,17 @@ export default function QuestionOraleScreen() {
 
   const lessonCode = code ?? niveau?.reference_lesson;
 
+  // Numéro de la question affichée en titre ("Question X") : position de
+  // cette question parmi les tirages sans remise de la session (1 pour la
+  // première tirée), remis à 1 au même moment que l'historique de
+  // useRandomBrowser (changement de leçon/mode) — cf. demande explicite du
+  // user. Repasse à 1 si le pool entier (question.total) a été épuisé et
+  // qu'un tirage recommence à répéter, pour rester dans 1..n.
+  const [questionSeq, setQuestionSeq] = useState(1);
+  useEffect(() => {
+    setQuestionSeq(1);
+  }, [lessonCode, mode]);
+
   const { current: question, next, back } = useRandomBrowser(
     (prevQuestion, seen) =>
       lessonCode
@@ -173,10 +184,11 @@ export default function QuestionOraleScreen() {
   // previous/next ne doivent jamais faire quitter le type d'objet
   // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    back();
+    if (back()) setQuestionSeq((n) => Math.max(1, n - 1));
   }
   function goNext() {
     next();
+    setQuestionSeq((n) => n + 1);
   }
 
   const swipeHandlers = useSwipe({
@@ -187,6 +199,10 @@ export default function QuestionOraleScreen() {
   if (!question) return null;
 
   const globalNote = geminiResult ? computeGlobalNote(geminiResult) : null;
+  // Repasse dans 1..total (cf. question.total, renvoyé par le backend) au
+  // cas où la session a fini par tirer plus de questions distinctes que le
+  // pool n'en contient (répétitions après épuisement).
+  const questionNumber = question.total ? ((questionSeq - 1) % question.total) + 1 : questionSeq;
 
   return (
     <section
@@ -201,6 +217,27 @@ export default function QuestionOraleScreen() {
       <ActionHints {...swipeHandlers.hints} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
+      {/* Numéro de la question dans la session (1..total, cf. questionSeq),
+          pour que le user comprenne où il en est — même couleur que les
+          titres de bloc audio (var(--tileAccent)), taille +200% de la
+          leur (0.84em -> 1.68em), centré — cf. demande explicite du user.
+          marginTop: saute une ligne par rapport à la barre de contrôle
+          (trop proche sinon, cf. bug rapporté par le user). L'espace avec
+          le premier titre de bloc audio ("Ecoute le contenu") vient lui du
+          marginTop déjà porté par ce premier bloc (cf. OralAnswerCapture,
+          BLOCK_GAP), pas besoin de marge supplémentaire en dessous. */}
+      <h1
+        style={{
+          color: "var(--tileAccent)",
+          fontSize: "1.176em",
+          fontWeight: 700,
+          textAlign: "center",
+          margin: "1em 0 -19.2px",
+          width: "100%",
+        }}
+      >
+        Question {questionNumber}
+      </h1>
 
       {/* Même habillage pour les deux modes (leçon/oral et révisions/oral) —
           cf. OralAnswerCapture, inspiré de l'écran des questions écrites

@@ -180,6 +180,7 @@ def random_question_orale(
                 current_pair = (text_code_part, int(index_part))
         text_code, q_index = pick_sequential(own_pairs, current_pair)
         draw_pool = None
+        total = len(own_pairs)
     else:
         # `global_texts` liste des lesson_code (= text_code, même format),
         # déjà cumulative (inclut lesson_code lui-même) : chaque question
@@ -203,6 +204,7 @@ def random_question_orale(
         draw_key = picked
         text_code, q_index_str = picked.rsplit("|", 1)
         q_index = int(q_index_str)
+        total = len(recency_pool)
 
     text = texts_data[text_code]
     question = text["questions"][q_index]
@@ -213,6 +215,7 @@ def random_question_orale(
         "question_french": question["french"],
         "texte_hebrew": text["text"],
         "voicepath": text["voicepath"],
+        "total": total,
     }
     if draw_pool is not None:
         chapter, _, lesson_num = text_code.partition(".")

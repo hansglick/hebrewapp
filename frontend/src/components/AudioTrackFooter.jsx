@@ -33,7 +33,13 @@ export function AudioTrackFooter({ currentTime, duration, rate, onCycleRate }) {
           fontVariantNumeric: "tabular-nums",
         }}
       >
-        {formatMinutesSeconds(currentTime)} / {formatMinutesSeconds(duration)}
+        {/* "-:- / -:-" tant que la durée est inconnue (pas encore de piste
+            à lire — enregistrement pas encore effectué, ou métadonnées pas
+            encore chargées) plutôt que "0:00 / 0:00", cf. demande explicite
+            du user. */}
+        {Number.isFinite(duration) && duration > 0
+          ? `${formatMinutesSeconds(currentTime)} / ${formatMinutesSeconds(duration)}`
+          : "-:- / -:-"}
       </span>
       <button
         type="button"

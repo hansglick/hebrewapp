@@ -114,6 +114,17 @@ export default function TexteScreen() {
           ))}
         </div>
       )}
+
+      {/* Espace en fin de texte (3 sauts de ligne, pas plus) pour que le
+          user puisse, en scrollant, lire la fin du texte à hauteur des
+          yeux plutôt que collée en bas de l'écran — regroupés dans un seul
+          conteneur (pas 3 éléments flex directs) pour ne pas cumuler le gap
+          de .screen entre chacun, cf. demande explicite du user. */}
+      <div>
+        <br />
+        <br />
+        <br />
+      </div>
     </section>
   );
 }

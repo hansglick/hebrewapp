@@ -136,19 +136,23 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
   return (
     <div className="voice-prefill-block">
       <div className="voice-prefill-row">
-        <MicrophoneIcon
-          size={ICON_SIZE}
-          badgeColor={voiceState === "recording" ? "var(--annulationPleine)" : "var(--validationPleine)"}
-          pulsing={voiceState === "recording"}
-          onClick={handleMicClick}
-          ariaLabel={
-            voiceState === "recording"
-              ? "Arrêter l'enregistrement"
-              : hasRecording
-              ? "Réenregistrer"
-              : "Enregistrer une réponse vocale"
-          }
-        />
+        {/* marginTop: 4 — même recentrage que .voice-prefill-toggle/-send
+            (align-items: flex-start sur la ligne, cf. VoicePrefill.css). */}
+        <div style={{ marginTop: 4 }}>
+          <MicrophoneIcon
+            size={ICON_SIZE}
+            badgeColor={voiceState === "recording" ? "var(--annulationPleine)" : "var(--validationPleine)"}
+            pulsing={voiceState === "recording"}
+            onClick={handleMicClick}
+            ariaLabel={
+              voiceState === "recording"
+                ? "Arrêter l'enregistrement"
+                : hasRecording
+                ? "Réenregistrer"
+                : "Enregistrer une réponse vocale"
+            }
+          />
+        </div>
 
         <button
           type="button"
@@ -166,22 +170,34 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
           />
         </button>
 
-        <div
-          className={`voice-prefill-wave${inertClass}`}
-          onClick={hasRecording ? handleSeek : undefined}
-        >
-          <span
-            className="voice-prefill-wave-icon voice-prefill-wave-bg"
-            style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
-          />
-          <span
-            className="voice-prefill-wave-icon voice-prefill-wave-fill"
-            style={{
-              WebkitMaskImage: `url(${VOICE_ICON_URL})`,
-              maskImage: `url(${VOICE_ICON_URL})`,
-              clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-              WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-            }}
+        <div className={`voice-prefill-wave${inertClass}`}>
+          {/* Onde + graphique de progression : hauteur fixe, cf.
+              .voice-prefill-wave-graphic. Le compteur/pastille (cf.
+              AudioTrackFooter) vient juste en dessous, dans ce même
+              conteneur, pour que ses deux extrémités tombent exactement sur
+              le début/la fin de l'onde plutôt que sur toute la largeur de
+              la ligne (micro+lecture+onde+envoyer) — cf. demande explicite
+              du user. */}
+          <div className="voice-prefill-wave-graphic" onClick={hasRecording ? handleSeek : undefined}>
+            <span
+              className="voice-prefill-wave-icon voice-prefill-wave-bg"
+              style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
+            />
+            <span
+              className="voice-prefill-wave-icon voice-prefill-wave-fill"
+              style={{
+                WebkitMaskImage: `url(${VOICE_ICON_URL})`,
+                maskImage: `url(${VOICE_ICON_URL})`,
+                clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+              }}
+            />
+          </div>
+          <AudioTrackFooter
+            currentTime={progress * duration}
+            duration={duration}
+            rate={rate}
+            onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
           />
         </div>
 
@@ -207,15 +223,6 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
             setIsPlaying(false);
             setProgress(1);
           }}
-        />
-      </div>
-
-      <div className={inertClass.trim()}>
-        <AudioTrackFooter
-          currentTime={progress * duration}
-          duration={duration}
-          rate={rate}
-          onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
         />
       </div>
 

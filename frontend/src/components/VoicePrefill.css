@@ -8,9 +8,12 @@
   margin: 8px 0;
 }
 
+/* align-items: flex-start (pas center) : la colonne .voice-prefill-wave
+   est désormais plus haute que les boutons (onde + pied compteur/vitesse en
+   dessous, cf. AudioTrackFooter) — cf. demande explicite du user. */
 .voice-prefill-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   width: 100%;
 }
@@ -22,9 +25,19 @@
   text-align: start;
 }
 
+/* Colonne : l'onde (hauteur fixe, cf. .voice-prefill-wave-graphic) puis le
+   pied compteur/vitesse juste en dessous (cf. AudioTrackFooter dans
+   VoicePrefill.jsx), pour que ce dernier s'aligne sur les bords de l'onde
+   plutôt que sur toute la ligne micro+lecture+onde+envoyer — cf. demande
+   explicite du user. */
 .voice-prefill-wave {
-  position: relative;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.voice-prefill-wave-graphic {
+  position: relative;
   height: 32px;
   cursor: pointer;
 }
@@ -50,11 +63,16 @@
      (requestAnimationFrame côté JS), cf. AudioProgressBlock.css. */
 }
 
+/* margin-top: 4px — recentre visuellement ces boutons ronds de 40px sur la
+   hauteur de l'onde (32px, cf. .voice-prefill-wave-graphic), maintenant que
+   la ligne est alignée en haut (align-items: flex-start) plutôt que
+   centrée. */
 .voice-prefill-toggle,
 .voice-prefill-send {
   flex-shrink: 0;
   width: 40px;
   height: 40px;
+  margin-top: 4px;
   border: none;
   border-radius: 50%;
   background: none;
