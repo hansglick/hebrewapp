@@ -67,7 +67,12 @@ def get_lecon(code: str):
     text_code = lesson.get("text") or ""
     has_oral_questions = bool(questions_for_text(texts, text_code))
 
-    return {**lesson, "has_oral_questions": has_oral_questions}
+    # Même logique de gating que has_oral_questions ci-dessus, mais pour la
+    # tuile "Révise le concept" (ParlerScreen/LibraryLeconDetailScreen) —
+    # cf. item_concept.json, champ "presence".
+    has_concept = bool(get_dataset("concept").get(code, {}).get("presence"))
+
+    return {**lesson, "has_oral_questions": has_oral_questions, "has_concept": has_concept}
 
 
 @router.get("/lecons/{code}/exploration")

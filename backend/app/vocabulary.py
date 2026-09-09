@@ -158,6 +158,74 @@ def revision_system_instruction(code_lesson: str) -> str:
     )
 
 
+# system_instruction d'une persona "professeur de concept" (Gemini Live ou
+# équivalent) qui fait assimiler pas à pas le concept grammatical d'une
+# leçon précise (item_concept.json) — cf. demande explicite du user.
+# Template fourni tel quel par le user, seuls TITRE/EXPLICATION/EXEMPLES
+# sont injectés. {{pseudo}} : même convention d'échappement que
+# REVISION_SYSTEM_INSTRUCTION_TEMPLATE ci-dessus (reste littéralement
+# "{pseudo}" après le .format(), substitué à la connexion une fois
+# l'utilisateur identifié — pas connu à la génération, mono-leçon).
+CONCEPT_SYSTEM_INSTRUCTION_TEMPLATE = """Tu es un professeur francophone d'hébreu bienveillant.
+Ton but est d'aider un étudiant à réviser le concept qu'introduit la leçon (uniquement s'il existe).
+Tu devras dans l'ordre :
+- Saluer l'étudiant en disant "Shalom {{pseudo}}".
+- Te présenter.
+- Présenter le concept.
+- Poser UNE SEULE QUESTION A LA FOIS à l'étudiant afin de lui faire assimiler le concept pas à pas
+- Attendre impérativement la réponse de l'étudiant
+- Corrige (si elles existent) ses erreurs avec bienveillance et donne-lui la bonne réponse en la justifiant avant de passer à la question suivante. Continue cet échange pas à pas.
+
+
+# REMARQUES :
+
+- Tu t'adresses à un étudiant francophone, la langue que tu utilises est le français mais tu dois évaluer ses réponses en hébreu.
+- Quand tu utilises un mot en hébreu, lors de l'affichage, représente le mot en caractères hébraïques (sans les nikkud)
+- L'étudiant peut te poser des questions sur l'hébreu de manière générale. Tu dois y répondre mais finis toujours par revenir à ta mission de lui faire assimiler le concept.
+- Utilises tes propres exemples en plus de ceux fournis pour enrichir la conversation.
+
+
+
+# DONNES DE LA LECON
+
+- TITRE DU CONCEPT : {concept}
+- EXPLICATION DU CONCEPT : {explication}
+- EXEMPLES ILLUSTRANT LE CONCEPT : {exemples}
+"""
+
+
+def concept_system_instruction(code_lesson: str) -> str:
+    """system_instruction complète (cf. CONCEPT_SYSTEM_INSTRUCTION_TEMPLATE)
+    pour la persona qui fait réviser le concept grammatical de
+    `code_lesson`.
+
+    Lève ValueError si `code_lesson` n'est pas une leçon du cursus, ou si
+    elle n'introduit aucun concept (item_concept.json, champ "presence")."""
+    if code_lesson not in all_lesson_codes_in_order():
+        raise ValueError(f"Leçon inconnue : {code_lesson!r}")
+    concept_item = get_dataset("concept").get(code_lesson)
+    if not concept_item or not concept_item.get("presence"):
+        raise ValueError(f"Aucun concept pour cette leçon : {code_lesson!r}")
+    exemples = "\n".join(concept_item["exemples"])
+    return CONCEPT_SYSTEM_INSTRUCTION_TEMPLATE.format(
+        concept=concept_item["concept"],
+        explication=concept_item["explication"],
+        exemples=exemples,
+    )
+
+
+def all_concept_system_instructions() -> dict:
+    """{lesson_code: system_instruction} pour toutes les leçons du cursus
+    qui introduisent un concept grammatical (item_concept.json, "presence":
+    true) — sert à générer item_concept_revision.json hors ligne."""
+    concept_data = get_dataset("concept")
+    return {
+        code: concept_system_instruction(code)
+        for code, item in concept_data.items()
+        if item.get("presence")
+    }
+
+
 def mots_et_verbes_recents(lesson_code: str, last_n: int) -> tuple[list, list]:
     """(words_list, verbs_list) — formes non-vocalisées de tout mot/verbe
     dont la leçon d'introduction se situe dans la fenêtre des `last_n`

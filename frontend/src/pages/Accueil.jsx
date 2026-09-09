@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau } from "../api/user";
 import { getOnboardingStatus } from "../api/onboarding";
@@ -31,11 +31,70 @@ function TileTitle({ src, color, children }) {
 export default function Accueil() {
   const [niveau, setNiveau] = useState(null);
   const [pseudo, setPseudo] = useState(null);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
     getOnboardingStatus().then((s) => setPseudo(s.pseudo));
   }, []);
+
+  // Centre le titre "שלום {pseudo}" verticalement dans l'espace entre le
+  // bas du bandeau et la première tuile — cf. demande explicite du user.
+  // marginTop calculé dynamiquement (pas une valeur fixe) : ce titre est
+  // le premier enfant d'un conteneur flex "safe center" (cf. .screen,
+  // screens.css), où un marginTop sur le 1er enfant ne déplace celui-ci
+  // que de la MOITIÉ de sa valeur (le recentrage absorbe l'autre moitié —
+  // cf. memory safe_center_first_child_margin_pitfall). Plutôt que de
+  // supposer ce facteur 0.5 en dur, on le mesure ici : un déplacement
+  // d'essai donne le déplacement réel obtenu, d'où l'on déduit la pente
+  // exacte puis la valeur à poser pour centrer pile — robuste quelle que
+  // soit la taille de fenêtre, recalculé au resize.
+  useLayoutEffect(() => {
+    if (!pseudo) return;
+    const el = titleRef.current;
+    const header = document.querySelector(".app-header");
+    const firstTile = document.querySelector(".accueil-columns");
+    if (!el || !header || !firstTile) return;
+
+    function centerOf(rect) {
+      return rect.top + rect.height / 2;
+    }
+    function targetCenter() {
+      return (header.getBoundingClientRect().bottom + firstTile.getBoundingClientRect().top) / 2;
+    }
+
+    function apply() {
+      el.style.marginTop = "0px";
+      const c0 = centerOf(el.getBoundingClientRect());
+      const target = targetCenter();
+      const rawDelta = target - c0;
+      if (Math.abs(rawDelta) < 0.5) return; // déjà centré, rien à faire
+
+      const testMargin = 40;
+      el.style.marginTop = testMargin + "px";
+      const c1 = centerOf(el.getBoundingClientRect());
+      const slope = (c1 - c0) / testMargin;
+      if (!slope) {
+        el.style.marginTop = "0px";
+        return;
+      }
+      const neededMargin = rawDelta / slope;
+      el.style.marginTop = `${neededMargin}px`;
+
+      // Garde-fou : si le résultat déborde au-dessus du bandeau ou pousse
+      // le titre sous la première tuile (mesure incohérente, contenu
+      // transitoire...), revenir à la position naturelle plutôt que
+      // d'afficher quelque chose de cassé.
+      const finalRect = el.getBoundingClientRect();
+      if (finalRect.top < header.getBoundingClientRect().bottom || finalRect.bottom > firstTile.getBoundingClientRect().top) {
+        el.style.marginTop = "0px";
+      }
+    }
+
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, [pseudo, niveau]);
 
   if (!niveau) return null;
 
@@ -45,7 +104,7 @@ export default function Accueil() {
   return (
     <section className="screen accueil-screen">
       {pseudo && (
-        <h1 className="hebrew" style={{ margin: "0 0 8px", direction: "rtl", fontWeight: 400 }}>
+        <h1 ref={titleRef} className="hebrew" style={{ margin: "0 0 8px", direction: "rtl", fontWeight: 400 }}>
           {/* "!" placé APRÈS {pseudo} dans l'ordre logique du code : le
               titre est en RTL (direction:"rtl"), donc le contenu le plus
               tardif dans l'ordre logique s'affiche le plus à GAUCHE
@@ -73,7 +132,9 @@ export default function Accueil() {
                   <MaskIcon src="/openbook.png" size={22} />
                   <span style={{ fontWeight: 600, fontSize: "1.1em", display: "flex", alignItems: "center" }}>
                     Reprendre la leçon
-                    <ChapitreLogo chapId={chapId} size="22px" style={{ marginInlineStart: 6 }} />
+                    {/* 28.6px = 22*1.3 : augmenté de 30% — cf. demande
+                        explicite du user. */}
+                    <ChapitreLogo chapId={chapId} size="28.6px" style={{ marginInlineStart: 6 }} />
                     <span style={{ fontStyle: "italic", marginInlineStart: 4 }}>
                       {displayLessonNumber(referenceLesson)}
                     </span>

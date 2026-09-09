@@ -94,6 +94,23 @@ export default function LibraryLeconDetailScreen() {
           </Link>
         )}
 
+        {/* Orange (comme les autres tuiles "conversation"), mais orange
+            PASTEL/grisée et non cliquable si la leçon n'introduit aucun
+            concept grammatical (cf. lecon.has_concept, backend) — cf.
+            demande explicite du user. Positionnée juste après "Phrases",
+            avant "Compréhension orale" — cf. demande explicite du user. */}
+        {lecon.has_concept ? (
+          <Link to={`/revision-concept/${code}`} className="card-link">
+            <div className="card" style={tileStyle("#f97316")}>
+              Révise le concept
+            </div>
+          </Link>
+        ) : (
+          <div className="card" style={{ ...tileStyle("#fed7aa"), cursor: "default" }} aria-disabled="true">
+            Révise le concept
+          </div>
+        )}
+
         {/* Orange (comme les 2 conversations plus bas), mais orange
             PASTEL/grisée et non cliquable si la leçon n'a pas de questions
             orales associées (cf. lecon.has_oral_questions, backend) — cf.

@@ -8,6 +8,7 @@ from app.database import init_db
 from app.routers import (
     auth,
     chapters,
+    concept,
     content,
     curiosites,
     evaluations,
@@ -47,6 +48,7 @@ app.include_router(wallet.router)
 app.include_router(curiosites.router)
 app.include_router(jdr.router)
 app.include_router(revision.router)
+app.include_router(concept.router)
 
 app.add_middleware(
     CORSMiddleware,

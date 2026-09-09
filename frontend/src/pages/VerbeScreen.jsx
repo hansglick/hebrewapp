@@ -31,10 +31,11 @@ const QUESTION_MARK_ICON_URL = "/point-dinterrogation.png";
 // parleur/bet/shin) du bloc 1 doivent être gris.
 const ICONS_GRAY = "var(--textSecondary)";
 
+// * 0.75 : réduit de 25% (cf. demande explicite du user).
 const shinIconStyle = {
   display: "inline-block",
-  width: "calc(22px / 1.125)",
-  height: "calc(22px / 1.125)",
+  width: "calc(22px * 0.75 / 1.125)",
+  height: "calc(22px * 0.75 / 1.125)",
   backgroundColor: ICONS_GRAY,
   WebkitMaskImage: "url(/shinletter.png)",
   maskImage: "url(/shinletter.png)",
@@ -58,8 +59,9 @@ const shinIconStyle = {
 // Chrome).
 const betIconStyle = {
   ...shinIconStyle,
-  width: "calc(19.02px / 1.125)",
-  height: "calc(19.02px / 1.125)",
+  // * 0.75 : réduit de 25% (cf. demande explicite du user).
+  width: "calc(19.02px * 0.75 / 1.125)",
+  height: "calc(19.02px * 0.75 / 1.125)",
   WebkitMaskImage: "url(/betletter.png)",
   maskImage: "url(/betletter.png)",
 };
@@ -475,7 +477,9 @@ export default function VerbeScreen() {
               style={{ padding: 0 }}
               onClick={() => speak(cardVerbe.pure)}
             >
-              <SpeakerIcon color={ICONS_GRAY} size={24} />
+              {/* size=18 (24*0.75) : réduit de 25% (cf. demande explicite
+                  du user). */}
+              <SpeakerIcon color={ICONS_GRAY} size={18} />
             </button>
             <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleBinyanInline}>
               <span style={betIconStyle} />
@@ -707,12 +711,13 @@ export default function VerbeScreen() {
                     <img
                       src={QUESTION_MARK_ICON_URL}
                       alt="Afficher la solution"
-                      // 48/1.5 : annule le zoom ambiant de .screen (le
-                      // bloc 3 n'est pas dans le wrapper hero à zoom:0.75,
-                      // l'ambiant vaut donc 1.5 ici) pour rendre à 48px,
-                      // taille exacte de l'écran révision/mot (aucun zoom
-                      // là-bas) — cf. demande explicite du user.
-                      style={{ width: 48 / 1.5, height: 48 / 1.5, display: "block" }}
+                      // 48*0.75/1.5 : 48/1.5 annule le zoom ambiant de
+                      // .screen (le bloc 3 n'est pas dans le wrapper hero à
+                      // zoom:0.75, l'ambiant vaut donc 1.5 ici) pour rendre
+                      // à 48px (taille de l'écran révision/mot), *0.75
+                      // réduit ensuite de 25% — cf. demande explicite du
+                      // user.
+                      style={{ width: (48 * 0.75) / 1.5, height: (48 * 0.75) / 1.5, display: "block" }}
                       draggable={false}
                     />
                   </button>

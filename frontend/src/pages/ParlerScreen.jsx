@@ -30,6 +30,26 @@ export default function ParlerScreen() {
     <section className="screen">
       <h1>Parler</h1>
       <div className="tile-list">
+        {/* Avant "Compréhension" — cf. demande explicite du user. Grisée
+            (non cliquable) si la leçon n'introduit aucun concept
+            grammatical (item_concept.json, champ "presence"), même
+            gating que "Compréhension" ci-dessous. */}
+        {referenceLesson &&
+          (lecon?.has_concept ? (
+            <Link to={`/revision-concept/${referenceLesson}`} className="card-link">
+              <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
+                Révise le concept
+              </div>
+            </Link>
+          ) : (
+            <div
+              className="card"
+              style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em", opacity: 0.5, cursor: "default" }}
+              aria-disabled="true"
+            >
+              Révise le concept
+            </div>
+          ))}
         {referenceLesson &&
           (lecon?.has_oral_questions ? (
             <Link to={`/comprehension-orale/${referenceLesson}`} className="card-link">

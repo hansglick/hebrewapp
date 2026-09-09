@@ -96,9 +96,14 @@
    s'ajuste automatiquement au libellé le plus long des deux — cf. demande
    explicite du user (déplacer le toggle "Clavier hébreu" pour l'aligner sous
    l'autre, quel que soit le texte le plus long). */
+/* justify-content:end : les deux interrupteurs (2e colonne) tombent sous
+   l'extrémité droite du champ de saisie au-dessus, quel que soit le libellé
+   le plus long (1re colonne, toujours max-content) — cf. demande explicite
+   du user, appliqué à tous les usages de HebrewInput dans l'application. */
 .hebrew-input-toggles {
   display: grid;
   grid-template-columns: max-content max-content;
+  justify-content: end;
   column-gap: 8px;
   row-gap: 8px;
   width: 100%;

@@ -14,9 +14,52 @@ import HebrewInput from "../../components/HebrewInput";
 import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { ChapitreLogo } from "../../components/ChapitreLogo";
+import { QuoteBlock, SectionTitle } from "../../components/QuoteBlock";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
 import { displayLessonNumber } from "../../utils/lessonDisplay";
 import "../screens.css";
+
+// Même pastille numérotée que les écrans révision/verbe et onboarding
+// sign-in/register (cf. StepBadge dans ces fichiers, même taille/police) —
+// cf. demande explicite du user ("applique la même logique design que dans
+// l'écran examen blanc / teacher", pastilles numérotées "Traduis"/"Réponse").
+const STEP_BADGE_SIZE = 25;
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+        // Centre la pastille sur le bord gauche du trait/du bloc (même
+        // largeur, cf. stepHr ci-dessous) plutôt que de l'y faire démarrer —
+        // cf. demande explicite du user.
+        position: "relative",
+        left: -STEP_BADGE_SIZE / 2,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+// Même largeur que les blocs pastille (QuoteBlock/SectionTitle, width:100%
+// maxWidth:320) — nécessaire pour que leurs bords gauches coïncident
+// exactement (cf. StepBadge.left ci-dessus) ; auparavant 70%, ce qui
+// désalignait le trait par rapport aux blocs — cf. demande explicite du
+// user.
+const stepHr = (
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+);
 
 function StarRating({ rating }) {
   return (
@@ -295,24 +338,33 @@ export default function OnboardingScreen({ onCompleted }) {
 
   return (
     <section className="screen">
-      <p className="muted" style={{ margin: 0 }}>
-        Question {questionNumber} / {totalQuestions}
-      </p>
+      {/* Logo "accident" (backend/results/logos/accident.png) — remplace
+          l'ancien bouton "Abandonner le test" (même action, cf.
+          handleAbandonTest), tooltip au survol via le pattern
+          .exam-tile-tooltip existant. Index + logo centrés ensemble sur la
+          largeur de l'écran (pas de maxWidth/space-between) — cf. demande
+          explicite du user. */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, width: "100%" }}>
+        <p className="muted" style={{ margin: 0 }}>
+          Question n°{questionNumber}/{totalQuestions}
+        </p>
+        <button
+          type="button"
+          className="onboarding-abandon-btn"
+          disabled={abandoning}
+          onClick={handleAbandonTest}
+        >
+          <img src={mediaUrl("logos/accident.png")} alt="" style={{ width: 28, height: 28 }} draggable={false} />
+          <span className="exam-tile-tooltip">Abandonne le test</span>
+        </button>
+      </div>
+
+      {stepHr}
 
       {loadingGemini ? (
         <GeminiWaiting />
       ) : (
         <>
-          <button
-            type="button"
-            className="exam-tile red pastel"
-            style={{ cursor: "pointer", maxWidth: 200, padding: "8px", fontSize: "0.85em" }}
-            disabled={abandoning}
-            onClick={handleAbandonTest}
-          >
-            Abandonner le test
-          </button>
-
           {geminiError && (
             <p className="muted" style={{ color: "var(--annulationPleine)" }}>
               {geminiError}
@@ -321,21 +373,53 @@ export default function OnboardingScreen({ onCompleted }) {
 
           {question.kind === "ecrit" && (
             <>
-              <p style={{ color: "var(--textPrimary)", margin: "1em 0 0", fontSize: "0.96em" }}>{question.french}</p>
+              {/* Même gabarit que QuestionEcriteScreen (mode "prof") : pastille +
+                  titre "Traduis", barre de citation + phrase française en gris
+                  italique — cf. demande explicite du user. */}
+              <QuoteBlock
+                label={
+                  <>
+                    <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                    Traduis
+                  </>
+                }
+                marginTop={20}
+              >
+                <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+                  {question.french}
+                </p>
+              </QuoteBlock>
+
+              {!result && stepHr}
 
               {!result && (
                 <>
-                  <HebrewInput
-                    key={questionNumber}
-                    value={studentSolution}
-                    onChange={setStudentSolution}
-                    rows={3}
-                    placeholder="Traduis !"
-                  />
+                  {/* marginTop:20 : même espace que celui entre le 1er trait et
+                      le bloc "Traduis" (QuoteBlock, marginTop=20 par défaut) —
+                      cf. demande explicite du user. */}
+                  <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                    <SectionTitle>
+                      <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                      Réponse
+                    </SectionTitle>
+                    {/* Saut de ligne supplémentaire avant le champ de saisie
+                        (trop proche du titre) — cf. demande explicite du user.
+                        HebrewInput ne relaie pas de prop "style", d'où ce div
+                        wrapper. */}
+                    <div style={{ marginTop: "1em" }}>
+                      <HebrewInput
+                        key={questionNumber}
+                        value={studentSolution}
+                        onChange={setStudentSolution}
+                        rows={3}
+                        placeholder="Traduis !"
+                      />
+                    </div>
+                  </div>
                   <button
                     type="button"
                     className="exam-tile green"
-                    style={{ marginTop: 0, cursor: studentSolution.trim() ? "pointer" : "default" }}
+                    style={{ marginTop: 4, cursor: studentSolution.trim() ? "pointer" : "default" }}
                     disabled={!studentSolution.trim()}
                     onClick={handleSubmitEcrit}
                   >

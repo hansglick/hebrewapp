@@ -64,7 +64,7 @@ export default function LeconDetailScreen() {
         )}
         {hasCuriosite && (
           <Link to={`/apprentissage/${chapId}/${code}/curiosite`} className="card-link">
-            <div className="card">Curiosité</div>
+            <div className="card">Coin culture</div>
           </Link>
         )}
       </div>

@@ -1,0 +1,1839 @@
+{
+    "0.01": {
+        "presence": true,
+        "concept": "Les pronoms personnels sujets et l'accord des verbes au présent.",
+        "explication": "En hébreu, les pronoms personnels sujets sont indispensables pour indiquer qui fait l'action. Il en existe dix : אני (je), אתה (tu masculin), את (tu féminin), הוא (il), היא (elle), אנחנו (nous), אתם (vous masculin), אתן (vous féminin), הם (ils) et הן (elles). Contrairement au français, la conjugaison des verbes au présent en hébreu ne dépend pas de la personne grammaticale, mais uniquement du genre (masculin ou féminin) et du nombre (singulier ou pluriel) du sujet. Ainsi, un verbe au présent possède seulement quatre formes. Par exemple, avec les verbes לגור (habiter) ou ללמוד (apprendre), la forme verbale sera identique pour אני, אתה et הוא si le sujet est masculin singulier.",
+        "exemples": [
+            "אני גר (J'habite - dit par un homme)",
+            "את גרה (Tu habites - adressé à une femme)",
+            "הוא לומד (Il apprend)",
+            "אנחנו לומדים (Nous apprenons - masculin ou mixte pluriel)",
+            "הן גרות (Elles habitent - féminin pluriel)"
+        ],
+        "lessoncode": "0.01"
+    },
+    "0.02": {
+        "presence": true,
+        "concept": "Les pronoms démonstratifs (זה, זאת, אלה) et la contraction de la préposition ב avec l'article défini ה.",
+        "explication": "Cette leçon introduit les pronoms démonstratifs en hébreu, qui s'accordent en genre et en nombre. On utilise זה pour le masculin singulier (c'est, ce), זאת pour le féminin singulier (c'est, cette), et אלה pour le pluriel (ce sont, ces). La leçon explique également l'usage de la préposition ב (dans). Lorsqu'elle précède un mot défini par l'article ה (le, la, les), la lettre ה disparaît à l'oral comme à l'écrit, et la préposition ב absorbe sa voyelle pour signifier 'dans le', 'dans la' ou 'dans les'.",
+        "exemples": [
+            "זה שלמה (C'est Shlomo)",
+            "זאת יעל (C'est Yael)",
+            "מי אלה ? (Qui sont-ils ?)",
+            "הם גרים בישראל (Ils habitent en Israël - préposition simple)",
+            "הם לומדים בכיתה (Ils étudient dans la classe - contraction de la préposition ב et de l'article ה)"
+        ],
+        "lessoncode": "0.02"
+    },
+    "0.03": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.03"
+    },
+    "0.04": {
+        "presence": true,
+        "concept": "L'accord en genre et en nombre ainsi que la place de l'adjectif qualificatif en hébreu.",
+        "explication": "En hébreu, l'adjectif qualificatif s'accorde systématiquement en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le nom auquel il se rapporte. La règle syntaxique principale à retenir est que l'adjectif se place toujours après le substantif qu'il qualifie, sans aucune exception. Contrairement au français où certains adjectifs courts peuvent se placer avant le nom, l'hébreu exige une structure stricte où le nom précède sa qualification. Ainsi, pour traduire un bon élève, on dira littéralement un élève bon. Il est donc indispensable de bien identifier le genre et le nombre du nom pour appliquer la bonne terminaison à l'adjectif qui le suit.",
+        "exemples": [
+            "Un bon élève : תלמיד טוב",
+            "Une bonne élève : תלמידה טובה",
+            "De petits élèves : תלמידים קטנים",
+            "De petites élèves : תלמידות קטנות",
+            "Un grand avion : מטוס גדול",
+            "Une grande classe : כיתה גדולה"
+        ],
+        "lessoncode": "0.04"
+    },
+    "0.05": {
+        "presence": true,
+        "concept": "L'expression de l'existence et de l'absence avec les mots יש et אין",
+        "explication": "En hébreu, pour exprimer l'existence ou la présence de quelque chose, on utilise le mot יש, qui correspond à la locution française 'il y a'. Contrairement au français qui utilise une forme impersonnelle composée de plusieurs mots, l'hébreu utilise un seul mot invariable. Pour exprimer l'absence, le vide ou le néant, c'est-à-dire 'il n'y a pas', on emploie le mot אין. Ces deux mots sont fondamentaux dans la syntaxe hébraïque et se placent généralement devant le nom pour indiquer la présence ou l'absence d'un objet ou d'une personne.",
+        "exemples": [
+            "יש ספר (Il y a un livre) / אין ספר (Il n'y a pas de livre)",
+            "יש תלמידים בכיתה (Il y a des élèves dans la classe) / אין תלמידים בכיתה (Il n'y a pas d'élèves dans la classe)",
+            "יש עיתון (Il y a un journal) / אין עיתון (Il n'y a pas de journal)"
+        ],
+        "lessoncode": "0.05"
+    },
+    "0.06": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.06"
+    },
+    "0.07": {
+        "presence": true,
+        "concept": "Les pronoms démonstratifs définis (הזה, הזאת, האלה) et la préposition de direction (ל).",
+        "explication": "En hébreu, pour exprimer les adjectifs démonstratifs ce, cette ou ces, on utilise les pronoms זה pour le masculin singulier, זאת pour le féminin singulier et אלה pour le pluriel. Contrairement au français, le démonstratif se place toujours après le nom, et même après l'adjectif qualificatif s'il y en a un. De plus, lorsqu'il qualifie un nom défini, le pronom démonstratif doit obligatoirement être précédé de l'article défini ה. On dira donc littéralement la table la cette. La leçon introduit également la contraction de la préposition ל avec l'article défini ה, qui fusionnent pour former ל.",
+        "exemples": [
+            "השולחן הזה (Cette table)",
+            "השולחן הגדול הזה (Cette grande table)",
+            "המיטה הזאת (Ce lit)",
+            "המיטה הקטנה הזאת (Ce petit lit)",
+            "התלמידים האלה (Ces élèves)"
+        ],
+        "lessoncode": "0.07"
+    },
+    "0.08": {
+        "presence": true,
+        "concept": "L'expression de la possession (le verbe avoir) au présent avec יש לי et אין לי",
+        "explication": "En hébreu, il n'existe pas de verbe avoir à proprement parler. Pour exprimer la possession au présent, on utilise une structure particulière basée sur les mots יש (il y a) pour l'affirmation et אין (il n'y a pas) pour la négation. À ces mots, on ajoute la préposition ל (à / pour) qui se décline en fonction du possesseur (par exemple, לי pour à moi, לך pour à toi, לו pour à lui, etc.). Ainsi, la phrase j'ai se construit littéralement comme il y a à moi (יש לי) et je n'ai pas comme il n'y a pas à moi (אין לי). Lorsque le possesseur est nommé, on attache la préposition ל directement au prénom ou au nom, par exemple לרוני (à Roni).",
+        "exemples": [
+            "יש לי ספר (J'ai un livre)",
+            "אין לי ספר (Je n'ai pas de livre)",
+            "יש לרוני ספר (Roni a un livre)",
+            "אין לרוני ספר (Roni n'a pas de livre)"
+        ],
+        "lessoncode": "0.08"
+    },
+    "0.09": {
+        "presence": true,
+        "concept": "La conjugaison de quelques verbes au présent (masculin, féminin, singulier et pluriel).",
+        "explication": "Cette leçon introduit la conjugaison au présent de plusieurs verbes hébreux d'action très courants, appartenant à différents groupes verbaux (appelés binyanim) tels que le Pa'al et le Pi'el. Contrairement au français, le temps présent en hébreu (aussi appelé Benoni) s'accorde uniquement en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le sujet, mais il ne varie pas en fonction de la personne (je, tu, il/elle partagent la même forme). Les verbes présentés dans cette leçon sont faire (לעשות), aimer (לאהוב), enseigner (ללמד), raconter (לספר) et se promener (לטייל). Le tableau didactique expose clairement les quatre déclinaisons fondamentales pour chaque verbe : masculin singulier, féminin singulier, masculin pluriel et féminin pluriel, permettant ainsi de formuler des phrases simples du quotidien.",
+        "exemples": [
+            "אני עושה (Je fais - masculin ou féminin singulier)",
+            "היא אוהבת (Elle aime - féminin singulier)",
+            "אנחנו מלמדים (Nous enseignons - masculin pluriel)",
+            "הן מטיילות (Elles se promènent - féminin pluriel)"
+        ],
+        "lessoncode": "0.09"
+    },
+    "0.10": {
+        "presence": true,
+        "concept": "L'utilisation de la préposition את devant un complément d'objet direct (COD) défini.",
+        "explication": "En hébreu, le complément d'objet direct (COD) obéit à une règle syntaxique particulière lorsqu'il est défini. Un COD est considéré comme défini s'il est précédé de l'article défini ה ou s'il s'agit d'un nom propre. Dans ce cas, le verbe doit être obligatoirement suivi de la préposition את avant le COD. Cette préposition n'a pas de traduction littérale en français, elle agit comme un simple marqueur grammatical. À l'inverse, si le COD est indéfini (par exemple un livre au lieu de le livre), on n'utilise pas la préposition את. Les noms propres étant définis par nature, ils prennent toujours את mais jamais l'article ה.",
+        "exemples": [
+            "Je mange une pomme (COD indéfini) : אני אוכל תפוח",
+            "Je mange la pomme (COD défini) : אני אוכל את התפוח",
+            "J'apprends la leçon : אני לומד את השיעור",
+            "J'aime Hanna (nom propre, défini par nature) : אני אוהב את חנה"
+        ],
+        "lessoncode": "0.10"
+    },
+    "0.11": {
+        "presence": true,
+        "concept": "L'utilisation du pronom relatif ש et la distinction entre les expressions de succession temporelle אחר כך, אחרי et אחרי ש.",
+        "explication": "La leçon aborde deux points grammaticaux. Premièrement, le pronom relatif ש (que/qui) qui s'attache toujours au mot suivant en tant que préfixe, car l'hébreu n'accepte pas de lettres orphelines. Deuxièmement, elle explique comment exprimer la succession temporelle avec trois termes distincts. אחר כך signifie ensuite ou après cela et sert à relier deux propositions indépendantes. אחרי signifie après et est exclusivement suivi d'un substantif. Enfin, אחרי ש se traduit par après que et doit obligatoirement être suivi d'un pronom personnel et d'un verbe conjugué, excluant l'usage de l'infinitif.",
+        "exemples": [
+            "הספר שאני קוראת (Le livre que je lis)",
+            "הוא אוכל ארוחת בוקר אחר כך הוא קורא עיתון (Il prend son petit-déjeuner ensuite il lit le journal)",
+            "אחרי השיעור הוא נח (Après le cours, il se repose)",
+            "אחרי שהם שותים קפה הם הולכים לטייל (Après qu'ils boivent un café, ils vont se promener)"
+        ],
+        "lessoncode": "0.11"
+    },
+    "0.12": {
+        "presence": true,
+        "concept": "Récapitulatif des modèles de conjugaison des verbes au présent",
+        "explication": "Cette leçon propose une révision générale de la conjugaison des verbes au présent en hébreu, en les classant selon leurs modèles. On y retrouve les verbes réguliers du groupe Paal comme ללמוד, les verbes se terminant par la lettre Hé comme לשתות, les verbes avec des gutturales comme לנסוע ou לפתוח, les verbes dont la racine contient une voyelle longue comme לגור, ainsi que les verbes du groupe Piel comme לדבר. Pour chaque modèle, les quatre formes du présent sont rappelées : masculin singulier, féminin singulier, masculin pluriel et féminin pluriel.",
+        "exemples": [
+            "Modèle ללמוד : לומד, לומדת, לומדים, לומדות",
+            "Modèle לשתות : שותה, שותה, שותים, שותות",
+            "Modèle לנסוע : נוסע, נוסעת, נוסעים, נוסעות",
+            "Modèle לגור : גר, גרה, גרים, גרות",
+            "Modèle לדבר : מדבר, מדברת, מדברים, מדברות"
+        ],
+        "lessoncode": "0.12"
+    },
+    "0.13": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.13"
+    },
+    "0.14": {
+        "presence": true,
+        "concept": "La distinction entre l'objet direct défini et indéfini et l'utilisation de la particule את.",
+        "explication": "En hébreu, la distinction entre un objet direct défini et indéfini est fondamentale. Lorsqu'un verbe d'action est suivi d'un complément d'objet direct indéfini (par exemple, une pomme - תפוח), le nom est placé directement après le verbe sans aucun mot de liaison. En revanche, lorsque le complément d'objet direct est défini (par exemple, la pomme - התפוח), il est obligatoire d'utiliser la particule את juste avant ce nom. Un nom est généralement rendu défini par l'ajout de l'article défini ה au début du mot. Cet exercice pratique le passage d'une forme à l'autre en ajoutant ou en retirant את et ה.",
+        "exemples": [
+            "Forme indéfinie : אני אוכל תפוח (Je mange une pomme).",
+            "Forme définie : אני אוכל את התפוח (Je mange la pomme).",
+            "Forme indéfinie : היא אוכלת עוגה (Elle mange un gâteau).",
+            "Forme définie : היא אוכלת את העוגה (Elle mange le gâteau)."
+        ],
+        "lessoncode": "0.14"
+    },
+    "0.15": {
+        "presence": true,
+        "concept": "Les mots interrogatifs et la formulation des questions",
+        "explication": "Cette leçon introduit les principaux mots interrogatifs en hébreu, essentiels pour formuler des questions. Ces mots se placent généralement en début de phrase. On y apprend le vocabulaire de base comme מי (qui), מה (quoi), מתי (quand), איפה (où), למה (pourquoi) et כמה (combien). La leçon montre également comment certaines prépositions se combinent avec ces mots, par exemple מאיפה (d'où) ou לאן (vers où). Enfin, elle présente les adjectifs interrogatifs איזה et איזו (quel, quelle) qui s'accordent avec le nom, ainsi que des mots de liaison comme כי (parce que) pour formuler les réponses.",
+        "exemples": [
+            "איך אתה עושה את זה ? (Comment fais-tu ça ?)",
+            "מתי את באה לישראל ? (Quand viens-tu en Israël ?)",
+            "למה את לא כותבת מכתב ? (Pourquoi tu n'écris pas une lettre ?)",
+            "איפה אתה יושב ? (Où es-tu assis ?)",
+            "איזה ספר את קוראת ? (Quel livre lis-tu ?)"
+        ],
+        "lessoncode": "0.15"
+    },
+    "0.16": {
+        "presence": true,
+        "concept": "Le superlatif en hébreu avec le mot הכי",
+        "explication": "Pour exprimer le superlatif en hébreu, on utilise le mot הכי placé avant un adjectif. Ce mot est invariable, ce qui signifie qu'il ne s'accorde ni en genre ni en nombre avec le nom auquel il se rapporte. Il permet de traduire les expressions françaises telles que le plus, la plus ou les plus. Ainsi, pour dire qu'une chose possède une qualité au plus haut degré par rapport aux autres, il suffit d'ajouter הכי juste avant l'adjectif qualificatif dans la phrase.",
+        "exemples": [
+            "איזו עיר את הכי אוהבת בישראל ? (Quelle est la ville que tu aimes le plus en Israël ?)",
+            "זה הפרי הכי טעים ? (C'est le meilleur fruit ?)",
+            "היא הכי גדולה בכיתה. (C'est la plus grande de la classe.)",
+            "הם הילדים הכי חמודים. (Ce sont les enfants les plus mignons.)"
+        ],
+        "lessoncode": "0.16"
+    },
+    "0.17": {
+        "presence": true,
+        "concept": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir).",
+        "explication": "La leçon introduit deux mots essentiels en hébreu : צריך et יכול. Le mot צריך exprime l'obligation, le besoin ou la nécessité (devoir, avoir besoin, falloir). Il s'accorde en genre et en nombre avec le sujet (צריך, צריכה, צריכים, צריכות) et peut être suivi d'un verbe à l'infinitif ou d'un nom. Employé de manière impersonnelle, il signifie 'il faut'. Le mot יכול exprime la capacité ou la possibilité (pouvoir). Il se conjugue également au présent selon le genre et le nombre (יכול, יכולה, יכולים, יכולות) et est généralement suivi d'un verbe à l'infinitif.",
+        "exemples": [
+            "אתה עייף, אתה צריך לנוח (Tu es fatigué, tu dois te reposer)",
+            "אני צריך זמן (J'ai besoin de temps)",
+            "כשאנחנו צמאים, צריך לשתות (Lorsqu'on a soif, il faut boire)",
+            "אני לא יכול לבוא כי אני עובד (Je ne peux pas venir car je travaille)",
+            "אתם יכולים לשבת (Vous pouvez vous assoir)"
+        ],
+        "lessoncode": "0.17"
+    },
+    "0.18": {
+        "presence": true,
+        "concept": "L'expression des sensations physiques avec la préposition ל déclinée",
+        "explication": "En hébreu, pour exprimer une sensation physique telle que 'avoir chaud' ou 'avoir froid', on n'utilise pas le verbe avoir comme en français, ni le verbe être. On emploie l'adjectif correspondant à la sensation, comme חם (chaud) ou קר (froid), suivi de la préposition ל (à ou pour) déclinée selon la personne qui éprouve cette sensation. Ce fonctionnement est similaire à l'expression de la possession avec יש לי. Ainsi, pour dire 'j'ai froid', on dit littéralement 'froid à moi', ce qui se traduit par קר לי. La préposition se décline pour chaque pronom : לי, לך, לו, לה, לנו, לכם, לכן, להם, להן.",
+        "exemples": [
+            "קר לך? (As-tu froid ?)",
+            "לא, לא קר לי. חם לי! (Non, je n'ai pas froid ; j'ai chaud !)",
+            "חם לכם? (Avez-vous chaud ?)",
+            "כן, חם לנו. (Oui, nous avons chaud.)"
+        ],
+        "lessoncode": "0.18"
+    },
+    "0.19": {
+        "presence": true,
+        "concept": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom.",
+        "explication": "En hébreu, les nombres cardinaux se déclinent au masculin et au féminin. Le comptage abstrait se fait par défaut au féminin. Toutefois, lorsqu'un nombre quantifie un nom, il doit s'accorder en genre avec celui-ci. Une règle syntaxique importante concerne le placement du nombre : à l'exception du chiffre un (אחד au masculin, אחת au féminin) qui se place toujours après le nom qu'il qualifie, tous les autres nombres se placent avant le nom. Par ailleurs, les dates s'expriment toujours avec des nombres au masculin, suivis de la préposition ב devant le mois.",
+        "exemples": [
+            "יש לי עוגה אחת : J'ai un gâteau (le chiffre un se place après le nom féminin).",
+            "יש לי שני ספרים : J'ai deux livres (le chiffre deux se place avant le nom masculin).",
+            "יש לי שתי עוגות : J'ai deux gâteaux (le chiffre deux se place avant le nom féminin).",
+            "אחד באפריל : Le premier avril (les dates s'expriment au masculin)."
+        ],
+        "lessoncode": "0.19"
+    },
+    "0.20": {
+        "presence": true,
+        "concept": "La conjugaison du verbe לתת (donner) au présent et les différents usages de l'expression בבקשה.",
+        "explication": "Cette leçon introduit la conjugaison du verbe irrégulier לתת (donner) au temps présent. En hébreu, ce verbe se conjugue ainsi : נותן au masculin singulier, נותנת au féminin singulier, נותנים au masculin pluriel et נותנות au féminin pluriel. Par ailleurs, la leçon explore le concept linguistique du mot בבקשה. Ce terme polyvalent est utilisé dans plusieurs contextes : pour formuler une requête polie (s'il te plaît), pour répondre à un remerciement (de rien), ou encore lorsqu'on apporte, sert ou tend quelque chose à quelqu'un (voici ou tenez).",
+        "exemples": [
+            "אתה יכול לתת לי ספר בבקשה? (Peux-tu me donner un livre s'il te plaît ?)",
+            "תודה רבה! - בבקשה. (Merci beaucoup ! - De rien.)",
+            "אני נותן (Je donne - masculin singulier)",
+            "אנחנו נותנות (Nous donnons - féminin pluriel)"
+        ],
+        "lessoncode": "0.20"
+    },
+    "0.21": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.21"
+    },
+    "0.22": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.22"
+    },
+    "0.23": {
+        "presence": true,
+        "concept": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+        "explication": "En hébreu, pour exprimer l'âge, on utilise une structure littérale signifiant 'fils de' ou 'fille de' suivie du nombre d'années. Pour un homme on emploie 'בן', pour une femme 'בת', pour un groupe masculin 'בני' et pour un groupe féminin 'בנות'. Une règle grammaticale essentielle est que le nombre exprimant l'âge doit toujours être au féminin. Cela s'explique par le fait que l'on compte des années, et que le mot 'année' en hébreu, 'שנה' (au pluriel 'שנים'), est de genre féminin. Ainsi, même si l'on donne l'âge d'un garçon, le chiffre utilisé sera au féminin.",
+        "exemples": [
+            "Quel âge as-tu ? (à une femme) : בת כמה את ?",
+            "J'ai quinze ans. (dit par un homme) : אני בן חמש עשרה.",
+            "Quel âge a Hanna ? Elle a 21 ans. : בת כמה חנה ? היא בת עשרים ואחת.",
+            "Quel âge ont-ils ? Ils ont 55 ans. : בני כמה הם ? הם בני חמישים וחמש."
+        ],
+        "lessoncode": "0.23"
+    },
+    "0.24": {
+        "presence": true,
+        "concept": "La conjugaison de plusieurs verbes d'action au présent (masculin, féminin, singulier et pluriel).",
+        "explication": "Cette leçon introduit la conjugaison au présent de plusieurs verbes essentiels pour faire des achats et interagir au quotidien, tels que demander (לבקש), payer (לשלם), vendre (למכור) et questionner (לשאול). En hébreu, le présent s'accorde en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le sujet, mais il ne change pas selon la personne (je, tu, il/elle). Par exemple, un homme dira אני משלם (je paie) et une femme dira אני משלמת. Le tableau de la leçon présente les quatre formes (masculin singulier, féminin singulier, masculin pluriel, féminin pluriel) pour chaque verbe abordé.",
+        "exemples": [
+            "הוא שואל כמה זה עולה (Il demande combien ça coûte)",
+            "היא מוכרת עגבניות (Elle vend des tomates)",
+            "אנחנו משלמים במזומן (Nous payons en espèces)",
+            "הן מנקות את הבית (Elles nettoient la maison)"
+        ],
+        "lessoncode": "0.24"
+    },
+    "0.25": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.25"
+    },
+    "0.26": {
+        "presence": true,
+        "concept": "L'expression de l'appartenance et la déclinaison de la préposition של",
+        "explication": "En hébreu, l'appartenance s'exprime à l'aide de la préposition של (qui signifie 'de'). Pour exprimer les adjectifs possessifs français (mon, ton, son, etc.), cette préposition se décline en fonction du possesseur et non de l'objet possédé. Par exemple, שלי sera utilisé indifféremment pour 'mon', 'ma' ou 'mes'. Une règle grammaticale essentielle est que l'objet possédé doit toujours être défini. Il faut donc obligatoirement ajouter l'article défini ה devant le nom de l'objet. Ainsi, pour dire 'mon livre', on dira littéralement 'le livre de moi'.",
+        "exemples": [
+            "הספר של דוד - Le livre de David",
+            "הספר שלי - Mon livre",
+            "הספר שלו - Son livre (à lui)",
+            "הבת שלו - Sa fille (à lui)",
+            "הילדים שלו - Ses enfants (à lui)"
+        ],
+        "lessoncode": "0.26"
+    },
+    "0.27": {
+        "presence": true,
+        "concept": "La formation des noms de langues et des nationalités à partir des noms de pays.",
+        "explication": "En hébreu, la formation des adjectifs de nationalité et des noms de langues à partir des noms de pays suit une règle morphologique précise basée sur l'ajout de suffixes. Pour indiquer la nationalité d'une personne, on ajoute au nom du pays (ou à sa base) le suffixe י pour le masculin singulier, et ית ou יה pour le féminin singulier. Pour le pluriel, on utilise ים au masculin et יות au féminin. Par ailleurs, le nom de la langue parlée dans le pays correspond généralement à la forme du féminin singulier de l'adjectif de nationalité, se terminant par le suffixe ית.",
+        "exemples": [
+            "Pays : צרפת (France) -> Langue : צרפתית (Français) -> Nationalité : צרפתי (Français, m.sg), צרפתיה (Française, f.sg).",
+            "Pays : ישראל (Israël) -> Langue : עברית (Hébreu) -> Nationalité : ישראלי (Israélien, m.sg), ישראלית (Israélienne, f.sg).",
+            "Pays : אנגליה (Angleterre) -> Langue : אנגלית (Anglais) -> Nationalité : אנגלי (Anglais, m.sg), אנגלים (Anglais, m.pl)."
+        ],
+        "lessoncode": "0.27"
+    },
+    "0.28": {
+        "presence": true,
+        "concept": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque.",
+        "explication": "Le mot כל est un terme très fréquent en hébreu qui se traduit différemment selon la syntaxe. Lorsqu'il est suivi d'un nom défini par l'article ה, il signifie tout, toute, tous ou toutes, englobant la totalité d'un groupe spécifique. En revanche, lorsque כל est suivi d'un nom au singulier sans article défini, il prend le sens de chaque, désignant les éléments individuellement. Cette distinction est fondamentale pour préciser si l'on parle d'un ensemble global ou de chaque élément séparément.",
+        "exemples": [
+            "כל התלמידים נחמדים (Tous les élèves sont sympas.)",
+            "כל פעם שאני רואה את חנה אני שמח (Chaque fois que je vois Hanna, je suis content.)",
+            "יש 21 תלמידים בכל כיתה (Il y a 21 élèves dans chaque classe.)"
+        ],
+        "lessoncode": "0.28"
+    },
+    "0.29": {
+        "presence": true,
+        "concept": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot.",
+        "explication": "L'état construit, appelé סמיכות en hébreu, est une structure grammaticale qui accole deux substantifs pour exprimer une relation d'appartenance ou former une nouvelle idée. Le premier mot, appelé le nom construit, peut subir des modifications : au féminin singulier, la terminaison ה devient souvent ת, et au masculin pluriel, la terminaison ים devient י. Le deuxième mot détermine si l'ensemble est défini ou non ; pour définir un état construit, on ajoute l'article défini ה uniquement au second mot. Le genre et le nombre de l'expression complète dépendent toujours du premier mot.",
+        "exemples": [
+            "בית ספר (une école) est formé de בית (maison) et ספר (livre).",
+            "ראש השנה (le nouvel an) est formé de ראש (tête) et השנה (l'année).",
+            "ארוחת בוקר (un petit-déjeuner) montre la transformation du ה en ת pour le premier mot féminin ארוחה.",
+            "ספרי ילדים (des livres d'enfants) montre la transformation de ים en י pour le premier mot masculin pluriel ספרים.",
+            "בית הספר (l'école) montre que l'article défini ה se place sur le deuxième mot."
+        ],
+        "lessoncode": "0.29"
+    },
+    "0.30": {
+        "presence": true,
+        "concept": "L'utilisation du mot כדי (pour, afin de) devant un verbe à l'infinitif.",
+        "explication": "En hébreu, pour exprimer le but ou l'intention, on utilise le mot כדי qui se traduit par 'pour' ou 'afin de' en français. Ce mot de liaison est strictement suivi d'un verbe à l'infinitif. Il est important de noter que כדי ne s'emploie jamais devant un nom, contrairement au français où la préposition 'pour' peut précéder un substantif. Cette structure grammaticale est essentielle pour construire des phrases complexes et expliquer la raison ou l'objectif d'une action spécifique.",
+        "exemples": [
+            "הוא נוסע באוטובוס כדי לחזור הביתה (Il prend l'autobus pour rentrer à la maison.)",
+            "הוא בא כדי לפגוש את שרה (Il vient pour rencontrer Sarah.)",
+            "הוא טס לארץ כדי לגלות את ירושלים (Il part en Israël pour découvrir Jérusalem.)"
+        ],
+        "lessoncode": "0.30"
+    },
+    "0.31": {
+        "presence": true,
+        "concept": "Les adjectifs numéraux ordinaux et leur accord en genre et en nombre.",
+        "explication": "En hébreu, les nombres ordinaux (premier, deuxième, troisième, etc.) fonctionnent comme des adjectifs à part entière. Ils se placent après le nom qu'ils qualifient et s'accordent avec lui en genre (masculin ou féminin) et en nombre. Par exemple, pour dire premier, on utilisera ראשון pour un nom masculin et ראשונה pour un nom féminin. De même, deuxième se dit שני au masculin et שנייה au féminin. Comme tout adjectif classique, si le nom est défini par l'article ה, l'adjectif ordinal prendra également cet article défini pour s'accorder parfaitement.",
+        "exemples": [
+            "יום ראשון (Dimanche, littéralement jour premier)",
+            "יד שנייה (D'occasion, littéralement main seconde)",
+            "העולם השלישי (Le Tiers-monde, littéralement le monde le troisième)",
+            "האחרון (Le dernier) et האחרונה (La dernière)"
+        ],
+        "lessoncode": "0.31"
+    },
+    "0.32": {
+        "presence": true,
+        "concept": "La forme duelle exprimant la paire ou le double avec le suffixe איים",
+        "explication": "En hébreu, il existe une forme grammaticale spécifique appelée le duel, qui sert à exprimer la paire ou le double pour certains substantifs, en particulier les marqueurs de temps. Au lieu d'utiliser le mot deux avec le pluriel du nom, on ajoute le suffixe איים à la fin du mot au singulier. Pour les mots féminins se terminant par la lettre ה, cette lettre se transforme souvent en ת avant d'ajouter le suffixe. Cette forme permet d'indiquer de manière très concise qu'il s'agit d'exactement deux unités, comme pour les jours, les semaines ou les heures.",
+        "exemples": [
+            "Le mot יום (un jour) devient יומיים (deux jours).",
+            "Le mot שבוע (une semaine) devient שבועיים (deux semaines).",
+            "Le mot חודש (un mois) devient חודשיים (deux mois).",
+            "Le mot שנה (un an) devient שנתיים (deux ans).",
+            "Le mot שעה (une heure) devient שעתיים (deux heures).",
+            "Le mot פעם (une fois) devient פעמיים (deux fois)."
+        ],
+        "lessoncode": "0.32"
+    },
+    "0.33": {
+        "presence": true,
+        "concept": "L'utilisation des verbes להגיד et לומר, les pronoms indéfinis משהו et מישהו, et l'expression de la possibilité avec אפשר et אי אפשר.",
+        "explication": "Cette leçon aborde trois points grammaticaux et lexicaux essentiels. Premièrement, elle explique la nuance entre les verbes להגיד et לומר pour traduire le verbe dire : en hébreu moderne, להגיד s'utilise principalement à l'infinitif, tandis que לומר s'emploie au présent. Deuxièmement, elle introduit les pronoms indéfinis משהו (quelque chose) et מישהו ou מישהי (quelqu'un, avec une distinction de genre pour ce dernier). Enfin, la leçon présente les expressions invariables אפשר (il est possible) et אי אפשר (il est impossible), qui sont toujours suivies d'un verbe à l'infinitif pour exprimer la capacité, la permission ou l'interdiction.",
+        "exemples": [
+            "אני אומר לחנה שהיא יפה. (Je dis à Hanna qu'elle est belle.)",
+            "חנה ! אני רוצה להגיד לך משהו : את יפה! (Hanna je veux te dire quelque chose : tu es belle !)",
+            "הילדים רוצים להגיד משהו להורים שלהם. (Les enfants veulent dire quelque chose à leurs parents.)",
+            "מישהו מהכיתה שלי רוצה ללמוד צרפתית. (Quelqu'un de ma classe veut apprendre le français.)",
+            "שלום, אפשר לשבת פה? (Bonjour, peut-on s'asseoir là ?)",
+            "לא, אי אפשר. אבל אפשר שם. (Non, ce n'est pas possible. Mais c'est possible là-bas.)"
+        ],
+        "lessoncode": "0.33"
+    },
+    "0.34": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.34"
+    },
+    "0.35": {
+        "presence": true,
+        "concept": "Conjugaison au présent de nouveaux verbes d'action et de préférence (לחכות, לבחור, להעדיף, לקחת, להביא)",
+        "explication": "Cette leçon introduit la conjugaison au présent de cinq verbes très courants en hébreu, appartenant à différents groupes verbaux (binyanim). On y trouve des verbes au Pa'al comme לבחור (choisir) et לקחת (prendre, qui est un verbe irrégulier), au Pi'el comme לחכות (attendre, qui se construit avec la préposition ל), et au Hif'il comme להעדיף (préférer) et להביא (apporter). L'apprentissage de ces verbes permet d'exprimer des choix, des préférences et des actions du quotidien. Comme pour tous les verbes au présent en hébreu, la conjugaison ne dépend pas de la personne mais s'accorde uniquement en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le sujet.",
+        "exemples": [
+            "אני מחכה לדנה (J'attends Dana - singulier)",
+            "אני מעדיף את החולצה הסגולה (Je préfère la chemise violette - masculin singulier)",
+            "היא אוהבת את השמלה ולוקחת (Elle aime la robe et la prend - féminin singulier)",
+            "אנחנו בוחרים בגדים ביחד (Nous choisissons des vêtements ensemble - masculin pluriel)"
+        ],
+        "lessoncode": "0.35"
+    },
+    "0.36": {
+        "presence": true,
+        "concept": "La déclinaison de la préposition את en tant que pronom complément d'objet direct (COD).",
+        "explication": "En hébreu, la particule את, qui introduit habituellement un complément d'objet direct défini, peut se décliner pour remplacer ce complément. Elle joue alors le rôle des pronoms personnels COD que nous connaissons en français, tels que le, la, les ou l'. Au lieu de répéter un nom défini, on utilise la préposition את déclinée en fonction du genre et du nombre du nom qu'elle remplace ainsi que de la personne. Par exemple, pour dire le en parlant d'un objet masculin ou d'un homme, on utilisera אותו. Pour la, on utilisera אותה. Cette déclinaison est indispensable pour construire des phrases fluides et naturelles sans répétitions inutiles.",
+        "exemples": [
+            "Je mange la pomme : אני אוכל את התפוח devient Je le mange : אני אוכל אותו",
+            "Est-il possible de prendre cette chemise ? Oui, tu peux la prendre : כן אתה יכול לקחת אותה",
+            "Hanna rencontre David demain. Elle le rencontre au centre-ville : היא פוגשת אותו במרכז העיר",
+            "Le directeur achète des gâteaux. Il les apporte au bureau : הוא מביא אותן למשרד"
+        ],
+        "lessoncode": "0.36"
+    },
+    "0.37": {
+        "presence": true,
+        "concept": "La déclinaison du mot שלום pour demander l'état de santé et la conjugaison de verbes au présent.",
+        "explication": "En hébreu, pour demander comment une personne va, on utilise le pronom interrogatif מה suivi du nom שלום (paix) auquel on attache un suffixe pronominal. Ce suffixe varie selon le genre et le nombre de la personne concernée. Par exemple, on s'adresse différemment à un homme ou à une femme. De plus, la leçon présente la conjugaison au présent de plusieurs verbes comme לדעת (savoir) ou לצאת (sortir). Comme pour tous les verbes au présent en hébreu, ils se conjuguent en s'accordant en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le sujet.",
+        "exemples": [
+            "מה שלומך ? (Comment vas-tu ?)",
+            "מה שלומו ? (Comment va-t-il ?)",
+            "אני יודע (Je sais - masculin singulier)",
+            "אנחנו שמחות (Nous sommes contentes - féminin pluriel)"
+        ],
+        "lessoncode": "0.37"
+    },
+    "0.38": {
+        "presence": true,
+        "concept": "L'expression du comparatif, du superlatif et de l'excès avec les mots יותר, פחות, הכי et מדי.",
+        "explication": "En hébreu, pour exprimer le comparatif de supériorité ou d'infériorité, on utilise respectivement les mots יותר (plus) et פחות (moins) placés avant l'adjectif. La préposition מ (de/que) est souvent attachée au mot suivant pour introduire l'élément comparé. Pour le superlatif, on emploie הכי (le plus) suivi de l'adjectif, ou הכי פחות (le moins). Il est important de noter que ces mots de comparaison sont invariables. L'accord en genre et en nombre se fait uniquement sur l'adjectif qui les accompagne. Enfin, pour exprimer l'excès (trop), on utilise le mot מדי placé après l'adjectif ou le verbe.",
+        "exemples": [
+            "דנה יותר גדולה ממיכל (Dana est plus grande que Mikhal.)",
+            "המכונית של דוד פחות יפה מהמכונית של יונתן (La voiture de David est moins belle que la voiture de Jonathan.)",
+            "ירושלים היא העיר הכי מעניינת בעולם (Jérusalem est la ville la plus intéressante au monde.)",
+            "זה הבגד הכי פחות יפה שיש לי (C'est le vêtement le moins beau que j'ai.)",
+            "קר מדי בפריז (Il fait trop froid à Paris !)"
+        ],
+        "lessoncode": "0.38"
+    },
+    "0.39": {
+        "presence": true,
+        "concept": "L'utilisation des prépositions avec les adjectifs proche (קרוב) et loin (רחוק).",
+        "explication": "En hébreu, contrairement au français, les adjectifs exprimant la proximité ou l'éloignement ne sont pas construits avec la même préposition. Pour dire 'loin de', on utilise l'adjectif רחוק suivi de la préposition מ (qui signifie 'de' ou 'depuis'). En revanche, pour dire 'proche de', on utilise l'adjectif קרוב suivi de la préposition ל (qui signifie 'à' ou 'vers'). Il est donc important de ne pas calquer la structure française 'de' pour les deux cas, mais de bien mémoriser la construction 'loin de' (רחוק מ) et 'proche à/vers' (קרוב ל).",
+        "exemples": [
+            "Leur appartement est loin du centre-ville : הדירה שלהם רחוקה ממרכז העיר",
+            "Elle habite proche du travail : היא גרה קרוב לעבודה"
+        ],
+        "lessoncode": "0.39"
+    },
+    "0.40": {
+        "presence": true,
+        "concept": "La déclinaison de la préposition מ (de) et la distinction entre les verbes לשאול et לבקש.",
+        "explication": "La leçon aborde la déclinaison de la préposition מ (de, depuis) selon les pronoms personnels, comme ממני (de moi) ou ממך (de toi). Elle explique ses usages principaux : indiquer la provenance, exprimer une comparaison (plus grand que), et introduire l'objet d'une requête. De plus, la leçon clarifie la différence entre deux verbes signifiant demander : לשאול, utilisé pour poser une question ou demander une information (construit avec את), et לבקש, employé pour demander une faveur, une action ou un objet (construit avec la préposition מ).",
+        "exemples": [
+            "Il lui demande de lire : הוא מבקש ממנה לקרוא",
+            "David est plus grand que lui : דוד יותר גדול ממנו",
+            "Il lui demande comment elle s'appelle : הוא שואל אותה איך קוראים לה",
+            "Tu lui demandes de revenir à la maison : אתה מבקש ממנו לחזור הביתה"
+        ],
+        "lessoncode": "0.40"
+    },
+    "0.41": {
+        "presence": true,
+        "concept": "L'utilisation du verbe לקבל pour exprimer le verbe avoir dans des demandes polies.",
+        "explication": "En français, il est extrêmement courant d'utiliser le verbe avoir dans des formules de politesse pour demander quelque chose, comme dans les expressions pourrais-je avoir ou est-il possible d'avoir. En hébreu, on ne traduit pas cette idée littéralement avec le mot exprimant la possession. On utilise plutôt le verbe לקבל, qui signifie fondamentalement recevoir. Par conséquent, pour demander un objet ou un service au restaurant, on demandera s'il est possible de le recevoir. De plus, la leçon aborde la conjugaison au présent de ce verbe ainsi que d'autres verbes d'action très courants au quotidien comme להחליט, להמתין ou להגיע.",
+        "exemples": [
+            "אפשר לקבל תפריט? (Est-il possible d'avoir la carte ?)",
+            "אני יכול לקבל בקבוק מים? (Pourrais-je avoir une bouteille d'eau ?)"
+        ],
+        "lessoncode": "0.41"
+    },
+    "0.42": {
+        "presence": true,
+        "concept": "La distinction entre les adverbes עוד, עדיין et תמיד, et l'utilisation de l'expression כדאי.",
+        "explication": "La leçon aborde la nuance entre plusieurs adverbes traduits par 'encore' ou 'toujours'. Les mots עוד et עדיין sont synonymes comme adverbes de temps pour une action qui perdure. Toutefois, עוד exprime aussi l'ajout (une quantité supplémentaire). Pour traduire 'toujours', on utilise עדיין si l'action continue dans le présent, mais תמיד pour une vérité générale ou une habitude. Enfin, la leçon introduit le mot invariable כדאי, suivi d'un verbe à l'infinitif, pour exprimer l'idée que 'ça vaut la peine' de faire quelque chose.",
+        "exemples": [
+            "Tu veux encore de l'eau ? (ajout) : אתה רוצה עוד מים ?",
+            "Tu as encore faim ? (temps) : אתה עוד רעב ? ou אתה עדיין רעב ?",
+            "Tu habites toujours à Tel Aviv ? (action continue) : אתה עדיין גר בתל אביב ?",
+            "Il arrive toujours tôt au travail. (habitude) : הוא תמיד מגיע מוקדם לעבודה.",
+            "Ça vaut la peine d'y aller : כדאי ללכת."
+        ],
+        "lessoncode": "0.42"
+    },
+    "0.43": {
+        "presence": true,
+        "concept": "La déclinaison de la préposition עם (avec).",
+        "explication": "Cette leçon introduit la déclinaison de la préposition עם (avec) pour exprimer avec moi, avec toi, avec lui, etc. En hébreu, lorsqu'on combine la préposition עם avec un pronom personnel, on utilise une base qui ressemble à la particule את mais qui se prononce avec le son i. Par exemple, avec moi devient איתי, avec toi au masculin devient איתך, avec lui devient איתו, et avec nous devient איתנו. Cela permet de fluidifier la phrase en remplaçant le nom de la personne par le pronom décliné approprié, selon le genre et le nombre.",
+        "exemples": [
+            "אני רוצה ללכת לים איתה (Je veux aller à la mer avec elle).",
+            "אנחנו נוסעים איתם לישראל (Nous voyageons avec eux en Israël).",
+            "אתם רוצים להישאר איתנו היום? (Voulez-vous rester avec nous aujourd'hui ?)."
+        ],
+        "lessoncode": "0.43"
+    },
+    "0.44": {
+        "presence": true,
+        "concept": "La construction syntaxique des verbes de perception (לשמוע, לראות) suivis d'un autre verbe.",
+        "explication": "En hébreu, les verbes de perception, qui sont liés aux cinq sens comme 'voir' (לראות) ou 'entendre' (לשמוע), obéissent à une règle syntaxique spécifique. Lorsqu'un verbe de perception est directement suivi d'un autre verbe décrivant l'action perçue, ce second verbe ne se met pas à l'infinitif comme c'est le cas en français. À la place, il doit obligatoirement être conjugué au présent et s'accorder en genre et en nombre avec la personne ou la chose qui accomplit cette action. Cette structure permet de souligner que l'action est en train de se dérouler au moment précis où elle est perçue.",
+        "exemples": [
+            "אני רואה אותה מגיעה (Je la vois arriver - le second verbe est conjugué au présent féminin singulier).",
+            "אנחנו שומעים אותם מדברים (Nous les entendons parler - le second verbe est conjugué au présent masculin pluriel)."
+        ],
+        "lessoncode": "0.44"
+    },
+    "0.45": {
+        "presence": true,
+        "concept": "L'introduction au temps du passé (זמן עבר) et la conjugaison des verbes à la forme פעל.",
+        "explication": "En hébreu, il n'existe qu'un seul temps pour exprimer le passé (זמן עבר), contrairement au français. La conjugaison au passé se caractérise par l'ajout de suffixes spécifiques à la racine du verbe, qui varient en fonction du pronom personnel. Ces suffixes partagent pour la plupart une sonorité similaire avec les pronoms correspondants, ce qui facilite leur apprentissage. Par exemple, pour le pronom אני (je), on ajoute le suffixe תי, et pour אנחנו (nous), on ajoute le suffixe נו. À la troisième personne du singulier masculin (הוא), le verbe ne prend aucun suffixe et se présente sous sa forme de base (la racine). Cette leçon illustre ce principe avec les verbes du groupe פעל (Paal).",
+        "exemples": [
+            "Avec le verbe ללמוד (apprendre) : אני למדתי (j'ai appris), הוא למד (il a appris).",
+            "Avec le verbe לכתוב (écrire) : אנחנו כתבנו (nous avons écrit), אתם כתבתם (vous avez écrit).",
+            "Avec le verbe לעבור (passer) : היא עברה (elle a passé), הם עברו (ils ont passé).",
+            "Utilisation avec des indicateurs de temps : אתמול אני קראתי ספר (Hier, j'ai lu un livre)."
+        ],
+        "lessoncode": "0.45"
+    },
+    "0.46": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au passé (עבר)",
+        "explication": "En hébreu, le temps du passé (עבר) se construit en ajoutant des suffixes pronominaux à la racine du verbe. Ces suffixes indiquent la personne, le genre et le nombre du sujet, ce qui permet souvent d'omettre le pronom personnel. Dans cette leçon, le concept est illustré par des verbes réguliers du binyan Pa'al tels que לרקוד (danser), לחזור (retourner) et לפתוח (ouvrir). La forme de base du verbe au passé correspond à la troisième personne du singulier masculin (par exemple, רקד pour 'il a dansé'). Pour les autres personnes, on ajoute des terminaisons spécifiques : -תי pour la première personne du singulier, -ת pour la deuxième, -ה pour la troisième personne du féminin, -נו pour 'nous', et -ו pour 'ils/elles'.",
+        "exemples": [
+            "אני רקדתי (J'ai dansé)",
+            "הוא חזר (Il est retourné)",
+            "היא פתחה (Elle a ouvert)",
+            "אנחנו חזרנו (Nous sommes retournés)",
+            "הם רקדו (Ils ont dansé)"
+        ],
+        "lessoncode": "0.46"
+    },
+    "0.47": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "0.47"
+    },
+    "0.48": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au passé (עבר) et l'utilisation de la double négation.",
+        "explication": "Cette leçon aborde principalement la conjugaison des verbes au temps passé (עבר). Elle présente les terminaisons spécifiques du passé pour les différentes personnes, comme le suffixe תי pour la première personne du singulier, à travers des verbes courants comme לעזוב, לשכוח et לזכור. De plus, la leçon introduit la structure de la négation en hébreu. Pour exprimer des concepts comme jamais ou rien, l'hébreu utilise une particule négative comme לא ou אין combinée avec des mots spécifiques comme אף פעם (jamais), שום דבר (rien) ou כלום (rien).",
+        "exemples": [
+            "אני שכחתי (J'ai oublié) - Utilisation du suffixe תי pour la première personne du singulier au passé.",
+            "הם עזבו (Ils ont quitté) - Utilisation du suffixe ו pour la troisième personne du pluriel au passé.",
+            "אף פעם לא שמעתי אותה מדברת עברית (Je ne l'ai jamais entendue parler hébreu) - Exemple de négation avec אף פעם et לא.",
+            "לא אכלתי כלום כל היום (Je n'ai rien mangé de la journée) - Exemple de négation avec לא et כלום."
+        ],
+        "lessoncode": "0.48"
+    },
+    "1.01": {
+        "presence": true,
+        "concept": "La différence d'utilisation entre les adjectifs פנוי (libre), תפוס (pris) et עסוק (occupé).",
+        "explication": "En hébreu, il existe plusieurs mots pour exprimer l'idée d'être occupé ou libre, avec des nuances spécifiques. Le mot עסוק s'utilise pour une personne qui est activement occupée par une tâche ou un travail. Le mot תפוס signifie pris et s'utilise très souvent pour un objet, un lieu ou une ligne téléphonique (comme une chaise ou une chambre d'hôtel), mais il peut aussi s'employer pour une personne dont le temps est déjà réservé. Enfin, פנוי signifie libre ou disponible, et s'applique aussi bien aux personnes (avoir du temps) qu'aux objets ou lieux (une place non occupée).",
+        "exemples": [
+            "הכיסא הזה תפוס. (Cette chaise est prise.)",
+            "אני לא יכולה לפגוש אותך כי אני תפוסה. (Je ne peux pas te voir car je suis prise.)",
+            "אני לא יכול לדבר איתך עכשיו אני מאוד עסוק. (Je ne peux pas te parler maintenant, je suis très occupé.)",
+            "את פנויה הערב? אני רוצה להזמין אותך לקולנוע. (Tu es libre ce soir ? Je veux t'inviter au cinéma.)"
+        ],
+        "lessoncode": "1.01"
+    },
+    "1.02": {
+        "presence": true,
+        "concept": "Le participe passé (פעול) des verbes du binyan פעל",
+        "explication": "La forme פעול (Pa'ul) est utilisée en hébreu pour créer le participe passé de nombreux verbes appartenant au groupe פעל (Pa'al). Elle sert à exprimer l'état résultant d'une action qui est déjà achevée. Ce participe passé s'accorde en genre et en nombre avec le nom auquel il se rapporte, fonctionnant souvent comme un adjectif. Pour le décliner, on ajoute les terminaisons classiques : ה pour le féminin singulier, ים pour le masculin pluriel, et ות pour le féminin pluriel. Par exemple, la racine de l'action d'écrire donne כתוב (écrit) au masculin singulier.",
+        "exemples": [
+            "החלון פתוח - La fenêtre est ouverte (du verbe לפתוח)",
+            "השם שלה כתוב במחברת - Son nom est écrit dans le cahier (du verbe לכתוב)",
+            "עכשיו הוא לבוש - Maintenant il est habillé (du verbe ללבוש)",
+            "דוד נוהג במכונית שכורה - David conduit une voiture louée (du verbe לשכור)"
+        ],
+        "lessoncode": "1.02"
+    },
+    "1.03": {
+        "presence": true,
+        "concept": "La déclinaison de la préposition אל (vers, chez) et son utilisation à la place de la préposition ל.",
+        "explication": "En hébreu, la préposition אל, qui signifie généralement 'vers' ou 'chez', se décline selon les pronoms personnels en un seul mot, contrairement au français. Par exemple, 'vers moi' devient אליי et 'vers lui' devient אליו. De plus, une règle grammaticale importante stipule que la préposition ל se transforme en אל lorsqu'elle doit être déclinée. Ce changement s'opère principalement dans trois cas : après des verbes de mouvement (comme aller ou arriver), avec des verbes pronominaux impliquant une réciprocité (comme s'adresser à ou se joindre à), et après certains adjectifs exprimant une idée de direction ou de proximité.",
+        "exemples": [
+            "היא לא יודעת איך להגיע אליי. (Elle ne sait pas comment arriver chez moi.)",
+            "הוא הולך לטליה. הוא צריך להגיע אליה בערב. (Il va chez Talia. Il doit arriver chez elle en soirée.)",
+            "אתה מצטרף אלינו ליום ההולדת של ליהיא? (Tu te joins à nous à l'anniversaire de Lihi ?)",
+            "דוד מאוד אוהב את גליה. הוא קרוב אליה. (David aime beaucoup Galia. Il est proche d'elle.)"
+        ],
+        "lessoncode": "1.03"
+    },
+    "1.04": {
+        "presence": true,
+        "concept": "La conjugaison des verbes irréguliers לתת et לדעת au passé, et l'utilisation des modaux אמור et עלול.",
+        "explication": "Cette leçon introduit la conjugaison au temps passé de deux verbes fondamentaux et irréguliers : לדעת (savoir) et לתת (donner). Le verbe לתת présente une irrégularité notable au passé puisqu'il perd la troisième lettre de sa racine (le ת) à presque toutes les personnes, donnant par exemple נתתי (j'ai donné). Par ailleurs, la leçon aborde une notion syntaxique importante avec l'emploi des mots אמור (être censé, être supposé) et עלול (risquer de). Ces termes fonctionnent comme des adjectifs modaux et s'accordent en genre et en nombre avec le sujet pour exprimer une attente ou une probabilité.",
+        "exemples": [
+            "נתתי (j'ai donné), נתנו (nous avons donné).",
+            "ידעתי (j'ai su / je savais), ידעו (ils ont su / ils savaient).",
+            "מתי את אמורה להגיע אלינו? (Quand est-ce que tu es censée arriver chez nous ?)",
+            "זה עלול לעלות הרבה. (Ça risque de coûter cher.)",
+            "הוא אמור לטלפן אליי הערב. (Il est supposé m'appeler ce soir.)"
+        ],
+        "lessoncode": "1.04"
+    },
+    "1.05": {
+        "presence": true,
+        "concept": "Le système des racines (שורש) de trois lettres en hébreu et leur rôle dans la formation des mots.",
+        "explication": "L'hébreu est une langue sémitique dont le vocabulaire repose sur un système de racines, appelé שורש. Une racine est généralement constituée de trois consonnes porteuses d'une idée fondamentale. Ces lettres, toujours disposées dans un ordre immuable, ne constituent pas un mot en soi. Pour former des mots réels tels que des verbes, des noms ou des adjectifs, la racine est intégrée dans des moules grammaticaux. Ce mécanisme permet de déduire le sens de mots inconnus, de faciliter la mémorisation et de comprendre la conjugaison. Il faut noter que certaines lettres (ה, ו, י, נ) peuvent parfois disparaître du mot final.",
+        "exemples": [
+            "La racine כתב (idée d'écriture) permet de former le verbe לכתוב (écrire), le nom מכתב (lettre) ou encore כתובת (adresse).",
+            "La racine פתח (idée d'ouverture) donne le verbe לפתוח (ouvrir) et le nom מפתח (clé).",
+            "La racine למד (idée d'enseignement) produit ללמוד (apprendre), תלמיד (élève) et מלומד (érudit)."
+        ],
+        "lessoncode": "1.05"
+    },
+    "1.06": {
+        "presence": true,
+        "concept": "La conjugaison au passé des verbes se terminant par OT à l'infinitif et du verbe להיות.",
+        "explication": "Cette leçon introduit la conjugaison au passé des verbes dont l'infinitif se termine par le son OT, indiquant une racine dont la troisième lettre est un ה. Au passé, ce ה se transforme généralement en י. Par exemple, pour le verbe לקנות, on obtient קניתי à la première personne du singulier. La leçon se concentre également sur le verbe להיות (être) au passé. Une règle importante est soulignée : contrairement au français où l'expression c'était est invariable, en hébreu, le verbe s'accorde en genre et en nombre avec le sujet auquel il se rapporte.",
+        "exemples": [
+            "Pour le verbe לקנות (acheter) à la première personne du singulier : קניתי",
+            "Quand j'étais enfant, je vivais à Paris : כשהייתי ילד קטן, גרתי בפריז",
+            "C'était une grande maison (accord au masculin) : זה היה בית גדול",
+            "C'était un petit appartement (accord au féminin) : זאת היתה דירה קטנה"
+        ],
+        "lessoncode": "1.06"
+    },
+    "1.07": {
+        "presence": true,
+        "concept": "L'utilisation de la racine זכר pour former différents verbes liés au souvenir (לזכור, להיזכר, להזכיר).",
+        "explication": "En hébreu, une même racine peut être insérée dans différentes formes verbales pour créer des verbes aux sens nuancés mais intimement liés. Cette leçon illustre parfaitement ce concept fondamental avec la racine זכר, qui porte l'idée générale du souvenir. Lorsqu'elle est conjuguée à la forme de base, elle donne le verbe לזכור qui signifie se souvenir ou retenir une information. À la forme passive ou réfléchie, on obtient להיזכר, utilisé pour exprimer le fait de se rappeler soudainement quelque chose. Enfin, à la forme causative, elle devient להזכיר, qui signifie rappeler quelque chose à quelqu'un. Comprendre ce mécanisme de dérivation permet d'enrichir considérablement son vocabulaire.",
+        "exemples": [
+            "אני לא מצליח לזכור את המספר (Je n'arrive pas à retenir le numéro).",
+            "עכשיו אני נזכר בשם שלה (Maintenant, je me souviens de son nom).",
+            "אני מזכיר לכם שמחר אין שיעור (Je vous rappelle qu'il n'y a pas de cours demain)."
+        ],
+        "lessoncode": "1.07"
+    },
+    "1.08": {
+        "presence": true,
+        "concept": "L'expression de la possession (le verbe avoir) au passé",
+        "explication": "En hébreu, pour exprimer la possession au passé (l'équivalent du verbe avoir), on utilise le verbe être (להיות) suivi de la préposition ל conjuguée selon le possesseur (לי, לך, לו, etc.). La règle fondamentale est que le verbe s'accorde toujours en genre et en nombre avec l'objet possédé, et non avec le possesseur. On utilisera donc היה pour un objet singulier masculin, היתה pour un objet singulier féminin, et היו pour des objets au pluriel. Par exemple, pour dire j'avais un livre, la structure littérale est il était à moi un livre.",
+        "exemples": [
+            "Rony avait un livre : היה לרוני ספר",
+            "Rony n'avait pas d'appartement en Israël : לרוני לא היתה דירה בישראל",
+            "Hanna avait des amis : לחנה היו חברים",
+            "J'avais un gâteau : היתה לי עוגה"
+        ],
+        "lessoncode": "1.08"
+    },
+    "1.09": {
+        "presence": true,
+        "concept": "L'expression de l'obligation avec צריך au passé et au conditionnel passé",
+        "explication": "En hébreu, pour exprimer l'obligation au passé (je devais) ou le conditionnel passé (j'aurais dû) avec le mot צריך, il faut utiliser le verbe להיות conjugué au passé, suivi de צריך accordé en genre et en nombre avec le sujet (צריך, צריכה, צריכים, צריכות). Par exemple, un homme dira הייתי צריך et une femme הייתי צריכה. La traduction exacte dépend du contexte de la phrase. De plus, pour exprimer une obligation impersonnelle comme il fallait, on utilise la troisième personne du masculin singulier sans pronom, ce qui donne היה צריך.",
+        "exemples": [
+            "הם היו צריכים לקנות שטיח חדש (Ils devaient acheter un nouveau tapis)",
+            "היא היתה צריכה לרהט את הדירה שלה (Elle devait meubler son appartement)",
+            "היית צריך לבקש ממני (Tu aurais dû me demander)",
+            "היה צריך להגיד לי אתמול (Il fallait me le dire hier)"
+        ],
+        "lessoncode": "1.09"
+    },
+    "1.10": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "1.10"
+    },
+    "1.11": {
+        "presence": true,
+        "concept": "La conjugaison au passé des verbes dont l'infinitif se termine en 'ות' (comme לעלות) et l'usage de במשך.",
+        "explication": "La leçon aborde deux concepts principaux. Premièrement, elle présente la conjugaison au passé des verbes dont l'infinitif se termine par 'ות', en utilisant le verbe לעלות (monter) comme modèle. Comprendre cette structure permet de déduire la conjugaison d'autres verbes de la même famille (comme לקנות, לרצות, לראות, לעשות) même sans voyelles. La leçon explore également les différentes acceptions de לעלות (monter, coûter, faire son Alya). Deuxièmement, elle explique la distinction entre במשך, utilisé pour exprimer 'pendant' devant une durée précise (jour, semaine), et la préposition ב, utilisée pour traduire 'pendant' devant un événement (vacances, cours).",
+        "exemples": [
+            "היא עלתה למטוס (Elle a embarqué - utilisation du verbe לעלות au passé).",
+            "כמה עולה השטיח? (Combien coûte le tapis ? - acception du verbe לעלות pour le prix).",
+            "הם עלו לארץ לפני חודש (Ils ont fait leur Alya il y a un mois - acception du verbe לעלות pour l'immigration en Israël).",
+            "למדתי עברית במשך שנתיים (J'ai appris l'hébreu pendant 2 ans - utilisation de במשך suivi d'une durée).",
+            "נחתי בחופשה (Je me suis reposée pendant les vacances - utilisation de ב suivi d'un événement)."
+        ],
+        "lessoncode": "1.11"
+    },
+    "1.12": {
+        "presence": true,
+        "concept": "L'utilisation et la déclinaison de la préposition אצל (chez)",
+        "explication": "En hébreu, pour exprimer l'idée de 'chez', on utilise la préposition אצל. Cette préposition se décline selon les pronoms personnels pour donner 'chez moi' (אצלי), 'chez toi' (אצלך), 'chez lui' (אצלו), etc. La règle grammaticale essentielle est que la préposition אצל ne s'emploie jamais avec un verbe de mouvement (comme aller). Elle accompagne uniquement des verbes statiques tels que habiter (לגור), manger (לאכול), être (להיות), se trouver (להימצא), se rencontrer (להיפגש) ou rester (להישאר). Pour exprimer un mouvement vers une personne, on utilisera une autre préposition comme אל.",
+        "exemples": [
+            "אני גר אצל ההורים שלי (J'habite chez mes parents)",
+            "אתם אוכלים אצל לאה הערב? (Vous mangez chez Léa ce soir ?)",
+            "את נשארת אצלו בבית? (Tu restes chez lui à la maison ?)",
+            "אתמול הם היו אצלי (Hier, ils étaient chez moi)"
+        ],
+        "lessoncode": "1.12"
+    },
+    "1.13": {
+        "presence": true,
+        "concept": "La conjugaison au passé des verbes creux au binyan Pa'al, comme לטוס, לקום et לרוץ.",
+        "explication": "La leçon introduit la conjugaison au passé (עבר) des verbes dits creux appartenant à la forme verbale Pa'al (פעל). Ces verbes, dont la racine comporte une lettre faible au milieu, ont une conjugaison particulière au passé. La lettre centrale de la racine disparaît dans la conjugaison. Par exemple, pour les verbes לטוס (prendre l'avion), לקום (se lever) et לרוץ (courir), la base du passé à la troisième personne du masculin singulier est respectivement טס, קם et רץ. Les terminaisons habituelles du passé s'ajoutent ensuite directement à cette base courte pour former les autres personnes.",
+        "exemples": [
+            "לטוס (prendre l'avion) : טסתי (j'ai pris l'avion), טסנו (nous avons pris l'avion).",
+            "לקום (se lever) : קמתי (je me suis levé), קמו (ils se sont levés).",
+            "לרוץ (courir) : רצתי (j'ai couru), רץ (il a couru)."
+        ],
+        "lessoncode": "1.13"
+    },
+    "1.14": {
+        "presence": true,
+        "concept": "La déclinaison de la préposition על (sur, à propos de)",
+        "explication": "La leçon introduit la préposition hébraïque על, qui se traduit généralement par 'sur' ou 'à propos de' en fonction du verbe qu'elle accompagne. En hébreu, les prépositions se déclinent en se combinant avec des pronoms personnels suffixes pour former un seul mot. Ainsi, au lieu de dire 'sur moi' avec deux mots distincts, on utilise la forme déclinée עלי. La déclinaison complète permet d'exprimer 'sur toi' (עליך), 'sur lui' (עליו), 'sur elle' (עליה), 'sur nous' (עלינו), 'sur vous' (עליכם / עליכן) et 'sur eux/elles' (עליהם / עליהן). Cette notion est essentielle pour utiliser correctement des verbes comme 'penser à' ou 'parler de'.",
+        "exemples": [
+            "אני חושבת על נעם. אני חושבת עליו. (Je pense à Noam. Je pense à lui.)",
+            "שמעת עליהם? (Tu as entendu parler d'eux ?)",
+            "הוא יושב על הספה. הוא יושב עליה ורואה טלוויזיה. (Il est assis sur le canapé. Il est assis dessus et regarde la télé.)"
+        ],
+        "lessoncode": "1.14"
+    },
+    "1.15": {
+        "presence": true,
+        "concept": "L'utilisation et la distinction entre les formes לעניין, להתעניין et מעוניין.",
+        "explication": "Ce point de grammaire illustre le passage naturel d'une racine hébraïque à travers différentes formes. Il explique la différence entre la forme active לעניין (intéresser) et la forme pronominale להתעניין (s'intéresser). De plus, il précise que le verbe לעניין conjugué au présent fait également office d'adjectif pour signifier intéressant. Enfin, le terme מעוניין est présenté comme l'équivalent du participe passé français, traduisant l'état d'être intéressé par quelque chose. Cela démontre la richesse et la logique de dérivation des mots en hébreu à partir d'une même racine.",
+        "exemples": [
+            "השיעור מעניין אותי מאוד (Le cours m'intéresse beaucoup).",
+            "אני מתעניין בשיעור (Je m'intéresse au cours).",
+            "עלמה אישה כל כך מעניינת (Alma est une femme tellement intéressante).",
+            "אנחנו מעוניינים במכונית (Nous sommes intéressés par la voiture)."
+        ],
+        "lessoncode": "1.15"
+    },
+    "1.16": {
+        "presence": true,
+        "concept": "Les nombres cardinaux et ordinaux, leurs règles d'accord et la construction des centaines et milliers.",
+        "explication": "Cette leçon détaille l'utilisation des nombres en hébreu. Le chiffre 1 (אחד / אחת) fonctionne comme un adjectif et se place après le nom. Les centaines se construisent avec le mot מאות précédé d'un chiffre au féminin, tandis que les milliers utilisent le mot אלפים précédé d'un chiffre au masculin. Les nombres 200 (מאתיים) et 2000 (אלפיים) prennent la forme duelle. Les nombres ordinaux s'accordent en genre et en nombre comme des adjectifs et prennent l'article défini ה si le nom est défini. A partir du onzième, les ordinaux utilisent les nombres cardinaux avec l'article ה.",
+        "exemples": [
+            "ילד אחד / ילדה אחת (un garçon / une fille)",
+            "חמש מאות צלחות (500 assiettes - le chiffre avant מאות est féminin)",
+            "ששת אלפים פקידים (6000 employés - le chiffre avant אלפים est masculin)",
+            "השבוע השלישי (la troisième semaine - l'ordinal s'accorde et prend l'article défini)"
+        ],
+        "lessoncode": "1.16"
+    },
+    "1.17": {
+        "presence": true,
+        "concept": "L'utilisation de לפני, כבר et מאז pour exprimer 'depuis' et 'il y a'",
+        "explication": "En hébreu, la traduction des expressions temporelles 'depuis' et 'il y a' dépend du contexte et du temps du verbe. Le mot לפני s'utilise avec un verbe au passé pour traduire 'il y a' et marquer le point de départ d'une action terminée. Le mot כבר s'emploie avec un verbe au présent pour traduire 'depuis' et insister sur la durée d'une action toujours en cours. Enfin, מאז traduit 'depuis' lorsqu'il est suivi d'un événement précis ou d'une date marquant le début d'une situation qui perdure dans le présent.",
+        "exemples": [
+            "עליתי לארץ לפני שנתיים - J'ai fait mon Alyah il y a deux ans.",
+            "אני גר בארץ כבר שנתיים - J'habite en Israël depuis deux ans.",
+            "הוא גר בישראל מאז שנת 2000 - Il habite en Israël depuis l'an 2000."
+        ],
+        "lessoncode": "1.17"
+    },
+    "1.18": {
+        "presence": true,
+        "concept": "La conjugaison des verbes du groupe פיעל au passé.",
+        "explication": "En hébreu, les verbes sont classés en sept formes de conjugaison appelées בניינים. Cette leçon introduit la conjugaison au passé des verbes appartenant au moule פיעל. Au passé, ces verbes se conjuguent en ajoutant des suffixes pronominaux à la racine. La leçon aborde également le cas particulier des racines à quatre lettres, qui appartiennent pour la plupart au groupe פיעל. Il s'agit souvent de verbes récents, d'emprunts ou d'onomatopées. Pour ces verbes spécifiques, la lettre יוד qui suit habituellement la première lettre de la racine ne s'écrit pas.",
+        "exemples": [
+            "הוא ביקש ממני מים (Il m'a demandé de l'eau).",
+            "הם בישלו בשר לשבת (Ils ont cuisiné de la viande pour Chabat).",
+            "היא פרסמה מודעה (Elle a publié une annonce)."
+        ],
+        "lessoncode": "1.18"
+    },
+    "1.19": {
+        "presence": true,
+        "concept": "Les participes passés construits à partir de la forme פיעל",
+        "explication": "La leçon introduit la construction et l'utilisation des participes passés dérivés de la forme verbale active פיעל, qui correspondent à la forme passive. En hébreu, ces participes passés fonctionnent et se comportent exactement comme des adjectifs. Par conséquent, ils doivent obligatoirement s'accorder en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le nom ou le sujet qu'ils qualifient. Ils sont souvent caractérisés par le préfixe מ suivi de la racine du verbe. Par exemple, à partir du verbe actif signifiant ranger, on obtient le participe passé rangé qui se décline selon le genre et le nombre du sujet.",
+        "exemples": [
+            "הבית מסודר (La maison est rangée)",
+            "האוכל מבושל (La nourriture est cuite)",
+            "החולה מטופל (Le malade est pris en charge)",
+            "מטופל, מטופלת, מטופלים, מטופלות (Déclinaison du participe passé : pris en charge / traité)"
+        ],
+        "lessoncode": "1.19"
+    },
+    "1.20": {
+        "presence": true,
+        "concept": "L'expression de la douleur avec le verbe לכאוב et le genre et nombre des parties du corps",
+        "explication": "En hébreu, pour exprimer la douleur (avoir mal), on utilise le verbe לכאוב (faire mal) associé à la préposition ל déclinée selon la personne qui ressent la douleur (par exemple לי pour dire à moi). La particularité syntaxique majeure est que la partie du corps endolorie devient le sujet grammatical de la phrase. Le verbe doit donc s'accorder en genre et en nombre avec cette partie du corps. Il faut noter que la plupart des membres du corps sont féminins, et ceux fonctionnant par paires prennent une forme duelle et s'accordent au féminin pluriel, comme avec כואבות.",
+        "exemples": [
+            "כואב לי הראש (J'ai mal à la tête - accord au masculin singulier)",
+            "כואבת לה הבטן (Elle a mal au ventre - accord au féminin singulier)",
+            "כואבות לי האוזניים (J'ai mal aux oreilles - accord au féminin pluriel)",
+            "אתמול כאב לו הגב (Hier, il a eu mal au dos - verbe au passé)"
+        ],
+        "lessoncode": "1.20"
+    },
+    "1.21": {
+        "presence": true,
+        "concept": "La distinction entre la voix active et la voix passive, et l'usage des prépositions avec le verbe לסבול.",
+        "explication": "La leçon introduit la distinction entre la voix active et la voix passive en hébreu, en illustrant le passage d'une forme à l'autre avec la racine בדק. À la voix active, le sujet accomplit l'action, tandis qu'à la voix passive, il la subit. Par ailleurs, la leçon explique la construction syntaxique du verbe לסבול (souffrir ou supporter) en fonction de la préposition qui le suit. Suivi de la préposition מ, il exprime le fait de souffrir d'une condition. Suivi de la particule את, il exprime le fait de supporter quelqu'un ou quelque chose.",
+        "exemples": [
+            "הרופאה בודקת את החולה (La doctoresse examine le malade - Voie active)",
+            "החולה נבדק (Le malade est examiné - Voie passive)",
+            "אני לא סובל את האנשים האלה (Je ne supporte pas ces gens-là - Utilisation avec את)",
+            "אני סובל מהלחות כשאני בתל אביב (Je souffre de l'humidité quand je suis à Tel Aviv - Utilisation avec מ)"
+        ],
+        "lessoncode": "1.21"
+    },
+    "1.22": {
+        "presence": true,
+        "concept": "L'expression de l'heure et l'accord en genre des nombres pour les heures et les minutes.",
+        "explication": "En hébreu, l'expression de l'heure repose sur des règles d'accord spécifiques. Pour indiquer une heure entière, on utilise le mot השעה suivi du chiffre au féminin (comme אחת, שתיים, שלוש). Puisque le système fonctionne sur 12 heures, on précise le moment de la journée avec des termes comme בבוקר (au matin) ou בערב (au soir). Une règle grammaticale particulière s'applique aux minutes : lorsque l'on exprime les minutes 5 et 10, on doit utiliser la forme masculine de ces chiffres, soit חמישה pour 5 et עשרה pour 10, contrairement aux heures qui restent au féminin.",
+        "exemples": [
+            "Il est 10h : השעה עשר (utilisation du chiffre au féminin pour l'heure).",
+            "Il est 8h du matin : השעה שמונה בבוקר (précision du moment de la journée).",
+            "Il est 8h10 : השעה שמונה ועשרה (utilisation du chiffre au masculin pour les 10 minutes).",
+            "Il est 15h55 (4h moins 5) : השעה חמישה לארבע (utilisation du chiffre au masculin pour les 5 minutes)."
+        ],
+        "lessoncode": "1.22"
+    },
+    "1.23": {
+        "presence": true,
+        "concept": "La conjugaison du verbe יכול (pouvoir) au passé",
+        "explication": "Le verbe יכול (pouvoir) est un verbe particulièrement irrégulier en hébreu, et ce à tous les temps. Au passé, sa conjugaison se distingue par la présence récurrente du son O, ce qui ne suit pas le modèle habituel de la conjugaison régulière. Il est donc indispensable de mémoriser ses différentes formes par coeur. Il faut également noter qu'à la troisième personne du masculin singulier, l'orthographe peut parfois varier (יכל ou יכול) selon les ouvrages de grammaire, bien que le sens et l'usage restent identiques.",
+        "exemples": [
+            "רציתי מאוד להצטרף אליכם אבל בסוף לא יכולתי (Je voulais vraiment vous rejoindre mais finalement je n'ai pas pu).",
+            "אני לא יודע אם הוא יכל לסיים את כל העבודה שלו (Je ne sais pas s'il a pu finir tout son travail).",
+            "למה לא יכולת לעשות את מה שביקשתי ממך? (Pourquoi n'as-tu pas pu faire ce que je t'ai demandé ?)",
+            "יכולנו לעשות את העבודה שהם לא יכלו (Nous avons pu faire le travail qu'ils n'ont pas pu faire)."
+        ],
+        "lessoncode": "1.23"
+    },
+    "1.24": {
+        "presence": true,
+        "concept": "L'expression de la lassitude avec le verbe להימאס et les prépositions ל et מ",
+        "explication": "En hébreu, pour exprimer le fait d'en avoir marre ou d'être lassé de quelque chose, on utilise une construction linguistique spécifique avec le verbe להימאס. Ce verbe est généralement utilisé à la troisième personne du masculin singulier au passé, soit נמאס. Il est obligatoirement suivi de la préposition ל, qui se décline pour indiquer la personne qui ressent la lassitude (par exemple לי pour dire que j'en ai marre, ou לך pour dire que tu en as marre). Ensuite, si l'on souhaite préciser de quoi ou de qui on est lassé, on ajoute la préposition מ (de), également déclinée selon l'objet ou la personne en question.",
+        "exemples": [
+            "מספיק! נמאס לי! (Ça suffit, j'en ai marre !)",
+            "נמאס לך ממנו? (Tu en as marre de lui ?)",
+            "זהו נמאס לי מזה. (Ça y est j'en ai marre de ça.)",
+            "בסוף נמאס לו והוא מחליט להיכנס לחניון. (A la fin il en a marre et il décide d'entrer dans un parking.)"
+        ],
+        "lessoncode": "1.24"
+    },
+    "1.25": {
+        "presence": true,
+        "concept": "La conjugaison au passé des verbes à la forme Piel se terminant par ות et la syntaxe des verbes de perception.",
+        "explication": "Cette leçon aborde deux points grammaticaux. Premièrement, elle introduit la conjugaison au passé des verbes du binyan Piel dont l'infinitif se termine par ות, correspondant aux racines se terminant par la lettre ה. Pour ces verbes, la voyelle de la racine change au passé selon le pronom, par exemple avec un son 'i' à la première personne du singulier, comme pour le verbe לנסות qui devient ניסיתי. Deuxièmement, la leçon explique la syntaxe des verbes de perception comme לראות ou לשמוע. En hébreu, le verbe d'action qui suit un verbe de perception ne se met pas à l'infinitif mais se conjugue au présent.",
+        "exemples": [
+            "Conjugaison au passé (Piel) : אני ניסיתי (j'ai essayé), הוא ניסה (il a essayé), הם חיכו (ils ont attendu).",
+            "Verbes de perception : אני רואה אותה מגיעה (Je la vois arriver - littéralement : Je vois elle arrive).",
+            "Verbes de perception : שמעתי אותה אומרת את זה (Je l'ai entendue dire ça).",
+            "Expression de l'envie : בא לך לבלות איתי הערב? (Ça te dit de sortir avec moi ce soir ?)."
+        ],
+        "lessoncode": "1.25"
+    },
+    "1.26": {
+        "presence": true,
+        "concept": "La conjugaison des verbes de la forme נפעל au temps passé.",
+        "explication": "Le binyan נפעל se distingue par la présence de la lettre נ comme préfixe. Il sert très fréquemment à exprimer la forme passive des verbes du binyan פעל, mais il peut également avoir un sens réflexif. En principe, la plupart des verbes au פעל peuvent se mettre à la forme passive en transposant leur racine au נפעל, à condition que le verbe existe dans le dictionnaire. La conjugaison au passé se construit en ajoutant les terminaisons classiques du passé à la base du verbe, comme pour le verbe להיכנס qui donne נכנסתי à la première personne du singulier.",
+        "exemples": [
+            "המכתב נכתב בעברית (La lettre est écrite en hébreu, utilisation comme passif).",
+            "החולה נבדק בבית החולים (Le malade est examiné à l'hôpital, utilisation comme passif).",
+            "הוא פתאום נזכר (Il s'est soudainement souvenu, utilisation comme réflexif).",
+            "הספר נמכר (Le livre a été vendu, passif du verbe מכר)."
+        ],
+        "lessoncode": "1.26"
+    },
+    "1.27": {
+        "presence": true,
+        "concept": "Traduire l'expression 'arriver à faire quelque chose' avec le verbe להצליח et l'utilisation du mot תוך pour exprimer une durée.",
+        "explication": "En français, on utilise souvent le verbe 'arriver' pour exprimer le fait de parvenir ou de réussir à faire quelque chose. En hébreu, on ne traduit pas cela par le verbe להגיע, qui signifie arriver physiquement à une destination, mais on utilise le verbe להצליח, qui signifie 'réussir'. Ainsi, 'je n'arrive pas' se dira 'je ne réussis pas'. De plus, la leçon introduit le mot תוך suivi d'une durée. Il indique qu'une action s'accomplira à l'intérieur de cette période, c'est-à-dire dans un délai imparti, et non à la fin exacte de cette durée.",
+        "exemples": [
+            "למדתי עברית והיום אני מצליח לדבר (J'ai appris l'hébreu et aujourd'hui j'arrive à parler).",
+            "אני לא מצליחה לסגור את הדלת (Je n'arrive pas à fermer la porte).",
+            "הם מגיעים תוך שעה (Ils arrivent d'ici une heure).",
+            "אני מגיעה תוך חמש דקות (J'arrive dans les 5 minutes)."
+        ],
+        "lessoncode": "1.27"
+    },
+    "1.28": {
+        "presence": true,
+        "concept": "La déclinaison des prépositions (Forme 1)",
+        "explication": "En hébreu, les prépositions se déclinent en ajoutant des suffixes pronominaux pour indiquer la personne (moi, toi, lui, etc.), fusionnant ainsi la préposition et le pronom personnel. Il existe principalement deux modèles de déclinaisons qui se distinguent par la sonorité de leurs suffixes. Cette leçon se concentre sur la première forme (Forme 1). Des prépositions très courantes telles que מול (en face de), בגלל (à cause de), נגד (contre) ou בשביל (pour) suivent ce modèle. Il faut toutefois prêter attention à certaines prépositions comme כמו ou ב dont la troisième personne du pluriel se calque sur le modèle de להם et להן.",
+        "exemples": [
+            "היא יושבת מולי (Elle est assise en face de moi) - Préposition מול avec le suffixe de la 1ère personne du singulier.",
+            "אנחנו מאחרים בגללך (Nous sommes en retard à cause de toi) - Préposition בגלל avec le suffixe de la 2ème personne du singulier.",
+            "קניתי משהו בשבילכן (J'ai acheté quelque chose pour vous) - Préposition בשביל avec le suffixe de la 2ème personne du pluriel féminin.",
+            "הוא עושה הכול כמוהו (Il fait tout comme lui) - Préposition כמו avec le suffixe de la 3ème personne du singulier."
+        ],
+        "lessoncode": "1.28"
+    },
+    "1.29": {
+        "presence": true,
+        "concept": "La déclinaison des prépositions de forme 2 et l'exception de la préposition בין.",
+        "explication": "Cette leçon introduit la deuxième forme de déclinaison des prépositions en hébreu. Contrairement à la première forme (comme בשביל), les prépositions de la forme 2 telles que אל, אחרי, לפני, בלי et מאחורי utilisent des suffixes pronominaux qui intègrent souvent la lettre yod, rappelant les terminaisons des noms au pluriel. Par exemple, לפני devient לפניי (avant moi). La leçon met également en évidence une exception importante avec la préposition בין (entre), dont le modèle de déclinaison est hybride et emprunte des éléments à la fois à la première et à la deuxième forme.",
+        "exemples": [
+            "הוא תמיד מגיע לפניי לעבודה (Il arrive toujours avant moi au travail.)",
+            "לא בא לי לנסוע בלעדיהם (Je n'ai pas envie de voyager sans eux.)",
+            "יש כלב חמוד מאחוריכם (Il y a un chien mignon derrière vous.)",
+            "אין שום דבר ביני לבינה (Il n'y a rien entre elle et moi.)"
+        ],
+        "lessoncode": "1.29"
+    },
+    "1.30": {
+        "presence": true,
+        "concept": "L'utilisation du mot אמור pour traduire l'expression \"être censé\"",
+        "explication": "En hébreu, pour exprimer l'idée d'être \"censé\" faire quelque chose ou qu'un événement est \"censé\" se produire, on emploie le mot אמור suivi d'un verbe à l'infinitif. Ce terme s'accorde en genre et en nombre avec le sujet de la phrase. Il se décline de la façon suivante : אמור pour le masculin singulier, אמורה pour le féminin singulier, אמורים pour le masculin pluriel et אמורות pour le féminin pluriel. Bien qu'il dérive d'une racine verbale, il fonctionne ici comme un quasi-modal indiquant une attente ou une probabilité.",
+        "exemples": [
+            "היא אמורה להגיע בקרוב (Elle est censée bientôt arriver.)",
+            "אתם לא אמורים להיות פה (Vous n'êtes pas censés être là.)",
+            "מי אמור להגיע לבית של כוכבה? (Qui est censé arriver chez Kochava ?)"
+        ],
+        "lessoncode": "1.30"
+    },
+    "1.31": {
+        "presence": true,
+        "concept": "L'expression du conditionnel",
+        "explication": "En hébreu, il n'existe pas de mode conditionnel à proprement parler comme c'est le cas dans la langue française. Pour exprimer une hypothèse, un souhait, une politesse ou une condition non réalisée, on utilise une structure syntaxique composée bien spécifique. Celle-ci se forme en employant le verbe être (להיות) conjugué au temps du passé, directement suivi du verbe de l'action principale conjugué au présent. Cette combinaison temporelle permet de traduire fidèlement des phrases hypothétiques souvent introduites par la conjonction si (אם), ainsi que des expressions courantes telles que je voudrais, je ferais ou j'aurais fait.",
+        "exemples": [
+            "Si je n'avais pas eu d'argent, je n'aurais pas acheté cette voiture. : אם לא היה לי כסף, לא הייתי קונה את המכונית הזאת.",
+            "Je voudrais acheter cela mais je ne sais si ça vaut le coup. : הייתי רוצה לקנות את זה אבל אני לא יודע אם זה כדאי.",
+            "Si mon appartement avait été plus grand, j'aurais acheté une grande table. : אם הדירה שלי הייתה יותר גדולה, הייתי קונה שולחן גדול.",
+            "Si j'avais su que c'était cher, je n'aurais pas payé. : אם הייתי יודע שזה יקר, לא הייתי משלם."
+        ],
+        "lessoncode": "1.31"
+    },
+    "1.32": {
+        "presence": true,
+        "concept": "L'accord des adjectifs de couleur en genre et en nombre et la conjugaison au binyan Piel.",
+        "explication": "Cette leçon aborde deux concepts grammaticaux. Premièrement, elle introduit la conjugaison de verbes au binyan Piel (פיעל), comme les verbes לצייר (dessiner) et לתאר (décrire), en présentant leurs déclinaisons au présent et au passé. Deuxièmement, elle approfondit l'accord des adjectifs de couleur. En hébreu, les couleurs s'accordent obligatoirement en genre (masculin ou féminin) et en nombre (singulier ou pluriel) avec le nom qu'elles qualifient. Le document fournit un tableau exhaustif déclinant chaque couleur (par exemple, noir se dit שחור au masculin singulier, et שחורות au féminin pluriel) pour décrire précisément la nature.",
+        "exemples": [
+            "הבן שלי מצייר עם עפרון (Mon fils dessine avec un crayon - utilisation du verbe לצייר au présent masculin singulier).",
+            "יש לי נעליים שחורות (J'ai des chaussures noires - accord de la couleur au féminin pluriel).",
+            "לדני יש חולצה ירוקה (Dani a une chemise verte - accord de la couleur au féminin singulier).",
+            "השמים כחולים (Le ciel est bleu - accord de la couleur au masculin pluriel)."
+        ],
+        "lessoncode": "1.32"
+    },
+    "1.33": {
+        "presence": true,
+        "concept": "La conjugaison et l'utilisation du verbe לגשת (s'approcher) au binyan נפעל",
+        "explication": "La leçon met en évidence le verbe לגשת signifiant s'approcher ou s'avancer. Ce verbe fait partie du binyan נפעל. Son infinitif לגשת est irrégulier par rapport à sa racine נ-ג-ש. Au présent, il se conjugue ainsi : ניגש au masculin singulier, ניגשת au féminin singulier, et ניגשים ou ניגשות au pluriel. Le document illustre aussi quelques formes au passé comme ניגשתי (je me suis approché) et ניגשו (ils se sont approchés). Dans la phrase, ce verbe est généralement suivi des prépositions ל ou אל pour introduire la personne ou l'objet dont on s'approche.",
+        "exemples": [
+            "המוכר ניגש אליי ושואל אותי אם אני מסתדר",
+            "אתה צריך לגשת לדלפק בבקשה",
+            "כשאני מגיע לבנק אני מיד ניגש לדלפק"
+        ],
+        "lessoncode": "1.33"
+    },
+    "1.34": {
+        "presence": true,
+        "concept": "L'utilisation du préfixe ל devant une durée pour indiquer la fréquence et l'usage du mot תלוי pour exprimer la dépendance.",
+        "explication": "Cette leçon met en évidence deux points linguistiques. Le premier est l'ajout du préfixe ל devant un nom de durée ou de temps pour exprimer une notion de fréquence, de répartition ou de tarif. Cela se traduit généralement en français par le mot 'par' ou 'pour', comme dans 'par jour' ou 'par an'. Le second point concerne l'utilisation du mot תלוי qui se traduit par 'dépend'. Lorsqu'on veut préciser de quoi ou de qui cela dépend, on utilise ce mot suivi de la préposition ב attachée au nom ou au pronom.",
+        "exemples": [
+            "250 שקלים לשנה (250 shekels par an).",
+            "כמה עולה חדר ללילה ? (Combien coûte la chambre pour une nuit ?).",
+            "החניה עולה לי 50 שקל ליום (Le parking me coûte 50 shekels par jour).",
+            "זה לא תלוי בי, זה תלוי בכם (Ça ne dépend pas de moi, ça dépend de vous).",
+            "תלוי. אם יורד גשם אני נשארת בבית (Ça dépend. S'il pleut je reste chez moi)."
+        ],
+        "lessoncode": "1.34"
+    },
+    "1.35": {
+        "presence": true,
+        "concept": "L'expression de l'identité (le même), de la comparaison et du superlatif.",
+        "explication": "Cette leçon introduit plusieurs concepts liés à la description et à la comparaison. Premièrement, pour exprimer l'identité (dire 'le même', 'la même'), on utilise la préposition 'את' déclinée (אותו, אותה, אותם, אותן) selon le genre et le nombre du nom, souvent accompagnée d'un pronom démonstratif (זה, זאת, אלה). Deuxièmement, la leçon aborde les degrés de comparaison : l'égalité s'exprime avec 'כמו' (comme) qui peut se décliner avec des suffixes pronominaux (כמוני, כמוהו), la supériorité avec 'יותר מ' (plus que), et l'infériorité avec 'פחות מ' (moins que). Enfin, le superlatif s'exprime avec le mot 'הכי' (le plus).",
+        "exemples": [
+            "זה אותו שיר ששמעתי אתמול. (C'est la même chanson que j'ai écoutée hier.)",
+            "קנית אותו טלפון כמוני. (Tu as acheté le même téléphone que moi.)",
+            "היא גבוהה כמוני. (Elle est aussi grande que moi.)",
+            "דוד יותר גדול מאלי. (David est plus grand qu'Élie.)",
+            "הספר הזה היה פחות מעניין מהספר של חנה. (Ce livre était moins intéressant que le livre de Hanna.)",
+            "פגשתי את הבחורה הכי חמודה בעולם. (J'ai rencontré la fille la plus mignonne au monde.)"
+        ],
+        "lessoncode": "1.35"
+    },
+    "1.36": {
+        "presence": true,
+        "concept": "L'utilisation de l'expression תתחדש et l'accord du mot מתאים pour les vêtements.",
+        "explication": "La leçon introduit la formule de politesse תתחדש, employée pour féliciter quelqu'un qui vient d'acquérir un nouvel objet, comme un vêtement, ou qui a une nouvelle coupe de cheveux. Il s'agit de l'impératif du verbe להתחדש issu de la racine ח ד ש. La leçon explique également comment utiliser le terme מתאים pour dire qu'un vêtement va bien à quelqu'un. Ce mot s'accorde en genre et en nombre avec le vêtement en question, prenant les formes מתאים, מתאימה, מתאימים, ou מתאימות, et est suivi de la préposition ל pour indiquer à qui l'objet convient.",
+        "exemples": [
+            "החולצה הזאת מתאימה לו (Cette chemise lui va.)",
+            "הנעליים האלה מתאימות להם (Ces chaussures leur vont.)",
+            "המכנסיים האלה מתאימים לך (Ce pantalon te va.)",
+            "הבגד הזה לא מתאים לי (Ce vêtement ne me va pas.)"
+        ],
+        "lessoncode": "1.36"
+    },
+    "1.37": {
+        "presence": true,
+        "concept": "Conjugaison de verbes au présent et au passé, incluant la forme verbale Nif'al (נפעל).",
+        "explication": "La leçon introduit la conjugaison de nouveaux verbes au présent et au passé, essentiels pour le contexte des achats. Elle met en évidence le binyan (forme verbale) Nif'al (נפעל) avec les verbes להיראות (paraître) et להימצא (se trouver). Ce binyan exprime souvent un état ou une voix passive. De plus, la leçon aborde le verbe למדוד (mesurer, essayer) à la forme Pa'al (פעל) et le verbe להחליף (échanger), permettant aux élèves de formuler des phrases complètes sur l'essayage et l'échange de vêtements.",
+        "exemples": [
+            "Verbe להיראות (paraître) au présent : הוא נראה (il paraît), היא נראית (elle paraît).",
+            "Verbe להימצא (se trouver) au passé : אני נמצאתי (je me suis trouvé), הוא נמצא (il s'est trouvé).",
+            "Verbe למדוד (essayer) au présent : אני מודד (j'essaie), היא מודדת (elle essaie).",
+            "Verbe להחליף (échanger) au présent : הוא מחליף (il échange), הם מחליפים (ils échangent)."
+        ],
+        "lessoncode": "1.37"
+    },
+    "1.38": {
+        "presence": true,
+        "concept": "La conjugaison de la forme verbale הפעיל au passé et sa valeur causative.",
+        "explication": "La leçon introduit la conjugaison du binyan הפעיל au passé. Cette forme verbale exprime souvent une idée causative ou factitive, signifiant que le sujet fait faire l'action à un tiers. On peut observer ce lien en comparant des racines communes entre le moule פעל et le moule הפעיל, où l'action passe d'un état ou d'une action simple à une action causée. La conjugaison au passé utilise des préfixes et des suffixes spécifiques aux pronoms. La leçon souligne également une particularité pour certains verbes dont la racine perd une lettre (comme נ ou ו) au cours de la conjugaison.",
+        "exemples": [
+            "Le verbe ללבוש (porter un vêtement, forme פעל) devient להלביש (habiller quelqu'un, forme הפעיל). Exemple : אני לובש חולצה (Je porte une chemise) vs אני מלביש את הבן שלי (J'habille mon fils).",
+            "Le verbe לאכול (manger) devient להאכיל (nourrir). Exemple : הוא אכל תפוח (Il a mangé une pomme) vs הוא האכיל את התינוק (Il a donné à manger au bébé).",
+            "Le verbe לדאוג (s'inquiéter) devient להדאיג (inquiéter). Exemple : הוא דאג (Il s'inquiétait) vs הוא הדאיג אותם (Il les a inquiétés).",
+            "Conjugaison type au passé avec להסביר (expliquer) : אני הסברתי (j'ai expliqué), הוא הסביר (il a expliqué), הם הסבירו (ils ont expliqué)."
+        ],
+        "lessoncode": "1.38"
+    },
+    "1.39": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au binyan Hif'il (הפעיל) et Pa'al (פעל) au présent et au passé.",
+        "explication": "La leçon présente des verbes appartenant aux binyanim Pa'al (פעל) et Hif'il (הפעיל). Le binyan Hif'il exprime souvent une action causative. La leçon met en évidence la morphologie de ce binyan : l'infinitif commence par le préfixe לה (ex: להגזים), le présent utilise le préfixe מ (ex: מגזים), et le passé se forme avec le préfixe ה à la troisième personne (ex: הגזים). Les tableaux de conjugaison montrent les variations en genre et en nombre au présent, ainsi que les formes de la première et troisième personne au passé, préparant l'élève aux exercices de conjugaison.",
+        "exemples": [
+            "להגזים (exagérer) : au présent מגזים (masculin singulier), au passé הגזים (il a exagéré)",
+            "להשמין (grossir) : au présent משמין (masculin singulier), au passé השמין (il a grossi)",
+            "לרדת (descendre, binyan Pa'al) : au présent יורד (masculin singulier), au passé ירד (il est descendu)"
+        ],
+        "lessoncode": "1.39"
+    },
+    "1.40": {
+        "presence": true,
+        "concept": "Le ה de direction ajouté en fin de mot pour indiquer un mouvement vers une destination.",
+        "explication": "Le ה de direction est un suffixe ajouté à la fin d'un mot en hébreu pour indiquer une direction ou un mouvement vers un lieu spécifique. Bien qu'il ressemble à la terminaison féminine, sa fonction est différente. En hébreu moderne, il s'utilise surtout dans des expressions figées, souvent avec des verbes de mouvement. L'ajout de ce ה rend redondante l'utilisation de la préposition ל (vers) avant le mot, car le suffixe exprime déjà cette idée de direction. Par exemple, le mot signifiant 'maison' devient 'vers la maison' comme dans l'expression לחזור הביתה.",
+        "exemples": [
+            "ימין (droite) devient ימינה (vers la droite / à droite)",
+            "שמאל (gauche) devient שמאלה (vers la gauche / à gauche)",
+            "צפון (nord) devient צפונה (vers le nord)",
+            "דרום (sud) devient דרומה (vers le sud)",
+            "שם (là-bas) devient שמה (vers là-bas)"
+        ],
+        "lessoncode": "1.40"
+    },
+    "1.41": {
+        "presence": true,
+        "concept": "L'utilisation de l'expression כבר לא (ne plus) et la distinction entre les verbes לעצור et להפסיק (arrêter).",
+        "explication": "La leçon introduit deux concepts linguistiques. Le premier est l'utilisation de l'expression כבר לא pour exprimer quelque chose qui n'est plus d'actualité, traduisant le 'ne plus' français (équivalent à לא יותר). Le second concept est la distinction sémantique entre deux verbes qui se traduisent par 'arrêter' en français : לעצור et להפסיק. Le verbe לעצור est utilisé pour marquer l'arrêt physique d'un mouvement (par exemple, un véhicule qui s'arrête). En revanche, le verbe להפסיק est employé pour indiquer l'interruption ou la cessation d'une activité ou d'une action.",
+        "exemples": [
+            "אני כבר לא עובד במקום הזה (Je ne travaille plus à cet endroit.)",
+            "אני כבר לא רעב (Je n'ai plus faim.)",
+            "אני עוצר ברמזור (Je m'arrête au feu tricolore - arrêt d'un mouvement.)",
+            "אני מפסיק ללמוד השנה (J'arrête d'étudier cette année - arrêt d'une activité.)"
+        ],
+        "lessoncode": "1.41"
+    },
+    "1.42": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "1.42"
+    },
+    "1.43": {
+        "presence": true,
+        "concept": "La distinction entre les adverbes de lieu statiques (בפנים, בחוץ) et les adverbes de direction ou de mouvement (פנימה, החוצה).",
+        "explication": "En hébreu, il existe une distinction importante pour exprimer les concepts de dedans/à l'intérieur et dehors/à l'extérieur selon que l'action est statique ou implique un mouvement. Pour décrire un état ou une position fixe (avec des verbes statiques), on utilise les mots בפנים (à l'intérieur / dedans) et בחוץ (à l'extérieur / dehors). En revanche, lorsqu'il y a une idée de direction ou de déplacement vers un lieu (avec des verbes de mouvement comme sortir ou entrer), on emploie les termes פנימה (vers l'intérieur) et החוצה (vers l'extérieur). Cette nuance est essentielle pour formuler des phrases correctes.",
+        "exemples": [
+            "קר בחוץ! יותר נעים בפנים. (Il fait froid dehors ! Il fait meilleur dedans.)",
+            "אני נשאר בפנים, לא בא לי לשבת בחוץ. (Je reste dedans, je n'ai pas envie de m'asseoir dehors.)",
+            "אני יוצא החוצה שניה. (Je sors dehors une seconde.)",
+            "אני נכנס פנימה, קר בחוץ. (Je rentre à l'intérieur, il fait froid dehors.)"
+        ],
+        "lessoncode": "1.43"
+    },
+    "1.44": {
+        "presence": true,
+        "concept": "Le binyan התפעל (Hitpael) au passé",
+        "explication": "Le binyan התפעל (Hitpael) est une forme verbale en hébreu principalement utilisée pour exprimer des actions réfléchies ou réciproques. Il est très proche du binyan פיעל (Piel), car de nombreux verbes actifs au פיעל se mettent au התפעל pour prendre un sens réfléchi. Au passé, la conjugaison se construit avec le préfixe הת (hit) suivi de la racine et des terminaisons habituelles du passé (comme תי pour je, נו pour nous). La forme présente des particularités phonétiques, comme l'inversion du préfixe avec certaines premières lettres de la racine (par exemple avec ס ou צ) ou des conjugaisons spécifiques pour les racines à quatre lettres.",
+        "exemples": [
+            "הוא התלבש יפה (Il s'est bien habillé.)",
+            "הפגישה התבטלה (Le rendez-vous s'est annulé.)",
+            "התרגשתי כשראיתי אותם שוב (J'étais ému quand je les ai revus.)",
+            "היא לא ביקשה עזרה היא הסתדרה לבד (Elle n'a pas demandé d'aide, elle s'est débrouillée seule.)"
+        ],
+        "lessoncode": "1.44"
+    },
+    "1.45": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au passé pour les formes נפעל, התפעל et הפעיל",
+        "explication": "Cette leçon se concentre sur la conjugaison des verbes au passé, en mettant l'accent sur trois formes verbales (binyanim) spécifiques de la langue hébraïque : le נפעל (Nifal), le התפעל (Hitpael) et le הפעיל (Hifil). Le texte de la leçon utilise abondamment ces verbes pour raconter une rencontre familiale dans le passé. Le tableau grammatical détaille les verbes et montre comment les conjuguer au passé, notamment à la première personne du singulier, ainsi qu'à la troisième personne du singulier et du pluriel. L'objectif est de maîtriser les préfixes et suffixes caractéristiques du passé pour ces binyanim.",
+        "exemples": [
+            "Binyan נפעל : Le verbe להיפרד (se séparer) se conjugue au passé à la 3ème personne du pluriel en נפרדו (ils se sont séparés).",
+            "Binyan התפעל : Le verbe להתרגש (s'émouvoir) donne התרגשתי (je me suis ému) à la 1ère personne du singulier et התרגש (il s'est ému) à la 3ème personne du singulier.",
+            "Binyan הפעיל : Le verbe להתחיל (commencer) devient התחלתי (j'ai commencé) à la 1ère personne du singulier ou התחיל (il a commencé) à la 3ème personne du singulier."
+        ],
+        "lessoncode": "1.45"
+    },
+    "2.01": {
+        "presence": true,
+        "concept": "La conjugaison du verbe irrégulier יכול au passé",
+        "explication": "Le verbe יכול (pouvoir) constitue une exception majeure dans la conjugaison hébraïque, que ce soit au présent, au passé ou au futur. Bien qu'il soit apparenté au binyan פעל, il ne suit aucun modèle standard. Une de ses grandes particularités est l'absence d'un véritable infinitif, un sujet qui fait d'ailleurs l'objet de débats (מחלוקת) dans les livres de grammaire. Au passé, sa conjugaison présente plusieurs variantes acceptées. De plus, pour exprimer la capacité dans le passé, il est également possible de le conjuguer de manière analytique en utilisant le verbe auxiliaire להיות. Il est donc nécessaire d'apprendre ses formes par cœur.",
+        "exemples": [
+            "יכולתי (je pouvais / j'ai pu)",
+            "יכולת (tu pouvais / tu as pu)",
+            "יכול (il pouvait / il a pu)",
+            "יכולה (elle pouvait / elle a pu)",
+            "יכולנו (nous pouvions / nous avons pu)",
+            "יכלו (ils/elles pouvaient / ont pu)"
+        ],
+        "lessoncode": "2.01"
+    },
+    "2.02": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au futur a la forme Paal (modeles אפעול et אפעל)",
+        "explication": "En hebreu, le futur se caracterise par l'ajout de prefixes (א, ת, י, נ) et parfois de suffixes (י, ו) a la racine du verbe, selon le pronom personnel. Pour le binyan Paal, il existe deux moules principaux : אפעול et אפעל. La conjugaison standard suit le modele אפעול. Cependant, lorsque la deuxieme ou la troisieme lettre de la racine est une consonne gutturale (א, ה, ח, ע), le verbe adopte le modele אפעל pour des raisons de prononciation. Les prefixes permettent d'identifier le sujet, par exemple א pour אני ou נ pour אנחנו.",
+        "exemples": [
+            "Le verbe לכתוב (ecrire) suit le modele classique אפעול : אני אכתוב (j'ecrirai), הוא יכתוב (il ecrira), אנחנו נכתוב (nous ecrirons).",
+            "Le verbe לדאוג (s'inquieter) possede une gutturale en deuxieme position de la racine, il suit donc le modele אפעל : אני אדאג (je m'inquieterai), היא תדאג (elle s'inquietera).",
+            "Exemple avec un marqueur de temps : מחר אני אכתוב מכתב (Demain j'ecrirai une lettre)."
+        ],
+        "lessoncode": "2.02"
+    },
+    "2.03": {
+        "presence": true,
+        "concept": "Le futur (עתיד) des verbes, principalement au binyan פעל (Pa'al).",
+        "explication": "La leçon introduit le temps du futur (עתיד) en hébreu, en se concentrant particulièrement sur le binyan פעל (Pa'al) et en présentant quelques verbes d'autres formes (פיעל, הפעיל, התפעל). En hébreu, le futur se construit en ajoutant des lettres préfixes à la racine du verbe, connues sous l'acronyme איתן (Aleph, Yod, Tav, Noun), qui correspondent aux différentes personnes. Des suffixes sont également ajoutés pour le féminin singulier et le pluriel. Ce temps est utilisé pour décrire des actions à venir, mais il sert aussi couramment à formuler des requêtes, des instructions ou des interdictions, comme illustré dans le texte de la leçon.",
+        "exemples": [
+            "אני אשמע (j'écouterai)",
+            "אנחנו נשמור (nous garderons)",
+            "אתה תסגור (tu fermeras, masculin singulier)",
+            "הם ילמדו (ils apprendront)",
+            "אל תשכח (n'oublie pas, masculin singulier)"
+        ],
+        "lessoncode": "2.03"
+    },
+    "2.04": {
+        "presence": true,
+        "concept": "Conjugaison au futur des verbes du binyan Paal dont l'infinitif contient un vav ou un youd.",
+        "explication": "Cette leçon introduit la conjugaison au futur des verbes du binyan Paal construits sur les modèles contenant un vav ou un youd central. La règle de conjugaison pour ces verbes est particulièrement simple : il suffit de prendre l'infinitif du verbe, d'en retirer la lettre ל (lamed) qui marque l'infinitif, et d'y ajouter les préfixes et suffixes habituels du futur selon le pronom personnel. La voyelle centrale est conservée, ce qui facilite grandement leur mémorisation. Des verbes courants comme לגור, לשיר ou לבוא suivent cette règle.",
+        "exemples": [
+            "Le verbe לגור (habiter) : j'habiterai s'écrit אני אגור et ils habiteront s'écrit הם יגורו.",
+            "Le verbe לשיר (chanter) : tu (masculin) chanteras s'écrit אתה תשיר et nous chanterons s'écrit אנחנו נשיר.",
+            "Le verbe לבוא (venir) : elle viendra s'écrit היא תבוא et vous viendrez s'écrit אתם תבואו."
+        ],
+        "lessoncode": "2.04"
+    },
+    "2.05": {
+        "presence": true,
+        "concept": "L'impératif négatif avec la particule אל et l'accord du mot חסר",
+        "explication": "L'impératif négatif, qui exprime une interdiction ou une défense, se forme en hébreu en utilisant la particule de négation אל (et non pas לא) suivie du verbe conjugué au futur. Cette particule se place toujours juste devant le verbe. Par exemple, pour dire 'ne t'inquiète pas' à un homme, on utilise אל suivi du verbe au futur תדאג. De plus, la leçon aborde l'utilisation du mot חסר (manquant). Ce mot fonctionne comme un adjectif et s'accorde en genre et en nombre avec l'objet ou la personne qui manque, et non avec la personne à qui il manque quelque chose.",
+        "exemples": [
+            "אל תדאג ! (Ne t'inquiète pas ! - au masculin singulier)",
+            "אל תדאגי ! (Ne t'inquiète pas ! - au féminin singulier)",
+            "אל תדאגו ! (Ne vous inquiétez pas ! - au pluriel)",
+            "חסר מלח (Il manque du sel - masculin singulier)",
+            "חסרה צלחת (Il manque une assiette - féminin singulier)",
+            "חסרים תלמידים (Il manque des élèves - masculin pluriel)"
+        ],
+        "lessoncode": "2.05"
+    },
+    "2.06": {
+        "presence": true,
+        "concept": "La conjugaison du verbe להיות (être) et des verbes se terminant en ה au futur.",
+        "explication": "Cette leçon introduit la conjugaison au futur du verbe להיות (être). En hébreu, le verbe être ne se conjugue qu'au passé et au futur. Il sert notamment d'auxiliaire et permet de former le passé et le futur de l'expression de la possession (יש לי / אין לי). La leçon montre également que ce modèle de conjugaison s'applique à d'autres verbes dont la racine se termine par la lettre ה (les verbes Lamed-He), tels que לקנות (acheter) ou לרצות (vouloir). Ces verbes adoptent les préfixes réguliers du futur (א, ת, י, נ) avec une terminaison en ה pour le singulier et en ו pour le pluriel.",
+        "exemples": [
+            "אני אהיה (Je serai)",
+            "הוא יקנה (Il achètera)",
+            "אנחנו נרצה (Nous voudrons)",
+            "הם יהיו (Ils seront)"
+        ],
+        "lessoncode": "2.06"
+    },
+    "2.07": {
+        "presence": true,
+        "concept": "L'expression de la possession et du verbe avoir au futur avec le verbe להיות et la préposition ל",
+        "explication": "En hébreu, le verbe avoir n'existe pas. Pour exprimer la possession au futur, on utilise une structure combinant le verbe être (להיות) conjugué au futur et la préposition ל déclinée selon le possesseur (לי, לך, לו, לה, לנו, לכם, לכן, להם, להן). La règle essentielle est que le verbe להיות s'accorde en genre et en nombre avec l'objet possédé, et non avec le possesseur. Ainsi, pour un objet masculin singulier on utilise יהיה, pour un objet féminin singulier on utilise תהיה, et pour des objets au pluriel on utilise יהיו.",
+        "exemples": [
+            "יהיה לי ספר - J'aurai un livre",
+            "תהיה לי דירה - J'aurai un appartement",
+            "יהיו לדנה מבחנים - Dana aura des examens",
+            "כשיהיה לך זמן, תשלח לו הודעה - Quand tu auras le temps, envoie-lui un message"
+        ],
+        "lessoncode": "2.07"
+    },
+    "2.08": {
+        "presence": true,
+        "concept": "Conjugaison au futur des verbes au binyan פעל dont la première lettre de la racine est une gutturale (א, ח, ע).",
+        "explication": "En hébreu, la conjugaison des verbes au binyan פעל au futur subit une modification phonétique lorsque la première lettre de la racine est une consonne gutturale, comme le א, le ח ou le ע. Contrairement aux verbes réguliers qui prennent généralement le son i aux préfixes du futur, la présence d'une gutturale en première position de la racine modifie la vocalisation pour faciliter la prononciation. Les préfixes de conjugaison prendront alors un son différent, souvent un a ou un e, ce qui altère la sonorité habituelle du futur pour ces verbes spécifiques.",
+        "exemples": [
+            "Le verbe לעבוד (travailler) dont la racine commence par la lettre gutturale ע se conjugue au futur : אעבוד (je travaillerai), תעבוד (tu travailleras), יעבוד (il travaillera).",
+            "Le verbe לעשות (faire) se conjugue au futur : אעשה (je ferai), תעשה (tu feras), יעשה (il fera).",
+            "Le verbe לענות (répondre) se conjugue au futur : אענה (je répondrai), תענה (tu répondras), יענה (il répondra)."
+        ],
+        "lessoncode": "2.08"
+    },
+    "2.09": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "2.09"
+    },
+    "2.11": {
+        "presence": true,
+        "concept": "La déclinaison des nombres avec des suffixes pronominaux pour exprimer nous deux, vous trois, etc.",
+        "explication": "En hébreu, il est possible d'ajouter des suffixes pronominaux directement aux nombres pour exprimer des groupes de personnes incluant le locuteur, l'interlocuteur ou des tiers, tels que \"nous deux\", \"vous trois\" ou \"eux quatre\". Ces suffixes s'attachent à la forme construite du nombre et varient en fonction du genre (masculin ou féminin) et de la personne (première, deuxième ou troisième personne du pluriel). Par exemple, à partir du chiffre deux, on forme שנינו pour \"nous deux\" au masculin et שתינו au féminin. Cette structure grammaticale permet d'exprimer de manière concise et idiomatique la totalité d'un groupe défini.",
+        "exemples": [
+            "שנינו (nous deux - masculin)",
+            "שתינו (nous deux - féminin)",
+            "שלושתכם (vous trois - masculin)",
+            "ארבעתם (eux quatre - masculin)"
+        ],
+        "lessoncode": "2.11"
+    },
+    "2.12": {
+        "presence": true,
+        "concept": "La déclinaison du nom commun singulier pour exprimer la possession (נטיית השם).",
+        "explication": "En hébreu, les noms peuvent se décliner pour exprimer la possession en ajoutant des suffixes pronominaux directement à la fin du mot. Cette forme remplace l'utilisation du mot של de possession. Si cette structure est très courante à l'écrit pour créer des formules courtes, elle s'utilise aussi à l'oral pour des expressions figées, des mots de liaison ou le vocabulaire de la famille. Sur le plan orthographique, si le nom se termine par un ה, celui-ci se transforme en ת avant d'ajouter le suffixe. Enfin, il est important de noter qu'un nom décliné ne prend jamais l'article défini.",
+        "exemples": [
+            "לצערי (à mon regret) à partir du mot צער",
+            "לדעתי (à mon avis) à partir du mot דעה, où le ה devient ת",
+            "בעלי (mon mari) et אשתי (ma femme) pour les liens de parenté",
+            "דרכי (par moi / à travers moi) à partir du mot דרך",
+            "מה שלומך (comment vas-tu) qui utilise la déclinaison du mot שלום"
+        ],
+        "lessoncode": "2.12"
+    },
+    "2.13": {
+        "presence": true,
+        "concept": "Conjugaison de verbes au futur, particularités d'usage du verbe dire (להגיד / לומר) et distinction entre les marqueurs de temps במשך et בזמן.",
+        "explication": "Cette leçon aborde la conjugaison de plusieurs verbes dans différents binyanim, avec une attention particulière sur le futur de verbes irréguliers comme לדחות (repousser) ou למצוא (trouver). Elle introduit également une règle linguistique importante concernant le verbe dire : l'infinitif להגיד n'est pas utilisé au présent ni au passé, temps pour lesquels on préférera le verbe לומר. En revanche, להגיד est très courant à l'infinitif et au futur. Enfin, la leçon précise la différence entre בזמן (pendant que, suivi d'une action simultanée) et במשך (pendant, suivi d'une durée).",
+        "exemples": [
+            "אני אדחה את הפגישה (Je repousserai le rendez-vous - utilisation du futur)",
+            "שכחתי להגיד להם (J'ai oublié de leur dire - utilisation de l'infinitif להגיד)",
+            "הם ישנו בזמן שעבדתי (Ils dormaient pendant que je travaillais - action simultanée avec בזמן)",
+            "גרתי בצרפת במשך שנים (J'ai vécu en France pendant des années - durée avec במשך)"
+        ],
+        "lessoncode": "2.13"
+    },
+    "2.14": {
+        "presence": true,
+        "concept": "La conjugaison des verbes a la forme פיעל au futur",
+        "explication": "Le binyan פיעל est une forme verbale tres courante et reguliere en hebreu, particulierement simple a conjuguer au temps futur. Cette forme est souvent utilisee pour integrer de nouveaux mots ou neologismes dans la langue, et elle accueille frequemment des racines a quatre lettres. La conjugaison au futur se deduit directement et logiquement de l'infinitif du verbe. En pratique, il suffit de retirer la lettre ל de l'infinitif et de la remplacer par les prefixes specifiques du futur, a savoir les lettres א, ת, י, נ, selon le pronom personnel sujet, tout en ajoutant les suffixes necessaires pour le pluriel ou le feminin.",
+        "exemples": [
+            "Pour le verbe לדבר (parler) : je parlerai devient אדבר, tu parleras (masculin) devient תדבר, et il parlera devient ידבר.",
+            "Pour le verbe לבשל (cuisiner) : nous cuisinerons devient נבשל, et ils cuisineront devient יבשלו.",
+            "Pour le verbe לספר (raconter) : elle racontera devient תספר, et vous raconterez devient תספרו."
+        ],
+        "lessoncode": "2.14"
+    },
+    "2.15": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au futur (עתיד) et au passé (עבר) dans les différents Binyanim.",
+        "explication": "Cette leçon met en pratique la conjugaison hébraïque en contrastant le futur et le passé à travers différents Binyanim (פעל, פיעל, הפעיל, התפעל, נפעל). Le dialogue initial illustre abondamment le futur pour exprimer des actions prévues avant un voyage, tandis que le récit narratif qui suit utilise le passé pour décrire les étapes franchies à l'aéroport. Les tableaux grammaticaux détaillent ces conjugaisons, en insistant particulièrement sur les déclinaisons complètes du futur pour les formes פעל et פיעל, permettant d'assimiler les préfixes verbaux propres à chaque personne.",
+        "exemples": [
+            "Au futur (Binyan פיעל) : אני אכבס (je laverai), אני אגהץ (je repasserai), אני אקפל (je plierai).",
+            "Au futur (Binyan פעל) : אני אארוז (j'emballerai), אני אנחת (j'atterrirai).",
+            "Au passé (Binyan הפעיל) : הוא הראה (il a montré), הוא המריא (il a décollé).",
+            "Au passé (Binyan התפעל) : הוא התעכב (il a été retardé).",
+            "Au passé (Binyan נפעל) : המזוודה נשקלה (la valise a été pesée)."
+        ],
+        "lessoncode": "2.15"
+    },
+    "2.16": {
+        "presence": true,
+        "concept": "Conjugaison au futur des verbes du binyan פיעל dont la troisieme lettre de la racine est un ה (גזרה ל״ה).",
+        "explication": "Cette lecon introduit la conjugaison au futur pour une famille particuliere de verbes dans le binyan פיעל. Il s'agit de la גזרה (guizra) des verbes ל״ה (Lamed he), c'est-a-dire les verbes dont la troisieme et derniere lettre de la racine est un ה. La presence de cette lettre entraine des modifications lors de la conjugaison par rapport au modele classique. Par exemple, le ה final peut disparaitre ou se transformer devant certaines terminaisons (comme pour les pronoms au pluriel ou a la deuxieme personne du feminin singulier), tout en gardant la melodie typique du binyan פיעל.",
+        "exemples": [
+            "לחכות (attendre) : אני אחכה, אנחנו נחכה",
+            "לקוות (esperer) : הוא יקווה, הם יקוו",
+            "לכבות (eteindre) : היא תכבה, אתם תכבו"
+        ],
+        "lessoncode": "2.16"
+    },
+    "2.17": {
+        "presence": true,
+        "concept": "Nuances linguistiques et expressions idiomatiques (בסוף contre סוף סוף, מדינה contre ארץ, et תעשה לי טובה)",
+        "explication": "La leçon introduit des concepts linguistiques liés à l'usage spécifique de certains mots et expressions en hébreu. Elle distingue 'בסוף' (finalement, au bout du compte) de 'סוף סוף' (enfin, exprimant l'aboutissement d'une longue attente). Elle enseigne l'expression courante 'תעשה לי טובה' (rends-moi service ou fais-moi une faveur). De plus, elle nuance la différence entre 'מדינה' qui désigne un État en tant qu'entité politique ou institutionnelle, et 'ארץ' qui désigne le pays au sens géographique, la terre, ou spécifiquement la terre d'Israël lorsqu'il est employé avec l'article défini.",
+        "exemples": [
+            "הוא היה אמור לבוא אבל בסוף הוא לא בא (Il était censé venir mais finalement il n'est pas venu.)",
+            "סוף סוף הגעתם! חיכינו שעות! (Vous êtes enfin arrivés ! On a attendu des heures !)",
+            "אמיר תעשה לי טובה תקנה חלב בדרך חזרה. (Amir, rends-moi service, achète du lait sur le chemin du retour.)",
+            "צרפת היא מדינה דמוקרטית. (La France est un état démocratique.)",
+            "אני גר בארץ. (J'habite en Israël.)"
+        ],
+        "lessoncode": "2.17"
+    },
+    "2.18": {
+        "presence": true,
+        "concept": "L'impératif positif et négatif (ציווי) et l'exhortation à la première personne du pluriel.",
+        "explication": "En hébreu, l'impératif positif se construit à partir du futur en retirant les préfixes des pronoms personnels de la deuxième personne (אתה, את, אתם, אתן). À l'oral, le futur remplace souvent l'impératif, bien que certains verbes courts restent très usités. Pour former l'impératif négatif, on utilise la particule אל suivie du verbe conjugué au futur, à la place de la négation habituelle לא. De plus, l'hébreu n'ayant pas de forme impérative directe pour le pronom nous, on exprime l'exhortation en combinant l'impératif du verbe לבוא avec le verbe d'action conjugué au futur.",
+        "exemples": [
+            "Impératif positif : בוא (viens, masculin singulier), ספרו (racontez, pluriel).",
+            "Impératif négatif : אל תכתוב (n'écris pas, masculin singulier).",
+            "Exhortation (nous) : בואו נלך ביחד (allons-y ensemble)."
+        ],
+        "lessoncode": "2.18"
+    },
+    "2.19": {
+        "presence": true,
+        "concept": "L'utilisation du verbe להספיק pour exprimer la notion de suffire ou d'avoir le temps",
+        "explication": "Le verbe להספיק, appartenant au binyan Hifil, possède deux significations principales en hébreu moderne qui sont introduites dans cette leçon. Premièrement, il est utilisé pour indiquer qu'une quantité ou une chose est suffisante, se traduisant par suffire ou être assez. Deuxièmement, il est très couramment employé pour exprimer le fait d'avoir le temps de faire quelque chose. Contrairement au français où l'on utilise l'expression avoir le temps, l'hébreu utilise directement ce verbe conjugué, souvent suivi d'un infinitif. Par exemple, au passé, on dira je n'ai pas eu le temps en utilisant simplement la forme négative du verbe conjugué.",
+        "exemples": [
+            "אתה רוצה עוד אורז או שמספיק לך ? (Tu veux encore du riz ou ça te suffit ?)",
+            "היא מספיק גדולה כדי לנסוע לבד. (Elle est assez grande pour voyager seule.)",
+            "הספקת לעשות את מה שביקשתי ממך ? (As-tu eu le temps de faire ce que je t'ai demandé ?)",
+            "לא הספקנו לסיים את המבחן. (Nous n'avons pas eu le temps de finir l'examen.)"
+        ],
+        "lessoncode": "2.19"
+    },
+    "2.20": {
+        "presence": true,
+        "concept": "Conjugaison des verbes à racine de 4 lettres (quadrilitères) au binyan פיעל au futur.",
+        "explication": "Cette leçon aborde la conjugaison au futur des verbes du binyan פיעל qui possèdent une racine à quatre lettres (verbes quadrilitères). Ce phénomène de racine à quatre lettres ne se retrouve principalement que dans les binyanim פיעל et התפעל. La conjugaison de ces verbes au futur ne pose pas de difficulté majeure car elle suit le modèle régulier du פיעל. La seule différence notable par rapport à un verbe à racine trilitère (3 lettres) est que la deuxième lettre de la racine quadrilitère prend toujours un chva (absence de voyelle) à toutes les personnes et à tous les temps.",
+        "exemples": [
+            "Le verbe לפרסם (publier) se conjugue au futur : אפרסם (je publierai), יפרסם (il publiera).",
+            "Le verbe לעדכן (actualiser) se conjugue au futur : נעדכן (nous actualiserons), תעדכנו (vous actualiserez).",
+            "Le verbe לארגן (organiser) se conjugue au futur : תארגן (tu organiseras), יארגנו (ils organiseront).",
+            "Le verbe לשכנע (convaincre) se conjugue au futur : אשכנע (je convaincrai), תשכנע (elle convaincra)."
+        ],
+        "lessoncode": "2.20"
+    },
+    "2.21": {
+        "presence": true,
+        "concept": "L'expression de l'obligation avec חייב et le pronom négatif אף אחד לא",
+        "explication": "La leçon introduit deux concepts linguistiques importants. Premièrement, l'expression de l'obligation forte avec le mot חייב, qui est plus fort que צריך et marque une absence totale de choix. Il s'accorde en genre et en nombre au présent (חייב, חייבת, חייבים, חייבות). Pour exprimer cette obligation au passé ou au futur, il faut utiliser le verbe être conjugué au temps correspondant, suivi de חייב. Deuxièmement, la leçon aborde le pronom négatif אף אחד לא, signifiant 'personne ne'. En hébreu, cette structure s'utilise souvent avec le mot לא placé juste avant le verbe pour marquer l'absence d'action par quiconque.",
+        "exemples": [
+            "הייתי חייב, אהיה חייב - J'étais obligé, je serai obligé.",
+            "מי מדבר רוסית פה? אף אחד - Qui parle russe ici ? Personne.",
+            "אף אחד לא רוצה לטעום את העוגה שלי? - Personne ne veut goûter mon gâteau ?"
+        ],
+        "lessoncode": "2.21"
+    },
+    "2.22": {
+        "presence": true,
+        "concept": "L'expression de l'appréciation 'ça me plaît' avec la structure למצוא חן בעיני",
+        "explication": "Pour exprimer 'ça me plaît' en hébreu, on utilise une expression idiomatique qui signifie littéralement 'trouver grâce aux yeux de'. La structure repose sur le verbe למצוא (trouver) suivi du mot חן (grâce) et du mot עיניים (yeux) décliné. Le verbe למצוא s'accorde en genre, en nombre et en temps avec la chose qui plaît, qui est le véritable sujet grammatical de la phrase. Le mot עיניים prend un suffixe possessif pluriel correspondant à la personne à qui la chose plaît. Ainsi, 'le livre me plaît' se dit littéralement 'le livre trouve grâce à mes yeux'.",
+        "exemples": [
+            "Cette chemise me plaira : החולצה הזאת תמצא חן בעיניי",
+            "Le livre lui a beaucoup plu (à elle) : הספר מאוד מצא חן בעיניה",
+            "Les cadeaux leur plaisent (à eux) : המתנות מוצאות חן בעיניהם"
+        ],
+        "lessoncode": "2.22"
+    },
+    "2.23": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "2.23"
+    },
+    "2.24": {
+        "presence": true,
+        "concept": "La conjugaison des verbes à la forme נפעל au futur.",
+        "explication": "Le binyan נפעל correspond généralement à la forme passive du binyan פעל, bien qu'il puisse également exprimer des actions réflexives ou réciproques. Pour conjuguer ces verbes au futur, on ajoute les préfixes pronominaux habituels à la racine du verbe. Une règle grammaticale essentielle de cette forme au futur est que la première lettre de la racine, qui se trouve juste après le préfixe, prend systématiquement un דגש. Ce point est particulièrement important car il modifie la prononciation des lettres ב, כ et פ, qui se prononcent alors de manière occlusive. Comme toujours en hébreu, il est très utile de se référer à l'infinitif du verbe pour construire correctement sa conjugaison au futur.",
+        "exemples": [
+            "Le verbe להיכנס (entrer) : אכנס (j'entrerai), ייכנס (il entrera).",
+            "Le verbe להיפגש (se rencontrer) : ניפגש (nous nous rencontrerons).",
+            "Le verbe להיפרד (se séparer) : תיפרדו (vous vous séparerez)."
+        ],
+        "lessoncode": "2.24"
+    },
+    "2.25": {
+        "presence": true,
+        "concept": "L'utilisation des modaux (עשוי, אמור, עלול), l'accord du verbe כאב (avoir mal) et l'expression de la réciprocité (אחד עם השני).",
+        "explication": "La leçon aborde trois points syntaxiques essentiels. D'abord, l'usage des pseudo-modaux עשוי (être susceptible de), אמור (être censé) et עלול (risquer de, souvent négatif) qui se placent avant un verbe à l'infinitif. Ensuite, la construction particulière du verbe כאב (avoir mal) : contrairement au français, le sujet grammatical du verbe est la partie du corps qui fait mal. Le verbe doit donc impérativement s'accorder en genre et en nombre avec cette partie du corps, et non avec la personne. Enfin, la leçon explique comment traduire la réciprocité (l'un l'autre) en utilisant אחד suivi d'une préposition et de השני, le tout s'accordant en genre selon les personnes impliquées (par exemple אחת לשניה pour des femmes).",
+        "exemples": [
+            "הם אמורים להגיע עוד מעט (Ils sont censés arriver dans pas longtemps.)",
+            "אתה עלול ליפול (Tu risques de tomber.)",
+            "כואב לי הראש (J'ai mal à la tête - כואב s'accorde avec הראש).",
+            "אתמול כאבו לי העיניים (Hier j'ai eu mal aux yeux - כאבו s'accorde avec העיניים).",
+            "הם דיברו אחד עם השני (Ils se sont parlé l'un à l'autre.)",
+            "הן דואגות אחת לשניה (Elles se soucient l'une de l'autre.)"
+        ],
+        "lessoncode": "2.25"
+    },
+    "2.26": {
+        "presence": true,
+        "concept": "Les pronoms relatifs composés avec ש et les prépositions déclinées",
+        "explication": "En hébreu, pour traduire les pronoms relatifs composés français tels que 'dont', 'dans lequel', 'auquel' ou 'avec qui', on utilise une structure syntaxique différente. On emploie systématiquement le pronom relatif simple ש (qui signifie 'que' ou 'qui') attaché au mot suivant, combiné plus loin dans la proposition avec une préposition déclinée. Contrairement au français où le pronom relatif porte la préposition (par exemple 'sur lequel'), en hébreu, on dit littéralement 'que... sur lui' (ש... עליו). C'est cette préposition déclinée qui s'accorde en genre et en nombre avec le nom auquel elle se rapporte, en fonction du verbe de la phrase.",
+        "exemples": [
+            "Je sais que tu es fatigué : אני יודעת שאתה עייף",
+            "C'est le livre dont je t'ai parlé (litt. que j'ai parlé sur lui) : זה הספר שדיברתי איתך עליו",
+            "L'appartement dans lequel j'habite est grand (litt. que j'habite dans lui) : הדירה שבה אני גר גדולה",
+            "L'enfant avec lequel je parle est mignon (litt. que je parle avec lui) : הילד שאיתו אני מדבר חמוד",
+            "La chaise sur laquelle je suis assis est confortable (litt. que sur elle je suis assis) : הכיסא שעליו אני יושב נוח"
+        ],
+        "lessoncode": "2.26"
+    },
+    "2.27": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au futur et à l'infinitif selon leurs Binyanim (פעל, פיעל, התפעל, נפעל)",
+        "explication": "Cette leçon met en pratique la conjugaison de plusieurs verbes courants en se basant sur leurs formes verbales, ou Binyanim (בניינים). À travers un code couleur, le texte associe chaque verbe à son groupe : פעל (Pa'al), פיעל (Pi'el), התפעל (Hitpa'el) et נפעל (Nif'al). L'accent est particulièrement mis sur le temps du futur (עתיד) et sur l'infinitif (שם הפועל) pour exprimer des actions futures, des intentions ou des obligations. Les tableaux de conjugaison détaillent les préfixes spécifiques à chaque personne et à chaque Binyan, permettant ainsi de repérer les schémas récurrents de la langue hébraïque.",
+        "exemples": [
+            "Binyan פעל (Pa'al) : לעצום (fermer) se conjugue au futur à la première personne en אעצום (je fermerai).",
+            "Binyan נפעל (Nif'al) : להירדם (s'endormir) donne אירדם (je m'endormirai) au futur.",
+            "Binyan פיעל (Pi'el) : לארח (accueillir) devient אארח (j'accueillerai).",
+            "Binyan התפעל (Hitpa'el) : להתארח (séjourner) est utilisé au passé avec התארחתי (j'ai séjourné)."
+        ],
+        "lessoncode": "2.27"
+    },
+    "2.28": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au binyan התפעל au futur et les modifications phonétiques du préfixe.",
+        "explication": "La leçon introduit la conjugaison du futur pour la forme verbale התפעל. La conjugaison régulière se forme en ajoutant les préfixes du futur à la base du verbe. Cependant, une règle phonétique importante s'applique lorsque la première lettre de la racine est une consonne sifflante (ש, ס, צ, ז) ou un ד. Pour faciliter la prononciation, la lettre ת du préfixe change de place avec la première lettre de la racine. De plus, elle peut se transformer en ט devant un צ, en ד devant un ז, ou disparaître complètement devant un ד.",
+        "exemples": [
+            "Racine avec ש ou ס : להסתדר (s'arranger), le ת passe après la première lettre.",
+            "Racine avec צ : להצטלם (se faire photographier), le ת passe après et se transforme en ט.",
+            "Racine avec ז : להזדקן (vieillir), le ת passe après et se transforme en ד.",
+            "Racine avec ד : להידרדר (dégringoler), le ת disparaît complètement.",
+            "Verbe régulier sans modification : להתקשר (téléphoner)."
+        ],
+        "lessoncode": "2.28"
+    },
+    "2.29": {
+        "presence": true,
+        "concept": "La conjugaison du binyan Hitpael (התפעל) et l'utilisation des mots בעצם et בזכות avec suffixes pronominaux",
+        "explication": "La leçon introduit la conjugaison des verbes au binyan Hitpael (התפעל), qui exprime généralement des actions réfléchies, réciproques ou des changements d'état. Le document montre comment conjuguer ces verbes et aborde des variations phonétiques propres à ce binyan, comme l'inversion ou la modification de lettres pour les racines commençant par certaines consonnes (par exemple הסתדר ou השתכנע). Enfin, la leçon présente deux expressions importantes déclinées avec des suffixes pronominaux : בעצם pour dire 'par soi-même' (ex: בעצמי) et בזכות pour dire 'grâce à' (ex: בזכותה).",
+        "exemples": [
+            "אני צריך להתכונן לראיון (Je dois me préparer pour l'entretien - utilisation du verbe התכונן au Hitpael)",
+            "הוא מתלבש יפה (Il s'habille bien - utilisation du verbe התלבש au Hitpael)",
+            "עשיתי את השיעורים בעצמי (J'ai fait mes devoirs par moi-même - utilisation de בעצמי)",
+            "היא קיבלה את העבודה בזכותו (Elle a eu le travail grâce à lui - utilisation de בזכותו)"
+        ],
+        "lessoncode": "2.29"
+    },
+    "2.30": {
+        "presence": true,
+        "concept": "La conjugaison des verbes au futur à la forme Hif'il (הפעיל).",
+        "explication": "Le futur de la forme verbale Hif'il (הפעיל) se construit très facilement à partir de l'infinitif. Les préfixes pronominaux du futur (א, ת, י, נ) viennent remplacer la lettre ה de l'infinitif tout en conservant sa voyelle, c'est-à-dire le son a. De plus, la voyelle caractéristique du Hif'il, le son i qui est souvent représenté par la lettre י dans la racine, est elle aussi conservée tout au long de la conjugaison au futur. Ainsi, la structure générale reste très régulière et prévisible pour tous les verbes appartenant à ce groupe verbal.",
+        "exemples": [
+            "Le verbe להזמין (inviter, réserver) donne אזמין (j'inviterai) et תזמין (tu inviteras).",
+            "Le verbe להתחיל (commencer) donne אתחיל (je commencerai) et יתחיל (il commencera).",
+            "Le verbe להמשיך (continuer) donne אמשיך (je continuerai) et נמשיך (nous continuerons).",
+            "Le verbe להבין (comprendre) donne אבין (je comprendrai) et יבינו (ils comprendront)."
+        ],
+        "lessoncode": "2.30"
+    },
+    "2.31": {
+        "presence": true,
+        "concept": "La conjugaison au futur (עתיד) de plusieurs verbes dans différents binyanim",
+        "explication": "Cette leçon met l'accent sur l'utilisation et la conjugaison du futur (עתיד) en hébreu. Le futur se construit en ajoutant des préfixes pronominaux (א, ת, י, נ) à la racine du verbe, ainsi que des suffixes pour indiquer le genre et le nombre. La vocalisation de ces préfixes varie en fonction du groupe verbal (binyan). La leçon illustre ce concept à travers des tableaux de conjugaison pour des verbes au binyan פעל (comme לעמוד et לקרוס), au binyan הפעיל (comme להעמיס et להגיע) et au binyan התפעל (comme להשתנות). Ces formes sont largement utilisées dans le dialogue et les exercices pour exprimer des intentions et des actions à venir.",
+        "exemples": [
+            "אני אעמוד (je me tiendrai debout) - Verbe au binyan פעל",
+            "הוא ישתנה (il changera) - Verbe au binyan התפעל",
+            "הם יגיעו (ils arriveront) - Verbe au binyan הפעיל",
+            "מתי תתחיל לעבוד שם ? (Quand commenceras-tu à y travailler ?)"
+        ],
+        "lessoncode": "2.31"
+    },
+    "2.32": {
+        "presence": true,
+        "concept": "L'utilisation et la déclinaison du pronom réfléchi עצם (moi-même, toi-même, etc.).",
+        "explication": "En hébreu, pour exprimer une action qui concerne directement le sujet (comme \"je me prépare\", \"ils sont sûrs d'eux\") ou pour insister sur le fait qu'une action a été réalisée par le sujet lui-même sans aide, on utilise le mot עצם. Ce mot fonctionne comme un pronom réfléchi et se décline en fonction de la personne du sujet de la phrase (par exemple : עצמי pour moi-même, עצמך pour toi-même, עצמו pour lui-même). De plus, עצם s'associe souvent à d'autres prépositions (comme ל, ב, על, את) selon les exigences du verbe qui l'accompagne. Il est également utilisé dans plusieurs expressions idiomatiques courantes.",
+        "exemples": [
+            "אני מכין לעצמי קפה (Je me prépare un café)",
+            "עשית את זה בעצמך ? (Tu l'as fait toi-même ?)",
+            "הוא עשה את עצמו (Il a fait semblant)",
+            "הם בטוחים בעצמם (Ils sont sûrs d'eux)"
+        ],
+        "lessoncode": "2.32"
+    },
+    "2.33": {
+        "presence": true,
+        "concept": "L'expression syntaxique de proportionnalité ככל ש... ככה (plus... plus...)",
+        "explication": "La leçon introduit la structure syntaxique ככל ש... ככה, qui sert à exprimer une corrélation ou une proportionnalité entre deux actions ou états. En français, cela se traduit généralement par la tournure plus... plus... ou au fur et à mesure que. La première proposition est introduite par ככל ש, souvent suivie d'un verbe au futur pour indiquer une action hypothétique ou continue, et la proposition principale qui en découle est introduite par ככה. Cette construction est très courante en hébreu moderne pour marquer l'évolution parallèle de deux éléments. La leçon présente également l'expression figée ככל האפשר signifiant autant que possible.",
+        "exemples": [
+            "ככל שתבשלי ותאפי יותר, ככה תשתפרי (Plus tu cuisineras et feras des gâteaux, plus tu t'amélioreras.)",
+            "ככל שתלמד ככה תדע יותר (Plus tu étudieras, plus tu sauras.)",
+            "ככל שיהיו יותר אנשים ככה יהיה יותר שמח (Plus il y aura de monde, plus il y aura de joie.)",
+            "ככל האפשר (Autant que possible)"
+        ],
+        "lessoncode": "2.33"
+    },
+    "2.34": {
+        "presence": true,
+        "concept": "L'expression linguistique נוח ל pour exprimer le confort ou la convenance.",
+        "explication": "Cette leçon aborde l'utilisation de l'adjectif נוח (confortable, pratique) associé à la préposition ל (pour/à). En hébreu, cette structure syntaxique est très courante pour exprimer qu'une situation convient à quelqu'un, qu'un objet est confortable, ou que l'on se sent à l'aise. La préposition se décline selon la personne concernée (לי, לך, לו, לה, etc.). Contrairement au français, la construction est souvent impersonnelle : l'objet ou la situation est le sujet de la phrase, et la personne qui ressent le confort est introduite par la préposition. La leçon inclut également des révisions de conjugaison de divers verbes.",
+        "exemples": [
+            "נקבע יום ושעה שנוחים לכולם (Nous allons fixer un jour et une heure qui conviennent à tout le monde.)",
+            "לא נוח לי ללמוד ביום שני (Ce n'est pas pratique pour moi d'avoir cours le lundi.)",
+            "המקום הזה לא נוח לי אני רוצה בבקשה להחליף (Je ne me sens pas à l'aise ici je veux changer de place SVP.)",
+            "המזרן הזה ממש נוח נראה לי שאקנה אותו (Ce matelas est vraiment confortable je pense que je vais l'acheter.)"
+        ],
+        "lessoncode": "2.34"
+    },
+    "2.35": {
+        "presence": true,
+        "concept": "Le binyan פועל, qui est la forme passive du binyan פיעל.",
+        "explication": "En hébreu, le פועל est l'une des sept formes verbales. Il sert spécifiquement à donner un sens passif aux verbes du binyan פיעל. Au présent, le פועל est très souvent utilisé comme un adjectif pour décrire l'état d'un nom. Une particularité de cette forme est qu'elle ne possède pas d'infinitif et qu'elle est fortement connectée au binyan התפעל. De plus, son usage est principalement restreint à la troisième personne, la conjugaison aux autres personnes étant très rare dans la pratique courante.",
+        "exemples": [
+            "העניין מסודר (L'affaire est réglée)",
+            "תלמיד מסודר (Un élève ordonné)",
+            "הבשר יותר מדי מבושל (La viande est trop cuite)",
+            "הוא שחקן מאוד מפורסם (C'est un acteur très célèbre)",
+            "סרט מצויר (Dessin animé)"
+        ],
+        "lessoncode": "2.35"
+    },
+    "2.36": {
+        "presence": true,
+        "concept": "Le binyan Pual (פועל), la forme passive du binyan Piel (פיעל)",
+        "explication": "Le binyan Pual (פועל) est l'une des sept formes verbales en hébreu. Il sert exclusivement de voix passive au binyan Piel (פיעל). Par exemple, si au Piel le verbe exprime une action active comme annuler ou raccourcir, au Pual, il signifiera que l'action a été subie, c'est-à-dire être annulé ou être raccourci. Sa conjugaison se caractérise souvent par la voyelle 'ou' au passé et par le préfixe מ (mem) au présent. Dans cette leçon, on observe de nombreux verbes au Pual pour exprimer des actions subies dans un contexte professionnel.",
+        "exemples": [
+            "ביטל (il a annulé - Piel) devient בוטל (il a été annulé - Pual)",
+            "הישיבה בוטלה (la réunion a été annulée)",
+            "קיצר (il a raccourci - Piel) devient קוצר (il a été raccourci - Pual)",
+            "החוזה יחודש (le contrat sera renouvelé)",
+            "הם יפוטרו (ils seront renvoyés)"
+        ],
+        "lessoncode": "2.36"
+    },
+    "2.37": {
+        "presence": true,
+        "concept": "La formation du nom d'action (שם הפעולה) à partir des verbes selon leurs formes (בניינים).",
+        "explication": "Le nom d'action (שם הפעולה) désigne le nom qui exprime l'action du verbe dont il dérive. En hébreu, la construction de ces noms est très régulière et dépend directement de la forme verbale (le בניין) à laquelle appartient le verbe. Cette leçon aborde la formation des noms d'action pour les formes פעל, פיעל, הפעיל et התפעל. Connaître ces structures permet de déduire facilement le nom d'action à partir de l'infinitif d'un verbe, ce qui facilite grandement l'apprentissage et la mémorisation du vocabulaire en regroupant les mots par racine.",
+        "exemples": [
+            "Pour la forme פעל : לכתוב (écrire) devient כתיבה (écriture).",
+            "Pour la forme פיעל : לבקר (visiter) devient ביקור (visite).",
+            "Pour la forme הפעיל : להזמין (inviter) devient הזמנה (invitation).",
+            "Pour la forme התפעל : להתרגש (s'émouvoir) devient התרגשות (émotion)."
+        ],
+        "lessoncode": "2.37"
+    },
+    "2.38": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "2.38"
+    },
+    "2.39": {
+        "presence": true,
+        "concept": "Le binyan הופעל, forme passive du binyan הפעיל",
+        "explication": "Le binyan הופעל est la forme passive du binyan הפעיל en hébreu. Il sert principalement à donner un sens passif aux verbes d'action de cette catégorie. Au présent, le הופעל est très souvent utilisé comme adjectif (par exemple, מובן pour 'compris' ou 'évident'). Sur le plan de la conjugaison, la lettre ה caractéristique du הפעיל se transforme en מ au présent. Au passé, le ה reste visible à toutes les personnes. Au futur, cette lettre disparaît, absorbée par les pronoms personnels préfixes. Il est à noter que le הופעל, tout comme le פועל, ne possède pas d'infinitif et s'emploie généralement dans un registre de langue plutôt soutenu.",
+        "exemples": [
+            "הוא הופתע מהסיפור שלי (Il a été surpris par mon histoire)",
+            "השיעור יופסק כי לא יהיה לו זמן (Le cours sera interrompu car il n'aura pas le temps)",
+            "הארץ המובטחת (La Terre Promise)",
+            "הטלפון הומצא בשנת 1876 (Le téléphone fut inventé en 1876)",
+            "זה מובן מאליו (C'est évident, c'est acquis)"
+        ],
+        "lessoncode": "2.39"
+    },
+    "2.40": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "2.40"
+    },
+    "2.41": {
+        "presence": true,
+        "concept": "L'expression de la simultanéité et la traduction du gérondif en hébreu.",
+        "explication": "En hébreu, l'expression de la simultanéité (souvent traduite en français par le gérondif 'en' ou 'tout en' + participe présent) n'est pas unique et dépend du contexte. On peut utiliser la préposition ב attachée au nom d'action (שם הפעולה) pour une action simultanée. Pour insister sur l'action en cours, on emploie תוך כדי suivi du nom d'action ou d'une proposition. On utilise également בזמן ש ou באותו זמן pour dire 'pendant que' ou 'en même temps'. Attention, si le gérondif français exprime plutôt la succession ('quand', 'lorsque') et non la simultanéité stricte, on utilisera simplement le préfixe כש attaché au verbe.",
+        "exemples": [
+            "ב + שם הפעולה : באתי בריצה (Je suis venu en courant).",
+            "תוך כדי + שם הפעולה : הוא דיבר בטלפון תוך כדי נהיגה (Il parlait au téléphone tout en conduisant).",
+            "תוך כדי : הם כותבים ותוך כדי גם מדברים (Ils écrivent et en même temps ils parlent).",
+            "בזמן ש : בזמן שהוא דיבר, אני אכלתי (Pendant qu'il parlait, je mangeais).",
+            "באותו זמן : היא ציירה ואכלה באותו זמן (Elle dessinait tout en mangeant).",
+            "כש (succession) : כשהוא חזר הביתה, הוא ישב וחשב (En rentrant chez lui, il s'est assis et a réfléchi)."
+        ],
+        "lessoncode": "2.41"
+    },
+    "2.42": {
+        "presence": true,
+        "concept": "Comment exprimer le verbe 'devenir' en hébreu",
+        "explication": "En hébreu, il existe plusieurs façons de traduire le verbe 'devenir' selon le contexte. On utilise le verbe נהיה (principalement au passé) lorsqu'il est suivi d'un adjectif pour exprimer un changement d'état. Pour un changement de statut impliquant un nom (substantif), on emploie le verbe להפוך suivi de la préposition ל, utilisable à tous les temps. Enfin, l'expression להפוך להיות s'utilise également à tous les temps pour indiquer un changement de statut ou de qualité. Il est donc crucial de choisir la bonne structure selon que le résultat du changement est un adjectif ou un nom.",
+        "exemples": [
+            "Il est devenu sympa : הוא נהיה נחמד",
+            "Un jour, il deviendra le président des États-Unis : יום אחד הוא יהפוך לנשיא ארצות הברית",
+            "Elle est devenue la directrice de la société : היא הפכה להיות המנהלת בחברה",
+            "La maison est devenue trop petite : הבית הפך להיות קטן מדי"
+        ],
+        "lessoncode": "2.42"
+    },
+    "2.43": {
+        "presence": true,
+        "concept": "L'expression de la cause avec le verbe לגרום ל et l'expression de la faute via la déclinaison du nom אשמה.",
+        "explication": "Cette leçon introduit deux tournures idiomatiques et syntaxiques courantes en hébreu. Tout d'abord, elle explique comment exprimer la notion de cause ou l'idée de 'faire en sorte que' en utilisant le verbe לגרום (causer) systématiquement suivi de la préposition ל. Ensuite, elle aborde l'expression de la culpabilité ou de la faute à l'aide du nom אשמה (faute). Pour dire 'c'est de ma faute' ou 'ce n'est pas de ma faute', l'hébreu utilise la préposition ב (dans/par) attachée au nom אשמה, lequel est décliné avec les suffixes pronominaux possessifs pour s'accorder avec la personne concernée (par exemple: באשמתי, באשמתך).",
+        "exemples": [
+            "הרעש גורם לי כאב ראש (Le bruit me donne mal à la tête).",
+            "אני אגרום לה שתראה את האמת (Je ferai en sorte qu'elle voie la vérité).",
+            "הסיפור העצוב של חנה גרם לי לבכות (La triste histoire de Hanna m'a fait pleurer).",
+            "זה לא באשמתי, זה לא באשמתך (Ce n'est pas de ma faute, ce n'est pas de ta faute)."
+        ],
+        "lessoncode": "2.43"
+    },
+    "2.44": {
+        "presence": true,
+        "concept": "L'utilisation des connecteurs logiques (מילות קישור) pour structurer et enrichir les phrases en hébreu.",
+        "explication": "Cette leçon aborde les connecteurs logiques en hébreu, appelés מילות קישור. Ces mots ou expressions sont fondamentaux pour articuler la pensée, relier des propositions entre elles et rendre le discours plus fluide et naturel. La leçon les classe selon leur fonction logique : introduire un propos (comme קודם כל), situer dans le temps (לפני, אחרי), exprimer une contradiction (אבל, למרות), donner une raison (כי, בגלל), indiquer une conséquence (לכן), un but (כדי), une condition (אם) ou encore justifier (כלומר). L'apprentissage de ces termes permet de dépasser le stade des phrases simples pour construire des énoncés complexes et nuancés.",
+        "exemples": [
+            "Pour débuter un propos : קודם כל אני אגיד לו שפוטרתי (D'abord, je lui dirai que j'ai été viré).",
+            "Pour exprimer une contradiction : הוא עושה הרבה מאמצים אבל הוא לא מצליח להשתנות (Il fait beaucoup d'efforts mais il n'arrive pas à changer).",
+            "Pour donner une raison : הטיסה בוטלה בגלל מזג האוויר (Le vol a été annulé à cause de la météo).",
+            "Pour exprimer le but : הוא הביא לה מתנה כדי להפתיע אותה (Il lui a apporté un cadeau afin de la surprendre)."
+        ],
+        "lessoncode": "2.44"
+    },
+    "2.45": {
+        "presence": true,
+        "concept": "Exprimer une envie en hébreu avec יש לי חשק, בא לי et מתחשק לי",
+        "explication": "En hébreu, l'expression de l'envie se fait couramment à l'aide de tournures impersonnelles plutôt qu'avec un verbe conjugué de manière classique. La leçon introduit trois expressions principales : 'יש לי חשק' (j'ai envie), 'בא לי' (ça me dit / j'ai envie) et 'מתחשק לי' (il me prend l'envie). Ces formules s'utilisent avec la préposition 'ל' suivie du pronom personnel (ici 'לי', à moi). Elles peuvent être suivies soit d'un nom pour exprimer l'envie d'un objet ou d'une chose, soit d'un verbe à l'infinitif pour exprimer l'action que l'on souhaite réaliser.",
+        "exemples": [
+            "יש לי חשק לבמבה (J'ai envie de Bamba - avec un nom)",
+            "בא לי במבה (J'ai envie de Bamba - avec un nom)",
+            "מתחשק לי ללכת לים (J'ai envie d'aller à la mer - avec un verbe à l'infinitif)"
+        ],
+        "lessoncode": "2.45"
+    },
+    "2.46": {
+        "presence": true,
+        "concept": "Les connecteurs logiques en hébreu (מילות קישור) pour structurer le discours.",
+        "explication": "Cette leçon introduit la deuxième partie sur les connecteurs logiques en hébreu (מילות קישור). Ces mots et expressions sont essentiels pour structurer le discours, articuler les idées et s'exprimer avec plus de richesse. Le document classe ces connecteurs selon leur fonction : exprimer son avis (לפי דעתי, בעיניי), énumérer (קודם כול, אחר כך), ajouter une information (בנוסף לכך, גם), émettre une supposition (כנראה, אולי), exprimer une certitude (כמובן, ברור), mettre l'accent (בעיקר, במיוחד), comparer (מאשר) et conclure (בקיצור, לסיכום). Maitriser ces outils grammaticaux permet de rendre la communication beaucoup plus fluide et naturelle.",
+        "exemples": [
+            "לפי דעתי כדאי שתתחילי לארגן את הנסיעה שלך כבר עכשיו (À mon avis, ce serait bien que tu commences à préparer ton voyage dès maintenant.)",
+            "קודם כול תנוחי, אחר כך תתחילי לחזור על החומר (D'abord, repose-toi, ensuite tu commenceras à réviser les cours.)",
+            "היא בחורה מאוד רצינית. בנוסף לכך היא מאוד נחמדה (C'est une fille très sérieuse. De plus, elle est très sympa.)",
+            "בקיצור היה מדהים! (Bref, c'était génial !)"
+        ],
+        "lessoncode": "2.46"
+    },
+    "2.47": {
+        "presence": true,
+        "concept": "L'expression des verbes 'se perdre' et 'se sentir soulagé' en hébreu",
+        "explication": "En hébreu, certains verbes pronominaux ou expressions idiomatiques du français se traduisent par des structures spécifiques non pronominales. Par exemple, pour dire 'se perdre', on utilise l'expression 'ללכת לאיבוד' qui signifie littéralement 'aller à la perte'. Le verbe 'ללכת' se conjugue selon le sujet et le temps, tandis que le mot 'לאיבוד' reste invariable. De la même manière, pour traduire l'état de 'se sentir soulagé', l'hébreu utilise la formule 'לנשום לרווחה', signifiant littéralement 'respirer avec soulagement'. Ces structures idiomatiques sont essentielles pour s'exprimer de façon naturelle en hébreu.",
+        "exemples": [
+            "הקמפוס של האוניברסיטה כל כך גדול שהלכתי לאיבוד (Le campus de l'université est tellement grand que je me suis perdue)",
+            "כשהוא מטייל בעיר גדולה רוב הזמן הוא הולך לאיבוד (Quand il se promène dans une grande ville, la plupart du temps il se perd)",
+            "אם לא נשתמש בוויז נלך לאיבוד (Si on ne se sert pas de Waze, on va se perdre)",
+            "נשמתי לרווחה כשהוא אמר לי שהוא הגיע בשלום (Je me suis sentie soulagée lorsqu'il m'a dit qu'il était bien arrivé)"
+        ],
+        "lessoncode": "2.47"
+    },
+    "2.48": {
+        "presence": true,
+        "concept": "L'état construit (צורת נסמך) des nombres cardinaux.",
+        "explication": "En hébreu, les nombres cardinaux possèdent une forme absolue (צורת נפרד) utilisée pour compter ou avec des noms indéfinis, et une forme construite (צורת נסמך) utilisée lorsqu'ils quantifient un nom défini (par exemple, un nom précédé du ה de définition ou avec un suffixe possessif). Au masculin, les nombres de 3 à 10 modifient leur terminaison à l'état construit : le ה final est remplacé par un ת (par exemple, שלושה devient שלושת). Au féminin, la forme construite des nombres de 3 à 10 reste identique à la forme absolue. Les nombres 1 et 2 ont des formes spécifiques (שניים devient שני, שתיים devient שתי).",
+        "exemples": [
+            "ארבעת הילדים שלי נחמדים (Mes quatre enfants sont gentils) - Utilisation de ארבעת au lieu de ארבעה pour le masculin défini.",
+            "שלוש הבנות שלי באוניברסיטה (Mes trois filles sont à l'université) - La forme féminine שלוש reste identique à l'état construit.",
+            "חמשת האחים שלי באים למסיבה (Mes cinq frères viennent à la fête) - Utilisation de חמשת au lieu de חמישה.",
+            "ששת השבועות האחרונים (Les six dernières semaines) - Utilisation de ששת au lieu de שישה."
+        ],
+        "lessoncode": "2.48"
+    },
+    "2.49": {
+        "presence": true,
+        "concept": "La conjugaison au futur (עתיד) dans les différents groupes verbaux et la formation de l'impératif",
+        "explication": "Cette leçon de révision aborde principalement la conjugaison au futur (עתיד) en hébreu. Elle détaille la formation du futur pour le binyan פעל, incluant ses deux formes principales (en O et en A), les verbes avec une racine contenant un vav (ו), ceux se terminant par un ה, ainsi que les exceptions courantes. La leçon s'étend également au futur des binyanim פיעל et נפעל, et aux racines à quatre lettres. Enfin, elle explique comment construire l'impératif à partir du futur, que ce soit à la forme positive ou négative (avec la particule אל suivie du futur).",
+        "exemples": [
+            "Futur פעל classique : אני אכתוב (j'écrirai), הוא יכתוב (il écrira).",
+            "Futur avec racine en Vav : אני אגור (j'habiterai), הם יבואו (ils viendront).",
+            "Futur du verbe להיות pour exprimer 'avoir' : יהיה לך זמן (tu auras du temps).",
+            "Futur du binyan פיעל : אני אדבר (je parlerai), אנחנו נדבר (nous parlerons).",
+            "Impératif négatif : אל תדאג (ne t'inquiète pas), אל תשכח (n'oublie pas).",
+            "Impératif positif : בואו נתחיל (commençons), חכי לנו (attends-nous)."
+        ],
+        "lessoncode": "2.49"
+    },
+    "2.50": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "2.50"
+    },
+    "3.01": {
+        "presence": true,
+        "concept": "Les propositions relatives avec préposition (dont, dans lequel, etc.) utilisant ש et un pronom de rappel",
+        "explication": "En hébreu, l'utilisation de pronoms relatifs complexes tels que 'dont', 'dans lequel', ou 'sur lequel' requiert une structure syntaxique spécifique, souvent perçue comme redondante par les francophones. La construction s'articule autour de la particule relative ש (signifiant que ou qui) préfixée au mot suivant. Plus loin dans la proposition, on ajoute une préposition conjuguée, servant de pronom de rappel, qui fait référence à l'antécédent. Par exemple, l'expression 'l'entreprise dans laquelle' se traduit littéralement par 'l'entreprise que je travaille dans elle' (החברה שבה). Cette formulation idiomatique est essentielle pour structurer correctement des phrases complexes en hébreu.",
+        "exemples": [
+            "הבחור שדיברתי איתך עליו מאוד נחמד (Le gars dont je t'ai parlé est très gentil)",
+            "בחברה שבה אני עובד מקבלים הרבה הטבות (Dans l'entreprise où je travaille, il y a beaucoup d'avantages)",
+            "המקום שאליו אנחנו הולכים יפתיע אותך מאוד (Le lieu vers lequel nous nous dirigeons va te surprendre)"
+        ],
+        "lessoncode": "3.01"
+    },
+    "3.02": {
+        "presence": true,
+        "concept": "La forme passive et le passage du binyan פעל au נפעל pour les racines commençant par un יוד.",
+        "explication": "La leçon introduit la forme passive en hébreu, avec un focus particulier sur le passage du binyan actif פעל au binyan passif נפעל. Elle met en évidence une règle de conjugaison spécifique pour les verbes dont la racine (shoresh) commence par la lettre יוד. Pour ces verbes, le passage à la forme passive entraîne une modification de la première lettre de la racine. Le יוד initial se transforme généralement en וו dans la conjugaison du נפעל (notamment au présent, passé et futur). Cela permet de basculer d'une action active à une action subie.",
+        "exemples": [
+            "Le verbe ליצור (créer) au binyan פעל devient להיווצר (être créé) au binyan נפעל.",
+            "Au présent, la forme active יוצר (il crée) devient la forme passive נוצר (il est créé).",
+            "Au futur, ייצור (il créera) devient ייווצר (il sera créé).",
+            "D'autres exemples de verbes se conjuguant sur ce modèle incluent להיוולד (naître) et להיווסד (être fondé)."
+        ],
+        "lessoncode": "3.02"
+    },
+    "3.03": {
+        "presence": true,
+        "concept": "La différence entre les verbes לחלוק et לחלק, et l'usage des prépositions את et על avec לחלוק.",
+        "explication": "La leçon met en évidence la distinction sémantique et syntaxique entre deux verbes issus de la même racine (ח-ל-ק). Le verbe לחלק (à la forme Piel) signifie 'diviser' ou 'distribuer' (par exemple, distribuer des tracts ou couper un gâteau en parts). En revanche, le verbe לחלוק (à la forme Paal) possède deux sens distincts selon la préposition qui l'accompagne. Lorsqu'il est suivi de la particule את, il signifie 'partager' quelque chose avec quelqu'un (comme partager un repas). Lorsqu'il est suivi de la préposition על, il prend le sens de 'ne pas être d'accord' ou 'contester' une opinion.",
+        "exemples": [
+            "אני הולך לחלק עלונים על החוף (Je vais distribuer des flyers sur la plage - utilisation de לחלק pour distribuer).",
+            "אני אחלק את העוגה הזאת לשניים (Je vais partager ce gâteau en deux - utilisation de לחלק pour diviser).",
+            "אני אחלוק איתך את הקרואסון הזה (Je vais partager ce croissant avec toi - utilisation de לחלוק את pour partager avec quelqu'un).",
+            "אני חולק על מה שאתה אומר בנושא הזה (Je conteste ce que tu dis sur ce sujet - utilisation de לחלוק על pour exprimer un désaccord)."
+        ],
+        "lessoncode": "3.03"
+    },
+    "3.04": {
+        "presence": true,
+        "concept": "La distinction linguistique entre les verbes לשתף et לחלוק pour traduire le verbe partager.",
+        "explication": "En hébreu, le concept de partager se traduit différemment selon la nature de ce qui est partagé, ce qui constitue une distinction linguistique essentielle. Le verbe לשתף s'utilise pour un partage abstrait, immatériel ou social. Il s'agit de faire participer quelqu'un à une expérience, de partager des sentiments, des idées ou des problèmes. En revanche, le verbe לחלוק est réservé au partage concret et matériel. Il implique la division physique d'un objet, d'un espace ou d'une ressource en plusieurs parts, comme le fait de partager un repas, un gâteau ou une chambre avec d'autres personnes.",
+        "exemples": [
+            "אני משתף את המשפחה בבעיות שלי (Je partage mes problèmes avec ma famille.)",
+            "אני אוכל עוגה ואני רוצה לחלוק אותה איתך (Je mange du gâteau et je veux le partager avec toi.)",
+            "אני חולק את החדר שלי במלון עם שני חברים (Je partage ma chambre d'hôtel avec deux amis.)"
+        ],
+        "lessoncode": "3.04"
+    },
+    "3.05": {
+        "presence": true,
+        "concept": "La forme passive הופעל (Huf'al) correspondant à la forme active הפעיל (Hif'il)",
+        "explication": "En hébreu, le système verbal est structuré autour de différentes formes appelées binyanim. Le binyan הופעל (Huf'al) est la voix passive directe du binyan actif הפעיל (Hif'il). Lorsqu'un verbe à la forme הפעיל exprime une action accomplie par un sujet (souvent de nature causative), son équivalent au הופעל indique que le sujet subit cette action. Visuellement et phonétiquement, le הופעל se caractérise souvent par l'ajout du son 'ou' (marqué par la lettre ו) après le préfixe temporel, tant au passé qu'au futur. Par exemple, une action active comme 'déclarer' devient 'être déclaré' au passif.",
+        "exemples": [
+            "הקים (il a fondé, actif) devient הוקם (il a été fondé, passif)",
+            "הקיף (il a encerclé, actif) devient הוקף (il a été encerclé, passif)",
+            "הכריז (il a déclaré, actif) devient הוכרז (il a été déclaré, passif)",
+            "השמיד (il a exterminé, actif) devient הושמד (il a été exterminé, passif)"
+        ],
+        "lessoncode": "3.05"
+    },
+    "3.06": {
+        "presence": true,
+        "concept": "La conjugaison de certains verbes particuliers au binyan הפעיל et la déclinaison du mot רוב.",
+        "explication": "La leçon aborde deux concepts linguistiques. Premièrement, elle présente une particularité de conjugaison pour certains verbes du binyan הפעיל. Contrairement au modèle régulier, ces verbes adoptent une voyelle 'é' au présent à la forme masculine singulière. C'est le cas de verbes tels que להגן qui se conjugue מגן, ou להקל qui devient מקל. Deuxièmement, le document explique la déclinaison du nom רוב (la plupart). Ce terme peut s'attacher à des suffixes pronominaux pour spécifier le groupe concerné, formant ainsi des mots comme רובנו (la plupart d'entre nous) ou רובם (la plupart d'entre eux).",
+        "exemples": [
+            "Conjugaison de להגן au présent : מגן, מגנה, מגנים, מגנות.",
+            "Conjugaison de להקל au présent : מקל, מקלה, מקלים, מקלות.",
+            "Déclinaison de רוב : רובנו לא מסכימים עם ההחלטה (La plupart d'entre nous ne sommes pas d'accord avec la décision).",
+            "Déclinaison de רוב : גיליתי שרובם כבר יודעים (J'ai réalisé que la plupart d'entre eux savent déjà)."
+        ],
+        "lessoncode": "3.06"
+    },
+    "3.07": {
+        "presence": true,
+        "concept": "L'alternance entre la forme active et la forme pronominale ou passive des verbes.",
+        "explication": "Cette leçon aborde la transformation des verbes de la forme active vers la forme pronominale ou passive en conservant la même racine. En hébreu, cela se traduit souvent par un changement de binyan (construction verbale). Par exemple, on passe du binyan פיעל (actif) au binyan התפעל (réfléchi ou pronominal) pour indiquer que le sujet subit ou fait l'action sur lui-même. On observe également l'utilisation de participes passifs pour décrire un état résultant d'une action. Comprendre cette mécanique permet d'adapter correctement la forme verbale au contexte de la phrase.",
+        "exemples": [
+            "לפרנס (subvenir aux besoins, actif) devient להתפרנס (gagner sa vie, pronominal).",
+            "לפתח (développer, actif) devient להתפתח (se développer, pronominal).",
+            "למלא (remplir, actif) devient להתמלא (se remplir, pronominal).",
+            "להתיש (épuiser, actif) donne le participe passif מותש (épuisé)."
+        ],
+        "lessoncode": "3.07"
+    },
+    "3.08": {
+        "presence": true,
+        "concept": "La conversion des verbes et des phrases entre le temps passé (עבר) et le temps futur (עתיד).",
+        "explication": "Le concept grammatical abordé dans les exercices de cette leçon est la conjugaison et la transposition des temps, plus précisément le passage du passé (עבר) au futur (עתיד) et inversement. En hébreu, changer le temps d'un verbe nécessite de modifier ses affixes en fonction de son groupe verbal (binyan). Le passé se forme en ajoutant des suffixes à la racine pour indiquer le pronom, tandis que le futur se construit principalement avec des préfixes (et quelques suffixes). Cet exercice permet de s'entraîner à manipuler la structure temporelle de la phrase tout en révisant les verbes du vocabulaire.",
+        "exemples": [
+            "Passé vers futur : דוד ושירה נתקעו עם האוטו (David et Shira sont restés coincés avec la voiture) devient דוד ושירה ייתקעו עם האוטו (David et Shira resteront coincés avec la voiture).",
+            "Futur vers passé : היא תלך לים ותצלול (Elle ira à la mer et plongera) devient היא הלכה לים וצללה (Elle est allée à la mer et a plongé).",
+            "Futur vers passé : העוגה תיפול על הרצפה ותתרסק (Le gâteau tombera sur le sol et s'écrasera) devient העוגה נפלה על הרצפה והתרסקה (Le gâteau est tombé sur le sol et s'est écrasé)."
+        ],
+        "lessoncode": "3.08"
+    },
+    "3.09": {
+        "presence": true,
+        "concept": "La conversion des phrases du temps passé au temps futur.",
+        "explication": "La leçon aborde la conjugaison hébraïque en se concentrant sur le passage du temps passé (עבר) au temps futur (עתיד). En hébreu, la conjugaison au passé utilise principalement des suffixes pour indiquer la personne, le genre et le nombre (par exemple, le suffixe 'תי' pour la première personne du singulier). Au futur, la conjugaison repose sur l'ajout de préfixes spécifiques à chaque personne (comme 'א' pour je, 'י' pour il, 'ת' pour elle/tu), parfois accompagnés de suffixes. Cet exercice permet de s'entraîner à identifier la racine et le binyan (groupe verbal) d'un verbe au passé pour le conjuguer correctement au futur.",
+        "exemples": [
+            "שלשום קרסתי וחליתי (Avant-hier je me suis effondrée et je suis tombée malade) devient au futur : מחר אקרוס ואחלה (Demain je m'effondrerai et je tomberai malade).",
+            "פניתי לרופא (Je me suis adressée au médecin) devient au futur : אפנה לרופא (Je m'adresserai au médecin).",
+            "הוא הפנה אותי (Il m'a dirigée) devient au futur : הוא יפנה אותי (Il me dirigera).",
+            "היא התרוצצה (Elle a couru partout) devient au futur : היא תתרוצץ (Elle courra partout)."
+        ],
+        "lessoncode": "3.09"
+    },
+    "4.01": {
+        "presence": true,
+        "concept": "L'impératif (ציווי) de certains verbes fréquents et irréguliers",
+        "explication": "La leçon introduit la conjugaison à l'impératif, un mode utilisé pour donner des ordres, des conseils ou des instructions en hébreu. Bien qu'en hébreu parlé moderne le temps du futur remplace souvent l'impératif strict, plusieurs verbes très courants (notamment des verbes de mouvement irréguliers) conservent des formes impératives spécifiques qui sont largement employées au quotidien. Le document présente la conjugaison de ces verbes à l'impératif pour les trois personnes pertinentes : la deuxième personne du masculin singulier, du féminin singulier et du pluriel. On y observe notamment la chute de certaines lettres de la racine pour des verbes comme aller ou descendre.",
+        "exemples": [
+            "ללכת (Aller) : לך (masculin singulier), לכי (féminin singulier), לכו (pluriel)",
+            "לרדת (Descendre) : רד (masculin singulier), רדי (féminin singulier), רדו (pluriel)",
+            "לצאת (Sortir) : צא (masculin singulier), צאי (féminin singulier), צאו (pluriel)",
+            "להיכנס (Entrer) : היכנס ou תיכנס (masculin singulier), היכנסי ou תיכנסי (féminin singulier), היכנסו ou תיכנסו (pluriel)"
+        ],
+        "lessoncode": "4.01"
+    },
+    "4.02": {
+        "presence": true,
+        "concept": "L'utilisation de la lettre ה comme pronom relatif devant un verbe au présent",
+        "explication": "En hébreu, la lettre ה est généralement connue pour servir d'article défini lorsqu'elle est placée devant un nom. Toutefois, cette même lettre acquiert une fonction syntaxique différente lorsqu'elle précède un verbe. Dans ce cas précis, elle agit comme un pronom relatif, traduisible par 'qui' ou 'que' en français. Elle remplit alors exactement le même rôle que le préfixe relatif ש. Il est crucial de retenir une restriction majeure concernant cette règle : l'utilisation du ה comme pronom relatif n'est valable et correcte que lorsque le verbe qui le suit est conjugué au présent.",
+        "exemples": [
+            "זאת מנורת תלייה רטרו המגיעה במגוון צבעים (Il s'agit d'une suspension rétro qui se décline dans une variété de couleurs.)",
+            "בית המרקחת, הנמצא ליד בית החולים, גדול (La pharmacie, qui est située à côté de l'hôpital, est grande.)"
+        ],
+        "lessoncode": "4.02"
+    },
+    "4.03": {
+        "presence": true,
+        "concept": "L'utilisation d'expressions idiomatiques courantes et la distinction linguistique entre les verbes prêter et emprunter.",
+        "explication": "Cette leçon aborde deux aspects linguistiques. Premièrement, elle introduit des expressions idiomatiques très courantes en hébreu : בול (exactement, pile), כולה (pour minimiser une situation, signifiant juste ou seulement) et קטע (pour marquer l'étonnement ou décrire une ambiance). Deuxièmement, elle clarifie le champ lexical du prêt et de l'emprunt, qui varie selon qu'il s'agit d'argent ou d'objets. Pour l'argent, on utilise les verbes ללוות (emprunter) et להלוות (prêter). Pour les objets, on emploie לשאול (emprunter) et להשאיל (prêter). Cette distinction est essentielle pour s'exprimer correctement au quotidien.",
+        "exemples": [
+            "החולצה הזאת מתאימה לך בול (Cette chemise te va pile poil).",
+            "אל תדאג זה כולה בדיקת דם (Ne t'inquiète pas, c'est juste une prise de sang).",
+            "די! איזה קטע! חשבתי שהם לא סובלים אחד את השנייה (Arrête ! Quelle histoire ! Je croyais qu'ils ne pouvaient pas se voir).",
+            "הוא הלווה לי כסף (Il m'a prêté de l'argent).",
+            "אני שואל ספר מהספרייה (J'emprunte un livre à la bibliothèque)."
+        ],
+        "lessoncode": "4.03"
+    },
+    "4.04": {
+        "presence": true,
+        "concept": "Le principe de la racine secondaire augmentée (שורש תנייני)",
+        "explication": "En hébreu, le concept de racine secondaire, ou שורש תנייני, désigne un phénomène linguistique où une nouvelle racine est créée à partir d'un mot existant (souvent un nom), lui-même issu d'une racine primaire. Ce processus consiste à intégrer une lettre supplémentaire (comme le מ ou le ת du préfixe du nom) pour former une nouvelle racine, généralement de quatre lettres. Cela permet d'enrichir un champ lexical spécifique tout en conservant l'idée sémantique d'origine. Le nouveau verbe ainsi formé se conjugue ensuite selon les règles classiques des verbes quadrilitères.",
+        "exemples": [
+            "À partir de la racine חזר (revenir, לחזור), on forme le nom מחזור (cycle). La lettre מ est conservée pour créer le nouveau verbe למחזר (recycler) et le nom d'action מיחזור (recyclage).",
+            "À partir du verbe לכתוב (écrire), on forme le verbe לשכתב (retranscrire).",
+            "À partir du verbe לרכז (concentrer), on forme le verbe למרכז (centraliser).",
+            "À partir du verbe להגביר (augmenter), on forme le verbe לתגבר (renforcer).",
+            "À partir du nom עברית (hébreu), on forme le verbe לעברת (hébraïser)."
+        ],
+        "lessoncode": "4.04"
+    },
+    "4.05": {
+        "presence": true,
+        "concept": "La formation de substantifs avec le préfixe de négation אי",
+        "explication": "En hébreu, le terme אי est souvent utilisé comme un préfixe pour former des substantifs exprimant la négation ou le contraire d'un concept. Il fonctionne de manière très similaire aux préfixes français tels que in, im, dés ou mal. Lorsqu'il est placé devant un nom, il en inverse le sens pour indiquer l'absence ou la privation de cette qualité. C'est un outil linguistique très utile et courant pour créer des mots composés exprimant une idée négative sans avoir besoin de formuler une phrase complète avec une particule de négation classique.",
+        "exemples": [
+            "אי נוחות (inconfort) - exprime le contraire de נוחות (confort)",
+            "אי הסכמה (désaccord) - exprime le contraire de הסכמה (accord)",
+            "אי הבנה (malentendu) - exprime le contraire de הבנה (compréhension)",
+            "אי צדק (injustice) - exprime le contraire de צדק (justice)"
+        ],
+        "lessoncode": "4.05"
+    },
+    "4.06": {
+        "presence": false,
+        "concept": "",
+        "explication": "",
+        "exemples": [],
+        "lessoncode": "4.06"
+    },
+    "4.08": {
+        "presence": true,
+        "concept": "L'utilisation et la dérivation de la racine חיב pour exprimer l'engagement, l'obligation et la facturation.",
+        "explication": "En hébreu, le système des racines permet de construire un vaste champ lexical à partir de trois lettres. Cette leçon met en évidence la racine חיב. À partir de celle-ci, on forme des verbes et des noms aux sens liés mais distincts. Par exemple, à la forme hitpael, le verbe להתחייב signifie s'engager, donnant le nom התחייבות (engagement). À la forme piel, le verbe לחייב signifie obliger ou débiter financièrement, ce qui donne le nom חיוב (débit ou facturation). Ce concept illustre parfaitement la logique morphologique de la langue hébraïque.",
+        "exemples": [
+            "התחייבתי להחזיר את הספר בהקדם (Je me suis engagé à rendre le livre rapidement).",
+            "המנוי למכון הכושר שלי הוא ללא התחייבות (L'abonnement à ma salle de sport est sans engagement).",
+            "השופט חייב את הנאשם לשלם כסף לתובע (Le juge a contraint les accusés de verser de l'argent au plaignant).",
+            "חייבו לי את כרטיס האשראי בלי אישור (On a débité ma carte sans accord).",
+            "חיוב החשבון נעשה באמצע החודש (Le prélèvement sur le compte a lieu au milieu du mois)."
+        ],
+        "lessoncode": "4.08"
+    },
+    "4.09": {
+        "presence": true,
+        "concept": "Le préfixe תת (sous- / sub-)",
+        "explication": "En hébreu, le préfixe תת (tat) est utilisé pour exprimer l'idée de 'sous', 'inférieur' ou 'sub-'. Il fonctionne de manière très similaire aux préfixes français 'sous-' ou 'sub-'. On l'attache généralement à un nom ou à un adjectif, souvent relié par un trait d'union (makaf), pour former un nouveau mot composé. Ce préfixe linguistique permet de créer de nombreux termes dans des domaines variés tels que la psychologie, la géographie, l'anatomie ou la médecine, en indiquant une position physique inférieure ou un état quantitatif en dessous d'une certaine norme.",
+        "exemples": [
+            "תת-מודע : subconscient",
+            "תת-תזונה : malnutrition (sous-alimentation)",
+            "תת-ימי : sous-marin",
+            "תת קרקעי : souterrain"
+        ],
+        "lessoncode": "4.09"
+    }
+}

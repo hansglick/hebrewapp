@@ -453,7 +453,9 @@ export default function MotScreen() {
               }}
             >
               <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={cardRevealed}>
-                <img src={QUESTION_MARK_ICON_URL} alt="Afficher la solution" style={{ width: 48, height: 48, display: "block" }} draggable={false} />
+                {/* 36x36 (48*0.75) : réduit de 25% — cf. demande explicite
+                    du user. */}
+                <img src={QUESTION_MARK_ICON_URL} alt="Afficher la solution" style={{ width: 36, height: 36, display: "block" }} draggable={false} />
               </button>
             </div>
 

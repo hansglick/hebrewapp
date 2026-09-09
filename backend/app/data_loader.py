@@ -25,6 +25,8 @@ DATA_FILES = {
     "hebreworiginword": "item_hebreworiginword.json",
     "jdr": "item_jdr.json",
     "revision": "item_revision.json",
+    "concept": "item_concept.json",
+    "concept_revision": "item_concept_revision.json",
 }
 
 

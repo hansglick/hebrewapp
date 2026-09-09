@@ -484,9 +484,26 @@
 }
 
 /* Largeur par défaut (desktop) du trait révisions/quizz — évite le conflit
-   avec la règle mobile ci-dessous (même sélecteur, dans le @media). */
+   avec la règle mobile ci-dessous (même sélecteur, dans le @media).
+   325px = 200*1.3*1.25 (agrandi de 30% puis de 25%, cf. demandes
+   explicites du user). */
 .quizz-hr {
-  width: 200px;
+  width: 325px;
+}
+
+/* .quizz-title-row (pastilles 1/2, cf. QuizzScreen) doit RENDRE à la même
+   largeur que .quizz-hr pour que leurs bords gauches coïncident (mesuré
+   via Claude in Chrome), mais ce conteneur porte AUSSI son propre
+   zoom:1/(1.6*0.75) (pour que la pastille/le titre restent à la même
+   taille que révision/mot) — ce zoom annule pile l'ambiant du bloc
+   (1.6*0.75), donc sa largeur RENDUE = sa largeur CSS telle quelle,
+   contrairement à .quizz-hr (sans zoom propre) dont la largeur RENDUE =
+   sa largeur CSS * l'ambiant (1.6*0.75=1.2). 312 = 260*1.2 : compense
+   cet écart pour retomber sur la même largeur rendue (312px) — cf.
+   demande explicite du user ("pastilles alignées sur le bord gauche du
+   trait"). */
+.quizz-title-row {
+  width: 390px;
 }
 
 /* Sur mobile, les fiches (tuiles/cartes) prennent toute la largeur
@@ -504,9 +521,17 @@
      réels, souvent >= la largeur d'un mobile). 40vw (80/2, même
      compensation du zoom que .mot-revision-racine ci-dessus) le fait
      représenter exactement 80% de la largeur d'écran, cf. demande
-     explicite du user. */
+     explicite du user. 65vw = 40*1.3*1.25 (agrandi de 30% puis 25%, cf.
+     demandes explicites du user). */
   .quizz-hr {
-    width: 40vw;
+    width: 65vw;
+  }
+
+  /* 78vw = 65*1.2 : même compensation que la règle desktop ci-dessus (le
+     zoom propre de .quizz-title-row annule l'ambiant, .quizz-hr n'a pas
+     de zoom propre) — cf. demande explicite du user. */
+  .quizz-title-row {
+    width: 78vw;
   }
 
   /* Certains écrans fixent une largeur d'image en style inline (220/280/320px)
@@ -662,4 +687,34 @@
   .curiosite-split .curiosite-content-row {
     max-width: 100% !important;
   }
+}
+
+/* L'alignement à droite des toggles pré-remplir/clavier hébreu est
+   désormais la règle par défaut de .hebrew-input-toggles elle-même (cf.
+   HebrewInput.css) — appliqué à tous les usages de HebrewInput dans
+   l'application, cf. demande explicite du user. */
+
+/* Bouton "logo accident" (remplace "Abandonner le test") : même pattern de
+   tooltip que .header-btn/.wallet-strip-item (Layout.jsx/.css) — tooltip
+   sous le logo (top:100%) plutôt qu'au-dessus (défaut de .exam-tile-tooltip),
+   ce logo étant tout en haut de l'écran — cf. demande explicite du user. */
+.onboarding-abandon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.onboarding-abandon-btn:hover .exam-tile-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.onboarding-abandon-btn .exam-tile-tooltip {
+  top: 100%;
+  bottom: auto;
+  margin-top: 8px;
 }

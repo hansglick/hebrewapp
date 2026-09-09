@@ -2,9 +2,44 @@ import { useState } from "react";
 import { ChapitreLogo } from "../../components/ChapitreLogo";
 import HebrewInput from "../../components/HebrewInput";
 import { OralAnswerCapture } from "../../components/OralAnswerCapture";
+import { QuoteBlock, SectionTitle } from "../../components/QuoteBlock";
+import { mediaUrl } from "../../api/media";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
 import { displayLessonNumber } from "../../utils/lessonDisplay";
 import "../screens.css";
+
+// Même pastille/trait que OnboardingScreen.jsx (cf. ce fichier pour le
+// commentaire détaillé) — dupliqués ici pour que cet écran de dev reste
+// autonome (pas d'appel aux routes réelles), cf. demande explicite du user.
+const STEP_BADGE_SIZE = 25;
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+        position: "relative",
+        left: -STEP_BADGE_SIZE / 2,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+const stepHr = (
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+);
 
 function StarRating({ rating }) {
   return (
@@ -96,29 +131,65 @@ export default function OnboardingPreviewScreen() {
         </>
       )}
 
+      {(phase === "ecrit-question" ||
+        phase === "ecrit-result" ||
+        phase === "oral-question" ||
+        phase === "oral-result") && (
+        <>
+          {/* Ligne partagée écrit/oral : index de question + logo "accident"
+              (remplace l'ancien bouton "Abandonner le test") + trait — cf.
+              OnboardingScreen.jsx, dupliqué ici pour cet écran de dev
+              autonome, cf. demande explicite du user. */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, width: "100%" }}>
+            <p className="muted" style={{ margin: 0 }}>
+              Question n°{phase.startsWith("ecrit") ? "3" : "5"}/7
+            </p>
+            <button type="button" className="onboarding-abandon-btn">
+              <img src={mediaUrl("logos/accident.png")} alt="" style={{ width: 28, height: 28 }} draggable={false} />
+              <span className="exam-tile-tooltip">Abandonne le test</span>
+            </button>
+          </div>
+
+          {stepHr}
+        </>
+      )}
+
       {(phase === "ecrit-question" || phase === "ecrit-result") && (
         <>
-          <p className="muted" style={{ margin: 0 }}>
-            Question 3 / 7
-          </p>
-          <button
-            type="button"
-            className="exam-tile red pastel"
-            style={{ cursor: "pointer", maxWidth: 200, padding: "8px", fontSize: "0.85em" }}
+          <QuoteBlock
+            label={
+              <>
+                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                Traduis
+              </>
+            }
+            marginTop={20}
           >
-            Abandonner le test
-          </button>
-          <p style={{ color: "var(--textPrimary)", margin: "1em 0 0", fontSize: "0.96em" }}>
-            Le chat mange une pomme dans le jardin.
-          </p>
+            <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+              Le chat mange une pomme dans le jardin.
+            </p>
+          </QuoteBlock>
 
           {phase === "ecrit-question" && (
             <>
-              <HebrewInput value={studentSolution} onChange={setStudentSolution} rows={3} placeholder="Traduis !" />
+              {stepHr}
+              <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                <SectionTitle>
+                  <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                  Réponse
+                </SectionTitle>
+                <div style={{ marginTop: "1em" }}>
+                  <HebrewInput value={studentSolution} onChange={setStudentSolution} rows={3} placeholder="Traduis !" />
+                </div>
+              </div>
+              {/* disabled + vert pastel (via .exam-tile.green:disabled,
+                  screens.css) tant que le champ est vide — même câblage que
+                  l'écran réel, cf. demande explicite du user. */}
               <button
                 type="button"
                 className="exam-tile green"
-                style={{ marginTop: 0, cursor: "pointer" }}
+                style={{ marginTop: 4, cursor: studentSolution.trim() ? "pointer" : "default" }}
+                disabled={!studentSolution.trim()}
               >
                 Envoyer ma réponse
               </button>
@@ -147,17 +218,6 @@ export default function OnboardingPreviewScreen() {
 
       {(phase === "oral-question" || phase === "oral-result") && (
         <>
-          <p className="muted" style={{ margin: 0 }}>
-            Question 5 / 7
-          </p>
-          <button
-            type="button"
-            className="exam-tile red pastel"
-            style={{ cursor: "pointer", maxWidth: 200, padding: "8px", fontSize: "0.85em" }}
-          >
-            Abandonner le test
-          </button>
-
           {/* src fictifs : pas de vrais fichiers audio en preview, seule la
               chrome visuelle importe ici. */}
           <OralAnswerCapture

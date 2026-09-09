@@ -49,6 +49,7 @@ import JdrScreen from "./pages/jdr/JdrScreen";
 import ConversationChapitresListScreen from "./pages/jdr/ConversationChapitresListScreen";
 import ConversationLeconsListScreen from "./pages/jdr/ConversationLeconsListScreen";
 import RevisionScreen from "./pages/revision/RevisionScreen";
+import ConceptRevisionScreen from "./pages/concept/ConceptRevisionScreen";
 import ConversationProfChapitresListScreen from "./pages/revision/ConversationProfChapitresListScreen";
 import ConversationProfLeconsListScreen from "./pages/revision/ConversationProfLeconsListScreen";
 import ParlerScreen from "./pages/ParlerScreen";
@@ -123,6 +124,7 @@ function App() {
         <Route path="revision-prof" element={<ConversationProfChapitresListScreen />} />
         <Route path="revision-prof/chapitre/:chapId" element={<ConversationProfLeconsListScreen />} />
         <Route path="revision-prof/:code" element={<RevisionScreen />} />
+        <Route path="revision-concept/:code" element={<ConceptRevisionScreen />} />
         <Route path="dev" element={<DevIndexScreen />} />
         <Route path="dev/waiting-preview" element={<WaitingPreviewScreen />} />
         <Route path="dev/quizz-preview" element={<QuizzPreviewScreen />} />

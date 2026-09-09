@@ -88,13 +88,23 @@ function finalizeWordAt(text, cursor) {
   return text.slice(0, i) + finalForm + text.slice(i + 1);
 }
 
-export default function HebrewInput({ value, onChange, rows = 3, placeholder, showVoicePrefill = true }) {
+export default function HebrewInput({
+  value,
+  onChange,
+  rows = 3,
+  placeholder,
+  showVoicePrefill = true,
+  forceKeyboardHidden = false,
+}) {
   const [activeKey, setActiveKey] = useState(null);
   // Masqué par défaut (toggle à gauche) tant que le user ne l'a jamais
   // activé lui-même ; mémorisé ensuite (localStorage), cf. demande
-  // explicite du user.
+  // explicite du user. forceKeyboardHidden : ignore cette préférence
+  // partagée pour l'état INITIAL uniquement (l'onboarding doit toujours
+  // démarrer masqué, cf. demande explicite du user) — le toggle reste
+  // interactif et persiste normalement ensuite.
   const [keyboardVisible, setKeyboardVisible] = useState(
-    () => localStorage.getItem(KEYBOARD_VISIBLE_KEY) === "true"
+    () => !forceKeyboardHidden && localStorage.getItem(KEYBOARD_VISIBLE_KEY) === "true"
   );
   // Même logique de mémorisation que le clavier (toggle manuel, masqué par
   // défaut, choix durable du user une fois activé) — cf. demande explicite

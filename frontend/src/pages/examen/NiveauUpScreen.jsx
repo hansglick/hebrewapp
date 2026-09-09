@@ -80,35 +80,33 @@ export function NiveauUpScreen({ code, finalResult }) {
           }}
         >
           <li>
-            {/* Gains de l'examen : gras + vert, cf. demande explicite du user. */}
-            <strong style={{ color: "var(--validationPleine)" }}>
-              + {Math.round(finalResult.points_gagnes ?? 0)}{" "}
-              <ShekelIcon size={12} style={{ verticalAlign: -1 }} color="var(--validationPleine)" />
-            </strong>{" "}
-            gagnés à l'instant
+            {/* Plus de gras ni de vert (logo au bleu par défaut de ShekelIcon,
+                var(--logoAccent), même bleu que le logo utilisé sans
+                override dans l'encadré "Envie d'un défi ?" plus bas) — cf.
+                demande explicite du user. */}
+            + {Math.round(finalResult.points_gagnes ?? 0)} <ShekelIcon size={12} style={{ verticalAlign: -1 }} /> gagnés à
+            l'instant
           </li>
           {wallet && (
             <>
               <li>
-                {/* Total actuel : vert (pas gras), cf. demande explicite du user. */}
-                <span style={{ color: "var(--validationPleine)" }}>
-                  {Math.round(wallet.points)} <ShekelIcon size={12} style={{ verticalAlign: -1 }} color="var(--validationPleine)" />
-                </span>{" "}
-                au total
+                {Math.round(wallet.points)} <ShekelIcon size={12} style={{ verticalAlign: -1 }} /> au total
               </li>
-              <li>{wallet.nombre_cartes} carte(s) dans ta collection</li>
+              <li>
+                {wallet.nombre_cartes} carte(s) dans ta{" "}
+                <Link to="/jeu/cartes" className="link-btn" style={{ fontSize: "1em" }}>
+                  collection
+                </Link>
+              </li>
             </>
           )}
+          <li>
+            <Link to="/jeu/lotterie" className="link-btn" style={{ fontSize: "1em" }}>
+              Échange tes points contre des cartes
+            </Link>
+          </li>
         </ul>
       </div>
-
-      <p className="muted" style={{ fontSize: "0.8em", textAlign: "center", maxWidth: 320 }}>
-        Échange tes points contre des cartes dans{" "}
-        <Link to="/jeu/lotterie" className="link-btn" style={{ fontSize: "1em" }}>
-          la boutique de lots
-        </Link>
-        .
-      </p>
 
       {hardStatus?.unlocked && (
         <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320 }}>
