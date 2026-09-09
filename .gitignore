@@ -1,5 +1,9 @@
-# Media (images/voice) - too heavy for git history, handled separately
-backend/results/
+# Media (images/voice) - too heavy for git history, handled separately via
+# the Render persistent disk (cf. render.yaml) - EXCEPT images_concept/,
+# light enough (79MB/159 files) to just ship through git; app/main.py seeds
+# the persistent disk from it on startup if missing.
+backend/results/*
+!backend/results/images_concept/
 
 # Sources PDF de travail hors ligne - pas utilisées par l'app, juste lourdes
 backend/data/pdfs/

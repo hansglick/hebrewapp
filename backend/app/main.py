@@ -1,8 +1,10 @@
+import shutil
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.config import DATA_DIR, FRONTEND_DEV_ORIGIN, RESULTS_DIR
+from app.config import BACKEND_DIR, DATA_DIR, FRONTEND_DEV_ORIGIN, RESULTS_DIR
 from app.data_loader import DATA_FILES, get_dataset
 from app.database import init_db
 from app.routers import (
@@ -61,6 +63,25 @@ app.add_middleware(
 # premier déploiement (avant que le disque ne soit peuplé), le dossier
 # n'existe pas encore et StaticFiles refuse de démarrer sans lui.
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Dossiers d'assets versionnés dans git (assez légers pour ça, contrairement
+# au reste de backend/results/, cf. .gitignore — ex: images_concept) : ils
+# vivent dans le checkout du repo (BACKEND_DIR / "results"), distinct du
+# disque persistant (RESULTS_DIR) en prod. Sans cette copie au démarrage, un
+# simple "git push" ne suffirait pas à les rendre servables, puisque
+# StaticFiles(RESULTS_DIR) ne regarde jamais dans le checkout. Ne fait rien
+# en local (les deux chemins coïncident déjà). Idempotent (skip si déjà
+# copié) pour ne pas retraiter à chaque redémarrage.
+_bundled_results_dir = BACKEND_DIR / "results"
+if RESULTS_DIR != _bundled_results_dir and _bundled_results_dir.exists():
+    for _bundled_item in _bundled_results_dir.iterdir():
+        _dest = RESULTS_DIR / _bundled_item.name
+        if not _dest.exists():
+            if _bundled_item.is_dir():
+                shutil.copytree(_bundled_item, _dest)
+            else:
+                shutil.copy2(_bundled_item, _dest)
+
 app.mount("/media", StaticFiles(directory=RESULTS_DIR), name="media")
 app.mount("/data-media", StaticFiles(directory=DATA_DIR), name="data-media")
 
