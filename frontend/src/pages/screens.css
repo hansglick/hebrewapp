@@ -19,6 +19,24 @@
   user-select: none;
 }
 
+/* Pages plein écran avec animation "tourner la page" (cf. PageTurnCurl) :
+   chacune gère son propre overflow-y:auto (défilement interne, cf. fiche
+   racine/verbe qui déborde), plutôt que de compter sur le scroll de la
+   page — mais un scrollbar CLASSIQUE (non-overlay) sur un conteneur
+   IMBRIQUÉ réserve de la place et peut apparaître comme une barre
+   verticale inattendue selon la plateforme/l'émulation (ex: DevTools en
+   mode mobile n'émule pas toujours le scrollbar overlay fin des vrais
+   navigateurs mobiles pour un overflow imbriqué) — masqué ici pour rester
+   cohérent quelle que soit la plateforme, le scroll tactile/molette reste
+   fonctionnel sans la barre visible, cf. demande explicite du user.
+   Firefox : scrollbar-width. Chrome/Safari/Edge : ::-webkit-scrollbar. */
+.page-turn-card {
+  scrollbar-width: none;
+}
+.page-turn-card::-webkit-scrollbar {
+  display: none;
+}
+
 /* Remonte l'ensemble du contenu de l'écran principal (Accueil) de quelques
    pixels — scopé à cet écran seul (pas .screen, partagé par tous les
    écrans) pour éviter le scroll sur mobile, cf. demande explicite du user. */
@@ -156,21 +174,6 @@
   border-radius: 50%;
   margin-inline-start: 8px;
   vertical-align: middle;
-}
-
-.progress-bar-track {
-  width: 100%;
-  max-width: 320px;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--cardBorder);
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 0.3s ease;
 }
 
 .card {
@@ -491,8 +494,7 @@
 @media (max-width: 600px) {
   .tile-list,
   .card,
-  .exam-tile,
-  .progress-bar-track {
+  .exam-tile {
     max-width: 100%;
   }
 

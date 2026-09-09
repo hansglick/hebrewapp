@@ -119,6 +119,33 @@ export default function ExamenCibleScreen() {
         <span className="binyan-pill" style={{ backgroundColor: "var(--validationPleine)", marginInlineStart: 0 }} />
         Examen {displayLessonNumber(code)} - {displayChapitreLabel(chapId)}
       </h1>
+
+      {/* Avertissement systématique (indépendant de ecrit_passed/
+          oral_passed, contrairement au petit texte italique historique
+          qu'il remplace ci-dessous) dès que cet examen porte sur une leçon
+          antérieure au niveau ACTUEL du user (comparaison de code, cf. même
+          convention que LeconsListScreen) — fond blanc, écriture rouge,
+          au-dessus de la tuile "Modalités de l'examen" — cf. demande
+          explicite du user (accessible notamment depuis la tuile "Repasser
+          l'examen" de la Bibliothèque). */}
+      {code < niveau.level && (
+        <div
+          className="card"
+          style={{
+            textAlign: "start",
+            width: "100%",
+            maxWidth: 320,
+            fontSize: "0.85em",
+            background: "#fff",
+            color: "var(--annulationPleine)",
+            border: "1px solid var(--annulationPleine)",
+          }}
+        >
+          <strong>⚠ Attention :</strong> cet examen porte sur une leçon antérieure à ton niveau actuel.
+          En cas d'échec, tu risques de redescendre au niveau {displayLessonCode(status.fallback_level)}.
+        </div>
+      )}
+
       <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320, fontSize: "0.85em" }}>
         <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Modalités de l'examen :</p>
         <ul

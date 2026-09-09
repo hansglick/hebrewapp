@@ -292,22 +292,6 @@
     height: 33px;
   }
 
-  .persistent-icon-culture svg {
-    width: 33px;
-    height: 33px;
-  }
-
-  /* padding-inline-end minimal (espace côté configuration, à droite) : ce
-     bouton a un contour visible (border, cf. .header-btn) — un padding plus
-     généreux resterait À L'INTÉRIEUR de ce contour (case vide collée au
-     chapter label) plutôt que de créer un vrai espace visuel ; c'est donc
-     margin-inline-start (ci-dessous), pas padding, qui écarte le contour
-     lui-même du chapter label, cf. demande explicite du user. */
-  .persistent-icon-culture {
-    padding-inline: 8px 4px;
-    margin-inline-start: 16px;
-  }
-
   .persistent-icon-house .icon-outline {
     display: none;
   }

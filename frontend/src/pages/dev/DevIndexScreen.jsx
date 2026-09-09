@@ -32,6 +32,11 @@ const PREVIEWS = [
     label: "Quizz (révisions vs examen)",
     description: "Comparaison côte à côte du rendu d'un objet quizz.",
   },
+  {
+    to: "/dev/page-turn-preview",
+    label: "Animation \"tourner la page\"",
+    description: "Prototype de la transition suivant/précédent entre objets, avant application à l'app.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec

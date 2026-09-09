@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau } from "../api/user";
+import { getLecon } from "../api/content";
 import "./screens.css";
 
-// Écran de choix atteint depuis la tuile "Parler" de l'accueil : conversation
-// guidée (RevisionScreen, "Révise avec ton professeur") vs jeu de rôle (JDR),
-// chacune avec son propre accès aux leçons précédentes juste en dessous,
-// cf. demande explicite du user.
+// Écran de choix atteint depuis la tuile "Parler" de l'accueil :
+// compréhension (questions orales, cf. QuestionOraleScreen en mode
+// exploration/tirage linéaire bouclé) / conversation guidée (RevisionScreen,
+// "Révise avec ton professeur") / jeu de rôle (JDR).
 export default function ParlerScreen() {
   const [niveau, setNiveau] = useState(null);
+  const [lecon, setLecon] = useState(null);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
   }, []);
+
+  // Sert à griser la tuile "Compréhension" si la leçon de référence n'a pas
+  // de questions orales associées (cf. lecon.has_oral_questions, backend) —
+  // cf. demande explicite du user.
+  useEffect(() => {
+    if (niveau?.reference_lesson) getLecon(niveau.reference_lesson).then(setLecon);
+  }, [niveau]);
 
   if (!niveau) return null;
   const referenceLesson = niveau.reference_lesson;
@@ -21,6 +30,22 @@ export default function ParlerScreen() {
     <section className="screen">
       <h1>Parler</h1>
       <div className="tile-list">
+        {referenceLesson &&
+          (lecon?.has_oral_questions ? (
+            <Link to={`/comprehension-orale/${referenceLesson}`} className="card-link">
+              <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
+                Compréhension
+              </div>
+            </Link>
+          ) : (
+            <div
+              className="card"
+              style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em", opacity: 0.5, cursor: "default" }}
+              aria-disabled="true"
+            >
+              Compréhension
+            </div>
+          ))}
         {referenceLesson && (
           <Link to={`/revision-prof/${referenceLesson}`} className="card-link">
             <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
@@ -28,13 +53,6 @@ export default function ParlerScreen() {
             </div>
           </Link>
         )}
-        <Link
-          to="/revision-prof"
-          className="link-btn"
-          style={{ textAlign: "center", border: "none", background: "none", padding: 0 }}
-        >
-          Rejouer les conversations précédentes
-        </Link>
 
         {referenceLesson && (
           <Link to={`/jdr/${referenceLesson}`} className="card-link" style={{ marginTop: 16 }}>
@@ -43,13 +61,6 @@ export default function ParlerScreen() {
             </div>
           </Link>
         )}
-        <Link
-          to="/jdr"
-          className="link-btn"
-          style={{ textAlign: "center", border: "none", background: "none", padding: 0 }}
-        >
-          Rejouer les conversations précédentes
-        </Link>
       </div>
     </section>
   );

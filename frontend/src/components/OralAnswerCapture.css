@@ -1,0 +1,87 @@
+/* Empilement vertical par défaut (mobile/tablette) — cf. OralAnswerCapture.jsx.
+   :first-child porte un plus grand marginTop (espace avec le titre "Question
+   X" au-dessus, pas de trait avant lui) que les blocs suivants (dont le
+   trait séparateur porte déjà la moitié de l'écart, cf.
+   .oral-answer-capture-divider) — cf. demande explicite du user (espace
+   entre blocs +20%). */
+.oral-answer-capture {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.oral-answer-capture-block {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 24px;
+}
+
+.oral-answer-capture-block:first-child {
+  margin-top: 48px;
+}
+
+.oral-answer-capture-divider {
+  width: 100%;
+  max-width: 320px;
+  height: 1px;
+  background: var(--cardBorder);
+  margin-top: 24px;
+}
+
+/* Uniquement sur desktop (largeur d'écran) — pas mobile/tablette : les 3
+   blocs (Contenu/Question/Réponse) s'alignent horizontalement plutôt que
+   d'être empilés, séparés par un trait VERTICAL plutôt qu'horizontal.
+   Même composant partagé pour leçon, révisions ET examens (classique et
+   hard) — s'applique donc aux trois d'un coup — cf. demande explicite du
+   user. Le gap de la ligne remplace le marginTop individuel de chaque
+   bloc/trait (qui, lui, servait à l'espacement VERTICAL de l'empilement).
+
+   Largeur des blocs INCHANGÉE par rapport au mobile (320px, pas de
+   flex:1/rétrécissement) — cf. demande explicite du user. Comme 3 blocs de
+   320px + traits + espacements dépassent largement les 480px de
+   .app-content (cf. Layout.css), on lève ce plafond directement sur
+   .app-content (cf. règle .app-content:has(...) ci-dessous) plutôt que
+   d'essayer de "sortir" de son cadre depuis ici : plusieurs écrans (page
+   turn de QuestionOraleScreen, "safe center" .screen) ont un ancêtre
+   overflow:hidden/auto entre .oral-answer-capture et .app-content, qui
+   aurait de toute façon rogné une tentative de "full bleed" via
+   position:relative/left/transform — seule route qui marche partout : la
+   largeur dispo grandit à la source (.app-content), pas de bidouille de
+   positionnement ici. align-items:flex-start (pas stretch) : seuls les
+   DEUX TRAITS doivent s'étirer sur toute la hauteur de la ligne (cf.
+   align-self ci-dessous), pas les blocs eux-mêmes (sinon le bloc
+   "Réponse", plus grand à cause du bouton "Envoyer ma réponse" qu'il
+   contient désormais, aurait forcé les deux autres à s'étirer avec un
+   vide en dessous). */
+@media (min-width: 900px) {
+  .oral-answer-capture {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .oral-answer-capture-block,
+  .oral-answer-capture-block:first-child {
+    margin-top: 0;
+  }
+
+  .oral-answer-capture-divider {
+    width: 1px;
+    max-width: none;
+    height: auto;
+    margin-top: 0;
+    align-self: stretch;
+  }
+
+  /* :has() nécessaire pour lever le plafond de .app-content (Layout.css)
+     uniquement quand ce composant est présent — même technique déjà en
+     place pour .curiosite-split (cf. screens.css). 3*320px de blocs +
+     2*24px de gap = 1008px de contenu ; 1100px de max-width (moins le
+     padding horizontal de .app-content) laisse une marge confortable. */
+  .app-content:has(.oral-answer-capture) {
+    max-width: 1100px;
+  }
+}

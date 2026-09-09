@@ -19,7 +19,6 @@ export function markObjectSeen({ objectType, objectKey }) {
   apiFetchJson("/api/object-views", { object_type: objectType, object_key: objectKey }).catch(() => {});
 }
 
-export const getExamReadiness = () => apiFetch("/api/examens/readiness");
 
 export const getEvaluations = ({ objectType, objectKey, limit = 5 }) => {
   const params = new URLSearchParams({ object_type: objectType, object_key: objectKey, limit });

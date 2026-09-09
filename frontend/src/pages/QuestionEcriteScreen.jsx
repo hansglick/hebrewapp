@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRandomPhrase } from "../api/content";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
@@ -12,6 +12,7 @@ import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar, BottomNavToggle } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { WaitingVideo } from "../components/WaitingVideo";
+import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../components/PageTurnCurl";
 import "./screens.css";
 
 // Les observations sont affichées en italique, mais un mot en hébreu au
@@ -54,6 +55,8 @@ export default function QuestionEcriteScreen() {
   const [geminiError, setGeminiError] = useState(null);
   const [loadingGemini, setLoadingGemini] = useState(false);
   const [pulse, setPulse] = useState(null); // "success" | "danger" | null
+  const [flip, setFlip] = useState(null); // { dir, phrase, phase: "start" | "animating" }
+  const flipTimeoutRef = useRef(null);
 
   // Le mode découle du chemin d'accès, cf. MotScreen.
   const mode = code ? "exploration" : "revision";
@@ -134,14 +137,42 @@ export default function QuestionEcriteScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, evalMode, revealed, phrase]);
 
+  // Animation "tourner la page" (cf. PageTurnCurl, déjà appliquée aux
+  // mots/verbes/curiosités) — leçon ET révisions, cf. demande explicite du
+  // user ("tous les objets présents dans révisions qui sont itérables").
+  // Le snapshot regroupe tout l'état visuel pertinent (pas seulement la
+  // phrase), utilisé par renderRevisionCard pour la page "sortante" en
+  // révisions — cf. QuestionOraleScreen::renderQuestionCard, même
+  // principe. En exploration, seuls `phrase`/`isCursive` sont utilisés par
+  // renderExplorationPhrase, le reste du snapshot est ignoré.
+  function startFlip(dir) {
+    if (flip || !phrase) return;
+    setFlip({
+      dir,
+      snapshot: { phrase, isCursive, evalMode, revealed, studentSolution, geminiResult, geminiError, pulse },
+      phase: "start",
+    });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setFlip((f) => (f ? { ...f, phase: "animating" } : f));
+      });
+    });
+    clearTimeout(flipTimeoutRef.current);
+    flipTimeoutRef.current = setTimeout(() => setFlip(null), PAGE_TURN_TOTAL_DURATION_MS);
+  }
+
   // Sur la toute première phrase de la session (pas encore d'historique),
   // back() ne fait rien plutôt que de sortir de l'écran (navigate(-1)) :
   // previous/next ne doivent jamais faire quitter le type d'objet
   // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    back();
+    if (flip) return;
+    const moved = back();
+    if (moved) startFlip("prev");
   }
   function goNext() {
+    if (flip) return;
+    startFlip("next");
     next();
   }
 
@@ -162,10 +193,422 @@ export default function QuestionEcriteScreen() {
 
   if (!phrase) return null;
 
-  const isSourceHebrew = phrase.direction === "francais";
-  const sourceText = isSourceHebrew ? phrase.hebrew : phrase.french;
-  const targetText = isSourceHebrew ? phrase.french : phrase.hebrew;
-  const targetIsHebrew = !isSourceHebrew;
+  // Rendu d'une phrase en exploration (français/trait/hébreu/haut-parleur)
+  // — utilisé pour la page au repos et, via PageTurnCurl, pour la page
+  // "sortante" pendant l'animation, cf. demande explicite du user. `cursive`
+  // est passé explicitement (pas lu sur la variable isCursive du render
+  // courant) : sinon, dès que la nouvelle phrase arrive, isCursive change
+  // pour TOUT LE MONDE — y compris la page sortante, qui afficherait alors
+  // encore l'ANCIEN texte mais avec une police soudainement différente
+  // (cursive <-> carrée), donc un texte qui change de taille/saute en
+  // pleine animation — cf. bug rapporté par le user.
+  function renderExplorationPhrase(cardPhrase, cursive) {
+    return (
+      <div
+        className="page-turn-card"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg)",
+          overflowY: "auto",
+          backfaceVisibility: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+        }}
+      >
+        <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.152em" }}>
+          {cardPhrase.french}
+        </p>
+        <hr
+          style={{
+            width: "70%",
+            maxWidth: 320,
+            border: "none",
+            borderTop: "1px solid var(--cardBorder)",
+            margin: 0,
+          }}
+        />
+        <p
+          className="hebrew"
+          style={{
+            margin: 0,
+            fontWeight: 700,
+            color: "var(--textPrimary)",
+            fontSize: "2.16em",
+            direction: "rtl",
+            fontFamily: cursive ? "'Gveret Levin', cursive" : undefined,
+          }}
+        >
+          {cardPhrase.hebrew}
+        </p>
+        <button
+          type="button"
+          className="speak-btn"
+          style={{ marginTop: 24 }}
+          onClick={() => speak(cardPhrase.hebrew)}
+        >
+          <SpeakerIcon size={30} color="var(--speakerIcon)" />
+        </button>
+      </div>
+    );
+  }
+
+  // Rendu d'une carte de révision (les deux evalMode confondus) — utilisé
+  // pour la page au repos et, via PageTurnCurl, pour la page "sortante"
+  // pendant l'animation "tourner la page" (leçon ET révisions, cf.
+  // demande explicite du user "tous les objets présents dans révisions qui
+  // sont itérables"). `snap` regroupe tout l'état visuel pertinent (pas
+  // seulement la phrase) pour que la page sortante reste fidèle à ce qui
+  // était affiché au moment de la quitter — même principe que
+  // QuestionOraleScreen::renderQuestionCard. Les handlers (onClick/
+  // onChange) restent branchés sur l'état LIVE du composant (pas sur le
+  // snapshot) : cohérent avec le reste de l'écran, la page sortante n'est
+  // de toute façon pas destinée à être manipulée pendant l'animation.
+  function renderRevisionCard(snap) {
+    const cardPhrase = snap.phrase;
+    const cursive = snap.isCursive;
+    const cardEvalMode = snap.evalMode;
+    const cardRevealed = snap.revealed;
+    const cardStudentSolution = snap.studentSolution;
+    const cardGeminiResult = snap.geminiResult;
+    const cardGeminiError = snap.geminiError;
+    const cardPulse = snap.pulse;
+
+    const isSourceHebrew = cardPhrase.direction === "francais";
+    const sourceText = isSourceHebrew ? cardPhrase.hebrew : cardPhrase.french;
+    const targetText = isSourceHebrew ? cardPhrase.french : cardPhrase.hebrew;
+    const targetIsHebrew = !isSourceHebrew;
+
+    return (
+      <div
+        className="page-turn-card"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg)",
+          overflowY: "auto",
+          backfaceVisibility: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        {cardEvalMode === "prof" && (
+          <QuoteBlock>
+            {isSourceHebrew ? (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                <p
+                  className="hebrew"
+                  style={{
+                    margin: 0,
+                    fontWeight: 700,
+                    color: "var(--textSecondary)",
+                    fontSize: "1.44em",
+                    direction: "rtl",
+                    fontFamily: cursive ? "'Gveret Levin', cursive" : undefined,
+                  }}
+                >
+                  {sourceText}
+                </p>
+                <span style={{ color: "var(--cardBorder)", fontWeight: 400 }}>|</span>
+                <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
+                  <SpeakerIcon size={20.25} color="var(--speakerIcon)" />
+                </button>
+              </div>
+            ) : (
+              <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+                {sourceText}
+              </p>
+            )}
+          </QuoteBlock>
+        )}
+
+        {cardEvalMode === "auto" && (
+          <div
+            style={{
+              flex: 1,
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {isSourceHebrew ? (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginBottom: 14 }}>
+                <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
+                  <SpeakerIcon size={33} color="var(--speakerIcon)" />
+                </button>
+                <p
+                  className="hebrew"
+                  style={{
+                    margin: 0,
+                    fontWeight: 700,
+                    color: "var(--textPrimary)",
+                    fontSize: "2.16em",
+                    direction: "rtl",
+                    fontFamily: cursive ? "'Gveret Levin', cursive" : undefined,
+                  }}
+                >
+                  {sourceText}
+                </p>
+              </div>
+            ) : (
+              <p style={{ color: "var(--textPrimary)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
+                {sourceText}
+              </p>
+            )}
+
+            <hr
+              style={{
+                width: "70%",
+                maxWidth: 320,
+                border: "none",
+                borderTop: "1px solid var(--cardBorder)",
+                margin: 0,
+              }}
+            />
+
+            <div style={{ display: "grid", justifyItems: "center", marginTop: 28 }}>
+              <div
+                style={{
+                  gridArea: "1 / 1",
+                  visibility: cardRevealed ? "hidden" : "visible",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                  marginTop: 9,
+                }}
+              >
+                <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={cardRevealed}>
+                  <span
+                    className="racine-badge"
+                    style={{ background: "#000", fontWeight: 700, fontSize: "1.4em", padding: "10px 24px" }}
+                  >
+                    ?
+                  </span>
+                </button>
+              </div>
+
+              <div
+                style={{
+                  gridArea: "1 / 1",
+                  visibility: cardRevealed ? "visible" : "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 8,
+                  marginTop: -14,
+                }}
+              >
+                {targetIsHebrew ? (
+                  <p
+                    className="hebrew"
+                    style={{
+                      margin: 0,
+                      fontWeight: 700,
+                      color: "var(--textPrimary)",
+                      fontSize: "2.16em",
+                      direction: "rtl",
+                      fontFamily: cursive ? "'Gveret Levin', cursive" : undefined,
+                    }}
+                  >
+                    {targetText}
+                  </p>
+                ) : (
+                  <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
+                    {targetText}
+                  </p>
+                )}
+
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    marginTop: 32,
+                  }}
+                >
+                  {targetIsHebrew && (
+                    <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
+                      <SpeakerIcon size={44} color="var(--speakerIcon)" />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className={`eval-btn danger${cardPulse === "danger" ? " pulse" : ""}`}
+                    onClick={() => handleEvaluate(false)}
+                  >
+                    <img src="/wrong.png" alt="Faux" width={36} height={36} draggable={false} />
+                  </button>
+                  <button
+                    type="button"
+                    className={`eval-btn success${cardPulse === "success" ? " pulse" : ""}`}
+                    onClick={() => handleEvaluate(true)}
+                  >
+                    <img src="/right.png" alt="Vrai" width={36} height={36} draggable={false} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {cardEvalMode === "prof" && (
+          <>
+            {!cardGeminiResult && (
+              <>
+                {targetIsHebrew ? (
+                  <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                    <SectionTitle>Réponse</SectionTitle>
+                    <HebrewInput
+                      key={`${cardPhrase.lesson_code}-${cardPhrase.position}-${cardPhrase.direction}`}
+                      value={cardStudentSolution}
+                      onChange={setStudentSolution}
+                      rows={3}
+                    />
+                  </div>
+                ) : (
+                  <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                    <SectionTitle>Réponse</SectionTitle>
+                    <textarea
+                      className="translate-textarea"
+                      value={cardStudentSolution}
+                      onChange={(e) => setStudentSolution(e.target.value)}
+                      rows={3}
+                      style={{ width: "100%", fontFamily: "inherit" }}
+                    />
+                  </div>
+                )}
+                {!loadingGemini && (
+                  <button
+                    type="button"
+                    className="exam-tile green"
+                    style={{ marginTop: 24, cursor: cardStudentSolution.trim() ? "pointer" : "default" }}
+                    disabled={!cardStudentSolution.trim()}
+                    onClick={handleSubmitProf}
+                  >
+                    Envoyer ma réponse
+                  </button>
+                )}
+                {cardGeminiError && (
+                  <p className="muted" style={{ color: "var(--annulationPleine)" }}>
+                    {cardGeminiError}
+                  </p>
+                )}
+              </>
+            )}
+
+            {cardGeminiResult && targetIsHebrew && (
+              <>
+                <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
+                  <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
+                  <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
+                    {cardGeminiResult.translation}
+                  </span>
+                </p>
+
+                <hr
+                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
+                />
+
+                <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+                  <tbody>
+                    <tr>
+                      <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                        Note
+                      </td>
+                      <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                        <StarRating rating={cardGeminiResult.score} />
+                      </td>
+                    </tr>
+                    {cardGeminiResult.observations.length > 0 && (
+                      <tr>
+                        <td
+                          colSpan={2}
+                          style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                        >
+                          <ul
+                            style={{
+                              margin: 0,
+                              paddingInlineStart: "1.2em",
+                              fontStyle: "italic",
+                              fontSize: "0.85em",
+                              color: "var(--textSecondary)",
+                            }}
+                          >
+                            {cardGeminiResult.observations.map((obs, i) => (
+                              <li key={i}>{renderWithHebrewHighlight(obs)}</li>
+                            ))}
+                          </ul>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+
+                <hr
+                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
+                />
+
+                <button
+                  type="button"
+                  className="link-btn"
+                  style={{
+                    fontStyle: "italic",
+                    color: "var(--textSecondary)",
+                    fontSize: "0.96em",
+                    textDecoration: "none",
+                  }}
+                  onClick={next}
+                >
+                  Question suivante
+                </button>
+              </>
+            )}
+
+            {cardGeminiResult && !targetIsHebrew && (
+              <>
+                <p>
+                  <strong>Note du professeur : {cardGeminiResult.score} / 5</strong>
+                </p>
+                <p className="muted">Ta traduction : {cardGeminiResult.translation}</p>
+                <ul className="words-list">
+                  {cardGeminiResult.observations.map((obs, i) => (
+                    <li key={i}>{obs}</li>
+                  ))}
+                </ul>
+
+                <hr
+                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
+                />
+
+                <button
+                  type="button"
+                  className="link-btn"
+                  style={{
+                    fontStyle: "italic",
+                    color: "var(--textSecondary)",
+                    fontSize: "0.96em",
+                    textDecoration: "none",
+                  }}
+                  onClick={next}
+                >
+                  Question suivante
+                </button>
+              </>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
 
   // Remplace les anciens boutons radio (sens de traduction + mode
   // d'évaluation) — deux toggles sur la barre de contrôle inférieure, cf.
@@ -202,409 +645,35 @@ export default function QuestionEcriteScreen() {
 
       {/* Phrase française toujours au-dessus du trait, phrase hébreu
           toujours en dessous (avec son haut-parleur) — cf. demande
-          explicite du user. Bloc centré au milieu de l'écran (largeur et
-          hauteur, desktop comme mobile) via flex:1 + justifyContent:center
-          sur ce conteneur (la section porte déjà flex:1). */}
+          explicite du user. Plein écran + PageTurnCurl (position:absolute,
+          pas flex:1 normal) pour porter l'animation "tourner la page" au
+          changement de phrase, cf. demande explicite du user. */}
       {mode === "exploration" && (
-        <div
-          style={{
-            flex: 1,
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-          }}
-        >
-          <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.152em" }}>
-            {phrase.french}
-          </p>
-          <hr
-            style={{
-              width: "70%",
-              maxWidth: 320,
-              border: "none",
-              borderTop: "1px solid var(--cardBorder)",
-              margin: 0,
-            }}
-          />
-          <p
-            className="hebrew"
-            style={{
-              margin: 0,
-              fontWeight: 700,
-              color: "var(--textPrimary)",
-              fontSize: "2.16em",
-              direction: "rtl",
-              fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
-            }}
-          >
-            {phrase.hebrew}
-          </p>
-          {/* marginTop en plus du gap:10 du flex column ambiant — augmente
-              spécifiquement l'espace phrase hébreu -> haut-parleur, sans
-              toucher aux autres écarts (français -> trait -> hébreu), cf.
-              demande explicite du user. */}
-          <button
-            type="button"
-            className="speak-btn"
-            style={{ marginTop: 24 }}
-            onClick={() => speak(phrase.hebrew)}
-          >
-            <SpeakerIcon size={30} color="var(--speakerIcon)" />
-          </button>
+        <div style={{ position: "relative", flex: 1, width: "100%", perspective: 1600, overflow: "hidden" }}>
+          {renderExplorationPhrase(phrase, isCursive)}
+          {flip && (
+            <PageTurnCurl
+              dir={flip.dir}
+              phase={flip.phase}
+              renderPage={() => renderExplorationPhrase(flip.snapshot.phrase, flip.snapshot.isCursive)}
+            />
+          )}
         </div>
       )}
 
+      {/* Même technique que le bloc exploration ci-dessus (plein écran +
+          PageTurnCurl) — leçon ET révisions, cf. demande explicite du user
+          ("tous les objets présents dans révisions qui sont itérables"),
+          cf. renderRevisionCard. */}
       {mode === "revision" && (
-        <>
-          {evalMode === "prof" && (
-            <QuoteBlock>
-              {isSourceHebrew ? (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                  <p
-                    className="hebrew"
-                    style={{
-                      margin: 0,
-                      fontWeight: 700,
-                      color: "var(--textSecondary)",
-                      fontSize: "1.44em",
-                      direction: "rtl",
-                      fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
-                    }}
-                  >
-                    {sourceText}
-                  </p>
-                  <span style={{ color: "var(--cardBorder)", fontWeight: 400 }}>|</span>
-                  <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                    <SpeakerIcon size={20.25} color="var(--speakerIcon)" />
-                  </button>
-                </div>
-              ) : (
-                <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
-                  {sourceText}
-                </p>
-              )}
-            </QuoteBlock>
+        <div style={{ position: "relative", flex: 1, width: "100%", perspective: 1600, overflow: "hidden" }}>
+          {renderRevisionCard({ phrase, isCursive, evalMode, revealed, studentSolution, geminiResult, geminiError, pulse })}
+          {flip && (
+            <PageTurnCurl dir={flip.dir} phase={flip.phase} renderPage={() => renderRevisionCard(flip.snapshot)} />
           )}
-        </>
-      )}
-
-      {mode === "revision" && evalMode === "auto" && (
-        <div
-          style={{
-            flex: 1,
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* La phrase donnée (source) est toujours au-dessus du trait, la
-              solution (cible à deviner) toujours en dessous — même
-              principe que MotScreen/révisions. marginBottom:14 des deux
-              côtés (hébreu comme français) : le trait doit être à
-              équidistance des deux phrases, cf. demande explicite du user.
-              Haut-parleur au-dessus de la phrase hébreu (pas en dessous),
-              cf. demande explicite du user. */}
-          {isSourceHebrew ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginBottom: 14 }}>
-              {/* size 33 = 22 * 1.5 (+50%), cf. demande explicite du
-                  user. */}
-              <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                <SpeakerIcon size={33} color="var(--speakerIcon)" />
-              </button>
-              {/* Phrase hébreu toujours en noir (jamais grisée), cf.
-                  demande explicite du user. */}
-              <p
-                className="hebrew"
-                style={{
-                  margin: 0,
-                  fontWeight: 700,
-                  color: "var(--textPrimary)",
-                  fontSize: "2.16em",
-                  direction: "rtl",
-                  fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
-                }}
-              >
-                {sourceText}
-              </p>
-            </div>
-          ) : (
-            <p style={{ color: "var(--textPrimary)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
-              {sourceText}
-            </p>
-          )}
-
-          <hr
-            style={{
-              width: "70%",
-              maxWidth: 320,
-              border: "none",
-              borderTop: "1px solid var(--cardBorder)",
-              margin: 0,
-            }}
-          />
-
-          {/* Zone de révélation à hauteur fixe : le "?" et la solution
-              occupent la même cellule de grille (l'un en visibility:hidden,
-              l'autre visible) — la hauteur de la cellule est donc toujours
-              celle du contenu le plus grand (la solution), qu'elle soit
-              affichée ou non. La phrase source et le trait au-dessus ne
-              bougent ainsi jamais lors de la révélation, cf. demande
-              explicite du user. Le "?" (badge, aligné en haut de la
-              cellule) reçoit toujours l'espacement complet ; le bloc
-              "révélé" reçoit systématiquement le même marginTop réduit
-              (-14, qu'il soit en français ou en hébreu) pour que l'écart
-              trait -> solution soit identique à l'écart source -> trait
-              (marginBottom:14 côté source), cf. demande explicite du
-              user. */}
-          <div style={{ display: "grid", justifyItems: "center", marginTop: 28 }}>
-            <div
-              style={{
-                gridArea: "1 / 1",
-                visibility: revealed ? "hidden" : "visible",
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "center",
-                marginTop: 9,
-              }}
-            >
-              <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={revealed}>
-                <span
-                  className="racine-badge"
-                  style={{ background: "#000", fontWeight: 700, fontSize: "1.4em", padding: "10px 24px" }}
-                >
-                  ?
-                </span>
-              </button>
-            </div>
-
-            <div
-              style={{
-                gridArea: "1 / 1",
-                visibility: revealed ? "visible" : "hidden",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 8,
-                marginTop: -14,
-              }}
-            >
-              {targetIsHebrew ? (
-                <p
-                  className="hebrew"
-                  style={{
-                    margin: 0,
-                    fontWeight: 700,
-                    color: "var(--textPrimary)",
-                    fontSize: "2.16em",
-                    direction: "rtl",
-                    fontFamily: isCursive ? "'Gveret Levin', cursive" : undefined,
-                  }}
-                >
-                  {targetText}
-                </p>
-              ) : (
-                // Phrase française toujours en gris (jamais noire), cf.
-                // demande explicite du user.
-                <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
-                  {targetText}
-                </p>
-              )}
-
-              {/* Haut-parleur (si la cible est en hébreu), wrong.png et
-                  right.png (au lieu des glyphes ✗/✓ texte) sur la même
-                  ligne — cf. demande explicite du user. className
-                  danger/success conservée (couleur du bouton lui-même, pas
-                  de l'image) pour que le halo .pulse (box-shadow en
-                  currentColor) continue de fonctionner sans changement.
-                  marginTop:32 (avec le gap:8 du conteneur, 40px au total)
-                  quelle que soit la cible (français ou hébreu) : même
-                  espace phrase -> logos des deux côtés, cf. demandes
-                  explicites du user. */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                  marginTop: 32,
-                }}
-              >
-                {targetIsHebrew && (
-                  <button type="button" className="speak-btn" onClick={() => speak(phrase.hebrew)}>
-                    <SpeakerIcon size={44} color="var(--speakerIcon)" />
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className={`eval-btn danger${pulse === "danger" ? " pulse" : ""}`}
-                  onClick={() => handleEvaluate(false)}
-                >
-                  <img src="/wrong.png" alt="Faux" width={36} height={36} draggable={false} />
-                </button>
-                <button
-                  type="button"
-                  className={`eval-btn success${pulse === "success" ? " pulse" : ""}`}
-                  onClick={() => handleEvaluate(true)}
-                >
-                  <img src="/right.png" alt="Vrai" width={36} height={36} draggable={false} />
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       )}
 
-      {mode === "revision" && evalMode === "prof" && (
-        <>
-          {!geminiResult && (
-            <>
-              {targetIsHebrew ? (
-                <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                  <SectionTitle>Réponse</SectionTitle>
-                  <HebrewInput
-                    key={`${phrase.lesson_code}-${phrase.position}-${phrase.direction}`}
-                    value={studentSolution}
-                    onChange={setStudentSolution}
-                    rows={3}
-                  />
-                </div>
-              ) : (
-                <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                  <SectionTitle>Réponse</SectionTitle>
-                  <textarea
-                    className="translate-textarea"
-                    value={studentSolution}
-                    onChange={(e) => setStudentSolution(e.target.value)}
-                    rows={3}
-                    style={{ width: "100%", fontFamily: "inherit" }}
-                  />
-                </div>
-              )}
-              {!loadingGemini && (
-                <button
-                  type="button"
-                  className="exam-tile green"
-                  style={{ marginTop: 24, cursor: studentSolution.trim() ? "pointer" : "default" }}
-                  disabled={!studentSolution.trim()}
-                  onClick={handleSubmitProf}
-                >
-                  Envoyer ma réponse
-                </button>
-              )}
-              {geminiError && (
-                <p className="muted" style={{ color: "var(--annulationPleine)" }}>
-                  {geminiError}
-                </p>
-              )}
-            </>
-          )}
-
-          {geminiResult && targetIsHebrew && (
-            <>
-              <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
-                <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
-                  {geminiResult.translation}
-                </span>
-              </p>
-
-              <hr
-                style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
-              />
-
-              <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
-                <tbody>
-                  <tr>
-                    <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
-                      Note
-                    </td>
-                    <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
-                      <StarRating rating={geminiResult.score} />
-                    </td>
-                  </tr>
-                  {geminiResult.observations.length > 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
-                      >
-                        <ul
-                          style={{
-                            margin: 0,
-                            paddingInlineStart: "1.2em",
-                            fontStyle: "italic",
-                            fontSize: "0.85em",
-                            color: "var(--textSecondary)",
-                          }}
-                        >
-                          {geminiResult.observations.map((obs, i) => (
-                            <li key={i}>{renderWithHebrewHighlight(obs)}</li>
-                          ))}
-                        </ul>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-
-              <hr
-                style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
-              />
-
-              <button
-                type="button"
-                className="link-btn"
-                style={{
-                  fontStyle: "italic",
-                  color: "var(--textSecondary)",
-                  fontSize: "0.96em",
-                  textDecoration: "none",
-                }}
-                onClick={next}
-              >
-                Question suivante
-              </button>
-            </>
-          )}
-
-          {geminiResult && !targetIsHebrew && (
-            <>
-              <p>
-                <strong>Note du professeur : {geminiResult.score} / 5</strong>
-              </p>
-              <p className="muted">Ta traduction : {geminiResult.translation}</p>
-              <ul className="words-list">
-                {geminiResult.observations.map((obs, i) => (
-                  <li key={i}>{obs}</li>
-                ))}
-              </ul>
-
-              <hr
-                style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
-              />
-
-              <button
-                type="button"
-                className="link-btn"
-                style={{
-                  fontStyle: "italic",
-                  color: "var(--textSecondary)",
-                  fontSize: "0.96em",
-                  textDecoration: "none",
-                }}
-                onClick={next}
-              >
-                Question suivante
-              </button>
-            </>
-          )}
-        </>
-      )}
         </>
       )}
     </section>

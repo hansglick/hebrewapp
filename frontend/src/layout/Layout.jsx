@@ -11,6 +11,7 @@ import { getUnreadNotificationCount } from "../api/content";
 import { DictionaryIcon } from "../components/DictionaryIcon";
 import { HouseIcon } from "../components/HouseIcon";
 import { DreidelIcon } from "../components/DreidelIcon";
+import { LibraryIcon } from "../components/LibraryIcon";
 import { NotificationIcon } from "../components/NotificationIcon";
 import { ShekelIcon } from "../components/ShekelIcon";
 import { MagenDavidIcon } from "../components/MagenDavidIcon";
@@ -66,7 +67,7 @@ export default function Layout() {
   // partir (voir les gardes `hasIdentity &&` ci-dessous).
   const [hasIdentity, setHasIdentity] = useState(() => !!getIdentity());
   const { wallet, refreshWallet } = useWallet();
-  const { themeMode, setThemeMode } = useConfig();
+  const { themeMode, setThemeMode, godMode, setGodMode } = useConfig();
   const location = useLocation();
   const navigate = useNavigate();
   const { timer } = useExamTimer();
@@ -345,19 +346,29 @@ export default function Layout() {
             </span>
             <span className="exam-tile-tooltip">Notifications</span>
           </button>
+          {/* Remplace l'icône Dictionnaire sur desktop (désormais dans le
+              panneau Configuration, cf. ConfigModal) — accès aux leçons
+              précédentes (chapitres déjà atteints -> leçons débloquées ->
+              écran curé Texte/Vocabulaire/Verbes/Phrases/Conversations/
+              Repasser l'examen, cf. LibraryChapitresScreen), cf. demande
+              explicite du user. */}
           <button
             type="button"
             className="header-btn hide-on-mobile"
-            onClick={() => navigate("/dictionnaire")}
-            title="Dictionnaire"
+            onClick={() => navigate("/library")}
+            title="Bibliothèque"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <DictionaryIcon size={40} color="var(--chromeTextPrimary)" />
-            <span className="exam-tile-tooltip">Dictionnaire</span>
+            <LibraryIcon size={40} color="var(--chromeTextPrimary)" />
+            <span className="exam-tile-tooltip">Explorez les leçons et examens précédents</span>
           </button>
+          {/* hide-on-mobile : sur mobile, ce logo est désormais proposé en
+              premier dans le panneau "Plus d'options" (cf.
+              header-mobile-panel ci-dessous) plutôt que dans l'en-tête —
+              cf. demande explicite du user. */}
           <button
             type="button"
-            className="header-btn persistent-icon persistent-icon-culture"
+            className="header-btn persistent-icon persistent-icon-culture hide-on-mobile"
             onClick={() => navigate("/fun")}
             title="Culture"
             style={{ display: "inline-flex", alignItems: "center" }}
@@ -388,6 +399,17 @@ export default function Layout() {
           {mobileMenuOpen && (
             <>
               <div className="header-mobile-panel">
+                {/* Premier de la liste — cf. demande explicite du user
+                    (logo toupie/Culture déplacé de l'en-tête vers ce
+                    panneau sur mobile, cf. hide-on-mobile ci-dessus). */}
+                <button
+                  type="button"
+                  className="header-mobile-panel-row"
+                  onClick={() => navigate("/fun")}
+                >
+                  <DreidelIcon size={20} color="var(--chromeTextPrimary)" />
+                  <span>Culture</span>
+                </button>
                 {wallet && (
                   <>
                     <button
@@ -424,6 +446,22 @@ export default function Layout() {
                   <NotificationIcon size={20} color="var(--chromeTextPrimary)" />
                   <span>Notifications{unreadCount > 0 ? ` (${unreadCount})` : ""}</span>
                 </button>
+                {/* "Archives" (icône Library, même écran /library que sur
+                    desktop) — UNIQUEMENT dans ce panneau mobile, entre
+                    Notifications et Dictionnaire, cf. demande explicite du
+                    user. Sur desktop, ce même logo est déjà accessible via
+                    l'en-tête (à la place de Dictionnaire, cf.
+                    hide-on-mobile plus haut) ; les deux options
+                    (Archives/Dictionnaire) restent distinctes et coexistent
+                    ici, contrairement au desktop. */}
+                <button
+                  type="button"
+                  className="header-mobile-panel-row"
+                  onClick={() => navigate("/library")}
+                >
+                  <LibraryIcon size={20} color="var(--chromeTextPrimary)" />
+                  <span>Archives</span>
+                </button>
                 <button
                   type="button"
                   className="header-mobile-panel-row"
@@ -447,6 +485,32 @@ export default function Layout() {
                       <span className="switch-knob" />
                     </button>
                     <MoonIcon size={14} color={themeMode === "dark" ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)"} />
+                  </div>
+                </div>
+                <div className="header-mobile-panel-row" style={{ justifyContent: "space-between" }}>
+                  <span>God Mode</span>
+                  {/* "off"/"on" de part et d'autre du loquet — même
+                      couleur/format que le toggle Thème ci-dessus (côté
+                      actif en chromeTextPrimary, côté inactif en
+                      chromeTextSecondary), cf. demande explicite du
+                      user. */}
+                  <div className="switch-wrap">
+                    <span style={{ fontSize: "0.75em", fontWeight: 600, color: !godMode ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
+                      off
+                    </span>
+                    <button
+                      type="button"
+                      className={`switch${godMode ? " on" : ""}`}
+                      role="switch"
+                      aria-checked={godMode}
+                      aria-label="Basculer God Mode"
+                      onClick={() => setGodMode(!godMode)}
+                    >
+                      <span className="switch-knob" />
+                    </button>
+                    <span style={{ fontSize: "0.75em", fontWeight: 600, color: godMode ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
+                      on
+                    </span>
                   </div>
                 </div>
                 <button
@@ -475,6 +539,8 @@ export default function Layout() {
         onClose={() => setConfigOpen(false)}
         themeMode={themeMode}
         setThemeMode={setThemeMode}
+        godMode={godMode}
+        setGodMode={setGodMode}
         onLogout={handleLogout}
       />
       <main className="app-content">

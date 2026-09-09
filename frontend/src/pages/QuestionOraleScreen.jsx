@@ -11,6 +11,7 @@ import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar } from "../components/BottomNavBar";
 import { OralAnswerCapture } from "../components/OralAnswerCapture";
 import { WaitingVideo } from "../components/WaitingVideo";
+import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../components/PageTurnCurl";
 import "./screens.css";
 
 const GEMINI_TIMEOUT_MS = 30000;
@@ -93,6 +94,9 @@ export default function QuestionOraleScreen() {
   useEffect(() => {
     setQuestionSeq(1);
   }, [lessonCode, mode]);
+
+  const [flip, setFlip] = useState(null); // { dir, snapshot, phase: "start" | "animating" }
+  const flipTimeoutRef = useRef(null);
 
   const { current: question, next, back } = useRandomBrowser(
     (prevQuestion, seen) =>
@@ -179,14 +183,55 @@ export default function QuestionOraleScreen() {
     }
   }
 
+  // Repasse dans 1..total (cf. question.total, renvoyé par le backend) au
+  // cas où la session a fini par tirer plus de questions distinctes que le
+  // pool n'en contient (répétitions après épuisement).
+  const questionNumber = question ? (question.total ? ((questionSeq - 1) % question.total) + 1 : questionSeq) : 1;
+
+  // Animation "tourner la page" (cf. PageTurnCurl, déjà appliquée aux
+  // mots/verbes/traductions) — leçon ET révisions, cf. demande explicite
+  // du user ("tous les objets présents dans révisions qui sont
+  // itérables"). Capture tout l'état visuel de la question ACTUELLE (pas
+  // seulement la question elle-même) comme page "sortante", cf.
+  // renderQuestionCard.
+  function startFlip(dir) {
+    if (flip || !question) return;
+    const snapshot = {
+      question,
+      questionNumber,
+      geminiResult,
+      geminiError,
+      timeoutMessage,
+      audioBlob,
+      audioUrl,
+      isRecording,
+      isConverting,
+    };
+    setFlip({ dir, snapshot, phase: "start" });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setFlip((f) => (f ? { ...f, phase: "animating" } : f));
+      });
+    });
+    clearTimeout(flipTimeoutRef.current);
+    flipTimeoutRef.current = setTimeout(() => setFlip(null), PAGE_TURN_TOTAL_DURATION_MS);
+  }
+
   // Sur la toute première question de la session (pas encore d'historique),
   // back() ne fait rien plutôt que de sortir de l'écran (navigate(-1)) :
   // previous/next ne doivent jamais faire quitter le type d'objet
   // parcouru, cf. demande explicite du user.
   function goPrevious() {
-    if (back()) setQuestionSeq((n) => Math.max(1, n - 1));
+    if (flip) return;
+    const moved = back();
+    if (moved) {
+      startFlip("prev");
+      setQuestionSeq((n) => Math.max(1, n - 1));
+    }
   }
   function goNext() {
+    if (flip) return;
+    startFlip("next");
     next();
     setQuestionSeq((n) => n + 1);
   }
@@ -198,71 +243,79 @@ export default function QuestionOraleScreen() {
 
   if (!question) return null;
 
-  const globalNote = geminiResult ? computeGlobalNote(geminiResult) : null;
-  // Repasse dans 1..total (cf. question.total, renvoyé par le backend) au
-  // cas où la session a fini par tirer plus de questions distinctes que le
-  // pool n'en contient (répétitions après épuisement).
-  const questionNumber = question.total ? ((questionSeq - 1) % question.total) + 1 : questionSeq;
-
-  return (
-    <section
-      className="screen question-orale-screen"
-      style={{ flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)" }}
-      onPointerDown={swipeHandlers.onPointerDown}
-    >
-      {loadingGemini ? (
-        <WaitingVideo />
-      ) : (
-        <>
-      <ActionHints {...swipeHandlers.hints} />
-      <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
-
-      {/* Numéro de la question dans la session (1..total, cf. questionSeq),
-          pour que le user comprenne où il en est — même couleur que les
-          titres de bloc audio (var(--tileAccent)), taille +200% de la
-          leur (0.84em -> 1.68em), centré — cf. demande explicite du user.
-          marginTop: saute une ligne par rapport à la barre de contrôle
-          (trop proche sinon, cf. bug rapporté par le user). L'espace avec
-          le premier titre de bloc audio ("Ecoute le contenu") vient lui du
-          marginTop déjà porté par ce premier bloc (cf. OralAnswerCapture,
-          BLOCK_GAP), pas besoin de marge supplémentaire en dessous. */}
-      <h1
+  // Rendu du contenu d'une question donnée (titre "Question X" + les 3
+  // blocs audio + résultat Gemini éventuel) — utilisé pour la page au
+  // repos et, via PageTurnCurl, pour la page "sortante" pendant
+  // l'animation (exploration seulement, cf. startFlip). `snap` regroupe
+  // tout l'état visuel (pas seulement la question) pour que la page
+  // sortante reste fidèle à ce qui était affiché au moment de la quitter.
+  function renderQuestionCard(snap) {
+    const cardGlobalNote = snap.geminiResult ? computeGlobalNote(snap.geminiResult) : null;
+    return (
+      <div
+        className="page-turn-card"
         style={{
-          color: "var(--tileAccent)",
-          fontSize: "1.176em",
-          fontWeight: 700,
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg)",
+          overflowY: "auto",
+          backfaceVisibility: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "safe center",
+          gap: 16,
           textAlign: "center",
-          margin: "1em 0 -19.2px",
-          width: "100%",
+          boxSizing: "border-box",
+          paddingBottom: "calc(var(--bottom-nav-height) * 2)",
         }}
       >
-        Question {questionNumber}
-      </h1>
+        {/* Numéro de la question dans la session (1..total, cf. questionSeq),
+            pour que le user comprenne où il en est — même couleur que les
+            titres de bloc audio (var(--tileAccent)), taille +200% de la
+            leur (0.84em -> 1.68em), centré — cf. demande explicite du user.
+            marginTop: saute une ligne par rapport à la barre de contrôle
+            (trop proche sinon, cf. bug rapporté par le user). L'espace avec
+            le premier titre de bloc audio ("Ecoute le contenu") vient lui du
+            marginTop déjà porté par ce premier bloc (cf. OralAnswerCapture,
+            BLOCK_GAP), pas besoin de marge supplémentaire en dessous. */}
+        <h1
+          style={{
+            color: "var(--tileAccent)",
+            fontSize: "1.176em",
+            fontWeight: 700,
+            textAlign: "center",
+            margin: "1em 0 -19.2px",
+            width: "100%",
+          }}
+        >
+          Question {snap.questionNumber}
+        </h1>
 
-      {/* Même habillage pour les deux modes (leçon/oral et révisions/oral) —
-          cf. OralAnswerCapture, inspiré de l'écran des questions écrites
-          avec pré-remplissage vocal, demande explicite du user. */}
-      <OralAnswerCapture
-        contentSrc={mediaUrl(question.voicepath)}
-        questionText={question.question_hebrew}
-        showRecorder={!geminiResult}
-        isRecording={isRecording}
-        isConverting={isConverting}
-        audioBlob={audioBlob}
-        audioUrl={audioUrl}
-        onStart={startRecording}
-        onStop={stopRecording}
-        onEnvoyer={handleSubmit}
-      />
+        {/* Même habillage pour les deux modes (leçon/oral et révisions/oral) —
+            cf. OralAnswerCapture, inspiré de l'écran des questions écrites
+            avec pré-remplissage vocal, demande explicite du user. */}
+        <OralAnswerCapture
+          contentSrc={mediaUrl(snap.question.voicepath)}
+          questionText={snap.question.question_hebrew}
+          showRecorder={!snap.geminiResult}
+          isRecording={snap.isRecording}
+          isConverting={snap.isConverting}
+          audioBlob={snap.audioBlob}
+          audioUrl={snap.audioUrl}
+          onStart={startRecording}
+          onStop={stopRecording}
+          onEnvoyer={handleSubmit}
+        />
 
-      {!geminiResult && (
+      {!snap.geminiResult && (
         <>
-          {geminiError && (
+          {snap.geminiError && (
             <p className="muted" style={{ color: "var(--annulationPleine)" }}>
-              {geminiError}
+              {snap.geminiError}
             </p>
           )}
-          {timeoutMessage && (
+          {snap.timeoutMessage && (
             <p
               className="muted"
               style={{ fontStyle: "italic", fontSize: "0.8em", textAlign: "center" }}
@@ -273,12 +326,12 @@ export default function QuestionOraleScreen() {
         </>
       )}
 
-      {geminiResult && (
+      {snap.geminiResult && (
         <>
           <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
             <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
             <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
-              {geminiResult.verbatim}
+              {snap.geminiResult.verbatim}
             </span>
           </p>
 
@@ -291,10 +344,10 @@ export default function QuestionOraleScreen() {
                   Complétude
                 </td>
                 <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
-                  <StarRating rating={geminiResult.rating_completeness} />
+                  <StarRating rating={snap.geminiResult.rating_completeness} />
                 </td>
               </tr>
-              {geminiResult.errors_rating_completeness?.length > 0 && (
+              {snap.geminiResult.errors_rating_completeness?.length > 0 && (
                 <tr>
                   <td
                     colSpan={2}
@@ -309,7 +362,7 @@ export default function QuestionOraleScreen() {
                         color: "var(--textSecondary)",
                       }}
                     >
-                      {geminiResult.errors_rating_completeness.map((e, i) => (
+                      {snap.geminiResult.errors_rating_completeness.map((e, i) => (
                         <li key={i}>{renderWithHebrewHighlight(e)}</li>
                       ))}
                     </ul>
@@ -324,10 +377,10 @@ export default function QuestionOraleScreen() {
                   Grammaire
                 </td>
                 <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
-                  <StarRating rating={geminiResult.rating_hebrew} />
+                  <StarRating rating={snap.geminiResult.rating_hebrew} />
                 </td>
               </tr>
-              {geminiResult.errors_rating_hebrew.length > 0 && (
+              {snap.geminiResult.errors_rating_hebrew.length > 0 && (
                 <tr>
                   <td
                     colSpan={2}
@@ -342,7 +395,7 @@ export default function QuestionOraleScreen() {
                         color: "var(--textSecondary)",
                       }}
                     >
-                      {geminiResult.errors_rating_hebrew.map((e, i) => (
+                      {snap.geminiResult.errors_rating_hebrew.map((e, i) => (
                         <li key={i}>{renderWithHebrewHighlight(e)}</li>
                       ))}
                     </ul>
@@ -357,10 +410,10 @@ export default function QuestionOraleScreen() {
                   Compréhension
                 </td>
                 <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
-                  <StarRating rating={geminiResult.rating_comprehension} />
+                  <StarRating rating={snap.geminiResult.rating_comprehension} />
                 </td>
               </tr>
-              {geminiResult.errors_rating_comprehension.length > 0 && (
+              {snap.geminiResult.errors_rating_comprehension.length > 0 && (
                 <tr>
                   <td
                     colSpan={2}
@@ -375,7 +428,7 @@ export default function QuestionOraleScreen() {
                         color: "var(--textSecondary)",
                       }}
                     >
-                      {geminiResult.errors_rating_comprehension.map((e, i) => (
+                      {snap.geminiResult.errors_rating_comprehension.map((e, i) => (
                         <li key={i}>{renderWithHebrewHighlight(e)}</li>
                       ))}
                     </ul>
@@ -405,7 +458,7 @@ export default function QuestionOraleScreen() {
                   Note Globale
                 </td>
                 <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
-                  <StarRating rating={Math.round(globalNote.average)} />
+                  <StarRating rating={Math.round(cardGlobalNote.average)} />
                 </td>
               </tr>
               <tr>
@@ -422,7 +475,7 @@ export default function QuestionOraleScreen() {
                       color: "var(--textSecondary)",
                     }}
                   >
-                    <li>{capitalize(globalNote.comment)}</li>
+                    <li>{capitalize(cardGlobalNote.comment)}</li>
                   </ul>
                 </td>
               </tr>
@@ -430,6 +483,52 @@ export default function QuestionOraleScreen() {
           </table>
         </>
       )}
+      </div>
+    );
+  }
+
+  return (
+    <section
+      className="screen question-orale-screen"
+      style={{ flex: 1 }}
+      onPointerDown={swipeHandlers.onPointerDown}
+    >
+      {loadingGemini ? (
+        <WaitingVideo />
+      ) : (
+        <>
+          <ActionHints {...swipeHandlers.hints} />
+          <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
+
+          {/* zoom:0.9 : réduit de 10% l'ensemble des éléments de l'écran
+              (contenu de la question orale — leçon et révisions), cf.
+              demande explicite du user. Ne touche ni ActionHints ni
+              BottomNavBar (frères de ce conteneur, pas des enfants). */}
+          <div
+            style={{
+              position: "relative",
+              flex: 1,
+              width: "100%",
+              perspective: 1600,
+              overflow: "hidden",
+              zoom: 0.9,
+            }}
+          >
+            {renderQuestionCard({
+              question,
+              questionNumber,
+              geminiResult,
+              geminiError,
+              timeoutMessage,
+              audioBlob,
+              audioUrl,
+              isRecording,
+              isConverting,
+            })}
+            {flip && (
+              <PageTurnCurl dir={flip.dir} phase={flip.phase} renderPage={() => renderQuestionCard(flip.snapshot)} />
+            )}
+          </div>
         </>
       )}
     </section>

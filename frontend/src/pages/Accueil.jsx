@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getNiveau, getExamReadiness } from "../api/user";
-import { getLeconExploration } from "../api/content";
-import { getOnboardingStatus, resetAccount } from "../api/onboarding";
-import { ChapitreLogo } from "../components/ChapitreLogo";
+import { getNiveau } from "../api/user";
+import { getOnboardingStatus } from "../api/onboarding";
 import { MaskIcon } from "../components/MaskIcon";
-import { ProgressBar } from "../components/ProgressBar";
-import { displayChapitreLabel } from "../utils/chapitreDisplay";
+import { ChapitreLogo } from "../components/ChapitreLogo";
 import { displayLessonNumber } from "../utils/lessonDisplay";
-import { leconProgressMessage } from "../utils/leconProgressMessage";
-import { readinessDisplay } from "../utils/readinessMessage";
 import "./screens.css";
 
 // Icône sobre à l'extrémité gauche du titre de chaque tuile (pas de débord
 // ni de pulsation, contrairement aux tuiles d'attente d'examen — une tuile
 // d'accueil est utilisée en permanence, cf. demande explicite du user). Le
 // reste du contenu de la tuile (sous ce titre) reste centré comme avant.
+// Hauteur explicite partagée par les tuiles "Examen" et "Examen Blanc" —
+// pour rester strictement identique entre les deux quelle que soit la
+// longueur du texte ("Examen" vs "Examen Blanc"), cf. demande explicite du
+// user. Valeur alignée sur la hauteur naturelle d'une tuile TileTitle
+// simple (padding:12px 14px de .card + une ligne de contenu ~24px + les
+// bordures), comme "Parler"/"Apprendre" plus haut.
+const EXAM_TILE_HEIGHT = 50;
+
 function TileTitle({ src, color, children }) {
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
@@ -27,44 +30,27 @@ function TileTitle({ src, color, children }) {
 
 export default function Accueil() {
   const [niveau, setNiveau] = useState(null);
-  const [exploration, setExploration] = useState(null);
-  const [readiness, setReadiness] = useState(null);
-  const [confirmingReset, setConfirmingReset] = useState(false);
   const [pseudo, setPseudo] = useState(null);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
-    getExamReadiness().then(setReadiness);
     getOnboardingStatus().then((s) => setPseudo(s.pseudo));
   }, []);
-
-  useEffect(() => {
-    if (niveau?.reference_lesson) getLeconExploration(niveau.reference_lesson).then(setExploration);
-  }, [niveau]);
-
-  async function handleReset() {
-    await resetAccount();
-    // Layout revérifie /api/onboarding/status au prochain changement de
-    // route — un rechargement complet est le moyen le plus simple de
-    // repartir de zéro sans avoir à réconcilier tout l'état local (wallet,
-    // niveau...) éparpillé dans plusieurs contextes.
-    window.location.assign("/");
-  }
 
   if (!niveau) return null;
 
   const referenceLesson = niveau.reference_lesson;
   const chapId = referenceLesson ? referenceLesson.split(".")[0] : null;
-  const explorationPercent =
-    exploration && exploration.total > 0 ? (100 * exploration.seen) / exploration.total : 0;
-  const leconProgress = leconProgressMessage(explorationPercent);
-  const readinessInfo = readinessDisplay(readiness);
 
   return (
     <section className="screen accueil-screen">
       {pseudo && (
         <h1 className="hebrew" style={{ margin: "0 0 8px", direction: "rtl", fontWeight: 400 }}>
-          שלום <span style={{ fontWeight: 700 }}>{pseudo}</span>
+          {/* "!" placé APRÈS {pseudo} dans l'ordre logique du code : le
+              titre est en RTL (direction:"rtl"), donc le contenu le plus
+              tardif dans l'ordre logique s'affiche le plus à GAUCHE
+              visuellement — cf. demande explicite du user. */}
+          שלום <span style={{ fontWeight: 700 }}>{pseudo}</span> !
         </h1>
       )}
 
@@ -78,30 +64,24 @@ export default function Accueil() {
           {referenceLesson && (
             <Link to={`/apprentissage/${chapId}/${referenceLesson}`} className="card-link">
               <div className="card" style={{ textAlign: "center" }}>
-                <TileTitle src="/openbook.png">Apprendre</TileTitle>
-                <ChapitreLogo chapId={chapId} size="3.4em" style={{ marginInlineStart: 0, marginTop: 10 }} />
-                <div style={{ fontWeight: 600, margin: "6px 0 10px" }}>
-                  {displayChapitreLabel(chapId)} — {displayLessonNumber(referenceLesson)}
+                {/* Titre custom (pas TileTitle, qui ne gère qu'une seule
+                    icône) — tout sur un même axe horizontal : icône
+                    openbook, texte, logo du chapitre (même taille que
+                    l'icône openbook, 22px) puis le numéro de leçon, cf.
+                    demande explicite du user. */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  <MaskIcon src="/openbook.png" size={22} />
+                  <span style={{ fontWeight: 600, fontSize: "1.1em", display: "flex", alignItems: "center" }}>
+                    Reprendre la leçon
+                    <ChapitreLogo chapId={chapId} size="22px" style={{ marginInlineStart: 6 }} />
+                    <span style={{ fontStyle: "italic", marginInlineStart: 4 }}>
+                      {displayLessonNumber(referenceLesson)}
+                    </span>
+                  </span>
                 </div>
-                {exploration && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
-                    <span style={{ fontWeight: 600, fontSize: "0.9em" }}>{Math.ceil(explorationPercent)}%</span>
-                    <ProgressBar value={explorationPercent} color={leconProgress.color} />
-                    <p className="muted" style={{ margin: 0 }}>
-                      Leçon en cours
-                    </p>
-                  </div>
-                )}
               </div>
             </Link>
           )}
-          <Link
-            to="/apprentissage"
-            className="link-btn"
-            style={{ textAlign: "center", border: "none", background: "none", padding: 0 }}
-          >
-            Consulter les leçons précédentes
-          </Link>
         </div>
 
         {/* Parler (remplace les anciennes tuiles Conversation / Révise avec
@@ -115,33 +95,50 @@ export default function Accueil() {
           </Link>
         </div>
 
-        {/* Réviser */}
+        {/* Renforcer (anciennement "Réviser", cf. demande explicite du
+            user) */}
         <div className="tile-list" style={{ gap: 8, margin: 0 }}>
           <Link to="/revisions" className="card-link">
             <div className="card" style={{ textAlign: "center" }}>
               <div style={{ marginBottom: 10 }}>
-                <TileTitle src="/revision.png">Réviser</TileTitle>
+                <TileTitle src="/revision.png">Renforcer</TileTitle>
               </div>
-              {readinessInfo && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
-                  <span style={{ fontWeight: 600, fontSize: "0.9em" }}>{Math.ceil(readinessInfo.percent)}%</span>
-                  <ProgressBar value={readinessInfo.percent} color={readinessInfo.color} />
-                  <p className="muted" style={{ margin: 0 }}>
-                    Révise avant l'examen!
-                  </p>
-                </div>
-              )}
             </div>
           </Link>
         </div>
 
-        {/* Examen : fond noir, texte blanc, logo examhat recoloré en blanc
-            (cf. demande explicite du user). L'état "dernier niveau atteint"
-            garde le traitement grisé existant, sans le style noir/blanc. */}
+        {/* Examen Blanc précède Examen (cf. demande explicite du user).
+            Même format/tuile que Examen (TileTitle + card), mais grise
+            (pas de card-dark, pas de recoloration blanche du logo) —
+            exercices de traduction de phrases (même algorithme de tirage
+            que l'ancien "revisions/question-ecrite", cf. examen-blanc dans
+            App.jsx). height:EXAM_TILE_HEIGHT explicite et identique sur
+            les deux tuiles (display:flex + alignItems:center pour centrer
+            le contenu dedans) : garantit un format strictement identique
+            entre les deux quel que soit le texte ("Examen" vs "Examen
+            Blanc" n'ont pas la même longueur), plutôt que de compter sur
+            un auto-sizing par contenu qui pourrait diverger — cf. demande
+            explicite du user ("strictement de même format"). */}
         <div className="tile-list" style={{ gap: 8, margin: 0 }}>
+          <Link to="/examen-blanc" className="card-link">
+            <div
+              className="card"
+              style={{ textAlign: "center", height: EXAM_TILE_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
+              <TileTitle src="/examhat.png">Examen Blanc</TileTitle>
+            </div>
+          </Link>
+          {/* Examen : fond noir, texte blanc, logo examhat recoloré en
+              blanc (cf. demande explicite du user). L'état "dernier niveau
+              atteint" garde le traitement grisé existant, sans le style
+              noir/blanc — pas de hauteur forcée dans ce cas, le message
+              n'a pas à matcher la tuile Examen Blanc. */}
           {niveau.next_lesson_code ? (
             <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
-              <div className="card card-dark" style={{ textAlign: "center" }}>
+              <div
+                className="card card-dark"
+                style={{ textAlign: "center", height: EXAM_TILE_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}
+              >
                 <TileTitle src="/examhat.png" color="#fff">Examen</TileTitle>
               </div>
             </Link>
@@ -150,57 +147,9 @@ export default function Accueil() {
               Dernier niveau du cours atteint
             </div>
           )}
-          <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
-            <Link
-              to="/examen/copies"
-              className="link-btn"
-              style={{ border: "none", background: "none", padding: 0 }}
-            >
-              Consulter mes copies
-            </Link>
-            <Link
-              to="/examen/sauter"
-              className="link-btn"
-              style={{ border: "none", background: "none", padding: 0 }}
-            >
-              Demander une équivalence
-            </Link>
-          </div>
         </div>
       </div>
 
-      {/* Plus de tuile "Hard Exam" ici : elle ne "vit" que dans les
-          notifications épinglées (cf. app.action_notifications), qui
-          suffisent déjà à signaler sa disponibilité — cf. demande explicite
-          du user. */}
-      <div className="tile-list" style={{ gap: 8, marginTop: 24 }}>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
-          {confirmingReset ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-              <p className="muted" style={{ margin: 0, fontSize: "0.8em", textAlign: "center" }}>
-                Toute ta progression sera perdue et tu recommenceras depuis l'onboarding. Confirmer ?
-              </p>
-              <div style={{ display: "flex", gap: 16 }}>
-                <button type="button" className="link-btn" style={{ color: "var(--annulationPleine)" }} onClick={handleReset}>
-                  Oui, réinitialiser
-                </button>
-                <button type="button" className="link-btn" onClick={() => setConfirmingReset(false)}>
-                  Annuler
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button
-              type="button"
-              className="link-btn"
-              style={{ color: "var(--textSecondary)", fontSize: "0.8em" }}
-              onClick={() => setConfirmingReset(true)}
-            >
-              Réinitialiser mon compte
-            </button>
-          )}
-        </div>
-      </div>
     </section>
   );
 }

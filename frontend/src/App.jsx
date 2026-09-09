@@ -9,6 +9,10 @@ import PdfScreen from "./pages/apprentissage/PdfScreen";
 import TexteScreen from "./pages/apprentissage/TexteScreen";
 import CuriositeListScreen from "./pages/apprentissage/CuriositeListScreen";
 import CuriositeLessonScreen from "./pages/apprentissage/CuriositeLessonScreen";
+import LibraryChapitresScreen from "./pages/library/LibraryChapitresScreen";
+import LibraryLeconsScreen from "./pages/library/LibraryLeconsScreen";
+import LibraryLeconDetailScreen from "./pages/library/LibraryLeconDetailScreen";
+import LibraryCopiesScreen from "./pages/library/LibraryCopiesScreen";
 import RevisionsChoiceScreen from "./pages/revisions/RevisionsChoiceScreen";
 import QuizzScreen from "./pages/revisions/QuizzScreen";
 import RacineScreen from "./pages/revisions/RacineScreen";
@@ -21,6 +25,8 @@ import ChansonRechercheScreen from "./pages/fun/ChansonRechercheScreen";
 import BibleChoiceScreen from "./pages/fun/BibleChoiceScreen";
 import CuriositeScreen from "./pages/fun/CuriositeScreen";
 import NiveauScreen from "./pages/NiveauScreen";
+import SauterLeconsChapitresScreen from "./pages/SauterLeconsChapitresScreen";
+import SauterLeconsScreen from "./pages/SauterLeconsScreen";
 import NotificationsScreen from "./pages/NotificationsScreen";
 import MotScreen from "./pages/MotScreen";
 import VerbeScreen from "./pages/VerbeScreen";
@@ -53,6 +59,7 @@ import OnboardingPreviewScreen from "./pages/dev/OnboardingPreviewScreen";
 import NiveauUpPreviewScreen from "./pages/dev/NiveauUpPreviewScreen";
 import LotteriePreviewScreen from "./pages/dev/LotteriePreviewScreen";
 import SignInPreviewScreen from "./pages/dev/SignInPreviewScreen";
+import PageTurnPreviewScreen from "./pages/dev/PageTurnPreviewScreen";
 import JeuChoiceScreen from "./pages/jeu/JeuChoiceScreen";
 import RegleDuJeuScreen from "./pages/jeu/RegleDuJeuScreen";
 import LotterieScreen from "./pages/jeu/LotterieScreen";
@@ -79,6 +86,14 @@ function App() {
           path="apprentissage/:chapId/:code/questions-ecrites"
           element={<QuestionEcriteScreen />}
         />
+        {/* Bibliothèque (icône desktop uniquement, cf. LibraryIcon/
+            Layout.jsx) : chapitres déjà atteints -> leçons débloquées ->
+            écran curé (Texte/Vocabulaire/Verbes/Phrases/Conversations/
+            Repasser l'examen), cf. demande explicite du user. */}
+        <Route path="library" element={<LibraryChapitresScreen />} />
+        <Route path="library/:chapId" element={<LibraryLeconsScreen />} />
+        <Route path="library/:chapId/:code" element={<LibraryLeconDetailScreen />} />
+        <Route path="library/:chapId/:code/copies" element={<LibraryCopiesScreen />} />
         <Route
           path="apprentissage/:chapId/:code/questions-orales"
           element={<QuestionOraleScreen />}
@@ -86,13 +101,22 @@ function App() {
         <Route path="revisions" element={<RevisionsChoiceScreen />} />
         <Route path="revisions/mot" element={<MotScreen />} />
         <Route path="revisions/verbe" element={<VerbeScreen />} />
-        <Route path="revisions/question-ecrite" element={<QuestionEcriteScreen />} />
         <Route path="revisions/quizz" element={<QuizzScreen />} />
-        <Route path="revisions/question-orale" element={<QuestionOraleScreen />} />
         <Route path="revisions/statistiques" element={<StatistiquesScreen />} />
+        {/* "Examen Blanc" (tuile accueil) : mêmes composant/algorithme de
+            tirage que l'ancien "revisions/question-ecrite" (mode "revision"
+            de QuestionEcriteScreen, dérivé de l'absence de :code) — seul
+            l'accès change, cf. demande explicite du user. */}
+        <Route path="examen-blanc" element={<QuestionEcriteScreen />} />
         <Route path="racine/:shoresh" element={<RacineScreen />} />
         <Route path="dictionnaire" element={<DictionnaireScreen />} />
         <Route path="parler" element={<ParlerScreen />} />
+        {/* "Compréhension" (sous-tuile de "Parler") : QuestionOraleScreen en
+            mode "exploration" (dérivé de la présence de :code), tirage
+            linéaire et bouclé (pick_sequential côté backend) sur les
+            questions du texte de la leçon de référence — cf. demande
+            explicite du user. */}
+        <Route path="comprehension-orale/:code" element={<QuestionOraleScreen />} />
         <Route path="jdr" element={<ConversationChapitresListScreen />} />
         <Route path="jdr/chapitre/:chapId" element={<ConversationLeconsListScreen />} />
         <Route path="jdr/:code" element={<JdrScreen />} />
@@ -106,6 +130,7 @@ function App() {
         <Route path="dev/niveau-up-preview" element={<NiveauUpPreviewScreen />} />
         <Route path="dev/lotterie-preview" element={<LotteriePreviewScreen />} />
         <Route path="dev/signin-preview" element={<SignInPreviewScreen />} />
+        <Route path="dev/page-turn-preview" element={<PageTurnPreviewScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
         <Route path="examen/sauter" element={<ExamenSauterScreen />} />
         <Route path="examen/sauter/:chapId" element={<ExamenSauterChapitreScreen />} />
@@ -136,6 +161,11 @@ function App() {
         <Route path="jeu/lotterie" element={<LotterieScreen />} />
         <Route path="jeu/cartes" element={<CartesScreen />} />
         <Route path="niveau" element={<NiveauScreen />} />
+        {/* "Sauter des leçons" (cf. NiveauScreen) : chapitres -> leçons à
+            partir du niveau actuel -> accueil de l'examen correspondant,
+            cf. demande explicite du user. */}
+        <Route path="niveau/sauter" element={<SauterLeconsChapitresScreen />} />
+        <Route path="niveau/sauter/:chapId" element={<SauterLeconsScreen />} />
         <Route path="notifications" element={<NotificationsScreen />} />
         <Route path="binyans" element={<BinyanScreen />} />
         <Route path="binyans/:nom" element={<BinyanScreen />} />

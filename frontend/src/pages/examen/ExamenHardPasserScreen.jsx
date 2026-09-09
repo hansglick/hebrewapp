@@ -499,7 +499,11 @@ export default function ExamenHardPasserScreen() {
           }
         />
       ) : (
-        <>
+        // zoom:0.9 uniquement pour une question orale (réduction de 10% de
+        // tous les éléments de l'écran, cf. demande explicite du user) —
+        // les autres types de question (traduction/verbe/rapport) restent
+        // à taille normale.
+        <div style={q.type === "oral" ? { zoom: 0.9 } : undefined}>
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
               <tr>
@@ -755,7 +759,7 @@ export default function ExamenHardPasserScreen() {
               )}
             </>
           )}
-        </>
+        </div>
       )}
     </section>
   );

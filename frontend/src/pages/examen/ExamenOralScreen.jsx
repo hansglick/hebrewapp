@@ -415,8 +415,14 @@ export default function ExamenOralScreen() {
       className="screen"
       // paddingBottom en plus pendant l'attente (le mode "chansons" de
       // GeminiWaiting/WaitingVideo y affiche sa propre barre de contrôle
-      // inférieure next/previous) — cf. demande explicite du user.
-      style={loadingGemini ? { flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)" } : { flex: 1 }}
+      // inférieure next/previous) — cf. demande explicite du user. zoom:0.9
+      // (écran entièrement dédié aux questions orales) : réduit de 10%
+      // l'ensemble des éléments de l'écran, cf. demande explicite du user.
+      style={
+        loadingGemini
+          ? { flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)", zoom: 0.9 }
+          : { flex: 1, zoom: 0.9 }
+      }
     >
       {/* Le header "Question N/25" (navigation ◀▶) n'a de sens que pendant
           la saisie des réponses — pendant l'évaluation (groupée ou non),

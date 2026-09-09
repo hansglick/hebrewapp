@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getRandomMot, getRacine } from "../api/content";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
@@ -9,7 +9,61 @@ import { ActionHints } from "../components/ActionHints";
 import { BottomNavBar } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
+import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../components/PageTurnCurl";
+import { SectionTitle } from "../components/QuoteBlock";
 import "./screens.css";
+
+// Icônes UI statiques servies depuis frontend/public/, cf. AudioProgressBlock.jsx.
+const QUESTION_MARK_ICON_URL = "/point-dinterrogation.png";
+const SHIN_ICON_URL = "/shinletter.png";
+
+// Même pastille numérotée que les titres des blocs audio des questions
+// orales (cf. OralAnswerCapture.jsx::StepBadge, même taille/police) — cf.
+// demande explicite du user.
+const STEP_BADGE_SIZE = 25;
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+// shinletter.png est un pictogramme noir plein (pas une icône déjà colorée,
+// contrairement à point-dinterrogation.png) — même technique que
+// lecture.png/voice.png (cf. AudioProgressBlock.jsx/.css) : mask-image
+// plutôt qu'un <img>, pour pouvoir en piloter la couleur en CSS. Noir fixe
+// (pas var(--accent), qui suivait la couleur du caractère "ש" remplacé) —
+// cf. demande explicite du user.
+const shinIconStyle = {
+  display: "inline-block",
+  width: 22,
+  height: 22,
+  backgroundColor: "#000",
+  WebkitMaskImage: `url(${SHIN_ICON_URL})`,
+  maskImage: `url(${SHIN_ICON_URL})`,
+  WebkitMaskSize: "contain",
+  maskSize: "contain",
+  WebkitMaskRepeat: "no-repeat",
+  maskRepeat: "no-repeat",
+  WebkitMaskPosition: "center",
+  maskPosition: "center",
+};
 
 export default function MotScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
@@ -17,7 +71,10 @@ export default function MotScreen() {
   const [niveau, setNiveau] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [racineDetails, setRacineDetails] = useState(null);
+  const [racineOpen, setRacineOpen] = useState(false); // pilote l'animation "tapis" (cf. toggleRacineInline)
   const [pulse, setPulse] = useState(null); // "success" | "danger" | null
+  const [flip, setFlip] = useState(null); // { dir, mot, phase: "start" | "animating" }
+  const flipTimeoutRef = useRef(null);
 
   // Le mode découle du chemin d'accès : apprentissage (code présent) parcourt
   // simplement la liste ordonnée de la leçon ; révisions (code absent) tire
@@ -48,19 +105,30 @@ export default function MotScreen() {
     restoreMot
   );
 
-  // La fiche racine s'affiche directement sous la paire de mots (exploration
-  // et révision) plutôt que de naviguer vers un écran séparé.
+  // La fiche racine se déroule comme un tapis directement sous la rangée
+  // haut-parleur/shin (exploration et révision), entre elle et le trait
+  // horizontal, plutôt que de naviguer vers un écran séparé ou de
+  // s'afficher en superposition sous tout le reste — cf. demande explicite
+  // du user. racineOpen (booléen, pilote l'animation) est dissocié de
+  // racineDetails (les données, gardées en mémoire même une fois refermé)
+  // : sans cette séparation, refermer effacerait racineDetails
+  // instantanément et démonterait la fiche avant que l'animation de
+  // fermeture n'ait eu le temps de jouer.
   function toggleRacineInline() {
-    if (racineDetails) {
-      setRacineDetails(null);
+    if (racineOpen) {
+      setRacineOpen(false);
       return;
     }
-    if (mot.racine) getRacine(mot.racine).then(setRacineDetails);
+    if (mot.racine) getRacine(mot.racine).then((data) => {
+      setRacineDetails(data);
+      setRacineOpen(true);
+    });
   }
 
   useEffect(() => {
     setRevealed(false);
     setRacineDetails(null);
+    setRacineOpen(false);
     setPulse(null);
   }, [mot]);
 
@@ -96,14 +164,37 @@ export default function MotScreen() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mode, revealed, mot]);
 
+  // Animation "tourner la page" (cf. PageTurnCurl, validée sur le
+  // prototype /dev/page-turn-preview, déjà appliquée aux curiosités) —
+  // leçon ET révisions, cf. demande explicite du user ("tous les objets
+  // présents dans révisions qui sont itérables"). Capture le mot ACTUEL
+  // (et, en révisions, l'état de révélation/pulse) comme page "sortante"
+  // avant de lancer la vraie navigation ci-dessous (qui met à jour le mot
+  // affiché via un nouveau tirage).
+  function startFlip(dir) {
+    if (flip || !mot) return;
+    setFlip({ dir, mot, revealed, pulse, phase: "start" });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setFlip((f) => (f ? { ...f, phase: "animating" } : f));
+      });
+    });
+    clearTimeout(flipTimeoutRef.current);
+    flipTimeoutRef.current = setTimeout(() => setFlip(null), PAGE_TURN_TOTAL_DURATION_MS);
+  }
+
   // Sur le tout premier mot de la session (pas encore d'historique), back()
   // ne fait rien plutôt que de sortir de l'écran (navigate(-1)) : previous/
   // next ne doivent jamais faire quitter le type d'objet parcouru, cf.
   // demande explicite du user.
   function goPrevious() {
-    back();
+    if (flip) return;
+    const moved = back();
+    if (moved) startFlip("prev");
   }
   function goNext() {
+    if (flip) return;
+    startFlip("next");
     next();
   }
 
@@ -120,237 +211,322 @@ export default function MotScreen() {
 
   if (!mot) return null;
 
+  // Rendu de la page "mot" en exploration pour un mot donné — utilisé à la
+  // fois pour la page "au repos" et, via PageTurnCurl, pour la page
+  // "sortante" pendant l'animation (cf. startFlip). position:absolute +
+  // inset:0 + fond propre (au lieu de flex:1 normal) : nécessaire pour que
+  // les bandes de PageTurnCurl (clip-path) se découpent sur une boîte bien
+  // définie ; overflowY:auto (au lieu de compter sur le scroll de la page)
+  // pour que la fiche racine dépliée reste atteignable malgré l'overflow:
+  // hidden du conteneur de pivot ci-dessous.
+  function renderExplorationMot(cardMot) {
+    function handleRacineClick() {
+      if (racineOpen) {
+        setRacineOpen(false);
+        return;
+      }
+      if (cardMot.racine) getRacine(cardMot.racine).then((data) => {
+        setRacineDetails(data);
+        setRacineOpen(true);
+      });
+    }
+    return (
+      <div
+        className="page-turn-card"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg)",
+          overflowY: "auto",
+          backfaceVisibility: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          // "safe center" (pas juste "center") : sans ce filet de sécurité,
+          // dès que la fiche racine dépliée rend le contenu plus grand que
+          // l'espace disponible, le centrage pousse le haut du contenu
+          // hors de l'écran sans retomber sur un alignement en haut — et
+          // comme ce conteneur est en overflowY:auto, ce qui sort par le
+          // haut devient inaccessible (impossible de scroller au-delà de
+          // 0) — cf. bug rapporté par le user (encadré tronqué, éléments
+          // au-dessus du trait disparus).
+          justifyContent: "safe center",
+        }}
+      >
+        <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+          <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em" }}>
+            {cardMot.original}
+          </span>
+
+          <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
+            <button type="button" className="speak-btn" onClick={() => speak(cardMot.original)}>
+              <SpeakerIcon color="var(--speakerIcon)" size={27} />
+            </button>
+            <button type="button" className="speak-btn" onClick={handleRacineClick}>
+              <span style={shinIconStyle} />
+            </button>
+          </span>
+
+          {/* Fiche racine "tapis" : se déroule vers le bas depuis la
+              rangée haut-parleur/shin, bordure supérieure juste
+              au-dessus du trait — cf. demande explicite du user.
+              Technique CSS grid-template-rows 0fr<->1fr (pas de hauteur
+              fixe à calculer en JS, s'anime "auto" nativement) + overflow
+              hidden sur l'enfant pour clipper le contenu pendant
+              l'animation. Toujours monté (racineOpen pilote uniquement la
+              hauteur) pour que la fermeture s'anime aussi, pas seulement
+              l'ouverture. marginTop:-27 : mesuré en direct via Claude in
+              Chrome (getBoundingClientRect) — espace shin->bordure
+              supérieure de l'encadré réduit de 50% (54px -> 27px), même
+              valeur que renderRevisionMot (structure identique) — cf.
+              demande explicite du user. */}
+          <div
+            style={{
+              width: "100%",
+              display: "grid",
+              gridTemplateRows: racineOpen ? "1fr" : "0fr",
+              transition: "grid-template-rows 300ms ease",
+              marginTop: -27,
+            }}
+          >
+            <div style={{ overflow: "hidden", minHeight: 0 }}>
+              {racineDetails && (
+                <div style={{ paddingBottom: 14 }}>
+                  <RacineCard racine={racineDetails} />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <hr
+            style={{
+              width: "70%",
+              maxWidth: 400,
+              border: "none",
+              borderTop: "1px solid var(--cardBorder)",
+              margin: 0,
+            }}
+          />
+
+          <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{cardMot.french}</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Rendu d'une carte de révision (mot+racine+hp / trait / mot traduit +
+  // ✗/✓, avec révélation via le badge "?") — utilisé pour la page au repos
+  // et, via PageTurnCurl, pour la page "sortante" pendant l'animation
+  // (leçon ET révisions, cf. demande explicite du user "tous les objets
+  // présents dans révisions qui sont itérables"). Les handlers
+  // (toggleRacineInline/setRevealed/handleEvaluate) restent branchés sur
+  // l'état LIVE du composant, pas sur cardRevealed/cardPulse — même
+  // convention que renderExplorationMot/QuestionOraleScreen.
+  function renderRevisionMot(cardMot, cardRevealed, cardPulse) {
+    return (
+      <div
+        className="page-turn-card"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg)",
+          overflowY: "auto",
+          backfaceVisibility: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          // "safe center" (pas juste "center") : sans ce filet de sécurité,
+          // dès que la fiche racine dépliée rend le contenu plus grand que
+          // l'espace disponible, le centrage pousse le haut du contenu
+          // hors de l'écran sans retomber sur un alignement en haut — et
+          // comme ce conteneur est en overflowY:auto, ce qui sort par le
+          // haut devient inaccessible (impossible de scroller au-delà de
+          // 0) — cf. bug rapporté par le user (encadré tronqué, éléments
+          // au-dessus du trait disparus).
+          justifyContent: "safe center",
+        }}
+      >
+        <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+          {/* Pastille "1" + mini-titre, au-dessus de l'extrémité GAUCHE du
+              trait — même pastille/police que les titres des blocs audio
+              des questions orales (cf. StepBadge/SectionTitle). Même
+              largeur ET même width:"70% / maxWidth:400" que le trait
+              (pas juste maxWidth:400) : les deux boîtes, centrées l'une
+              comme l'autre, doivent avoir la MÊME largeur pour que leurs
+              bords gauches coïncident exactement, cf. demande explicite du
+              user. marginBottom:14 (avec le gap:14 du conteneur, 28 au
+              total) : la pastille (pavé plein rond) paraissait plus
+              proche du mot hébreu que le logo shin ne l'est du trait
+              malgré un espace CSS égal — même effet optique que le badge
+              "?" plus haut dans l'écran — cf. demande explicite du user.
+              display:"flow-root" : empêche le marginBottom:8 propre à
+              SectionTitle de "fuiter" à travers cette boîte (collapsing
+              margins CSS) et de fausser le calcul ci-dessus.
+              marginTop:14 : pousse tout le groupe (premier enfant d'un
+              conteneur centré verticalement) vers le bas — cf. demande
+              explicite du user ("descend"). marginBottom:-1 : mesuré en
+              direct via Claude in Chrome (getBoundingClientRect) et
+              ajusté empiriquement jusqu'à égaler l'écart shin->trait
+              (21px) — cf. demande explicite du user ("équidistance"). */}
+          <div style={{ width: "70%", maxWidth: 400, marginTop: 14, marginBottom: -1, display: "flow-root" }}>
+            <SectionTitle fontSize="0.84em">
+              <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+              Traduis le mot hébreu
+            </SectionTitle>
+          </div>
+
+          <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em" }}>
+            {cardMot.original}
+          </span>
+
+          <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
+            <button type="button" className="speak-btn" onClick={() => speak(cardMot.original)}>
+              <SpeakerIcon color="var(--speakerIcon)" size={27} />
+            </button>
+            <button type="button" className="speak-btn" onClick={toggleRacineInline}>
+              <span style={shinIconStyle} />
+            </button>
+          </span>
+
+          {/* Fiche racine "tapis" : se déroule vers le bas depuis la
+              rangée haut-parleur/shin, bordure supérieure juste
+              au-dessus du trait — cf. demande explicite du user (même
+              technique que renderExplorationMot, cf. son commentaire).
+              marginTop:-27 : mesuré en direct via Claude in Chrome
+              (getBoundingClientRect) — espace shin->bordure supérieure de
+              l'encadré à 54px, réduit de 50% (27px) — cf. demande
+              explicite du user. */}
+          <div
+            style={{
+              width: "100%",
+              display: "grid",
+              gridTemplateRows: racineOpen ? "1fr" : "0fr",
+              transition: "grid-template-rows 300ms ease",
+              marginTop: -27,
+            }}
+          >
+            <div style={{ overflow: "hidden", minHeight: 0 }}>
+              {racineDetails && (
+                <div style={{ paddingBottom: 14 }}>
+                  <RacineCard racine={racineDetails} />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <hr
+            style={{
+              width: "70%",
+              maxWidth: 400,
+              border: "none",
+              borderTop: "1px solid var(--cardBorder)",
+              margin: 0,
+              marginTop: 7,
+            }}
+          />
+
+          {/* Pastille "2" (vert pastel) + mini-titre "Réponse", même
+              traitement que la pastille "1" ci-dessus (width:"70%" pour
+              coïncider avec l'extrémité gauche du trait). marginTop:14
+              (au lieu de 7), même raison que la pastille "1" ci-dessus.
+              display:"flow-root" : sans lui, le marginBottom:8 de
+              SectionTitle fuitait vers le bloc suivant (mot traduit +
+              logos ✗/✓ une fois révélé), l'éloignant de 8px de trop par
+              rapport à cette ligne "Réponse" — cf. demande explicite du
+              user ("remonte le bloc... traduit"). */}
+          <div style={{ width: "70%", maxWidth: 400, marginTop: 14, display: "flow-root" }}>
+            <SectionTitle fontSize="0.84em">
+              <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+              Réponse
+            </SectionTitle>
+          </div>
+
+          <div style={{ display: "grid", justifyItems: "center" }}>
+            <div
+              style={{
+                gridArea: "1 / 1",
+                visibility: cardRevealed ? "hidden" : "visible",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                marginTop: 18,
+              }}
+            >
+              <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={cardRevealed}>
+                <img src={QUESTION_MARK_ICON_URL} alt="Afficher la solution" style={{ width: 48, height: 48, display: "block" }} draggable={false} />
+              </button>
+            </div>
+
+            <div
+              style={{
+                gridArea: "1 / 1",
+                visibility: cardRevealed ? "visible" : "hidden",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 20,
+                // -1 : mesuré en direct via Claude in Chrome
+                // (getBoundingClientRect) et ajusté empiriquement jusqu'à
+                // égaler l'espace pastille bleue -> mot hébreu (21px) —
+                // cf. demande explicite du user.
+                marginTop: -1,
+              }}
+            >
+              <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{cardMot.french}</span>
+              <div style={{ display: "flex", gap: 0 }}>
+                <button
+                  type="button"
+                  className={`eval-btn danger${cardPulse === "danger" ? " pulse" : ""}`}
+                  onClick={() => handleEvaluate(false)}
+                >
+                  <img src="/wrong.png" alt="Faux" width={36} height={36} draggable={false} />
+                </button>
+                <button
+                  type="button"
+                  className={`eval-btn success${cardPulse === "success" ? " pulse" : ""}`}
+                  onClick={() => handleEvaluate(true)}
+                >
+                  <img src="/right.png" alt="Vrai" width={36} height={36} draggable={false} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section className="screen" style={{ paddingBottom: "calc(var(--bottom-nav-height) * 2)", flex: 1 }} onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} digits={mode === "revision" && revealed} />
       <BottomNavBar onPrevious={goPrevious} onNext={goNext} />
 
 
-      {/* flex:1 (plutôt que minHeight:60vh, qui ne remplit pas forcément
-          tout l'espace réellement disponible) : remplit toute la hauteur
-          restante de .app-content — déjà sous le bandeau immuable, exclu
-          par la mise en page flex parente — pour un centrage vertical
-          exact sur cet espace, cf. demande explicite du user. */}
+      {/* Plein écran (position:relative + perspective) plutôt que flex:1
+          normal, pour porter l'animation "tourner la page" au changement
+          de mot — cf. renderExplorationMot/PageTurnCurl, demande explicite
+          du user ("aux objets mots dans leçons"). */}
       {mode === "exploration" && (
-        <div
-          style={{
-            flex: 1,
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* position:relative isole ce groupe (mot hébreu/français, logos,
-              trait) de la RacineCard ci-dessous : son apparition/disparition
-              ne doit jamais faire bouger ces éléments, cf. demande
-              explicite du user. */}
-          {/* width:"100%" : sans elle, ce conteneur (position:relative)
-              n'a que la largeur de son contenu (mot hébreu/français), donc
-              le wrapper absolu de la RacineCard ci-dessous (width:"100%"
-              relatif à CE conteneur) hériterait de cette même largeur
-              étriquée au lieu de la pleine largeur d'écran dont elle
-              disposait avant ce changement — cf. bug rapporté par le
-              user. */}
-          <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-            {/* Le mot hébreu est toujours au-dessus du trait, le mot
-                français toujours en dessous — cf. demande explicite du
-                user (retour à cette disposition). */}
-            <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em" }}>
-              {mot.original}
-            </span>
-
-            <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
-              <button type="button" className="speak-btn" onClick={() => speak(mot.original)}>
-                <SpeakerIcon color="var(--speakerIcon)" size={27} />
-              </button>
-              <button type="button" className="speak-btn" onClick={toggleRacineInline}>
-                <span className="hebrew" style={{ fontWeight: 700, fontSize: "1.4em", color: "var(--accent)" }}>
-                  ש
-                </span>
-              </button>
-            </span>
-
-            <hr
-              style={{
-                width: "70%",
-                maxWidth: 400,
-                border: "none",
-                borderTop: "1px solid var(--cardBorder)",
-                margin: 0,
-              }}
-            />
-
-            <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{mot.french}</span>
-
-            {/* position:absolute (au lieu d'un enfant normal du flex
-                column) : n'affecte donc jamais la position des éléments
-                ci-dessus. marginTop:14 restitue l'espace du gap perdu (les
-                éléments absolus ne comptent pas dans le gap du flex
-                parent) au-dessus du marginTop:40 propre à RacineCard, pour
-                garder le même espacement qu'avant ce changement — cf.
-                demande explicite du user ("espace nécessaire... une
-                certaine harmonie"). */}
-            {/* paddingBottom (pas marginBottom) sur ce wrapper position:absolute
-                lui-même — pas sur .screen — car un élément absolument
-                positionné qui déborde de la hauteur "en flux" de ses
-                ancêtres n'est rattrapé par la zone défilable du document
-                QUE via son propre padding (sa marge de fin, elle, ne compte
-                pas) : un paddingBottom ajouté ailleurs (.screen) ne repousse
-                jamais la vraie fin de page au-delà de CE bloc, cf. bug
-                rapporté par le user (encadré racine coupé par la barre). */}
-            {racineDetails && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "100%",
-                  marginTop: 14,
-                  paddingBottom: "calc(var(--bottom-nav-height) * 2)",
-                }}
-              >
-                <RacineCard racine={racineDetails} />
-              </div>
-            )}
-          </div>
+        <div style={{ position: "relative", flex: 1, width: "100%", perspective: 1600, overflow: "hidden" }}>
+          {renderExplorationMot(mot)}
+          {flip && <PageTurnCurl dir={flip.dir} phase={flip.phase} renderPage={() => renderExplorationMot(flip.mot)} />}
         </div>
       )}
 
-      {/* Reprend très exactement la structure/les tailles de l'écran
-          d'exploration (leçon/mot) ci-dessus — mot hébreu, rangée d'icônes,
-          trait, mot français — plutôt qu'un ancien habillage zoom:2 propre
-          à cet écran : polices/logos/tailles doivent être strictement les
-          mêmes une fois la solution affichée, cf. demande explicite du
-          user. Seule différence : le mot français et le trait sont
-          remplacés par un badge "?" tant que la solution n'est pas
-          révélée. */}
+      {/* Même technique que le bloc exploration ci-dessus (plein écran +
+          PageTurnCurl) — leçon ET révisions, cf. demande explicite du user
+          ("tous les objets présents dans révisions qui sont itérables"),
+          cf. renderRevisionMot. */}
       {mode === "revision" && (
-        <div
-          style={{
-            flex: 1,
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-            <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em" }}>
-              {mot.original}
-            </span>
-
-            <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
-              <button type="button" className="speak-btn" onClick={() => speak(mot.original)}>
-                <SpeakerIcon color="var(--speakerIcon)" size={27} />
-              </button>
-              <button type="button" className="speak-btn" onClick={toggleRacineInline}>
-                <span className="hebrew" style={{ fontWeight: 700, fontSize: "1.4em", color: "var(--accent)" }}>
-                  ש
-                </span>
-              </button>
-            </span>
-
-            <hr
-              style={{
-                width: "70%",
-                maxWidth: 400,
-                border: "none",
-                borderTop: "1px solid var(--cardBorder)",
-                margin: 0,
-              }}
+        <div style={{ position: "relative", flex: 1, width: "100%", perspective: 1600, overflow: "hidden" }}>
+          {renderRevisionMot(mot, revealed, pulse)}
+          {flip && (
+            <PageTurnCurl
+              dir={flip.dir}
+              phase={flip.phase}
+              renderPage={() => renderRevisionMot(flip.mot, flip.revealed, flip.pulse)}
             />
-
-            {/* Zone de révélation à hauteur fixe (même technique que
-                QuestionEcriteScreen) : le "?" et la réponse occupent la même
-                cellule de grille (l'un en visibility:hidden), donc la
-                hauteur de la cellule ne varie jamais selon `revealed` — le
-                mot hébreu et le trait au-dessus ne bougent ainsi jamais lors
-                de la révélation, cf. demande explicite du user. `?` et
-                boutons ✗/✓ n'ont pas d'équivalent en exploration : tailles
-                reprises telles quelles de QuestionEcriteScreen (même
-                mécanique de révélation, déjà calibrée sans zoom). Pas de
-                marginTop ici : l'espace trait -> contenu révélé doit être
-                le même que celui entre le badge "ש" et le trait au-dessus
-                (le gap:14 du conteneur flex parent), cf. demande explicite
-                du user. */}
-            <div style={{ display: "grid", justifyItems: "center" }}>
-              <div
-                style={{
-                  gridArea: "1 / 1",
-                  visibility: revealed ? "hidden" : "visible",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "center",
-                }}
-              >
-                <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={revealed}>
-                  <span
-                    className="racine-badge"
-                    style={{ background: "#000", fontWeight: 700, fontSize: "1.4em", padding: "10px 24px" }}
-                  >
-                    ?
-                  </span>
-                </button>
-              </div>
-
-              {/* gap:40 (au lieu de 14) : même espace mot français -> logos
-                  que révisions/traduction (phrase traduite -> logos), cf.
-                  demande explicite du user. */}
-              <div
-                style={{
-                  gridArea: "1 / 1",
-                  visibility: revealed ? "visible" : "hidden",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 40,
-                }}
-              >
-                <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{mot.french}</span>
-                {/* wrong.png/right.png (au lieu des glyphes ✗/✓ texte) —
-                    cf. demande explicite du user. className danger/success
-                    conservée (couleur du bouton lui-même, pas de l'image)
-                    pour que le halo .pulse (box-shadow en currentColor)
-                    continue de fonctionner sans changement. */}
-                <div style={{ display: "flex", gap: 0 }}>
-                  <button
-                    type="button"
-                    className={`eval-btn danger${pulse === "danger" ? " pulse" : ""}`}
-                    onClick={() => handleEvaluate(false)}
-                  >
-                    <img src="/wrong.png" alt="Faux" width={36} height={36} draggable={false} />
-                  </button>
-                  <button
-                    type="button"
-                    className={`eval-btn success${pulse === "success" ? " pulse" : ""}`}
-                    onClick={() => handleEvaluate(true)}
-                  >
-                    <img src="/right.png" alt="Vrai" width={36} height={36} draggable={false} />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {racineDetails && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "100%",
-                  marginTop: 14,
-                  paddingBottom: "calc(var(--bottom-nav-height) * 2)",
-                }}
-              >
-                <RacineCard racine={racineDetails} />
-              </div>
-            )}
-          </div>
+          )}
         </div>
       )}
     </section>

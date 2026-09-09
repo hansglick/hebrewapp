@@ -1,19 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getExamen } from "../../api/content";
-import { answerExamen, getExamenStatus, getSessionExists } from "../../api/user";
+import { answerExamen, getSessionExists } from "../../api/user";
 import { evaluateTranslation, evaluateTranslationsGrouped } from "../../api/gemini";
 import HebrewInput from "../../components/HebrewInput";
 import { QuoteBlock } from "../../components/QuoteBlock";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
-import { EvalWaitModeToggle } from "../../components/EvalWaitModeToggle";
 import { ExamenBilanScreen } from "./ExamenBilanScreen";
 import { useExamTimer } from "../../context/ExamTimerContext";
 import { useConfig } from "../../config/ConfigContext";
 import { displayLessonCode } from "../../utils/lessonDisplay";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
-import { ShekelIcon } from "../../components/ShekelIcon";
 import "../screens.css";
 
 const RED_THRESHOLD_SECONDS = 5 * 60;
@@ -76,11 +74,7 @@ export default function ExamenEcritScreen() {
   const [attemptError, setAttemptError] = useState(null);
   const [remainingSeconds, setRemainingSeconds] = useState(null);
   const [confirmed, setConfirmed] = useState(null); // null=vérification en cours, true=go, false=confirmation requise
-  const [pointsAGagner, setPointsAGagner] = useState(null);
 
-  useEffect(() => {
-    getExamenStatus(code).then((s) => setPointsAGagner(s.points_a_gagner_ecrit));
-  }, [code]);
   // Mode "attendre l'évaluation globale" (cf. Layout) : réponses traduction
   // gardées ici en local (pas envoyées à Gemini tout de suite), traitées les
   // unes après les autres une fois toutes les questions couvertes.
@@ -395,21 +389,6 @@ export default function ExamenEcritScreen() {
         <h1>
           Lancer l'examen écrit {displayChapitreLabel(code.split(".")[0])} - {displayLessonCode(code)}
         </h1>
-        <EvalWaitModeToggle />
-        <p className="muted" style={{ fontSize: "0.8em" }}>
-          {pointsAGagner > 0 ? (
-            <>
-              Vous gagnerez {Math.round(pointsAGagner)}{" "}
-              <ShekelIcon size={11} style={{ verticalAlign: -1 }} /> en réussissant cet
-              examen maintenant.
-            </>
-          ) : (
-            <>
-              0 <ShekelIcon size={11} style={{ verticalAlign: -1 }} /> pour l'instant (l'oral
-              doit aussi être réussi pour que les points soient crédités).
-            </>
-          )}
-        </p>
         <p className="muted" style={{ fontSize: "0.8em" }}>
           Une fois l'examen lancé, si vous abandonnez l'épreuve, alors la note la plus faible sera assigné aux
           questions auxquelles vous n'avez pas répondu. N'oubliez pas que vous avez seulement trois essais par

@@ -38,8 +38,9 @@ const basePaletteLight = {
   // (Clavier hébreu, Pré-remplir, God Mode — fusionné).
   bg: "#ffffff",
   chromeBg: "#16171d",
-  // 7 — logo haut-parleur (gris orphelin, ne suit jamais le thème).
-  speakerIcon: "#64748b",
+  // 7 — logo haut-parleur (noir fixe, ne suit jamais le thème — cf.
+  // demande explicite du user).
+  speakerIcon: "#000000",
   // 8 — logos shekel/gems.../magen david/configuration/bordure/previous/house/next.
   // Bleu électrique se rapprochant du bleu de l'emoji 💎, cf. demande
   // explicite du user (remplace l'ancien bleu nuit #1d3557).
@@ -96,7 +97,7 @@ const basePaletteDark = {
   chromeTextSecondary: "#9ca3af",
   bg: "#16171d",
   chromeBg: "#16171d",
-  speakerIcon: "#64748b",
+  speakerIcon: "#000000",
   logoAccent: "#38bdf8",
   accent: "#5fbf8b",
   binyanPaal: "#8b5cf6",

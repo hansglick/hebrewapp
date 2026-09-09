@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau } from "../api/user";
-import { displayLessonCode } from "../utils/lessonDisplay";
+import { displayLessonNumber } from "../utils/lessonDisplay";
+import { displayChapitreLabel } from "../utils/chapitreDisplay";
 import "./screens.css";
 
 export default function NiveauScreen() {
@@ -13,21 +14,18 @@ export default function NiveauScreen() {
 
   if (!niveau) return null;
 
+  const chapId = niveau.level.split(".")[0];
+  const label = `Niveau ${displayChapitreLabel(chapId)}.${displayLessonNumber(niveau.level)}`;
+
   return (
     <section className="screen">
-      <h1>Niveau {displayLessonCode(niveau.level)}</h1>
+      <h1>{label}</h1>
       <p className="muted">
-        Bloqué à ce niveau depuis {niveau.jours_bloque} jour(s)
+        Vous avez atteint le niveau "{label}" depuis {niveau.jours_bloque} jour(s).
       </p>
-      {niveau.next_lesson_code ? (
-        <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
-          <div className="card">Passer le prochain examen ({displayLessonCode(niveau.next_lesson_code)})</div>
-        </Link>
-      ) : (
-        <div className="card" style={{ opacity: 0.5 }}>
-          Dernier niveau du cours atteint
-        </div>
-      )}
+      <Link to="/niveau/sauter" className="card-link">
+        <div className="card">Sauter des leçons</div>
+      </Link>
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { MicrophoneIcon } from "./MicrophoneIcon";
 import { AudioTrackFooter, PLAYBACK_RATE_CYCLE } from "./AudioTrackFooter";
 import { ttsUrl } from "../utils/speech";
 import "./AudioProgressBlock.css";
+import "./OralAnswerCapture.css";
 
 // Icônes UI statiques servies depuis frontend/public/, cf. AudioProgressBlock.jsx.
 const LECTURE_ICON_URL = "/lecture.png";
@@ -141,23 +142,9 @@ export function OralAnswerCapture({
   const TITLE_AXIS_OFFSET = 46;
   const titleAxisStyle = { marginLeft: TITLE_AXIS_OFFSET - STEP_BADGE_SIZE / 2 };
 
-  // Espace entre blocs +20% (40 -> 48), réparti pour moitié de chaque côté
-  // du trait séparateur (cf. dividerStyle) plutôt que d'ajouter sa hauteur
-  // par-dessus, pour que l'écart total entre deux blocs reste bien 48 et
-  // que le trait tombe à mi-chemin — cf. demande explicite du user.
-  const BLOCK_GAP = 48;
-  const HALF_GAP = BLOCK_GAP / 2;
-  const dividerStyle = {
-    width: "100%",
-    maxWidth: 320,
-    height: 1,
-    background: "var(--cardBorder)",
-    marginTop: HALF_GAP,
-  };
-
   return (
-    <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ width: "100%", maxWidth: 320, marginTop: BLOCK_GAP }}>
+    <div className="oral-answer-capture">
+      <div className="oral-answer-capture-block">
         <div style={titleAxisStyle}>
           <SectionTitle fontSize="0.84em">
             <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
@@ -167,8 +154,8 @@ export function OralAnswerCapture({
         <AudioProgressBlock src={contentSrc} />
       </div>
 
-      <div style={dividerStyle} />
-      <div style={{ width: "100%", maxWidth: 320, marginTop: HALF_GAP }}>
+      <div className="oral-answer-capture-divider" />
+      <div className="oral-answer-capture-block">
         <div style={titleAxisStyle}>
           <SectionTitle fontSize="0.84em">
             <StepBadge number={2} background="#dbeafe" color="#1d4ed8" />
@@ -180,8 +167,8 @@ export function OralAnswerCapture({
 
       {showRecorder && (
         <>
-          <div style={dividerStyle} />
-          <div style={{ width: "100%", maxWidth: 320, marginTop: HALF_GAP }}>
+          <div className="oral-answer-capture-divider" />
+          <div className="oral-answer-capture-block">
             <div style={titleAxisStyle}>
               <SectionTitle fontSize="0.84em">
                 <StepBadge number={3} background="var(--validationGrisee)" color="var(--validationPleine)" />
@@ -262,31 +249,36 @@ export function OralAnswerCapture({
                 />
               </div>
             </div>
+
+            {/* À l'intérieur du bloc 3 (Réponse) — pas un élément séparé
+                après toute la ligne : sur desktop (blocs alignés
+                horizontalement), ce bouton doit visuellement appartenir au
+                bloc "Réponse", pas s'étaler sous toute la rangée — cf.
+                demande explicite du user. En mobile (empilement vertical),
+                le rendu reste identique puisque ce bloc est déjà le
+                dernier. */}
+            {isConverting && (
+              <p className="muted" style={{ margin: "12px 0 0", textAlign: "center" }}>
+                Traitement de l'enregistrement...
+              </p>
+            )}
+
+            {!isConverting && (
+              <button
+                type="button"
+                className="exam-tile green"
+                // 11.9 (au lieu de 23.8) : espace trait -> bouton "vitesse
+                // de lecture" -> bouton "Envoyer ma réponse" réduit de 50%,
+                // cf. demande explicite du user.
+                style={{ marginTop: 11.9, cursor: hasRecording ? "pointer" : "default" }}
+                disabled={!hasRecording}
+                onClick={onEnvoyer}
+              >
+                Envoyer ma réponse
+              </button>
+            )}
           </div>
         </>
-      )}
-
-      {showRecorder && isConverting && (
-        <p className="muted" style={{ margin: "12px 0 0", textAlign: "center" }}>
-          Traitement de l'enregistrement...
-        </p>
-      )}
-
-      {/* Toujours affiché (pas seulement une fois enregistré) : grisé en
-          vert pastel tant qu'aucun enregistrement n'existe, vert plein une
-          fois prêt — même bouton que "Envoyer ma réponse" des questions
-          écrites avec pré-remplissage. Espace visible avec l'encadré du
-          dessus, cf. demande explicite du user. */}
-      {showRecorder && !isConverting && (
-        <button
-          type="button"
-          className="exam-tile green"
-          style={{ marginTop: 23.8, cursor: hasRecording ? "pointer" : "default" }}
-          disabled={!hasRecording}
-          onClick={onEnvoyer}
-        >
-          Envoyer ma réponse
-        </button>
       )}
     </div>
   );
