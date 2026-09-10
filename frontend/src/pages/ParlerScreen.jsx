@@ -38,7 +38,7 @@ export default function ParlerScreen() {
           (lecon?.has_concept ? (
             <Link to={`/revision-concept/${referenceLesson}`} className="card-link">
               <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-                Révise le concept
+                Le concept du jour
               </div>
             </Link>
           ) : (
@@ -47,14 +47,14 @@ export default function ParlerScreen() {
               style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em", opacity: 0.5, cursor: "default" }}
               aria-disabled="true"
             >
-              Révise le concept
+              Le concept du jour
             </div>
           ))}
         {referenceLesson &&
           (lecon?.has_oral_questions ? (
             <Link to={`/comprehension-orale/${referenceLesson}`} className="card-link">
               <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-                Compréhension
+                Compréhension orale
               </div>
             </Link>
           ) : (
@@ -63,13 +63,13 @@ export default function ParlerScreen() {
               style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em", opacity: 0.5, cursor: "default" }}
               aria-disabled="true"
             >
-              Compréhension
+              Compréhension orale
             </div>
           ))}
         {referenceLesson && (
           <Link to={`/revision-prof/${referenceLesson}`} className="card-link">
             <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-              Conversation guidée
+              Les nouveaux items du jour
             </div>
           </Link>
         )}

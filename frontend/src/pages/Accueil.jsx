@@ -137,10 +137,15 @@ export default function Accueil() {
           <strong style={{ fontWeight: 700 }}>
             {displayChapitreLabel(chapId)}.{displayLessonNumber(referenceLesson)}
           </strong>
-          {/* marginInlineStart:-4 annule le gap:4 du flex parent (hérité de
-              tous les enfants), pour coller le logo au texte — cf. demande
-              explicite du user. */}
-          <ChapitreLogo chapId={chapId} size="36px" style={{ marginInlineStart: -4 }} />
+          {/* marginInlineStart:-20 : -4 annule le gap:4 du flex parent
+              (hérité de tous les enfants) ; les -16px supplémentaires
+              compensent la marge transparente interne au SVG (le dessin de
+              l'ourson n'occupe pas toute la largeur du cadre 2816x1572 du
+              fichier), sans quoi un espace visible restait malgré le
+              collage des boîtes DOM — mesuré via Claude in Chrome — cf.
+              demande explicite du user ("rapprocher le logo de l'index de
+              leçon"). */}
+          <ChapitreLogo chapId={chapId} size="36px" style={{ marginInlineStart: -20 }} />
         </p>
       )}
 

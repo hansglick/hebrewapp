@@ -7,6 +7,7 @@ import HebrewInput from "../../components/HebrewInput";
 import { QuoteBlock, SectionTitle } from "../../components/QuoteBlock";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
+import { PerfStat } from "../../components/PerfStat";
 import { ExamenBilanScreen } from "./ExamenBilanScreen";
 import { useExamTimer } from "../../context/ExamTimerContext";
 import { useConfig } from "../../config/ConfigContext";
@@ -85,6 +86,40 @@ function StepBadge({ number, background, color }) {
 const stepHr = (
   <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
 );
+
+// Pastille utilisée UNIQUEMENT par le bloc quizz — variante décalée
+// (position:relative + left) qui centre le rond sur le bord gauche du
+// trait, différente de StepBadge ci-dessus — cf. revisions/QuizzScreen
+// (même composant, dupliqué ici) — cf. demande explicite du user ("les
+// quizz doivent avoir strictement le même design que dans Renforcer").
+function QuizzStepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 6,
+        flexShrink: 0,
+        position: "relative",
+        left: -STEP_BADGE_SIZE / 2,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
 
 function firstUnanswered(answers) {
   const i = answers.findIndex((a) => a === null);
@@ -527,18 +562,20 @@ export default function ExamenEcritScreen() {
             }}
           />
 
-          <QuoteBlock
-            label={
-              <>
-                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
-                Traduis
-              </>
-            }
-          >
-            <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
-              {q.french}
-            </p>
-          </QuoteBlock>
+          {q.type !== "quizz" && (
+            <QuoteBlock
+              label={
+                <>
+                  <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                  Traduis
+                </>
+              }
+            >
+              <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+                {q.french}
+              </p>
+            </QuoteBlock>
+          )}
 
           {q.type !== "quizz" && !answer && stepHr}
 
@@ -561,29 +598,67 @@ export default function ExamenEcritScreen() {
             </>
           )}
 
-          {/* zoom:1.6 : même taille/format que l'objet quizz en révisions
-              (cf. revisions/QuizzScreen), cf. demande explicite du user. */}
-          {!answer && q.type === "quizz" && (
-            <div style={{ zoom: 1.6 }}>
-              <QuizzBubbles
-                options={q.options}
-                correctKey={q.key}
-                selectedKey={selectedQuizz}
-                onSelect={setSelectedQuizz}
-                onConfirm={handleSubmitQuizz}
-                disabled={false}
-              />
-              {/* Double-tap (au lieu d'un bouton "Valider" séparé) : re-taper
-                  la bulle déjà sélectionnée valide directement, cf. demande
-                  explicite du user. */}
-              {selectedQuizz && (
-                <p
-                  className="muted"
-                  style={{ margin: 0, fontStyle: "italic", fontSize: "0.375em" }}
-                >
-                  Appuyez de nouveau sur la réponse pour valider votre choix
-                </p>
-              )}
+          {/* Design strictement identique à revisions/QuizzScreen (StepBadge/
+              SectionTitle repris à l'identique, mêmes classes quizz-title-row/
+              quizz-hr, même zoom ambiant 1.6*0.75, même PerfStat) — cf.
+              demande explicite du user. Un seul bloc (pas de duplication
+              !answer/answer) : seules les props de QuizzBubbles et l'état
+              Correct/Incorrect changent une fois répondu, comme là-bas. */}
+          {q.type === "quizz" && (
+            <div
+              style={{
+                zoom: 1.6 * 0.75,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 16,
+              }}
+            >
+              <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
+                <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+                  <QuizzStepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                  Traduis le mot
+                </SectionTitle>
+              </div>
+
+              <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{capitalize(q.french)}</p>
+
+              <div className="quizz-hr">
+                <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
+              </div>
+
+              <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
+                <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+                  <QuizzStepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                  Double-tap pour choisir la réponse
+                </SectionTitle>
+              </div>
+
+              <div style={{ marginTop: 4.8 }}>
+                <QuizzBubbles
+                  options={q.options}
+                  correctKey={q.key}
+                  selectedKey={answer ? answer.selected_key : selectedQuizz}
+                  onSelect={answer ? undefined : setSelectedQuizz}
+                  onConfirm={answer ? undefined : handleSubmitQuizz}
+                  disabled={!!answer}
+                />
+              </div>
+
+              <p
+                style={{
+                  margin: 0,
+                  fontWeight: 600,
+                  visibility: answer ? "visible" : "hidden",
+                  color: answer && answer.selected_key === q.key ? "var(--validationPleine)" : "var(--annulationPleine)",
+                }}
+              >
+                {answer?.selected_key === q.key ? "Correct" : "Incorrect"}
+              </p>
+
+              <div className="quizz-hr" style={{ zoom: 1 / (1.6 * 0.75), marginTop: -6 }}>
+                <PerfStat objectType="quizz" />
+              </div>
             </div>
           )}
 
@@ -634,26 +709,6 @@ export default function ExamenEcritScreen() {
             </p>
           )}
 
-          {/* zoom:1.6 : même taille/format que l'objet quizz en révisions
-              (cf. revisions/QuizzScreen), cf. demande explicite du user. */}
-          {answer && q.type === "quizz" && (
-            <div style={{ zoom: 1.6 }}>
-              <QuizzBubbles
-                options={q.options}
-                correctKey={q.key}
-                selectedKey={answer.selected_key}
-                disabled
-              />
-              <p
-                style={{
-                  fontWeight: 600,
-                  color: answer.selected_key === q.key ? "var(--validationPleine)" : "var(--annulationPleine)",
-                }}
-              >
-                {answer.selected_key === q.key ? "Correct" : "Incorrect"}
-              </p>
-            </div>
-          )}
 
           {answer && q.type !== "quizz" && (
             <>

@@ -27,6 +27,31 @@ function FullHistoryPastilles({ history }) {
   );
 }
 
+// Pastilles du bloc "Situation actuelle" : toujours 3, les 3 derniers
+// essais (rouge/vert) complétés à GAUCHE par des pastilles grises s'il y en
+// a moins de 3 — même convention que l'ancien bloc "Situation" de l'écran
+// bilan (AttemptPastilles, ExamenBilanScreen) — cf. demande explicite du
+// user.
+function RecentAttemptsPastilles({ history }) {
+  const recent = history.slice(-3);
+  const padded = Array(3 - recent.length).fill(null).concat(recent);
+  return (
+    <span style={{ display: "inline-flex", gap: 6, verticalAlign: "middle" }}>
+      {padded.map((passed, i) => (
+        <span
+          key={i}
+          className="binyan-pill"
+          style={{
+            margin: 0,
+            backgroundColor:
+              passed === null ? "var(--textSecondary)" : passed ? "var(--validationPleine)" : "var(--annulationPleine)",
+          }}
+        />
+      ))}
+    </span>
+  );
+}
+
 function FormatTile({ label, passed, unlocked, attemptsToday, lastScore, joursBloque, godMode, onClick }) {
   let colorClass = "grey";
   let tooltip = `Il est temps de passer l'examen — ça fait ${joursBloque} jour(s) que tu attends.`;
@@ -215,6 +240,38 @@ export default function ExamenCibleScreen() {
           <li>{status.phrases_count} phrases</li>
           <li>
             {status.oral_questions_count} questions à propos de {status.texts_count} textes
+          </li>
+        </ul>
+
+        {/* Même bloc "Situation" que l'ancien écran bilan (ExamenBilanScreen) —
+            RecentAttemptsPastilles reproduit la même convention que son
+            AttemptPastilles (3 pastilles, grisées à gauche si moins de 3
+            essais), calculée ici à partir de status.full_history_ecrit/oral
+            (pas d'id de copie disponible, contrairement au bilan) — cf.
+            demande explicite du user. */}
+        <p style={{ margin: "1.5em 0 0", fontWeight: 600, color: "var(--textPrimary)" }}>Situation actuelle :</p>
+        <ul style={{ margin: "4px 0 0", paddingInlineStart: "1.2em" }}>
+          <li>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>Écrit : </span>
+            <RecentAttemptsPastilles history={status.full_history_ecrit} />
+          </li>
+          <li>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>Oral : </span>
+            <RecentAttemptsPastilles history={status.full_history_oral} />
+          </li>
+          <li>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
+              Tentatives restantes aujourd'hui :{" "}
+            </span>
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>écrit</span>{" "}
+            <span style={{ color: "var(--textPrimary)" }}>
+              {Math.max(0, MAX_ATTEMPTS_PER_DAY - status.attempts_today_ecrit)}
+            </span>
+            {", "}
+            <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>oral</span>{" "}
+            <span style={{ color: "var(--textPrimary)" }}>
+              {Math.max(0, MAX_ATTEMPTS_PER_DAY - status.attempts_today_oral)}
+            </span>
           </li>
         </ul>
       </div>

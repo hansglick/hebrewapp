@@ -15,7 +15,12 @@ const PREVIEWS = [
   {
     to: "/dev/niveau-up-preview",
     label: "Montée de niveau",
-    description: "Transition affichée après la réussite d'un examen (écrit ou oral).",
+    description: "Célébration affichée une fois les DEUX examens (écrit et oral) réussis.",
+  },
+  {
+    to: "/dev/examen-bilan-preview",
+    label: "Bilan d'examen",
+    description: "Transition affichée après la réussite d'UN SEUL des deux examens (écrit ou oral).",
   },
   {
     to: "/dev/lotterie-preview",

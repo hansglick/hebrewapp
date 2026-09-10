@@ -265,6 +265,16 @@
   color: #fff;
 }
 
+/* Bouton "Non" de AccountChoiceScreen — violet à titre exceptionnel (pas
+   un nouveau token de palette, juste ce bouton précis), cf. demande
+   explicite du user. */
+.exam-tile.purple {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
 /* Tuile "Hard Exam" (écran de montée de niveau) — même orange que le reste
    de l'app (cf. WaitingVideo.css), cf. demande explicite du user. */
 .exam-tile.orange {

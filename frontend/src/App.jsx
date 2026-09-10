@@ -57,6 +57,7 @@ import WaitingPreviewScreen from "./pages/dev/WaitingPreviewScreen";
 import DevIndexScreen from "./pages/dev/DevIndexScreen";
 import OnboardingPreviewScreen from "./pages/dev/OnboardingPreviewScreen";
 import NiveauUpPreviewScreen from "./pages/dev/NiveauUpPreviewScreen";
+import ExamenBilanPreviewScreen from "./pages/dev/ExamenBilanPreviewScreen";
 import LotteriePreviewScreen from "./pages/dev/LotteriePreviewScreen";
 import SignInPreviewScreen from "./pages/dev/SignInPreviewScreen";
 import JeuChoiceScreen from "./pages/jeu/JeuChoiceScreen";
@@ -127,6 +128,7 @@ function App() {
         <Route path="dev/waiting-preview" element={<WaitingPreviewScreen />} />
         <Route path="dev/onboarding-preview" element={<OnboardingPreviewScreen />} />
         <Route path="dev/niveau-up-preview" element={<NiveauUpPreviewScreen />} />
+        <Route path="dev/examen-bilan-preview" element={<ExamenBilanPreviewScreen />} />
         <Route path="dev/lotterie-preview" element={<LotteriePreviewScreen />} />
         <Route path="dev/signin-preview" element={<SignInPreviewScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
