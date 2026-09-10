@@ -73,6 +73,12 @@ export function OralAnswerCapture({
   onStart,
   onStop,
   onEnvoyer,
+  // Une fois notée, le bloc "Réponse" (3) bascule de l'enregistreur à une
+  // simple lecture de l'audio envoyé, au lieu de disparaître — optionnel,
+  // seul l'écran onboarding s'en sert pour l'instant (les autres appelants
+  // ne passent pas cette prop, comportement inchangé pour eux), cf. demande
+  // explicite du user.
+  resultAudioUrl,
 }) {
   const questionSrc = useMemo(() => ttsUrl(questionText), [questionText]);
 
@@ -165,117 +171,128 @@ export function OralAnswerCapture({
         <AudioProgressBlock src={questionSrc} />
       </div>
 
-      {showRecorder && (
+      {(showRecorder || resultAudioUrl) && (
         <>
           <div className="oral-answer-capture-divider" />
           <div className="oral-answer-capture-block">
             <div style={titleAxisStyle}>
               <SectionTitle fontSize="0.84em">
                 <StepBadge number={3} background="var(--validationGrisee)" color="var(--validationPleine)" />
-                Enregistre ta réponse
+                {showRecorder ? "Enregistre ta réponse" : "Réponse"}
               </SectionTitle>
             </div>
-            <div className="audio-progress-block-panel">
-              <div className="audio-progress-block">
-                <MicrophoneIcon
-                  size={64}
-                  badgeColor={isRecording ? "var(--annulationPleine)" : "var(--validationPleine)"}
-                  pulsing={isRecording}
-                  onClick={isRecording ? onStop : onStart}
-                  ariaLabel={
-                    isRecording
-                      ? "Arrêter l'enregistrement"
-                      : hasRecording
-                      ? "Réenregistrer"
-                      : "Enregistrer une réponse"
-                  }
-                />
 
-                <button
-                  type="button"
-                  className={`audio-progress-block-toggle${inertClass}`}
-                  onClick={hasRecording ? togglePlay : undefined}
-                  disabled={!hasRecording}
-                  aria-label={isPlaying ? "Pause" : "Lecture"}
-                >
-                  <span
-                    className="audio-progress-block-icon"
-                    style={{
-                      WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
-                      maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
-                    }}
-                  />
-                </button>
+            {showRecorder ? (
+              <>
+                <div className="audio-progress-block-panel">
+                  <div className="audio-progress-block">
+                    <MicrophoneIcon
+                      size={64}
+                      badgeColor={isRecording ? "var(--annulationPleine)" : "var(--validationPleine)"}
+                      pulsing={isRecording}
+                      onClick={isRecording ? onStop : onStart}
+                      ariaLabel={
+                        isRecording
+                          ? "Arrêter l'enregistrement"
+                          : hasRecording
+                          ? "Réenregistrer"
+                          : "Enregistrer une réponse"
+                      }
+                    />
 
-                <div
-                  className={`audio-progress-block-wave${inertClass}`}
-                  onClick={hasRecording ? handleSeek : undefined}
-                >
-                  <span
-                    className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
-                    style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
-                  />
-                  <span
-                    className="audio-progress-block-wave-icon audio-progress-block-wave-fill"
-                    style={{
-                      WebkitMaskImage: `url(${VOICE_ICON_URL})`,
-                      maskImage: `url(${VOICE_ICON_URL})`,
-                      clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-                      WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
-                    }}
-                  />
+                    <button
+                      type="button"
+                      className={`audio-progress-block-toggle${inertClass}`}
+                      onClick={hasRecording ? togglePlay : undefined}
+                      disabled={!hasRecording}
+                      aria-label={isPlaying ? "Pause" : "Lecture"}
+                    >
+                      <span
+                        className="audio-progress-block-icon"
+                        style={{
+                          WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+                          maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+                        }}
+                      />
+                    </button>
+
+                    <div
+                      className={`audio-progress-block-wave${inertClass}`}
+                      onClick={hasRecording ? handleSeek : undefined}
+                    >
+                      <span
+                        className="audio-progress-block-wave-icon audio-progress-block-wave-bg"
+                        style={{ WebkitMaskImage: `url(${VOICE_ICON_URL})`, maskImage: `url(${VOICE_ICON_URL})` }}
+                      />
+                      <span
+                        className="audio-progress-block-wave-icon audio-progress-block-wave-fill"
+                        style={{
+                          WebkitMaskImage: `url(${VOICE_ICON_URL})`,
+                          maskImage: `url(${VOICE_ICON_URL})`,
+                          clipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                          WebkitClipPath: `inset(0 ${100 - progress * 100}% 0 0)`,
+                        }}
+                      />
+                    </div>
+
+                    {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                    <audio
+                      ref={audioRef}
+                      src={audioUrl ?? undefined}
+                      preload="metadata"
+                      onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
+                      onPlay={() => setIsPlaying(true)}
+                      onPause={() => setIsPlaying(false)}
+                      onEnded={() => {
+                        setIsPlaying(false);
+                        setProgress(1);
+                      }}
+                    />
+                  </div>
+                  <div className={inertClass.trim()}>
+                    <AudioTrackFooter
+                      currentTime={progress * duration}
+                      duration={duration}
+                      rate={rate}
+                      onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
+                    />
+                  </div>
                 </div>
 
-                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                <audio
-                  ref={audioRef}
-                  src={audioUrl ?? undefined}
-                  preload="metadata"
-                  onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                  onEnded={() => {
-                    setIsPlaying(false);
-                    setProgress(1);
-                  }}
-                />
-              </div>
-              <div className={inertClass.trim()}>
-                <AudioTrackFooter
-                  currentTime={progress * duration}
-                  duration={duration}
-                  rate={rate}
-                  onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
-                />
-              </div>
-            </div>
+                {/* À l'intérieur du bloc 3 (Réponse) — pas un élément séparé
+                    après toute la ligne : sur desktop (blocs alignés
+                    horizontalement), ce bouton doit visuellement appartenir au
+                    bloc "Réponse", pas s'étaler sous toute la rangée — cf.
+                    demande explicite du user. En mobile (empilement vertical),
+                    le rendu reste identique puisque ce bloc est déjà le
+                    dernier. */}
+                {isConverting && (
+                  <p className="muted" style={{ margin: "12px 0 0", textAlign: "center" }}>
+                    Traitement de l'enregistrement...
+                  </p>
+                )}
 
-            {/* À l'intérieur du bloc 3 (Réponse) — pas un élément séparé
-                après toute la ligne : sur desktop (blocs alignés
-                horizontalement), ce bouton doit visuellement appartenir au
-                bloc "Réponse", pas s'étaler sous toute la rangée — cf.
-                demande explicite du user. En mobile (empilement vertical),
-                le rendu reste identique puisque ce bloc est déjà le
-                dernier. */}
-            {isConverting && (
-              <p className="muted" style={{ margin: "12px 0 0", textAlign: "center" }}>
-                Traitement de l'enregistrement...
-              </p>
-            )}
-
-            {!isConverting && (
-              <button
-                type="button"
-                className="exam-tile green"
-                // 11.9 (au lieu de 23.8) : espace trait -> bouton "vitesse
-                // de lecture" -> bouton "Envoyer ma réponse" réduit de 50%,
-                // cf. demande explicite du user.
-                style={{ marginTop: 11.9, cursor: hasRecording ? "pointer" : "default" }}
-                disabled={!hasRecording}
-                onClick={onEnvoyer}
-              >
-                Envoyer ma réponse
-              </button>
+                {!isConverting && (
+                  <button
+                    type="button"
+                    className="exam-tile green"
+                    // 11.9 (au lieu de 23.8) : espace trait -> bouton "vitesse
+                    // de lecture" -> bouton "Envoyer ma réponse" réduit de 50%,
+                    // cf. demande explicite du user.
+                    style={{ marginTop: 11.9, cursor: hasRecording ? "pointer" : "default" }}
+                    disabled={!hasRecording}
+                    onClick={onEnvoyer}
+                  >
+                    Envoyer ma réponse
+                  </button>
+                )}
+              </>
+            ) : (
+              // Une fois notée : même format que les blocs 1/2 (lecture
+              // simple, pas de micro/envoi) — le verbatim est affiché à part,
+              // dans le bloc "Évaluation" de l'écran appelant — cf. demande
+              // explicite du user.
+              <AudioProgressBlock src={resultAudioUrl} />
             )}
           </div>
         </>

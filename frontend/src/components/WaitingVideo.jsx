@@ -35,7 +35,11 @@ const MAIL_TOOLTIP =
 // au-dessus — mais seulement quand les réponses sont évaluées en bloc à la
 // fin de l'examen (attente plus longue), jamais pour l'attente d'une
 // réponse unique évaluée immédiatement, cf. demande explicite du user.
-export function WaitingVideo({ label = "Patientez quelques instants ...", allowChansons = false }) {
+// `allowCourrier` (true par défaut, comportement historique inchangé) :
+// masque la tuile "Recevoir les résultats par courrier" quand false — non
+// pertinente pour l'attente d'une correction unique et rapide (ex: test de
+// niveau onboarding), cf. demande explicite du user.
+export function WaitingVideo({ label = "Patientez quelques instants ...", allowChansons = false, allowCourrier = true }) {
   const [filename, setFilename] = useState(null);
   const [ready, setReady] = useState(false);
   const [chansons, setChansons] = useState(false);
@@ -115,18 +119,20 @@ export function WaitingVideo({ label = "Patientez quelques instants ...", allowC
             </button>
           )}
 
-          <button
-            type="button"
-            className="waiting-video-mail-tile"
-            title={MAIL_TOOLTIP}
-            onClick={() => {
-              activateLockdownEscape();
-              navigate("/");
-            }}
-          >
-            <img className="waiting-video-mail-icon" src={MAIL_ICON_URL} alt="" />
-            <span className="waiting-video-mail-label">Recevoir les résultats par courrier</span>
-          </button>
+          {allowCourrier && (
+            <button
+              type="button"
+              className="waiting-video-mail-tile"
+              title={MAIL_TOOLTIP}
+              onClick={() => {
+                activateLockdownEscape();
+                navigate("/");
+              }}
+            >
+              <img className="waiting-video-mail-icon" src={MAIL_ICON_URL} alt="" />
+              <span className="waiting-video-mail-label">Recevoir les résultats par courrier</span>
+            </button>
+          )}
 
           {filename && (
             <video

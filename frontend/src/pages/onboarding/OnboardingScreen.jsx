@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  abandonOnboardingExam,
   advanceOnboardingExam,
   getCurrentOnboardingExam,
   skipOnboarding,
@@ -13,7 +12,6 @@ import { blobToWavBlob } from "../../utils/audioEncode";
 import HebrewInput from "../../components/HebrewInput";
 import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
-import { ChapitreLogo } from "../../components/ChapitreLogo";
 import { QuoteBlock, SectionTitle } from "../../components/QuoteBlock";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
 import { displayLessonNumber } from "../../utils/lessonDisplay";
@@ -24,7 +22,7 @@ import "../screens.css";
 // cf. demande explicite du user ("applique la même logique design que dans
 // l'écran examen blanc / teacher", pastilles numérotées "Traduis"/"Réponse").
 const STEP_BADGE_SIZE = 25;
-function StepBadge({ number, background, color }) {
+function StepBadge({ number, background, color, centerOnEdge = true }) {
   return (
     <span
       style={{
@@ -42,9 +40,10 @@ function StepBadge({ number, background, color }) {
         flexShrink: 0,
         // Centre la pastille sur le bord gauche du trait/du bloc (même
         // largeur, cf. stepHr ci-dessous) plutôt que de l'y faire démarrer —
-        // cf. demande explicite du user.
-        position: "relative",
-        left: -STEP_BADGE_SIZE / 2,
+        // cf. demande explicite du user. Désactivable (centerOnEdge=false) :
+        // le bloc "Évaluation" oral s'aligne plutôt sur l'axe des pastilles
+        // d'OralAnswerCapture (cf. son usage plus bas), pas sur un trait.
+        ...(centerOnEdge ? { position: "relative", left: -STEP_BADGE_SIZE / 2 } : {}),
       }}
     >
       {number}
@@ -78,7 +77,6 @@ export default function OnboardingScreen({ onCompleted }) {
   const [startError, setStartError] = useState(null);
   const [starting, setStarting] = useState(false);
   const [skipping, setSkipping] = useState(false);
-  const [abandoning, setAbandoning] = useState(false);
   const pseudo = getIdentity()?.pseudo ?? "";
 
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -216,18 +214,6 @@ export default function OnboardingScreen({ onCompleted }) {
     }
   }
 
-  async function handleAbandonTest() {
-    if (!window.confirm("Abandonner le test ? Les questions restantes recevront la note minimale.")) return;
-    setAbandoning(true);
-    try {
-      const response = await abandonOnboardingExam();
-      setDoneResult(response);
-      setPhase("done");
-    } finally {
-      setAbandoning(false);
-    }
-  }
-
   async function handleNext() {
     const response = await advanceOnboardingExam({
       questionNumber,
@@ -245,13 +231,24 @@ export default function OnboardingScreen({ onCompleted }) {
     resetQuestionState();
   }
 
+  // Avance automatiquement 5s après l'affichage de l'évaluation (plus de
+  // bouton "Question suivante" manuel) — cf. demande explicite du user.
+  useEffect(() => {
+    if (!result) return;
+    const timeout = setTimeout(handleNext, 5000);
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
+
   if (phase === "loading" || (phase === "question" && !question)) return null;
 
   if (phase === "intro") {
     return (
       <section className="screen">
-        <h1 className="hebrew" style={{ direction: "rtl" }}>
-          שלום {pseudo}
+        {/* שלום non gras, pseudo en gras, "!" final — cf. demande explicite
+            du user. */}
+        <h1 className="hebrew" style={{ direction: "rtl", fontWeight: 400 }}>
+          שלום <strong style={{ fontWeight: 600 }}>{pseudo}</strong> !
         </h1>
         <button
           type="button"
@@ -278,13 +275,24 @@ export default function OnboardingScreen({ onCompleted }) {
   if (phase === "test-intro") {
     return (
       <section className="screen">
-        <h1>Évaluation de ton niveau</h1>
-        <p className="muted" style={{ fontSize: "0.9em" }}>
-          7 questions (un mélange de traductions écrites et de questions orales) pour te proposer des
-          leçons adaptées à ton niveau — réponds du mieux que tu peux, il n'y a pas de mauvaise surprise
-          possible : si le niveau retenu s'avère trop facile ou trop difficile, tu pourras toujours
-          demander une équivalence par la suite pour ajuster dans un sens comme dans l'autre.
-        </p>
+        {/* 1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%, cf. demande
+            explicite du user. */}
+        <h1 style={{ fontSize: "1.4em" }}>Évaluation de ton niveau</h1>
+        {/* Encadré de même largeur que le bouton "Commencer le test !" (.card
+            et .exam-tile partagent width:100%/max-width:320px) ; police
+            réduite de 15% (0.9em * 0.85 = 0.765em) — cf. demande explicite
+            du user. */}
+        <div className="card">
+          <p className="muted" style={{ fontSize: "0.765em", margin: 0 }}>
+            Un test rapide de 7 questions nous permettra d'évaluer ton niveau et ainsi de déterminer où
+            commencer ton parcours. Cependant, tu peux commencer à la première leçon si tu es débutant.
+          </p>
+          <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
+            Pas de panique, si l'estimation s'avère trop éloigné de ton niveau réel, tu pourras toujours
+            monter ou descendre de niveau en cliquant sur le logo central de la barre de contrôle
+            supérieure qui représente ta progression.
+          </p>
+        </div>
         {startError && (
           <p className="muted" style={{ color: "var(--annulationPleine)" }}>
             {startError}
@@ -314,21 +322,41 @@ export default function OnboardingScreen({ onCompleted }) {
 
   if (phase === "done") {
     const chapId = doneResult.reference_lesson ? doneResult.reference_lesson.split(".")[0] : null;
+    // "[label du chapitre].[index de la leçon]" — cf. demande explicite du
+    // user. Repli sur un titre/message génériques si reference_lesson
+    // manque (ex: skipOnboarding, qui ne fixe pas de niveau estimé).
+    const levelLabel = chapId ? `${displayChapitreLabel(chapId)}.${displayLessonNumber(doneResult.reference_lesson)}` : null;
     return (
       <section className="screen">
-        <h1>C'est parti !</h1>
-        {chapId && (
-          <div className="card" style={{ textAlign: "center" }}>
-            <ChapitreLogo chapId={chapId} size="3.4em" style={{ marginInlineStart: 0 }} />
-            <div style={{ fontWeight: 600, margin: "6px 0 0" }}>
-              {displayChapitreLabel(chapId)} — {displayLessonNumber(doneResult.reference_lesson)}
-            </div>
-          </div>
-        )}
-        <p className="muted" style={{ fontSize: "0.9em" }}>
-          Ton niveau de départ vient d'être fixé à partir de tes réponses. Tu peux commencer à apprendre dès
-          maintenant.
-        </p>
+        {/* 1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%. "Félicitations
+            tu as le niveau" en graisse normale, le niveau lui-même en gras —
+            cf. demande explicite du user. */}
+        <h1 style={{ fontSize: "1.4em", fontWeight: 400 }}>
+          {levelLabel ? (
+            <>
+              Félicitations tu as le niveau <strong style={{ fontWeight: 600 }}>{levelLabel}</strong> !
+            </>
+          ) : (
+            "C'est parti !"
+          )}
+        </h1>
+        {/* Encadré de même largeur que le bouton "Commencer" ci-dessous
+            (.card et .exam-tile partagent width:100%/max-width:320px) — cf.
+            demande explicite du user. */}
+        <div className="card">
+          <p className="muted" style={{ fontSize: "0.9em", margin: 0 }}>
+            {levelLabel ? (
+              <>
+                Ton niveau vient d'être estimé à partir des résultats du test d'évaluation, tu as le niveau{" "}
+                <strong style={{ fontWeight: 600 }}>{levelLabel}</strong>. Tu pourras toujours monter ou
+                descendre de niveau en cliquant sur le milieu de la barre de contrôle si tu estimes que
+                cela ne reflète pas ton niveau réel.
+              </>
+            ) : (
+              "Ton niveau de départ vient d'être fixé à partir de tes réponses. Tu peux commencer à apprendre dès maintenant."
+            )}
+          </p>
+        </div>
         <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={onCompleted}>
           Commencer
         </button>
@@ -336,152 +364,216 @@ export default function OnboardingScreen({ onCompleted }) {
     );
   }
 
+  // true dès l'envoi de la réponse (pendant l'attente ET une fois notée) —
+  // gèle le bloc "Réponse" (input/enregistreur) et affiche le bloc
+  // "Évaluation" (vidéo d'attente puis note) sans jamais quitter cette
+  // page ni masquer les blocs précédents — cf. demande explicite du user.
+  const submitted = loadingGemini || !!result;
+
   return (
     <section className="screen">
-      {/* Logo "accident" (backend/results/logos/accident.png) — remplace
-          l'ancien bouton "Abandonner le test" (même action, cf.
-          handleAbandonTest), tooltip au survol via le pattern
-          .exam-tile-tooltip existant. Index + logo centrés ensemble sur la
-          largeur de l'écran (pas de maxWidth/space-between) — cf. demande
-          explicite du user. */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, width: "100%" }}>
-        <p className="muted" style={{ margin: 0 }}>
-          Question n°{questionNumber}/{totalQuestions}
-        </p>
-        <button
-          type="button"
-          className="onboarding-abandon-btn"
-          disabled={abandoning}
-          onClick={handleAbandonTest}
-        >
-          <img src={mediaUrl("logos/accident.png")} alt="" style={{ width: 28, height: 28 }} draggable={false} />
-          <span className="exam-tile-tooltip">Abandonne le test</span>
-        </button>
-      </div>
+      {/* Toujours affiché, même pendant l'avance automatique (le message
+          clignotant "Prêt pour la question suivante ?" vit désormais sous
+          les étoiles de chaque bloc "Évaluation", cf. plus bas) — cf.
+          demande explicite du user. */}
+      <p className="muted" style={{ margin: 0, textAlign: "center", width: "100%" }}>
+        Question n° {questionNumber}/{totalQuestions}
+      </p>
 
       {stepHr}
 
-      {loadingGemini ? (
-        <GeminiWaiting />
-      ) : (
+      {geminiError && (
+        <p className="muted" style={{ color: "var(--annulationPleine)" }}>
+          {geminiError}
+        </p>
+      )}
+
+      {question.kind === "ecrit" && (
         <>
-          {geminiError && (
-            <p className="muted" style={{ color: "var(--annulationPleine)" }}>
-              {geminiError}
+          {/* Même gabarit que QuestionEcriteScreen (mode "prof") : pastille +
+              titre "Traduis", barre de citation + phrase française en gris
+              italique — cf. demande explicite du user. Toujours affiché
+              (seule l'indication "Question n°X/Y" du header se masque
+              pendant l'avance automatique, pas ce bloc) — cf. demande
+              explicite du user. */}
+          <QuoteBlock
+            label={
+              <>
+                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                Traduis
+              </>
+            }
+            marginTop={20}
+          >
+            <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+              {question.french}
             </p>
-          )}
+          </QuoteBlock>
 
-          {question.kind === "ecrit" && (
-            <>
-              {/* Même gabarit que QuestionEcriteScreen (mode "prof") : pastille +
-                  titre "Traduis", barre de citation + phrase française en gris
-                  italique — cf. demande explicite du user. */}
-              <QuoteBlock
-                label={
-                  <>
-                    <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
-                    Traduis
-                  </>
-                }
-                marginTop={20}
+          {/* Bloc "Réponse" (pastille 2, verte) : toujours affiché entre les
+              deux traits, son contenu bascule du champ de saisie (avant
+              envoi) au texte traduit figé (dès l'envoi, pas seulement une
+              fois noté — sinon le champ resterait éditable et le bouton
+              "Envoyer" cliquable pendant l'attente) — même pastille, cf.
+              demande explicite du user. */}
+          {stepHr}
+
+          <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+            <SectionTitle>
+              <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+              Réponse
+            </SectionTitle>
+            {!submitted ? (
+              // HebrewInput ne relaie pas de prop "style", d'où ce div
+              // wrapper pour le saut de ligne — cf. demande explicite du
+              // user. Classe "onboarding-question-input" : bordure gris
+              // clair et plus fine (au lieu du bleu nuit par défaut),
+              // règle scopée à cet écran seul (cf. screens.css) — cf.
+              // demande explicite du user.
+              <div className="onboarding-question-input" style={{ marginTop: "1em" }}>
+                <HebrewInput
+                  key={questionNumber}
+                  value={studentSolution}
+                  onChange={setStudentSolution}
+                  rows={3}
+                  placeholder="Traduis !"
+                />
+              </div>
+            ) : (
+              // 1.248em = 0.96em * 1.3 : +30%, cf. demande explicite du
+              // user. result.translation pas encore disponible pendant
+              // l'attente : on retombe sur la réponse telle que tapée.
+              <p
+                className="hebrew"
+                style={{ margin: "1em 0 0", fontSize: "1.248em", fontStyle: "italic", color: "var(--textSecondary)" }}
               >
-                <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
-                  {question.french}
-                </p>
-              </QuoteBlock>
+                {result ? result.translation : studentSolution}
+              </p>
+            )}
+          </div>
 
-              {!result && stepHr}
-
-              {!result && (
-                <>
-                  {/* marginTop:20 : même espace que celui entre le 1er trait et
-                      le bloc "Traduis" (QuoteBlock, marginTop=20 par défaut) —
-                      cf. demande explicite du user. */}
-                  <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle>
-                      <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
-                      Réponse
-                    </SectionTitle>
-                    {/* Saut de ligne supplémentaire avant le champ de saisie
-                        (trop proche du titre) — cf. demande explicite du user.
-                        HebrewInput ne relaie pas de prop "style", d'où ce div
-                        wrapper. */}
-                    <div style={{ marginTop: "1em" }}>
-                      <HebrewInput
-                        key={questionNumber}
-                        value={studentSolution}
-                        onChange={setStudentSolution}
-                        rows={3}
-                        placeholder="Traduis !"
-                      />
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="exam-tile green"
-                    style={{ marginTop: 4, cursor: studentSolution.trim() ? "pointer" : "default" }}
-                    disabled={!studentSolution.trim()}
-                    onClick={handleSubmitEcrit}
-                  >
-                    Envoyer ma réponse
-                  </button>
-                </>
-              )}
-
-              {result && (
-                <>
-                  <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                    <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{result.translation}</span>
-                  </p>
-                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
-                  <StarRating rating={result.score} />
-                </>
-              )}
-            </>
-          )}
-
-          {question.kind === "oral" && (
-            <>
-              <OralAnswerCapture
-                contentSrc={mediaUrl(question.voicepath)}
-                questionText={question.question_hebrew}
-                showRecorder={!result}
-                isRecording={isRecording}
-                isConverting={isConverting}
-                audioBlob={audioBlob}
-                audioUrl={audioUrl}
-                onStart={startRecording}
-                onStop={stopRecording}
-                onEnvoyer={handleSubmitOral}
-              />
-
-              {result && (
-                <>
-                  <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
-                    <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
-                    <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{result.verbatim}</span>
-                  </p>
-                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
-                  <StarRating
-                    rating={Math.round(
-                      (result.rating_completeness + result.rating_hebrew + result.rating_comprehension) / 3
-                    )}
-                  />
-                </>
-              )}
-            </>
-          )}
-
-          {result && (
+          {!submitted && (
             <button
               type="button"
-              className="link-btn"
-              style={{ fontStyle: "italic", color: "var(--textSecondary)", fontSize: "0.96em", textDecoration: "none" }}
-              onClick={handleNext}
+              className="exam-tile green"
+              style={{ marginTop: 4, cursor: studentSolution.trim() ? "pointer" : "default" }}
+              disabled={!studentSolution.trim()}
+              onClick={handleSubmitEcrit}
             >
-              {questionNumber < totalQuestions ? "Question suivante" : "Voir mon niveau"}
+              Envoyer ma réponse
             </button>
+          )}
+
+          {/* Bloc "Évaluation" (pastille 3, orange pastel) : affiché dès
+              l'envoi (pas seulement une fois noté) — la vidéo d'attente
+              (sans la tuile "courrier", non pertinente pour une correction
+              aussi rapide) y remplace la note le temps de la requête, sans
+              jamais quitter cette page ni masquer les blocs précédents —
+              cf. demande explicite du user. Le message clignotant d'avance
+              automatique vit sous la note. */}
+          {submitted && (
+            <>
+              {stepHr}
+              <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                <SectionTitle>
+                  <StepBadge number={3} background="#ffedd5" color="#c2410c" />
+                  Évaluation
+                </SectionTitle>
+                <div style={{ marginTop: "1em" }}>
+                  {loadingGemini ? (
+                    <GeminiWaiting allowCourrier={false} />
+                  ) : (
+                    <>
+                      <StarRating rating={result.score} />
+                      <p className="onboarding-next-blink" style={{ margin: "12px 0 0" }}>
+                        Prêt pour la question suivante ?
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      )}
+
+      {question.kind === "oral" && (
+        <>
+          {/* Toujours affiché (seule l'indication "Question n°X/Y" du
+              header se masque pendant l'avance automatique, pas ce
+              bloc) — cf. demande explicite du user. Classe
+              "onboarding-oral-answer-capture" : réduit l'espace au-dessus
+              du bloc 1 (cf. screens.css), un trait le précède déjà ici
+              (le header), contrairement aux autres écrans qui utilisent
+              OralAnswerCapture sans trait avant le bloc 1 — cf. demande
+              explicite du user. Bloc 3 ("Réponse") bascule vers la lecture
+              dès l'envoi (pas seulement une fois noté, cf. `submitted` —
+              sinon l'enregistreur resterait actif pendant l'attente), plus
+              de verbatim ici, déplacé dans le bloc "Évaluation" — cf.
+              resultAudioUrl (OralAnswerCapture.jsx). */}
+          <div className="onboarding-oral-answer-capture" style={{ width: "100%" }}>
+            <OralAnswerCapture
+              contentSrc={mediaUrl(question.voicepath)}
+              questionText={question.question_hebrew}
+              showRecorder={!submitted}
+              isRecording={isRecording}
+              isConverting={isConverting}
+              audioBlob={audioBlob}
+              audioUrl={audioUrl}
+              onStart={startRecording}
+              onStop={stopRecording}
+              onEnvoyer={handleSubmitOral}
+              resultAudioUrl={submitted ? audioUrl : undefined}
+            />
+          </div>
+
+          {/* Bloc "Évaluation" (pastille 4, orange pastel) : affiché dès
+              l'envoi — vidéo d'attente (sans la tuile "courrier") le temps
+              de la requête, puis verbatim + note, cf. demande explicite du
+              user. Continue la numérotation des 3 blocs "originels"
+              d'OralAnswerCapture — espace avant ce bloc réduit pour
+              matcher l'espacement interne d'OralAnswerCapture (-8, comme
+              le bloc 1 ci-dessus), pastille décalée à droite
+              (marginLeft:33.5 = même calcul que TITLE_AXIS_OFFSET -
+              STEP_BADGE_SIZE/2 dans OralAnswerCapture.jsx) pour s'aligner
+              verticalement avec les pastilles 1/2/3, verbatim centré
+              au-dessus des étoiles. */}
+          {submitted && (
+            <>
+              {stepHr}
+              <div style={{ width: "100%", maxWidth: 320, marginTop: -8 }}>
+                <div style={{ marginLeft: 33.5 }}>
+                  <SectionTitle>
+                    <StepBadge number={4} background="#ffedd5" color="#c2410c" centerOnEdge={false} />
+                    Évaluation
+                  </SectionTitle>
+                </div>
+                <div style={{ marginTop: "1em", textAlign: "center" }}>
+                  {loadingGemini ? (
+                    <GeminiWaiting allowCourrier={false} />
+                  ) : (
+                    <>
+                      <p className="hebrew" style={{ margin: 0, fontSize: "0.96em" }}>
+                        <span style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Verbatim : </span>
+                        <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>
+                          {result.verbatim}
+                        </span>
+                      </p>
+                      <div style={{ marginTop: 8 }}>
+                        <StarRating
+                          rating={Math.round(
+                            (result.rating_completeness + result.rating_hebrew + result.rating_comprehension) / 3
+                          )}
+                        />
+                      </div>
+                      <p className="onboarding-next-blink" style={{ margin: "12px 0 0" }}>
+                        Prêt pour la question suivante ?
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
           )}
         </>
       )}

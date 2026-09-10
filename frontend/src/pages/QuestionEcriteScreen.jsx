@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRandomPhrase } from "../api/content";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
@@ -13,7 +13,146 @@ import { BottomNavBar, BottomNavToggle } from "../components/BottomNavBar";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { WaitingVideo } from "../components/WaitingVideo";
 import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../components/PageTurnCurl";
+import { QuestionMarkIcon } from "../components/QuestionMarkIcon";
 import "./screens.css";
+
+// Même pastille numérotée que les écrans onboarding/révision (eux-mêmes
+// calqués à l'origine sur cet écran) — dupliquée ici, cf. demande explicite
+// du user ("copier le design des écrans révisions").
+const STEP_BADGE_SIZE = 25;
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+// Même format de trait que les écrans onboarding/révision — cf. demande
+// explicite du user.
+const stepHr = (
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+);
+
+// Trait du mode Auto + encadré invisible des phrases (même largeur, cf.
+// demande explicite du user) : 84%/384 = 70%/320 * 1.2 (+20%).
+const AUTO_HR_WIDTH = "84%";
+const AUTO_HR_MAX_WIDTH = 384;
+
+// Le mot "et" compte comme une ponctuation à part entière (même logique de
+// coupure que "." ou ",") — cf. demande explicite du user.
+const endsWithPunct = (word) => /[.,]$/.test(word) || /^et$/i.test(word);
+
+// Retour à la ligne "normal" (remplissage glouton, comme le ferait le
+// navigateur), SAUF quand une ligne serait sur le point de déborder sans
+// se terminer par "." ou "," (ou le mot "et") : dans ce cas seulement, on
+// recule jusqu'à la dernière ponctuation rencontrée SUR CETTE LIGNE et on
+// coupe là — cf. demande explicite du user ("uniquement si on serait dans
+// l'obligation d'aller à la ligne prochainement sans que le dernier
+// caractère de cette ligne soit un '.' ou une ','"). Aucune ponctuation sur
+// la ligne : retour à la ligne naturel, sans forcer quoi que ce soit.
+function wrapPreferringPunctuation(text, maxWidth, measureEl) {
+  const words = text.split(/\s+/);
+  const widthOf = (wordsSlice) => {
+    measureEl.textContent = wordsSlice.join(" ");
+    return measureEl.scrollWidth;
+  };
+
+  const lines = [];
+  let lineStart = 0;
+  let i = 0;
+  while (i < words.length) {
+    if (widthOf(words.slice(lineStart, i + 1)) <= maxWidth) {
+      i++;
+      continue;
+    }
+    if (i === lineStart) {
+      // Un seul mot déjà trop large pour la ligne : on le laisse déborder seul.
+      lines.push(words[i]);
+      lineStart = i + 1;
+      i = lineStart;
+      continue;
+    }
+    const candidate = words.slice(lineStart, i);
+    if (endsWithPunct(candidate[candidate.length - 1])) {
+      lines.push(candidate.join(" "));
+      lineStart = i;
+      continue;
+    }
+    let cut = -1;
+    for (let j = candidate.length - 1; j >= 0; j--) {
+      if (endsWithPunct(candidate[j])) {
+        cut = j;
+        break;
+      }
+    }
+    if (cut >= 0) {
+      lines.push(words.slice(lineStart, lineStart + cut + 1).join(" "));
+      lineStart = lineStart + cut + 1;
+      i = lineStart;
+    } else {
+      // Aucune ponctuation sur cette ligne : retour à la ligne naturel.
+      lines.push(candidate.join(" "));
+      lineStart = i;
+    }
+  }
+  if (lineStart < words.length) {
+    lines.push(words.slice(lineStart).join(" "));
+  }
+  return lines;
+}
+
+// Un <span> caché (position:absolute, white-space:nowrap) sert de règle
+// pour mesurer, mot par mot, la largeur réellement rendue dans l'encadré
+// invisible (même police/taille que le texte visible, cf. héritage CSS).
+function AutoWrapText({ text, className, style }) {
+  const containerRef = useRef(null);
+  const measureRef = useRef(null);
+  const [lines, setLines] = useState([text]);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const measure = measureRef.current;
+    if (!container || !measure) return;
+    measure.textContent = text;
+    if (measure.scrollWidth <= container.clientWidth) {
+      setLines([text]);
+    } else {
+      setLines(wrapPreferringPunctuation(text, container.clientWidth, measure));
+    }
+  }, [text]);
+
+  return (
+    <p ref={containerRef} className={className} style={{ position: "relative", ...style }}>
+      <span
+        ref={measureRef}
+        aria-hidden="true"
+        style={{ position: "absolute", visibility: "hidden", whiteSpace: "nowrap", top: 0, left: 0 }}
+      />
+      {lines.map((line, i) => (
+        <span key={i}>
+          {line}
+          {i < lines.length - 1 && <br />}
+        </span>
+      ))}
+    </p>
+  );
+}
 
 // Les observations sont affichées en italique, mais un mot en hébreu au
 // milieu d'une phrase française perd en lisibilité en italique — on l'en
@@ -299,7 +438,14 @@ export default function QuestionEcriteScreen() {
         }}
       >
         {cardEvalMode === "prof" && (
-          <QuoteBlock>
+          <QuoteBlock
+            label={
+              <>
+                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                Traduis
+              </>
+            }
+          >
             {isSourceHebrew ? (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                 <p
@@ -328,6 +474,12 @@ export default function QuestionEcriteScreen() {
           </QuoteBlock>
         )}
 
+        {/* Sépare les blocs "Traduis"/"Réponse" — cf. demande explicite du
+            user. Masqué une fois la réponse notée (bloc "Réponse" retombe
+            alors sur le récap "Réponse de l'étudiant : ..." plus bas, sans
+            pastille). */}
+        {cardEvalMode === "prof" && !cardGeminiResult && stepHr}
+
         {cardEvalMode === "auto" && (
           <div
             style={{
@@ -340,41 +492,99 @@ export default function QuestionEcriteScreen() {
             }}
           >
             {isSourceHebrew ? (
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginBottom: 14 }}>
+              // width/maxWidth explicites ici (pas seulement sur AutoWrapText
+              // plus bas) : ce wrapper est un flex item sans largeur propre
+              // (alignItems:"center" du parent -> shrink-to-fit), donc la
+              // largeur en % d'AutoWrapText se résolvait contre un
+              // conteneur de largeur indéterminée (résolue à 0), cassant
+              // l'algorithme de retour à la ligne (un seul mot par ligne) —
+              // cf. bug rapporté par le user (toggle "FR", phrase source en
+              // hébreu). Même piège/fix que la grille du bloc "Réponse" plus
+              // bas (cf. commentaires sur justifySelf:"stretch").
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 4,
+                  marginBottom: 14,
+                  width: AUTO_HR_WIDTH,
+                  maxWidth: AUTO_HR_MAX_WIDTH,
+                  boxSizing: "border-box",
+                }}
+              >
                 <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
                   <SpeakerIcon size={33} color="var(--speakerIcon)" />
                 </button>
-                <p
+                {/* 1.728em = 2.16em * 0.8 : -20% — cf. demande explicite du
+                    user. */}
+                {/* Encadré invisible de même largeur que le trait
+                    ci-dessous — cf. demande explicite du user. width:"100%"
+                    (pas AUTO_HR_WIDTH) : le wrapper ci-dessus porte déjà
+                    cette largeur, cf. commentaire sur ce wrapper. */}
+                <AutoWrapText
+                  text={sourceText}
                   className="hebrew"
                   style={{
                     margin: 0,
                     fontWeight: 700,
                     color: "var(--textPrimary)",
-                    fontSize: "2.16em",
+                    fontSize: "1.728em",
                     direction: "rtl",
                     fontFamily: cursive ? "'Gveret Levin', cursive" : undefined,
+                    width: "100%",
+                    boxSizing: "border-box",
                   }}
-                >
-                  {sourceText}
-                </p>
+                />
               </div>
             ) : (
-              <p style={{ color: "var(--textPrimary)", margin: 0, marginBottom: 14, fontSize: "1.44em", textAlign: "center" }}>
-                {sourceText}
-              </p>
+              // 1.152em = 1.44em * 0.8 : -20% ; gris + italique — cf.
+              // demande explicite du user.
+              <AutoWrapText
+                text={sourceText}
+                style={{
+                  color: "var(--textSecondary)",
+                  fontStyle: "italic",
+                  margin: 0,
+                  marginBottom: 14,
+                  fontSize: "1.152em",
+                  textAlign: "center",
+                  width: AUTO_HR_WIDTH,
+                  maxWidth: AUTO_HR_MAX_WIDTH,
+                  boxSizing: "border-box",
+                }}
+              />
             )}
 
             <hr
               style={{
-                width: "70%",
-                maxWidth: 320,
+                width: AUTO_HR_WIDTH,
+                maxWidth: AUTO_HR_MAX_WIDTH,
                 border: "none",
                 borderTop: "1px solid var(--cardBorder)",
                 margin: 0,
               }}
             />
 
-            <div style={{ display: "grid", justifyItems: "center", marginTop: 28 }}>
+            {/* width/maxWidth ici (pas seulement sur AutoWrapText plus bas) :
+                une grille dont les items portent une largeur en % se
+                redimensionne sur elle-même (largeur ambiguë, résolue au
+                contenu le plus étroit des deux calques empilés) — la
+                phrase traduite se retrouvait ainsi mesurée dans un encadré
+                bien plus étroit que le trait, se coupant même sur des
+                phrases courtes — cf. bug rapporté par le user. En fixant
+                la largeur de la grille elle-même (résolue sans ambiguïté
+                contre le conteneur flex parent), AutoWrapText peut
+                ensuite s'appuyer dessus via width:"100%". */}
+            <div
+              style={{
+                display: "grid",
+                justifyItems: "center",
+                marginTop: 28,
+                width: AUTO_HR_WIDTH,
+                maxWidth: AUTO_HR_MAX_WIDTH,
+              }}
+            >
               <div
                 style={{
                   gridArea: "1 / 1",
@@ -386,18 +596,32 @@ export default function QuestionEcriteScreen() {
                 }}
               >
                 <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={cardRevealed}>
-                  <span
-                    className="racine-badge"
-                    style={{ background: "#000", fontWeight: 700, fontSize: "1.4em", padding: "10px 24px" }}
-                  >
-                    ?
-                  </span>
+                  {/* Fond = même couleur que la réponse qu'il cache :
+                      noir (var(--textPrimary)) si la réponse est en
+                      hébreu (toggle HE), gris (var(--textSecondary)) si
+                      elle est en français (toggle FR) — cf. demande
+                      explicite du user. */}
+                  <QuestionMarkIcon
+                    size={48}
+                    background={targetIsHebrew ? "var(--textPrimary)" : "var(--textSecondary)"}
+                    style={{ display: "block" }}
+                  />
                 </button>
               </div>
 
               <div
                 style={{
                   gridArea: "1 / 1",
+                  // justifySelf:"stretch" (au lieu d'hériter justifyItems:
+                  // "center" du parent) : sans ça, cette cellule de grille
+                  // se redimensionne elle-même à son propre contenu — la
+                  // largeur width:"100%" d'AutoWrapText plus bas se
+                  // résolvait alors contre une largeur ambiguë au lieu de
+                  // la largeur réelle du trait, cf. bug rapporté par le
+                  // user. En s'étirant sur toute la piste (déjà fixée à
+                  // AUTO_HR_WIDTH sur la grille parente), cette cellule
+                  // offre une largeur fiable à ses enfants.
+                  justifySelf: "stretch",
                   visibility: cardRevealed ? "visible" : "hidden",
                   display: "flex",
                   flexDirection: "column",
@@ -406,24 +630,40 @@ export default function QuestionEcriteScreen() {
                   marginTop: -14,
                 }}
               >
+                {/* 1.728em = 2.16em * 0.8 : -20% — cf. demande explicite du
+                    user. */}
                 {targetIsHebrew ? (
-                  <p
+                  <AutoWrapText
+                    text={targetText}
                     className="hebrew"
                     style={{
                       margin: 0,
                       fontWeight: 700,
                       color: "var(--textPrimary)",
-                      fontSize: "2.16em",
+                      fontSize: "1.728em",
                       direction: "rtl",
                       fontFamily: cursive ? "'Gveret Levin', cursive" : undefined,
+                      // 100% de la grille parente (déjà à AUTO_HR_WIDTH),
+                      // pas AUTO_HR_WIDTH ici — cf. commentaire sur la
+                      // grille ci-dessus.
+                      width: "100%",
+                      boxSizing: "border-box",
                     }}
-                  >
-                    {targetText}
-                  </p>
+                  />
                 ) : (
-                  <p style={{ fontStyle: "italic", color: "var(--textSecondary)", margin: 0, fontSize: "1.44em", textAlign: "center" }}>
-                    {targetText}
-                  </p>
+                  // 1.152em = 1.44em * 0.8 : -20% — cf. demande explicite du user.
+                  <AutoWrapText
+                    text={targetText}
+                    style={{
+                      fontStyle: "italic",
+                      color: "var(--textSecondary)",
+                      margin: 0,
+                      fontSize: "1.152em",
+                      textAlign: "center",
+                      width: "100%",
+                      boxSizing: "border-box",
+                    }}
+                  />
                 )}
 
                 <div
@@ -465,8 +705,11 @@ export default function QuestionEcriteScreen() {
             {!cardGeminiResult && (
               <>
                 {targetIsHebrew ? (
-                  <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle>Réponse</SectionTitle>
+                  <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                    <SectionTitle>
+                      <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                      Réponse
+                    </SectionTitle>
                     <HebrewInput
                       key={`${cardPhrase.lesson_code}-${cardPhrase.position}-${cardPhrase.direction}`}
                       value={cardStudentSolution}
@@ -476,7 +719,10 @@ export default function QuestionEcriteScreen() {
                   </div>
                 ) : (
                   <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle>Réponse</SectionTitle>
+                    <SectionTitle>
+                      <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                      Réponse
+                    </SectionTitle>
                     <textarea
                       className="translate-textarea"
                       value={cardStudentSolution}
@@ -615,17 +861,24 @@ export default function QuestionEcriteScreen() {
   // demande explicite du user.
   const revisionToggles = mode === "revision" && (
     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+      {/* La sélection "FR" est désactivée — onChange ignore toute
+          tentative de repasser en français — seulement en mode Teacher, en
+          mode Auto "FR" reste sélectionnable normalement, cf. demande
+          explicite du user. */}
       <BottomNavToggle
         leftLabel="FR"
         rightLabel="HE"
         value={direction === "hebreu"}
-        onChange={(isHebreu) => setDirection(isHebreu ? "hebreu" : "francais")}
+        onChange={(isHebreu) => (isHebreu || evalMode !== "prof") && setDirection(isHebreu ? "hebreu" : "francais")}
       />
+      {/* La sélection "Teacher" est désactivée — onChange ignore toute
+          tentative de passer en Teacher — tant que "FR" est sélectionné
+          (direction === "francais"), cf. demande explicite du user. */}
       <BottomNavToggle
         leftLabel="Auto"
         rightLabel="Teacher"
         value={evalMode === "prof"}
-        onChange={(isProf) => setEvalMode(isProf ? "prof" : "auto")}
+        onChange={(isProf) => (!isProf || direction !== "francais") && setEvalMode(isProf ? "prof" : "auto")}
       />
     </div>
   );

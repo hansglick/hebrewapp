@@ -7,8 +7,10 @@ import { mediaUrl } from "../../api/media";
 import { blobToWavBlob } from "../../utils/audioEncode";
 import HebrewInput from "../../components/HebrewInput";
 import "../../components/HebrewInput.css";
-import { QuoteBlock } from "../../components/QuoteBlock";
+import { QuoteBlock, SectionTitle } from "../../components/QuoteBlock";
 import { OralAnswerCapture } from "../../components/OralAnswerCapture";
+import { SpeakerIcon } from "../../components/SpeakerIcon";
+import { speak } from "../../utils/speech";
 import { WaitingVideo } from "../../components/WaitingVideo";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import { EvalWaitModeToggle } from "../../components/EvalWaitModeToggle";
@@ -23,6 +25,39 @@ const RED_THRESHOLD_SECONDS = 2 * 60;
 function parseUtc(sqliteDatetime) {
   return Date.parse(`${sqliteDatetime.replace(" ", "T")}Z`);
 }
+
+// Même pastille numérotée que QuestionEcriteScreen (examen blanc)/
+// ExamenEcritScreen — cf. demande explicite du user ("le design des
+// questions écrites du hard exam doit être le même que examen blanc").
+const STEP_BADGE_SIZE = 25;
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+// Même trait que QuestionEcriteScreen/ExamenEcritScreen entre le bloc
+// "Traduis" et le bloc "Réponse" — cf. StepBadge ci-dessus.
+const stepHr = (
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+);
 
 function firstUnanswered(answers) {
   const i = answers.findIndex((a) => a === null);
@@ -44,6 +79,35 @@ function timeoutAnswerFor(question) {
     rating_comprehension: 1,
     errors_rating_comprehension: [],
   };
+}
+
+// Les observations sont affichées en italique, mais un mot en hébreu au
+// milieu d'une phrase française perd en lisibilité en italique — on l'en
+// exempte pour qu'il ressorte mieux (cf. QuestionEcriteScreen/ExamenEcritScreen,
+// même logique).
+function renderWithHebrewHighlight(text) {
+  return text
+    .split(/([֐-׿]+(?:[\s'"־][֐-׿]+)*)/g)
+    .map((part, i) =>
+      /[֐-׿]/.test(part) ? (
+        <span key={i} className="hebrew" style={{ fontStyle: "normal" }}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function computeGlobalNote(result) {
+  const ratings = [result.rating_completeness, result.rating_hebrew, result.rating_comprehension];
+  const average = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+  const comment = ratings.every((r) => r >= 4) ? "excellent" : "insuffisant";
+  return { average, comment };
 }
 
 function StarRating({ rating }) {
@@ -635,35 +699,69 @@ export default function ExamenHardPasserScreen() {
 
           {q.type === "traduction" && (
             <>
-              <QuoteBlock>
-                <p
-                  style={{
-                    color: "var(--textSecondary)",
-                    margin: 0,
-                    fontStyle: q.direction === "hebreu" ? "italic" : "normal",
-                  }}
-                >
-                  {q.direction === "hebreu" ? q.french : q.hebrew}
-                </p>
+              <QuoteBlock
+                label={
+                  <>
+                    <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                    Traduis
+                  </>
+                }
+              >
+                {/* Même distinction que QuestionEcriteScreen (examen blanc /
+                    Teacher) : source hébreu -> gras, taille 1.44em, avec
+                    haut-parleur ; source français -> italique, 0.96em, sans
+                    haut-parleur — cf. demande explicite du user. */}
+                {q.direction === "francais" ? (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                    <p
+                      className="hebrew"
+                      style={{ margin: 0, fontWeight: 700, color: "var(--textSecondary)", fontSize: "1.44em", direction: "rtl" }}
+                    >
+                      {q.hebrew}
+                    </p>
+                    <span style={{ color: "var(--cardBorder)", fontWeight: 400 }}>|</span>
+                    <button type="button" className="speak-btn" onClick={() => speak(q.hebrew)}>
+                      <SpeakerIcon size={20.25} color="var(--speakerIcon)" />
+                    </button>
+                  </div>
+                ) : (
+                  <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
+                    {q.french}
+                  </p>
+                )}
               </QuoteBlock>
+
+              {!answer && stepHr}
+
               {!answer && !pendingAnswers[index] && q.direction === "hebreu" && (
-                <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={3} placeholder="Traduis !" />
+                <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                  <SectionTitle>
+                    <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                    Réponse
+                  </SectionTitle>
+                  <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={3} />
+                </div>
               )}
               {!answer && !pendingAnswers[index] && q.direction === "francais" && (
-                <input
-                  type="text"
-                  value={studentSolution}
-                  onChange={(e) => setStudentSolution(e.target.value)}
-                  placeholder="Traduis !"
-                  className="hebrew-input-textarea"
-                  style={{ width: "100%", maxWidth: 320, fontFamily: "var(--font-latin)" }}
-                />
+                <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                  <SectionTitle>
+                    <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                    Réponse
+                  </SectionTitle>
+                  <textarea
+                    className="translate-textarea"
+                    value={studentSolution}
+                    onChange={(e) => setStudentSolution(e.target.value)}
+                    rows={3}
+                    style={{ width: "100%", fontFamily: "inherit" }}
+                  />
+                </div>
               )}
               {!answer && !pendingAnswers[index] && (
                 <button
                   type="button"
                   className="exam-tile green"
-                  style={{ cursor: studentSolution.trim() ? "pointer" : "default" }}
+                  style={{ marginTop: 24, cursor: studentSolution.trim() ? "pointer" : "default" }}
                   disabled={!studentSolution.trim()}
                   onClick={handleSubmitTraduction}
                 >
@@ -677,27 +775,47 @@ export default function ExamenHardPasserScreen() {
               )}
               {answer && (
                 <>
-                  <p className="hebrew" style={{ fontSize: "0.8em", margin: "1em 0 0" }}>
-                    <span style={{ color: "var(--textPrimary)" }}>Réponse : </span>
+                  <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
                     <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
                   </p>
-                  <StarRating rating={answer.score} />
-                  {answer.observations?.length > 0 && (
-                    <ul
-                      style={{
-                        margin: "4px 0 0",
-                        paddingInlineStart: "1.2em",
-                        fontStyle: "italic",
-                        fontSize: "0.85em",
-                        color: "var(--textSecondary)",
-                        textAlign: "start",
-                      }}
-                    >
-                      {answer.observations.map((obs, i) => (
-                        <li key={i}>{obs}</li>
-                      ))}
-                    </ul>
-                  )}
+
+                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+
+                  <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
+                    <tbody>
+                      <tr>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                          Note
+                        </td>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                          <StarRating rating={answer.score} />
+                        </td>
+                      </tr>
+                      {answer.observations?.length > 0 && (
+                        <tr>
+                          <td
+                            colSpan={2}
+                            style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                          >
+                            <ul
+                              style={{
+                                margin: 0,
+                                paddingInlineStart: "1.2em",
+                                fontStyle: "italic",
+                                fontSize: "0.85em",
+                                color: "var(--textSecondary)",
+                              }}
+                            >
+                              {answer.observations.map((obs, i) => (
+                                <li key={i}>{renderWithHebrewHighlight(obs)}</li>
+                              ))}
+                            </ul>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </>
               )}
             </>
@@ -729,28 +847,146 @@ export default function ExamenHardPasserScreen() {
 
               {answer && (
                 <>
-                  <p className="hebrew" style={{ fontSize: "0.8em", margin: "1em 0 0" }}>
-                    <span style={{ color: "var(--textPrimary)" }}>Réponse : </span>
+                  <p className="hebrew" style={{ fontSize: "0.8em", margin: 0, marginTop: "1.5em" }}>
+                    <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
                     <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
                   </p>
+
+                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+
                   <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
                     <tbody>
                       <tr>
-                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>Complétude</td>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                          Complétude
+                        </td>
                         <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
                           <StarRating rating={answer.rating_completeness} />
                         </td>
                       </tr>
+                      {answer.errors_rating_completeness?.length > 0 && (
+                        <tr>
+                          <td
+                            colSpan={2}
+                            style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                          >
+                            <ul
+                              style={{
+                                margin: 0,
+                                paddingInlineStart: "1.2em",
+                                fontStyle: "italic",
+                                fontSize: "0.85em",
+                                color: "var(--textSecondary)",
+                              }}
+                            >
+                              {answer.errors_rating_completeness.map((e, i) => (
+                                <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                              ))}
+                            </ul>
+                          </td>
+                        </tr>
+                      )}
                       <tr>
-                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>Grammaire</td>
+                        <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+                      </tr>
+                      <tr>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                          Grammaire
+                        </td>
                         <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
                           <StarRating rating={answer.rating_hebrew} />
                         </td>
                       </tr>
+                      {answer.errors_rating_hebrew?.length > 0 && (
+                        <tr>
+                          <td
+                            colSpan={2}
+                            style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                          >
+                            <ul
+                              style={{
+                                margin: 0,
+                                paddingInlineStart: "1.2em",
+                                fontStyle: "italic",
+                                fontSize: "0.85em",
+                                color: "var(--textSecondary)",
+                              }}
+                            >
+                              {answer.errors_rating_hebrew.map((e, i) => (
+                                <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                              ))}
+                            </ul>
+                          </td>
+                        </tr>
+                      )}
                       <tr>
-                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>Compréhension</td>
+                        <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+                      </tr>
+                      <tr>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                          Compréhension
+                        </td>
                         <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
                           <StarRating rating={answer.rating_comprehension} />
+                        </td>
+                      </tr>
+                      {answer.errors_rating_comprehension?.length > 0 && (
+                        <tr>
+                          <td
+                            colSpan={2}
+                            style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                          >
+                            <ul
+                              style={{
+                                margin: 0,
+                                paddingInlineStart: "1.2em",
+                                fontStyle: "italic",
+                                fontSize: "0.85em",
+                                color: "var(--textSecondary)",
+                              }}
+                            >
+                              {answer.errors_rating_comprehension.map((e, i) => (
+                                <li key={i}>{renderWithHebrewHighlight(e)}</li>
+                              ))}
+                            </ul>
+                          </td>
+                        </tr>
+                      )}
+                      <tr>
+                        <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+                      </tr>
+                      <tr>
+                        <td colSpan={2} style={{ padding: "8px 0", border: "1px solid transparent" }}>
+                          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2} style={{ height: "1em", border: "1px solid transparent" }} />
+                      </tr>
+                      <tr>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}>
+                          Note Globale
+                        </td>
+                        <td style={{ border: "1px solid transparent", padding: "4px 8px" }}>
+                          <StarRating rating={Math.round(computeGlobalNote(answer).average)} />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          colSpan={2}
+                          style={{ border: "1px solid transparent", padding: "4px 8px", textAlign: "start" }}
+                        >
+                          <ul
+                            style={{
+                              margin: 0,
+                              paddingInlineStart: "1.2em",
+                              fontStyle: "italic",
+                              fontSize: "0.85em",
+                              color: "var(--textSecondary)",
+                            }}
+                          >
+                            <li>{capitalize(computeGlobalNote(answer).comment)}</li>
+                          </ul>
                         </td>
                       </tr>
                     </tbody>

@@ -11,10 +11,11 @@ import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
 import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../components/PageTurnCurl";
 import { SectionTitle } from "../components/QuoteBlock";
+import { PerfStat } from "../components/PerfStat";
+import { QuestionMarkIcon } from "../components/QuestionMarkIcon";
 import "./screens.css";
 
 // Icônes UI statiques servies depuis frontend/public/, cf. AudioProgressBlock.jsx.
-const QUESTION_MARK_ICON_URL = "/point-dinterrogation.png";
 const SHIN_ICON_URL = "/shinletter.png";
 
 // Même pastille numérotée que les titres des blocs audio des questions
@@ -42,6 +43,10 @@ function StepBadge({ number, background, color }) {
       {number}
     </span>
   );
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 // shinletter.png est un pictogramme noir plein (pas une icône déjà colorée,
@@ -75,6 +80,9 @@ export default function MotScreen() {
   const [pulse, setPulse] = useState(null); // "success" | "danger" | null
   const [flip, setFlip] = useState(null); // { dir, mot, phase: "start" | "animating" }
   const flipTimeoutRef = useRef(null);
+  // Force PerfBubble à recalculer son % juste après chaque évaluation
+  // envoyée — cf. demande explicite du user ("en direct").
+  const [perfVersion, setPerfVersion] = useState(0);
 
   // Le mode découle du chemin d'accès : apprentissage (code présent) parcourt
   // simplement la liste ordonnée de la leçon ; révisions (code absent) tire
@@ -145,6 +153,7 @@ export default function MotScreen() {
   function handleEvaluate(success) {
     setPulse(success ? "success" : "danger");
     createEvaluation({ objectType: "mot", objectKey: `${mot.key}|${mot.langue}`, success }).then(() => {
+      setPerfVersion((v) => v + 1);
       setTimeout(() => {
         setPulse(null);
         next();
@@ -369,23 +378,27 @@ export default function MotScreen() {
               ajusté empiriquement jusqu'à égaler l'écart shin->trait
               (21px) — cf. demande explicite du user ("équidistance"). */}
           <div style={{ width: "70%", maxWidth: 400, marginTop: 14, marginBottom: -1, display: "flow-root" }}>
-            <SectionTitle fontSize="0.84em">
+            {/* gris non gras (au lieu du bleu marine par défaut) — cf.
+                demande explicite du user. */}
+            <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
               <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
               Traduis le mot hébreu
             </SectionTitle>
           </div>
 
-          <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em" }}>
+          {/* Non gras + noir (var(--textPrimary), remplace le gris clair
+              précédent) — cf. demande explicite du user. marginBottom:13 :
+              depuis la suppression des logos haut-parleur/shin (qui
+              créaient l'espace avec le trait), le mot touchait presque le
+              trait (8px, gap:14 du conteneur + marginTop:-27 du panneau
+              racine collapsé) — ce marginBottom ramène l'écart à 21px, la
+              même valeur "équidistance" déjà utilisée comme référence dans
+              cet écran — cf. demande explicite du user. */}
+          <span
+            className="hebrew"
+            style={{ fontWeight: 700, fontSize: "2.925em", color: "var(--textPrimary)", marginBottom: 13 }}
+          >
             {cardMot.original}
-          </span>
-
-          <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
-            <button type="button" className="speak-btn" onClick={() => speak(cardMot.original)}>
-              <SpeakerIcon color="var(--speakerIcon)" size={27} />
-            </button>
-            <button type="button" className="speak-btn" onClick={toggleRacineInline}>
-              <span style={shinIconStyle} />
-            </button>
           </span>
 
           {/* Fiche racine "tapis" : se déroule vers le bas depuis la
@@ -414,16 +427,15 @@ export default function MotScreen() {
             </div>
           </div>
 
-          <hr
-            style={{
-              width: "70%",
-              maxWidth: 400,
-              border: "none",
-              borderTop: "1px solid var(--cardBorder)",
-              margin: 0,
-              marginTop: 7,
-            }}
-          />
+          <div style={{ width: "70%", maxWidth: 400, marginTop: 7 }}>
+            <hr
+              style={{
+                border: "none",
+                borderTop: "1px solid var(--cardBorder)",
+                margin: 0,
+              }}
+            />
+          </div>
 
           {/* Pastille "2" (vert pastel) + mini-titre "Réponse", même
               traitement que la pastille "1" ci-dessus (width:"70%" pour
@@ -434,8 +446,15 @@ export default function MotScreen() {
               logos ✗/✓ une fois révélé), l'éloignant de 8px de trop par
               rapport à cette ligne "Réponse" — cf. demande explicite du
               user ("remonte le bloc... traduit"). */}
-          <div style={{ width: "70%", maxWidth: 400, marginTop: 14, display: "flow-root" }}>
-            <SectionTitle fontSize="0.84em">
+          {/* marginTop:7 : redescend ce bloc (la pastille PERF. ne se
+              trouve plus juste sous le trait) pour égaler à nouveau
+              l'écart mot hébreu->trait (21px), cf. demande explicite du
+              user ("même espace... entre le titre du bloc 2 et la barre
+              horizontale au-dessus"). */}
+          <div style={{ width: "70%", maxWidth: 400, marginTop: 7, display: "flow-root" }}>
+            {/* gris non gras (au lieu du bleu marine par défaut) — cf.
+                demande explicite du user. */}
+            <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
               <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
               Réponse
             </SectionTitle>
@@ -454,8 +473,9 @@ export default function MotScreen() {
             >
               <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={cardRevealed}>
                 {/* 36x36 (48*0.75) : réduit de 25% — cf. demande explicite
-                    du user. */}
-                <img src={QUESTION_MARK_ICON_URL} alt="Afficher la solution" style={{ width: 36, height: 36, display: "block" }} draggable={false} />
+                    du user. Fond noir (var(--textPrimary)), remplace le
+                    gris clair précédent — cf. demande explicite du user. */}
+                <QuestionMarkIcon size={36} background="var(--textPrimary)" style={{ display: "block" }} />
               </button>
             </div>
 
@@ -474,7 +494,9 @@ export default function MotScreen() {
                 marginTop: -1,
               }}
             >
-              <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textSecondary)" }}>{cardMot.french}</span>
+              <span style={{ fontStyle: "italic", fontSize: "1.3em", color: "var(--textPrimary)" }}>
+                {capitalize(cardMot.french)}
+              </span>
               <div style={{ display: "flex", gap: 0 }}>
                 <button
                   type="button"
@@ -492,6 +514,13 @@ export default function MotScreen() {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Alignée sous le point d'interrogation / la solution révélée,
+              justifiée à droite pour que la fin de la chaîne coïncide avec
+              l'extrémité droite du trait — cf. demande explicite du user. */}
+          <div style={{ width: "70%", maxWidth: 400, marginTop: -6 }}>
+            <PerfStat objectType="mot" refreshKey={perfVersion} />
           </div>
         </div>
       </div>

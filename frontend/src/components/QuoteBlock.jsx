@@ -3,14 +3,14 @@
 // les deux restent visuellement identiques (gras, même taille que la mini
 // tuile "Réponse" d'origine, couleur de la barre de citation, justifié à
 // gauche) — cf. demande explicite du user.
-export function SectionTitle({ children, fontSize = "0.7em", fontWeight = 700 }) {
+export function SectionTitle({ children, fontSize = "0.7em", fontWeight = 700, color = "var(--tileAccent)" }) {
   return (
     <div
       style={{
         fontWeight,
         fontSize,
         textAlign: "left",
-        color: "var(--tileAccent)",
+        color,
         marginBottom: 8,
       }}
     >

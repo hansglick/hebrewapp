@@ -74,8 +74,11 @@ export default function ParlerScreen() {
           </Link>
         )}
 
+        {/* Pas de marginTop supplémentaire : le gap:12px de .tile-list
+            suffit déjà, un ajout ici cassait l'uniformité des écarts entre
+            tuiles consécutives — cf. demande explicite du user. */}
         {referenceLesson && (
-          <Link to={`/jdr/${referenceLesson}`} className="card-link" style={{ marginTop: 16 }}>
+          <Link to={`/jdr/${referenceLesson}`} className="card-link">
             <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
               Jeu de rôle
             </div>

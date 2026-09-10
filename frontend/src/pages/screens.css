@@ -265,6 +265,15 @@
   color: #fff;
 }
 
+/* Tuile "Hard Exam" (écran de montée de niveau) — même orange que le reste
+   de l'app (cf. WaitingVideo.css), cf. demande explicite du user. */
+.exam-tile.orange {
+  background: #f97316;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
 .exam-tile.green {
   background: var(--validationPleine);
   color: #fff;
@@ -425,6 +434,12 @@
   border: none;
   cursor: pointer;
   line-height: 1;
+  /* Sans ça, le surlignage tactile par défaut (rectangle gris/bleu
+     translucide) reste visible comme un "carré" qui persiste après le tap
+     — ce bouton est retiré/remplacé très vite (changement de mot juste
+     après), ce qui laisse le temps au surlignage de rester affiché plus
+     longtemps que d'habitude — cf. bug rapporté par le user. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .eval-btn.success {
@@ -694,27 +709,78 @@
    HebrewInput.css) — appliqué à tous les usages de HebrewInput dans
    l'application, cf. demande explicite du user. */
 
-/* Bouton "logo accident" (remplace "Abandonner le test") : même pattern de
-   tooltip que .header-btn/.wallet-strip-item (Layout.jsx/.css) — tooltip
-   sous le logo (top:100%) plutôt qu'au-dessus (défaut de .exam-tile-tooltip),
-   ce logo étant tout en haut de l'écran — cf. demande explicite du user. */
-.onboarding-abandon-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
+/* Question écrite de l'évaluation onboarding : bordure du champ de saisie
+   (et de l'encadré pré-remplissage vocal, pour rester un seul bloc visuel,
+   cf. HebrewInput.css) en gris clair et plus fine, au lieu du bleu nuit
+   var(--tileAccent) par défaut — règle scopée à cet écran seul, cf.
+   demande explicite du user. */
+.onboarding-question-input .hebrew-input-textarea,
+.onboarding-question-input .voice-prefill-frame {
+  border-color: var(--cardBorder);
+  border-width: 1px;
 }
 
-.onboarding-abandon-btn:hover .exam-tile-tooltip {
-  visibility: visible;
-  opacity: 1;
+/* Examen blanc / Teacher (QuestionEcriteScreen, cardEvalMode==="prof") ET
+   Examen (ExamenEcritScreen, questions de traduction) : même traitement
+   gris clair que ci-dessus pour le champ de saisie ET le bloc pré-remplir
+   avec la voix — classe partagée entre les deux écrans pour garantir un
+   design strictement identique, cf. demande explicite du user. */
+.exam-teacher-input .hebrew-input-textarea,
+.exam-teacher-input .voice-prefill-frame {
+  border-color: var(--cardBorder);
+  border-width: 1px;
 }
 
-.onboarding-abandon-btn .exam-tile-tooltip {
-  top: 100%;
-  bottom: auto;
-  margin-top: 8px;
+/* Fond des toggles (pré-remplir/clavier hébreu) de cet écran, même vert
+   pastel que la pastille du bloc 2 (var(--validationGrisee)) — seul le
+   fond/piste change, pas le loquet (.switch-knob, reste var(--accent)) —
+   règle scopée à cet écran seul (les autres usages de HebrewInput/.switch
+   gardent leur fond par défaut), cf. demande explicite du user. */
+.onboarding-question-input .switch {
+  background: var(--validationGrisee);
 }
+
+/* Question orale de l'évaluation onboarding : un trait précède déjà le
+   bloc 1 d'OralAnswerCapture ici (le header), contrairement aux autres
+   écrans qui l'utilisent (révisions, examen) sans trait avant — l'espace
+   par défaut (marginTop:48, pensé pour un titre "Question X" sans trait)
+   double alors l'écart, cf. .oral-answer-capture-block:first-child
+   (OralAnswerCapture.css). -8px : ramène ce total au même espace que celui
+   entre les blocs suivants (24px, cf. .oral-answer-capture-block) — règle
+   scopée à cet écran seul, cf. demande explicite du user. */
+/* Uniquement en-dessous du seuil desktop d'OralAnswerCapture.css (900px,
+   empilement vertical avec traits horizontaux) : au-delà, les 3 blocs
+   passent en rangée sans marge verticale entre eux (déjà remise à 0 par
+   OralAnswerCapture.css), notre écart n'a alors plus lieu d'être. */
+@media (max-width: 899px) {
+  .onboarding-oral-answer-capture .oral-answer-capture-block:first-child {
+    margin-top: -8px;
+  }
+}
+
+/* Message "Prêt pour la question suivante ?" (onboarding, avance
+   automatique 5s après l'évaluation) : rouge clignotant pour signaler au
+   user que l'écran va changer — cf. demande explicite du user. */
+.onboarding-next-blink {
+  color: var(--annulationPleine);
+  font-weight: 700;
+  text-align: center;
+  animation: onboarding-next-blink 1s ease-in-out infinite;
+}
+
+@keyframes onboarding-next-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-next-blink {
+    animation: none;
+  }
+}
+

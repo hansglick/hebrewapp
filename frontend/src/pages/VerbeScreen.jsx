@@ -11,6 +11,8 @@ import { SpeakerIcon } from "../components/SpeakerIcon";
 import { RacineCard } from "../components/RacineCard";
 import { SectionTitle } from "../components/QuoteBlock";
 import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../components/PageTurnCurl";
+import { PerfStat } from "../components/PerfStat";
+import { QuestionMarkIcon } from "../components/QuestionMarkIcon";
 import "./screens.css";
 
 const TEMPS_LABELS = [
@@ -18,9 +20,6 @@ const TEMPS_LABELS = [
   { key: "present", label: "présent" },
   { key: "futur", label: "futur" },
 ];
-
-// Icônes UI statiques servies depuis frontend/public/, cf. AudioProgressBlock.jsx/MotScreen.jsx.
-const QUESTION_MARK_ICON_URL = "/point-dinterrogation.png";
 
 // shinletter.png (backend/results/logos) est un pictogramme noir plein —
 // même technique de masque CSS et même taille (22px) que MotScreen — /1.125
@@ -115,6 +114,9 @@ export default function VerbeScreen() {
   const [flip, setFlip] = useState(null); // { dir, verbe, phase: "start" | "animating" }
   const flipTimeoutRef = useRef(null);
   const badge1Ref = useRef(null);
+  // Force PerfBubble à recalculer son % juste après chaque évaluation
+  // envoyée — cf. demande explicite du user ("en direct").
+  const [perfVersion, setPerfVersion] = useState(0);
 
   // Le mode découle du chemin d'accès, cf. MotScreen.
   const mode = code ? "exploration" : "revision";
@@ -288,6 +290,7 @@ export default function VerbeScreen() {
       objectKey: `${verbe.key}|${temps}|${personneKey}`,
       success,
     }).then(() => {
+      setPerfVersion((v) => v + 1);
       setTimeout(() => {
         setPulse(null);
         next();
@@ -430,7 +433,7 @@ export default function VerbeScreen() {
               ...(isBase ? null : { marginTop: frozenBadge1MarginTop }),
             }}
           >
-            <SectionTitle fontSize="0.84em">
+            <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
               <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
               Conjugue le verbe
             </SectionTitle>
@@ -450,7 +453,19 @@ export default function VerbeScreen() {
               police rendue doit être identique à l'écran révision/mot
               (aucun zoom là-bas, même contexte de police parent 18px),
               cf. demande explicite du user. */}
-          <h1 className="hebrew" style={{ margin: 0, fontWeight: 700, fontSize: "calc(2.925em / 1.125)" }}>
+          {/* Non gras + gris clair en révision/renforcer uniquement (reste
+              gras et couleur par défaut en exploration/apprentissage) —
+              #9ca3af (pas var(--textSecondary), trop foncé) : plus clair
+              que le gris standard de l'app, cf. demande explicite du user. */}
+          <h1
+            className="hebrew"
+            style={{
+              margin: 0,
+              fontWeight: 700,
+              fontSize: "calc(2.925em / 1.125)",
+              color: mode === "revision" ? "var(--textPrimary)" : undefined,
+            }}
+          >
             {cardVerbe.pure}
           </h1>
 
@@ -463,31 +478,34 @@ export default function VerbeScreen() {
           {/* gap:2 (8px par défaut de .hebrew-word-row -> 4 -> 2, réduit de
               50% à chaque demande explicite du user) : override en inline
               uniquement ici (pas la classe partagée, utilisée aussi par
-              MotScreen). */}
-          <span className="hebrew-word-row" style={{ justifyContent: "center", gap: 2 }}>
-            {/* padding:0 : chaque <button> a un padding par défaut du
-                navigateur (~6px de chaque côté) qui dominait largement le
-                `gap` ci-dessus et rendait le rapprochement invisible —
-                mesuré via Claude in Chrome (padding 6px + gap 2px +
-                padding 6px = 14px, quasi inchangé malgré le gap réduit) —
-                cf. bug rapporté par le user. */}
-            <button
-              type="button"
-              className="speak-btn"
-              style={{ padding: 0 }}
-              onClick={() => speak(cardVerbe.pure)}
-            >
-              {/* size=18 (24*0.75) : réduit de 25% (cf. demande explicite
-                  du user). */}
-              <SpeakerIcon color={ICONS_GRAY} size={18} />
-            </button>
-            <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleBinyanInline}>
-              <span style={betIconStyle} />
-            </button>
-            <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleRacineInline}>
-              <span style={shinIconStyle} />
-            </button>
-          </span>
+              MotScreen). Masqué en révision/renforcer (reste affiché en
+              exploration/apprentissage) — cf. demande explicite du user. */}
+          {mode !== "revision" && (
+            <span className="hebrew-word-row" style={{ justifyContent: "center", gap: 2 }}>
+              {/* padding:0 : chaque <button> a un padding par défaut du
+                  navigateur (~6px de chaque côté) qui dominait largement le
+                  `gap` ci-dessus et rendait le rapprochement invisible —
+                  mesuré via Claude in Chrome (padding 6px + gap 2px +
+                  padding 6px = 14px, quasi inchangé malgré le gap réduit) —
+                  cf. bug rapporté par le user. */}
+              <button
+                type="button"
+                className="speak-btn"
+                style={{ padding: 0 }}
+                onClick={() => speak(cardVerbe.pure)}
+              >
+                {/* size=18 (24*0.75) : réduit de 25% (cf. demande explicite
+                    du user). */}
+                <SpeakerIcon color={ICONS_GRAY} size={18} />
+              </button>
+              <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleBinyanInline}>
+                <span style={betIconStyle} />
+              </button>
+              <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleRacineInline}>
+                <span style={shinIconStyle} />
+              </button>
+            </span>
+          )}
 
           {mode === "exploration" && (
             <p
@@ -640,16 +658,6 @@ export default function VerbeScreen() {
               }}
             />
 
-            {/* Pastille "2" + titre "À la forme" — cf. demande explicite
-                du user. marginTop calé pour équidistance (cf. commentaire
-                du trait ci-dessus). */}
-            <div style={{ width: "70%", maxWidth: 400, marginTop: -6, display: "flow-root", zoom: 1 / 1.5 }}>
-              <SectionTitle fontSize="0.84em">
-                <StepBadge number={2} background="#dbeafe" color="#1d4ed8" />
-                À la forme
-              </SectionTitle>
-            </div>
-
             {/* Temps + personne, séparés par un trait fin vertical
                 discret gris — cf. demande explicite du user. Police même
                 taille/format que le mot traduit en français de l'écran
@@ -659,35 +667,56 @@ export default function VerbeScreen() {
                 wrapper hero à zoom:0.75, donc l'ambiant est 1.5 et non
                 1.125) pour rendre à la même taille absolue que l'écran
                 révision/mot (23.4px, aucun zoom là-bas). */}
-            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-              <span style={{ fontSize: "calc(1.3em * 0.8 / 1.5)", color: "#000", fontWeight: 700 }}>
+            {/* Non gras, gris clair #9ca3af (même gris que le verbe hébreu
+                du bloc 1, pas var(--textSecondary) — trop foncé) — cf.
+                demande explicite du user. */}
+            {/* marginTop:-5.474 (zoom:1.5 ambiant de .screen) : équidistance
+                entre les deux traits horizontaux. Le trait du dessous
+                (marginTop:-5.47 sur son propre wrapper, cf. plus bas) suit
+                ce bloc dans le flux normal, donc son écart en dessous reste
+                fixe (15.8px) quel que soit le marginTop appliqué ici — seul
+                l'écart au-dessus bouge ; -5.474 l'aligne sur ces 15.8px —
+                cf. demande explicite du user, suite à la suppression de la
+                pastille "2" + titre "À la forme". */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: -5.474 }}>
+              {/* 0.64 = 0.8 * 0.8 : -20% supplémentaires — cf. demande
+                  explicite du user. */}
+              <span style={{ fontSize: "calc(1.3em * 0.64 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>
                 {capitalize(tempsLabel)}
               </span>
               <span style={{ width: 1, height: "1.2em", background: "var(--cardBorder)" }} />
-              <span style={{ fontSize: "calc(1.3em * 0.8 / 1.5)", color: "#000", fontWeight: 700 }}>
+              {/* 0.64 = 0.8 * 0.8 : -20% supplémentaires — cf. demande
+                  explicite du user. */}
+              <span style={{ fontSize: "calc(1.3em * 0.64 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>
                 {capitalize(personneLabel)}
               </span>
             </div>
 
             {/* marginTop calé pour équidistance entre "la forme" (bloc 2)
                 et la pastille 3 (bloc 1) — cf. demande explicite du user. */}
-            <hr
-              style={{
-                width: "70%",
-                maxWidth: 400,
-                border: "none",
-                borderTop: "1px solid var(--cardBorder)",
-                margin: 0,
-                marginTop: -5.47,
-              }}
-            />
+            <div style={{ width: "70%", maxWidth: 400, marginTop: -5.47 }}>
+              <hr
+                style={{
+                  border: "none",
+                  borderTop: "1px solid var(--cardBorder)",
+                  margin: 0,
+                }}
+              />
+            </div>
 
-            {/* Pastille "3" (vert pastel) + titre "Réponse" — cf. demande
-                explicite du user. marginTop calé pour équidistance (cf.
-                commentaire du trait ci-dessus). */}
-            <div style={{ width: "70%", maxWidth: 400, marginTop: -4.49, display: "flow-root", zoom: 1 / 1.5 }}>
-              <SectionTitle fontSize="0.84em">
-                <StepBadge number={3} background="var(--validationGrisee)" color="var(--validationPleine)" />
+            {/* Pastille "2" (vert pastel, renumérotée après la suppression
+                de l'ancienne pastille "2" "À la forme" — cf. demande
+                explicite du user) + titre "Réponse". marginTop:20.99 :
+                augmente de 150% l'écart avec le trait au-dessus (18px ->
+                45px, mesuré via Claude in Chrome) en descendant ce bloc —
+                cf. demande explicite du user. zoom:1/1.5 sur ce div annule
+                le zoom ambiant de .screen (1.5) pour son propre rendu, donc
+                ce marginTop s'applique en 1:1 (pas de facteur x1.5), contrairement
+                aux marginTop posés directement dans l'ambiant (ex: la
+                rangée temps/personne juste au-dessus). */}
+            <div style={{ width: "70%", maxWidth: 400, marginTop: 20.99, display: "flow-root", zoom: 1 / 1.5 }}>
+              <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+                <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
                 Réponse
               </SectionTitle>
             </div>
@@ -708,17 +737,17 @@ export default function VerbeScreen() {
                   }}
                 >
                   <button type="button" className="speak-btn" onClick={() => setRevealed(true)} disabled={revealed}>
-                    <img
-                      src={QUESTION_MARK_ICON_URL}
-                      alt="Afficher la solution"
-                      // 48*0.75/1.5 : 48/1.5 annule le zoom ambiant de
-                      // .screen (le bloc 3 n'est pas dans le wrapper hero à
-                      // zoom:0.75, l'ambiant vaut donc 1.5 ici) pour rendre
-                      // à 48px (taille de l'écran révision/mot), *0.75
-                      // réduit ensuite de 25% — cf. demande explicite du
-                      // user.
-                      style={{ width: (48 * 0.75) / 1.5, height: (48 * 0.75) / 1.5, display: "block" }}
-                      draggable={false}
+                    {/* 48*0.75/1.5 : 48/1.5 annule le zoom ambiant de
+                        .screen (le bloc 3 n'est pas dans le wrapper hero à
+                        zoom:0.75, l'ambiant vaut donc 1.5 ici) pour rendre
+                        à 48px (taille de l'écran révision/mot), *0.75
+                        réduit ensuite de 25% — cf. demande explicite du
+                        user. Fond #9ca3af : même gris que le verbe hébreu
+                        du bloc 1 — cf. demande explicite du user. */}
+                    <QuestionMarkIcon
+                      size={(48 * 0.75) / 1.5}
+                      background="var(--textPrimary)"
+                      style={{ display: "block" }}
                     />
                   </button>
                 </div>
@@ -743,7 +772,7 @@ export default function VerbeScreen() {
                       la police hébraïque sans le fontSize/direction
                       imposés par cette classe, qui écraseraient la taille
                       voulue ici. */}
-                  <p className="hebrew" style={{ margin: 0, fontSize: "calc(1.3em * 1.25 / 1.5)", color: "var(--textSecondary)" }}>
+                  <p className="hebrew" style={{ margin: 0, fontSize: "calc(1.3em * 1.25 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>
                     {conjugaisonsTemps[personneKey]?.conjugaison}
                   </p>
                   <div style={{ display: "flex", gap: 0 }}>
@@ -770,6 +799,14 @@ export default function VerbeScreen() {
                 </div>
               </div>
             )}
+
+            {/* Alignée sous le point d'interrogation / la solution révélée,
+                justifiée à droite pour que la fin de la chaîne coïncide
+                avec l'extrémité droite du trait — cf. demande explicite du
+                user. zoom:1/1.5 annule le zoom ambiant de .screen. */}
+            <div style={{ width: "70%", maxWidth: 400, zoom: 1 / 1.5, marginTop: -6 }}>
+              <PerfStat objectType="verbe" refreshKey={perfVersion} />
+            </div>
           </>
         )}
       </div>

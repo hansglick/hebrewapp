@@ -29,6 +29,12 @@ class EvaluationOut(BaseModel):
     created_at: str
 
 
+class EvaluationStatsOut(BaseModel):
+    count: int
+    percent: int | None
+    success_count: int | None
+
+
 def _row_to_out(row) -> EvaluationOut:
     return EvaluationOut(
         id=row["id"],
@@ -85,5 +91,38 @@ def list_evaluations(
             (user_id, object_type, object_key, limit),
         ).fetchall()
         return [_row_to_out(row) for row in rows]
+    finally:
+        conn.close()
+
+
+# Performance récente sur un TYPE d'item (tous object_key confondus, ex:
+# "mot"), pas sur un item précis — cf. bulle "PERF." des écrans révisions,
+# demande explicite du user. Seules les évaluations à réponse booléenne
+# (success) comptent : les évaluations notées (score, ex: oral) n'ont pas
+# leur place dans un % de bonnes réponses.
+@router.get("/evaluations/stats", response_model=EvaluationStatsOut)
+def evaluation_stats(
+    object_type: str = Query(...),
+    limit: int = Query(10, ge=1, le=50),
+    user_id: int = Depends(get_current_user_id),
+):
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            """
+            SELECT success FROM evaluations
+            WHERE user_id = ? AND object_type = ? AND success IS NOT NULL
+            ORDER BY created_at DESC, id DESC
+            LIMIT ?
+            """,
+            (user_id, object_type, limit),
+        ).fetchall()
+        count = len(rows)
+        if count < limit:
+            return EvaluationStatsOut(count=count, percent=None, success_count=None)
+        success_count = sum(1 for row in rows if row["success"])
+        return EvaluationStatsOut(
+            count=count, percent=round(success_count / count * 100), success_count=success_count
+        )
     finally:
         conn.close()

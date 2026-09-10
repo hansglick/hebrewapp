@@ -4,6 +4,7 @@ import { getNiveau } from "../api/user";
 import { getOnboardingStatus } from "../api/onboarding";
 import { MaskIcon } from "../components/MaskIcon";
 import { ChapitreLogo } from "../components/ChapitreLogo";
+import { displayChapitreLabel } from "../utils/chapitreDisplay";
 import { displayLessonNumber } from "../utils/lessonDisplay";
 import "./screens.css";
 
@@ -113,33 +114,50 @@ export default function Accueil() {
         </h1>
       )}
 
+      {/* Police nettement plus petite que le titre (0.85em contre ~2em par
+          défaut pour un h1) et grise — cf. demande explicite du user.
+          marginTop:-12 : le gap:16 du flex .screen + le marginBottom:8 du
+          titre donnaient 24px d'écart ; -12px ramène ce total à 12px, soit
+          -50% — cf. demande explicite du user. Logo +100% (18px -> 36px) ;
+          label du chapitre + index de leçon en gras — cf. demande explicite
+          du user. */}
+      {referenceLesson && (
+        <p
+          className="muted"
+          style={{
+            margin: "-12px 0 8px",
+            fontSize: "0.85em",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 4,
+          }}
+        >
+          Tu es à la leçon{" "}
+          <strong style={{ fontWeight: 700 }}>
+            {displayChapitreLabel(chapId)}.{displayLessonNumber(referenceLesson)}
+          </strong>
+          {/* marginInlineStart:-4 annule le gap:4 du flex parent (hérité de
+              tous les enfants), pour coller le logo au texte — cf. demande
+              explicite du user. */}
+          <ChapitreLogo chapId={chapId} size="36px" style={{ marginInlineStart: -4 }} />
+        </p>
+      )}
+
       {/* Linéaire sur une même ligne horizontale en desktop, empilé
           verticalement en mobile (cf. .accueil-columns, screens.css) — 4
           colonnes : Apprendre / Parler / Réviser / Examen, cf. demande
           explicite du user. */}
       <div className="accueil-columns">
-        {/* Apprendre */}
+        {/* Apprendre — plus de logo de chapitre ni d'index de leçon sur la
+            tuile (déplacés sous le titre de l'écran, cf. plus haut), tuile
+            simplifiée au même format que Parler/Renforcer — cf. demande
+            explicite du user. */}
         <div className="tile-list" style={{ gap: 8, margin: 0 }}>
           {referenceLesson && (
             <Link to={`/apprentissage/${chapId}/${referenceLesson}`} className="card-link">
               <div className="card" style={{ textAlign: "center" }}>
-                {/* Titre custom (pas TileTitle, qui ne gère qu'une seule
-                    icône) — tout sur un même axe horizontal : icône
-                    openbook, texte, logo du chapitre (même taille que
-                    l'icône openbook, 22px) puis le numéro de leçon, cf.
-                    demande explicite du user. */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                  <MaskIcon src="/openbook.png" size={22} />
-                  <span style={{ fontWeight: 600, fontSize: "1.1em", display: "flex", alignItems: "center" }}>
-                    Reprendre la leçon
-                    {/* 28.6px = 22*1.3 : augmenté de 30% — cf. demande
-                        explicite du user. */}
-                    <ChapitreLogo chapId={chapId} size="28.6px" style={{ marginInlineStart: 6 }} />
-                    <span style={{ fontStyle: "italic", marginInlineStart: 4 }}>
-                      {displayLessonNumber(referenceLesson)}
-                    </span>
-                  </span>
-                </div>
+                <TileTitle src="/openbook.png">Apprendre</TileTitle>
               </div>
             </Link>
           )}

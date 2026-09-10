@@ -224,7 +224,18 @@ export default function ConceptRevisionScreen() {
   if (!concept) return null;
 
   return (
-    <section className="screen">
+    // justifyContent:"flex-start" (au lieu du centrage vertical par défaut
+    // de .screen) : positionne l'encadré de conversation relativement haut
+    // dans l'écran plutôt que centré sur sa hauteur — l'espace avec la
+    // barre de contrôle supérieure vient déjà du padding de .app-content
+    // (Layout.css) — cf. demande explicite du user.
+    // marginBottom:"auto" : épingle le bloc .screen en haut de .app-content
+    // (dont le justify-content:"safe center" partagé centrerait sinon ce
+    // bloc, min-height:60vh, dans tout l'espace disponible) — l'astuce des
+    // marges "auto" en flexbox absorbe tout l'espace libre sous ce seul
+    // enfant. marginTop:24 : 24 (padding-top de .app-content) + 24 = 48px,
+    // taille de la pastille verte du micro — cf. demande explicite du user.
+    <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
       <div className="card card-illustration" style={{ textAlign: "center" }}>
         {/* Même gabarit que JdrScreen (image pleine largeur en tête de
             carte) — cf. demande explicite du user ("calque-toi sur le
@@ -237,22 +248,24 @@ export default function ConceptRevisionScreen() {
           draggable={false}
         />
 
-        {/* "Concept" en gras devant le nom du concept (item_concept.json::concept),
-            qui n'est plus un titre mais un texte classique — gras retiré,
-            italique, taille réduite, justifié à gauche — cf. demande
-            explicite du user. */}
-        <p style={{ margin: "12px 0 0", fontSize: "0.9em", textAlign: "left" }}>
-          <span style={{ fontWeight: 700 }}>Concept : </span>
-          <span style={{ fontStyle: "italic" }}>{concept.concept}</span>
-        </p>
-
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
-          <MicrophoneIcon
-            size={48}
-            badgeColor={running ? "var(--annulationPleine)" : "var(--validationPleine)"}
-            pulsing={running}
-            onClick={running ? stop : start}
-          />
+        {/* Même disposition que JdrScreen : micro à gauche, séparé du texte
+            introductif par une fine bordure verticale grise — cf. demande
+            explicite du user. "Concept : concept_name" reprend la même
+            typographie qu'avant (gras/italique), juste déplacé dans cette
+            rangée. */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12, width: "100%" }}>
+          <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--cardBorder)" }}>
+            <MicrophoneIcon
+              size={48}
+              badgeColor={running ? "var(--annulationPleine)" : "var(--validationPleine)"}
+              pulsing={running}
+              onClick={running ? stop : start}
+            />
+          </div>
+          <p style={{ flex: 1, minWidth: 0, margin: 0, fontSize: "0.9em", textAlign: "left" }}>
+            <span style={{ fontWeight: 700 }}>Concept : </span>
+            <span style={{ fontStyle: "italic" }}>{concept.concept}</span>
+          </p>
         </div>
 
         {status && (

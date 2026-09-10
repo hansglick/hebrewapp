@@ -60,8 +60,10 @@ export function NiveauUpScreen({ code, finalResult }) {
   return (
     <section className="screen">
       {/* Seuls le pseudo et le niveau atteint sont en gras, cf. demande
-          explicite du user — le h1 lui-même repasse donc en graisse normale. */}
-      <h1 style={{ textAlign: "center", fontWeight: 400 }}>
+          explicite du user — le h1 lui-même repasse donc en graisse normale.
+          1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%, cf. demande
+          explicite du user. */}
+      <h1 style={{ textAlign: "center", fontWeight: 400, fontSize: "1.4em" }}>
         Félicitations {pseudo && <strong style={{ fontWeight: 600 }}>{pseudo}</strong>}, tu atteins le niveau{" "}
         <strong style={{ fontWeight: 600 }}>
           {displayChapitreLabel(chapId)} {displayLessonNumber(code)}
@@ -94,16 +96,21 @@ export function NiveauUpScreen({ code, finalResult }) {
               </li>
               <li>
                 {wallet.nombre_cartes} carte(s) dans ta{" "}
-                <Link to="/jeu/cartes" className="link-btn" style={{ fontSize: "1em" }}>
+                {/* Noir (pas var(--accent), vert par défaut de .link-btn) —
+                    cf. demande explicite du user. */}
+                <Link to="/jeu/cartes" className="link-btn" style={{ fontSize: "1em", color: "var(--textPrimary)" }}>
                   collection
                 </Link>
               </li>
             </>
           )}
           <li>
-            <Link to="/jeu/lotterie" className="link-btn" style={{ fontSize: "1em" }}>
-              Échange tes points contre des cartes
-            </Link>
+            {/* Seul "Échange" est souligné/lien, le reste de la phrase est
+                du texte simple — cf. demande explicite du user. */}
+            <Link to="/jeu/lotterie" className="link-btn" style={{ fontSize: "1em", color: "var(--textPrimary)" }}>
+              Échange
+            </Link>{" "}
+            tes points contre des cartes
           </li>
         </ul>
       </div>
@@ -117,16 +124,26 @@ export function NiveauUpScreen({ code, finalResult }) {
             {hardStatus.points_a_gagner} <ShekelIcon size={12} style={{ verticalAlign: -1 }} />. Disponible
             seulement jusqu'à ta prochaine réussite d'un examen classique.
           </p>
-          <Link to="/examen/hard" className="link-btn" style={{ marginTop: 6, display: "inline-block" }}>
-            Découvrir le Hard Exam
-          </Link>
         </div>
+      )}
+
+      {/* Remplace la mention "Découvrir le Hard Exam" du 2e encadré — cf.
+          demande explicite du user. */}
+      {hardStatus?.unlocked && (
+        <button
+          type="button"
+          className="exam-tile orange"
+          style={{ cursor: "pointer", maxWidth: 320 }}
+          onClick={() => navigate("/examen/hard")}
+        >
+          Hard Exam
+        </button>
       )}
 
       <button
         type="button"
         className="exam-tile green"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", maxWidth: 320 }}
         onClick={() => navigate("/")}
       >
         Prochaine leçon

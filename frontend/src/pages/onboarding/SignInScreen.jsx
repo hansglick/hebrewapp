@@ -111,7 +111,7 @@ export default function SignInScreen({ onSignedIn, onBack }) {
       <button
         type="button"
         className="exam-tile green auth-submit-btn"
-        style={{ cursor: "pointer", marginTop: 16 }}
+        style={{ cursor: "pointer" }}
         disabled={!pseudo.trim() || pin.length !== 4 || submitting}
         onClick={handleSubmit}
       >

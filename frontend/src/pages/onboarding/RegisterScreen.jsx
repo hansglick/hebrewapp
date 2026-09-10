@@ -151,7 +151,7 @@ export default function RegisterScreen({ onRegistered, onBack }) {
       <button
         type="button"
         className="exam-tile green auth-submit-btn"
-        style={{ cursor: "pointer", marginTop: 16 }}
+        style={{ cursor: "pointer" }}
         disabled={!canSubmit || submitting}
         onClick={handleSubmit}
       >

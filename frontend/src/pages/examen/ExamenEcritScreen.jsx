@@ -4,7 +4,7 @@ import { getExamen } from "../../api/content";
 import { answerExamen, getSessionExists } from "../../api/user";
 import { evaluateTranslation, evaluateTranslationsGrouped } from "../../api/gemini";
 import HebrewInput from "../../components/HebrewInput";
-import { QuoteBlock } from "../../components/QuoteBlock";
+import { QuoteBlock, SectionTitle } from "../../components/QuoteBlock";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import { ExamenBilanScreen } from "./ExamenBilanScreen";
@@ -51,6 +51,40 @@ function StarRating({ rating }) {
     </span>
   );
 }
+
+// Même pastille numérotée que QuestionEcriteScreen (examen blanc) — cf.
+// demande explicite du user ("le design graphique des questions de
+// traduction dans Examen doit être strictement le même que celui utilisé
+// dans examen blanc / HE + Teacher").
+const STEP_BADGE_SIZE = 25;
+function StepBadge({ number, background, color }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: STEP_BADGE_SIZE,
+        height: STEP_BADGE_SIZE,
+        borderRadius: "50%",
+        background,
+        color,
+        fontSize: "0.9375em",
+        fontWeight: 700,
+        marginRight: 12,
+        flexShrink: 0,
+      }}
+    >
+      {number}
+    </span>
+  );
+}
+
+// Même trait que QuestionEcriteScreen (examen blanc) entre le bloc "Traduis"
+// et le bloc "Réponse" — cf. demande explicite du user (cf. StepBadge).
+const stepHr = (
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+);
 
 function firstUnanswered(answers) {
   const i = answers.findIndex((a) => a === null);
@@ -493,11 +527,20 @@ export default function ExamenEcritScreen() {
             }}
           />
 
-          <QuoteBlock>
+          <QuoteBlock
+            label={
+              <>
+                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                Traduis
+              </>
+            }
+          >
             <p style={{ color: "var(--textSecondary)", margin: 0, fontSize: "0.96em", fontStyle: "italic" }}>
               {q.french}
             </p>
           </QuoteBlock>
+
+          {q.type !== "quizz" && !answer && stepHr}
 
           {attemptError && (
             <p className="muted" style={{ color: "var(--annulationPleine)" }}>
@@ -546,17 +589,17 @@ export default function ExamenEcritScreen() {
 
           {!answer && q.type !== "quizz" && pendingAnswers[index] === undefined && (
             <>
-              <HebrewInput
-                key={index}
-                value={studentSolution}
-                onChange={setStudentSolution}
-                rows={3}
-                placeholder="Traduis !"
-              />
+              <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
+                <SectionTitle>
+                  <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                  Réponse
+                </SectionTitle>
+                <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={3} />
+              </div>
               <button
                 type="button"
                 className="exam-tile green"
-                style={{ marginTop: 0, cursor: studentSolution.trim() ? "pointer" : "default" }}
+                style={{ marginTop: 24, cursor: studentSolution.trim() ? "pointer" : "default" }}
                 disabled={!studentSolution.trim()}
                 onClick={handleSubmitOnline}
               >

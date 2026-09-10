@@ -682,7 +682,7 @@ export function playLotAnimation(stageEl, tier, reward, onWalletSettle) {
             [{ opacity: 1 }, { opacity: 0 }],
             { duration: reduceMotion ? 0 : 2500, easing: "ease-in", fill: "forwards" }
           ).onfinish = () => summary.remove();
-        }, reduceMotion ? 0 : 1200);
+        }, reduceMotion ? 0 : 3000);
       }, fanSettleAt);
 
       const gemDuration = reduceMotion ? 220 : 620;

@@ -8,6 +8,7 @@ import { BottomNavBar } from "../../components/BottomNavBar";
 import { QuizzBubbles } from "../../components/QuizzBubbles";
 import { PageTurnCurl, PAGE_TURN_TOTAL_DURATION_MS } from "../../components/PageTurnCurl";
 import { SectionTitle } from "../../components/QuoteBlock";
+import { PerfStat } from "../../components/PerfStat";
 import "../screens.css";
 
 // Même pastille numérotée que les titres de l'écran révision/mot (cf.
@@ -47,12 +48,20 @@ function StepBadge({ number, background, color }) {
   );
 }
 
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 export default function QuizzScreen() {
   const [niveau, setNiveau] = useState(null);
   const [selected, setSelected] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [flip, setFlip] = useState(null); // { dir, quizz, selected, submitted, phase: "start" | "animating" }
   const flipTimeoutRef = useRef(null);
+  // Force PerfBubble à recalculer son % juste après chaque évaluation
+  // envoyée (nouvelle valeur = nouveau fetch, cf. PerfBubble::refreshKey) —
+  // cf. demande explicite du user ("en direct").
+  const [perfVersion, setPerfVersion] = useState(0);
 
   useEffect(() => {
     getNiveau().then(setNiveau);
@@ -77,7 +86,7 @@ export default function QuizzScreen() {
       objectType: "quizz",
       objectKey: quizz.key,
       success: selected === quizz.key,
-    });
+    }).then(() => setPerfVersion((v) => v + 1));
   }
 
   useEffect(() => {
@@ -178,30 +187,39 @@ export default function QuizzScreen() {
             révision/mot (aucun zoom là-bas), cf. demande explicite du
             user ("même taille que révision/mots"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-          <SectionTitle fontSize="0.84em">
+          <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
             <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
             Traduis le mot
           </SectionTitle>
         </div>
 
-        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em", fontWeight: 700 }}>{cardQuizz.french}</p>
+        {/* Même gris clair que MotScreen/VerbeScreen (révision) — cf.
+            demande explicite du user. */}
+        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{capitalize(cardQuizz.french)}</p>
 
         {/* width fixée en CSS (cf. .quizz-hr, screens.css) et non ici : un
             style inline gagnerait toujours face à la règle @media,
             empêchant l'override mobile de jamais s'appliquer. */}
-        <hr
-          className="quizz-hr"
-          style={{
-            border: "none",
-            borderTop: "1px solid var(--cardBorder)",
-            margin: 0,
-          }}
-        />
+        <div className="quizz-hr">
+          <hr
+            style={{
+              width: "100%",
+              border: "none",
+              borderTop: "1px solid var(--cardBorder)",
+              margin: 0,
+            }}
+          />
+        </div>
 
         {/* Pastille "2" (vert pastel) + titre "Double-tap pour
-            sélectionner la réponse" — cf. demande explicite du user. */}
-        <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-          <SectionTitle fontSize="0.84em">
+            sélectionner la réponse" — cf. demande explicite du user.
+            marginTop:0 : la pastille PERF. ne se trouve plus juste sous le
+            trait, plus besoin de remonter ce bloc pour égaler l'écart
+            phrase française->trait (19.19px), cf. demande explicite du
+            user ("même espace... entre le titre du bloc 2 et la barre
+            horizontale au-dessus"). */}
+        <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75), marginTop: 0 }}>
+          <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
             <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
             Double-tap pour choisir la réponse
           </SectionTitle>
@@ -243,6 +261,16 @@ export default function QuizzScreen() {
         >
           {cardSelected === cardQuizz.key ? "Correct" : "Incorrect"}
         </p>
+
+        {/* Alignée sous les bulles / le retour Correct-Incorrect, justifiée
+            à droite pour que la fin de la chaîne coïncide avec l'extrémité
+            droite du trait — cf. demande explicite du user. className
+            "quizz-hr" : même largeur (et même override mobile) que le
+            trait, sans dupliquer ces valeurs. zoom:1/(1.6*0.75) annule le
+            zoom ambiant de ce bloc. */}
+        <div className="quizz-hr" style={{ zoom: 1 / (1.6 * 0.75), marginTop: -6 }}>
+          <PerfStat objectType="quizz" refreshKey={perfVersion} />
+        </div>
       </div>
     );
   }

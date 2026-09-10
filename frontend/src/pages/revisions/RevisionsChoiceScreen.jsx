@@ -17,7 +17,7 @@ export default function RevisionsChoiceScreen() {
   return (
     <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
       <ActionHints {...swipeHandlers.hints} />
-      <h1>Révisions</h1>
+      <h1>Renforcer</h1>
 
       <div className="tile-list">
         <Link to="/revisions/mot" className="card-link">

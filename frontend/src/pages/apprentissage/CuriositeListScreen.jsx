@@ -19,7 +19,7 @@ export default function CuriositeListScreen() {
 
   return (
     <section className="screen">
-      <h1>Curiosité</h1>
+      <h1>Coin culture</h1>
       <div className="tile-list">
         {types.map((type) => (
           <Link

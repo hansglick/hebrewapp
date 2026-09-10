@@ -25,6 +25,14 @@ export const getEvaluations = ({ objectType, objectKey, limit = 5 }) => {
   return apiFetch(`/api/evaluations?${params}`);
 };
 
+// % de bonnes réponses sur les `limit` dernières évaluations d'un TYPE
+// d'item (tous items confondus) — cf. bulle "PERF." des écrans révisions.
+// { count, percent } où percent est null tant que count < limit.
+export const getEvaluationStats = ({ objectType, limit = 10 }) => {
+  const params = new URLSearchParams({ object_type: objectType, limit });
+  return apiFetch(`/api/evaluations/stats?${params}`);
+};
+
 export const getExamenStatus = (code) => apiFetch(`/api/examens/${encodeURIComponent(code)}/status`);
 
 export const getSessionExists = (code) => apiFetch(`/api/examens/${encodeURIComponent(code)}/session-exists`);

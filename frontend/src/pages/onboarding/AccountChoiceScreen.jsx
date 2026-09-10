@@ -5,7 +5,9 @@ import "../screens.css";
 export default function AccountChoiceScreen({ onYes, onNo }) {
   return (
     <section className="screen">
-      <h1>As-tu déjà un compte ?</h1>
+      {/* 1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%, cf. demande
+          explicite du user. */}
+      <h1 style={{ fontSize: "1.4em", fontWeight: 400 }}>As-tu déjà un compte ?</h1>
       <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={onYes}>
         Oui
       </button>

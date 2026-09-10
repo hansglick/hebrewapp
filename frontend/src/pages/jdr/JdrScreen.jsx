@@ -277,7 +277,18 @@ export default function JdrScreen() {
   if (!jdr) return null;
 
   return (
-    <section className="screen">
+    // justifyContent:"flex-start" (au lieu du centrage vertical par défaut
+    // de .screen) : positionne l'encadré de conversation relativement haut
+    // dans l'écran plutôt que centré sur sa hauteur — l'espace avec la
+    // barre de contrôle supérieure vient déjà du padding de .app-content
+    // (Layout.css) — cf. demande explicite du user.
+    // marginBottom:"auto" : épingle le bloc .screen en haut de .app-content
+    // (dont le justify-content:"safe center" partagé centrerait sinon ce
+    // bloc, min-height:60vh, dans tout l'espace disponible) — l'astuce des
+    // marges "auto" en flexbox absorbe tout l'espace libre sous ce seul
+    // enfant. marginTop:24 : 24 (padding-top de .app-content) + 24 = 48px,
+    // taille de la pastille verte du micro — cf. demande explicite du user.
+    <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
       <div className="card card-illustration" style={{ textAlign: "center" }}>
         <img
           className="screen-image"
@@ -307,6 +318,7 @@ export default function JdrScreen() {
               color: "var(--textSecondary)",
             }}
           >
+            <strong style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Mission : </strong>
             {jdr.objectif_etudiant}
           </p>
         </div>

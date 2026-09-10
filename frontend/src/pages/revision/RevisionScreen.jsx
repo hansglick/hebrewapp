@@ -222,20 +222,35 @@ export default function RevisionScreen() {
   if (!revision) return null;
 
   return (
-    <section className="screen">
+    // justifyContent:"flex-start" (au lieu du centrage vertical par défaut
+    // de .screen) : positionne l'encadré de conversation relativement haut
+    // dans l'écran plutôt que centré sur sa hauteur — l'espace avec la
+    // barre de contrôle supérieure vient déjà du padding de .app-content
+    // (Layout.css) — cf. demande explicite du user.
+    // marginBottom:"auto" : épingle le bloc .screen en haut de .app-content
+    // (dont le justify-content:"safe center" partagé centrerait sinon ce
+    // bloc, min-height:60vh, dans tout l'espace disponible) — l'astuce des
+    // marges "auto" en flexbox absorbe tout l'espace libre sous ce seul
+    // enfant. marginTop:24 : 24 (padding-top de .app-content) + 24 = 48px,
+    // taille de la pastille verte du micro — cf. demande explicite du user.
+    <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
       <div className="card card-illustration" style={{ textAlign: "center" }}>
-        <h1 style={{ margin: "0 0 4px", fontSize: "1.1em" }}>Révise avec ton professeur</h1>
-        <p className="muted" style={{ margin: 0, fontSize: "0.85em" }}>
-          Ton professeur va t'interroger, au hasard, sur les mots, verbes et phrases de ta leçon — réponds en hébreu.
-        </p>
-
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
-          <MicrophoneIcon
-            size={48}
-            badgeColor={running ? "var(--annulationPleine)" : "var(--validationPleine)"}
-            pulsing={running}
-            onClick={running ? stop : start}
-          />
+        {/* Plus de titre — cf. demande explicite du user. Même disposition
+            que JdrScreen : micro à gauche, séparé du texte introductif par
+            une fine bordure verticale grise. */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
+          <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--cardBorder)" }}>
+            <MicrophoneIcon
+              size={48}
+              badgeColor={running ? "var(--annulationPleine)" : "var(--validationPleine)"}
+              pulsing={running}
+              onClick={running ? stop : start}
+            />
+          </div>
+          <p style={{ flex: 1, minWidth: 0, margin: 0, fontSize: "0.8em", fontStyle: "italic", textAlign: "start", color: "var(--textSecondary)" }}>
+            <strong style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Révisions : </strong>
+            révise les nouveaux mots, verbes et tournures de phrases de la leçon avec ton professeur.
+          </p>
         </div>
 
         {status && (

@@ -30,3 +30,11 @@
   height: 52px;
   box-sizing: border-box;
 }
+
+/* Spécificité (2 classes) supérieure à la règle mobile générique
+   .exam-tile{max-width:100%} (screens.css) qui fait sinon dépasser ce
+   bouton par rapport au champ de mot de passe (resté à 320px) sur petit
+   écran — cf. demande explicite du user. */
+.auth-submit-btn.exam-tile {
+  max-width: 320px;
+}
