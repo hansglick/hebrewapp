@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { abandonExamen, abandonExamenHard, getActiveLockdown, getNiveau } from "../api/user";
-import { getCurrentOnboardingExam } from "../api/onboarding";
+import { getCurrentOnboardingExam, getCurrentQuicktestExam } from "../api/onboarding";
 import { clearIdentity, getIdentity } from "../api/identity";
 import { clearLockdownEscape, isLockdownEscapeActive } from "../utils/lockdownEscape";
 import OnboardingScreen from "../pages/onboarding/OnboardingScreen";
@@ -78,7 +78,19 @@ export default function Layout() {
       justRegisteredRef.current = false;
       return;
     }
-    getCurrentOnboardingExam().then((r) => setShowOnboarding(r.in_progress));
+    // Vérifie AUSSI le Quick Test (cf. app/quicktest_exam.py, endpoints
+    // séparés) : sans ça, un Quick Test interrompu par un refresh ne
+    // serait jamais repris (seul l'examen d'entrée classique ramènerait à
+    // l'onboarding) — cf. demande explicite du user ("un test réellement
+    // interrompu... y ramène", garantie qui doit valoir pour les deux
+    // parcours.
+    getCurrentOnboardingExam().then((r) => {
+      if (r.in_progress) {
+        setShowOnboarding(true);
+        return;
+      }
+      getCurrentQuicktestExam().then((rq) => setShowOnboarding(rq.in_progress));
+    });
   }, [hasIdentity]);
 
   // Layout reste monté d'une route à l'autre (Outlet), donc on recharge le

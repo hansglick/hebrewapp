@@ -66,12 +66,25 @@ def neighbors(current_set: int) -> tuple:
     `current_set` de ce côté (cf. exemple du user : depuis le set 9, la
     partition inférieure fixée = sets 7 et 8, pas 1 à 8).
 
-    Cas limite : depuis une extrémité (set 1 ou NUM_SETS), il n'existe aucun
-    set de ce côté (pool = 0) — on reste alors sur `current_set` plutôt que
-    de planter sur une liste vide."""
-    pool = min(current_set - 1, NUM_SETS - current_set)
+    Cas limite : depuis une extrémité (set 1 ou NUM_SETS), un des deux côtés
+    n'a RÉELLEMENT aucun set (lower_pool ou upper_pool vaut 0 — jamais les
+    deux à la fois puisque NUM_SETS > 1) — rester sur `current_set` de CE
+    côté est inévitable, mais l'autre côté garde SA PROPRE taille de fenêtre
+    (tous les sets restants de ce côté) plutôt que d'être lui aussi ramené à
+    zéro par la contrainte de symétrie. Sans cette exception, un bon score
+    obtenu au set 1 (ou un mauvais au set NUM_SETS) restait sans aucun effet
+    pour le reste du test, quelle que soit la suite des réponses — piégeant
+    le user au niveau le plus bas (ou le plus haut) après un seul faux pas,
+    même en répondant parfaitement ensuite — cf. bug rapporté par le user."""
+    lower_pool = current_set - 1
+    upper_pool = NUM_SETS - current_set
+    pool = min(lower_pool, upper_pool)
     if pool == 0:
-        return current_set, current_set
+        if lower_pool == 0:
+            upper_range = list(range(current_set + 1, current_set + upper_pool + 1))
+            return current_set, upper_range[_median_index(len(upper_range))]
+        lower_range = list(range(current_set - lower_pool, current_set))
+        return lower_range[_median_index(len(lower_range))], current_set
     lower_range = list(range(current_set - pool, current_set))
     upper_range = list(range(current_set + 1, current_set + pool + 1))
     lower_median = lower_range[_median_index(len(lower_range))]

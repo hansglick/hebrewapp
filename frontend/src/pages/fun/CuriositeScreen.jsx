@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getRandomCuriosite, getCuriositePool, getCuriositeItem } from "../../api/content";
+import { getRandomCuriosite, getCuriositePool, getCuriositeLessonPool, getCuriositeItem } from "../../api/content";
 import { mediaUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
@@ -14,6 +14,17 @@ import "../screens.css";
 const BOUNDARY_MESSAGE =
   "De nouveaux éléments se débloquent au fur et à mesure de ta progression dans le cours.";
 
+// Mention discrète affichée en haut de chaque item du pool fusionné
+// "bible" (récit + citation + proverbe), pour indiquer sans y insister de
+// quel sous-type il s'agit — cf. demande explicite du user. Distincte des
+// labels de CURIOSITE_CONFIG (utilisés pour les tuiles), formulation
+// propre à ce contexte.
+const BIBLE_TYPE_LABELS = {
+  recit: "Récit du Tanakh",
+  tanakh: "Citation de la bible",
+  proverb: "Proverbe biblique",
+};
+
 // Écran générique de parcours des contenus "curiosités" (proverbe, tanakh,
 // récit, landmark, blague, expression, presse, mot d'origine hébraïque) —
 // un item à la fois. `lessonCode` restreint aux nouveautés de cette leçon
@@ -27,42 +38,79 @@ const BOUNDARY_MESSAGE =
 // /dev/page-turn-preview) au changement d'objet — appliqué à tous les
 // types (tous les objets accessibles depuis le portail Culture), cf.
 // demande explicite du user.
-export default function CuriositeScreen({ type, lessonCode }) {
+export default function CuriositeScreen({ type, types, lessonCode }) {
   const [showDetails, setShowDetails] = useState(false);
-  const config = CURIOSITE_CONFIG[type];
+  // `types` (tableau) : mode "fusionné" — le user parcourt un seul
+  // ensemble mélangeant plusieurs types (ex: bible = récit + citation +
+  // proverbe, sans distinction affichée dans les segments de l'image map,
+  // juste une mention discrète par item, cf. BIBLE_TYPE_LABELS), chaque
+  // item gardant son propre type d'origine (__type) pour savoir quelle
+  // config appliquer — cf. demande explicite du user ("Coin culture
+  // fast"). PAS de tirage aléatoire ici (contrairement au mode leçon
+  // mono-type, cf. plus bas) : le user a explicitement demandé un
+  // parcours séquentiel de tout ce qui est débloqué à cette leçon pour
+  // ces types, dans un ordre figé (peu importe lequel) — cf. le pool
+  // fusionné juste en dessous.
+  const multiType = Array.isArray(types) && types.length > 0;
+  const configFor = (cardItem) => (multiType ? CURIOSITE_CONFIG[cardItem.__type] : CURIOSITE_CONFIG[type]);
   const [flip, setFlip] = useState(null); // { dir, item, phase: "start" | "animating" }
   const flipTimeoutRef = useRef(null);
 
-  // Mode "leçon" — inchangé.
+  // Mode "leçon" mono-type (tuile "Curiosité" d'un des 5 autres segments,
+  // ex: presse/landmark/blague) — inchangé : tirage aléatoire dans le
+  // delta de cette leçon (en pratique 0 ou 1 item la plupart du temps, le
+  // calendrier de déblocage étalant les items sur les 159 leçons — cf.
+  // clarification du user, il n'y a alors rien de significatif à
+  // randomiser). Jamais utilisé en mode fusionné (multiType), qui passe
+  // par le pool séquencé ci-dessous à la place.
   const { current: randomItem, next: randomNext, back: randomBack } = useRandomBrowser(
     (prevItem) =>
-      lessonCode ? getRandomCuriosite(type, { lessonCode, current: prevItem?.index }) : Promise.resolve(null),
+      lessonCode && !multiType
+        ? getRandomCuriosite(type, { lessonCode, current: prevItem?.index })
+        : Promise.resolve(null),
     [type, lessonCode]
   );
 
-  // Mode "Culture" — pool chargé une fois (ordre du plus récemment
-  // débloqué au plus ancien, déjà trié côté backend), puis simple pointeur
-  // dedans, jamais de nouveau tirage.
+  // Pool séquencé (ordre figé, pas de randomisation), simple pointeur
+  // dedans — utilisé par le portail "Culture" (pool cumulatif mono-type,
+  // comportement inchangé) ET par le mode fusionné (multiType), qui lui
+  // fusionne le pool DELTA de cette leçon pour chacun des `types` (cf.
+  // getCuriositeLessonPool) en une seule liste de {type, index}, dans
+  // l'ordre des types passés — cf. demande explicite du user.
   const [pool, setPool] = useState(null);
   const [position, setPosition] = useState(0);
   const [orderedItem, setOrderedItem] = useState(null);
   const [atBoundary, setAtBoundary] = useState(null); // null | "start" | "end"
 
   useEffect(() => {
-    if (lessonCode) return;
+    if (lessonCode && !multiType) return;
     setPool(null);
     setPosition(0);
     setOrderedItem(null);
     setAtBoundary(null);
-    getCuriositePool(type).then((data) => setPool(data.pool));
-  }, [type, lessonCode]);
+    if (multiType) {
+      Promise.all(
+        types.map((t) =>
+          getCuriositeLessonPool(t, lessonCode).then((data) => data.pool.map((index) => ({ type: t, index })))
+        )
+      ).then((lists) => setPool(lists.flat()));
+    } else {
+      getCuriositePool(type).then((data) => setPool(data.pool));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, multiType ? types.join(",") : null, lessonCode]);
 
   useEffect(() => {
-    if (lessonCode || !pool || pool.length === 0) return;
-    getCuriositeItem(type, pool[position]).then(setOrderedItem);
-  }, [lessonCode, pool, position, type]);
+    if ((lessonCode && !multiType) || !pool || pool.length === 0) return;
+    if (multiType) {
+      const entry = pool[position];
+      getCuriositeItem(entry.type, entry.index).then((data) => setOrderedItem({ ...data, __type: entry.type }));
+    } else {
+      getCuriositeItem(type, pool[position]).then(setOrderedItem);
+    }
+  }, [lessonCode, multiType, pool, position, type]);
 
-  const item = lessonCode ? randomItem : orderedItem;
+  const item = lessonCode && !multiType ? randomItem : orderedItem;
 
   useEffect(() => {
     setShowDetails(false);
@@ -74,12 +122,14 @@ export default function CuriositeScreen({ type, lessonCode }) {
   // PageTurnCurl, demande explicite du user. Un seul flip à la fois (clics
   // rapides ignorés pendant qu'une page tourne déjà), même limite que sur
   // le prototype /dev/page-turn-preview.
-  // Pas d'animation quand on vient d'une leçon (tuile "Curiosité") : un
-  // seul objet unique à voir dans ce contexte, pas une séquence à
-  // parcourir — cf. demande explicite du user. Uniquement pour le portail
-  // Culture (sans lessonCode), où on parcourt vraiment une liste.
+  // Pas d'animation en mode leçon MONO-TYPE (tuile "Curiosité" classique) :
+  // un seul objet unique à voir dans ce contexte, pas une séquence à
+  // parcourir — cf. demande explicite du user. En revanche, le mode
+  // fusionné (multiType, ex: bible) EST une vraie séquence à parcourir
+  // (comme le portail Culture) : l'animation s'applique aussi ici — cf.
+  // demande explicite du user.
   function startFlip(dir) {
-    if (lessonCode || flip || !item) return;
+    if ((lessonCode && !multiType) || flip || !item) return;
     setFlip({ dir, item, phase: "start" });
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -96,7 +146,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
   // animation pour rien, cf. demande explicite du user.
   function goPrevious() {
     if (flip) return;
-    if (lessonCode) {
+    if (lessonCode && !multiType) {
       // Sur la toute première curiosité de la session (pas encore
       // d'historique), randomBack() ne fait rien plutôt que de sortir de
       // l'écran (navigate(-1)) : previous/next ne doivent jamais faire
@@ -115,7 +165,7 @@ export default function CuriositeScreen({ type, lessonCode }) {
   }
   function goNext() {
     if (flip) return;
-    if (lessonCode) {
+    if (lessonCode && !multiType) {
       startFlip("next");
       randomNext();
       return;
@@ -135,31 +185,27 @@ export default function CuriositeScreen({ type, lessonCode }) {
     onSpace: !showDetails ? () => setShowDetails(true) : undefined,
   });
 
-  // Mode "Culture" avec un pool vide (rien d'encore débloqué pour ce type) :
-  // même message que la borne de fin, pas de carte à afficher.
-  if (!lessonCode && pool && pool.length === 0) {
+  // Pool vide (rien d'encore débloqué pour ce type, ou pour aucun des
+  // types fusionnés à cette leçon) : pas de carte à afficher. Le message
+  // "de nouveaux éléments se débloquent..." ne concerne QUE le portail
+  // Culture (!lessonCode, parcours cumulatif de tout le cours) — en mode
+  // fusionné dans une leçon (multiType), il n'a pas de sens (on est déjà
+  // à l'intérieur d'une leçon précise, rien à "débloquer" ici) — cf.
+  // demande explicite du user.
+  if ((!lessonCode || multiType) && pool && pool.length === 0) {
     return (
       <section className="screen" onPointerDown={swipeHandlers.onPointerDown}>
         <ActionHints {...swipeHandlers.hints} />
-        <p className="muted" style={{ textAlign: "center", fontStyle: "italic" }}>
-          {BOUNDARY_MESSAGE}
-        </p>
+        {!multiType && (
+          <p className="muted" style={{ textAlign: "center", fontStyle: "italic" }}>
+            {BOUNDARY_MESSAGE}
+          </p>
+        )}
       </section>
     );
   }
 
   if (!item) return null;
-
-  const heroFontVar =
-    config.heroFont === "biblical" ? "var(--font-hebrew-biblical)" : "var(--font-hebrew)";
-  const heroStyle = {
-    fontFamily: heroFontVar,
-    fontSize: config.heroFontScale
-      ? `calc(var(--font-size-hebrew-large) * ${config.heroFontScale})`
-      : "var(--font-size-hebrew-large)",
-    direction: "rtl",
-    cursor: "pointer",
-  };
 
   // Rendu d'une page pleine (fond = var(--bg), pas d'encadré/bordure/
   // ombre) pour un item donné — utilisé à la fois pour la page "au repos"
@@ -167,7 +213,20 @@ export default function CuriositeScreen({ type, lessonCode }) {
   // Reprend fidèlement les mêmes variantes de mise en page que l'ancien
   // encadré .card (referenceValue/speakerTopRight/speakerBelowImage/
   // speakerWithHero, pilotées par curiositeConfig), juste sans boîte.
+  // config recalculée PAR item (pas une fois globalement) : en mode
+  // fusionné, chaque item peut être d'un type différent (cf. __type).
   function renderCard(cardItem) {
+    const config = configFor(cardItem);
+    const heroFontVar = config.heroFont === "biblical" ? "var(--font-hebrew-biblical)" : "var(--font-hebrew)";
+    const heroStyle = {
+      fontFamily: heroFontVar,
+      fontSize: config.heroFontScale
+        ? `calc(var(--font-size-hebrew-large) * ${config.heroFontScale})`
+        : "var(--font-size-hebrew-large)",
+      direction: "rtl",
+      cursor: "pointer",
+    };
+
     const cardSpeakButton = (
       <button
         type="button"
@@ -192,6 +251,12 @@ export default function CuriositeScreen({ type, lessonCode }) {
           textAlign: "center",
         }}
       >
+        {multiType && (
+          <p style={{ margin: "0 0 10px", fontSize: "0.75em", color: "var(--textSecondary)" }}>
+            {BIBLE_TYPE_LABELS[cardItem.__type]}
+          </p>
+        )}
+
         {config.hasImage && (
           <>
             <img
@@ -289,7 +354,10 @@ export default function CuriositeScreen({ type, lessonCode }) {
     >
       <ActionHints {...swipeHandlers.hints} />
 
-      {atBoundary && (
+      {/* Idem : ce message n'a de sens que dans le portail Culture (le
+          cours continue de se débloquer), pas ici où on est déjà dans une
+          leçon précise — cf. demande explicite du user. */}
+      {atBoundary && !multiType && (
         <p className="muted" style={{ textAlign: "center", fontStyle: "italic", fontSize: "0.85em", margin: "8px 0 0" }}>
           {BOUNDARY_MESSAGE}
         </p>

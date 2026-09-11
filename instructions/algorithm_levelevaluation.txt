@@ -1,0 +1,133 @@
+# Algorithme adaptatif de test de positionnement
+
+- **1. Préparer les 11 sets**
+  - Répartir les 159 leçons chronologiquement en 11 sets de 14 ou 15 leçons.
+  - Conserver deux bornes virtuelles :
+    - `lower_bound = 0` : aucun set n’est encore considéré comme maîtrisé.
+    - `upper_bound = 12` : aucun set n’est encore identifié comme trop difficile.
+  - Commencer au **set 6**, milieu du cursus.
+  - Prévoir **4 questions minimum**, **5 questions normalement au maximum**.
+  - Une 6e question peut éventuellement servir de secours dans un cas très ambigu.
+
+- **2. Alterner les modalités dès le début**
+  - Q1 : écrit.
+  - Q2 : oral.
+  - Q3 : écrit.
+  - Q4 : oral.
+  - Q5, si nécessaire : modalité choisie en fonction de l’incertitude restante.
+  - Ainsi, dès la quatrième question, le positionnement repose déjà sur **deux réponses écrites et deux réponses orales**.
+
+- **3. Évaluer chaque réponse sur 5**
+  - Écrit : utiliser la note Gemini de 1 à 5.
+  - Oral : conserver les trois notes Gemini :
+    - complétude ;
+    - qualité de l’hébreu ;
+    - compréhension.
+  - Calculer également leur moyenne.
+  - Interpréter les notes ainsi :
+    - `4 ou 5` → maîtrise suffisamment claire ;
+    - `1 ou 2` → non-maîtrise suffisamment claire ;
+    - `3` → zone d’incertitude, probablement proche du niveau réel de l’apprenant.
+
+- **4. Réduire la zone de recherche après une réponse claire**
+  - Si `score >= 4` :
+    - considérer le set testé comme maîtrisé ;
+    - mettre à jour :
+      - `lower_bound = max(lower_bound, set_testé)` ;
+    - chercher ensuite dans la moitié supérieure de la zone restante.
+  - Si `score <= 2` :
+    - considérer le set testé comme probablement trop difficile ;
+    - mettre à jour :
+      - `upper_bound = min(upper_bound, set_testé)` ;
+    - chercher ensuite dans la moitié inférieure de la zone restante.
+  - La prochaine question est choisie aussi près que possible du **milieu entre `lower_bound` et `upper_bound`**.
+
+- **5. Traiter un score de 3 différemment**
+  - Ne pas faire monter ou descendre fortement le niveau.
+  - Considérer le set testé comme un **candidat à la frontière de niveau**.
+  - Poser une nouvelle question autour du même niveau, idéalement dans l’autre modalité.
+  - Si la réponse de confirmation est `4–5` :
+    - poursuivre vers le haut.
+  - Si elle est `1–2` :
+    - considérer que la limite se situe autour de ce set.
+  - Si elle est encore `3` :
+    - considérer que l’on est probablement très proche du bon point de départ.
+
+- **6. Exemple de recherche**
+  - Q1 : set 6 → score 5.
+    - `lower_bound = 6`
+    - `upper_bound = 12`
+  - Q2 : set 9 → score 2.
+    - `lower_bound = 6`
+    - `upper_bound = 9`
+  - Q3 : set 7 → score 4.
+    - `lower_bound = 7`
+    - `upper_bound = 9`
+  - Q4 : set 8 → score 2.
+    - `lower_bound = 7`
+    - `upper_bound = 8`
+  - La frontière est maintenant localisée entre les sets 7 et 8.
+  - Il n’est probablement pas utile de poser Q5.
+
+- **7. Vérifier après la quatrième question si le test peut s’arrêter**
+  - Autoriser l’arrêt seulement si toutes les conditions suivantes sont satisfaites :
+    - au moins **4 questions** ont été posées ;
+    - l’écrit et l’oral ont tous deux été suffisamment testés ;
+    - la zone restante est très petite, typiquement :
+      - `upper_bound - lower_bound <= 1` ;
+    - les réponses sont globalement cohérentes avec la frontière trouvée ;
+    - il n’existe pas de forte contradiction entre écrit et oral.
+  - Si toutes ces conditions sont remplies :
+    - **arrêter immédiatement le test**.
+  - Sinon :
+    - poser Q5.
+
+- **8. Utiliser Q5 comme question de confirmation**
+  - Q5 ne doit pas être une question supplémentaire standard.
+  - Elle doit servir à résoudre l’incertitude restante.
+  - Exemples :
+    - écrit nettement meilleur que l’oral → poser une question orale ;
+    - oral nettement meilleur que l’écrit → poser une question écrite ;
+    - incertitude entre les sets 7 et 8 → poser une question au set 8 ou à la frontière entre les deux ;
+    - plusieurs scores de 3 → poser une question supplémentaire de difficulté comparable.
+
+- **9. Pour l’oral, tenir compte de la dispersion des trois notes**
+  - Ne pas se baser uniquement sur la moyenne arrondie pour décider d’un arrêt anticipé.
+  - Exemple :
+    - `4 / 4 / 4` donne une forte confiance ;
+    - `5 / 2 / 5` donne une confiance plus faible ;
+    - pourtant, les deux peuvent produire une moyenne proche de 4.
+  - Une forte dispersion entre les trois notes doit donc :
+    - **diminuer la confiance** dans le positionnement ;
+    - favoriser la pose d’une question supplémentaire.
+
+- **10. Déterminer le point de départ**
+  - Lorsque `lower_bound` et `upper_bound` sont consécutifs :
+    - `lower_bound` = dernier niveau probablement maîtrisé ;
+    - `upper_bound` = premier niveau qui mérite d’être travaillé.
+  - Le **point de départ recommandé** se situe donc dans `upper_bound`.
+  - Si le système s’arrête alors que la zone reste légèrement plus large à cause de réponses ambiguës :
+    - choisir le point de départ légèrement plus prudent ;
+    - éviter de positionner l’élève trop haut.
+
+- **11. Résultat UX attendu**
+  - Cas très clair :
+    - **4 questions**.
+  - Cas normal mais légèrement incertain :
+    - **5 questions**.
+  - Cas exceptionnellement contradictoire :
+    - éventuellement **6 questions maximum**.
+  - L’utilisateur ne voit pas cette mécanique.
+  - Il a simplement l’impression de passer un **test court qui s’adapte à son niveau**.
+
+## Principe central
+
+Le changement principal par rapport à l’algorithme actuel est de ne plus seulement chercher :
+
+> « Quel set tester ensuite ? »
+
+Mais de maintenir en permanence :
+
+> « Quelle est encore la zone possible du niveau de l’utilisateur ? »
+
+Dès que cette zone devient suffisamment petite et suffisamment fiable, le test peut s’arrêter.

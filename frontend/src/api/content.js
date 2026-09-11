@@ -112,6 +112,12 @@ export const getLessonCuriosites = (code) =>
 export const getCuriositePool = (type) =>
   fetchJson(`/api/curiosites/${encodeURIComponent(type)}/pool`);
 
+// Liste ordonnée (ordre figé, pas de randomisation) des items débloqués
+// précisément à la leçon `code` pour ce type — cf. CuriositeScreen en mode
+// fusionné (types), "Coin culture fast" > bible.
+export const getCuriositeLessonPool = (type, code) =>
+  fetchJson(`/api/curiosites/${encodeURIComponent(type)}/lesson-pool/${encodeURIComponent(code)}`);
+
 export const getCuriositeItem = (type, index) =>
   fetchJson(`/api/curiosites/${encodeURIComponent(type)}/${encodeURIComponent(index)}`);
 

@@ -9,6 +9,8 @@ import PdfScreen from "./pages/apprentissage/PdfScreen";
 import TexteScreen from "./pages/apprentissage/TexteScreen";
 import CuriositeListScreen from "./pages/apprentissage/CuriositeListScreen";
 import CuriositeLessonScreen from "./pages/apprentissage/CuriositeLessonScreen";
+import CuriositeBibleLessonScreen from "./pages/apprentissage/CuriositeBibleLessonScreen";
+import CoinCultureFastScreen from "./pages/apprentissage/CoinCultureFastScreen";
 import LibraryChapitresScreen from "./pages/library/LibraryChapitresScreen";
 import LibraryLeconsScreen from "./pages/library/LibraryLeconsScreen";
 import LibraryLeconDetailScreen from "./pages/library/LibraryLeconDetailScreen";
@@ -78,6 +80,8 @@ function App() {
         <Route path="apprentissage/:chapId/:code/pdf" element={<PdfScreen />} />
         <Route path="apprentissage/:chapId/:code/texte" element={<TexteScreen />} />
         <Route path="apprentissage/:chapId/:code/curiosite" element={<CuriositeListScreen />} />
+        <Route path="apprentissage/:chapId/:code/curiosite-fast" element={<CoinCultureFastScreen />} />
+        <Route path="apprentissage/:chapId/:code/curiosite-bible" element={<CuriositeBibleLessonScreen />} />
         <Route
           path="apprentissage/:chapId/:code/curiosite/:type"
           element={<CuriositeLessonScreen />}

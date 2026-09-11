@@ -92,6 +92,21 @@ def curiosite_pool(curiosite_type: str, user_id: int = Depends(get_current_user_
     return {"pool": list(reversed(pool))}
 
 
+@router.get("/{curiosite_type}/lesson-pool/{code}")
+def curiosite_lesson_pool(curiosite_type: str, code: str):
+    """Liste ordonnée (ordre figé, pas de randomisation) des items qui se
+    débloquent précisément à la leçon `code` pour ce type — utilisé pour
+    parcourir séquentiellement un ensemble fusionné de plusieurs types
+    (ex: "bible" = récit + citation + proverbe dans "Coin culture fast"),
+    plutôt que le tirage aléatoire de /{curiosite_type}/random — cf.
+    demande explicite du user."""
+    _check_type(curiosite_type)
+    position = curiosites.lesson_position(code)
+    if position is None:
+        raise HTTPException(404, f"Leçon introuvable : {code!r}")
+    return {"pool": curiosites.pool_delta(curiosite_type, position)}
+
+
 @router.get("/{curiosite_type}/{index}")
 def get_curiosite(curiosite_type: str, index: int):
     _check_type(curiosite_type)

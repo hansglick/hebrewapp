@@ -74,7 +74,7 @@ export default function ExamenOralScreen() {
   const { code } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { godMode, evalWaitMode } = useConfig();
+  const { godMode, evalWaitMode, oralBackgroundEval, setOralBackgroundEval } = useConfig();
   const [exam, setExam] = useState(null);
   const [index, setIndex] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
@@ -103,6 +103,20 @@ export default function ExamenOralScreen() {
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const batchRunningRef = useRef(false);
+
+  // Mode "évaluation en arrière-plan" (case à cocher indépendante,
+  // cf. oralBackgroundEval) : {[index]: "pending" | { error }} — dès
+  // l'envoi, la réponse est verrouillée (plus de ré-enregistrement) et
+  // notée par Gemini sans bloquer la navigation vers la question suivante.
+  // Distinct de pendingAnswers (mode "global", qui lui diffère l'ENVOI à
+  // la fin) : ici l'envoi est immédiat, seule l'ATTENTE de la note ne
+  // bloque plus le user — cf. demande explicite du user.
+  const [backgroundStatus, setBackgroundStatus] = useState({});
+  // Garde la réponse déjà envoyée (blob audio ou texte du rapport) par
+  // index, pour permettre un "Réessayer" identique en cas d'échec — sans
+  // repasser par un nouvel enregistrement, puisque la réponse est
+  // verrouillée dès l'envoi.
+  const submittedAnswerRef = useRef({});
 
   // Layout re-render son enfant (via <Outlet/>) à chaque poll actif-lockdown
   // (toutes les 5s pendant l'examen) — sans ce useMemo, URL.createObjectURL
@@ -158,15 +172,31 @@ export default function ExamenOralScreen() {
 
   // Mode "évaluation globale" : dès que la question courante a reçu une
   // réponse (en attente localement), passe automatiquement à la suivante
-  // après 2s — le user n'a pas à cliquer "▶" lui-même.
+  // après 2s — le user n'a pas à cliquer "▶" lui-même. Exclut
+  // oralBackgroundEval (case à cocher indépendante) : sinon, une fois une
+  // réponse notée en arrière-plan, revenir la consulter via ◀ relançait
+  // cet effet (qui ne regarde que exam.answers[index], sans savoir PAR
+  // QUEL mode elle a été notée) et renvoyait aussitôt en avant — cf. bug
+  // constaté en test.
   useEffect(() => {
-    if (evalWaitMode !== "global" || finalResult || !exam) return undefined;
+    if (evalWaitMode !== "global" || oralBackgroundEval || finalResult || !exam) return undefined;
     const isAnswered = exam.answers[index] !== null || pendingAnswers[index] !== undefined;
     if (!isAnswered || index >= exam.questions.length - 1) return undefined;
     const id = setTimeout(() => setIndex((i) => i + 1), 2000);
     return () => clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [exam?.answers[index], pendingAnswers[index], evalWaitMode, index, finalResult]);
+  }, [exam?.answers[index], pendingAnswers[index], evalWaitMode, oralBackgroundEval, index, finalResult]);
+
+  // Mode "évaluation en arrière-plan" : avance automatiquement à la
+  // question suivante juste après l'envoi (pas d'attente de la note) —
+  // déclenché UNE SEULE FOIS depuis handleSubmit/handleSubmitRapport (pas
+  // via un effect réagissant à l'état), pour ne pas se redéclencher si le
+  // user revient ensuite consulter une question déjà envoyée via ◀ — cf.
+  // bug constaté en test (retour en arrière renvoyé en avant tout seul).
+  function scheduleBackgroundAdvance(submittedIndex) {
+    if (submittedIndex >= exam.questions.length - 1) return;
+    setTimeout(() => setIndex((i) => (i === submittedIndex ? i + 1 : i)), 1200);
+  }
 
   async function startRecording() {
     // Un seul bouton micro pour enregistrer ET ré-enregistrer (plus de
@@ -200,7 +230,48 @@ export default function ExamenOralScreen() {
     setIsRecording(false);
   }
 
+  // Envoie une réponse (orale ou rapport) à Gemini sans bloquer l'écran —
+  // `idx` est figé au moment de l'appel (pas `index`, qui peut avoir changé
+  // le temps que la promesse résolve, le user ayant déjà navigué ailleurs).
+  // `response.completed` reste la SEULE source de vérité pour afficher le
+  // bilan (même signal serveur qu'en mode "each"/"global", cf.
+  // answerExamen) : comme il ne devient vrai que lorsque TOUTES les
+  // questions ont une réponse NOTÉE, le bilan reste naturellement bloqué
+  // jusqu'à ce que toutes les évaluations en arrière-plan soient revenues —
+  // cf. demande explicite du user ("faisons les choses simplement").
+  async function submitInBackground(idx, kind, payload) {
+    submittedAnswerRef.current[idx] = { kind, payload };
+    setBackgroundStatus((prev) => ({ ...prev, [idx]: "pending" }));
+    try {
+      const result =
+        kind === "oral"
+          ? await evaluateOral(payload)
+          : { ...(await evaluateReport(payload)), rapport: payload.rapport };
+      const response = await answerExamen(code, { examType: "oral", questionIndex: idx, answer: result });
+      setExam((prev) => ({ ...prev, answers: prev.answers.map((a, i) => (i === idx ? result : a)) }));
+      setBackgroundStatus((prev) => {
+        const next = { ...prev };
+        delete next[idx];
+        return next;
+      });
+      if (response.completed) setFinalResult(response);
+    } catch (e) {
+      setBackgroundStatus((prev) => ({ ...prev, [idx]: { error: e.message } }));
+    }
+  }
+
+  function retryBackground(idx) {
+    const submitted = submittedAnswerRef.current[idx];
+    if (submitted) submitInBackground(idx, submitted.kind, submitted.payload);
+  }
+
   async function handleSubmit() {
+    if (oralBackgroundEval) {
+      const q = exam.questions[index];
+      submitInBackground(index, "oral", { textCode: q.text_code, questionIndex: q.question_index, audioBlob });
+      scheduleBackgroundAdvance(index);
+      return;
+    }
     if (evalWaitMode === "global") {
       setPendingAnswers((prev) => ({ ...prev, [index]: { type: "oral", audioBlob } }));
       return;
@@ -230,6 +301,12 @@ export default function ExamenOralScreen() {
   }
 
   async function handleSubmitRapport() {
+    if (oralBackgroundEval) {
+      const q = exam.questions[index];
+      submitInBackground(index, "rapport", { textCode: q.text_code, rapport: rapportText });
+      scheduleBackgroundAdvance(index);
+      return;
+    }
     if (evalWaitMode === "global") {
       setPendingAnswers((prev) => ({ ...prev, [index]: { type: "rapport", rapportText } }));
       return;
@@ -363,6 +440,38 @@ export default function ExamenOralScreen() {
           Lancer l'examen oral {displayChapitreLabel(code.split(".")[0])} - {displayLessonCode(code)}
         </h1>
         <EvalWaitModeToggle />
+        {/* Case à cocher indépendante du toggle each/global ci-dessus,
+            propre à l'examen oral — cf. demande explicite du user. Cochée :
+            chaque réponse est envoyée à Gemini en arrière-plan dès l'envoi
+            (le user continue l'examen sans attendre), mais devient alors
+            verrouillée (non modifiable) ; le bilan final reste bloqué
+            jusqu'à ce que TOUTES les évaluations soient revenues. */}
+        <label
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 8,
+            width: "100%",
+            maxWidth: 320,
+            textAlign: "start",
+            cursor: "pointer",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={oralBackgroundEval}
+            onChange={(e) => setOralBackgroundEval(e.target.checked)}
+            style={{ marginTop: 3 }}
+          />
+          <span>
+            Évaluer chaque réponse en arrière-plan
+            <br />
+            <span className="muted" style={{ fontSize: "0.75em" }}>
+              Continue l'examen sans attendre la note de chaque réponse — mais une fois envoyée, une réponse ne peut
+              plus être modifiée. Le bilan final reste bloqué jusqu'à ce que toutes les évaluations soient revenues.
+            </span>
+          </span>
+        </label>
         <p className="muted" style={{ fontSize: "0.8em" }}>
           {pointsAGagner > 0 ? (
             <>
@@ -512,6 +621,13 @@ export default function ExamenOralScreen() {
         {q.text_code}
       </p>
 
+      {oralBackgroundEval &&
+        exam.questions.every((_, i) => exam.answers[i] !== null || backgroundStatus[i] === "pending") && (
+          <p className="muted" style={{ fontStyle: "italic", fontSize: "0.8em" }}>
+            Toutes tes réponses ont été envoyées — en attente des dernières évaluations avant l'affichage du bilan...
+          </p>
+        )}
+
       {attemptError && (
         <p className="muted" style={{ color: "var(--annulationPleine)" }}>
           {attemptError}
@@ -539,7 +655,7 @@ export default function ExamenOralScreen() {
         <OralAnswerCapture
           contentSrc={mediaUrl(q.voicepath)}
           questionText={q.question_hebrew}
-          showRecorder={!answer && !pendingAnswers[index]}
+          showRecorder={!answer && !pendingAnswers[index] && !backgroundStatus[index]}
           isRecording={isRecording}
           isConverting={isConverting}
           audioBlob={audioBlob}
@@ -550,7 +666,16 @@ export default function ExamenOralScreen() {
         />
       )}
 
-      {!answer && q.type === "rapport" && !pendingAnswers[index] && (
+      {/* Avertissement avant envoi (mode arrière-plan uniquement) : la
+          réponse va être verrouillée dès qu'elle sera envoyée — cf. demande
+          explicite du user. */}
+      {oralBackgroundEval && !answer && !backgroundStatus[index] && (
+        <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em" }}>
+          Une fois envoyée, cette réponse ne pourra plus être modifiée.
+        </p>
+      )}
+
+      {!answer && q.type === "rapport" && !pendingAnswers[index] && !backgroundStatus[index] && (
         <>
           <textarea
             value={rapportText}
@@ -598,6 +723,29 @@ export default function ExamenOralScreen() {
             Modifier
           </button>
         </p>
+      )}
+
+      {/* Mode "évaluation en arrière-plan" : réponse déjà envoyée,
+          verrouillée — plus aucune modification possible, cf. demande
+          explicite du user. */}
+      {!answer && backgroundStatus[index] === "pending" && (
+        <p className="muted" style={{ fontStyle: "italic", fontSize: "0.8em" }}>
+          Réponse envoyée et prise en compte — évaluation en cours en arrière-plan. Elle ne peut plus être modifiée.
+        </p>
+      )}
+
+      {!answer && backgroundStatus[index]?.error && (
+        <>
+          <p className="muted" style={{ color: "var(--annulationPleine)", fontSize: "0.85em" }}>
+            {backgroundStatus[index].error}
+          </p>
+          <p className="muted" style={{ fontStyle: "italic", fontSize: "0.8em" }}>
+            Cette réponse a déjà été prise en compte et ne peut plus être modifiée, mais son évaluation a échoué.{" "}
+            <button type="button" className="link-btn" style={{ fontSize: "1em" }} onClick={() => retryBackground(index)}>
+              Réessayer
+            </button>
+          </p>
+        </>
       )}
 
       {answer && q.type === "rapport" && (

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { extractVerbatim } from "../api/gemini";
 import { blobToWavBlob } from "../utils/audioEncode";
+import { mediaUrl } from "../api/media";
 import { MicrophoneIcon } from "./MicrophoneIcon";
 import { AudioTrackFooter, PLAYBACK_RATE_CYCLE } from "./AudioTrackFooter";
 import "./VoicePrefill.css";
@@ -12,6 +13,16 @@ const LECTURE_ICON_URL = "/lecture.png";
 const PAUSE_ICON_URL = "/pause.png";
 const VOICE_ICON_URL = "/voice.png";
 const SEND_ICON_URL = "/sendvocal.png";
+// Version grisée (bleus plus clairs que l'original, cf. sendvocal.png) —
+// affichée tant qu'aucun enregistrement n'est disponible, cf. demande
+// explicite du user. Générée une fois via un script Python (blend vers le
+// blanc à 62%), pas une variante dynamique CSS : le user voulait un
+// véritable second logo, pas juste une opacité réduite.
+const SEND_ICON_INACTIVE_URL = "/sendvocal_inactive.png";
+// processing.gif (backend/results/logos) : celui-ci vient bien via
+// mediaUrl/le backend (pas frontend/public), comme les autres assets de ce
+// dossier.
+const PROCESSING_ICON_URL = mediaUrl("logos/processing.gif");
 const ICON_SIZE = 40;
 
 // Pré-remplissage vocal générique : idle -> recording -> recorded ->
@@ -201,14 +212,23 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
           />
         </div>
 
+        {/* Pas de inertClass ici (contrairement à lecture/onde) : l'icône
+            elle-même bascule entre 3 logos selon l'état (grisé tant
+            qu'aucun enregistrement n'existe, vif une fois enregistré,
+            processing.gif pendant l'envoi) plutôt qu'une simple opacité
+            réduite — cf. demande explicite du user. */}
         <button
           type="button"
-          className={`voice-prefill-send${inertClass}`}
+          className="voice-prefill-send"
           onClick={handleSendVoice}
           disabled={voiceState !== "recorded"}
           aria-label="Envoyer"
         >
-          <img src={SEND_ICON_URL} alt="" style={{ width: ICON_SIZE * 0.78, height: ICON_SIZE * 0.78 }} />
+          <img
+            src={voiceState === "sending" ? PROCESSING_ICON_URL : hasRecording ? SEND_ICON_URL : SEND_ICON_INACTIVE_URL}
+            alt=""
+            style={{ width: ICON_SIZE * 0.78, height: ICON_SIZE * 0.78 }}
+          />
         </button>
 
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -228,12 +248,6 @@ export function VoicePrefill({ onChange, lang = "he", context }) {
 
       {voiceState === "recording" && (
         <p className="muted voice-prefill-hint">Enregistrement en cours...</p>
-      )}
-
-      {voiceState === "sending" && (
-        <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em", margin: 0 }}>
-          Envoi en cours ...
-        </p>
       )}
 
       {voiceError && (

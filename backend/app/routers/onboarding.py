@@ -16,8 +16,17 @@ from app.onboarding_exam import (
     pick_oral_slots,
     score_from_result,
 )
+from app import quicktest_exam
 
 router = APIRouter(prefix="/api/onboarding", tags=["onboarding"])
+
+
+def _quicktest_estimate_total(question_number: int) -> int:
+    """Indication de progression affichée au user ("Question n° X/Y") —
+    approximative puisque l'algorithme est adaptatif (4 à 6 questions
+    réelles), jamais garantie à l'avance contrairement à l'examen
+    classique (7 fixes) — cf. demande explicite du user."""
+    return min(quicktest_exam.ABSOLUTE_MAX_QUESTIONS, max(quicktest_exam.NORMAL_MAX_QUESTIONS, question_number))
 
 
 @router.get("/status")
@@ -185,6 +194,194 @@ def abandon_exam(user_id: int = Depends(get_current_user_id)):
         conn.close()
 
 
+# --- Quick Test (algorithme adaptatif par bissection, cf. app.quicktest_exam) ---
+# Bouton additionnel proposé en plus (pas à la place) de l'examen d'entrée
+# classique ci-dessus — table et endpoints entièrement séparés, aucun
+# endpoint existant n'est modifié — cf. demande explicite du user ("ne pas
+# casser l'application").
+
+
+@router.post("/quicktest/start")
+def start_quicktest(user_id: int = Depends(get_current_user_id)):
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT * FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,)
+        ).fetchone()
+        if row is not None:
+            return {
+                "completed": False,
+                "question_number": row["question_number"],
+                "total_questions": _quicktest_estimate_total(row["question_number"]),
+                "question": json.loads(row["current_question_json"]),
+            }
+
+        lower_bound, upper_bound = quicktest_exam.LOWER_BOUND_INIT, quicktest_exam.UPPER_BOUND_INIT
+        set_index, modality = quicktest_exam.choose_next_question(1, lower_bound, upper_bound, None, [])
+        question = quicktest_exam.draw_for(set_index, modality)
+        conn.execute(
+            """
+            INSERT INTO onboarding_quicktest_progress
+                (user_id, question_number, current_set, current_kind, lower_bound, upper_bound,
+                 pending_confirmation_set, current_question_json, history_json)
+            VALUES (?, 1, ?, ?, ?, ?, NULL, ?, ?)
+            """,
+            (user_id, set_index, question["kind"], lower_bound, upper_bound, json.dumps(question), json.dumps([])),
+        )
+        conn.commit()
+        return {
+            "completed": False,
+            "question_number": 1,
+            "total_questions": _quicktest_estimate_total(1),
+            "question": question,
+        }
+    finally:
+        conn.close()
+
+
+@router.get("/quicktest/current")
+def current_quicktest(user_id: int = Depends(get_current_user_id)):
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT * FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,)
+        ).fetchone()
+    finally:
+        conn.close()
+    if row is None:
+        return {"in_progress": False}
+    return {
+        "in_progress": True,
+        "question_number": row["question_number"],
+        "total_questions": _quicktest_estimate_total(row["question_number"]),
+        "question": json.loads(row["current_question_json"]),
+    }
+
+
+class QuickTestAdvanceRequest(BaseModel):
+    question_number: int
+    kind: str  # "ecrit" | "oral" — la question réellement répondue (peut différer
+    # de la modalité voulue si aucun contenu oral n'était disponible à ce set)
+    result: dict
+
+
+@router.post("/quicktest/advance")
+def advance_quicktest(payload: QuickTestAdvanceRequest, user_id: int = Depends(get_current_user_id)):
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT * FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,)
+        ).fetchone()
+        if row is None:
+            raise HTTPException(404, "Aucun Quick Test en cours")
+        if payload.question_number != row["question_number"]:
+            raise HTTPException(409, "Cette question a déjà été traitée")
+
+        history = json.loads(row["history_json"])
+        entry = quicktest_exam.make_history_entry(payload.question_number, row["current_set"], payload.kind, payload.result)
+        history.append(entry)
+
+        lower_bound, upper_bound, pending = quicktest_exam.apply_entry(
+            row["lower_bound"], row["upper_bound"], row["pending_confirmation_set"], entry
+        )
+
+        if quicktest_exam.should_stop(payload.question_number, lower_bound, upper_bound, pending, history):
+            niveau = quicktest_exam.final_niveau(payload.question_number, lower_bound, upper_bound, pending, history)
+            set_user_level(user_id, niveau)
+            conn.execute(
+                "UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (user_id,)
+            )
+            conn.execute("DELETE FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,))
+            conn.commit()
+            return {
+                "completed": True,
+                "niveau": niveau,
+                "reference_lesson": reference_lesson(niveau),
+                "history": history,
+            }
+
+        next_question_number = payload.question_number + 1
+        set_index, modality = quicktest_exam.choose_next_question(
+            next_question_number, lower_bound, upper_bound, pending, history
+        )
+        question = quicktest_exam.draw_for(set_index, modality)
+
+        conn.execute(
+            """
+            UPDATE onboarding_quicktest_progress
+            SET question_number = ?, current_set = ?, current_kind = ?, lower_bound = ?, upper_bound = ?,
+                pending_confirmation_set = ?, current_question_json = ?, history_json = ?
+            WHERE user_id = ?
+            """,
+            (
+                next_question_number,
+                set_index,
+                question["kind"],
+                lower_bound,
+                upper_bound,
+                pending,
+                json.dumps(question),
+                json.dumps(history),
+                user_id,
+            ),
+        )
+        conn.commit()
+        return {
+            "completed": False,
+            "question_number": next_question_number,
+            "total_questions": _quicktest_estimate_total(next_question_number),
+            "question": question,
+        }
+    finally:
+        conn.close()
+
+
+@router.post("/quicktest/abandon")
+def abandon_quicktest(user_id: int = Depends(get_current_user_id)):
+    """Même principe que l'abandon de l'examen classique : la question
+    courante (non répondue) et toutes celles qui resteraient jusqu'à
+    l'arrêt sont traitées comme un échec net (score 1)."""
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT * FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,)
+        ).fetchone()
+        if row is None:
+            raise HTTPException(404, "Aucun Quick Test en cours")
+
+        history = json.loads(row["history_json"])
+        lower_bound, upper_bound = row["lower_bound"], row["upper_bound"]
+        pending = row["pending_confirmation_set"]
+        question_number = row["question_number"]
+        set_index = row["current_set"]
+        modality = row["current_kind"]
+
+        while True:
+            entry = {
+                "question_number": question_number,
+                "set": set_index,
+                "kind": modality,
+                "score": 1,
+                "rounded_score": 1,
+                "spread": None,
+            }
+            history.append(entry)
+            lower_bound, upper_bound, pending = quicktest_exam.apply_entry(lower_bound, upper_bound, pending, entry)
+            if quicktest_exam.should_stop(question_number, lower_bound, upper_bound, pending, history):
+                break
+            question_number += 1
+            set_index, modality = quicktest_exam.choose_next_question(question_number, lower_bound, upper_bound, pending, history)
+
+        niveau = quicktest_exam.final_niveau(question_number, lower_bound, upper_bound, pending, history)
+        set_user_level(user_id, niveau)
+        conn.execute("UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (user_id,))
+        conn.execute("DELETE FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,))
+        conn.commit()
+        return {"completed": True, "niveau": niveau, "reference_lesson": reference_lesson(niveau), "history": history}
+    finally:
+        conn.close()
+
+
 @router.post("/skip")
 def skip_onboarding(user_id: int = Depends(get_current_user_id)):
     """Bouton "Commencez au niveau débutant" — même effet de bord que la fin
@@ -195,6 +392,7 @@ def skip_onboarding(user_id: int = Depends(get_current_user_id)):
     try:
         conn.execute("UPDATE users SET onboarding_completed_at = datetime('now') WHERE id = ?", (user_id,))
         conn.execute("DELETE FROM onboarding_exam_progress WHERE user_id = ?", (user_id,))
+        conn.execute("DELETE FROM onboarding_quicktest_progress WHERE user_id = ?", (user_id,))
         conn.commit()
     finally:
         conn.close()

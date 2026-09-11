@@ -20,6 +20,26 @@ export async function abandonOnboardingExam() {
   return apiFetch("/api/onboarding/exam/abandon", { method: "POST" });
 }
 
+// Quick Test — algorithme adaptatif par bissection (cf.
+// backend/app/quicktest_exam.py), bouton additionnel proposé à côté de
+// l'examen d'entrée classique ci-dessus (endpoints entièrement séparés) —
+// cf. demande explicite du user.
+export async function startQuicktestExam() {
+  return apiFetch("/api/onboarding/quicktest/start", { method: "POST" });
+}
+
+export async function getCurrentQuicktestExam() {
+  return apiFetch("/api/onboarding/quicktest/current");
+}
+
+export async function advanceQuicktestExam({ questionNumber, kind, result }) {
+  return apiFetchJson("/api/onboarding/quicktest/advance", { question_number: questionNumber, kind, result });
+}
+
+export async function abandonQuicktestExam() {
+  return apiFetch("/api/onboarding/quicktest/abandon", { method: "POST" });
+}
+
 export async function skipOnboarding() {
   return apiFetch("/api/onboarding/skip", { method: "POST" });
 }

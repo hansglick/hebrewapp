@@ -67,6 +67,14 @@ export default function LeconDetailScreen() {
             <div className="card">Coin culture</div>
           </Link>
         )}
+        {/* Variante "image map" (cf. CoinCultureFastScreen) ajoutée EN PLUS
+            de la tuile "Coin culture" existante, sans la remplacer pour le
+            moment — cf. demande explicite du user. */}
+        {hasCuriosite && (
+          <Link to={`/apprentissage/${chapId}/${code}/curiosite-fast`} className="card-link">
+            <div className="card">Coin culture fast</div>
+          </Link>
+        )}
       </div>
     </section>
   );

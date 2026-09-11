@@ -388,6 +388,30 @@ def init_db():
             """
         )
 
+        # Tentative en cours du "Quick Test" (bouton additionnel, cf.
+        # app.quicktest_exam) — algorithme adaptatif par bissection
+        # (lower_bound/upper_bound sur les 11 sets), distinct de l'examen
+        # d'entrée classique ci-dessus (table séparée, jamais touché) —
+        # cf. demande explicite du user ("ne pas casser l'application").
+        # pending_confirmation_set (nullable) : set en attente d'une
+        # question de confirmation après un score 3 non encore confirmé.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS onboarding_quicktest_progress (
+                user_id INTEGER PRIMARY KEY REFERENCES users(id),
+                question_number INTEGER NOT NULL,
+                current_set INTEGER NOT NULL,
+                current_kind TEXT NOT NULL,
+                lower_bound INTEGER NOT NULL,
+                upper_bound INTEGER NOT NULL,
+                pending_confirmation_set INTEGER,
+                current_question_json TEXT NOT NULL,
+                history_json TEXT NOT NULL,
+                created_at TEXT NOT NULL DEFAULT (datetime('now'))
+            )
+            """
+        )
+
         # Lot d'évaluation orale groupée mis en attente après un échec par
         # surcharge Gemini (429/503, ou timeout de traitement du fichier) —
         # cf. app.oral_retry. `status`: pending (offert au user via une
@@ -493,6 +517,7 @@ _RESET_TABLES = (
     "wallet_lesson_points_awarded",
     "user_level",
     "onboarding_exam_progress",
+    "onboarding_quicktest_progress",
 )
 
 

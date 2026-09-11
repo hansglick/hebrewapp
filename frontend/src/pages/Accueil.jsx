@@ -204,18 +204,10 @@ export default function Accueil() {
           </Link>
         </div>
 
-        {/* Examen Blanc précède Examen (cf. demande explicite du user).
-            Même format/tuile que Examen (TileTitle + card), mais grise
-            (pas de card-dark, pas de recoloration blanche du logo) —
-            exercices de traduction de phrases (même algorithme de tirage
-            que l'ancien "revisions/question-ecrite", cf. examen-blanc dans
-            App.jsx). height:EXAM_TILE_HEIGHT explicite et identique sur
-            les deux tuiles (display:flex + alignItems:center pour centrer
-            le contenu dedans) : garantit un format strictement identique
-            entre les deux quel que soit le texte ("Examen" vs "Examen
-            Blanc" n'ont pas la même longueur), plutôt que de compter sur
-            un auto-sizing par contenu qui pourrait diverger — cf. demande
-            explicite du user ("strictement de même format"). */}
+        {/* Examen Blanc + Examen : empilées verticalement dans la même
+            colonne, chacune gardant sa propre tuile pleine (.card /
+            .card-dark complète, bordure/coins/ombre intacts) — cf. demande
+            explicite du user. */}
         <div className="tile-list" style={{ gap: 8, margin: 0 }}>
           <Link to="/examen-blanc" className="card-link">
             <div
@@ -225,11 +217,7 @@ export default function Accueil() {
               <TileTitle src="/examhat.png">Examen Blanc</TileTitle>
             </div>
           </Link>
-          {/* Examen : fond noir, texte blanc, logo examhat recoloré en
-              blanc (cf. demande explicite du user). L'état "dernier niveau
-              atteint" garde le traitement grisé existant, sans le style
-              noir/blanc — pas de hauteur forcée dans ce cas, le message
-              n'a pas à matcher la tuile Examen Blanc. */}
+
           {niveau.next_lesson_code ? (
             <Link to={`/examen/cible/${niveau.next_lesson_code}`} className="card-link">
               <div

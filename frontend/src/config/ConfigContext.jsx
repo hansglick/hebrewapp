@@ -16,6 +16,16 @@ export function ConfigProvider({ children }) {
   const [evalWaitMode, setEvalWaitMode] = useState(
     () => localStorage.getItem("eval-wait-mode") || "each"
   );
+  // Case à cocher indépendante du toggle each/global, propre à l'examen
+  // oral (cf. ExamenOralScreen) : quand activée, chaque réponse (orale ou
+  // rapport) est envoyée à Gemini en arrière-plan dès l'envoi, sans
+  // attendre — le user peut continuer l'examen immédiatement. La réponse
+  // est alors verrouillée (non modifiable) dès l'envoi, et le bilan final
+  // reste bloqué jusqu'à ce que TOUTES les évaluations soient revenues —
+  // cf. demande explicite du user.
+  const [oralBackgroundEval, setOralBackgroundEval] = useState(
+    () => localStorage.getItem("oral-background-eval") === "true"
+  );
 
   useEffect(() => {
     localStorage.setItem("god-mode", godMode ? "true" : "false");
@@ -24,6 +34,10 @@ export function ConfigProvider({ children }) {
   useEffect(() => {
     localStorage.setItem("eval-wait-mode", evalWaitMode);
   }, [evalWaitMode]);
+
+  useEffect(() => {
+    localStorage.setItem("oral-background-eval", oralBackgroundEval ? "true" : "false");
+  }, [oralBackgroundEval]);
 
   useEffect(() => {
     const theme = appConfig.theme[themeMode];
@@ -49,8 +63,10 @@ export function ConfigProvider({ children }) {
       setGodMode,
       evalWaitMode,
       setEvalWaitMode,
+      oralBackgroundEval,
+      setOralBackgroundEval,
     }),
-    [themeMode, fontScale, godMode, evalWaitMode]
+    [themeMode, fontScale, godMode, evalWaitMode, oralBackgroundEval]
   );
 
   return <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>;

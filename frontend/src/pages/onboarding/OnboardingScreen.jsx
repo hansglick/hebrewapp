@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   advanceOnboardingExam,
+  advanceQuicktestExam,
   getCurrentOnboardingExam,
+  getCurrentQuicktestExam,
   skipOnboarding,
   startOnboardingExam,
+  startQuicktestExam,
 } from "../../api/onboarding";
 import { getIdentity } from "../../api/identity";
 import { evaluateOral, evaluateTranslation } from "../../api/gemini";
@@ -100,17 +103,37 @@ export default function OnboardingScreen({ onCompleted }) {
   const audioUrl = useMemo(() => (audioBlob ? URL.createObjectURL(audioBlob) : null), [audioBlob]);
 
   const [doneResult, setDoneResult] = useState(null);
+  // "classic" (7 questions fixes, algorithme actuel) | "quick" (4-6
+  // questions, bissection adaptative, cf. app/quicktest_exam.py) — cf.
+  // demande explicite du user ("Quick Test" en plus, sans rien casser).
+  const [variant, setVariant] = useState("classic");
 
   useEffect(() => {
+    // Reprise après reload : les deux parcours sont mutuellement exclusifs
+    // (compléter l'un termine l'onboarding), mais une session peut avoir
+    // été interrompue en cours de l'un OU l'autre — on vérifie le
+    // classique d'abord, puis le Quick Test, cf. demande explicite du
+    // user.
     getCurrentOnboardingExam().then((current) => {
       if (current.in_progress) {
+        setVariant("classic");
         setQuestionNumber(current.question_number);
         setTotalQuestions(current.total_questions);
         setQuestion(current.question);
         setPhase("question");
-      } else {
-        setPhase("intro");
+        return;
       }
+      getCurrentQuicktestExam().then((quickCurrent) => {
+        if (quickCurrent.in_progress) {
+          setVariant("quick");
+          setQuestionNumber(quickCurrent.question_number);
+          setTotalQuestions(quickCurrent.total_questions);
+          setQuestion(quickCurrent.question);
+          setPhase("question");
+        } else {
+          setPhase("intro");
+        }
+      });
     });
   }, []);
 
@@ -122,11 +145,12 @@ export default function OnboardingScreen({ onCompleted }) {
     setGeminiError(null);
   }
 
-  async function handleStart() {
+  async function handleStart(chosenVariant) {
+    setVariant(chosenVariant);
     setStarting(true);
     setStartError(null);
     try {
-      const data = await startOnboardingExam();
+      const data = await (chosenVariant === "quick" ? startQuicktestExam() : startOnboardingExam());
       setQuestionNumber(data.question_number);
       setTotalQuestions(data.total_questions);
       setQuestion(data.question);
@@ -215,7 +239,8 @@ export default function OnboardingScreen({ onCompleted }) {
   }
 
   async function handleNext() {
-    const response = await advanceOnboardingExam({
+    const advance = variant === "quick" ? advanceQuicktestExam : advanceOnboardingExam;
+    const response = await advance({
       questionNumber,
       kind: question.kind,
       result,
@@ -298,12 +323,26 @@ export default function OnboardingScreen({ onCompleted }) {
             {startError}
           </p>
         )}
+        {/* Bouton additionnel, au-dessus de "Commencer le test !" — lance
+            l'algorithme adaptatif (4-6 questions, cf.
+            backend/app/quicktest_exam.py) plutôt que les 7 questions
+            fixes ci-dessous, sans rien changer à ce dernier — cf. demande
+            explicite du user. */}
+        <button
+          type="button"
+          className="exam-tile green pastel"
+          style={{ cursor: "pointer" }}
+          disabled={starting || skipping}
+          onClick={() => handleStart("quick")}
+        >
+          Quick Test
+        </button>
         <button
           type="button"
           className="exam-tile green"
           style={{ cursor: "pointer" }}
           disabled={starting || skipping}
-          onClick={handleStart}
+          onClick={() => handleStart("classic")}
         >
           Commencer le test !
         </button>
