@@ -52,14 +52,14 @@ function capitalize(text) {
 // shinletter.png est un pictogramme noir plein (pas une icône déjà colorée,
 // contrairement à point-dinterrogation.png) — même technique que
 // lecture.png/voice.png (cf. AudioProgressBlock.jsx/.css) : mask-image
-// plutôt qu'un <img>, pour pouvoir en piloter la couleur en CSS. Noir fixe
-// (pas var(--accent), qui suivait la couleur du caractère "ש" remplacé) —
-// cf. demande explicite du user.
+// plutôt qu'un <img>, pour pouvoir en piloter la couleur en CSS. Gris clair
+// #9ca3af (pas var(--accent), qui suivait la couleur du caractère "ש"
+// remplacé) — cf. demande explicite du user.
 const shinIconStyle = {
   display: "inline-block",
   width: 22,
   height: 22,
-  backgroundColor: "#000",
+  backgroundColor: "#9ca3af",
   WebkitMaskImage: `url(${SHIN_ICON_URL})`,
   maskImage: `url(${SHIN_ICON_URL})`,
   WebkitMaskSize: "contain",
@@ -149,13 +149,16 @@ export default function MotScreen() {
 
   // Anime brièvement le bouton choisi avant de passer au mot suivant, pour
   // que le user perçoive bien son choix (surtout via les raccourcis clavier
-  // 1/0 qui n'ont pas de retour visuel de "clic").
+  // 1/0 qui n'ont pas de retour visuel de "clic"). startFlip("next") avant
+  // next() : même animation "tourner la page" que le bouton next de la
+  // barre de contrôle — cf. demande explicite du user.
   function handleEvaluate(success) {
     setPulse(success ? "success" : "danger");
     createEvaluation({ objectType: "mot", objectKey: `${mot.key}|${mot.langue}`, success }).then(() => {
       setPerfVersion((v) => v + 1);
       setTimeout(() => {
         setPulse(null);
+        startFlip("next");
         next();
       }, 350);
     });
@@ -251,15 +254,19 @@ export default function MotScreen() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          // "safe center" (pas juste "center") : sans ce filet de sécurité,
-          // dès que la fiche racine dépliée rend le contenu plus grand que
-          // l'espace disponible, le centrage pousse le haut du contenu
-          // hors de l'écran sans retomber sur un alignement en haut — et
-          // comme ce conteneur est en overflowY:auto, ce qui sort par le
-          // haut devient inaccessible (impossible de scroller au-delà de
-          // 0) — cf. bug rapporté par le user (encadré tronqué, éléments
-          // au-dessus du trait disparus).
-          justifyContent: "safe center",
+          // flex-start (pas "safe center") dès que la fiche racine est
+          // dépliée : "safe center" n'est pas fiable en pratique (constaté
+          // en émulation mobile DevTools, cf. capture jointe par le user)
+          // — le centrage continue de pousser le haut ET le bas du contenu
+          // hors de l'écran, avec ce conteneur en overflowY:auto rendant
+          // le haut inaccessible au scroll — cf. bug rapporté par le user
+          // (encadré tronqué en haut ET en bas). "safe center" (pas
+          // "center" simple) tant que la fiche est fermée : même
+          // conteneur overflowY:auto/scrollTop bloqué à 0, donc un
+          // débordement avec "center" simple rend aussi le haut invisible
+          // et inatteignable au scroll — cf. bug rapporté par le user (mot
+          // hébreu tronqué en haut alors qu'aucune fiche n'était ouverte).
+          justifyContent: racineOpen ? "flex-start" : "safe center",
         }}
       >
         <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
@@ -268,8 +275,11 @@ export default function MotScreen() {
           </span>
 
           <span className="hebrew-word-row" style={{ justifyContent: "center" }}>
+            {/* Gris clair #9ca3af (pas var(--speakerIcon), noir) pour les
+                deux logos de cette rangée — cf. demande explicite du
+                user. */}
             <button type="button" className="speak-btn" onClick={() => speak(cardMot.original)}>
-              <SpeakerIcon color="var(--speakerIcon)" size={27} />
+              <SpeakerIcon color="#9ca3af" size={27} />
             </button>
             <button type="button" className="speak-btn" onClick={handleRacineClick}>
               <span style={shinIconStyle} />
@@ -344,15 +354,19 @@ export default function MotScreen() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          // "safe center" (pas juste "center") : sans ce filet de sécurité,
-          // dès que la fiche racine dépliée rend le contenu plus grand que
-          // l'espace disponible, le centrage pousse le haut du contenu
-          // hors de l'écran sans retomber sur un alignement en haut — et
-          // comme ce conteneur est en overflowY:auto, ce qui sort par le
-          // haut devient inaccessible (impossible de scroller au-delà de
-          // 0) — cf. bug rapporté par le user (encadré tronqué, éléments
-          // au-dessus du trait disparus).
-          justifyContent: "safe center",
+          // flex-start (pas "safe center") dès que la fiche racine est
+          // dépliée : "safe center" n'est pas fiable en pratique (constaté
+          // en émulation mobile DevTools, cf. capture jointe par le user)
+          // — le centrage continue de pousser le haut ET le bas du contenu
+          // hors de l'écran, avec ce conteneur en overflowY:auto rendant
+          // le haut inaccessible au scroll — cf. bug rapporté par le user
+          // (encadré tronqué en haut ET en bas). "safe center" (pas
+          // "center" simple) tant que la fiche est fermée : même
+          // conteneur overflowY:auto/scrollTop bloqué à 0, donc un
+          // débordement avec "center" simple rend aussi le haut invisible
+          // et inatteignable au scroll — cf. bug rapporté par le user (mot
+          // hébreu tronqué en haut alors qu'aucune fiche n'était ouverte).
+          justifyContent: racineOpen ? "flex-start" : "safe center",
         }}
       >
         <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>

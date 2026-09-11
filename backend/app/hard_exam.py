@@ -3,7 +3,7 @@ import random
 from app.data_loader import get_dataset
 from app.database import get_connection
 from app.difficulty import _is_negative, define_difficulty_score
-from app.lesson_order import all_lesson_codes_in_order, level_score, sample_unique
+from app.lesson_order import all_lesson_codes_in_order, sample_unique
 from app.quizz import build_quizz_options
 from app.stats import TAB_OBJECT_TYPES
 from app.text_questions import questions_for_text
@@ -16,30 +16,18 @@ RATING_THRESHOLD = 4
 
 def _last_level_up_at(conn, user_id: int) -> str | None:
     """Horodatage de la dernière VRAIE montée de niveau (écrit ET oral
-    réussis sur un même code, faisant progresser dans le cours) — distinct
-    d'une simple insertion dans level_history, qui trace aussi les
-    redescentes (repasse ratée d'un examen déjà certifié). Dérivé en
-    comparant chaque entrée à la précédente plutôt que stocké, faute d'un
-    champ "sens" sur level_history."""
-    rows = conn.execute(
-        "SELECT level, reached_at FROM level_history WHERE user_id = ? ORDER BY reached_at ASC, id ASC",
+    réussis sur un même code, faisant progresser dans le cours) — seules les
+    lignes source='exam' de level_history en résultent (cf.
+    app.exam_session, app.database.set_user_level) : le placement initial de
+    l'onboarding, l'outil dev PUT /niveau et le bootstrap de compte
+    n'écrivent jamais cette source, précisément pour ne pas déverrouiller le
+    Hard Exam avant toute vraie réussite d'examen — cf. bug rapporté par le
+    user (Hard Exam proposé juste après le test de niveau de l'onboarding)."""
+    row = conn.execute(
+        "SELECT MAX(reached_at) AS t FROM level_history WHERE user_id = ? AND source = 'exam'",
         (user_id,),
-    ).fetchall()
-    last_up = None
-    previous_score = None
-    for row in rows:
-        score = level_score(row["level"])
-        if score is None:
-            continue
-        # `previous_score is None` couvre à la fois le tout premier niveau
-        # jamais atteint et le cas où toutes les entrées précédentes étaient
-        # le sentinel de bootstrap (score None, ex: DEFAULT_LEVEL) : dans les
-        # deux cas, atteindre un premier niveau valide compte comme une
-        # montée.
-        if previous_score is None or score > previous_score:
-            last_up = row["reached_at"]
-        previous_score = score
-    return last_up
+    ).fetchone()
+    return row["t"] if row else None
 
 
 def is_unlocked(conn, user_id: int) -> bool:

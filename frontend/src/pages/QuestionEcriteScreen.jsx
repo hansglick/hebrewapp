@@ -230,7 +230,9 @@ export default function QuestionEcriteScreen() {
   }, [phrase]);
 
   // Anime brièvement le bouton choisi avant de passer à la phrase suivante,
-  // cf. MotScreen::handleEvaluate (même logique).
+  // cf. MotScreen::handleEvaluate. startFlip("next") avant next() : même
+  // animation "tourner la page" que le bouton next de la barre de
+  // contrôle — cf. demande explicite du user.
   function handleEvaluate(success) {
     setPulse(success ? "success" : "danger");
     createEvaluation({
@@ -240,6 +242,7 @@ export default function QuestionEcriteScreen() {
     }).then(() => {
       setTimeout(() => {
         setPulse(null);
+        startFlip("next");
         next();
       }, 350);
     });

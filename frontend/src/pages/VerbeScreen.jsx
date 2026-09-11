@@ -281,8 +281,9 @@ export default function VerbeScreen() {
   }
 
   // Anime brièvement le bouton choisi avant de passer au verbe suivant,
-  // cf. MotScreen::handleEvaluate (même logique : pas d'animation "tourner
-  // la page" ici, réservée à goPrevious/goNext).
+  // cf. MotScreen::handleEvaluate. startFlip("next") avant next() : même
+  // animation "tourner la page" que le bouton next de la barre de
+  // contrôle — cf. demande explicite du user.
   function handleEvaluate(success) {
     setPulse(success ? "success" : "danger");
     createEvaluation({
@@ -293,6 +294,7 @@ export default function VerbeScreen() {
       setPerfVersion((v) => v + 1);
       setTimeout(() => {
         setPulse(null);
+        startFlip("next");
         next();
       }, 350);
     });
@@ -339,16 +341,13 @@ export default function VerbeScreen() {
   // Sur le tout premier verbe de la session (pas encore d'historique), back()
   // ne fait rien plutôt que de sortir de l'écran (navigate(-1)) : previous/
   // next ne doivent jamais faire quitter le type d'objet parcouru, cf.
-  // demande explicite du user. En exploration, "précédent" désélectionne
-  // d'abord le temps affiché (retour aux tuiles) avant de changer de verbe —
-  // en révision, plus de tuiles à désélectionner (temps tiré au hasard), on
-  // passe directement au verbe précédent, cf. demande explicite du user.
+  // demande explicite du user. "Précédent" passe directement au verbe
+  // précédent (plus d'étape intermédiaire de désélection du temps en
+  // exploration) : le useEffect ci-dessus (déclenché par le changement de
+  // `verbe`) retombe toujours sur "present" en exploration, jamais sur
+  // aucun temps sélectionné — cf. demande explicite du user.
   function goPrevious() {
     if (flip) return;
-    if (mode === "exploration" && temps) {
-      setTemps(null);
-      return;
-    }
     const moved = back();
     if (moved) startFlip("prev");
   }
@@ -391,9 +390,29 @@ export default function VerbeScreen() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "safe center",
+          // flex-start (pas "safe center") dès qu'une fiche binyan/racine
+          // est dépliée : "safe center" n'est pas fiable en pratique
+          // (constaté en émulation mobile DevTools, cf. capture jointe par
+          // le user sur MotScreen — même conteneur, même défaut) — le
+          // centrage continue de pousser le haut ET le bas du contenu hors
+          // de l'écran, avec ce conteneur en overflowY:auto rendant le
+          // haut inaccessible au scroll. "center" simple tant que les deux
+          // fiches sont fermées. "safe center" (pas "center" simple) tant
+          // que les deux fiches sont fermées : ce conteneur est en
+          // overflowY:auto avec scrollTop bloqué à 0 (cf. plus haut), donc
+          // un "center" simple qui déborderait rendrait le haut du contenu
+          // invisible et inatteignable au scroll — cf. bug rapporté par le
+          // user (verbe hébreu tronqué en haut alors qu'aucune fiche
+          // n'était ouverte).
+          justifyContent: racineOpen || binyanOpen ? "flex-start" : "safe center",
           gap: 16,
           boxSizing: "border-box",
+          // /1.5 : compense le zoom ambiant de .screen (ce conteneur est
+          // à l'intérieur), sans quoi ce padding rendrait à 1.5x sa valeur
+          // — garantit que la dernière conjugaison reste visible au-dessus
+          // de la barre de contrôle inférieure au lieu d'être masquée par
+          // elle, cf. bug rapporté par le user.
+          paddingBottom: "calc(var(--bottom-nav-height) * 2 / 1.5)",
         }}
       >
         {/* Pastille "1" + titre, uniquement en révision — même format que
@@ -526,13 +545,19 @@ export default function VerbeScreen() {
             ci-dessus (sinon leur zoom de compensation devrait annuler
             0.75*1.5 au lieu de 1.5, cf. régression corrigée) — même
             technique que la fiche racine de MotScreen (grid-template-rows
-            0fr<->1fr + overflow hidden), cf. demande explicite du user. */}
+            0fr<->1fr + overflow hidden), cf. demande explicite du user.
+            marginTop:-25.8 (zoom:1.5 ambiant de .screen) : remonte ce bloc
+            et tout ce qui suit (fiche racine, tuiles temps, conjugaisons)
+            pour réduire de 50% l'écart entre le verbe traduit en français
+            et les tuiles temps (77.4px -> 38.7px, mesuré via Claude in
+            Chrome) — cf. demande explicite du user. */}
         <div
           style={{
             width: "100%",
             display: "grid",
             gridTemplateRows: binyanOpen ? "1fr" : "0fr",
             transition: "grid-template-rows 300ms ease",
+            marginTop: -25.8,
           }}
         >
           <div style={{ overflow: "hidden", minHeight: 0 }}>
@@ -639,24 +664,8 @@ export default function VerbeScreen() {
           </>
         ) : (
           <>
-            {/* Trait — même format que l'écran révision/mot — cf. demande
-                explicite du user. marginTop calé pour équidistance : le
-                trait doit être à mi-chemin entre le dernier élément du
-                bloc 1 (la rangée haut-parleur/bet/shin) et le premier
-                élément du bloc 2 (la pastille), pas aligné sur les écarts
-                de l'écran révision/mot — cf. demande explicite du user
-                ("équidistant entre le dernier et le premier élément de
-                chaque paire de blocs consécutifs"). */}
-            <hr
-              style={{
-                width: "70%",
-                maxWidth: 400,
-                border: "none",
-                borderTop: "1px solid var(--cardBorder)",
-                margin: 0,
-                marginTop: -36,
-              }}
-            />
+            {/* Première ligne horizontale du bloc révision supprimée — test
+                visuel, cf. demande explicite du user. */}
 
             {/* Temps + personne, séparés par un trait fin vertical
                 discret gris — cf. demande explicite du user. Police même
@@ -670,15 +679,11 @@ export default function VerbeScreen() {
             {/* Non gras, gris clair #9ca3af (même gris que le verbe hébreu
                 du bloc 1, pas var(--textSecondary) — trop foncé) — cf.
                 demande explicite du user. */}
-            {/* marginTop:-5.474 (zoom:1.5 ambiant de .screen) : équidistance
-                entre les deux traits horizontaux. Le trait du dessous
-                (marginTop:-5.47 sur son propre wrapper, cf. plus bas) suit
-                ce bloc dans le flux normal, donc son écart en dessous reste
-                fixe (15.8px) quel que soit le marginTop appliqué ici — seul
-                l'écart au-dessus bouge ; -5.474 l'aligne sur ces 15.8px —
-                cf. demande explicite du user, suite à la suppression de la
-                pastille "2" + titre "À la forme". */}
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: -5.474 }}>
+            {/* marginTop:-26.74 (zoom:1.5 ambiant de .screen) : remonte
+                temps/personne pour réduire de 50% l'écart avec le verbe
+                hébreu du bloc 1 (63.8px -> 31.9px, mesuré via Claude in
+                Chrome) — cf. demande explicite du user. */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: -26.74 }}>
               {/* 0.64 = 0.8 * 0.8 : -20% supplémentaires — cf. demande
                   explicite du user. */}
               <span style={{ fontSize: "calc(1.3em * 0.64 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>

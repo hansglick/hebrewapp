@@ -251,16 +251,27 @@ def init_db():
         )
 
         # Historique des montées de niveau, pour la courbe de progression.
+        # `source` distingue une vraie réussite d'examen ('exam', seule à
+        # déverrouiller le Hard Exam, cf. app.hard_exam.is_unlocked) d'un
+        # simple placement (onboarding, outil dev PUT /niveau, bootstrap de
+        # compte) — sans quoi le placement initial de l'onboarding était
+        # compté comme une "vraie" montée de niveau et déverrouillait le
+        # Hard Exam juste après le test de niveau, cf. bug rapporté par le
+        # user.
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS level_history (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER NOT NULL REFERENCES users(id),
                 level TEXT NOT NULL,
-                reached_at TEXT NOT NULL DEFAULT (datetime('now'))
+                reached_at TEXT NOT NULL DEFAULT (datetime('now')),
+                source TEXT NOT NULL DEFAULT 'other'
             )
             """
         )
+        level_history_cols = [r["name"] for r in conn.execute("PRAGMA table_info(level_history)").fetchall()]
+        if "source" not in level_history_cols:
+            conn.execute("ALTER TABLE level_history ADD COLUMN source TEXT NOT NULL DEFAULT 'other'")
 
         # Wallet (points, tickets, cartes, gems) — cf. app.wallet, port de
         # instructions/wallet_behavior/simulation.py. Un lot de points par
@@ -547,7 +558,12 @@ def login_user(pseudo: str, pin: str) -> int | None:
         conn.close()
 
 
-def set_user_level(user_id: int, level: str) -> None:
+def set_user_level(user_id: int, level: str, source: str = "other") -> None:
+    """`source="exam"` réservé à une vraie réussite d'examen classique
+    (cf. app.exam_session) — seule valeur qui compte comme une "vraie"
+    montée de niveau pour app.hard_exam.is_unlocked. Tout le reste
+    (onboarding, outil dev PUT /niveau, fallback de rétrogradation) garde
+    la valeur par défaut 'other'."""
     conn = get_connection()
     try:
         conn.execute(
@@ -555,8 +571,8 @@ def set_user_level(user_id: int, level: str) -> None:
             (level, user_id),
         )
         conn.execute(
-            "INSERT INTO level_history (user_id, level, reached_at) VALUES (?, ?, datetime('now'))",
-            (user_id, level),
+            "INSERT INTO level_history (user_id, level, reached_at, source) VALUES (?, ?, datetime('now'), ?)",
+            (user_id, level, source),
         )
         conn.commit()
     finally:

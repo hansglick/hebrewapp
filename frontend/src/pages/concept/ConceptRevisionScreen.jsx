@@ -55,7 +55,9 @@ export default function ConceptRevisionScreen() {
   const [concept, setConcept] = useState(null);
   const [loadError, setLoadError] = useState(null);
   const [running, setRunning] = useState(false);
-  const [status, setStatus] = useState("Prêt.");
+  // "" (pas "Prêt.") : ce message initial alourdissait l'encadré sans
+  // apporter d'information utile — cf. demande explicite du user.
+  const [status, setStatus] = useState("");
   const [aiBuffer, setAiBuffer] = useState("");
   const [lastCompletedAi, setLastCompletedAi] = useState("");
   const [history, setHistory] = useState([]); // [{speaker, text, ts}], retrié à chaque ajout

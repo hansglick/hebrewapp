@@ -41,17 +41,17 @@ export default function LeconDetailScreen() {
             </div>
           </Link>
         )}
+        {lecon.words.length > 0 && (
+          <Link to={`/apprentissage/${chapId}/${code}/mots`} className="card-link">
+            <div className="card" style={notVisitedStyle("mots")}>
+              Vocabulaire
+            </div>
+          </Link>
+        )}
         {lecon.verbs.length > 0 && (
           <Link to={`/apprentissage/${chapId}/${code}/verbes`} className="card-link">
             <div className="card" style={notVisitedStyle("verbes")}>
               Verbes
-            </div>
-          </Link>
-        )}
-        {lecon.words.length > 0 && (
-          <Link to={`/apprentissage/${chapId}/${code}/mots`} className="card-link">
-            <div className="card" style={notVisitedStyle("mots")}>
-              Mots
             </div>
           </Link>
         )}

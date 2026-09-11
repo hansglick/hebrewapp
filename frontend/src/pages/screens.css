@@ -32,6 +32,18 @@
    Firefox : scrollbar-width. Chrome/Safari/Edge : ::-webkit-scrollbar. */
 .page-turn-card {
   scrollbar-width: none;
+  /* Désactive le "scroll anchoring" du navigateur : ce conteneur combine
+     overflow-y:auto, justify-content:safe center ET des enfants dont la
+     hauteur change (fiches binyan/racine en grid-template-rows 0fr<->1fr)
+     — terrain propice à ce que le navigateur recale automatiquement (et
+     de travers) le scroll après une interaction, ramenant le fameux
+     rognage du haut du contenu après avoir scrollé — cf. bug rapporté par
+     le user ("en scrollant... on retourne au bug précédent"). Notre
+     propre logique (safe center + marges calculées dynamiquement) gère
+     déjà le positionnement, ce mécanisme du navigateur n'a rien à
+     apporter ici et ne fait que le perturber.
+  */
+  overflow-anchor: none;
 }
 .page-turn-card::-webkit-scrollbar {
   display: none;

@@ -22,8 +22,17 @@ const EXAM_TILE_HEIGHT = 50;
 
 function TileTitle({ src, color, children }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-      <MaskIcon src={src} size={22} color={color} />
+    // gap:14 (pas 8) : le transform:scale(1.5) du logo déborde de ~5.5px
+    // sur sa droite (sa boîte de mise en page reste 22px, mesurée par ce
+    // gap, alors que son rendu visuel fait 33px) — sans ce +6px, le logo
+    // grossi mordait visuellement sur l'espace vers le titre, cf. bug
+    // rapporté par le user ("trop collés").
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+      {/* transform:scale (pas size) : agrandit le logo de 50% sans toucher
+          à sa boîte de mise en page (22px), donc sans changer la hauteur
+          de la ligne ni la dimension de la tuile — cf. demande explicite
+          du user. */}
+      <MaskIcon src={src} size={22} color={color} style={{ transform: "scale(1.5)" }} />
       <span style={{ fontWeight: 600, fontSize: "1.1em" }}>{children}</span>
     </div>
   );
@@ -105,7 +114,11 @@ export default function Accueil() {
   return (
     <section className="screen accueil-screen">
       {pseudo && (
-        <h1 ref={titleRef} className="hebrew" style={{ margin: "0 0 8px", direction: "rtl", fontWeight: 400 }}>
+        <h1
+          ref={titleRef}
+          className="hebrew"
+          style={{ margin: "0 0 8px", direction: "rtl", fontWeight: 400, fontSize: "2.5em" }}
+        >
           {/* "!" placé APRÈS {pseudo} dans l'ordre logique du code : le
               titre est en RTL (direction:"rtl"), donc le contenu le plus
               tardif dans l'ordre logique s'affiche le plus à GAUCHE

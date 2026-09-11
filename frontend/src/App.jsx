@@ -27,6 +27,8 @@ import CuriositeScreen from "./pages/fun/CuriositeScreen";
 import NiveauScreen from "./pages/NiveauScreen";
 import SauterLeconsChapitresScreen from "./pages/SauterLeconsChapitresScreen";
 import SauterLeconsScreen from "./pages/SauterLeconsScreen";
+import DefinirNiveauChapitresScreen from "./pages/DefinirNiveauChapitresScreen";
+import DefinirNiveauScreen from "./pages/DefinirNiveauScreen";
 import NotificationsScreen from "./pages/NotificationsScreen";
 import MotScreen from "./pages/MotScreen";
 import VerbeScreen from "./pages/VerbeScreen";
@@ -166,6 +168,12 @@ function App() {
             cf. demande explicite du user. */}
         <Route path="niveau/sauter" element={<SauterLeconsChapitresScreen />} />
         <Route path="niveau/sauter/:chapId" element={<SauterLeconsScreen />} />
+        {/* "Définir son niveau" (God Mode uniquement, cf. NiveauScreen) :
+            chapitres -> toutes les leçons du chapitre (pas de filtrage par
+            niveau actuel) -> redéfinit directement le niveau du user, cf.
+            demande explicite du user. */}
+        <Route path="niveau/definir" element={<DefinirNiveauChapitresScreen />} />
+        <Route path="niveau/definir/:chapId" element={<DefinirNiveauScreen />} />
         <Route path="notifications" element={<NotificationsScreen />} />
         <Route path="binyans" element={<BinyanScreen />} />
         <Route path="binyans/:nom" element={<BinyanScreen />} />

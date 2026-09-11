@@ -181,7 +181,14 @@ export default function Layout() {
       <div className="app-shell">
         <main className="app-content">
           <AuthFlow
-            onSignedIn={() => setHasIdentity(true)}
+            onSignedIn={() => {
+              // Sans ce navigate, le user retombe sur l'URL déjà chargée
+              // avant la connexion (ex: /fun si l'app avait été laissée sur
+              // la page Culture) — connexion doit toujours rimer avec
+              // accueil, cf. demande explicite du user.
+              navigate("/", { replace: true });
+              setHasIdentity(true);
+            }}
             onRegistered={() => {
               justRegisteredRef.current = true;
               setShowOnboarding(true);

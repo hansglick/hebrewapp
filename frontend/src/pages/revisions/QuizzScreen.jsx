@@ -195,7 +195,7 @@ export default function QuizzScreen() {
 
         {/* Même gris clair que MotScreen/VerbeScreen (révision) — cf.
             demande explicite du user. */}
-        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{capitalize(cardQuizz.french)}</p>
+        <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em", fontWeight: 700 }}>{capitalize(cardQuizz.french)}</p>
 
         {/* width fixée en CSS (cf. .quizz-hr, screens.css) et non ici : un
             style inline gagnerait toujours face à la règle @media,

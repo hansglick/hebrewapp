@@ -62,7 +62,9 @@ export default function JdrScreen() {
   const [jdr, setJdr] = useState(null);
   const [loadError, setLoadError] = useState(null);
   const [running, setRunning] = useState(false);
-  const [status, setStatus] = useState("Prêt.");
+  // "" (pas "Prêt.") : ce message initial alourdissait l'encadré sans
+  // apporter d'information utile — cf. demande explicite du user.
+  const [status, setStatus] = useState("");
   const [aiBuffer, setAiBuffer] = useState("");
   // Reste affichée après turn_complete, jusqu'à ce que la prochaine réplique
   // de l'IA commence à arriver (aiBuffer redevient non-vide) — sans ça,

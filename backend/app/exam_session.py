@@ -304,7 +304,7 @@ def _finalize(conn, user_id: int, code: str, exam_type: str, questions: list, an
             or (code in codes and codes.index(code) > codes.index(current_level))
         )
         if is_advance:
-            set_user_level(user_id, code)
+            set_user_level(user_id, code, source="exam")
             niveau_updated = True
     elif was_already_certified and not passed:
         fallback_level = _highest_fully_passed_code_excluding(conn, user_id, code)
