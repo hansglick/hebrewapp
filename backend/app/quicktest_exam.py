@@ -112,10 +112,17 @@ def target_default_set(lower_bound: int, upper_bound: int) -> int:
     l'exemple chiffré de l'algorithme — 7.5 -> 7) tant que la fenêtre est
     large, directement `upper_bound` (la frontière elle-même) dès qu'elle
     est déjà étroite (<=1) — cf. point 8 ("poser une question au set 8"
-    quand lower=7/upper=8)."""
+    quand lower=7/upper=8). `upper_bound` est une borne VIRTUELLE (peut
+    valoir jusqu'à UPPER_BOUND_INIT=12, au-delà du dernier set réel) —
+    on borne le résultat à [1, NUM_SETS] avant de le renvoyer, sinon un
+    upper_bound resté à 12 (jamais contraint par un score <=2) provoque
+    un IndexError au tirage de la question — cf. bug rapporté par le
+    user en prod (crash de l'onboarding)."""
     if upper_bound - lower_bound <= 1:
-        return upper_bound
-    return (lower_bound + upper_bound) // 2
+        target = upper_bound
+    else:
+        target = (lower_bound + upper_bound) // 2
+    return max(1, min(target, NUM_SETS))
 
 
 def _modality_means(history: list) -> tuple:

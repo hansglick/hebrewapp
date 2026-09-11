@@ -218,7 +218,18 @@ export default function Layout() {
     return (
       <div className="app-shell">
         <main className="app-content">
-          <OnboardingScreen onCompleted={() => setShowOnboarding(false)} />
+          <OnboardingScreen
+            onCompleted={() => {
+              // L'onboarding peut avoir été repris (refresh en plein test)
+              // depuis N'IMPORTE QUELLE URL — sans navigation explicite,
+              // masquer l'écran d'onboarding retombe sur la route déjà
+              // chargée (ex: "/revisions"), pas l'accueil — cf. bug
+              // rapporté par le user en prod ("fin du test d'évaluation
+              // doit rimer avec accueil", même principe que la connexion).
+              navigate("/", { replace: true });
+              setShowOnboarding(false);
+            }}
+          />
         </main>
       </div>
     );
