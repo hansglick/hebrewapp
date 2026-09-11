@@ -65,22 +65,27 @@ app.add_middleware(
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Dossiers d'assets versionnés dans git (assez légers pour ça, contrairement
-# au reste de backend/results/, cf. .gitignore — ex: images_concept) : ils
-# vivent dans le checkout du repo (BACKEND_DIR / "results"), distinct du
+# au reste de backend/results/, cf. .gitignore — ex: images_concept, logos) :
+# ils vivent dans le checkout du repo (BACKEND_DIR / "results"), distinct du
 # disque persistant (RESULTS_DIR) en prod. Sans cette copie au démarrage, un
 # simple "git push" ne suffirait pas à les rendre servables, puisque
 # StaticFiles(RESULTS_DIR) ne regarde jamais dans le checkout. Ne fait rien
-# en local (les deux chemins coïncident déjà). Idempotent (skip si déjà
-# copié) pour ne pas retraiter à chaque redémarrage.
+# en local (les deux chemins coïncident déjà). Copie FICHIER PAR FICHIER
+# (pas dossier par dossier) : un simple "skip si le dossier de destination
+# existe déjà" raterait tout nouveau fichier ajouté dans un dossier déjà
+# partiellement synchronisé sur le disque (ex: un nouveau logo ajouté à
+# results/logos/, déjà peuplé manuellement avec d'autres fichiers) — cf. bug
+# rapporté par le user (homepage_image.png absent en prod). N'écrase jamais
+# un fichier déjà présent (idempotent, ne retraite pas à chaque redémarrage).
 _bundled_results_dir = BACKEND_DIR / "results"
 if RESULTS_DIR != _bundled_results_dir and _bundled_results_dir.exists():
-    for _bundled_item in _bundled_results_dir.iterdir():
-        _dest = RESULTS_DIR / _bundled_item.name
+    for _bundled_file in _bundled_results_dir.rglob("*"):
+        if _bundled_file.is_dir():
+            continue
+        _dest = RESULTS_DIR / _bundled_file.relative_to(_bundled_results_dir)
         if not _dest.exists():
-            if _bundled_item.is_dir():
-                shutil.copytree(_bundled_item, _dest)
-            else:
-                shutil.copy2(_bundled_item, _dest)
+            _dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(_bundled_file, _dest)
 
 app.mount("/media", StaticFiles(directory=RESULTS_DIR), name="media")
 app.mount("/data-media", StaticFiles(directory=DATA_DIR), name="data-media")
