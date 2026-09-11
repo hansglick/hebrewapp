@@ -546,18 +546,26 @@ export default function VerbeScreen() {
             0.75*1.5 au lieu de 1.5, cf. régression corrigée) — même
             technique que la fiche racine de MotScreen (grid-template-rows
             0fr<->1fr + overflow hidden), cf. demande explicite du user.
-            marginTop:-25.8 (zoom:1.5 ambiant de .screen) : remonte ce bloc
-            et tout ce qui suit (fiche racine, tuiles temps, conjugaisons)
-            pour réduire de 50% l'écart entre le verbe traduit en français
-            et les tuiles temps (77.4px -> 38.7px, mesuré via Claude in
-            Chrome) — cf. demande explicite du user. */}
+            marginTop (zoom:1.5 ambiant de .screen) : remonte ce bloc et
+            tout ce qui suit (fiche racine, tuiles temps, conjugaisons) pour
+            réduire l'écart entre le verbe traduit en français et les
+            tuiles temps — déjà réduit de 50% une première fois (77.4px ->
+            38.7px), puis à nouveau de 50% ici (38.7px -> 19.35px, mesuré
+            via Claude in Chrome) — cf. demande explicite du user. Note :
+            "redescendre le hero" (marginTop positif posé sur le bloc du
+            haut) a été essayé et NE marche PAS pour cet objectif — testé
+            en direct dans le navigateur, ça déplace le hero ET les tuiles
+            temps de la même distance (tout le groupe glisse ensemble sous
+            "safe center"), donc l'écart entre les deux ne change pas ; seul
+            resserrer CET écart précis (ce marginTop négatif) le réduit
+            réellement. */}
         <div
           style={{
             width: "100%",
             display: "grid",
             gridTemplateRows: binyanOpen ? "1fr" : "0fr",
             transition: "grid-template-rows 300ms ease",
-            marginTop: -25.8,
+            marginTop: -38.7,
           }}
         >
           <div style={{ overflow: "hidden", minHeight: 0 }}>

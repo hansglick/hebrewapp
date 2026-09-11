@@ -6,7 +6,6 @@ import { speak } from "../utils/speech";
 import { ActionHints } from "../components/ActionHints";
 import { SpeakerIcon } from "../components/SpeakerIcon";
 import { FlagIsrael, FlagFrance } from "../components/Flag";
-import { VoicePrefill } from "../components/VoicePrefill";
 import { RacineCard } from "../components/RacineCard";
 import { VerbeCard } from "../components/VerbeCard";
 import HebrewInput from "../components/HebrewInput";
@@ -105,7 +104,6 @@ export default function DictionnaireScreen() {
         <HebrewInput value={query} onChange={setQuery} rows={1} placeholder="Rechercher en hébreu..." />
       ) : (
         <div className="hebrew-input">
-          <VoicePrefill lang="fr" context="dictionnaire" onChange={setQuery} />
           <input
             type="text"
             value={query}
