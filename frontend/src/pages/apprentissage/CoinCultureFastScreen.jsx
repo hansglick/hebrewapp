@@ -68,12 +68,17 @@ export default function CoinCultureFastScreen() {
 
   return (
     <section className="screen">
-      {/* fontSize:"1.4em" (2em par défaut * 0.7, -30%) + fontWeight:400
-          (pas gras) — cf. demande explicite du user. */}
-      <h1 style={{ fontSize: "1.4em", fontWeight: 400 }}>Explore la culture israélienne!</h1>
-      <p className="muted" style={{ margin: "-8px 0 0", textAlign: "center" }}>
-        Explorez la culture israélienne en cliquant les objets posés sur la table!
-      </p>
+      {/* Titre + sous-titre dans le même encadré, de même largeur que
+          l'image map (width:100%/maxWidth:420, cf. le conteneur de
+          l'image juste en dessous) — cf. demande explicite du user. */}
+      <div className="card" style={{ width: "100%", maxWidth: 420, margin: "0 auto", textAlign: "center" }}>
+        {/* fontSize:"1.4em" (2em par défaut * 0.7, -30%) + fontWeight:400
+            (pas gras) — cf. demande explicite du user. */}
+        <h1 style={{ margin: 0, fontSize: "1.4em", fontWeight: 400 }}>Explore la culture israélienne!</h1>
+        <p className="muted" style={{ margin: "8px 0 0" }}>
+          Explorez la culture israélienne en cliquant les objets posés sur la table!
+        </p>
+      </div>
       <div style={{ position: "relative", width: "100%", maxWidth: 420, margin: "0 auto" }}>
         <svg
           viewBox={`0 0 ${CULTURE_IMAGE_SIZE} ${CULTURE_IMAGE_SIZE}`}

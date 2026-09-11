@@ -62,17 +62,13 @@ export default function LeconDetailScreen() {
             </div>
           </Link>
         )}
-        {hasCuriosite && (
-          <Link to={`/apprentissage/${chapId}/${code}/curiosite`} className="card-link">
-            <div className="card">Coin culture</div>
-          </Link>
-        )}
-        {/* Variante "image map" (cf. CoinCultureFastScreen) ajoutée EN PLUS
-            de la tuile "Coin culture" existante, sans la remplacer pour le
-            moment — cf. demande explicite du user. */}
+        {/* Remplace l'ancienne tuile "Coin culture" (liste de tuiles, cf.
+            CuriositeListScreen) — seule la variante "image map" (cf.
+            CoinCultureFastScreen) reste proposée ici, désormais sous le
+            nom "Coin culture" — cf. demande explicite du user. */}
         {hasCuriosite && (
           <Link to={`/apprentissage/${chapId}/${code}/curiosite-fast`} className="card-link">
-            <div className="card">Coin culture fast</div>
+            <div className="card">Coin culture</div>
           </Link>
         )}
       </div>

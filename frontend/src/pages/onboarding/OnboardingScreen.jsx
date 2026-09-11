@@ -309,8 +309,8 @@ export default function OnboardingScreen({ onCompleted }) {
             du user. */}
         <div className="card">
           <p className="muted" style={{ fontSize: "0.765em", margin: 0 }}>
-            Un test rapide de 7 questions nous permettra d'évaluer ton niveau et ainsi de déterminer où
-            commencer ton parcours. Cependant, tu peux commencer à la première leçon si tu es débutant.
+            Un test rapide de quelques questions nous permettra d'évaluer ton niveau et ainsi de déterminer
+            où commencer ton parcours. Cependant, tu peux commencer à la première leçon si tu es débutant.
           </p>
           <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
             Pas de panique, si l'estimation s'avère trop éloigné de ton niveau réel, tu pourras toujours
@@ -323,28 +323,19 @@ export default function OnboardingScreen({ onCompleted }) {
             {startError}
           </p>
         )}
-        {/* Bouton additionnel, au-dessus de "Commencer le test !" — lance
-            l'algorithme adaptatif (4-6 questions, cf.
-            backend/app/quicktest_exam.py) plutôt que les 7 questions
-            fixes ci-dessous, sans rien changer à ce dernier — cf. demande
-            explicite du user. */}
-        <button
-          type="button"
-          className="exam-tile green pastel"
-          style={{ cursor: "pointer" }}
-          disabled={starting || skipping}
-          onClick={() => handleStart("quick")}
-        >
-          Quick Test
-        </button>
+        {/* Seul bouton de lancement du test désormais — lance l'algorithme
+            adaptatif (4-6 questions, cf. backend/app/quicktest_exam.py),
+            l'ancien algorithme (7 questions fixes) n'est plus proposé ici
+            — cf. demande explicite du user. Couleur vive (exam-tile green,
+            pas pastel) : c'est maintenant LE bouton principal. */}
         <button
           type="button"
           className="exam-tile green"
           style={{ cursor: "pointer" }}
           disabled={starting || skipping}
-          onClick={() => handleStart("classic")}
+          onClick={() => handleStart("quick")}
         >
-          Commencer le test !
+          Commencez le test
         </button>
         <button
           type="button"

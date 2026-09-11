@@ -687,11 +687,13 @@ export default function VerbeScreen() {
             {/* Non gras, gris clair #9ca3af (même gris que le verbe hébreu
                 du bloc 1, pas var(--textSecondary) — trop foncé) — cf.
                 demande explicite du user. */}
-            {/* marginTop:-26.74 (zoom:1.5 ambiant de .screen) : remonte
-                temps/personne pour réduire de 50% l'écart avec le verbe
-                hébreu du bloc 1 (63.8px -> 31.9px, mesuré via Claude in
-                Chrome) — cf. demande explicite du user. */}
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: -26.74 }}>
+            {/* marginTop:-3.44 (zoom:1.5 ambiant de .screen) : ce bloc était
+                trop remonté (chevauchait littéralement le verbe hébreu du
+                bloc 1, un précédent -26.74 s'est avéré excessif) — remonté
+                pour laisser un léger espace (~15px) au lieu d'un
+                chevauchement, mesuré via Claude in Chrome — cf. demande
+                explicite du user. */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: -3.44 }}>
               {/* 0.64 = 0.8 * 0.8 : -20% supplémentaires — cf. demande
                   explicite du user. */}
               <span style={{ fontSize: "calc(1.3em * 0.64 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>
