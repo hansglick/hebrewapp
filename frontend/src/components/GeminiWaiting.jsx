@@ -10,10 +10,10 @@ import { CuriositeWaitingCard } from "./CuriositeWaitingCard";
 // `key` passée par l'appelant, identique à celle déjà utilisée pour
 // WaitingVideo). Hors examen long/très long, se comporte comme
 // WaitingVideo seul (jamais de curiosité).
-export function GeminiWaiting({ label, showCuriosite, allowChansons, allowCourrier }) {
+export function GeminiWaiting({ label, showCuriosite, allowChansons }) {
   const showVideo = useMemo(() => !showCuriosite || Math.random() < 0.5, [showCuriosite]);
   return showVideo ? (
-    <WaitingVideo label={label} allowChansons={allowChansons} allowCourrier={allowCourrier} />
+    <WaitingVideo label={label} allowChansons={allowChansons} />
   ) : (
     <CuriositeWaitingCard label={label} />
   );

@@ -1,0 +1,134 @@
+{
+  "01_1": {
+    "id": "01_1",
+    "fr": "Hannah et David : Nous étudions l'hébreu à Tel Aviv.",
+    "he": "חנה ודוד: אנחנו לומדים עברית בתל אביב.",
+    "setid": "01"
+  },
+  "01_2": {
+    "id": "01_2",
+    "fr": "Tu écris la lettre aux bons élèves.",
+    "he": "אתה כותב את המכתב לתלמידים הטובים.",
+    "setid": "01"
+  },
+  "02_1": {
+    "id": "02_1",
+    "fr": "Ils demandent combien ça coûte.",
+    "he": "הם שואלים כמה זה עולה.",
+    "setid": "02"
+  },
+  "02_2": {
+    "id": "02_2",
+    "fr": "Hannah, ta famille habite en France ?",
+    "he": "חנה, המשפחה שלך גרה בצרפת?",
+    "setid": "02"
+  },
+  "03_1": {
+    "id": "03_1",
+    "fr": "Elle veut acheter de nouveaux vêtements.",
+    "he": "היא רוצה לקנות בגדים חדשים.",
+    "setid": "03"
+  },
+  "03_2": {
+    "id": "03_2",
+    "fr": "Vous avez choisi - choisir",
+    "he": "אתם בחרתם - לבחור",
+    "setid": "03"
+  },
+  "04_1": {
+    "id": "04_1",
+    "fr": "Ils l'aiment beaucoup. Ils sont très proches de lui.",
+    "he": "הם מאוד אוהבים אותו. הם מאוד קרובים אליו.",
+    "setid": "04"
+  },
+  "04_2": {
+    "id": "04_2",
+    "fr": "David a oublié quand il a une réunion cette semaine.",
+    "he": "דוד שכח מתי יש לו פגישה השבוע.",
+    "setid": "04"
+  },
+  "05_1": {
+    "id": "05_1",
+    "fr": "Je réponds à la prof, à la question qu'elle m'a posé.",
+    "he": "אני עונה למורה, על השאלה שהיא שאלה אותי.",
+    "setid": "05"
+  },
+  "05_2": {
+    "id": "05_2",
+    "fr": "Nous sommes aussi sortis avec ses amis dans des clubs, et nous y avons dansé.",
+    "he": "יצאנו גם עם החברים שלו למועדונים, ורקדנו שם.",
+    "setid": "05"
+  },
+  "06_1": {
+    "id": "06_1",
+    "fr": "Les enfants, le gâteau qu'il y a sur la table est pour vous.",
+    "he": "ילדים, העוגה שיש על השולחן בשבילכם.",
+    "setid": "06"
+  },
+  "06_2": {
+    "id": "06_2",
+    "fr": "Quand j'arrive à la banque, je m'approche immédiatement du guichet.",
+    "he": "כשאני מגיע לבנק אני מייד ניגש לדלפק.",
+    "setid": "06"
+  },
+  "07_1": {
+    "id": "07_1",
+    "fr": "Sarit m'a dit qu'elle demandera aussi à Michal si elle veut venir avec nous.",
+    "he": "שרית אמרה לי שהיא תשאל גם את מיכל אם היא רוצה לבוא איתנו.",
+    "setid": "07"
+  },
+  "07_2": {
+    "id": "07_2",
+    "fr": "Ruth et Shlomo oublieront comme d'habitude, il faut toujours le leur rappeler.",
+    "he": "רות ושלמה ישכחו כרגיל, צריך תמיד להזכיר להם.",
+    "setid": "07"
+  },
+  "08_1": {
+    "id": "08_1",
+    "fr": "Elle aurait dû me le dire plus tôt.",
+    "he": "היא הייתה צריכה להגיד לי את זה מוקדם יותר.",
+    "setid": "08"
+  },
+  "08_2": {
+    "id": "08_2",
+    "fr": "Ok, en avant Eitan, ne perds pas de temps, appelle-la dès maintenant.",
+    "he": "אוקיי, קדימה איתן, אל תבזבז זמן תצלצל אליה כבר עכשיו.",
+    "setid": "08"
+  },
+  "09_1": {
+    "id": "09_1",
+    "fr": "Demain nous nous réveillerons tôt car nous aurons un examen.",
+    "he": "מחר נתעורר מוקדם כי יהיה לנו מבחן.",
+    "setid": "09"
+  },
+  "09_2": {
+    "id": "09_2",
+    "fr": "Je me suis habillé(e) - Racine : l.b.sh",
+    "he": "התלבשתי - שורש: ל.ב.ש",
+    "setid": "09"
+  },
+  "10_1": {
+    "id": "10_1",
+    "fr": "Je ne pourrai jamais arriver à l’heure il n’y a aucune chance !",
+    "he": "אני לא אוכל להגיע בזמן אין סיכוי!",
+    "setid": "10"
+  },
+  "10_2": {
+    "id": "10_2",
+    "fr": "Bien sûr, je fais attention à ne pas blesser, vexer ou embarrasser à Dieu ne plaise et que cela peut créer des problèmes, mais il est toujours important pour moi qu'ils sachent ce que je pense vraiment.",
+    "he": "כמובן שאני שם לב לא לפגוע, להעליב או להביך חלילה ושזה עלול ליצור בעיות, אבל חשוב לי תמיד שהם ידעו מה אני באמת חושב.",
+    "setid": "10"
+  },
+  "11_1": {
+    "id": "11_1",
+    "fr": "Grâce à l'électrification, les trains seront plus silencieux, plus fiables, avec zéro émission de polluants dans les trains de voyageurs.",
+    "he": "בזכות החישמול הרכבות יהיו שקטות יותר, אמינות יותר, עם אפס פליטת מזהמים ברכבות נוסעים.",
+    "setid": "11"
+  },
+  "11_2": {
+    "id": "11_2",
+    "fr": "Voix off : Astérisque soixante-six soixante.",
+    "he": "קריינות: כוכבית שישים ושש שישים.",
+    "setid": "11"
+  }
+}

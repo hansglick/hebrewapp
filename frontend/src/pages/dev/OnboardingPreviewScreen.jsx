@@ -234,7 +234,7 @@ export default function OnboardingPreviewScreen() {
                 </SectionTitle>
                 <div style={{ marginTop: "1em" }}>
                   {phase === "ecrit-loading" ? (
-                    <GeminiWaiting allowCourrier={false} />
+                    <GeminiWaiting />
                   ) : (
                     <>
                       <StarRating rating={4} />
@@ -302,7 +302,7 @@ export default function OnboardingPreviewScreen() {
                 </div>
                 <div style={{ marginTop: "1em", textAlign: "center" }}>
                   {phase === "oral-loading" ? (
-                    <GeminiWaiting allowCourrier={false} />
+                    <GeminiWaiting />
                   ) : (
                     <>
                       <p className="hebrew" style={{ margin: 0, fontSize: "0.96em" }}>

@@ -519,6 +519,15 @@ export default function ExamenOralScreen() {
   const globalNote = answer && q.type !== "rapport" ? computeGlobalNote(answer) : null;
   const reportNote = answer && q.type === "rapport" ? computeReportNote(answer) : null;
 
+  // Mode "évaluation en arrière-plan" : une fois la dernière réponse
+  // envoyée, il n'y avait plus aucun écran d'attente (juste une phrase en
+  // italique au milieu de la question figée) pendant que les dernières
+  // évaluations reviennent avant le bilan — même écran GeminiWaiting que les
+  // autres modes (vidéo + options musique/courrier), cf. demande explicite
+  // du user.
+  const awaitingBackgroundCompletion =
+    oralBackgroundEval && exam.questions.every((_, i) => exam.answers[i] !== null || backgroundStatus[i] === "pending");
+
   return (
     <section
       className="screen"
@@ -528,7 +537,7 @@ export default function ExamenOralScreen() {
       // (écran entièrement dédié aux questions orales) : réduit de 10%
       // l'ensemble des éléments de l'écran, cf. demande explicite du user.
       style={
-        loadingGemini
+        loadingGemini || awaitingBackgroundCompletion
           ? { flex: 1, paddingBottom: "calc(var(--bottom-nav-height) * 2)", zoom: 0.9 }
           : { flex: 1, zoom: 0.9 }
       }
@@ -559,11 +568,11 @@ export default function ExamenOralScreen() {
             Retour à l'accueil
           </button>
         </div>
-      ) : loadingGemini ? (
+      ) : loadingGemini || awaitingBackgroundCompletion ? (
         <GeminiWaiting
-          key={batchProgress ? "batch" : "single"}
+          key={batchProgress ? "batch" : awaitingBackgroundCompletion ? "background" : "single"}
           showCuriosite={exam.exam_type === "long" || exam.exam_type === "tres_long"}
-          allowChansons={!!batchProgress}
+          allowChansons={!!batchProgress || awaitingBackgroundCompletion}
           label={
             batchProgress ? (
               <>
@@ -571,6 +580,8 @@ export default function ExamenOralScreen() {
                 <br />
                 ({batchProgress.label})
               </>
+            ) : awaitingBackgroundCompletion ? (
+              "Toutes tes réponses ont été envoyées — en attente des dernières évaluations avant l'affichage du bilan..."
             ) : undefined
           }
         />
@@ -620,13 +631,6 @@ export default function ExamenOralScreen() {
       <p className="muted" style={{ fontSize: "0.7em", margin: 0 }}>
         {q.text_code}
       </p>
-
-      {oralBackgroundEval &&
-        exam.questions.every((_, i) => exam.answers[i] !== null || backgroundStatus[i] === "pending") && (
-          <p className="muted" style={{ fontStyle: "italic", fontSize: "0.8em" }}>
-            Toutes tes réponses ont été envoyées — en attente des dernières évaluations avant l'affichage du bilan...
-          </p>
-        )}
 
       {attemptError && (
         <p className="muted" style={{ color: "var(--annulationPleine)" }}>

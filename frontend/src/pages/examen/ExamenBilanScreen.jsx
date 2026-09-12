@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { displayLessonCode } from "../../utils/lessonDisplay";
+import { mediaUrl } from "../../api/media";
 import { NiveauUpScreen } from "./NiveauUpScreen";
 
 const FORMAT_LABELS = { ecrit: "écrit", oral: "oral" };
@@ -40,16 +41,22 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
               {current.passed ? "Réussite" : "Échec"}
             </span>
           </li>
+          {/* Renvoie vers la copie de l'examen que l'étudiant vient de
+              passer (clic sur le logo) — cf. demande explicite du user. */}
+          {attemptId != null && (
+            <li style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={labelStyle}>Consultez ma copie</span>
+              <button
+                type="button"
+                onClick={() => navigate(`/examen/copies/${attemptId}`)}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", lineHeight: 0 }}
+              >
+                <img src={mediaUrl("logos/document.png")} alt="Consulter ma copie" style={{ width: 24, height: 24 }} />
+              </button>
+            </li>
+          )}
         </ul>
       </div>
-
-      {/* Renvoie vers la copie de l'examen que l'étudiant vient de passer —
-          cf. demande explicite du user. */}
-      {attemptId != null && (
-        <button type="button" className="link-btn" onClick={() => navigate(`/examen/copies/${attemptId}`)}>
-          Consulter ma copie
-        </button>
-      )}
 
       {/* Si les deux examens (écrit et oral) sont réussis, montre l'écran de
           félicitations pour la montée de niveau ; sinon, retourne à la page

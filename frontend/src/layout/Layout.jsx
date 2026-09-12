@@ -3,7 +3,6 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { abandonExamen, abandonExamenHard, getActiveLockdown, getNiveau } from "../api/user";
 import { getCurrentOnboardingExam, getCurrentQuicktestExam } from "../api/onboarding";
 import { clearIdentity, getIdentity } from "../api/identity";
-import { clearLockdownEscape, isLockdownEscapeActive } from "../utils/lockdownEscape";
 import OnboardingScreen from "../pages/onboarding/OnboardingScreen";
 import AuthFlow from "../pages/onboarding/AuthFlow";
 import { useWallet } from "../context/WalletContext";
@@ -149,17 +148,9 @@ export default function Layout() {
 
   // Tant qu'une tentative long/très long est en cours, toute navigation
   // ailleurs (manuelle ou via refresh) ramène immédiatement sur sa question
-  // — `replace: true` pour ne pas polluer l'historique de rebonds. Sauf si
-  // le user a explicitement choisi "Recevoir les résultats par courrier"
-  // pendant une évaluation groupée (cf. WaitingVideo) : la correction
-  // continue en arrière-plan, mais forcer son retour ici rendrait
-  // impossible la promesse du bouton — cf. bug rapporté par le user.
+  // — `replace: true` pour ne pas polluer l'historique de rebonds.
   useEffect(() => {
-    if (!lockdown) {
-      clearLockdownEscape();
-      return;
-    }
-    if (isLockdownEscapeActive()) return;
+    if (!lockdown) return;
     const target = lockdownTarget(lockdown);
     if (location.pathname !== target) navigate(target, { replace: true });
   }, [lockdown, location.pathname, navigate]);

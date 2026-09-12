@@ -511,7 +511,7 @@ export default function OnboardingScreen({ onCompleted }) {
                 </SectionTitle>
                 <div style={{ marginTop: "1em" }}>
                   {loadingGemini ? (
-                    <GeminiWaiting allowCourrier={false} />
+                    <GeminiWaiting />
                   ) : (
                     <>
                       <StarRating rating={result.score} />
@@ -580,7 +580,7 @@ export default function OnboardingScreen({ onCompleted }) {
                 </div>
                 <div style={{ marginTop: "1em", textAlign: "center" }}>
                   {loadingGemini ? (
-                    <GeminiWaiting allowCourrier={false} />
+                    <GeminiWaiting />
                   ) : (
                     <>
                       <p className="hebrew" style={{ margin: 0, fontSize: "0.96em" }}>
