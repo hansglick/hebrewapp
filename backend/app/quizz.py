@@ -1,7 +1,7 @@
 import random
 
 from app.data_loader import get_dataset
-from app.difficulty import compute_combo_difficulties, weighted_pick
+from app.difficulty import compute_combo_difficulties, pick_unexplored, weighted_pick
 from app.lesson_order import recency_weights
 
 N_OPTIONS = 8
@@ -105,7 +105,14 @@ def build_quizz_question(lesson_code: str, user_id: int, seen: set | None = None
         k: v for k, v in compute_combo_difficulties("quizz", user_id).items() if k in recency_pool
     }
 
-    picked, draw_pool = weighted_pick(difficulty_pool, recency_pool, seen)
+    # Explore d'abord tout le pool un par un (jamais évalué) avant
+    # d'appliquer la stratégie récence/difficulté — cf. demande explicite du
+    # user.
+    picked = pick_unexplored(recency_pool, difficulty_pool, seen)
+    if picked is not None:
+        draw_pool = "unexplored"
+    else:
+        picked, draw_pool = weighted_pick(difficulty_pool, recency_pool, seen)
     if picked is None:
         return None
 

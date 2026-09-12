@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AccountChoiceScreen from "./AccountChoiceScreen";
+import ImportantMessageScreen from "./ImportantMessageScreen";
 import SignInScreen from "./SignInScreen";
 import RegisterScreen from "./RegisterScreen";
 
@@ -16,13 +17,19 @@ import RegisterScreen from "./RegisterScreen";
 // (OnboardingScreen), une connexion réussie va directement à l'app
 // normale, sans condition, cf. demande explicite du user.
 export default function AuthFlow({ onSignedIn, onRegistered }) {
-  const [step, setStep] = useState("choice"); // choice | signin | register
+  const [step, setStep] = useState("choice"); // choice | signin | important-message | register
 
   if (step === "signin") {
     return <SignInScreen onSignedIn={onSignedIn} onBack={() => setStep("choice")} />;
   }
+  // Écran "message important" (clavier hébreu PC/mobile) inséré entre le
+  // choix "Non" et l'inscription elle-même — cf. demande explicite du
+  // user.
+  if (step === "important-message") {
+    return <ImportantMessageScreen onContinue={() => setStep("register")} />;
+  }
   if (step === "register") {
     return <RegisterScreen onRegistered={onRegistered} onBack={() => setStep("choice")} />;
   }
-  return <AccountChoiceScreen onYes={() => setStep("signin")} onNo={() => setStep("register")} />;
+  return <AccountChoiceScreen onYes={() => setStep("signin")} onNo={() => setStep("important-message")} />;
 }

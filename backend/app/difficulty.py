@@ -119,6 +119,23 @@ def _without_seen(pool: dict, seen: set) -> dict:
     return filtered or pool
 
 
+def pick_unexplored(recency_pool: dict, difficulty_pool: dict, seen: set | None = None) -> str | None:
+    """Première clé du pool récence (ordre fixe = ordre des leçons, cumulatif
+    donc une leçon fraîchement débloquée passe en premier) jamais évaluée
+    (absente de difficulty_pool, recalculé à chaque appel depuis la table
+    evaluations) et pas déjà tirée cette session sans avoir été évaluée (déjà
+    dans `seen`) — sert à explorer tous les items un par un avant de basculer
+    sur weighted_pick (récence/difficulté), cf. demande explicite du user.
+    None si tout a déjà été évalué au moins une fois (ou déjà tiré cette
+    session), auquel cas l'appelant doit retomber sur weighted_pick."""
+    seen = seen or set()
+    for key in recency_pool:
+        if key in difficulty_pool or key in seen:
+            continue
+        return key
+    return None
+
+
 def weighted_pick(difficulty_pool: dict, recency_pool: dict, seen_recency: set | None = None):
     """Tirage 50% pondéré par difficulté / 50% pondéré par récence dans la
     progression du cours, avec repli sur l'autre pool s'il est vide.

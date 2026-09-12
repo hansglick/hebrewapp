@@ -806,3 +806,32 @@
   }
 }
 
+/* Écran "message important" (AuthFlow, entre le choix "Non" et
+   l'inscription) : le loquet du toggle "Clavier hébreu" affiché en exemple
+   pulse d'une lueur (box-shadow, pas juste l'opacité) pour attirer l'oeil
+   dessus — ce toggle n'est qu'une DÉMO statique ici (même markup que le
+   vrai .switch/.switch-knob, cf. HebrewInput.jsx), pas un contrôle
+   interactif — cf. demande explicite du user. */
+.onboarding-toggle-demo .switch-knob {
+  animation: onboarding-toggle-glow 1.6s ease-in-out infinite;
+}
+
+/* color-mix (pas une valeur rgba() figée) : la lueur reste exactement la
+   couleur RÉELLE du loquet (var(--accent), celle du vrai .switch-knob),
+   quel que soit le thème — cf. demande explicite du user. */
+@keyframes onboarding-toggle-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 10px 5px color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-toggle-demo .switch-knob {
+    animation: none;
+  }
+}
+

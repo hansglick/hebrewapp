@@ -86,6 +86,7 @@ export default function RegisterScreen({ onRegistered, onBack }) {
           placeholder="שם..."
           showVoicePrefill={false}
           forceKeyboardHidden
+          highlightKeyboardToggle
         />
       </div>
 

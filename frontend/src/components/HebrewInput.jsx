@@ -95,6 +95,7 @@ export default function HebrewInput({
   placeholder,
   showVoicePrefill = true,
   forceKeyboardHidden = false,
+  highlightKeyboardToggle = false,
 }) {
   const [activeKey, setActiveKey] = useState(null);
   // Masqué par défaut (toggle à gauche) tant que le user ne l'a jamais
@@ -296,7 +297,10 @@ export default function HebrewInput({
             </button>
           </div>
         )}
-        <div className="hebrew-input-toggle-row">
+        {/* highlightKeyboardToggle : lueur pulsante sur le loquet, réservée à
+            l'écran d'inscription (RegisterScreen) pour attirer l'oeil dessus
+            — cf. demande explicite du user. */}
+        <div className={`hebrew-input-toggle-row${highlightKeyboardToggle ? " highlight-glow" : ""}`}>
           <span>Clavier hébreu</span>
           <button
             type="button"

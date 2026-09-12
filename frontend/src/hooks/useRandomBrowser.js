@@ -21,14 +21,15 @@ function depsEqual(a, b) {
 // sous StrictMode, qui rejoue l'effet une seconde fois au montage en dev.
 //
 // `fetchRandom` reçoit un second argument `seenRecency` (tableau de
-// draw_key déjà tirés via le pool récence côté backend, cf.
-// app.difficulty.weighted_pick) — les appelants qui tirent dans un pool
-// récence/difficulté (mots/verbes/phrases/quizz/oral en révision) le
-// transmettent à leur endpoint pour un tirage sans remise au sein de la
-// session (= depuis le dernier reset de `deps`, cf. demande explicite du
-// user) ; les autres l'ignorent simplement. Alimenté automatiquement à
-// partir de `result.pool === "recency"` + `result.draw_key` si présents
-// sur l'objet renvoyé — aucune gestion manuelle requise côté appelant.
+// draw_key déjà tirés via le pool récence OU le pool "unexplored" côté
+// backend, cf. app.difficulty.weighted_pick/pick_unexplored) — les
+// appelants qui tirent dans un pool récence/difficulté (mots/verbes/quizz
+// en révision) le transmettent à leur endpoint pour un tirage sans remise
+// au sein de la session (= depuis le dernier reset de `deps`, cf. demande
+// explicite du user) ; les autres l'ignorent simplement. Alimenté
+// automatiquement à partir de `result.pool` ("recency" ou "unexplored") +
+// `result.draw_key` si présents sur l'objet renvoyé — aucune gestion
+// manuelle requise côté appelant.
 export function useRandomBrowser(fetchRandom, deps = [], initialCurrent) {
   const [current, setCurrent] = useState(initialCurrent ?? null);
   const [history, setHistory] = useState([]);
@@ -36,7 +37,7 @@ export function useRandomBrowser(fetchRandom, deps = [], initialCurrent) {
   const skipDepsRef = useRef(initialCurrent !== undefined ? deps : null);
 
   function trackAndSet(result) {
-    if (result?.pool === "recency" && result.draw_key) {
+    if ((result?.pool === "recency" || result?.pool === "unexplored") && result.draw_key) {
       seenRecencyRef.current.add(result.draw_key);
     }
     setCurrent(result);

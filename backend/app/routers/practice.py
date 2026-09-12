@@ -10,6 +10,7 @@ from app.difficulty import (
     aggregate_by_base_key,
     compute_combo_difficulties,
     pick_sequential,
+    pick_unexplored,
     weighted_pick,
 )
 from app.lesson_order import recency_weights
@@ -99,7 +100,14 @@ def random_mot(
             k: v for k, v in compute_combo_difficulties("mot", user_id).items() if k in recency_pool
         }
 
-        combo, pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
+        # Explore d'abord tout le pool un par un (jamais évalué) avant
+        # d'appliquer la stratégie récence/difficulté — cf. demande explicite
+        # du user.
+        combo = pick_unexplored(recency_pool, difficulty_pool, set(seen))
+        if combo is not None:
+            pool = "unexplored"
+        else:
+            combo, pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
         if combo is None:
             key = langue = None
         else:
@@ -151,7 +159,14 @@ def random_verbe(
         difficulty_pool_raw = aggregate_by_base_key(compute_combo_difficulties("verbe", user_id))
         difficulty_pool = {k: v for k, v in difficulty_pool_raw.items() if k in recency_pool}
 
-        key, draw_pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
+        # Explore d'abord tout le pool un par un (jamais évalué) avant
+        # d'appliquer la stratégie récence/difficulté — cf. demande explicite
+        # du user.
+        key = pick_unexplored(recency_pool, difficulty_pool, set(seen))
+        if key is not None:
+            draw_pool = "unexplored"
+        else:
+            key, draw_pool = weighted_pick(difficulty_pool, recency_pool, set(seen))
 
     if key is None:
         raise HTTPException(404, "Aucun verbe disponible pour ce tirage")

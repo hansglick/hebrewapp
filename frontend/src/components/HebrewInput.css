@@ -115,6 +115,30 @@
   display: contents;
 }
 
+/* Lueur pulsante sur le loquet du toggle "Clavier hébreu" (highlightKeyboardToggle,
+   RegisterScreen uniquement) — même technique que .onboarding-toggle-demo
+   (screens.css) : color-mix reste exactement la couleur RÉELLE du loquet
+   (var(--accent)), quel que soit le thème, cf. demande explicite du user. */
+.hebrew-input-toggle-row.highlight-glow .switch-knob {
+  animation: hebrew-toggle-glow 1.6s ease-in-out infinite;
+}
+
+@keyframes hebrew-toggle-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 10px 5px color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hebrew-input-toggle-row.highlight-glow .switch-knob {
+    animation: none;
+  }
+}
+
 /* Libellés justifiés à gauche dans leur colonne (max-content, dimensionnée
    sur le plus long des deux) : sans ça, le texte le plus court ("Clavier
    hébreu") se retrouvait visuellement centré dans une colonne plus large
