@@ -1,4 +1,4 @@
-import { apiFetch } from "./http";
+import { apiFetch, apiFetchJson } from "./http";
 
 const fetchJson = (path) => apiFetch(path);
 
@@ -13,6 +13,11 @@ export const getBinyans = () => fetchJson("/api/binyans");
 export const getBinyan = (nom) => fetchJson(`/api/binyans/${encodeURIComponent(nom)}`);
 
 export const getRandomRacine = () => fetchJson("/api/racines/random");
+
+export const getQcmNiveauQuestions = () => fetchJson("/api/qcm-niveau/questions");
+
+export const estimateQcmNiveauProbabilities = (scores) =>
+  apiFetchJson("/api/qcm-niveau/estimate", { scores });
 export const getRacine = (shoresh) => fetchJson(`/api/racines/${encodeURIComponent(shoresh)}`);
 
 export const getChansons = () => fetchJson("/api/chansons");

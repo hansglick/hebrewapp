@@ -22,6 +22,7 @@ from app.routers import (
     notifications,
     onboarding,
     practice,
+    qcm,
     revision,
     stats,
     tts,
@@ -51,6 +52,7 @@ app.include_router(curiosites.router)
 app.include_router(jdr.router)
 app.include_router(revision.router)
 app.include_router(concept.router)
+app.include_router(qcm.router)
 
 app.add_middleware(
     CORSMiddleware,

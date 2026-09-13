@@ -1,0 +1,398 @@
+{
+    "01_1": {
+        "id": "01_1",
+        "fr": "Hannah et David : Nous étudions l'hébreu à Tel Aviv.",
+        "he": "חנה ודוד: אנחנו לומדים עברית בתל אביב.",
+        "setid": "01",
+        "answers": {
+            "id": "01_1",
+            "level3_answer": "חנה ודוד: אנחנו לומדות עברית בתל אביב.",
+            "level3_explanation": "L'étudiant a utilisé le féminin pluriel 'לומדות' alors qu'un groupe mixte (Hannah et David) requiert le masculin pluriel 'לומדים'.",
+            "level3_reveals": "L'étudiant comprend la phrase mais ne maîtrise pas la règle du genre pour les groupes mixtes.",
+            "level2_answer": "חנה ודוד: הם לומדים עברית בתל אביב.",
+            "level2_explanation": "L'étudiant a traduit 'ils étudient' (הם לומדים) au lieu de 'nous étudions' (אנחנו לומדים).",
+            "level2_reveals": "L'étudiant reconnaît le vocabulaire mais confond les pronoms personnels sujets.",
+            "level1_answer": "חנה ודוד: אנחנו ללמוד עברית בתל אביב.",
+            "level1_explanation": "L'étudiant a utilisé l'infinitif 'ללמוד' au lieu du verbe conjugué au présent.",
+            "level1_reveals": "L'étudiant connaît les mots de base mais ne sait pas conjuguer un verbe au présent."
+        }
+    },
+    "01_2": {
+        "id": "01_2",
+        "fr": "Tu écris la lettre aux bons élèves.",
+        "he": "אתה כותב את המכתב לתלמידים הטובים.",
+        "setid": "01",
+        "answers": {
+            "id": "01_2",
+            "level3_answer": "אתה כותב את המכתב לתלמידים טובים.",
+            "level3_explanation": "L'étudiant a oublié l'article défini 'ה' devant l'adjectif 'טובים', nécessaire car le nom est défini par la préposition 'ל'.",
+            "level3_reveals": "L'étudiant comprend la phrase mais ne maîtrise pas l'accord en définition de l'adjectif.",
+            "level2_answer": "אתה כותב מכתב לתלמידים הטובים.",
+            "level2_explanation": "L'étudiant a omis la particule d'objet direct 'את' et l'article défini devant le mot 'lettre'.",
+            "level2_reveals": "L'étudiant comprend le sens global mais ignore la règle de l'objet direct défini.",
+            "level1_answer": "אתה לכתוב המכתב תלמידים טובים.",
+            "level1_explanation": "L'étudiant a utilisé l'infinitif 'לכתוב' et a omis les prépositions nécessaires.",
+            "level1_reveals": "L'étudiant juxtapose des mots de vocabulaire sans appliquer la syntaxe de base."
+        }
+    },
+    "02_1": {
+        "id": "02_1",
+        "fr": "Ils demandent combien ça coûte.",
+        "he": "הם שואלים כמה זה עולה.",
+        "setid": "02",
+        "answers": {
+            "id": "02_1",
+            "level3_answer": "הם מבקשים כמה זה עולה.",
+            "level3_explanation": "L'étudiant a confondu 'demander une question' (לשאול) et 'demander une chose' (לבקש).",
+            "level3_reveals": "L'étudiant maîtrise la structure mais confond deux verbes traduisant 'demander' en français.",
+            "level2_answer": "הם שואלים כמה זה עולים.",
+            "level2_explanation": "L'étudiant a accordé le verbe 'coûter' au pluriel avec 'ils' au lieu du singulier avec 'ça'.",
+            "level2_reveals": "L'étudiant comprend le vocabulaire mais se trompe sur le sujet du deuxième verbe.",
+            "level1_answer": "הם שאלה כמה זה עולה.",
+            "level1_explanation": "L'étudiant a utilisé le nom 'question' (שאלה) au lieu du verbe conjugué 'demandent' (שואלים).",
+            "level1_reveals": "L'étudiant reconnaît la racine du mot mais confond les catégories grammaticales."
+        }
+    },
+    "02_2": {
+        "id": "02_2",
+        "fr": "Hannah, ta famille habite en France ?",
+        "he": "חנה, המשפחה שלך גרה בצרפת?",
+        "setid": "02",
+        "answers": {
+            "id": "02_2",
+            "level3_answer": "חנה, המשפחה שלך גר בצרפת?",
+            "level3_explanation": "L'étudiant a accordé le verbe au masculin (גר) alors que le mot 'famille' (משפחה) est féminin.",
+            "level3_reveals": "L'étudiant comprend la phrase mais se trompe sur le genre du mot 'famille'.",
+            "level2_answer": "חנה, המשפחה שלך גרים בצרפת?",
+            "level2_explanation": "L'étudiant a accordé le verbe au pluriel (גרים) en pensant aux membres de la famille, alors que le mot 'famille' est singulier.",
+            "level2_reveals": "L'étudiant traduit selon le sens collectif plutôt que selon la grammaire stricte du mot.",
+            "level1_answer": "חנה, את משפחה גרה בצרפת?",
+            "level1_explanation": "L'étudiant a utilisé le pronom personnel 'tu' (את) au lieu de l'adjectif possessif 'ta' (שלך).",
+            "level1_reveals": "L'étudiant ne maîtrise pas l'expression de la possession en hébreu."
+        }
+    },
+    "03_1": {
+        "id": "03_1",
+        "fr": "Elle veut acheter de nouveaux vêtements.",
+        "he": "היא רוצה לקנות בגדים חדשים.",
+        "setid": "03",
+        "answers": {
+            "id": "03_1",
+            "level3_answer": "היא רוצה קונה בגדים חדשים.",
+            "level3_explanation": "L'étudiant a conjugué le deuxième verbe (קונה) au lieu d'utiliser l'infinitif (לקנות) après le verbe 'vouloir'.",
+            "level3_reveals": "L'étudiant connaît le vocabulaire mais ignore la règle d'utilisation de l'infinitif après un verbe modal.",
+            "level2_answer": "היא רוצה לקנות חדשים בגדים.",
+            "level2_explanation": "L'étudiant a placé l'adjectif (חדשים) avant le nom (בגדים), calquant la syntaxe française.",
+            "level2_reveals": "L'étudiant comprend les mots mais applique la syntaxe française à l'hébreu.",
+            "level1_answer": "היא רוצה לקנות בגד חדש.",
+            "level1_explanation": "L'étudiant a traduit 'un nouveau vêtement' au singulier au lieu du pluriel 'de nouveaux vêtements'.",
+            "level1_reveals": "L'étudiant reconnaît les mots de base mais ne fait pas attention au nombre."
+        }
+    },
+    "03_2": {
+        "id": "03_2",
+        "fr": "Vous avez choisi - choisir",
+        "he": "אתם בחרתם - לבחור",
+        "setid": "03",
+        "answers": {
+            "id": "03_2",
+            "level3_answer": "אתם בחרתם - לבחיר",
+            "level3_explanation": "L'étudiant a mal formé l'infinitif du verbe pa'al, en utilisant une forme qui ressemble au binyan hif'il.",
+            "level3_reveals": "L'étudiant connaît la conjugaison au passé mais ne maîtrise pas la construction de l'infinitif pa'al.",
+            "level2_answer": "אתם בוחרים - לבחור",
+            "level2_explanation": "L'étudiant a conjugué le verbe au présent (vous choisissez) au lieu du passé (vous avez choisi).",
+            "level2_reveals": "L'étudiant connaît le verbe mais confond les temps verbaux.",
+            "level1_answer": "אתם לבחור - בחרתם",
+            "level1_explanation": "L'étudiant a inversé l'infinitif et le verbe conjugué par rapport à la demande.",
+            "level1_reveals": "L'étudiant reconnaît les formes verbales mais ne sait pas les associer correctement à leur traduction."
+        }
+    },
+    "04_1": {
+        "id": "04_1",
+        "fr": "Ils l'aiment beaucoup. Ils sont très proches de lui.",
+        "he": "הם מאוד אוהבים אותו. הם מאוד קרובים אליו.",
+        "setid": "04",
+        "answers": {
+            "id": "04_1",
+            "level3_answer": "הם מאוד אוהבים אותו. הם מאוד קרובים לו.",
+            "level3_explanation": "L'étudiant a utilisé la préposition 'ל' au lieu de 'אל' qui est requise avec l'adjectif 'proche' (קרוב).",
+            "level3_reveals": "L'étudiant comprend parfaitement la phrase mais ne connaît pas la préposition spécifique exigée par l'adjectif 'קרוב'.",
+            "level2_answer": "הם מאוד אוהבים אותו. הם מאוד קרובים ממנו.",
+            "level2_explanation": "L'étudiant a utilisé la préposition 'מ' par calque du français 'proches de lui', au lieu de 'אל'.",
+            "level2_reveals": "L'étudiant traduit littéralement depuis le français sans connaître la construction idiomatique hébraïque.",
+            "level1_answer": "הם מאוד אוהבים הוא. הם מאוד קרובים אליו.",
+            "level1_explanation": "L'étudiant a utilisé le pronom sujet 'הוא' au lieu du pronom objet direct 'אותו'.",
+            "level1_reveals": "L'étudiant ne maîtrise pas du tout les pronoms compléments d'objet direct."
+        }
+    },
+    "04_2": {
+        "id": "04_2",
+        "fr": "David a oublié quand il a une réunion cette semaine.",
+        "he": "דוד שכח מתי יש לו פגישה השבוע.",
+        "setid": "04",
+        "answers": {
+            "id": "04_2",
+            "level3_answer": "דוד שכח מתי יש לו פגישה בשבוע.",
+            "level3_explanation": "L'étudiant a ajouté la préposition 'ב' devant 'semaine', au lieu d'utiliser simplement 'השבוע' (cette semaine).",
+            "level3_reveals": "L'étudiant maîtrise la phrase mais se trompe sur l'expression temporelle 'cette semaine'.",
+            "level2_answer": "דוד שוכח מתי יש לו פגישה השבוע.",
+            "level2_explanation": "L'étudiant a conjugué le verbe 'oublier' au présent (שוכח) au lieu du passé (שכח).",
+            "level2_reveals": "L'étudiant connaît le vocabulaire mais ne maîtrise pas la conjugaison au passé.",
+            "level1_answer": "דוד שכח מתי הוא יש פגישה השבוע.",
+            "level1_explanation": "L'étudiant a calqué la structure française 'il a' en utilisant 'הוא יש' au lieu de la structure hébraïque de possession 'יש לו'.",
+            "level1_reveals": "L'étudiant ignore la structure fondamentale de la possession en hébreu."
+        }
+    },
+    "05_1": {
+        "id": "05_1",
+        "fr": "Je réponds à la prof, à la question qu'elle m'a posé.",
+        "he": "אני עונה למורה, על השאלה שהיא שאלה אותי.",
+        "setid": "05",
+        "answers": {
+            "id": "05_1",
+            "level3_answer": "אני עונה למורה, לשאלה שהיא שאלה אותי.",
+            "level3_explanation": "L'étudiant a utilisé la préposition 'ל' au lieu de 'על' pour introduire ce à quoi on répond (la question).",
+            "level3_reveals": "L'étudiant comprend la phrase mais ne connaît pas la préposition exacte qui suit le verbe 'répondre' pour une chose.",
+            "level2_answer": "אני עונה למורה, על השאלה שהיא שאלה לי.",
+            "level2_explanation": "L'étudiant a utilisé la préposition 'ל' (à moi) au lieu de la particule d'objet direct 'אותי' après le verbe 'poser une question'.",
+            "level2_reveals": "L'étudiant calque le français 'm'a posé' sans savoir que le verbe לשאול prend un objet direct en hébreu.",
+            "level1_answer": "אני עונה המורה, על השאלה שהיא שואלת אותי.",
+            "level1_explanation": "L'étudiant a omis la préposition 'ל' devant 'professeur' et a conjugué le deuxième verbe au présent au lieu du passé.",
+            "level1_reveals": "L'étudiant a de grosses lacunes sur les prépositions de base et la concordance des temps."
+        }
+    },
+    "05_2": {
+        "id": "05_2",
+        "fr": "Nous sommes aussi sortis avec ses amis dans des clubs, et nous y avons dansé.",
+        "he": "יצאנו גם עם החברים שלו למועדונים, ורקדנו שם.",
+        "setid": "05",
+        "answers": {
+            "id": "05_2",
+            "level3_answer": "יצאנו גם עם חברים שלו למועדונים, ורקדנו שם.",
+            "level3_explanation": "L'étudiant a omis l'article défini 'ה' devant 'חברים', qui est nécessaire dans la construction 'החברים שלו'.",
+            "level3_reveals": "L'étudiant comprend très bien la phrase mais oublie la règle de définition avec le possessif 'של'.",
+            "level2_answer": "יצאנו גם עם החברים שלו במועדונים, ורקדנו שם.",
+            "level2_explanation": "L'étudiant a utilisé la préposition 'ב' (dans) au lieu de 'ל' (vers) pour exprimer la direction.",
+            "level2_reveals": "L'étudiant confond les prépositions de lieu (position vs direction) sous l'influence du français.",
+            "level1_answer": "אנחנו יוצאים גם עם החברים שלו למועדונים, ורוקדים שם.",
+            "level1_explanation": "L'étudiant a conjugué les verbes 'sortir' et 'danser' au présent au lieu du passé.",
+            "level1_reveals": "L'étudiant reconnaît le vocabulaire mais ne sait pas conjuguer les verbes au passé."
+        }
+    },
+    "06_1": {
+        "id": "06_1",
+        "fr": "Les enfants, le gâteau qu'il y a sur la table est pour vous.",
+        "he": "ילדים, העוגה שיש על השולחן בשבילכם.",
+        "setid": "06",
+        "answers": {
+            "id": "06_1",
+            "level3_answer": "ילדים, העוגה שיש על השולחן בשבילך.",
+            "level3_explanation": "L'étudiant a utilisé le pronom suffixe singulier 'pour toi' (בשבילך) au lieu du pluriel 'pour vous' (בשבילכם).",
+            "level3_reveals": "L'étudiant maîtrise la structure mais manque d'attention sur l'accord en nombre du pronom suffixe.",
+            "level2_answer": "ילדים, העוגה שיש על השולחן בשביל אתם.",
+            "level2_explanation": "L'étudiant a juxtaposé la préposition 'בשביל' et le pronom 'אתם' au lieu d'utiliser la forme fléchie correcte 'בשבילכם'.",
+            "level2_reveals": "L'étudiant connaît le vocabulaire mais ne maîtrise pas la déclinaison des prépositions avec les pronoms suffixes.",
+            "level1_answer": "ילדים, עוגה יש על השולחן בשבילכם.",
+            "level1_explanation": "L'étudiant a omis l'article défini devant 'gâteau' et le pronom relatif 'ש' devant 'יש'.",
+            "level1_reveals": "L'étudiant traduit mot à mot sans appliquer les règles de syntaxe de base de l'hébreu."
+        }
+    },
+    "06_2": {
+        "id": "06_2",
+        "fr": "Quand j'arrive à la banque, je m'approche immédiatement du guichet.",
+        "he": "כשאני מגיע לבנק אני מייד ניגש לדלפק.",
+        "setid": "06",
+        "answers": {
+            "id": "06_2",
+            "level3_answer": "כשאני מגיע לבנק אני מייד ניגש את הדלפק.",
+            "level3_explanation": "L'utilisation de la particule 'את' au lieu de la préposition 'ל' ou 'אל' après le verbe 'ניגש' est incorrecte.",
+            "level3_reveals": "L'étudiant comprend la phrase mais ne maîtrise pas la préposition de direction exigée par le verbe s'approcher.",
+            "level2_answer": "מתי אני מגיע בבנק אני מייד מתקרב לדלפק.",
+            "level2_explanation": "L'utilisation du mot interrogatif 'מתי' au lieu de la conjonction 'כש' pour dire 'quand', ainsi que la préposition 'ב' au lieu de 'ל' sont fautives.",
+            "level2_reveals": "L'étudiant connaît le vocabulaire de base mais confond les mots interrogatifs et les conjonctions, et ne maîtrise pas les prépositions de mouvement.",
+            "level1_answer": "זמן אני בא לבנק אני מהר הולך קופה.",
+            "level1_explanation": "Cette traduction mot à mot est très approximative et souffre d'un manque de syntaxe et de prépositions.",
+            "level1_reveals": "L'étudiant connaît quelques mots isolés mais est incapable de former une phrase syntaxiquement correcte."
+        }
+    },
+    "07_1": {
+        "id": "07_1",
+        "fr": "Sarit m'a dit qu'elle demandera aussi à Michal si elle veut venir avec nous.",
+        "he": "שרית אמרה לי שהיא תשאל גם את מיכל אם היא רוצה לבוא איתנו.",
+        "setid": "07",
+        "answers": {
+            "id": "07_1",
+            "level3_answer": "שרית אמרה לי שהיא תבקש גם ממיכל אם היא רוצה לבוא איתנו.",
+            "level3_explanation": "Le verbe 'לבקש' (demander de faire) est utilisé à la place de 'לשאול' (poser une question).",
+            "level3_reveals": "L'étudiant maîtrise la syntaxe mais confond les deux sens du verbe demander en hébreu.",
+            "level2_answer": "שרית אמרה לי שהיא שואלת גם למיכל אם היא רוצה ללכת איתנו.",
+            "level2_explanation": "Le temps du verbe est au présent au lieu du futur, et la préposition 'ל' est utilisée à tort avec le verbe 'לשאול'.",
+            "level2_reveals": "L'étudiant comprend le sens global mais ne maîtrise pas la concordance des temps ni les prépositions spécifiques aux verbes.",
+            "level1_answer": "שרית אומרת לי היא תשאל גם מיכל אם היא רוצה באה איתנו.",
+            "level1_explanation": "L'absence de la conjonction 'ש', l'omission de 'את' et l'utilisation d'un verbe conjugué au lieu de l'infinitif après 'רוצה' rendent la phrase incorrecte.",
+            "level1_reveals": "L'étudiant reconnaît les mots principaux mais ignore les règles de base de la construction des phrases complexes et des infinitifs."
+        }
+    },
+    "07_2": {
+        "id": "07_2",
+        "fr": "Ruth et Shlomo oublieront comme d'habitude, il faut toujours le leur rappeler.",
+        "he": "רות ושלמה ישכחו כרגיל, צריך תמיד להזכיר להם.",
+        "setid": "07",
+        "answers": {
+            "id": "07_2",
+            "level3_answer": "רות ושלמה ישכחו כרגיל, צריך תמיד לזכור להם.",
+            "level3_explanation": "L'utilisation du verbe 'לזכור' (se souvenir) au lieu de sa forme causative 'להזכיר' (rappeler) change le sens de la phrase.",
+            "level3_reveals": "L'étudiant a un bon niveau mais ne maîtrise pas les binyanim pour exprimer la causalité.",
+            "level2_answer": "רות ושלמה שוכחים כרגיל, צריך תמיד להזכיר אותם.",
+            "level2_explanation": "Le verbe est au présent au lieu du futur, et la préposition 'אותם' est utilisée à la place de 'להם' après 'להזכיר'.",
+            "level2_reveals": "L'étudiant comprend le vocabulaire mais fait des erreurs de temps et de régime prépositionnel.",
+            "level1_answer": "רות ושלמה ישכח רגיל, צריך כל הזמן זוכר להם.",
+            "level1_explanation": "Le verbe 'ישכח' est au singulier, 'רגיל' manque le préfixe 'כ', et 'זוכר' n'est pas à l'infinitif.",
+            "level1_reveals": "L'étudiant connaît les racines des mots mais ne sait ni conjuguer au pluriel ni utiliser l'infinitif après un verbe de modalité."
+        }
+    },
+    "08_1": {
+        "id": "08_1",
+        "fr": "Elle aurait dû me le dire plus tôt.",
+        "he": "היא הייתה צריכה להגיד לי את זה מוקדם יותר.",
+        "setid": "08",
+        "answers": {
+            "id": "08_1",
+            "level3_answer": "היא הייתה צריכה לומר אותי את זה מוקדם יותר.",
+            "level3_explanation": "L'utilisation du pronom 'אותי' au lieu de 'לי' avec le verbe dire est une erreur de préposition.",
+            "level3_reveals": "L'étudiant maîtrise l'expression du regret au passé mais se trompe sur la préposition exigée par le verbe.",
+            "level2_answer": "היא צריכה להגיד לי את זה יותר מוקדם.",
+            "level2_explanation": "L'omission du verbe 'הייתה' transforme la phrase en une obligation au présent au lieu d'un reproche au passé.",
+            "level2_reveals": "L'étudiant ne sait pas comment exprimer le conditionnel passé ou l'obligation au passé en hébreu.",
+            "level1_answer": "היא חייבת מדברת לי זה קודם.",
+            "level1_explanation": "L'utilisation incorrecte de 'חייבת' avec un verbe conjugué 'מדברת' au lieu de l'infinitif démontre une syntaxe défaillante.",
+            "level1_reveals": "L'étudiant traduit mot à mot avec un vocabulaire basique sans comprendre la structure grammaticale de l'obligation."
+        }
+    },
+    "08_2": {
+        "id": "08_2",
+        "fr": "Ok, en avant Eitan, ne perds pas de temps, appelle-la dès maintenant.",
+        "he": "אוקיי, קדימה איתן, אל תבזבז זמן תצלצל אליה כבר עכשיו.",
+        "setid": "08",
+        "answers": {
+            "id": "08_2",
+            "level3_answer": "אוקיי, קדימה איתן, לא תבזבז זמן תצלצל אליה כבר עכשיו.",
+            "level3_explanation": "L'utilisation de 'לא' au lieu de 'אל' pour exprimer l'impératif négatif est incorrecte.",
+            "level3_reveals": "L'étudiant comprend parfaitement la phrase mais ignore la règle spécifique de la négation à l'impératif.",
+            "level2_answer": "אוקיי, קדימה איתן, אל מאבד זמן, מתקשר אליה עכשיו.",
+            "level2_explanation": "L'utilisation du présent au lieu de l'impératif ou du futur, et le choix du verbe 'לאבד' au lieu de 'לבזבז' sont inappropriés.",
+            "level2_reveals": "L'étudiant connaît le vocabulaire de base mais ne maîtrise pas l'impératif ni les nuances de vocabulaire.",
+            "level1_answer": "אוקיי, קדימה איתן, אין לאבד זמן, קורא לה עכשיו.",
+            "level1_explanation": "La structure littérale 'אין לאבד' pour 'ne perds pas' et l'utilisation du verbe 'לקרוא' au lieu de téléphoner sont erronées.",
+            "level1_reveals": "L'étudiant traduit littéralement du français et confond les différents sens du verbe appeler."
+        }
+    },
+    "09_1": {
+        "id": "09_1",
+        "fr": "Demain nous nous réveillerons tôt car nous aurons un examen.",
+        "he": "מחר נתעורר מוקדם כי יהיה לנו מבחן.",
+        "setid": "09",
+        "answers": {
+            "id": "09_1",
+            "level3_answer": "מחר נתעורר מוקדם כי יהיו לנו מבחן.",
+            "level3_explanation": "Le verbe 'להיות' est conjugué au pluriel 'יהיו' alors que le sujet 'מבחן' est au singulier.",
+            "level3_reveals": "L'étudiant maîtrise le futur et le vocabulaire, mais fait une erreur d'accord en nombre avec la structure de possession.",
+            "level2_answer": "מחר אנחנו מתעוררים מוקדם כי יש לנו מבחן.",
+            "level2_explanation": "L'utilisation du présent au lieu du futur pour les verbes 'se réveiller' et 'avoir' ne respecte pas le temps de la phrase originale.",
+            "level2_reveals": "L'étudiant préfère utiliser le présent pour exprimer le futur, montrant une maîtrise incomplète de la conjugaison au futur.",
+            "level1_answer": "מחר אנחנו קמים מוקדם בגלל אנחנו יש מבחן.",
+            "level1_explanation": "L'utilisation de 'בגלל' suivi d'un pronom au lieu de 'כי', et la traduction littérale 'אנחנו יש' pour 'nous aurons' sont incorrectes.",
+            "level1_reveals": "L'étudiant ne connaît pas la structure de la possession en hébreu et traduit littéralement depuis le français."
+        }
+    },
+    "09_2": {
+        "id": "09_2",
+        "fr": "Je me suis habillé(e) - Racine : l.b.sh",
+        "he": "התלבשתי - שורש: ל.ב.ש",
+        "setid": "09",
+        "answers": {
+            "id": "09_2",
+            "level3_answer": "הלבשתי - שורש: ל.ב.ש",
+            "level3_explanation": "L'utilisation de la forme 'הלבשתי' au lieu de la forme pronominale 'התלבשתי' change le sens du verbe.",
+            "level3_reveals": "L'étudiant connaît la racine mais confond les binyanim actif et réfléchi.",
+            "level2_answer": "לבשתי - שורש: ל.ב.ש",
+            "level2_explanation": "Le verbe 'לבשתי' signifie 'j'ai porté un vêtement' et non l'action de s'habiller soi-même.",
+            "level2_reveals": "L'étudiant connaît le verbe de base mais ne maîtrise pas la forme réfléchie nécessaire pour cette traduction.",
+            "level1_answer": "אני לובש - שורש: ל.ב.ש",
+            "level1_explanation": "Le verbe est conjugué au présent au lieu du passé, et ne reflète pas l'action réfléchie.",
+            "level1_reveals": "L'étudiant ne sait conjuguer qu'au présent et ignore les nuances des formes verbales."
+        }
+    },
+    "10_1": {
+        "id": "10_1",
+        "fr": "Je ne pourrai jamais arriver à l’heure il n’y a aucune chance !",
+        "he": "אני לא אוכל להגיע בזמן אין סיכוי!",
+        "setid": "10",
+        "answers": {
+            "id": "10_1",
+            "level3_answer": "אני לא יוכל להגיע בזמן אין סיכוי!",
+            "level3_explanation": "L'utilisation de 'יוכל' (futur à la 3e personne) au lieu de 'אוכל' (futur à la 1ère personne) est une erreur courante.",
+            "level3_reveals": "L'étudiant connaît le verbe mais fait une erreur de conjugaison typique sur la première personne du futur.",
+            "level2_answer": "אני אף פעם לא יכול לבוא בשעה אין מזל!",
+            "level2_explanation": "L'utilisation du présent, la traduction littérale de 'à l'heure' par 'בשעה', et la confusion sur le mot 'chance' rendent la phrase maladroite.",
+            "level2_reveals": "L'étudiant traduit trop littéralement et ne maîtrise pas le vocabulaire idiomatique ni le futur.",
+            "level1_answer": "אני לא אף פעם יכול מגיע לזמן אין צ'אנס!",
+            "level1_explanation": "La syntaxe incorrecte de la négation, l'absence d'infinitif après 'יכול', et la mauvaise préposition pour 'à l'heure' sont de graves erreurs.",
+            "level1_reveals": "L'étudiant assemble des mots sans respecter les règles syntaxiques de base de l'hébreu."
+        }
+    },
+    "10_2": {
+        "id": "10_2",
+        "fr": "Bien sûr, je fais attention à ne pas blesser, vexer ou embarrasser à Dieu ne plaise et que cela peut créer des problèmes, mais il est toujours important pour moi qu'ils sachent ce que je pense vraiment.",
+        "he": "כמובן שאני שם לב לא לפגוע, להעליב או להביך חלילה ושזה עלול ליצור בעיות, אבל חשוב לי תמיד שהם ידעו מה אני באמת חושב.",
+        "setid": "10",
+        "answers": {
+            "id": "10_2",
+            "level3_answer": "כמובן שאני שם לב לא לפצוע, להעליב או להביך חלילה ושזה עלול ליצור בעיות, אבל חשוב לי תמיד שהם ידעו מה אני באמת חושב.",
+            "level3_explanation": "Le verbe 'לפצוע' signifie blesser physiquement, tandis que 'לפגוע' est utilisé pour blesser moralement ou émotionnellement.",
+            "level3_reveals": "L'étudiant a un excellent niveau mais manque de précision sémantique sur le choix du verbe blesser dans un contexte figuré.",
+            "level2_answer": "בטח אני עושה תשומת לב לא לפגוע, להעליב או להביך חס וחלילה ושזה יכול לעשות בעיות, אבל חשוב לי תמיד שהם יודעים מה אני באמת חושב.",
+            "level2_explanation": "La traduction littérale 'עושה תשומת לב' pour 'fais attention', et l'utilisation du présent 'יודעים' au lieu du futur sont incorrectes.",
+            "level2_reveals": "L'étudiant comprend la phrase complexe mais utilise des calques du français et ne maîtrise pas la concordance des temps.",
+            "level1_answer": "ברור אני לוקח זהירות לא לכאוב, להעליב או להתבייש לאלוהים לא ירצה ושזה עושה בעיות, אבל תמיד חשוב לי שהם לדעת מה אני חושב באמת.",
+            "level1_explanation": "L'accumulation de traductions littérales absurdes comme 'לוקח זהירות' et d'erreurs de binyanim rendent la phrase incompréhensible.",
+            "level1_reveals": "L'étudiant traduit mot à mot depuis le français sans connaître les expressions idiomatiques ni la syntaxe hébraïque."
+        }
+    },
+    "11_1": {
+        "id": "11_1",
+        "fr": "Grâce à l'électrification, les trains seront plus silencieux, plus fiables, avec zéro émission de polluants dans les trains de voyageurs.",
+        "he": "בזכות החישמול הרכבות יהיו שקטות יותר, אמינות יותר, עם אפס פליטת מזהמים ברכבות נוסעים.",
+        "setid": "11",
+        "answers": {
+            "id": "11_1",
+            "level3_answer": "בזכות החישמול הרכבות יהיו שקטים יותר, אמינים יותר, עם אפס פליטת מזהמים ברכבות נוסעים.",
+            "level3_explanation": "Les adjectifs 'שקטים' et 'אמינים' sont au masculin pluriel, alors que le mot 'רכבות' est féminin pluriel.",
+            "level3_reveals": "L'étudiant maîtrise le vocabulaire technique mais oublie l'accord en genre d'un nom dont le pluriel est irrégulier.",
+            "level2_answer": "תודה לחשמל הרכבות יהיו יותר שקטות, יותר אמינות, עם אפס פליטות של זיהום ברכבות של נוסעים.",
+            "level2_explanation": "L'utilisation de 'תודה ל' au lieu de 'בזכות', et 'חשמל' au lieu de 'חישמול' montre un manque de vocabulaire précis.",
+            "level2_reveals": "L'étudiant comprend le sens général mais traduit littéralement les prépositions et manque de vocabulaire technique.",
+            "level1_answer": "בגלל החשמל הרכבות להיות שקט יותר, בטוח יותר, עם כלום זיהום אוויר ברכבות אנשים.",
+            "level1_explanation": "L'utilisation de l'infinitif 'להיות' au lieu du futur, des adjectifs au singulier, et un vocabulaire inadéquat sont des erreurs majeures.",
+            "level1_reveals": "L'étudiant a un vocabulaire très limité et ne sait pas accorder les adjectifs ni conjuguer le verbe être au futur."
+        }
+    },
+    "11_2": {
+        "id": "11_2",
+        "fr": "Voix off : Astérisque soixante-six soixante.",
+        "he": "קריינות: כוכבית שישים ושש שישים.",
+        "setid": "11",
+        "answers": {
+            "id": "11_2",
+            "level3_answer": "קריינות: כוכב שישים ושש שישים.",
+            "level3_explanation": "L'utilisation de 'כוכב' (étoile) au lieu de 'כוכבית' (astérisque) pour désigner le symbole sur un clavier est imprécise.",
+            "level3_reveals": "L'étudiant connaît les nombres et le mot étoile, mais ignore le diminutif spécifique utilisé pour l'astérisque.",
+            "level2_answer": "קול בחוץ: כוכבית שישים שש שישים.",
+            "level2_explanation": "La traduction littérale de 'voix off' par 'קול בחוץ' et l'omission de la conjonction 'ו' dans le nombre soixante-six sont incorrectes.",
+            "level2_reveals": "L'étudiant connaît le mot astérisque mais traduit littéralement les termes techniques et fait des erreurs sur les nombres composés.",
+            "level1_answer": "קול סגור: כוכב שש עשרה שש עשרה.",
+            "level1_explanation": "La traduction absurde de 'voix off' par 'קול סגור' et la confusion totale sur les nombres rendent la réponse fausse.",
+            "level1_reveals": "L'étudiant ne maîtrise ni le vocabulaire technique, ni les nombres de base en hébreu."
+        }
+    }
+}

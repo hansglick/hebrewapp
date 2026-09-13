@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRandomVerbe, getBinyan, getRacine } from "../api/content";
+import { BINYAN_COLORS } from "../config/appConfig";
 import { getNiveau, createEvaluation, markObjectSeen } from "../api/user";
 import { useSwipe } from "../hooks/useSwipe";
 import { useRandomBrowser } from "../hooks/useRandomBrowser";
@@ -46,23 +47,13 @@ const shinIconStyle = {
   maskPosition: "center",
 };
 
-// betletter.png (backend/results/logos) : même technique que
-// shinIconStyle, mais PAS la même taille de boîte — les deux images
-// sources font 512x512, mais l'encre du "ב" y occupe une bbox de hauteur
-// 472px contre 408px pour le "ש" (mesuré via Pillow) : à boîte égale, le
-// bet rendait donc ~16% plus grand que le shin malgré un mask-size:contain
-// identique — cf. bug rapporté par le user. width/height réduits dans le
-// même rapport (408/472) pour rendre une encre de même hauteur ; comme les
-// deux images partagent le même canevas 512x512, ce même rapport aligne
-// aussi leurs coiffes (calculé puis vérifié en direct via Claude in
-// Chrome).
-const betIconStyle = {
+// Même taille que .binyan-pill (14px) — logo racine gris placé au même
+// niveau que la pastille binyan, à sa gauche, cf. demande explicite du
+// user.
+const shinPillIconStyle = {
   ...shinIconStyle,
-  // * 0.75 : réduit de 25% (cf. demande explicite du user).
-  width: "calc(19.02px * 0.75 / 1.125)",
-  height: "calc(19.02px * 0.75 / 1.125)",
-  WebkitMaskImage: "url(/betletter.png)",
-  maskImage: "url(/betletter.png)",
+  width: 14,
+  height: 14,
 };
 
 // Même pastille numérotée que les titres des blocs audio des questions
@@ -476,24 +467,75 @@ export default function VerbeScreen() {
               gras et couleur par défaut en exploration/apprentissage) —
               #9ca3af (pas var(--textSecondary), trop foncé) : plus clair
               que le gris standard de l'app, cf. demande explicite du user. */}
-          <h1
-            className="hebrew"
-            style={{
-              margin: 0,
-              fontWeight: 700,
-              fontSize: "calc(2.925em / 1.125)",
-              color: mode === "revision" ? "var(--textPrimary)" : undefined,
-            }}
-          >
-            {cardVerbe.pure}
-          </h1>
+          {/* Binyan accessible via une pastille de la couleur du binyan,
+              positionnée à gauche du verbe (plus la lettre "ב") — affichée
+              dans les deux modes (exploration ET révision), cf. demande
+              explicite du user. En révision, sa fiche s'affiche plus bas,
+              sous le trait horizontal du bloc temps/personne (cf. bloc
+              dédié dans la branche révision ci-dessous) plutôt qu'ici. */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            {/* Racine, réservé au mode révision (l'exploration a déjà son
+                propre toggle racine dans la rangée sous le verbe) — placé
+                exactement sous la pastille binyan (colonne), cf. demande
+                explicite du user. */}
+            {mode === "revision" ? (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <button
+                  type="button"
+                  className="binyan-pill"
+                  aria-label="Binyan"
+                  onClick={toggleBinyanInline}
+                  style={{
+                    backgroundColor: BINYAN_COLORS[cardVerbe.binyan],
+                    margin: 0,
+                    padding: 0,
+                    border: "none",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                  }}
+                />
+                <button
+                  type="button"
+                  className="speak-btn"
+                  style={{ padding: 0 }}
+                  onClick={toggleRacineInline}
+                  aria-label="Racine"
+                >
+                  <span style={shinPillIconStyle} />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="binyan-pill"
+                aria-label="Binyan"
+                onClick={toggleBinyanInline}
+                style={{
+                  backgroundColor: BINYAN_COLORS[cardVerbe.binyan],
+                  margin: 0,
+                  padding: 0,
+                  border: "none",
+                  cursor: "pointer",
+                  flexShrink: 0,
+                }}
+              />
+            )}
+            <h1
+              className="hebrew"
+              style={{
+                margin: 0,
+                fontWeight: 700,
+                fontSize: "calc(2.925em / 1.125)",
+                color: mode === "revision" ? "var(--textPrimary)" : undefined,
+              }}
+            >
+              {cardVerbe.pure}
+            </h1>
+          </div>
 
           {/* SpeakerIcon size=24 : /1.125 annule le zoom ambiant (1.5*0.75)
               pour rendre à 27px, taille exacte de l'écran révision/mot —
-              cf. demande explicite du user. Binyan représenté par le logo
-              betletter.png (même technique/taille que shinIconStyle, noir
-              plein) — pas une pastille ni une lettre en texte — cf.
-              demande explicite du user. */}
+              cf. demande explicite du user. */}
           {/* gap:2 (8px par défaut de .hebrew-word-row -> 4 -> 2, réduit de
               50% à chaque demande explicite du user) : override en inline
               uniquement ici (pas la classe partagée, utilisée aussi par
@@ -516,9 +558,6 @@ export default function VerbeScreen() {
                 {/* size=18 (24*0.75) : réduit de 25% (cf. demande explicite
                     du user). */}
                 <SpeakerIcon color={ICONS_GRAY} size={18} />
-              </button>
-              <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleBinyanInline}>
-                <span style={betIconStyle} />
               </button>
               <button type="button" className="speak-btn" style={{ padding: 0 }} onClick={toggleRacineInline}>
                 <span style={shinIconStyle} />
@@ -559,52 +598,65 @@ export default function VerbeScreen() {
             "safe center"), donc l'écart entre les deux ne change pas ; seul
             resserrer CET écart précis (ce marginTop négatif) le réduit
             réellement. */}
-        <div
-          style={{
-            width: "100%",
-            display: "grid",
-            gridTemplateRows: binyanOpen ? "1fr" : "0fr",
-            transition: "grid-template-rows 300ms ease",
-            marginTop: -38.7,
-          }}
-        >
-          <div style={{ overflow: "hidden", minHeight: 0 }}>
-            {binyanDetails && (
-              <div style={{ paddingTop: 14, paddingBottom: 14 }}>
-                {/* zoom:1/1.5 annule le zoom:1.5 de .screen, cf. demande
-                    explicite du user (même taille que sur les autres
-                    écrans, non affectée par l'agrandissement du verbe). */}
-                <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5 }}>
-                  <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
-                    {binyanDetails.text}
-                  </p>
-                  <p className="muted" style={{ margin: "4px 0 0" }}>
-                    {binyanDetails.sens}
-                  </p>
+        {/* Fiche binyan : uniquement ICI en exploration (juste sous le
+            hero) — en révision, la même fiche (binyanOpen/binyanDetails
+            partagés) s'affiche plus bas, sous le trait horizontal du bloc
+            temps/personne, cf. demande explicite du user. */}
+        {mode === "exploration" && (
+          <div
+            style={{
+              width: "100%",
+              display: "grid",
+              gridTemplateRows: binyanOpen ? "1fr" : "0fr",
+              transition: "grid-template-rows 300ms ease",
+              marginTop: -38.7,
+            }}
+          >
+            <div style={{ overflow: "hidden", minHeight: 0 }}>
+              {binyanDetails && (
+                <div style={{ paddingTop: 14, paddingBottom: 14 }}>
+                  {/* zoom:1/1.5 annule le zoom:1.5 de .screen, cf. demande
+                      explicite du user (même taille que sur les autres
+                      écrans, non affectée par l'agrandissement du verbe). */}
+                  <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5 }}>
+                    <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
+                      {binyanDetails.text}
+                    </p>
+                    <p className="muted" style={{ margin: "4px 0 0" }}>
+                      {binyanDetails.sens}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
-        <div
-          style={{
-            width: "100%",
-            display: "grid",
-            gridTemplateRows: racineOpen ? "1fr" : "0fr",
-            transition: "grid-template-rows 300ms ease",
-          }}
-        >
-          <div style={{ overflow: "hidden", minHeight: 0 }}>
-            {racineDetails && (
-              <div style={{ paddingTop: 14, paddingBottom: 14 }}>
-                <div style={{ zoom: 1 / 1.5 }}>
-                  <RacineCard racine={racineDetails} />
+        {/* Fiche racine : uniquement ICI en exploration (juste sous le
+            hero) — en révision, la même fiche (racineOpen/racineDetails
+            partagés) s'affiche plus bas, sous le trait horizontal du bloc
+            temps/personne (bloc dédié dans la branche révision), cf.
+            demande explicite du user. */}
+        {mode === "exploration" && (
+          <div
+            style={{
+              width: "100%",
+              display: "grid",
+              gridTemplateRows: racineOpen ? "1fr" : "0fr",
+              transition: "grid-template-rows 300ms ease",
+            }}
+          >
+            <div style={{ overflow: "hidden", minHeight: 0 }}>
+              {racineDetails && (
+                <div style={{ paddingTop: 14, paddingBottom: 14 }}>
+                  <div style={{ zoom: 1 / 1.5 }}>
+                    <RacineCard racine={racineDetails} />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {mode === "exploration" ? (
           <>
@@ -717,6 +769,80 @@ export default function VerbeScreen() {
                   margin: 0,
                 }}
               />
+            </div>
+
+            {/* Fiche binyan (pastille cliquée dans le bloc 1 ci-dessus) :
+                affichée ICI, sous le trait horizontal du bloc temps/personne
+                — cf. demande explicite du user. Même technique
+                grid-template-rows 0fr<->1fr que la version exploration,
+                zoom:1/1.5 pour annuler l'ambiant de .screen (même contexte
+                que la section "Réponse" juste en dessous). */}
+            <div
+              style={{
+                // +25% (cf. demande explicite du user) : 70%->87.5%, 400->500.
+                width: "87.5%",
+                maxWidth: 500,
+                display: "grid",
+                gridTemplateRows: binyanOpen ? "1fr" : "0fr",
+                transition: "grid-template-rows 300ms ease",
+              }}
+            >
+              <div style={{ overflow: "hidden", minHeight: 0 }}>
+                {binyanDetails && (
+                  // paddingTop:25 (au lieu de 10) : compense le padding
+                  // ajouté à l'encadré racine plus bas (cf. bloc racine
+                  // ci-dessous) pour garder les deux bordures supérieures
+                  // alignées — cf. demande explicite du user.
+                  <div style={{ paddingTop: 25, zoom: 1 / 1.5 }}>
+                    <div className="card" style={{ textAlign: "center" }}>
+                      <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
+                        {binyanDetails.text}
+                      </p>
+                      <p className="muted" style={{ margin: "4px 0 0" }}>
+                        {binyanDetails.sens}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Fiche racine (logo shin cliqué dans le bloc 1 ci-dessus) :
+                même position/technique que la fiche binyan juste au-dessus
+                — cf. demande explicite du user. */}
+            <div
+              style={{
+                // +25% (cf. demande explicite du user) : 70%->87.5%, 400->500.
+                width: "87.5%",
+                maxWidth: 500,
+                display: "grid",
+                gridTemplateRows: racineOpen ? "1fr" : "0fr",
+                transition: "grid-template-rows 300ms ease",
+              }}
+            >
+              {/* paddingTop:10 posé sur l'enfant CONDITIONNEL (à l'intérieur
+                  de racineDetails &&), PAS sur ce conteneur overflow:hidden
+                  lui-même — un padding fixe posé directement sur le
+                  conteneur animé empêche celui-ci de revenir à une hauteur
+                  de 0 à la fermeture (le padding reste rendu même à
+                  gridTemplateRows:"0fr"), laissant le haut de l'encadré
+                  visible en permanence — cf. bug rapporté par le user. Ce
+                  padding réserve, en dehors de toute zone zoomée, la place
+                  que le marginTop:-54 plus bas vient consommer en remontant
+                  RacineCard (qui a son propre marginTop:40, cf.
+                  RacineCard.jsx) jusqu'au niveau de l'encadré binyan — le
+                  décalage introduit est compensé sur l'encadré binyan
+                  ci-dessus (paddingTop 10->25) pour garder les deux
+                  bordures alignées. */}
+              <div style={{ overflow: "hidden", minHeight: 0 }}>
+                {racineDetails && (
+                  <div style={{ paddingTop: 10 }}>
+                    <div style={{ marginTop: -54, zoom: 1 / 1.5 }}>
+                      <RacineCard racine={racineDetails} />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Pastille "2" (vert pastel, renumérotée après la suppression

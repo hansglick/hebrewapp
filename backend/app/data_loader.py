@@ -27,6 +27,7 @@ DATA_FILES = {
     "revision": "item_revision.json",
     "concept": "item_concept.json",
     "concept_revision": "item_concept_revision.json",
+    "qcm_niveau": "item_qcm.json",
 }
 
 

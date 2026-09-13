@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   advanceOnboardingExam,
   advanceQuicktestExam,
@@ -76,6 +77,7 @@ function StarRating({ rating }) {
 }
 
 export default function OnboardingScreen({ onCompleted }) {
+  const navigate = useNavigate();
   const [phase, setPhase] = useState("loading"); // loading | intro | test-intro | question | done
   const [startError, setStartError] = useState(null);
   const [starting, setStarting] = useState(false);
@@ -336,6 +338,17 @@ export default function OnboardingScreen({ onCompleted }) {
           onClick={() => handleStart("quick")}
         >
           Commencez le test
+        </button>
+        {/* Outil de conception (pas encore le vrai algorithme de niveau) :
+            lance le QCM de traduction chronométré, cf. demande explicite du
+            user. Ne modifie pas l'encadré au-dessus. */}
+        <button
+          type="button"
+          className="exam-tile green pastel"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/dev/qcm-niveau")}
+        >
+          QCM
         </button>
         <button
           type="button"

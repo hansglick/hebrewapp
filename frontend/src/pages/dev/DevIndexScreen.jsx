@@ -32,6 +32,11 @@ const PREVIEWS = [
     label: "Attente d'évaluation",
     description: "Écran affiché pendant la correction groupée d'un examen.",
   },
+  {
+    to: "/dev/qcm-niveau",
+    label: "QCM niveau",
+    description: "QCM de traduction fr->he chronométré (item_qcm.json) — outil de conception de l'algorithme de niveau.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec

@@ -85,15 +85,23 @@ def random_mot(
         # de SA PROPRE leçon d'origine (pas celle demandée en paramètre).
         words = get_dataset("word")
         weights_by_lesson = recency_weights(lesson_code)
+        # Groupé par SENS d'abord, puis par mot (pas l'inverse) : pick_unexplored
+        # tire dans l'ordre d'insertion de ce dict, et un mot a deux clés (une
+        # par sens) — les grouper par mot les aurait fait sortir l'un juste
+        # après l'autre pendant la phase d'exploration, proposant deux fois de
+        # suite "le même mot" (sens différent) à l'étudiant — cf. bug rapporté
+        # par le user. Avec ce groupement, les deux sens d'un même mot ne se
+        # retrouvent voisins qu'après avoir parcouru tous les mots dans l'autre
+        # sens.
         recency_pool = {}
-        for w in lesson["global_words"]:
-            word = words.get(w)
-            if word is None:
-                continue
-            weight = weights_by_lesson.get(f"{word['chapter']}.{word['lesson']}")
-            if weight is None:
-                continue
-            for d in DIRECTIONS:
+        for d in DIRECTIONS:
+            for w in lesson["global_words"]:
+                word = words.get(w)
+                if word is None:
+                    continue
+                weight = weights_by_lesson.get(f"{word['chapter']}.{word['lesson']}")
+                if weight is None:
+                    continue
                 recency_pool[f"{w}|{d}"] = weight
 
         difficulty_pool = {
