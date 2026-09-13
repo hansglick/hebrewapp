@@ -350,6 +350,17 @@ export default function OnboardingScreen({ onCompleted }) {
         >
           QCM
         </button>
+        {/* Outil de conception (pas encore le vrai algorithme de niveau) :
+            lance le test conversationnel (Gemini Live, 22 exercices de
+            traduction notés) — cf. demande explicite du user. */}
+        <button
+          type="button"
+          className="exam-tile green pastel"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/dev/conversation-eval")}
+        >
+          Test Conversationnelle
+        </button>
         <button
           type="button"
           className="exam-tile green pastel"

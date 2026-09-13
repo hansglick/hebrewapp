@@ -27,6 +27,14 @@ import "../components/ConfigModal.css";
 import "../pages/screens.css";
 import "./Layout.css";
 
+// Outils de conception lancés DEPUIS l'écran d'onboarding lui-même (boutons
+// "QCM"/"Test Conversationnelle" de OnboardingScreen, cf. demande explicite
+// du user) : sans cette liste, naviguer vers ces routes pendant que
+// `showOnboarding` est vrai ne fait rien, puisque Layout affiche
+// OnboardingScreen à la place de l'<Outlet/> quel que soit le chemin — le
+// clic changeait bien l'URL mais l'écran affiché restait OnboardingScreen.
+const ONBOARDING_BYPASS_PATHS = ["/dev/qcm-niveau", "/dev/conversation-eval"];
+
 function formatTimer(seconds) {
   const s = Math.max(0, Math.round(seconds));
   const mm = String(Math.floor(s / 60)).padStart(2, "0");
@@ -205,7 +213,7 @@ export default function Layout() {
 
   if (showOnboarding === null) return null;
 
-  if (showOnboarding) {
+  if (showOnboarding && !ONBOARDING_BYPASS_PATHS.includes(location.pathname)) {
     return (
       <div className="app-shell">
         <main className="app-content">

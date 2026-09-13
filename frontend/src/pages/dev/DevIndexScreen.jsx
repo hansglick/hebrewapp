@@ -37,6 +37,11 @@ const PREVIEWS = [
     label: "QCM niveau",
     description: "QCM de traduction fr->he chronométré (item_qcm.json) — outil de conception de l'algorithme de niveau.",
   },
+  {
+    to: "/dev/conversation-eval",
+    label: "Test conversationnel niveau",
+    description: "Conversation en direct avec un professeur IA, 11 exercices de traduction notés — outil de conception de l'algorithme de niveau.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec
