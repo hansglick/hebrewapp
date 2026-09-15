@@ -64,7 +64,7 @@ export default function CoinCultureFastScreen() {
     }
   }
 
-  const imageUrl = mediaUrl("logos/culturehomepage.png");
+  const imageUrl = mediaUrl("logos/culture_homepage_bubbly.png");
 
   return (
     <section className="screen">
