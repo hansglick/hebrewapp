@@ -173,28 +173,34 @@ function estimateLevelPlacement(rawScores) {
     const left = padded.slice(0, k);
     const right = padded.slice(k);
 
+    // Gauche : inchangé — probabilité de maîtrise estimée par la médiane de
+    // Beta(alphaLeft, betaLeft), cf. demande explicite du user ("on ne
+    // change rien").
     let alphaLeft = 0;
     for (const s of left) {
       if (s === 3) alphaLeft += 1;
       else if (s === 2) alphaLeft += 0.33;
     }
     const betaLeft = left.length - alphaLeft;
-
-    let alphaRight = 0;
-    for (const s of right) {
-      if (s === 1) alphaRight += 1;
-      else if (s === 2) alphaRight += 0.66;
-    }
-    const betaRight = right.length - alphaRight;
-
     const medianLeft = groupMedian(alphaLeft, betaLeft, left.length);
-    const medianRight = groupMedian(alphaRight, betaRight, right.length);
-    const diff = Math.abs(medianRight - medianLeft);
 
-    // `<` strict (pas `<=`) : en cas d'égalité, garde le plus petit k déjà
-    // trouvé — cf. demande explicite du user.
-    if (best === null || diff < best.diff) {
-      best = { k, alphaLeft, alphaRight, medianLeft, medianRight, diff };
+    // Droite : nouveau calcul, un simple ratio de la MÊME notion de
+    // maîtrise (plus de loi Beta/médiane de ce côté) — cf. demande
+    // explicite du user.
+    let successRight = 0;
+    for (const s of right) {
+      if (s === 3) successRight += 1;
+      else if (s === 2) successRight += 0.33;
+    }
+    const pRight = successRight / right.length;
+
+    // On cherche le k qui maximise l'écart signé (gauche nettement plus
+    // maîtrisée que droite), pas sa valeur absolue — cf. demande explicite
+    // du user. `>` strict (pas `>=`) : en cas d'égalité, garde le plus
+    // petit k déjà trouvé.
+    const gap = medianLeft - pRight;
+    if (best === null || gap > best.gap) {
+      best = { k, alphaLeft, successRight, medianLeft, pRight, gap };
     }
   }
   return best;
@@ -562,12 +568,12 @@ export default function ConversationTestScreen() {
               Placement (contrôle temporaire) — découpe retenue : k = {placement.k}
             </p>
             <p className="muted" style={{ margin: "4px 0 0" }}>
-              Somme pondérée gauche : {placement.alphaLeft.toFixed(2)} · droite :{" "}
-              {placement.alphaRight.toFixed(2)}
+              Somme pondérée gauche : {placement.alphaLeft.toFixed(2)} · succès pondérés droite :{" "}
+              {placement.successRight.toFixed(2)}
             </p>
             <p className="muted" style={{ margin: "4px 0 0" }}>
-              Médiane Beta gauche (x, P(X&lt;x)=50%) : {placement.medianLeft.toFixed(3)} · droite :{" "}
-              {placement.medianRight.toFixed(3)}
+              p(gauche) médiane Beta : {placement.medianLeft.toFixed(3)} · p(droite) ratio :{" "}
+              {placement.pRight.toFixed(3)} · écart : {placement.gap.toFixed(3)}
             </p>
             <p className="muted" style={{ margin: "4px 0 0" }}>
               1ère leçon du dernier set à gauche : {placement.startLesson ?? "?"}
