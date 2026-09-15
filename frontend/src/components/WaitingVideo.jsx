@@ -21,7 +21,7 @@ const MUSIC_ICON_URL = "/musique.png";
 // au-dessus — mais seulement quand les réponses sont évaluées en bloc à la
 // fin de l'examen (attente plus longue), jamais pour l'attente d'une
 // réponse unique évaluée immédiatement, cf. demande explicite du user.
-export function WaitingVideo({ label = "Patientez quelques instants ...", allowChansons = false }) {
+export function WaitingVideo({ label = "Patientez quelques instants ...", allowChansons = false, urgent = false }) {
   const [filename, setFilename] = useState(null);
   const [ready, setReady] = useState(false);
   const [chansons, setChansons] = useState(false);
@@ -76,7 +76,7 @@ export function WaitingVideo({ label = "Patientez quelques instants ...", allowC
       {/* Le texte s'affiche toujours, y compris en mode chansons : le user
           doit continuer à voir que sa copie est en cours d'évaluation, cf.
           demande explicite du user. */}
-      <p className="muted" style={{ fontStyle: "italic", fontSize: "0.75em" }}>
+      <p className={urgent ? "blink-red-text" : "muted"} style={{ fontStyle: "italic", fontSize: "0.75em" }}>
         {label}
       </p>
 

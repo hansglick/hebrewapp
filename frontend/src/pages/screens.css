@@ -800,6 +800,33 @@
   }
 }
 
+/* Générique, réutilisable partout où un message doit alerter (ex: attente
+   Gemini anormalement longue sur l'extraction de paroles, cf.
+   WaitingVideo::urgent) — rouge clignotant, sans imposer de graisse/
+   alignement (contrairement à .onboarding-next-blink) pour rester
+   substituable à .muted sans changer la mise en page, cf. demande
+   explicite du user ("même police et taille que le message précédent"). */
+.blink-red-text {
+  color: var(--annulationPleine);
+  animation: blink-red-text 1s ease-in-out infinite;
+}
+
+@keyframes blink-red-text {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blink-red-text {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .onboarding-next-blink {
     animation: none;
