@@ -167,6 +167,18 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             await safe_send({"type": "audio", "data": base64.b64encode(data).decode()})
 
                         if response.tool_call:
+                            # Répond d'ABORD à tous les appels d'outil du lot (le
+                            # modèle peut en émettre plusieurs dans une même
+                            # réponse, notamment lors d'un décalage où il
+                            # "rattrape" plusieurs évaluations d'un coup) —
+                            # avant de décider quoi que ce soit d'autre.
+                            # Injecter le wrap-up (send_client_content) au
+                            # milieu de cette boucle, avant d'avoir répondu à
+                            # un appel encore en attente dans le même lot,
+                            # viole le protocole Gemini Live et provoquait une
+                            # erreur "1007 Request contains an invalid
+                            # argument" — cf. bug rapporté par le user.
+                            new_scores = []
                             for fc in response.tool_call.function_calls:
                                 if fc.name != "report_evaluation":
                                     continue
@@ -179,32 +191,34 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                         id=fc.id, name=fc.name, response={"ok": True}
                                     )
                                 )
-                                if score not in (1, 2, 3):
-                                    continue
+                                if score in (1, 2, 3):
+                                    new_scores.append(score)
+
+                            for score in new_scores:
                                 scores.append(score)
                                 await safe_send({"type": "score", "score": score, "index": len(scores)})
                                 consecutive_ones = consecutive_ones + 1 if score == 1 else 0
 
-                                if not wrap_up_sent and consecutive_ones >= STOP_STREAK:
-                                    wrap_up_sent = True
-                                    ended = True
-                                    await session.send_client_content(
-                                        turns=types.Content(
-                                            role="user",
-                                            parts=[types.Part.from_text(text=conversation_eval.WRAP_UP_TOO_MANY_ERRORS)],
-                                        ),
-                                        turn_complete=True,
-                                    )
-                                elif not wrap_up_sent and len(scores) >= TOTAL_QUESTIONS:
-                                    wrap_up_sent = True
-                                    ended = True
-                                    await session.send_client_content(
-                                        turns=types.Content(
-                                            role="user",
-                                            parts=[types.Part.from_text(text=conversation_eval.WRAP_UP_TEST_COMPLETE)],
-                                        ),
-                                        turn_complete=True,
-                                    )
+                            if not wrap_up_sent and consecutive_ones >= STOP_STREAK:
+                                wrap_up_sent = True
+                                ended = True
+                                await session.send_client_content(
+                                    turns=types.Content(
+                                        role="user",
+                                        parts=[types.Part.from_text(text=conversation_eval.WRAP_UP_TOO_MANY_ERRORS)],
+                                    ),
+                                    turn_complete=True,
+                                )
+                            elif not wrap_up_sent and len(scores) >= TOTAL_QUESTIONS:
+                                wrap_up_sent = True
+                                ended = True
+                                await session.send_client_content(
+                                    turns=types.Content(
+                                        role="user",
+                                        parts=[types.Part.from_text(text=conversation_eval.WRAP_UP_TEST_COMPLETE)],
+                                    ),
+                                    turn_complete=True,
+                                )
 
                         content = response.server_content
                         if content:
