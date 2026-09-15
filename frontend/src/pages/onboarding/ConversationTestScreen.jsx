@@ -135,6 +135,35 @@ function betaMedian(a, b) {
   return (lo + hi) / 2;
 }
 
+// Cas particulier d'un groupe entièrement homogène (alpha=0 ou beta=0, ex:
+// que des scores=3) : la loi Beta(n+0.1, 0.1) issue du lissage habituel
+// s'écrase de façon disproportionnée contre 0 ou 1 (cf. discussion avec le
+// user — Beta avec un paramètre < 1 diverge au bord). On construit à la
+// place directement la vraisemblance binomiale d'observer n succès (ou n
+// échecs) sur n essais, pour chaque p d'une grille discrète {0, 0.01, ...,
+// 1}, normalisée en distribution — puis on prend le plus petit p de la
+// grille dont la somme cumulée dépasse strictement 50%, cf. demande
+// explicite du user.
+function discreteAllOrNothingMedian(n, allSuccess) {
+  const grid = [];
+  for (let i = 0; i <= 100; i++) grid.push(i / 100);
+  const likelihoods = grid.map((p) => (allSuccess ? p ** n : (1 - p) ** n));
+  const total = likelihoods.reduce((sum, l) => sum + l, 0);
+  let cumulative = 0;
+  for (let i = 0; i < grid.length; i++) {
+    cumulative += likelihoods[i] / total;
+    if (cumulative > 0.5) return grid[i];
+  }
+  return grid[grid.length - 1];
+}
+
+function groupMedian(alpha, beta, n) {
+  if (alpha === 0 || beta === 0) {
+    return discreteAllOrNothingMedian(n, beta === 0);
+  }
+  return betaMedian(alpha, beta);
+}
+
 function estimateLevelPlacement(rawScores) {
   const padded = rawScores.slice(0, SETS_COUNT);
   while (padded.length < SETS_COUNT) padded.push(1);
@@ -149,25 +178,17 @@ function estimateLevelPlacement(rawScores) {
       if (s === 3) alphaLeft += 1;
       else if (s === 2) alphaLeft += 0.33;
     }
-    let betaLeft = left.length - alphaLeft;
-    if (alphaLeft === 0 || betaLeft === 0) {
-      alphaLeft += 0.1;
-      betaLeft += 0.1;
-    }
+    const betaLeft = left.length - alphaLeft;
 
     let alphaRight = 0;
     for (const s of right) {
       if (s === 1) alphaRight += 1;
       else if (s === 2) alphaRight += 0.66;
     }
-    let betaRight = right.length - alphaRight;
-    if (alphaRight === 0 || betaRight === 0) {
-      alphaRight += 0.1;
-      betaRight += 0.1;
-    }
+    const betaRight = right.length - alphaRight;
 
-    const medianLeft = betaMedian(alphaLeft, betaLeft);
-    const medianRight = betaMedian(alphaRight, betaRight);
+    const medianLeft = groupMedian(alphaLeft, betaLeft, left.length);
+    const medianRight = groupMedian(alphaRight, betaRight, right.length);
     const diff = Math.abs(medianRight - medianLeft);
 
     // `<` strict (pas `<=`) : en cas d'égalité, garde le plus petit k déjà
