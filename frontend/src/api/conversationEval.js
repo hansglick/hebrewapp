@@ -1,4 +1,4 @@
-import { API_URL } from "./http";
+import { API_URL, apiFetchJson } from "./http";
 import { getIdentity } from "./identity";
 
 // Même technique que api/revision.js::revisionWebSocketUrl (un WebSocket
@@ -13,3 +13,9 @@ export function conversationEvalWebSocketUrl() {
   });
   return `${wsBase}/api/conversation-eval/ws?${params}`;
 }
+
+// Applique réellement le niveau estimé par l'algorithme de placement —
+// écrit en base (cf. app.routers.conversation_eval.apply_placement), unique
+// effet de bord persistant de ce test conversationnel jusqu'ici.
+export const applyConversationEvalPlacement = (startLesson) =>
+  apiFetchJson("/api/conversation-eval/apply-placement", { start_lesson: startLesson });

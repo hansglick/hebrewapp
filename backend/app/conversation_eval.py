@@ -9,6 +9,7 @@ scores sont relayés en direct au frontend au fil de la conversation."""
 from google.genai import types
 
 from app.jdr import LIVE_MODEL, live_client  # noqa: F401 — réexporté pour le router
+from app.onboarding_exam import build_sets
 from app.phrase_sampling import sample_hebrew_sentences_per_set
 
 # Sans un premier tour, la persona reste silencieuse en attendant que
@@ -135,6 +136,16 @@ Une fois que l'exercice réel a commencé, Toutes les actions ci-dessous te sont
 - Parler dans une autre langue que le français
 - Intervenir dans la conversation pour encourager, relancer, rassurer l'étudiant
 - Guider l'étudiant, aider l'étudiant, suggérer une réponse, donner une piste à l'étudiant, susurrer une réponse
+
+
+### Synchronisation et timing lors de l'attribution d'un score à une question
+
+Une réponse ne peut être évaluée que si la question correspondante est devenue **active**. Une question devient active uniquement après que tu as fini de l'énoncer entièrement. A ce titre :
+- À tout instant, il peut exister une seule question active ou bien aucune question active (lors de l'énoncé de la question suivante)
+- Après avoir attribué un score et appelé `report_evaluation`, la question active est considérée comme terminée ou inactive.
+- La question suivante ne devient active qu'après avoir été entièrement énoncée.
+- Toute parole, hésitation, fragment de réponse ou bruit émis par le micro de l'étudiant qui intervient alors que la question correspondante n'est pas encore active (i.e. tu n'as pas fini de l'énoncer), NE DOIT PAS être interprété comme une réponse à la question en cours d'énonciation. Par conséquent, si cela se produit, NE déclenche aucune évaluation et n'appelle JAMAIS `report_evaluation`.
+- Tu ne dois JAMAIS appeler `report_evaluation` pendant que tu es en train d'énoncer une question.
 """
 
 
@@ -144,6 +155,14 @@ def draw_phrases_for_test() -> list[str]:
     croissant — servent de matière aux 11 exercices de traduction."""
     by_set = sample_hebrew_sentences_per_set(k_per_set=1)
     return [phrase["french"] for setid in sorted(by_set) for phrase in by_set[setid]]
+
+
+def first_lesson_per_set() -> list[str]:
+    """Code de la première leçon de chacun des 11 sets, dans l'ordre — sert
+    au frontend à retrouver la leçon de départ recommandée par l'algorithme
+    de placement (cf. ConversationTestScreen.jsx), une fois la découpe
+    optimale des scores déterminée côté client."""
+    return [codes[0] for codes in build_sets()]
 
 
 def build_system_instruction(pseudo: str, phrases: list[str]) -> str:

@@ -325,37 +325,19 @@ export default function OnboardingScreen({ onCompleted }) {
             {startError}
           </p>
         )}
-        {/* Seul bouton de lancement du test désormais — lance l'algorithme
-            adaptatif (4-6 questions, cf. backend/app/quicktest_exam.py),
-            l'ancien algorithme (7 questions fixes) n'est plus proposé ici
-            — cf. demande explicite du user. Couleur vive (exam-tile green,
-            pas pastel) : c'est maintenant LE bouton principal. */}
+        {/* Les boutons "Commencez le test" (algorithme adaptatif quick-test)
+            et "QCM" ont été retirés de cet écran — cf. demande explicite du
+            user. Leurs structures sous-jacentes (handleStart("quick"),
+            route /dev/qcm-niveau, backend/app/quicktest_exam.py) restent
+            intactes, au cas où il faille les réafficher plus tard. */}
+        {/* Outil de conception (pas encore le vrai algorithme de niveau) :
+            lance le test conversationnel (Gemini Live, 11 exercices de
+            traduction notés) — cf. demande explicite du user. Couleur vive
+            (exam-tile green, pas pastel) : c'est désormais LE bouton
+            principal de cet écran. */}
         <button
           type="button"
           className="exam-tile green"
-          style={{ cursor: "pointer" }}
-          disabled={starting || skipping}
-          onClick={() => handleStart("quick")}
-        >
-          Commencez le test
-        </button>
-        {/* Outil de conception (pas encore le vrai algorithme de niveau) :
-            lance le QCM de traduction chronométré, cf. demande explicite du
-            user. Ne modifie pas l'encadré au-dessus. */}
-        <button
-          type="button"
-          className="exam-tile green pastel"
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/dev/qcm-niveau")}
-        >
-          QCM
-        </button>
-        {/* Outil de conception (pas encore le vrai algorithme de niveau) :
-            lance le test conversationnel (Gemini Live, 22 exercices de
-            traduction notés) — cf. demande explicite du user. */}
-        <button
-          type="button"
-          className="exam-tile green pastel"
           style={{ cursor: "pointer" }}
           onClick={() => navigate("/dev/conversation-eval")}
         >

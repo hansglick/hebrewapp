@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { conversationEvalWebSocketUrl } from "../../api/conversationEval";
+import { useNavigate } from "react-router-dom";
+import { applyConversationEvalPlacement, conversationEvalWebSocketUrl } from "../../api/conversationEval";
+import { getIdentity } from "../../api/identity";
+import { MaskIcon } from "../../components/MaskIcon";
 import { MicrophoneIcon } from "../../components/MicrophoneIcon";
 import { useWakeLock } from "../../hooks/useWakeLock";
+import { displayChapitreLabel } from "../../utils/chapitreDisplay";
+import { displayLessonNumber } from "../../utils/lessonDisplay";
 import "../screens.css";
 
 // Troisième test d'évaluation de niveau : conversation en direct (même
@@ -44,6 +49,134 @@ function base64ToInt16(b64) {
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
   return new Int16Array(bytes.buffer);
+}
+
+// --- Algorithme de placement (outil de conception, cf. demande explicite
+// du user) : cherche, parmi les 11 scores obtenus (les questions jamais
+// posées faute d'arrêt anticipé comptent comme score=1), la découpe entre
+// un groupe "gauche" (sets déjà maîtrisés) et un groupe "droite" (sets pas
+// encore atteints) qui égalise au mieux une estimation de maîtrise à
+// gauche et une estimation d'échec à droite — chacune modélisée par une loi
+// Beta dont on prend la médiane (x tel que P(X<x)=50%), calculée ici par
+// bissection sur la fonction bêta incomplète régularisée (implémentation
+// classique de Numerical Recipes : pas de lib de stats native en JS).
+
+const SETS_COUNT = 11;
+
+function logGamma(x) {
+  const cof = [
+    76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2,
+    -0.5395239384953e-5,
+  ];
+  let y = x;
+  let tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  let ser = 1.000000000190015;
+  for (let j = 0; j < 6; j++) {
+    y += 1;
+    ser += cof[j] / y;
+  }
+  return -tmp + Math.log((2.5066282746310005 * ser) / x);
+}
+
+function betaContinuedFraction(x, a, b) {
+  const MAXIT = 200;
+  const EPS = 3e-14;
+  const FPMIN = 1e-300;
+  const qab = a + b;
+  const qap = a + 1;
+  const qam = a - 1;
+  let c = 1;
+  let d = 1 - (qab * x) / qap;
+  if (Math.abs(d) < FPMIN) d = FPMIN;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= MAXIT; m++) {
+    const m2 = 2 * m;
+    let aa = (m * (b - m) * x) / ((qam + m2) * (a + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    h *= d * c;
+    aa = (-(a + m) * (qab + m) * x) / ((a + m2) * (qap + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < EPS) break;
+  }
+  return h;
+}
+
+function regularizedIncompleteBeta(x, a, b) {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const bt = Math.exp(logGamma(a + b) - logGamma(a) - logGamma(b) + a * Math.log(x) + b * Math.log(1 - x));
+  if (x < (a + 1) / (a + b + 2)) {
+    return (bt * betaContinuedFraction(x, a, b)) / a;
+  }
+  return 1 - (bt * betaContinuedFraction(1 - x, b, a)) / b;
+}
+
+// Médiane de Beta(a,b) par bissection sur betainc(x,a,b) = 0.5.
+function betaMedian(a, b) {
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 100; i++) {
+    const mid = (lo + hi) / 2;
+    if (regularizedIncompleteBeta(mid, a, b) < 0.5) lo = mid;
+    else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+function estimateLevelPlacement(rawScores) {
+  const padded = rawScores.slice(0, SETS_COUNT);
+  while (padded.length < SETS_COUNT) padded.push(1);
+
+  let best = null;
+  for (let k = 1; k <= SETS_COUNT - 1; k++) {
+    const left = padded.slice(0, k);
+    const right = padded.slice(k);
+
+    let alphaLeft = 0;
+    for (const s of left) {
+      if (s === 3) alphaLeft += 1;
+      else if (s === 2) alphaLeft += 0.33;
+    }
+    let betaLeft = left.length - alphaLeft;
+    if (alphaLeft === 0 || betaLeft === 0) {
+      alphaLeft += 0.1;
+      betaLeft += 0.1;
+    }
+
+    let alphaRight = 0;
+    for (const s of right) {
+      if (s === 1) alphaRight += 1;
+      else if (s === 2) alphaRight += 0.66;
+    }
+    let betaRight = right.length - alphaRight;
+    if (alphaRight === 0 || betaRight === 0) {
+      alphaRight += 0.1;
+      betaRight += 0.1;
+    }
+
+    const medianLeft = betaMedian(alphaLeft, betaLeft);
+    const medianRight = betaMedian(alphaRight, betaRight);
+    const diff = Math.abs(medianRight - medianLeft);
+
+    // `<` strict (pas `<=`) : en cas d'égalité, garde le plus petit k déjà
+    // trouvé — cf. demande explicite du user.
+    if (best === null || diff < best.diff) {
+      best = { k, alphaLeft, alphaRight, medianLeft, medianRight, diff };
+    }
+  }
+  return best;
 }
 
 // Plus long que RevisionScreen (5 min) : jusqu'à 11 exercices + 3 questions
@@ -115,6 +248,8 @@ function ScoresChart({ scores }) {
 }
 
 export default function ConversationTestScreen() {
+  const navigate = useNavigate();
+  const pseudo = getIdentity()?.pseudo ?? "";
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState("");
   const [aiBuffer, setAiBuffer] = useState("");
@@ -122,8 +257,10 @@ export default function ConversationTestScreen() {
   const [history, setHistory] = useState([]); // [{speaker, text, ts}]
   const [scores, setScores] = useState([]);
   const [ended, setEnded] = useState(false);
+  const [placement, setPlacement] = useState(null);
 
   const aiBufferRef = useRef("");
+  const setStartsRef = useRef([]);
 
   const wsRef = useRef(null);
   const micContextRef = useRef(null);
@@ -231,10 +368,23 @@ export default function ConversationTestScreen() {
         }
       } else if (msg.type === "user_transcript_final") {
         addToHistory("user", msg.text, msg.ts);
+      } else if (msg.type === "set_starts") {
+        setStartsRef.current = msg.codes;
       } else if (msg.type === "score") {
         setScores((prev) => [...prev, msg.score]);
       } else if (msg.type === "conversation_ended") {
         setScores(msg.scores);
+        // Règle en dur (cas particulier signalé par le user : un étudiant
+        // qui cartonne partout se voyait renvoyé au tout début par
+        // l'algorithme de découpe, faute de variation entre les sets) —
+        // court-circuite la découpe Beta au-delà de 8 réponses notées 3.
+        const countThrees = msg.scores.filter((s) => s === 3).length;
+        if (countThrees > 8) {
+          setPlacement({ override: true, startLesson: setStartsRef.current[8] });
+        } else {
+          const best = estimateLevelPlacement(msg.scores);
+          setPlacement({ ...best, startLesson: setStartsRef.current[best.k - 1] });
+        }
         intentionalStopRef.current = true;
         setEnded(true);
         stopMediaOnly();
@@ -280,13 +430,129 @@ export default function ConversationTestScreen() {
   }
 
   if (ended) {
+    const startLesson = placement?.startLesson;
+    const chapId = startLesson ? startLesson.split(".")[0] : null;
+    const levelLabel = chapId ? `${displayChapitreLabel(chapId)}.${displayLessonNumber(startLesson)}` : "?";
+
+    async function handleStartAdventure() {
+      if (startLesson) {
+        try {
+          await applyConversationEvalPlacement(startLesson);
+        } catch {
+          // best-effort : on navigue quand même vers l'accueil même si
+          // l'application du niveau échoue côté serveur.
+        }
+      }
+      navigate("/");
+    }
+
     return (
       <section className="screen">
-        <h1 style={{ fontSize: "1.4em" }}>Résultats du test conversationnel</h1>
-        <p className="muted" style={{ fontSize: "0.85em" }}>
+        <h1 style={{ fontSize: "1.4em", textAlign: "center" }}>
+          {pseudo}, tu es de niveau <strong>{levelLabel}</strong>
+        </h1>
+
+        <div className="card" style={{ textAlign: "left", fontSize: "0.85em" }}>
+          <p style={{ margin: 0 }}>
+            D'après les résultats du test, tu serais de niveau <strong>{levelLabel}</strong>. Commence dès
+            à présent à apprendre l'hébreu. À chaque leçon, ton objectif est de réussir l'examen afin de
+            débloquer la leçon suivante. Pour réussir ce challenge, tu peux explorer les 4 options qui
+            s'offrent à toi dans ton écran d'accueil :
+          </p>
+
+          <ul style={{ margin: "12px 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <MaskIcon src="/openbook.png" size={20} style={{ marginTop: 2 }} />
+              <span>
+                <strong>Apprendre : </strong>
+                Apprends l'hébreu à travers un texte, puis retrouve les mots de vocabulaire, les tournures
+                de phrases et même quelques informations culturelles sur Israël pour te détendre.
+              </span>
+            </li>
+            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <MaskIcon src="/speak.png" size={20} style={{ marginTop: 2 }} />
+              <span>
+                <strong>Parler : </strong>
+                Immerge-toi réellement dans la langue hébreu à travers quelques exercices et autres jeux
+                de rôle pour te mettre en situation.
+              </span>
+            </li>
+            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <MaskIcon src="/revision.png" size={20} style={{ marginTop: 2 }} />
+              <span>
+                <strong>Renforcer : </strong>
+                Révise le vocabulaire et la conjugaison des nouveaux verbes de la leçon.
+              </span>
+            </li>
+            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <MaskIcon src="/examhat.png" size={20} style={{ marginTop: 2 }} />
+              <span>
+                <strong>Examen blanc : </strong>
+                Entraîne-toi à passer l'examen à travers des exercices de même niveau d'exigeance que
+                l'examen final.
+              </span>
+            </li>
+            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <MaskIcon src="/examhat.png" size={20} style={{ marginTop: 2 }} />
+              <span>
+                <strong>Examen : </strong>
+                Le moment tant redouté. Evalue ta progression en acceptant ce challenge qui passera en
+                revue tout ce que tu es censé avoir appris pendant ta leçon. L'examen se décompose en deux
+                formats : le format écrit et le format oral. Il te faut réussir les deux pour débloquer la
+                leçon suivante. Si tel est le cas, tu recevras des shekels que tu pourras échanger contre
+                des lots de cartes à collectioner. Ces cartes représentent des figures incontournables de
+                la renaissance de la langue hébreu et de l'état d'Israël.
+              </span>
+            </li>
+          </ul>
+
+          <p style={{ margin: 0 }}>
+            La route est longue avant d'atteindre le niveau "Sabra". Mais en persévérant, tout arrive !
+            בהצלחה {pseudo}!
+          </p>
+        </div>
+
+        <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={handleStartAdventure}>
+          Commencer l'aventure!
+        </button>
+
+        {/* Vérification temporaire de l'algorithme de placement — cf.
+            demande explicite du user ("par souci de contrôle"). */}
+        <p className="muted" style={{ fontSize: "0.85em", marginTop: 24 }}>
           {scores.length} question{scores.length > 1 ? "s" : ""} évaluée{scores.length > 1 ? "s" : ""}.
         </p>
         <ScoresChart scores={scores} />
+
+        {placement && placement.override && (
+          <div className="card" style={{ marginTop: 16, textAlign: "left", fontSize: "0.8em" }}>
+            <p className="muted" style={{ margin: 0 }}>
+              Placement (contrôle temporaire) — règle spéciale : plus de 8 réponses notées 3, départ forcé
+              au set n°9.
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              1ère leçon du set n°9 : {placement.startLesson ?? "?"}
+            </p>
+          </div>
+        )}
+
+        {placement && !placement.override && (
+          <div className="card" style={{ marginTop: 16, textAlign: "left", fontSize: "0.8em" }}>
+            <p className="muted" style={{ margin: 0 }}>
+              Placement (contrôle temporaire) — découpe retenue : k = {placement.k}
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              Somme pondérée gauche : {placement.alphaLeft.toFixed(2)} · droite :{" "}
+              {placement.alphaRight.toFixed(2)}
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              Médiane Beta gauche (x, P(X&lt;x)=50%) : {placement.medianLeft.toFixed(3)} · droite :{" "}
+              {placement.medianRight.toFixed(3)}
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              1ère leçon du dernier set à gauche : {placement.startLesson ?? "?"}
+            </p>
+          </div>
+        )}
       </section>
     );
   }

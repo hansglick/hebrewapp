@@ -4,11 +4,14 @@ import io
 import time
 import wave
 
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from google.genai import types
+from pydantic import BaseModel
 
 from app import conversation_eval
-from app.auth import get_user_id
+from app.auth import get_current_user_id, get_user_id
+from app.database import DEFAULT_LEVEL, set_user_level
+from app.lesson_order import all_lesson_codes_in_order
 from app.openai_client import extract_verbatim
 
 router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
@@ -21,6 +24,29 @@ MIN_TURN_BYTES = 9600
 # app.conversation_eval.draw_phrases_for_test.
 TOTAL_QUESTIONS = 11
 STOP_STREAK = 3
+
+
+class ApplyPlacementRequest(BaseModel):
+    start_lesson: str
+
+
+@router.post("/apply-placement")
+def apply_placement(payload: ApplyPlacementRequest, user_id: int = Depends(get_current_user_id)):
+    """Applique réellement le niveau estimé par l'algorithme de placement
+    (cf. ConversationTestScreen.jsx) — première écriture en base de tout ce
+    test conversationnel, cf. demande explicite du user ("le user arriverait
+    sur la page d'accueil correspondant à son niveau"). `level` = la leçon
+    juste avant `start_lesson` dans l'ordre global du cours (aucune marge de
+    sécurité supplémentaire, contrairement à onboarding_exam.niveau_from_final_set),
+    pour que reference_lesson(level) redonne exactement `start_lesson`."""
+    codes = all_lesson_codes_in_order()
+    if payload.start_lesson not in codes:
+        level = DEFAULT_LEVEL
+    else:
+        idx = codes.index(payload.start_lesson)
+        level = codes[idx - 1] if idx > 0 else DEFAULT_LEVEL
+    set_user_level(user_id, level)
+    return {"level": level}
 
 
 def _pcm_to_wav_bytes(pcm_bytes: bytes, sample_rate: int = 16000) -> bytes:
@@ -47,6 +73,11 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
 
     phrases = conversation_eval.draw_phrases_for_test()
     instruction = conversation_eval.build_system_instruction(pseudo, phrases)
+
+    # Donnée structurelle (pas un score) : sert au frontend à retrouver la
+    # leçon de départ recommandée une fois la découpe optimale déterminée
+    # côté client, cf. demande explicite du user.
+    await websocket.send_json({"type": "set_starts", "codes": conversation_eval.first_lesson_per_set()})
 
     send_lock = asyncio.Lock()
 
