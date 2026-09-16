@@ -48,6 +48,12 @@ const PREVIEWS = [
     description:
       "Variante expérimentale du test conversationnel : l'IA choisit elle-même les concepts à éprouver, niveau de difficulté après niveau — amené à remplacer le premier test si ça fonctionne bien.",
   },
+  {
+    to: "/dev/phrase-curation",
+    label: "Curation des phrases",
+    description:
+      "Parcourir les phrases fr/hébreu de chaque set et sélectionner celles à garder pour le test conversationnel (élimine les phrases 'poubelles').",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec

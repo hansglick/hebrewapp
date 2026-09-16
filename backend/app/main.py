@@ -23,6 +23,7 @@ from app.routers import (
     niveau,
     notifications,
     onboarding,
+    phrase_curation,
     practice,
     qcm,
     revision,
@@ -57,6 +58,7 @@ app.include_router(concept.router)
 app.include_router(qcm.router)
 app.include_router(conversation_eval.router)
 app.include_router(conversation_challenger.router)
+app.include_router(phrase_curation.router)
 
 app.add_middleware(
     CORSMiddleware,

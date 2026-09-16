@@ -281,7 +281,6 @@ export default function ConversationTestScreen() {
   const [status, setStatus] = useState("");
   const [aiBuffer, setAiBuffer] = useState("");
   const [lastCompletedAi, setLastCompletedAi] = useState("");
-  const [history, setHistory] = useState([]); // [{speaker, text, ts}]
   // Échauffement noté séparément, jamais compté dans le niveau — effacé dès
   // que le vrai test démarre (cf. demande explicite du user). Historique du
   // vrai test : [{set, score}, ...], juste pour vérification en direct.
@@ -307,10 +306,6 @@ export default function ConversationTestScreen() {
   useEffect(() => stop, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useWakeLock(running);
-
-  function addToHistory(speaker, text, ts) {
-    setHistory((prev) => [...prev, { speaker, text, ts }].sort((a, b) => a.ts - b.ts));
-  }
 
   function playChunk(int16) {
     if (!playbackContextRef.current) {
@@ -395,11 +390,8 @@ export default function ConversationTestScreen() {
         aiBufferRef.current = "";
         setAiBuffer("");
         if (finished) {
-          addToHistory("ai", finished, msg.ts);
           setLastCompletedAi(finished);
         }
-      } else if (msg.type === "user_transcript_final") {
-        addToHistory("user", msg.text, msg.ts);
       } else if (msg.type === "set_starts") {
         setStartsRef.current = msg.codes;
       } else if (msg.type === "warmup_score") {
@@ -419,7 +411,6 @@ export default function ConversationTestScreen() {
       } else if (msg.type === "error") {
         serverErrorRef.current = true;
         setStatus("Erreur : " + msg.message);
-        addToHistory("error", msg.message, Date.now() / 1000);
       }
     };
 
@@ -658,33 +649,6 @@ export default function ConversationTestScreen() {
           }}
         >
           {renderWithAsteriskBold(aiBuffer || lastCompletedAi || "…")}
-        </div>
-
-        <div
-          style={{
-            marginTop: 12,
-            border: "1px solid var(--cardBorder)",
-            background: "var(--bg)",
-            borderRadius: 8,
-            padding: "12px 14px",
-            minHeight: 60,
-            fontSize: "0.85em",
-            color: "var(--textSecondary)",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {history.map((entry, i) => (
-            <div
-              key={i}
-              style={{
-                textAlign: entry.speaker === "user" ? "right" : "left",
-                direction: entry.speaker === "user" ? "rtl" : "ltr",
-              }}
-            >
-              {entry.speaker === "user" ? "🧑" : entry.speaker === "ai" ? "🤖" : "⚠️"}{" "}
-              {entry.speaker === "ai" ? renderWithAsteriskBold(entry.text) : entry.text}
-            </div>
-          ))}
         </div>
       </div>
     </section>
