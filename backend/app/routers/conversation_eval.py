@@ -267,14 +267,39 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # explicite du user).
                             for score in warmup_new:
                                 warmup_scores.append(score)
+                                idx = len(warmup_scores)
+                                french = (
+                                    conversation_eval.WARMUP_PHRASES[idx - 1]
+                                    if idx <= len(conversation_eval.WARMUP_PHRASES)
+                                    else ""
+                                )
                                 await safe_send(
-                                    {"type": "warmup_score", "score": score, "index": len(warmup_scores)}
+                                    {
+                                        "type": "warmup_score",
+                                        "score": score,
+                                        "index": idx,
+                                        "french": french,
+                                    }
                                 )
 
                             # Scores du vrai test : pilotent le set courant et
                             # la condition d'arrêt.
                             for score in real_new:
-                                await safe_send({"type": "score", "score": score, "set": current_set})
+                                # `pending_phrase` porte la phrase servie pour
+                                # LA question qu'on note ici — capturée avant
+                                # la remise à None juste en dessous (cf.
+                                # demande explicite du user, affichage du
+                                # détail question par question côté
+                                # frontend).
+                                answered_french = pending_phrase["french"] if pending_phrase else ""
+                                await safe_send(
+                                    {
+                                        "type": "score",
+                                        "score": score,
+                                        "set": current_set,
+                                        "french": answered_french,
+                                    }
+                                )
                                 # La question qui vient d'être notée est
                                 # terminée : le prochain `next_question`
                                 # devra vraiment piocher une nouvelle phrase.

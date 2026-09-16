@@ -22,6 +22,17 @@ from app.onboarding_exam import build_sets
 # l'étudiant parle en premier (même raison que app.revision.AMORCE).
 AMORCE = "Bonjour, je suis prêt à commencer le test."
 
+# Les 3 phrases d'échauffement sont fixes (cf. SYSTEM_INSTRUCTION_TEMPLATE
+# ci-dessous, section "Echauffement") — dupliquées ici (même ordre) pour que
+# le router puisse renvoyer la phrase française au frontend en même temps
+# que le score (cf. demande explicite du user, affichage du détail
+# question par question), sans avoir à la faire remonter depuis le modèle.
+WARMUP_PHRASES = [
+    "J'aime mangé au restaurant",
+    "Nous marchons en direction de la synagogue",
+    "Tu veux un peu de humus?",
+]
+
 REPORT_WARMUP_EVALUATION_TOOL = types.FunctionDeclaration(
     name="report_warmup_evaluation",
     description=(

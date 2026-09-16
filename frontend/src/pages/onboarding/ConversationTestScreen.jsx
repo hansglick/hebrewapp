@@ -281,10 +281,11 @@ export default function ConversationTestScreen() {
   const [status, setStatus] = useState("");
   const [aiBuffer, setAiBuffer] = useState("");
   const [lastCompletedAi, setLastCompletedAi] = useState("");
-  // Échauffement noté séparément, jamais compté dans le niveau — effacé dès
-  // que le vrai test démarre (cf. demande explicite du user). Historique du
-  // vrai test : [{set, score}, ...], juste pour vérification en direct.
+  // Échauffement noté séparément, jamais compté dans le niveau, mais
+  // conservé (pas effacé) et affiché avec le vrai test, séparé par une
+  // barre — cf. demande explicite du user. [{french, score}, ...].
   const [warmupScores, setWarmupScores] = useState([]);
+  // Historique du vrai test : [{set, french, score}, ...].
   const [realHistory, setRealHistory] = useState([]);
   const [currentSet, setCurrentSet] = useState(1);
   const [ended, setEnded] = useState(false);
@@ -395,14 +396,11 @@ export default function ConversationTestScreen() {
       } else if (msg.type === "set_starts") {
         setStartsRef.current = msg.codes;
       } else if (msg.type === "warmup_score") {
-        setWarmupScores((prev) => [...prev, msg.score]);
+        setWarmupScores((prev) => [...prev, { french: msg.french, score: msg.score }]);
       } else if (msg.type === "set") {
         setCurrentSet(msg.set);
       } else if (msg.type === "score") {
-        // Efface le panneau d'échauffement dès que le vrai test commence à
-        // noter des réponses — cf. demande explicite du user.
-        setWarmupScores([]);
-        setRealHistory((prev) => [...prev, { set: msg.set, score: msg.score }]);
+        setRealHistory((prev) => [...prev, { set: msg.set, french: msg.french, score: msg.score }]);
       } else if (msg.type === "conversation_ended") {
         setFinalLevel(msg.level);
         intentionalStopRef.current = true;
@@ -562,30 +560,6 @@ export default function ConversationTestScreen() {
 
   return (
     <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
-      {warmupScores.length > 0 && (
-        <div
-          style={{
-            marginBottom: 4,
-            fontSize: "0.75em",
-            color: "var(--textSecondary)",
-            textAlign: "center",
-          }}
-        >
-          Échauffement, non compté (contrôle temporaire) : {warmupScores.map((s, i) => `Q${i + 1}=${s}`).join(" · ")}
-        </div>
-      )}
-      {realHistory.length > 0 && (
-        <div
-          style={{
-            marginBottom: 4,
-            fontSize: "0.75em",
-            color: "var(--textSecondary)",
-            textAlign: "center",
-          }}
-        >
-          Historique (contrôle temporaire) : {realHistory.map((h) => `S${h.set}=${h.score}`).join(" · ")}
-        </div>
-      )}
       <div
         style={{
           marginBottom: 8,
@@ -649,6 +623,45 @@ export default function ConversationTestScreen() {
           }}
         >
           {renderWithAsteriskBold(aiBuffer || lastCompletedAi || "…")}
+        </div>
+
+        {/* Reprend l'espace laissé par le verbatim intégral retiré (cf.
+            demande explicite du user) : détail question par question
+            (échauffement puis vrai test, séparés par une barre), au lieu du
+            texte brut de toute la conversation. */}
+        <div
+          style={{
+            marginTop: 12,
+            border: "1px solid var(--cardBorder)",
+            background: "var(--bg)",
+            borderRadius: 8,
+            padding: "12px 14px",
+            minHeight: 60,
+            fontSize: "0.85em",
+            color: "var(--textSecondary)",
+            textAlign: "left",
+            direction: "ltr",
+          }}
+        >
+          {warmupScores.length === 0 && realHistory.length === 0 ? (
+            <span className="muted">…</span>
+          ) : (
+            <>
+              {warmupScores.map((entry, i) => (
+                <div key={`w-${i}`}>
+                  • Set 0 — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
+                </div>
+              ))}
+              {warmupScores.length > 0 && realHistory.length > 0 && (
+                <div style={{ textAlign: "center" }}>===================================</div>
+              )}
+              {realHistory.map((entry, i) => (
+                <div key={`r-${i}`}>
+                  • Set {entry.set} — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </section>
