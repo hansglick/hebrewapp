@@ -137,6 +137,14 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             final_level = None
             last_sent_set = None
             ended = False
+            # Distinct de `ended` : sert à n'envoyer `conversation_ended`
+            # qu'UNE fois, dès que la fin est détectée (immédiatement, pas
+            # seulement au turn_complete de l'au revoir de l'IA) — cf. bug
+            # rapporté par le user : si l'étudiant clique sur le micro pour
+            # "raccrocher" (comme l'IA le lui demande) avant que son tour
+            # d'au revoir soit terminé, la connexion se fermait côté client
+            # sans jamais avoir reçu le niveau final.
+            ended_notified = False
             # Phrase déjà servie pour la question EN COURS, tant qu'elle n'a
             # pas encore été notée — cf. bug rapporté par le user : sans ça,
             # un double appel à `next_question` (le modèle hésitant/
@@ -166,7 +174,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             async def from_gemini():
                 nonlocal user_buffer, user_turn_start_ts
                 nonlocal current_set, mastered_level, threes_in_set, consecutive_ones, final_level, last_sent_set, ended
-                nonlocal pending_phrase
+                nonlocal pending_phrase, ended_notified
                 flushed_this_turn = False
                 ai_turn_start_ts = None
                 while True:
@@ -180,7 +188,11 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # déjà rencontré. On termine proprement avec le
                             # dernier niveau connu.
                             ended = True
-                            await safe_send({"type": "conversation_ended", "level": final_level or mastered_level})
+                            if not ended_notified:
+                                ended_notified = True
+                                await safe_send(
+                                    {"type": "conversation_ended", "level": final_level or mastered_level}
+                                )
                             try:
                                 await websocket.close()
                             except Exception:
@@ -278,6 +290,16 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                         final_level = mastered_level
                                         ended = True
 
+                            # Envoie le niveau final DÈS que la fin est
+                            # détectée, sans attendre que le tour d'au revoir
+                            # de l'IA se termine — cf. bug rapporté par le
+                            # user (l'étudiant cliquant sur le micro pour
+                            # "raccrocher" fermait la connexion avant de
+                            # jamais recevoir ce message).
+                            if ended and not ended_notified:
+                                ended_notified = True
+                                await safe_send({"type": "conversation_ended", "level": final_level})
+
                             # `next_question` : le backend garde sa propre
                             # vérité (current_set) plutôt que de faire
                             # confiance aux arguments du modèle — cf. demande
@@ -324,19 +346,22 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 flushed_this_turn = False
                                 ai_turn_start_ts = None
                                 if ended:
-                                    # Laisse le tour d'au revoir de l'IA (déjà
+                                    # Le niveau a déjà été envoyé dès sa
+                                    # détection (cf. plus haut) — on laisse
+                                    # juste le tour d'au revoir de l'IA (déjà
                                     # déclenché par sa propre règle 7, aucun
-                                    # message silencieux injecté ici — cf.
-                                    # demande explicite du user) se terminer
-                                    # complètement avant de couper. Fermer la
-                                    # socket ICI (pas seulement dans le
-                                    # finally englobant) : sinon from_browser
-                                    # reste bloqué sur son receive_json() en
-                                    # attente, empêchant le TaskGroup de
-                                    # jamais se terminer.
-                                    await safe_send(
-                                        {"type": "conversation_ended", "level": final_level or mastered_level}
-                                    )
+                                    # message silencieux injecté ici) se
+                                    # terminer complètement avant de couper.
+                                    # Fermer la socket ICI (pas seulement
+                                    # dans le finally englobant) : sinon
+                                    # from_browser reste bloqué sur son
+                                    # receive_json() en attente, empêchant le
+                                    # TaskGroup de jamais se terminer.
+                                    if not ended_notified:
+                                        ended_notified = True
+                                        await safe_send(
+                                            {"type": "conversation_ended", "level": final_level or mastered_level}
+                                        )
                                     try:
                                         await websocket.close()
                                     except Exception:
