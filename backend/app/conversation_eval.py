@@ -109,9 +109,9 @@ Avant de passer à la question suivante, tu devras évaluer la réponse de l'ét
 Si la réponse de l'étudiant réunit l'ensemble des critères suivants :
 - Constituée uniquement ou presque de mots hébreux
 - Dotée d'une structuration parfaite
-- Dont le sens restitue correctement le sens de la phrase en français
-- Dont la prononciation en hébreu est de qualité acceptable
-- Linguistiquement correcte, i.e. ne comprend aucune des erreurs suivantes :
+- Dont le sens restitue parfaitement et fidèlement le sens de la phrase en français (dimension temporelle équivalente entre les deux phrases, les mêmes pronoms entre les deux phrases, vocabulaire exprimant des notions et concepts très proches entre les deux phrases)
+- Dont la prononciation en hébreu est de très bonne qualité
+- Linguistiquement parfaite, i.e. ne comprend AUCUNE des erreurs suivantes :
   - préposition manquante
   - préposition incorrecte
   - accord de genre incorrecte

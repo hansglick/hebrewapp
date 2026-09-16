@@ -129,6 +129,15 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             final_level = None
             last_sent_set = None
             ended = False
+            # Phrase déjà servie pour la question EN COURS, tant qu'elle n'a
+            # pas encore été notée — cf. bug rapporté par le user : sans ça,
+            # un double appel à `next_question` (le modèle hésitant/
+            # rappelant l'outil par erreur) piochait deux phrases
+            # différentes, et le modèle se corrigeait à voix haute en plein
+            # énoncé. Remise à None dès qu'un score réel arrive (la question
+            # est alors terminée, la prochaine devra être une VRAIE
+            # nouvelle pioche).
+            pending_phrase: dict | None = None
 
             async def from_browser():
                 nonlocal user_buffer, user_turn_start_ts
@@ -149,6 +158,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             async def from_gemini():
                 nonlocal user_buffer, user_turn_start_ts
                 nonlocal current_set, mastered_level, consecutive_ones, final_level, last_sent_set, ended
+                nonlocal pending_phrase
                 flushed_this_turn = False
                 ai_turn_start_ts = None
                 while True:
@@ -234,6 +244,10 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # la condition d'arrêt.
                             for score in real_new:
                                 await safe_send({"type": "score", "score": score, "set": current_set})
+                                # La question qui vient d'être notée est
+                                # terminée : le prochain `next_question`
+                                # devra vraiment piocher une nouvelle phrase.
+                                pending_phrase = None
                                 if score == 3:
                                     mastered_level = current_set
                                     consecutive_ones = 0
@@ -257,8 +271,15 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # lot (réponse best-effort, la conversation se
                             # termine juste après).
                             for fc in next_question_calls:
-                                pool = remaining_by_set.get(current_set) or []
-                                phrase = pool.pop() if pool else None
+                                # Idempotent : tant qu'aucun score réel n'est
+                                # arrivé depuis, un nouvel appel renvoie la
+                                # MÊME phrase déjà servie, jamais une
+                                # nouvelle pioche — cf. bug rapporté par le
+                                # user.
+                                if pending_phrase is None:
+                                    pool = remaining_by_set.get(current_set) or []
+                                    pending_phrase = pool.pop() if pool else None
+                                phrase = pending_phrase
                                 await session.send_tool_response(
                                     function_responses=types.FunctionResponse(
                                         id=fc.id,
