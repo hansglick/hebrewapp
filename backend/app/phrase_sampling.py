@@ -45,10 +45,23 @@ def phrases_by_set() -> dict[int, list[dict]]:
     de piocher une phrase à la fois, au fil de la conversation, plutôt que
     de pré-tirer un nombre fixe de phrases une bonne fois pour toutes (cf.
     sample_hebrew_sentences_per_set ci-dessus, utilisé par le Test
-    Challenger)."""
+    Challenger).
+
+    Dédupliqué par texte français : plusieurs leçons peuvent contenir la
+    même phrase française (dataset item_phrase.json), ce qui sinon permet de
+    tirer littéralement la même question deux fois au sein d'un même set."""
     sets = build_sets()
     phrases_data = get_dataset("phrase")
-    return {
-        set_index: [phrase for code in lesson_codes for phrase in phrases_data.get(code, [])]
-        for set_index, lesson_codes in enumerate(sets, start=1)
-    }
+    result = {}
+    for set_index, lesson_codes in enumerate(sets, start=1):
+        seen_french = set()
+        pool = []
+        for code in lesson_codes:
+            for phrase in phrases_data.get(code, []):
+                french = phrase["french"]
+                if french in seen_french:
+                    continue
+                seen_french.add(french)
+                pool.append(phrase)
+        result[set_index] = pool
+    return result
