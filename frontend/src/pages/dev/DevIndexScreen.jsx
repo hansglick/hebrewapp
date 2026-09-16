@@ -42,6 +42,12 @@ const PREVIEWS = [
     label: "Test conversationnel niveau",
     description: "Conversation en direct avec un professeur IA, 11 exercices de traduction notés — outil de conception de l'algorithme de niveau.",
   },
+  {
+    to: "/dev/conversation-challenger",
+    label: "Test Challenger",
+    description:
+      "Variante expérimentale du test conversationnel : l'IA choisit elle-même les concepts à éprouver, niveau de difficulté après niveau — amené à remplacer le premier test si ça fonctionne bien.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec

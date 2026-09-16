@@ -12,6 +12,7 @@ from app.routers import (
     chapters,
     concept,
     content,
+    conversation_challenger,
     conversation_eval,
     curiosites,
     evaluations,
@@ -55,6 +56,7 @@ app.include_router(revision.router)
 app.include_router(concept.router)
 app.include_router(qcm.router)
 app.include_router(conversation_eval.router)
+app.include_router(conversation_challenger.router)
 
 app.add_middleware(
     CORSMiddleware,

@@ -66,6 +66,7 @@ import LotteriePreviewScreen from "./pages/dev/LotteriePreviewScreen";
 import SignInPreviewScreen from "./pages/dev/SignInPreviewScreen";
 import QcmNiveauScreen from "./pages/onboarding/QcmNiveauScreen";
 import ConversationTestScreen from "./pages/onboarding/ConversationTestScreen";
+import ConversationChallengerScreen from "./pages/onboarding/ConversationChallengerScreen";
 import JeuChoiceScreen from "./pages/jeu/JeuChoiceScreen";
 import RegleDuJeuScreen from "./pages/jeu/RegleDuJeuScreen";
 import LotterieScreen from "./pages/jeu/LotterieScreen";
@@ -141,6 +142,7 @@ function App() {
         <Route path="dev/signin-preview" element={<SignInPreviewScreen />} />
         <Route path="dev/qcm-niveau" element={<QcmNiveauScreen />} />
         <Route path="dev/conversation-eval" element={<ConversationTestScreen />} />
+        <Route path="dev/conversation-challenger" element={<ConversationChallengerScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
         <Route path="examen/sauter" element={<ExamenSauterScreen />} />
         <Route path="examen/sauter/:chapId" element={<ExamenSauterChapitreScreen />} />
