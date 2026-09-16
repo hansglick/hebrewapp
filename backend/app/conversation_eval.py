@@ -149,7 +149,7 @@ ALORS :
 
 `score = 1`
 
-En écoutant la phrase de l'étudiant, essaie d'estimer la langue utilisée. Si tu ne reconnais pas de l'hébreu, alors `score = 1`
+En écoutant la phrase de l'étudiant, infère la langue utilisée. Si tu ne reconnais pas de l'hébreu, alors `score = 1`
 
 ---
 
@@ -170,7 +170,10 @@ Même si tout le reste de la phrase est correct :
 
 `score = 1`
 
-En écoutant la phrase de l'étudiant, extrait les pronoms/nom/mot (sujet de la phrase) propres utilisés. Si ces pronoms/noms propres/mot ne trouvent pas leur traduction exacte dans la phrase cible, alors `score = 1`
+En écoutant la phrase de l'étudiant, extrait les pronoms utilisés. Si ces pronoms ne trouvent pas leur traduction exacte dans la phrase cible, alors `score = 1`
+
+En écoutant la phrase de l'étudiant, extrait les noms propres utilisés. Si ces noms propres ne se retrouvent pas dans la phrase cible, alors `score = 1`
+
 ---
 
 ### 3. Fidélité temporelle
@@ -210,7 +213,7 @@ UNE SEULE erreur de conjugaison entraîne :
 
 `score = 1`
 
-En écoutant la phrase de l'étudiant, extrait le combo (pronom/nom propre/mot + verbe conjugué). Si tu remarques une incohérence, i.e. la conjugaison ne correspond pas au pronom/nom propre/mot utilisé, alors `score = 1`
+En écoutant la phrase de l'étudiant, extrait le combo (pronom/nom propre/sujet + verbe conjugué). Si tu remarques une incohérence, i.e. la conjugaison est ne correspond pas au genre ou au nombre (singulier ou pluriel) du pronom / nom propre / sujet, alors `score = 1`
 
 ---
 
@@ -249,7 +252,11 @@ UNE SEULE erreur de ce type entraîne :
 
 `score = 1`
 
-En écoutant la phrase de l'étudiant, extrait les verbes. Pour chacun de ces verbes, assure toi que la bonne préposition (parfaitement accordé au genre et au nombre) est sélectionné pour correspondre au sens de la phrase cible. Si tel n'est pas le cas, alors `score = 1`
+En écoutant la phrase de l'étudiant, extrait les combo sujet + verbe + complément d'objet. Pour chacune de ces combinaisons, assure toi que :
+- l'absence ou la présence d'une préposition est justifiée selon la grammaire hébraïque
+- la préposition qui l'accompagne (si elle existe) ne dénature pas le sens de la phrase cible
+- la préposition qui l'accompagne (si elle existe) est correctement accordée en genre et en nombre avec le complément d'objet
+Si tel n'est pas le cas, alors `score = 1`
 
 ---
 
@@ -261,7 +268,7 @@ UNE SEULE erreur d'accord entraîne :
 
 `score = 1`
 
-En écoutant la phrase de l'étudiant, extrait les combo (verbe + préposition, mot/pronom/nom propre + conjugaison), si la préposition n'est pas genré correctement (masculin, féminin), si le verbe n'est pas correctement genré (masculing ou féminin), alors `score = 1`
+En écoutant la phrase de l'étudiant, extrait les mots, les verbes, les adjectifs et les participes passé. Assure toi que les mots sont correctements accordés en genre et en nombre conformément à la grammaire habraïque et au sens de la phrase cible. Assure toi également que les verbes, adjectifs et participes passés sont accordés en genre et en nombre conformément aux sujets auxquels ils se réfèrent (au sein de la grammaire hébraïque). Si tel n'est pas le cas, alors `score = 1`
 
 ---
 
