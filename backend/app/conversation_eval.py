@@ -104,25 +104,257 @@ Avant de passer à la question suivante, tu devras évaluer la réponse de l'ét
 
 
 
-# BAREME
+# BARÈME — NOTATION STRICTEMENT BINAIRE
 
-Si la réponse de l'étudiant réunit l'ensemble des critères suivants :
-- Constituée uniquement ou presque de mots hébreux
-- Dotée d'une structuration parfaite
-- Dont le sens restitue parfaitement et fidèlement le sens de la phrase en français (dimension temporelle équivalente entre les deux phrases, les mêmes pronoms entre les deux phrases, vocabulaire exprimant des notions et concepts très proches entre les deux phrases)
-- Dont la prononciation en hébreu est de très bonne qualité
-- Linguistiquement parfaite, i.e. ne comprend AUCUNE des erreurs suivantes :
-  - préposition manquante
-  - préposition incorrecte
-  - accord de genre incorrecte
-  - conjugaison incorrecte
-  - vocabulaire inventé
-  - mots de liaison manquants
+La notation est STRICTEMENT binaire :
 
-ALORS => tu attribueras `score=3` à la réponse
+- `score = 3` : traduction entièrement correcte
+- `score = 1` : toute autre réponse
 
-Si la réponse de l'étudiant ne réunit pas l'ensemble des critères précédemment évoqués :
-ALORS => tu attribueras `score=1` à la réponse
+Il n'existe AUCUN score intermédiaire.
+
+## PRINCIPE FONDAMENTAL
+
+Le `score = 1` est la valeur par défaut.
+
+Tu ne peux attribuer `score = 3` que si tu as vérifié que la réponse satisfait TOUS les critères ci-dessous.
+
+UNE SEULE erreur linguistique réelle suffit à interdire le `score = 3` et entraîne obligatoirement :
+
+`score = 1`
+
+IMPORTANT :
+Ne juge jamais seulement si "le sens général est proche".
+Une traduction peut transmettre approximativement la même idée tout en étant incorrecte pour cet exercice.
+
+Tu dois comparer précisément la phrase française demandée avec l'hébreu effectivement produit.
+
+---
+
+## CONTRÔLES OBLIGATOIRES
+
+Avant d'attribuer `score = 3`, vérifie successivement TOUS les points suivants.
+
+### 1. Langue produite
+
+La réponse doit constituer une véritable phrase en hébreu.
+
+Si elle contient :
+- des mots français ou provenant d'une autre langue utilisés à la place de mots hébreux inconnus ;
+- du vocabulaire inventé ;
+- une juxtaposition de mots ;
+- des fragments ne formant pas une phrase correcte ;
+
+ALORS :
+
+`score = 1`
+
+---
+
+### 2. Fidélité du sujet et des pronoms
+
+Les personnes grammaticales et les pronoms doivent correspondre EXACTEMENT au sens de la phrase française.
+
+Exemples d'erreurs entraînant obligatoirement `score = 1` :
+
+- "je" traduit par "nous" ;
+- "tu" traduit par "vous" ;
+- "il" traduit par "elle" ;
+- "ils" traduit par "elles" lorsque cette distinction est pertinente ;
+- mauvais pronom possessif ;
+- mauvaise personne dans la conjugaison du verbe.
+
+Même si tout le reste de la phrase est correct :
+
+`score = 1`
+
+---
+
+### 3. Fidélité temporelle
+
+Le temps verbal et la dimension temporelle doivent correspondre EXACTEMENT à la phrase française.
+
+Exemples d'erreurs entraînant obligatoirement `score = 1` :
+
+- présent à la place du passé ;
+- passé à la place du présent ;
+- futur à la place du présent ;
+- infinitif à la place d'un verbe devant être conjugué ;
+- conjugaison correspondant à une autre temporalité que celle demandée.
+
+IMPORTANT :
+
+Une phrase au mauvais temps verbal n'est PAS une traduction parfaite, même si son sens général est évident.
+
+Donc :
+
+`score = 1`
+
+---
+
+### 4. Conjugaison
+
+Chaque verbe doit être correctement conjugué selon :
+
+- la personne ;
+- le genre lorsque pertinent ;
+- le nombre ;
+- le temps.
+
+UNE SEULE erreur de conjugaison entraîne :
+
+`score = 1`
+
+---
+
+### 5. Vocabulaire
+
+Les mots utilisés doivent exprimer fidèlement les notions de la phrase française.
+
+Un synonyme ou une formulation alternative est acceptable UNIQUEMENT s'il transmet réellement le même sens dans ce contexte.
+
+Si le mot employé est seulement proche mais modifie le sens, même légèrement :
+
+`score = 1`
+
+Exemples :
+- "se lever" à la place de "se réveiller" → `score = 1`
+- "regarder" à la place de "voir", si la distinction modifie le sens demandé → `score = 1`
+
+Ne récompense jamais une approximation lexicale simplement parce que tu comprends ce que l'étudiant voulait dire.
+
+---
+
+### 6. Prépositions et particules grammaticales
+
+Toutes les prépositions et particules grammaticales nécessaires doivent être correctement présentes et correctement utilisées.
+
+Exemples entraînant `score = 1` :
+
+- préposition incorrecte ;
+- préposition nécessaire absente ;
+- `את` absent lorsqu'il est grammaticalement nécessaire ;
+- mauvaise construction prépositionnelle liée à un verbe.
+
+UNE SEULE erreur de ce type entraîne :
+
+`score = 1`
+
+---
+
+### 7. Genre et nombre
+
+Les accords de genre et de nombre doivent être corrects.
+
+UNE SEULE erreur d'accord entraîne :
+
+`score = 1`
+
+---
+
+### 8. Structure syntaxique
+
+La phrase doit être grammaticalement correcte en hébreu.
+
+Les mots doivent être correctement reliés et la construction utilisée doit être acceptable en hébreu naturel.
+
+Si tu dois mentalement :
+- réorganiser les mots ;
+- ajouter un élément manquant ;
+- corriger une construction ;
+- deviner la relation entre plusieurs éléments ;
+
+ALORS la réponse n'est pas parfaite :
+
+`score = 1`
+
+---
+
+### 9. Prononciation
+
+La prononciation doit permettre d'identifier sans ambiguïté les mots et les formes grammaticales produits.
+
+Une simple différence d'accent ne doit PAS être pénalisée.
+
+En revanche, si une erreur de prononciation :
+- produit un autre mot ;
+- produit une autre forme grammaticale ;
+- rend un mot incorrect ou ambigu ;
+- empêche d'identifier clairement le mot voulu ;
+
+ALORS :
+
+`score = 1`
+
+---
+
+# DÉCISION FINALE
+
+Applique obligatoirement cette procédure :
+
+1. Cherche s'il existe AU MOINS UNE erreur parmi les catégories suivantes :
+   - langue utilisée ;
+   - sujet ou pronom ;
+   - temps verbal ;
+   - conjugaison ;
+   - vocabulaire ;
+   - préposition ou particule ;
+   - genre ;
+   - nombre ;
+   - syntaxe ;
+   - élément essentiel manquant ;
+   - prononciation modifiant ou rendant ambigu un mot.
+
+2. Si tu identifies AU MOINS UNE erreur réelle :
+   → `score = 1`
+
+3. Si et seulement si tu ne détectes AUCUNE erreur :
+   → `score = 3`
+
+---
+
+# RÈGLES ANTI-LAXISME
+
+Ne donne JAMAIS `score = 3` pour les raisons suivantes :
+
+- "le sens général est correct" ;
+- "je comprends ce que l'étudiant voulait dire" ;
+- "la réponse est proche" ;
+- "l'erreur est petite" ;
+- "presque toute la phrase est correcte" ;
+- "l'étudiant parle avec assurance" ;
+- "l'étudiant répond rapidement" ;
+- "l'étudiant semble avoir compris la phrase".
+
+Aucune de ces raisons n'est suffisante.
+
+Le test porte sur la capacité à PRODUIRE correctement la traduction, et non sur ta capacité à reconstruire l'intention de l'étudiant.
+
+Exemple fondamental :
+
+Si la phrase française exige le passé et que l'étudiant produit une phrase hébraïque parfaitement construite au présent :
+
+→ `score = 1`
+
+Si la phrase exige "je" et que l'étudiant traduit correctement toute la phrase mais utilise "nous" :
+
+→ `score = 1`
+
+Si toute la traduction est correcte sauf une préposition :
+
+→ `score = 1`
+
+Si toute la traduction est correcte sauf une erreur de conjugaison :
+
+→ `score = 1`
+
+Si toute la traduction est correcte sauf un mot de vocabulaire approximatif :
+
+→ `score = 1`
+
+`score = 3` signifie donc littéralement :
+
+> "Je n'ai identifié aucune erreur linguistique ou sémantique dans la traduction produite."
 
 
 
