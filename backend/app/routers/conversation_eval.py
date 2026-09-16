@@ -177,6 +177,17 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                 nonlocal pending_phrase, ended_notified
                 flushed_this_turn = False
                 ai_turn_start_ts = None
+                # Filet de sécurité : la fin de test (règle 7) n'impose pas
+                # d'appeler un outil particulier, elle est purement
+                # conversationnelle — si le modèle "oublie" d'appeler
+                # report_evaluation la 3e fois tout en respectant la règle à
+                # l'oral, le compteur ci-dessus n'atteint jamais le seuil et
+                # rien n'est jamais envoyé, cf. bug rapporté par le user
+                # ("l'agent avertit mais rien ne se passe au raccroché"). On
+                # détecte donc aussi la mention explicite de "raccroche"
+                # dans ce que l'IA vient de dire, et on force la fin nous-
+                # mêmes le cas échéant, avec le niveau déjà connu.
+                ai_text_buffer = ""
                 while True:
                     turn = session.receive()
                     async for response in turn:
@@ -338,6 +349,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 got_output = True
                                 if ai_turn_start_ts is None:
                                     ai_turn_start_ts = time.time()
+                                ai_text_buffer += content.output_transcription.text
                                 await safe_send(
                                     {"type": "ai_transcript", "text": content.output_transcription.text}
                                 )
@@ -345,6 +357,18 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 await safe_send({"type": "turn_complete", "ts": ai_turn_start_ts or time.time()})
                                 flushed_this_turn = False
                                 ai_turn_start_ts = None
+
+                                # Filet de sécurité (cf. commentaire plus
+                                # haut) : si l'IA vient de prononcer
+                                # "raccroche"/"raccrocher" sans que le
+                                # compteur d'outils n'ait détecté la fin,
+                                # force la fin nous-mêmes avec le niveau déjà
+                                # connu.
+                                if not ended and "raccroch" in ai_text_buffer.lower():
+                                    final_level = mastered_level
+                                    ended = True
+                                ai_text_buffer = ""
+
                                 if ended:
                                     # Le niveau a déjà été envoyé dès sa
                                     # détection (cf. plus haut) — on laisse

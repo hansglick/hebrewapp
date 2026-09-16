@@ -149,6 +149,8 @@ ALORS :
 
 `score = 1`
 
+En écoutant la phrase de l'étudiant, essaie d'estimer la langue utilisée. Si tu ne reconnais pas de l'hébreu, alors `score = 1`
+
 ---
 
 ### 2. Fidélité du sujet et des pronoms
@@ -168,6 +170,7 @@ Même si tout le reste de la phrase est correct :
 
 `score = 1`
 
+En écoutant la phrase de l'étudiant, extrait les pronoms/nom/mot propres utilisés. Si ces pronoms/noms propres/mot ne trouvent pas leur traduction exacte dans la phrase cible, alors `score = 1`
 ---
 
 ### 3. Fidélité temporelle
@@ -190,6 +193,8 @@ Donc :
 
 `score = 1`
 
+En écoutant la phrase de l'étudiant, extrait le temps verbal utilisé. S'il ne s'agit pas de l'équivalent du temps verbal utilisée dans la phrase cible, alors `score=1`
+
 ---
 
 ### 4. Conjugaison
@@ -204,6 +209,8 @@ Chaque verbe doit être correctement conjugué selon :
 UNE SEULE erreur de conjugaison entraîne :
 
 `score = 1`
+
+En écoutant la phrase de l'étudiant, extrait le combo (pronom/nom propre/mot + verbe conjugué). Si tu remarques une incohérence, i.e. la conjugaison ne correspond pas au pronom/nom propre/mot utilisé, alors `score = 1`
 
 ---
 
@@ -223,6 +230,8 @@ Exemples :
 
 Ne récompense jamais une approximation lexicale simplement parce que tu comprends ce que l'étudiant voulait dire.
 
+En écoutant la phrase de l'étudiant, extrait les mots de vocabulaire et les verbes. Si pour chacun de ces items, tu ne trouves pas la correspondance correctement traduis dans la phrase cible, alors `score = 1`
+
 ---
 
 ### 6. Prépositions et particules grammaticales
@@ -240,6 +249,8 @@ UNE SEULE erreur de ce type entraîne :
 
 `score = 1`
 
+En écoutant la phrase de l'étudiant, extrait les verbes. Pour chacun de ces verbes, assure toi que la bonne préposition (parfaitement accordé au genre et au nombre) est sélectionné pour correspondre au sens de la phrase cible. Si tel n'est pas le cas, alors `score = 1`
+
 ---
 
 ### 7. Genre et nombre
@@ -249,6 +260,8 @@ Les accords de genre et de nombre doivent être corrects.
 UNE SEULE erreur d'accord entraîne :
 
 `score = 1`
+
+En écoutant la phrase de l'étudiant, extrait les combo (verbe + préposition, mot/pronom/nom propre + conjugaison), si la préposition n'est pas genré correctement (masculin, féminin), si le verbe n'est pas correctement genré (masculing ou féminin), alors `score = 1`
 
 ---
 
@@ -329,14 +342,6 @@ Aucune de ces raisons n'est suffisante.
 Le test porte sur la capacité à PRODUIRE correctement la traduction, et non sur ta capacité à reconstruire l'intention de l'étudiant.
 
 Exemple fondamental :
-
-Si la phrase française exige le passé et que l'étudiant produit une phrase hébraïque parfaitement construite au présent :
-
-→ `score = 1`
-
-Si la phrase exige "je" et que l'étudiant traduit correctement toute la phrase mais utilise "nous" :
-
-→ `score = 1`
 
 Si toute la traduction est correcte sauf une préposition :
 
