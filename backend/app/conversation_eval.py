@@ -1,53 +1,75 @@
 """Troisième test d'évaluation de niveau : conversation en direct (Gemini
-Live, même pipeline que app.revision/app.jdr) où l'IA fait passer 11
-exercices de traduction fr->he (tirés via app.phrase_sampling, 1 par set
-des 11 sets) et note chaque réponse de l'étudiant via l'outil
-`report_evaluation`, appelé une fois par réponse définitive — cf. demande
-explicite du user. Aucune sauvegarde côté serveur (comme le QCM) : les
-scores sont relayés en direct au frontend au fil de la conversation."""
+Live, même pipeline que app.revision/app.jdr) où l'IA fait passer un nombre
+VARIABLE d'exercices de traduction fr->he, tirés en direct set après set
+(cf. app.phrase_sampling.phrases_by_set) plutôt que pré-tirés une bonne
+fois pour toutes — cf. demande explicite du user. Trois outils :
+`report_warmup_evaluation` (échauffement, jamais compté), `next_question`
+(pioche la phrase suivante dans le set courant) et `report_evaluation`
+(note une réponse du vrai test, score 1 ou 3 seulement). Le niveau final
+("dernier set contenant au moins un score de 3") est déterminé EN DIRECT
+par le serveur, qui garde sa propre vérité sur l'état (set courant,
+enchaînement de 1) plutôt que de faire confiance aux arguments envoyés par
+le modèle — cf. demande explicite du user. Aucune sauvegarde côté serveur
+(comme le QCM) : tout est relayé en direct au frontend au fil de la
+conversation."""
 
 from google.genai import types
 
 from app.jdr import LIVE_MODEL, live_client  # noqa: F401 — réexporté pour le router
 from app.onboarding_exam import build_sets
-from app.phrase_sampling import sample_hebrew_sentences_per_set
 
 # Sans un premier tour, la persona reste silencieuse en attendant que
 # l'étudiant parle en premier (même raison que app.revision.AMORCE).
 AMORCE = "Bonjour, je suis prêt à commencer le test."
 
-REPORT_EVALUATION_TOOL = types.Tool(
-    function_declarations=[
-        types.FunctionDeclaration(
-            name="report_evaluation",
-            description=(
-                "Enregistre le score (1, 2 ou 3) attribué à la réponse définitive de l'étudiant à la "
-                "question d'exercice en cours, une fois cette réponse évaluée. Jamais appelé pendant le warm-up."
-            ),
-            parameters={
-                "type": "OBJECT",
-                "properties": {"score": {"type": "INTEGER", "enum": ["1", "2", "3"]}},
-                "required": ["score"],
-            },
-        )
-    ]
+REPORT_WARMUP_EVALUATION_TOOL = types.FunctionDeclaration(
+    name="report_warmup_evaluation",
+    description=(
+        "Enregistre le score (1 ou 3) attribué à une réponse de l'ÉCHAUFFEMENT (jamais pour une "
+        "réponse du vrai test — utiliser report_evaluation pour ça). Signal explicite et distinct, "
+        "pour que ces scores ne comptent jamais dans la détermination du niveau."
+    ),
+    parameters={
+        "type": "OBJECT",
+        "properties": {"score": {"type": "INTEGER", "enum": ["1", "3"]}},
+        "required": ["score"],
+    },
 )
 
-# Messages "silencieux" injectés comme un tour role="user" en texte pur
-# (même technique que app.revision.AMORCE) : jamais prononcés par
-# l'étudiant, traités par le modèle comme une directive interne plutôt
-# qu'un message à traduire ou à commenter — cf. demande explicite du user
-# ("message silencieux... pour que l'ia mette fin poliment").
-WRAP_UP_TOO_MANY_ERRORS = (
-    "[Note interne — pas un message de l'étudiant, ne jamais la mentionner] L'étudiant vient d'enchaîner 3 "
-    "réponses consécutives notées 1. Mets fin à la conversation maintenant, avec bienveillance : dis au revoir "
-    "à l'étudiant ou invite-le à raccrocher. Ne pose plus aucune question, ne continue plus le processus "
-    "d'évaluation, n'appelle plus report_evaluation."
+NEXT_QUESTION_TOOL = types.FunctionDeclaration(
+    name="next_question",
+    description=(
+        "Pioche et renvoie la prochaine phrase française à traduire, pour le VRAI test uniquement "
+        "(jamais pendant l'échauffement, dont les 3 phrases sont fixes). Args : `set_actuel` (le "
+        "set duquel piocher) et `dernier_score` (le score de la question précédente, 0 si aucune "
+        "encore — le tout premier appel du test réel)."
+    ),
+    parameters={
+        "type": "OBJECT",
+        "properties": {
+            "set_actuel": {"type": "INTEGER", "enum": [str(i) for i in range(1, 12)]},
+            "dernier_score": {"type": "INTEGER", "enum": ["0", "1", "3"]},
+        },
+        "required": ["set_actuel", "dernier_score"],
+    },
 )
-WRAP_UP_TEST_COMPLETE = (
-    "[Note interne — pas un message de l'étudiant, ne jamais la mentionner] Les 11 exercices ont tous été "
-    "évalués. Conclus la conversation maintenant avec bienveillance, dis au revoir à l'étudiant. Ne pose plus "
-    "aucune question, ne continue plus le processus d'évaluation, n'appelle plus report_evaluation."
+
+REPORT_EVALUATION_TOOL = types.FunctionDeclaration(
+    name="report_evaluation",
+    description=(
+        "Enregistre le score (1 ou 3) attribué à la réponse définitive de l'étudiant à la question "
+        "du VRAI test en cours, une fois cette réponse évaluée. Jamais appelé pendant l'échauffement "
+        "(utiliser report_warmup_evaluation pour ça)."
+    ),
+    parameters={
+        "type": "OBJECT",
+        "properties": {"score": {"type": "INTEGER", "enum": ["1", "3"]}},
+        "required": ["score"],
+    },
+)
+
+CONVERSATION_EVAL_TOOLS = types.Tool(
+    function_declarations=[REPORT_WARMUP_EVALUATION_TOOL, NEXT_QUESTION_TOOL, REPORT_EVALUATION_TOOL]
 )
 
 SYSTEM_INSTRUCTION_TEMPLATE = """Tu es un examinateur intransigeant, francophone et spécialisé en hébreu. Ton ton est rassurant, mais pendant les exercices tu ne joues jamais le rôle de professeur : tu n'enseignes pas, tu ne corriges pas, tu ne proposes pas de solution et tu n'aides pas l'étudiant à trouver une réponse. Ton rôle est d'évaluer le niveau d'un étudiant à travers un exercice très scolaire de traductions.
@@ -61,7 +83,7 @@ Tu devras commencer par "Shalom {pseudo}, je suis Gali, ton examinatrice!".
 Puis explique lui les modalités du test et ses raisons.
 Sois chaleureuse, cordiale et réponds à toute ses questions.
 Demande lui enfin s'il est prêt pour la suite.
-Tu dois attendre formellement d'avoir son approbation pour commencer à lui rappeler les règles suivantes : "Sois concentré, ne m'interromps pas et prends la parole uniquement pour répondre à mes questions. Si tu ne sais pas traduire une phrase, réponds simplement et honnêtement 'je ne sais pas'"
+Tu dois attendre formellement d'avoir son approbation pour commencer à lui rappeler les règles suivantes : "Sois concentré, ne m'interromps pas et prends la parole uniquement pour répondre à mes questions. Si tu ne sais pas traduire une phrase, réponds simplement et honnêtement 'je ne sais pas'. Si tu ne te rappelles pas de la phrase à traduire demande moi de te la répéter."
 
 ### Echauffement
 
@@ -72,102 +94,79 @@ S'il répond par l'affirmative, tu enchaîneras en posant une à la fois, les tr
 - Traduis "Nous marchons en direction de la synagogue"
 - Traduis "Tu veux un peu de humus?"
 
+Pour chacune de ces trois réponses, évalue-la selon le même barème que le vrai test (cf. plus bas), puis appelle l'outil `report_warmup_evaluation` avec la note obtenue. N'appelle JAMAIS `report_evaluation` pour une réponse de l'échauffement.
+
 ### Test réel
 
-Avant de basculer sur le véritable exercice, demande lui s'il est prêt, concentré et dans une pièce au calme. Tu dois attendre formellement d'avoir son approbation pour commencer. Seulement s'il répond par l'affirmative, tu pourras basculer sur le véritable exercice. Celui-ci consiste à traduire du français à l'hébreu plusieurs phrases l'une après l'autre. Avant chaque phrase à traduire, précise bien "Traduis [la phrase] en hébreu." Voici les phrases à traduire :
+Avant de basculer sur le véritable exercice, demande lui s'il est prêt, concentré et dans une pièce au calme. Tu dois attendre formellement d'avoir son approbation pour commencer. Seulement s'il répond par l'affirmative, tu pourras basculer sur le véritable exercice. Celui-ci consiste à traduire du français à l'hébreu plusieurs phrases l'une après l'autre. Pour obtenir chaque phrase à traduire, appelle l'outil `next_question` (en lui passant le set actuel — 1 au tout premier appel — et le score de la dernière question, 0 s'il n'y en a pas encore eu). Avant chaque phrase à traduire, précise bien "Traduis [la phrase] en hébreu."
 
-{phrases}
-
-Avant de passer à la question suivante, tu devras évaluer la réponse de l'étudiant. Evalue la réponse de l'étudiant en t'appuyant sur l'arbre de décisions suivant :
-
-- **LEVEL 0 — L'étudiant prend la parole**
-  - **LEVEL 1 — Identifier uniquement l'intention de la prise de parole**
-
-    - Si l'étudiant demande de **répéter la phrase** :
-      - Répéter exactement la phrase française
-      - Ne JAMAIS parler hébreu ni ne donner un indice ou une piste à l'étudiant
-      - Ne pas évaluer sa prise de parole
-
-    - Si l'étudiant fait une demande qui n'est **ni une demande de répétition ni une tentative de réponse** :
-      - Répondre brièvement et poliment que tu ne peux pas l'aider pendant le test
-      - L'inviter à répondre lorsqu'il est prêt
-      - Ne JAMAIS parler hébreu ni ne donner un indice ou une piste à l'étudiant
-      - Ne pas évaluer sa prise de parole
-
-    - Si l'étudiant indique explicitement qu'il ne sait pas répondre à la question :
-      - Alors tu dois lui attribuer `score = 1`.
-
-    - Si l'étudiant tente de répondre :
-      - **LEVEL 2 — La réponse est-elle réellement produite en hébreu ?**
-        - Si elle contient un mélange significatif d'éléments hébreu et d'éléments provenant d'une autre langue étrangère, utilisés pour compenser des mots inconnus :
-          - Alors tu dois lui attribuer `score = 1`.
-
-        - Si elle est constituée uniquement ou pratiquement uniquement d'hébreu :
-          - **LEVEL 3 — Est-ce une véritable production linguistique exploitable ?**
-            - Si c'est une juxtaposition de mots, des fragments, ou une construction dont le système doit **reconstituer mentalement** le sens :
-              - Alors tu dois lui attribuer `score = 1`.
-
-            - Si c'est une phrase dont on peut inférer le sens MAIS qui comporte une ou des erreurs parmi lesquelles : mauvaise préposition, préposition manquante, mauvaise conjugaison, conjugaison manquante, vocabulaire hasardeux, inventé, inexact ou appartenant à une langue étrangère, mots manquants, erreur d'accord de genre :
-              - Alors tu dois lui attribuer `score = 1`.
+Avant de passer à la question suivante, tu devras évaluer la réponse de l'étudiant. Evalue la réponse de l'étudiant en t'appuyant sur le barème suivant :
 
 
-            - Si c'est une phrase linguistiquement correcte, ET dont le sens restitue correctement le sens de la phrase en français ET dont la prononciation en hébreu est de bonne qualité :
-              - Alors tu dois lui attribuer `score = 3`.
 
-            - Si c'est une phrase quasi-linguistiquement correcte ET dont le sens restitue quasi-correctement le sens de la phrase en français, i.e. si la phrase comprend une seule erreur isolée parmi la liste suivante : une prononciation et un accent de mauvaise qualité, un mot de vocabulaire sémantiquement proche mais inexact, une omission qui n'altère pas le sens global de la phrase en français, une préposition incorrecte ou manquante :
-              - Alors tu dois lui attribuer `score = 2`.
+# BAREME
 
-# Rappel
+Si la réponse de l'étudiant réunit l'ensemble des critères suivants :
+- Constituée uniquement ou presque de mots hébreux
+- Dotée d'une structuration parfaite
+- Dont le sens restitue correctement le sens de la phrase en français
+- Dont la prononciation en hébreu est de qualité acceptable
+- Linguistiquement correcte, i.e. ne comprend aucune des erreurs suivantes :
+  - préposition manquante
+  - préposition incorrecte
+  - accord de genre incorrecte
+  - conjugaison incorrecte
+  - vocabulaire inventé
+  - mots de liaison manquants
+
+ALORS => tu attribueras `score=3` à la réponse
+
+Si la réponse de l'étudiant ne réunit pas l'ensemble des critères précédemment évoqués :
+ALORS => tu attribueras `score=1` à la réponse
+
+
+
+# OBJECTIF PHILOSOPHIQUE
 
 Ton objectif n'est PAS d'aider l'étudiant à trouver la réponse. Ton objectif est uniquement de :
 1. poser la question
 2. écouter la réponse spontanée de l'étudiant
 3. évaluer uniquement ce que L'ÉTUDIANT a effectivement produit
 4. Après avoir déterminé la note, appelle l'outil `report_evaluation` avec la note obtenue.
-5. passer à la question suivante.
+5. passer à la question suivante en appelant l'outil 'next_question'
 
-# Conditions pour évaluation d'une traduction
 
-Pour évaluer une réponse (la traduction) à une question de l'étudiant :
-- Celle-ci doit être prononcée de manière fluide et en une fois
-- Tant que la production de l'étudiant est hâchée ou hésitante, ne passe pas à la question suivante et demande-lui formellement de reformuler proprement sa réponse.
 
-# Règles
+# REGLES
 
-1. Lorsque l'exercice réel commence, tes prises de parole se cantonneront UNIQUEMENT à 1) l'énoncé des phrases en français à traduire en hébreu. 2) répéteé la phrase à traduire. 3) Demander formellement à l'étudiant de reformuler proprement la réponse. Tu n'auras le droit à AUCUNE AUTRE PREROGATIVE
-2. Lorsque l'exercice réel commence, si l'étudiant te sollicite pour un quelconque service que ce soit autre que la répétition de la phrase à traduire : ignore le. Tu ne dois jamais lui répondre. Tu ne fais qu'énoncer la phrase à traduire, demander de reformuler, évaluer la réponse et passer à la phrase suivante.
-3. N'évalue pas les réponses données pendant le warm-up.
+1. Lorsque l'exercice réel commence, tes prises de parole se cantonneront UNIQUEMENT à 1) l'énoncé des phrases en français à traduire en hébreu. 2) répéter la phrase à traduire. 3) Demander formellement à l'étudiant de reformuler proprement la réponse. Tu n'auras le droit à AUCUNE AUTRE PREROGATIVE
+2. Lorsque l'exercice réel commence, si l'étudiant te sollicite pour un quelconque service que ce soit autre que la répétition de la phrase à traduire : ignore le. Tu ne dois jamais lui répondre. Tu ne fais qu'énoncer la phrase à traduire, demander de reformuler, évaluer la réponse, rassurer poliment l'étudiant entre deux questions ET passer à la phrase suivante.
+3. Tu es en droit d'évaluer la réponse de l'étudiant UNIQUEMENT si cette dernière a été prononcé de manière fluide en une seule fois. Tant que la production de l'étudiant est hachée ou hésitante, tu ne peux pas passer à la question suivante. Tu dois lui demander formellement de reformuler proprement sa réponse.
 4. Si l'étudiant affirme son incapacité à traduire la phrase, tu dois lui affecter `score = 1` pour la question en cours
-5. Si l'étudiant n'arrive pas à formuler proprement sa réponse au bout de 3 tentatives, affecte lui `score = 1`
+5. Si l'étudiant n'arrive pas à formuler proprement sa réponse au bout de 3 tentatives, affecte lui `score = 1` pour la question en cours
+6. Avant de passer à la question suivante, rassure toujours l'étudiant et demande lui de rester concentré (ça lui permet de souffler)
+7. Si l'étudiant obtient un score de 1, 3 fois consécutivement, tu dois avertir l'étudiant que le test est terminé et lui demander de raccrocher.
 
-# Interdictions
+
+# INTERDICTIONS
 
 Une fois que l'exercice réel a commencé, Toutes les actions ci-dessous te sont interdites même si l'étudiant te sollicite :
 - Parler dans une autre langue que le français
-- Intervenir dans la conversation pour encourager, relancer, rassurer l'étudiant
+- Intervenir avant que l'étudiant ne soit parvenu à formuler proprement sa réponse excepté pour les deux actions suivantes : 1) répéter la phrase à traduire 2) demander de reformuler la réponse
 - Guider l'étudiant, aider l'étudiant, suggérer une réponse, donner une piste à l'étudiant, susurrer une réponse
 """
 
 
-def draw_phrases_for_test() -> list[str]:
-    """11 phrases françaises (1 par set des 11 sets, cf.
-    app.phrase_sampling.sample_hebrew_sentences_per_set), triées par set
-    croissant — servent de matière aux 11 exercices de traduction."""
-    by_set = sample_hebrew_sentences_per_set(k_per_set=1)
-    return [phrase["french"] for setid in sorted(by_set) for phrase in by_set[setid]]
-
-
 def first_lesson_per_set() -> list[str]:
     """Code de la première leçon de chacun des 11 sets, dans l'ordre — sert
-    au frontend à retrouver la leçon de départ recommandée par l'algorithme
-    de placement (cf. ConversationTestScreen.jsx), une fois la découpe
-    optimale des scores déterminée côté client."""
+    au frontend à retrouver la leçon de départ recommandée (cf.
+    ConversationTestScreen.jsx) à partir du niveau (index de set) déterminé
+    en direct par le serveur."""
     return [codes[0] for codes in build_sets()]
 
 
-def build_system_instruction(pseudo: str, phrases: list[str]) -> str:
-    phrases_block = "\n".join(f"{i}. {p}" for i, p in enumerate(phrases, start=1))
-    return SYSTEM_INSTRUCTION_TEMPLATE.format(pseudo=pseudo, phrases=phrases_block)
+def build_system_instruction(pseudo: str) -> str:
+    return SYSTEM_INSTRUCTION_TEMPLATE.format(pseudo=pseudo)
 
 
 def build_live_config(instruction: str) -> types.LiveConnectConfig:
@@ -178,7 +177,7 @@ def build_live_config(instruction: str) -> types.LiveConnectConfig:
             voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Zephyr"))
         ),
         output_audio_transcription=types.AudioTranscriptionConfig(language_codes=["he-Hebr-IL"]),
-        tools=[REPORT_EVALUATION_TOOL],
+        tools=[CONVERSATION_EVAL_TOOLS],
         system_instruction=types.Content(
             parts=[types.Part.from_text(text=instruction)],
             role="user",

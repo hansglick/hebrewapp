@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import io
+import random
 import time
 import wave
 
@@ -13,6 +14,7 @@ from app.auth import get_current_user_id, get_user_id
 from app.database import DEFAULT_LEVEL, set_user_level
 from app.lesson_order import all_lesson_codes_in_order
 from app.openai_client import extract_verbatim
+from app.phrase_sampling import phrases_by_set
 
 router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
 
@@ -20,9 +22,6 @@ router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
 # bruit/souffle déclencherait un appel Whisper pour rien.
 MIN_TURN_BYTES = 9600
 
-# Nombre d'exercices réels de traduction (hors warm-up) — cf.
-# app.conversation_eval.draw_phrases_for_test.
-TOTAL_QUESTIONS = 11
 STOP_STREAK = 3
 
 
@@ -32,13 +31,10 @@ class ApplyPlacementRequest(BaseModel):
 
 @router.post("/apply-placement")
 def apply_placement(payload: ApplyPlacementRequest, user_id: int = Depends(get_current_user_id)):
-    """Applique réellement le niveau estimé par l'algorithme de placement
-    (cf. ConversationTestScreen.jsx) — première écriture en base de tout ce
-    test conversationnel, cf. demande explicite du user ("le user arriverait
-    sur la page d'accueil correspondant à son niveau"). `level` = la leçon
-    juste avant `start_lesson` dans l'ordre global du cours (aucune marge de
-    sécurité supplémentaire, contrairement à onboarding_exam.niveau_from_final_set),
-    pour que reference_lesson(level) redonne exactement `start_lesson`."""
+    """Applique réellement le niveau estimé (cf. ConversationTestScreen.jsx)
+    — écriture en base. `level` = la leçon juste avant `start_lesson` dans
+    l'ordre global du cours, pour que reference_lesson(level) redonne
+    exactement `start_lesson`."""
     codes = all_lesson_codes_in_order()
     if payload.start_lesson not in codes:
         level = DEFAULT_LEVEL
@@ -71,13 +67,23 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
         await websocket.close()
         return
 
-    phrases = conversation_eval.draw_phrases_for_test()
-    instruction = conversation_eval.build_system_instruction(pseudo, phrases)
+    instruction = conversation_eval.build_system_instruction(pseudo)
 
     # Donnée structurelle (pas un score) : sert au frontend à retrouver la
-    # leçon de départ recommandée une fois la découpe optimale déterminée
-    # côté client, cf. demande explicite du user.
+    # leçon de départ recommandée une fois le niveau (index de set) connu.
     await websocket.send_json({"type": "set_starts", "codes": conversation_eval.first_lesson_per_set()})
+
+    # Pools mélangés une fois par connexion : le tirage dans un set se fait
+    # ensuite par simple .pop(), sans remise au sein de cette session — cf.
+    # demande explicite du user ("tirer aléatoirement une question dans le
+    # set"). Chaque pool compte plusieurs centaines de phrases (vérifié),
+    # jamais de risque d'épuisement (au plus 3 tirages par set avant que le
+    # test n'avance ou ne s'arrête).
+    remaining_by_set: dict[int, list[dict]] = {}
+    for set_index, pool in phrases_by_set().items():
+        shuffled = list(pool)
+        random.shuffle(shuffled)
+        remaining_by_set[set_index] = shuffled
 
     send_lock = asyncio.Lock()
 
@@ -113,9 +119,15 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             user_buffer = bytearray()
             user_turn_start_ts = None
 
-            scores: list[int] = []
+            # État autoritaire tenu par LE SERVEUR (pas par les arguments
+            # envoyés par le modèle à next_question, cf. demande explicite
+            # du user "le backend garde sa propre vérité") :
+            warmup_scores: list[int] = []
+            current_set = 1
+            mastered_level = 0  # dernier set où un score=3 a été obtenu
             consecutive_ones = 0
-            wrap_up_sent = False
+            final_level = None
+            last_sent_set = None
             ended = False
 
             async def from_browser():
@@ -135,7 +147,8 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                     pass
 
             async def from_gemini():
-                nonlocal user_buffer, user_turn_start_ts, consecutive_ones, wrap_up_sent, ended
+                nonlocal user_buffer, user_turn_start_ts
+                nonlocal current_set, mastered_level, consecutive_ones, final_level, last_sent_set, ended
                 flushed_this_turn = False
                 ai_turn_start_ts = None
                 while True:
@@ -144,16 +157,12 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                         got_output = False
 
                         if response.go_away:
-                            # Le serveur prévient qu'il va couper la session
-                            # de force (limite de durée côté API, sans
-                            # rapport avec nos 11 questions/3 erreurs) — si on
-                            # ne ferme pas nous-mêmes avant l'échéance, ça
-                            # remonte comme une erreur 1008 "failed to close
-                            # after goaway" côté navigateur. On termine donc
-                            # la conversation proprement avec les scores déjà
-                            # obtenus, comme pour les autres cas de fin.
+                            # Le serveur prévient qu'il va couper la session de
+                            # force (limite de durée côté API) — cf. bug 1008
+                            # déjà rencontré. On termine proprement avec le
+                            # dernier niveau connu.
                             ended = True
-                            await safe_send({"type": "conversation_ended", "scores": scores})
+                            await safe_send({"type": "conversation_ended", "level": final_level or mastered_level})
                             try:
                                 await websocket.close()
                             except Exception:
@@ -167,58 +176,102 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             await safe_send({"type": "audio", "data": base64.b64encode(data).decode()})
 
                         if response.tool_call:
-                            # Répond d'ABORD à tous les appels d'outil du lot (le
-                            # modèle peut en émettre plusieurs dans une même
-                            # réponse, notamment lors d'un décalage où il
-                            # "rattrape" plusieurs évaluations d'un coup) —
-                            # avant de décider quoi que ce soit d'autre.
-                            # Injecter le wrap-up (send_client_content) au
-                            # milieu de cette boucle, avant d'avoir répondu à
-                            # un appel encore en attente dans le même lot,
-                            # viole le protocole Gemini Live et provoquait une
-                            # erreur "1007 Request contains an invalid
-                            # argument" — cf. bug rapporté par le user.
-                            new_scores = []
+                            # Répond d'ABORD à TOUS les appels d'outil du lot,
+                            # avant de décider quoi que ce soit d'autre — cf.
+                            # bug "1007 invalid argument" déjà rencontré et
+                            # corrigé sur ce même test.
+                            warmup_new: list[int] = []
+                            real_new: list[int] = []
+                            next_question_calls: list[types.FunctionCall] = []
+
                             for fc in response.tool_call.function_calls:
-                                if fc.name != "report_evaluation":
-                                    continue
-                                try:
-                                    score = int(fc.args.get("score"))
-                                except (TypeError, ValueError):
-                                    score = None
+                                if fc.name == "report_warmup_evaluation":
+                                    try:
+                                        score = int(fc.args.get("score"))
+                                    except (TypeError, ValueError):
+                                        score = None
+                                    await session.send_tool_response(
+                                        function_responses=types.FunctionResponse(
+                                            id=fc.id, name=fc.name, response={"ok": True}
+                                        )
+                                    )
+                                    if score in (1, 3):
+                                        warmup_new.append(score)
+
+                                elif fc.name == "report_evaluation":
+                                    try:
+                                        score = int(fc.args.get("score"))
+                                    except (TypeError, ValueError):
+                                        score = None
+                                    await session.send_tool_response(
+                                        function_responses=types.FunctionResponse(
+                                            id=fc.id, name=fc.name, response={"ok": True}
+                                        )
+                                    )
+                                    if score in (1, 3):
+                                        real_new.append(score)
+
+                                elif fc.name == "next_question":
+                                    # Traité APRÈS avoir répondu (la phrase
+                                    # tirée dépend du set courant, qui peut
+                                    # encore changer selon les scores traités
+                                    # ci-dessous dans ce même lot) — mais la
+                                    # réponse à l'outil doit partir tout de
+                                    # suite quand même.
+                                    next_question_calls.append(fc)
+
+                            # Scores d'échauffement : jamais comptés dans
+                            # l'algorithme de niveau, juste relayés pour
+                            # affichage (contrôle temporaire, cf. demande
+                            # explicite du user).
+                            for score in warmup_new:
+                                warmup_scores.append(score)
+                                await safe_send(
+                                    {"type": "warmup_score", "score": score, "index": len(warmup_scores)}
+                                )
+
+                            # Scores du vrai test : pilotent le set courant et
+                            # la condition d'arrêt.
+                            for score in real_new:
+                                await safe_send({"type": "score", "score": score, "set": current_set})
+                                if score == 3:
+                                    mastered_level = current_set
+                                    consecutive_ones = 0
+                                    if current_set >= 11:
+                                        final_level = 11
+                                        ended = True
+                                    else:
+                                        current_set += 1
+                                else:
+                                    consecutive_ones += 1
+                                    if consecutive_ones >= STOP_STREAK:
+                                        final_level = mastered_level
+                                        ended = True
+
+                            # `next_question` : le backend garde sa propre
+                            # vérité (current_set) plutôt que de faire
+                            # confiance aux arguments du modèle — cf. demande
+                            # explicite du user. On répond quand même à
+                            # CHAQUE appel du lot (protocole), y compris si
+                            # `ended` vient de basculer à True dans ce même
+                            # lot (réponse best-effort, la conversation se
+                            # termine juste après).
+                            for fc in next_question_calls:
+                                pool = remaining_by_set.get(current_set) or []
+                                phrase = pool.pop() if pool else None
                                 await session.send_tool_response(
                                     function_responses=types.FunctionResponse(
-                                        id=fc.id, name=fc.name, response={"ok": True}
+                                        id=fc.id,
+                                        name=fc.name,
+                                        response={
+                                            "french": phrase["french"] if phrase else "",
+                                            "set": current_set,
+                                        },
                                     )
                                 )
-                                if score in (1, 2, 3):
-                                    new_scores.append(score)
-
-                            for score in new_scores:
-                                scores.append(score)
-                                await safe_send({"type": "score", "score": score, "index": len(scores)})
-                                consecutive_ones = consecutive_ones + 1 if score == 1 else 0
-
-                            if not wrap_up_sent and consecutive_ones >= STOP_STREAK:
-                                wrap_up_sent = True
-                                ended = True
-                                await session.send_client_content(
-                                    turns=types.Content(
-                                        role="user",
-                                        parts=[types.Part.from_text(text=conversation_eval.WRAP_UP_TOO_MANY_ERRORS)],
-                                    ),
-                                    turn_complete=True,
-                                )
-                            elif not wrap_up_sent and len(scores) >= TOTAL_QUESTIONS:
-                                wrap_up_sent = True
-                                ended = True
-                                await session.send_client_content(
-                                    turns=types.Content(
-                                        role="user",
-                                        parts=[types.Part.from_text(text=conversation_eval.WRAP_UP_TEST_COMPLETE)],
-                                    ),
-                                    turn_complete=True,
-                                )
+                                if phrase and current_set != last_sent_set:
+                                    last_sent_set = current_set
+                                    await safe_send({"type": "set", "set": current_set})
 
                         content = response.server_content
                         if content:
@@ -233,17 +286,20 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 await safe_send({"type": "turn_complete", "ts": ai_turn_start_ts or time.time()})
                                 flushed_this_turn = False
                                 ai_turn_start_ts = None
-                                if wrap_up_sent:
-                                    # Laisse le tour d'au revoir de l'IA se
-                                    # terminer complètement avant de couper —
-                                    # cf. demande explicite du user ("si la
-                                    # communication se coupe d'elle même").
-                                    # Fermer la socket ICI (pas seulement
-                                    # dans le finally englobant) : sinon
-                                    # from_browser reste bloqué sur son
-                                    # receive_json() en attente, empêchant le
-                                    # TaskGroup de jamais se terminer.
-                                    await safe_send({"type": "conversation_ended", "scores": scores})
+                                if ended:
+                                    # Laisse le tour d'au revoir de l'IA (déjà
+                                    # déclenché par sa propre règle 7, aucun
+                                    # message silencieux injecté ici — cf.
+                                    # demande explicite du user) se terminer
+                                    # complètement avant de couper. Fermer la
+                                    # socket ICI (pas seulement dans le
+                                    # finally englobant) : sinon from_browser
+                                    # reste bloqué sur son receive_json() en
+                                    # attente, empêchant le TaskGroup de
+                                    # jamais se terminer.
+                                    await safe_send(
+                                        {"type": "conversation_ended", "level": final_level or mastered_level}
+                                    )
                                     try:
                                         await websocket.close()
                                     except Exception:

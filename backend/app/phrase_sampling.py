@@ -36,3 +36,19 @@ def sample_hebrew_sentences_per_set(k_per_set: int = 2, seed: int | None = None)
         result[f"{set_index:02d}"] = rng.sample(pool, k_per_set)
 
     return result
+
+
+def phrases_by_set() -> dict[int, list[dict]]:
+    """Pool COMPLET (pas un tirage) de phrases fr/hébreu pour chacun des 11
+    sets — sert au tirage dynamique piloté en direct par la conversation
+    (cf. app.routers.conversation_eval, outil `next_question`), qui a besoin
+    de piocher une phrase à la fois, au fil de la conversation, plutôt que
+    de pré-tirer un nombre fixe de phrases une bonne fois pour toutes (cf.
+    sample_hebrew_sentences_per_set ci-dessus, utilisé par le Test
+    Challenger)."""
+    sets = build_sets()
+    phrases_data = get_dataset("phrase")
+    return {
+        set_index: [phrase for code in lesson_codes for phrase in phrases_data.get(code, [])]
+        for set_index, lesson_codes in enumerate(sets, start=1)
+    }

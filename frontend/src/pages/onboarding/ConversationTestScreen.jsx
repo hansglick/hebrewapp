@@ -282,9 +282,14 @@ export default function ConversationTestScreen() {
   const [aiBuffer, setAiBuffer] = useState("");
   const [lastCompletedAi, setLastCompletedAi] = useState("");
   const [history, setHistory] = useState([]); // [{speaker, text, ts}]
-  const [scores, setScores] = useState([]);
+  // Échauffement noté séparément, jamais compté dans le niveau — effacé dès
+  // que le vrai test démarre (cf. demande explicite du user). Historique du
+  // vrai test : [{set, score}, ...], juste pour vérification en direct.
+  const [warmupScores, setWarmupScores] = useState([]);
+  const [realHistory, setRealHistory] = useState([]);
+  const [currentSet, setCurrentSet] = useState(1);
   const [ended, setEnded] = useState(false);
-  const [placement, setPlacement] = useState(null);
+  const [finalLevel, setFinalLevel] = useState(null);
 
   const aiBufferRef = useRef("");
   const setStartsRef = useRef([]);
@@ -397,21 +402,17 @@ export default function ConversationTestScreen() {
         addToHistory("user", msg.text, msg.ts);
       } else if (msg.type === "set_starts") {
         setStartsRef.current = msg.codes;
+      } else if (msg.type === "warmup_score") {
+        setWarmupScores((prev) => [...prev, msg.score]);
+      } else if (msg.type === "set") {
+        setCurrentSet(msg.set);
       } else if (msg.type === "score") {
-        setScores((prev) => [...prev, msg.score]);
+        // Efface le panneau d'échauffement dès que le vrai test commence à
+        // noter des réponses — cf. demande explicite du user.
+        setWarmupScores([]);
+        setRealHistory((prev) => [...prev, { set: msg.set, score: msg.score }]);
       } else if (msg.type === "conversation_ended") {
-        setScores(msg.scores);
-        // Règle en dur (cas particulier signalé par le user : un étudiant
-        // qui cartonne partout se voyait renvoyé au tout début par
-        // l'algorithme de découpe, faute de variation entre les sets) —
-        // court-circuite la découpe Beta au-delà de 8 réponses notées 3.
-        const countThrees = msg.scores.filter((s) => s === 3).length;
-        if (countThrees > 8) {
-          setPlacement({ override: true, startLesson: setStartsRef.current[8] });
-        } else {
-          const best = estimateLevelPlacement(msg.scores);
-          setPlacement({ ...best, startLesson: setStartsRef.current[best.k - 1] });
-        }
+        setFinalLevel(msg.level);
         intentionalStopRef.current = true;
         setEnded(true);
         stopMediaOnly();
@@ -457,7 +458,13 @@ export default function ConversationTestScreen() {
   }
 
   if (ended) {
-    const startLesson = placement?.startLesson;
+    // Niveau = dernier set contenant au moins un score de 3, déterminé EN
+    // DIRECT par le serveur (plus besoin de la découpe Beta ci-dessus,
+    // désormais inutilisée pour ce test — cf. demande explicite du user de
+    // ne pas la supprimer). 0 = même le set 1 n'a jamais été maîtrisé ; on
+    // retombe alors sur sa leçon de départ par défaut.
+    const startIndex = finalLevel > 0 ? finalLevel - 1 : 0;
+    const startLesson = setStartsRef.current[startIndex];
     const chapId = startLesson ? startLesson.split(".")[0] : null;
     const levelLabel = chapId ? `${displayChapitreLabel(chapId)}.${displayLessonNumber(startLesson)}` : "?";
 
@@ -543,61 +550,61 @@ export default function ConversationTestScreen() {
           Commencer l'aventure!
         </button>
 
-        {/* Vérification temporaire de l'algorithme de placement — cf.
-            demande explicite du user ("par souci de contrôle"). */}
-        <p className="muted" style={{ fontSize: "0.85em", marginTop: 24 }}>
-          {scores.length} question{scores.length > 1 ? "s" : ""} évaluée{scores.length > 1 ? "s" : ""}.
-        </p>
-        <ScoresChart scores={scores} />
-
-        {placement && placement.override && (
-          <div className="card" style={{ marginTop: 16, textAlign: "left", fontSize: "0.8em" }}>
-            <p className="muted" style={{ margin: 0 }}>
-              Placement (contrôle temporaire) — règle spéciale : plus de 8 réponses notées 3, départ forcé
-              au set n°9.
-            </p>
-            <p className="muted" style={{ margin: "4px 0 0" }}>
-              1ère leçon du set n°9 : {placement.startLesson ?? "?"}
-            </p>
-          </div>
-        )}
-
-        {placement && !placement.override && (
-          <div className="card" style={{ marginTop: 16, textAlign: "left", fontSize: "0.8em" }}>
-            <p className="muted" style={{ margin: 0 }}>
-              Placement (contrôle temporaire) — découpe retenue : k = {placement.k}
-            </p>
-            <p className="muted" style={{ margin: "4px 0 0" }}>
-              Somme pondérée gauche : {placement.alphaLeft.toFixed(2)} · succès pondérés droite :{" "}
-              {placement.successRight.toFixed(2)}
-            </p>
-            <p className="muted" style={{ margin: "4px 0 0" }}>
-              p(gauche) médiane Beta : {placement.medianLeft.toFixed(3)} · p(droite) ratio :{" "}
-              {placement.pRight.toFixed(3)} · écart : {placement.gap.toFixed(3)}
-            </p>
-            <p className="muted" style={{ margin: "4px 0 0" }}>
-              1ère leçon du dernier set à gauche : {placement.startLesson ?? "?"}
-            </p>
-          </div>
-        )}
+        {/* Vérification temporaire (cf. demande explicite du user "par
+            souci de contrôle") : le niveau est désormais déterminé EN
+            DIRECT par le serveur (dernier set avec au moins un score de 3),
+            plus besoin de recalculer quoi que ce soit ici. */}
+        <div className="card" style={{ marginTop: 16, textAlign: "left", fontSize: "0.8em" }}>
+          <p className="muted" style={{ margin: 0 }}>
+            Niveau (contrôle temporaire) : dernier set maîtrisé = <strong>{finalLevel}</strong> / 11
+          </p>
+          <p className="muted" style={{ margin: "4px 0 0" }}>
+            1ère leçon de ce set : {startLesson ?? "?"}
+          </p>
+          <p className="muted" style={{ margin: "4px 0 0" }}>
+            Historique du vrai test : {realHistory.map((h, i) => `S${h.set}=${h.score}`).join(" · ") || "(aucune réponse)"}
+          </p>
+        </div>
       </section>
     );
   }
 
   return (
     <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
-      {scores.length > 0 && (
+      {warmupScores.length > 0 && (
         <div
           style={{
-            marginBottom: 8,
+            marginBottom: 4,
             fontSize: "0.75em",
             color: "var(--textSecondary)",
             textAlign: "center",
           }}
         >
-          Scores (contrôle temporaire) : {scores.map((s, i) => `Q${i + 1}=${s}`).join(" · ")}
+          Échauffement, non compté (contrôle temporaire) : {warmupScores.map((s, i) => `Q${i + 1}=${s}`).join(" · ")}
         </div>
       )}
+      {realHistory.length > 0 && (
+        <div
+          style={{
+            marginBottom: 4,
+            fontSize: "0.75em",
+            color: "var(--textSecondary)",
+            textAlign: "center",
+          }}
+        >
+          Historique (contrôle temporaire) : {realHistory.map((h) => `S${h.set}=${h.score}`).join(" · ")}
+        </div>
+      )}
+      <div
+        style={{
+          marginBottom: 8,
+          fontSize: "0.75em",
+          color: "var(--textSecondary)",
+          textAlign: "center",
+        }}
+      >
+        Set actuel (contrôle temporaire) : {currentSet} / 11
+      </div>
       <div className="card card-illustration" style={{ textAlign: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
           <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--cardBorder)" }}>
@@ -634,12 +641,6 @@ export default function ConversationTestScreen() {
             }}
           >
             {status}
-          </p>
-        )}
-
-        {scores.length > 0 && (
-          <p className="muted" style={{ margin: "8px 0 0", fontSize: "0.75em" }}>
-            {scores.length} / 11 exercices évalués.
           </p>
         )}
 
