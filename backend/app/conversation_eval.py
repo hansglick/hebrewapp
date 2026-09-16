@@ -274,8 +274,6 @@ ALORS la réponse n'est pas parfaite :
 
 La prononciation doit permettre d'identifier sans ambiguïté les mots et les formes grammaticales produits.
 
-Une simple différence d'accent ne doit PAS être pénalisée.
-
 En revanche, si une erreur de prononciation :
 - produit un autre mot ;
 - produit une autre forme grammaticale ;

@@ -23,6 +23,13 @@ router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
 MIN_TURN_BYTES = 9600
 
 STOP_STREAK = 3
+# Nombre de scores=3 requis DANS LE SET COURANT avant de passer au set
+# suivant — cf. demande explicite du user. Pas forcément consécutifs (des
+# score=1 intercalés ne remettent pas ce compteur à zéro, seul un passage
+# de set le fait) ; "mastered_level" (utilisé pour le rapport final,
+# "dernier set contenant au moins un score de 3") reste lui mis à jour dès
+# le 1er score=3, indépendamment de ce seuil d'avancement.
+REQUIRED_THREES_PER_SET = 2
 
 
 class ApplyPlacementRequest(BaseModel):
@@ -124,7 +131,8 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             # du user "le backend garde sa propre vérité") :
             warmup_scores: list[int] = []
             current_set = 1
-            mastered_level = 0  # dernier set où un score=3 a été obtenu
+            mastered_level = 0  # dernier set où AU MOINS UN score=3 a été obtenu
+            threes_in_set = 0  # score=3 requis dans le set courant pour avancer
             consecutive_ones = 0
             final_level = None
             last_sent_set = None
@@ -157,7 +165,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
 
             async def from_gemini():
                 nonlocal user_buffer, user_turn_start_ts
-                nonlocal current_set, mastered_level, consecutive_ones, final_level, last_sent_set, ended
+                nonlocal current_set, mastered_level, threes_in_set, consecutive_ones, final_level, last_sent_set, ended
                 nonlocal pending_phrase
                 flushed_this_turn = False
                 ai_turn_start_ts = None
@@ -249,13 +257,21 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 # devra vraiment piocher une nouvelle phrase.
                                 pending_phrase = None
                                 if score == 3:
+                                    # "Au moins un score=3" suffit pour que ce
+                                    # set compte comme maîtrisé dans le
+                                    # rapport final, même s'il n'est pas
+                                    # (encore) suffisant pour AVANCER au set
+                                    # suivant (cf. REQUIRED_THREES_PER_SET).
                                     mastered_level = current_set
                                     consecutive_ones = 0
-                                    if current_set >= 11:
-                                        final_level = 11
-                                        ended = True
-                                    else:
-                                        current_set += 1
+                                    threes_in_set += 1
+                                    if threes_in_set >= REQUIRED_THREES_PER_SET:
+                                        if current_set >= 11:
+                                            final_level = 11
+                                            ended = True
+                                        else:
+                                            current_set += 1
+                                            threes_in_set = 0
                                 else:
                                     consecutive_ones += 1
                                     if consecutive_ones >= STOP_STREAK:
