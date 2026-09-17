@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau } from "../api/user";
 import { getLecon } from "../api/content";
+import { TileTitle } from "../components/TileTitle";
 import "./screens.css";
 
 // Écran de choix atteint depuis la tuile "Parler" de l'accueil :
@@ -37,50 +38,62 @@ export default function ParlerScreen() {
         {referenceLesson &&
           (lecon?.has_concept ? (
             <Link to={`/revision-concept/${referenceLesson}`} className="card-link">
-              <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-                Le concept du jour
+              <div className="card" style={{ textAlign: "center" }}>
+                <TileTitle src="/ampoule.png" gap={20}>Concept du jour</TileTitle>
               </div>
             </Link>
           ) : (
-            <div
-              className="card"
-              style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em", opacity: 0.5, cursor: "default" }}
-              aria-disabled="true"
-            >
-              Le concept du jour
+            <div className="card" style={{ textAlign: "center", opacity: 0.5, cursor: "default" }} aria-disabled="true">
+              <TileTitle src="/ampoule.png" gap={20}>Concept du jour</TileTitle>
             </div>
           ))}
-        {referenceLesson &&
-          (lecon?.has_oral_questions ? (
-            <Link to={`/comprehension-orale/${referenceLesson}`} className="card-link">
-              <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-                Compréhension orale
-              </div>
-            </Link>
-          ) : (
-            <div
-              className="card"
-              style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em", opacity: 0.5, cursor: "default" }}
-              aria-disabled="true"
-            >
-              Compréhension orale
-            </div>
-          ))}
+        {/* Ordre : concept du jour, items du jour, compréhension orale, jeu
+            de rôle — cf. demande explicite du user. */}
         {referenceLesson && (
           <Link to={`/revision-prof/${referenceLesson}`} className="card-link">
-            <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-              Les nouveaux items du jour
+            <div className="card" style={{ textAlign: "center" }}>
+              <TileTitle src="/alefletter.png" gap={20}>Items du jour</TileTitle>
             </div>
           </Link>
         )}
+        {referenceLesson &&
+          (lecon?.has_oral_questions ? (
+            <Link to={`/comprehension-orale/${referenceLesson}`} className="card-link">
+              <div className="card" style={{ textAlign: "center" }}>
+                <TileTitle src="/noiselogo.svg" gap={20}>Compréhension orale</TileTitle>
+              </div>
+            </Link>
+          ) : (
+            <div className="card" style={{ textAlign: "center", opacity: 0.5, cursor: "default" }} aria-disabled="true">
+              <TileTitle src="/noiselogo.svg" gap={20}>Compréhension orale</TileTitle>
+            </div>
+          ))}
 
         {/* Pas de marginTop supplémentaire : le gap:12px de .tile-list
             suffit déjà, un ajout ici cassait l'uniformité des écarts entre
             tuiles consécutives — cf. demande explicite du user. */}
         {referenceLesson && (
           <Link to={`/jdr/${referenceLesson}`} className="card-link">
-            <div className="card" style={{ textAlign: "center", fontWeight: 600, fontSize: "1.1em" }}>
-              Jeu de rôle
+            <div className="card" style={{ textAlign: "center" }}>
+              {/* Étoile dorée à bordure noire, coin haut droit — même
+                  forme/couleur/position relative que sur la tuile "Parler"
+                  de l'accueil (cf. Accueil.jsx) — cf. demande explicite du
+                  user. */}
+              <svg
+                viewBox="0 0 20 20"
+                width={20}
+                height={20}
+                style={{ position: "absolute", top: -8, right: -8 }}
+              >
+                <polygon
+                  points="10,1 12.9,7.6 20,8.1 14.5,12.9 16.2,20 10,16.2 3.8,20 5.5,12.9 0,8.1 7.1,7.6"
+                  fill="#ffd700"
+                  stroke="#000"
+                  strokeWidth="1"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <TileTitle src="/role.png" gap={20}>Jeu de rôle</TileTitle>
             </div>
           </Link>
         )}

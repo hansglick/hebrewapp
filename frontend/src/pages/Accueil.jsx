@@ -2,16 +2,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNiveau } from "../api/user";
 import { getOnboardingStatus } from "../api/onboarding";
-import { MaskIcon } from "../components/MaskIcon";
 import { ChapitreLogo } from "../components/ChapitreLogo";
+import { TileTitle } from "../components/TileTitle";
 import { displayChapitreLabel } from "../utils/chapitreDisplay";
 import { displayLessonNumber } from "../utils/lessonDisplay";
 import "./screens.css";
 
-// Icône sobre à l'extrémité gauche du titre de chaque tuile (pas de débord
-// ni de pulsation, contrairement aux tuiles d'attente d'examen — une tuile
-// d'accueil est utilisée en permanence, cf. demande explicite du user). Le
-// reste du contenu de la tuile (sous ce titre) reste centré comme avant.
 // Hauteur explicite partagée par les tuiles "Examen" et "Examen Blanc" —
 // pour rester strictement identique entre les deux quelle que soit la
 // longueur du texte ("Examen" vs "Examen Blanc"), cf. demande explicite du
@@ -19,24 +15,6 @@ import "./screens.css";
 // simple (padding:12px 14px de .card + une ligne de contenu ~24px + les
 // bordures), comme "Parler"/"Apprendre" plus haut.
 const EXAM_TILE_HEIGHT = 50;
-
-function TileTitle({ src, color, children }) {
-  return (
-    // gap:14 (pas 8) : le transform:scale(1.5) du logo déborde de ~5.5px
-    // sur sa droite (sa boîte de mise en page reste 22px, mesurée par ce
-    // gap, alors que son rendu visuel fait 33px) — sans ce +6px, le logo
-    // grossi mordait visuellement sur l'espace vers le titre, cf. bug
-    // rapporté par le user ("trop collés").
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
-      {/* transform:scale (pas size) : agrandit le logo de 50% sans toucher
-          à sa boîte de mise en page (22px), donc sans changer la hauteur
-          de la ligne ni la dimension de la tuile — cf. demande explicite
-          du user. */}
-      <MaskIcon src={src} size={22} color={color} style={{ transform: "scale(1.5)" }} />
-      <span style={{ fontWeight: 600, fontSize: "1.1em" }}>{children}</span>
-    </div>
-  );
-}
 
 export default function Accueil() {
   const [niveau, setNiveau] = useState(null);
@@ -105,6 +83,79 @@ export default function Accueil() {
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
   }, [pseudo, niveau]);
+
+  // Desktop UNIQUEMENT (même seuil que .accueil-columns, screens.css) :
+  // toutes les colonnes prennent la même largeur que "Apprendre" (la
+  // première), plutôt que leur largeur naturelle propre à leur texte — cf.
+  // demande explicite du user. Sur mobile (.accueil-columns empilé en
+  // colonne), on retire l'override pour retrouver la largeur pleine
+  // habituelle de chaque tuile.
+  useLayoutEffect(() => {
+    function apply() {
+      const columns = [...document.querySelectorAll(".accueil-columns > .tile-list")];
+      if (columns.length < 2) return;
+      const isDesktop = window.matchMedia("(min-width: 601px)").matches;
+      if (!isDesktop) {
+        columns.forEach((el) => {
+          el.style.width = "";
+          el.style.flexShrink = "";
+        });
+        return;
+      }
+      // .tile-list a width:100% en CSS (screens.css) : en tant qu'enfant
+      // flex, ça lui donne une base de calcul énorme (100% du conteneur),
+      // que le navigateur ne réduit ensuite QUE jusqu'au min-content de
+      // CHAQUE colonne (jamais en dessous) — d'où les largeurs toutes
+      // différentes constatées avant ce fix. On neutralise donc d'abord ce
+      // width:100% (width:"auto", flexShrink:0) sur les 4 colonnes pour
+      // mesurer la largeur naturelle réelle de "Apprendre", puis on
+      // l'applique aux 3 autres (et on la fige aussi sur "Apprendre" lui-
+      // même, pour qu'aucune des 4 ne varie plus au fil des reflows
+      // suivants) — cf. demande explicite du user.
+      columns.forEach((el) => {
+        el.style.width = "auto";
+        el.style.flexShrink = "0";
+      });
+      const width = columns[0].getBoundingClientRect().width;
+      columns.forEach((el) => {
+        el.style.width = `${width}px`;
+      });
+    }
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, [niveau]);
+
+  // Toutes les tuiles (desktop ET mobile, pas de condition d'écran ici,
+  // contrairement à la largeur ci-dessus) prennent la même hauteur que la
+  // première ("Apprendre") — cf. demande explicite du user. Neutralise
+  // d'abord toute hauteur déjà posée (dont EXAM_TILE_HEIGHT ci-dessus, qui
+  // ne visait qu'à égaler "Examen"/"Examen Blanc" entre elles) pour mesurer
+  // la hauteur naturelle de référence, puis l'applique à toutes + centre
+  // leur contenu verticalement (flex) pour absorber les tuiles dont le
+  // contenu est naturellement plus haut ou plus bas.
+  useLayoutEffect(() => {
+    function apply() {
+      const cards = [...document.querySelectorAll(".accueil-columns .card")];
+      if (cards.length < 2) return;
+      cards.forEach((el) => {
+        el.style.height = "";
+        el.style.display = "";
+        el.style.alignItems = "";
+        el.style.justifyContent = "";
+      });
+      const height = cards[0].getBoundingClientRect().height;
+      cards.forEach((el) => {
+        el.style.height = `${height}px`;
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.justifyContent = "center";
+      });
+    }
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, [niveau]);
 
   if (!niveau) return null;
 
@@ -187,6 +238,24 @@ export default function Accueil() {
         <div className="tile-list" style={{ gap: 8, margin: 0 }}>
           <Link to="/parler" className="card-link">
             <div className="card" style={{ textAlign: "center" }}>
+              {/* Étoile dorée à bordure noire, coin haut droit — cf.
+                  demande explicite du user. .card a déjà position:relative
+                  (screens.css), donc ce badge se positionne par rapport à
+                  la tuile elle-même. */}
+              <svg
+                viewBox="0 0 20 20"
+                width={20}
+                height={20}
+                style={{ position: "absolute", top: -8, right: -8 }}
+              >
+                <polygon
+                  points="10,1 12.9,7.6 20,8.1 14.5,12.9 16.2,20 10,16.2 3.8,20 5.5,12.9 0,8.1 7.1,7.6"
+                  fill="#ffd700"
+                  stroke="#000"
+                  strokeWidth="1"
+                  strokeLinejoin="round"
+                />
+              </svg>
               <TileTitle src="/speak.png">Parler</TileTitle>
             </div>
           </Link>

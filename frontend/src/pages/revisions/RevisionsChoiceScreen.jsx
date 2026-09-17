@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useConfig } from "../../config/ConfigContext";
 import { ActionHints } from "../../components/ActionHints";
+import { TileTitle } from "../../components/TileTitle";
 import "../screens.css";
 
 export default function RevisionsChoiceScreen() {
@@ -21,13 +22,19 @@ export default function RevisionsChoiceScreen() {
 
       <div className="tile-list">
         <Link to="/revisions/mot" className="card-link">
-          <div className="card">Mot</div>
+          <div className="card">
+            <TileTitle src="/alefletter.png" gap={20}>Mot</TileTitle>
+          </div>
         </Link>
         <Link to="/revisions/verbe" className="card-link">
-          <div className="card">Verbe</div>
+          <div className="card">
+            <TileTitle src="/menorah.svg" gap={20}>Verbe</TileTitle>
+          </div>
         </Link>
         <Link to="/revisions/quizz" className="card-link">
-          <div className="card">Quizz Vocabulaire</div>
+          <div className="card">
+            <TileTitle src="/quizfinal.png" gap={20}>Quizz</TileTitle>
+          </div>
         </Link>
         {/* Réservée au God Mode (cf. useConfig, toggle "God Mode" du
             bouton configuration) — cf. demande explicite du user. */}

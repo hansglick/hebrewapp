@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getLessonCuriosites } from "../../api/content";
+import { markObjectSeen } from "../../api/user";
 import { mediaUrl } from "../../api/media";
 import { COIN_CULTURE_ZONES, CULTURE_IMAGE_SIZE } from "./coinCultureZones";
 import "../screens.css";
@@ -39,6 +40,14 @@ export default function CoinCultureFastScreen() {
     getLessonCuriosites(code).then((data) => setAvailableRawTypes(data.types));
   }, [code]);
 
+  // Marque la tuile "Coin culture" comme visitée pour cette leçon (même
+  // convention que TexteScreen : un seul objet "vu" par leçon) — cf.
+  // demande explicite du user (cercler cette tuile en blanc si jamais
+  // visitée, comme les autres).
+  useEffect(() => {
+    markObjectSeen({ objectType: "curiosite", objectKey: code });
+  }, [code]);
+
   if (!availableRawTypes) return null;
 
   const zones = COIN_CULTURE_ZONES.map((zone) => ({
@@ -72,10 +81,12 @@ export default function CoinCultureFastScreen() {
           l'image map (width:100%/maxWidth:420, cf. le conteneur de
           l'image juste en dessous) — cf. demande explicite du user. */}
       <div className="card" style={{ width: "100%", maxWidth: 420, margin: "0 auto", textAlign: "center" }}>
-        {/* fontSize:"1.4em" (2em par défaut * 0.7, -30%) + fontWeight:400
-            (pas gras) — cf. demande explicite du user. */}
-        <h1 style={{ margin: 0, fontSize: "1.4em", fontWeight: 400 }}>Explore la culture israélienne!</h1>
-        <p className="muted" style={{ margin: "8px 0 0" }}>
+        {/* fontSize:"1.4em" (2em par défaut * 0.7, -30%) + fontWeight:700
+            (gras) — cf. demande explicite du user. */}
+        <h1 style={{ margin: 0, fontSize: "1.4em", fontWeight: 700 }}>Explore la culture israélienne!</h1>
+        {/* .muted vaut 0.85em par défaut ; -25% (cf. demande explicite du
+            user) -> 0.85 * 0.75 = 0.6375em. */}
+        <p className="muted" style={{ margin: "8px 0 0", fontSize: "0.6375em", fontStyle: "italic" }}>
           Explorez la culture israélienne en cliquant les objets posés sur la table!
         </p>
       </div>

@@ -1,7 +1,27 @@
+import json
 import random
 
+from app.config import DATA_DIR
 from app.data_loader import get_dataset
 from app.onboarding_exam import build_sets
+
+# Sélection manuelle faite via l'outil de curation (/dev/phrase-curation) —
+# fichier versionné (backend/data), pas le disque persistant en prod,
+# puisqu'il s'agit d'un choix éditorial destiné à être committé une fois
+# fait, cf. demande explicite du user.
+SELECTED_PHRASES_FILE = DATA_DIR / "selected_phrases.json"
+
+
+def load_selected_phrase_ids() -> dict[str, list[str]]:
+    if not SELECTED_PHRASES_FILE.exists():
+        return {}
+    with open(SELECTED_PHRASES_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_selected_phrase_ids(selection: dict[str, list[str]]) -> None:
+    with open(SELECTED_PHRASES_FILE, "w", encoding="utf-8") as f:
+        json.dump(selection, f, ensure_ascii=False, indent=2)
 
 
 def sample_hebrew_sentences_per_set(k_per_set: int = 2, seed: int | None = None) -> dict[str, list[dict]]:
@@ -64,4 +84,28 @@ def phrases_by_set() -> dict[int, list[dict]]:
                 seen_french.add(french)
                 pool.append(phrase)
         result[set_index] = pool
+    return result
+
+
+def selected_phrases_by_set() -> dict[int, list[dict]]:
+    """Sous-ensemble de phrases_by_set() retenu manuellement par le user via
+    l'outil de curation (/dev/phrase-curation), pour écarter les phrases
+    "poubelles" du vrai test conversationnel — cf. demande explicite du
+    user. Les ids ("{set}:{position}") sont ceux calculés par
+    app.routers.phrase_curation, dans la même énumération de
+    phrases_by_set() : la correspondance ne tient que parce que les deux
+    parcourent le pool dans le même ordre déterministe.
+
+    Si un set n'a AUCUNE phrase marquée (curation pas encore faite pour ce
+    set), retombe sur son pool complet plutôt que de laisser le test sans
+    aucune question à y piocher."""
+    pools = phrases_by_set()
+    selection = load_selected_phrase_ids()
+    result = {}
+    for set_index, pool in pools.items():
+        selected_ids = set(selection.get(str(set_index), []))
+        if not selected_ids:
+            result[set_index] = pool
+            continue
+        result[set_index] = [phrase for i, phrase in enumerate(pool) if f"{set_index}:{i}" in selected_ids]
     return result

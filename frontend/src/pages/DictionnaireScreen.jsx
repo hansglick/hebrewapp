@@ -89,13 +89,13 @@ export default function DictionnaireScreen() {
         <label>
           <input type="radio" name="dict-mode" checked={mode === "he_fr"} onChange={() => handleModeChange("he_fr")} />
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <FlagIsrael size={22} /> → <FlagFrance size={22} />
+            <FlagIsrael size={44} /> → <FlagFrance size={44} />
           </span>
         </label>
         <label>
           <input type="radio" name="dict-mode" checked={mode === "fr_he"} onChange={() => handleModeChange("fr_he")} />
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <FlagFrance size={22} /> → <FlagIsrael size={22} />
+            <FlagFrance size={44} /> → <FlagIsrael size={44} />
           </span>
         </label>
       </div>

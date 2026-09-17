@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 
+from app import curiosites
 from app.auth import get_current_user_id
 from app.data_loader import get_dataset
 from app.database import get_connection
@@ -140,6 +141,19 @@ def get_lecon_exploration(code: str, user_id: int = Depends(get_current_user_id)
             ).fetchone()
             oral_seen = min(oral_row["n"], len(questions))
         categories["oral"] = {"seen": oral_seen, "total": len(questions)}
+
+        # "Coin culture" (image map, cf. CoinCultureFastScreen) : un seul
+        # objet "vu" par leçon (même convention que "texte" ci-dessus),
+        # marqué au premier affichage de l'écran — cf. demande explicite du
+        # user (cercler cette tuile aussi si jamais visitée).
+        position = curiosites.lesson_position(code)
+        has_curiosite = position is not None and any(
+            curiosites.pool_delta(t, position) for t in curiosites.CURIOSITE_TYPES
+        )
+        categories["curiosite"] = {
+            "seen": seen_count("curiosite", [code]) if has_curiosite else 0,
+            "total": 1 if has_curiosite else 0,
+        }
     finally:
         conn.close()
 

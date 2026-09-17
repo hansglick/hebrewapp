@@ -14,7 +14,7 @@ from app.auth import get_current_user_id, get_user_id
 from app.database import DEFAULT_LEVEL, set_user_level
 from app.lesson_order import all_lesson_codes_in_order
 from app.openai_client import extract_verbatim
-from app.phrase_sampling import phrases_by_set
+from app.phrase_sampling import selected_phrases_by_set
 
 router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
 
@@ -86,11 +86,13 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
     # Pools mélangés une fois par connexion : le tirage dans un set se fait
     # ensuite par simple .pop(), sans remise au sein de cette session — cf.
     # demande explicite du user ("tirer aléatoirement une question dans le
-    # set"). Chaque pool compte plusieurs centaines de phrases (vérifié),
-    # jamais de risque d'épuisement (au plus 3 tirages par set avant que le
-    # test n'avance ou ne s'arrête).
+    # set"). Limité aux phrases retenues manuellement via l'outil de
+    # curation (/dev/phrase-curation, cf. demande explicite du user) —
+    # chaque pool en compte au moins 82 (vérifié), jamais de risque
+    # d'épuisement (au plus 3 tirages par set avant que le test n'avance ou
+    # ne s'arrête).
     remaining_by_set: dict[int, list[dict]] = {}
-    for set_index, pool in phrases_by_set().items():
+    for set_index, pool in selected_phrases_by_set().items():
         shuffled = list(pool)
         random.shuffle(shuffled)
         remaining_by_set[set_index] = shuffled

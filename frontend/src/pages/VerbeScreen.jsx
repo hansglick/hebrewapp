@@ -617,8 +617,14 @@ export default function VerbeScreen() {
                 <div style={{ paddingTop: 14, paddingBottom: 14 }}>
                   {/* zoom:1/1.5 annule le zoom:1.5 de .screen, cf. demande
                       explicite du user (même taille que sur les autres
-                      écrans, non affectée par l'agrandissement du verbe). */}
-                  <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5 }}>
+                      écrans, non affectée par l'agrandissement du verbe).
+                      margin:"0 auto" : .card a un max-width (320px) mais
+                      pas de centrage propre — sur desktop, ce wrapper
+                      (width:100%) dépasse cette largeur, et sans marge
+                      auto la carte restait collée à gauche au lieu d'être
+                      centrée sous le verbe — cf. bug rapporté par le
+                      user. */}
+                  <div className="card" style={{ textAlign: "center", zoom: 1 / 1.5, margin: "0 auto" }}>
                     <p className="hebrew-large" style={{ margin: 0, color: binyanDetails.color }}>
                       {binyanDetails.text}
                     </p>

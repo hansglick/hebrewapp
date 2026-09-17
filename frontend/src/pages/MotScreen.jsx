@@ -70,6 +70,16 @@ const shinIconStyle = {
   maskPosition: "center",
 };
 
+// Même format/couleur/dimension que le logo shin de l'écran révision/verbe
+// (cf. VerbeScreen.jsx::shinPillIconStyle, 14px, var(--textSecondary)) — cf.
+// demande explicite du user, à gauche du mot hébreu en révision/mot.
+const shinPillIconStyle = {
+  ...shinIconStyle,
+  width: 14,
+  height: 14,
+  backgroundColor: "var(--textSecondary)",
+};
+
 export default function MotScreen() {
   const { code } = useParams(); // présent seulement si venu par une leçon précise
   const location = useLocation();
@@ -408,11 +418,19 @@ export default function MotScreen() {
               racine collapsé) — ce marginBottom ramène l'écart à 21px, la
               même valeur "équidistance" déjà utilisée comme référence dans
               cet écran — cf. demande explicite du user. */}
-          <span
-            className="hebrew"
-            style={{ fontWeight: 700, fontSize: "2.925em", color: "var(--textPrimary)", marginBottom: 13 }}
-          >
-            {cardMot.original}
+          <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 13 }}>
+            <button
+              type="button"
+              className="speak-btn"
+              style={{ padding: 0 }}
+              onClick={toggleRacineInline}
+              aria-label="Racine"
+            >
+              <span style={shinPillIconStyle} />
+            </button>
+            <span className="hebrew" style={{ fontWeight: 700, fontSize: "2.925em", color: "var(--textPrimary)" }}>
+              {cardMot.original}
+            </span>
           </span>
 
           {/* Fiche racine "tapis" : se déroule vers le bas depuis la
