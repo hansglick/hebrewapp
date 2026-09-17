@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { applyConversationEvalPlacement, conversationEvalWebSocketUrl } from "../../api/conversationEval";
 import { getIdentity } from "../../api/identity";
@@ -290,6 +290,12 @@ export default function ConversationTestScreen() {
   const [currentSet, setCurrentSet] = useState(1);
   const [ended, setEnded] = useState(false);
   const [finalLevel, setFinalLevel] = useState(null);
+  // Coupure anormale (erreur serveur, erreur de socket, fermeture
+  // inattendue — ex. 1006) : affiche un écran dédié avec un bouton pour
+  // relancer le test depuis le début, plutôt qu'un simple texte de statut
+  // sous un micro qui reste dans un état incohérent — cf. demande
+  // explicite du user.
+  const [hasError, setHasError] = useState(false);
 
   const aiBufferRef = useRef("");
   const setStartsRef = useRef([]);
@@ -408,15 +414,41 @@ export default function ConversationTestScreen() {
         stopMediaOnly();
       } else if (msg.type === "error") {
         serverErrorRef.current = true;
-        setStatus("Erreur : " + msg.message);
+        setHasError(true);
+        stopMediaOnly();
       }
     };
 
-    ws.onerror = () => setStatus("Erreur de connexion.");
-    ws.onclose = (event) => {
-      if (intentionalStopRef.current || serverErrorRef.current) return;
-      setStatus(`Connexion fermée (code ${event.code}${event.reason ? " — " + event.reason : ""}).`);
+    ws.onerror = () => {
+      setHasError(true);
+      stopMediaOnly();
     };
+    ws.onclose = () => {
+      if (intentionalStopRef.current || serverErrorRef.current) return;
+      // Fermeture anormale non anticipée (ex. 1006 "abnormal closure") :
+      // le micro/la lecture audio peuvent encore tourner, il faut les
+      // couper avant d'afficher l'écran d'erreur.
+      setHasError(true);
+      stopMediaOnly();
+    };
+  }
+
+  // Repart de zéro après une erreur : efface tout l'état accumulé de la
+  // tentative précédente (échauffement, historique, set courant) plutôt
+  // que de continuer sur une session cassée — cf. demande explicite du
+  // user.
+  function restartAfterError() {
+    intentionalStopRef.current = false;
+    serverErrorRef.current = false;
+    setHasError(false);
+    setStatus("");
+    setAiBuffer("");
+    setLastCompletedAi("");
+    aiBufferRef.current = "";
+    setWarmupScores([]);
+    setRealHistory([]);
+    setCurrentSet(1);
+    start();
   }
 
   // Coupe micro/lecture/websocket SANS toucher à `ended`/`scores` — utilisé
@@ -444,6 +476,17 @@ export default function ConversationTestScreen() {
     setStatus("");
     stopMediaOnly();
     wsRef.current?.close();
+  }
+
+  if (hasError) {
+    return (
+      <section className="screen">
+        <h1 style={{ fontSize: "1.2em", textAlign: "center" }}>Il y a eu une erreur, vous devez repasser le test</h1>
+        <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={restartAfterError}>
+          Commencer le test
+        </button>
+      </section>
+    );
   }
 
   if (ended) {
@@ -674,9 +717,14 @@ export default function ConversationTestScreen() {
                 <div style={{ textAlign: "center" }}>===================================</div>
               )}
               {realHistory.map((entry, i) => (
-                <div key={`r-${i}`}>
-                  • Set {entry.set} — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
-                </div>
+                <Fragment key={`r-${i}`}>
+                  {i > 0 && entry.set !== realHistory[i - 1].set && (
+                    <div style={{ textAlign: "center" }}>===================================</div>
+                  )}
+                  <div>
+                    • Set {entry.set} — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
+                  </div>
+                </Fragment>
               ))}
             </>
           )}
