@@ -284,7 +284,7 @@ export default function OnboardingScreen({ onCompleted }) {
           disabled={skipping}
           onClick={() => setPhase("test-intro")}
         >
-          Évaluer son niveau
+          Evalue ton niveau!
         </button>
         <button
           type="button"
@@ -304,20 +304,23 @@ export default function OnboardingScreen({ onCompleted }) {
       <section className="screen">
         {/* 1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%, cf. demande
             explicite du user. */}
-        <h1 style={{ fontSize: "1.4em" }}>Évaluation de ton niveau</h1>
+        <h1 style={{ fontSize: "1.4em" }}>Evalue ton niveau!</h1>
         {/* Encadré de même largeur que le bouton "Commencer le test !" (.card
             et .exam-tile partagent width:100%/max-width:320px) ; police
             réduite de 15% (0.9em * 0.85 = 0.765em) — cf. demande explicite
             du user. */}
         <div className="card">
           <p className="muted" style={{ fontSize: "0.765em", margin: 0 }}>
-            Un test rapide de quelques questions nous permettra d'évaluer ton niveau et ainsi de déterminer
-            où commencer ton parcours. Cependant, tu peux commencer à la première leçon si tu es débutant.
+            Afin de te faire démarrer dans les meilleures conditions, ton professeure{" "}
+            <span style={{ fontStyle: "italic" }}>'Gali'</span> va te poser quelques questions afin d'évaluer
+            ton niveau en hébreu.
           </p>
           <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
-            Pas de panique, si l'estimation s'avère trop éloigné de ton niveau réel, tu pourras toujours
-            monter ou descendre de niveau en cliquant sur le logo central de la barre de contrôle
-            supérieure qui représente ta progression.
+            Pas de panique, si ton professeure t'a mal évalué, tu pourras toujours monter ou descendre de
+            niveau en cliquant sur le logo central de la barre de contrôle.
+          </p>
+          <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
+            Toutefois, si tu le souhaites, tu peux commencer directement à la première leçon.
           </p>
         </div>
         {startError && (
@@ -341,7 +344,7 @@ export default function OnboardingScreen({ onCompleted }) {
           style={{ cursor: "pointer" }}
           onClick={() => navigate("/dev/conversation-eval")}
         >
-          Test Conversationnelle
+          Commencer le test!
         </button>
         <button
           type="button"
@@ -350,7 +353,7 @@ export default function OnboardingScreen({ onCompleted }) {
           disabled={starting || skipping}
           onClick={handleSkip}
         >
-          Je préfère commencer à la première leçon
+          Commencer à la première leçon
         </button>
       </section>
     );

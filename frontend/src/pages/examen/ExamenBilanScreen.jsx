@@ -44,15 +44,22 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
           {/* Renvoie vers la copie de l'examen que l'étudiant vient de
               passer (clic sur le logo) — cf. demande explicite du user. */}
           {attemptId != null && (
-            <li style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={labelStyle}>Consultez ma copie</span>
-              <button
-                type="button"
-                onClick={() => navigate(`/examen/copies/${attemptId}`)}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", lineHeight: 0 }}
-              >
-                <img src={mediaUrl("logos/document.png")} alt="Consulter ma copie" style={{ width: 24, height: 24 }} />
-              </button>
+            // Puce manquante corrigée : display:"flex" posé directement sur
+            // le <li> lui remplaçait son display:"list-item" par défaut,
+            // supprimant la puce — cf. bug rapporté par le user. Le flex
+            // passe maintenant sur un <span> imbriqué, le <li> retrouve son
+            // display par défaut et sa puce.
+            <li>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <span style={labelStyle}>Consultez ma copie</span>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/examen/copies/${attemptId}`)}
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", lineHeight: 0 }}
+                >
+                  <img src={mediaUrl("logos/document.png")} alt="Consulter ma copie" style={{ width: 24, height: 24 }} />
+                </button>
+              </span>
             </li>
           )}
         </ul>

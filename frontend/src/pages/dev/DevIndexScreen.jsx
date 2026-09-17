@@ -54,6 +54,12 @@ const PREVIEWS = [
     description:
       "Parcourir les phrases fr/hébreu de chaque set et sélectionner celles à garder pour le test conversationnel (élimine les phrases 'poubelles').",
   },
+  {
+    to: "/dev/onboarding-journey-preview",
+    label: "Parcours onboarding complet",
+    description:
+      "De l'inscription à l'arrivée sur l'accueil (valeurs simulées, pas de vrai compte créé) — pour évaluer rapidement le rendu graphique de tout le parcours.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec
