@@ -276,8 +276,10 @@ export default function Accueil() {
         {/* Examen Blanc + Examen : empilées verticalement dans la même
             colonne, chacune gardant sa propre tuile pleine (.card /
             .card-dark complète, bordure/coins/ombre intacts) — cf. demande
-            explicite du user. */}
-        <div className="tile-list" style={{ gap: 8, margin: 0 }}>
+            explicite du user. gap:16 (comme .accueil-columns, l'écart entre
+            "Apprendre" et "Parler") au lieu de 8 — cf. demande explicite du
+            user. */}
+        <div className="tile-list" style={{ gap: 16, margin: 0 }}>
           <Link to="/examen-blanc" className="card-link">
             <div
               className="card"
