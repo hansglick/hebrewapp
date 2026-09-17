@@ -264,15 +264,21 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # Scores d'échauffement : jamais comptés dans
                             # l'algorithme de niveau, juste relayés pour
                             # affichage (contrôle temporaire, cf. demande
-                            # explicite du user).
+                            # explicite du user). Garde-fou partiel contre un
+                            # double appel du modèle pour la même question
+                            # (bug rapporté par le user, affichage "-") : au-
+                            # delà des 3 phrases fixes connues, on ignore —
+                            # imparfait (un doublon AVANT la 3e question
+                            # resterait indétectable, faute d'un état "phrase
+                            # ouverte" pour l'échauffement, contrairement au
+                            # vrai test ci-dessous), mais sans risque puisque
+                            # ces scores ne comptent jamais dans l'algorithme.
                             for score in warmup_new:
+                                if len(warmup_scores) >= len(conversation_eval.WARMUP_PHRASES):
+                                    continue
                                 warmup_scores.append(score)
                                 idx = len(warmup_scores)
-                                french = (
-                                    conversation_eval.WARMUP_PHRASES[idx - 1]
-                                    if idx <= len(conversation_eval.WARMUP_PHRASES)
-                                    else ""
-                                )
+                                french = conversation_eval.WARMUP_PHRASES[idx - 1]
                                 await safe_send(
                                     {
                                         "type": "warmup_score",
@@ -285,13 +291,26 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # Scores du vrai test : pilotent le set courant et
                             # la condition d'arrêt.
                             for score in real_new:
-                                # `pending_phrase` porte la phrase servie pour
-                                # LA question qu'on note ici — capturée avant
-                                # la remise à None juste en dessous (cf.
-                                # demande explicite du user, affichage du
-                                # détail question par question côté
-                                # frontend).
-                                answered_french = pending_phrase["french"] if pending_phrase else ""
+                                # Garde-fou contre un double appel de
+                                # `report_evaluation` pour LA MÊME question
+                                # (ex. le modèle note une réponse hésitante
+                                # trop tôt puis note à nouveau après
+                                # reformulation) — cf. bugs rapportés par le
+                                # user (affichage "-", décalage score/
+                                # question, fin de test prématurée par
+                                # double-comptage). `pending_phrase` n'est
+                                # non-None QUE tant que la question tirée par
+                                # le dernier `next_question` n'a pas encore
+                                # été notée ; un appel qui arrive alors qu'il
+                                # est déjà à None n'a aucune question à
+                                # laquelle s'attacher, donc pas de score fiable
+                                # à en tirer — on l'ignore silencieusement
+                                # (premier appel gagne, pas de rollback des
+                                # compteurs pour un second appel, plus simple
+                                # et plus sûr qu'une logique de correction).
+                                if pending_phrase is None:
+                                    continue
+                                answered_french = pending_phrase["french"]
                                 await safe_send(
                                     {
                                         "type": "score",
