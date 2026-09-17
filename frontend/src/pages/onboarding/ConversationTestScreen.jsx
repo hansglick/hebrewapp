@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { applyConversationEvalPlacement, conversationEvalWebSocketUrl } from "../../api/conversationEval";
 import { getIdentity } from "../../api/identity";
-import { MaskIcon } from "../../components/MaskIcon";
+import { AppConceptIntroScreen } from "../../components/AppConceptIntroScreen";
 import { MicrophoneIcon } from "../../components/MicrophoneIcon";
 import { useWakeLock } from "../../hooks/useWakeLock";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
@@ -287,7 +287,6 @@ export default function ConversationTestScreen() {
   const [warmupScores, setWarmupScores] = useState([]);
   // Historique du vrai test : [{set, french, score}, ...].
   const [realHistory, setRealHistory] = useState([]);
-  const [currentSet, setCurrentSet] = useState(1);
   const [ended, setEnded] = useState(false);
   const [finalLevel, setFinalLevel] = useState(null);
   // Coupure anormale (erreur serveur, erreur de socket, fermeture
@@ -403,8 +402,6 @@ export default function ConversationTestScreen() {
         setStartsRef.current = msg.codes;
       } else if (msg.type === "warmup_score") {
         setWarmupScores((prev) => [...prev, { french: msg.french, score: msg.score }]);
-      } else if (msg.type === "set") {
-        setCurrentSet(msg.set);
       } else if (msg.type === "score") {
         setRealHistory((prev) => [...prev, { set: msg.set, french: msg.french, score: msg.score }]);
       } else if (msg.type === "conversation_ended") {
@@ -447,7 +444,6 @@ export default function ConversationTestScreen() {
     aiBufferRef.current = "";
     setWarmupScores([]);
     setRealHistory([]);
-    setCurrentSet(1);
     start();
   }
 
@@ -513,124 +509,37 @@ export default function ConversationTestScreen() {
     }
 
     return (
-      <section className="screen">
-        <h1 style={{ fontSize: "1.4em", textAlign: "center" }}>
-          {pseudo}, tu es de niveau <strong>{levelLabel}</strong>
-        </h1>
-
-        <div className="card" style={{ textAlign: "left", fontSize: "0.85em" }}>
-          <p style={{ margin: 0 }}>
-            D'après les résultats du test, tu serais de niveau <strong>{levelLabel}</strong>. Commence dès
-            à présent à apprendre l'hébreu. À chaque leçon, ton objectif est de réussir l'examen afin de
-            débloquer la leçon suivante. Pour réussir ce challenge, tu peux explorer les 4 options qui
-            s'offrent à toi dans ton écran d'accueil :
-          </p>
-
-          <ul style={{ margin: "12px 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
-            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <MaskIcon src="/openbook.png" size={20} style={{ marginTop: 2 }} />
-              <span>
-                <strong>Apprendre : </strong>
-                Apprends l'hébreu à travers un texte, puis retrouve les mots de vocabulaire, les tournures
-                de phrases et même quelques informations culturelles sur Israël pour te détendre.
-              </span>
-            </li>
-            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <MaskIcon src="/speak.png" size={20} style={{ marginTop: 2 }} />
-              <span>
-                <strong>Parler : </strong>
-                Immerge-toi réellement dans la langue hébreu à travers quelques exercices et autres jeux
-                de rôle pour te mettre en situation.
-              </span>
-            </li>
-            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <MaskIcon src="/revision.png" size={20} style={{ marginTop: 2 }} />
-              <span>
-                <strong>Renforcer : </strong>
-                Révise le vocabulaire et la conjugaison des nouveaux verbes de la leçon.
-              </span>
-            </li>
-            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <MaskIcon src="/examhat.png" size={20} style={{ marginTop: 2 }} />
-              <span>
-                <strong>Examen blanc : </strong>
-                Entraîne-toi à passer l'examen à travers des exercices de même niveau d'exigeance que
-                l'examen final.
-              </span>
-            </li>
-            <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <MaskIcon src="/examhat.png" size={20} style={{ marginTop: 2 }} />
-              <span>
-                <strong>Examen : </strong>
-                Le moment tant redouté. Evalue ta progression en acceptant ce challenge qui passera en
-                revue tout ce que tu es censé avoir appris pendant ta leçon. L'examen se décompose en deux
-                formats : le format écrit et le format oral. Il te faut réussir les deux pour débloquer la
-                leçon suivante. Si tel est le cas, tu recevras des shekels que tu pourras échanger contre
-                des lots de cartes à collectioner. Ces cartes représentent des figures incontournables de
-                la renaissance de la langue hébreu et de l'état d'Israël.
-              </span>
-            </li>
-          </ul>
-
-          <p style={{ margin: 0 }}>
-            La route est longue avant d'atteindre le niveau "Sabra". Mais en persévérant, tout arrive !
-            בהצלחה {pseudo}!
-          </p>
-        </div>
-
-        <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={handleStartAdventure}>
-          Commencer l'aventure!
-        </button>
+      <>
+        <AppConceptIntroScreen pseudo={pseudo} levelLabel={levelLabel} onStart={handleStartAdventure} />
 
         {/* Vérification temporaire (cf. demande explicite du user "par
             souci de contrôle") : le niveau est désormais déterminé EN
             DIRECT par le serveur (dernier set avec au moins un score de 3),
-            plus besoin de recalculer quoi que ce soit ici. */}
-        <div className="card" style={{ marginTop: 16, textAlign: "left", fontSize: "0.8em" }}>
-          <p className="muted" style={{ margin: 0 }}>
-            Niveau (contrôle temporaire) : dernier set maîtrisé = <strong>{finalLevel}</strong> / 11
-          </p>
-          <p className="muted" style={{ margin: "4px 0 0" }}>
-            1ère leçon de ce set : {startLesson ?? "?"}
-          </p>
-          <p className="muted" style={{ margin: "4px 0 0" }}>
-            Historique du vrai test : {realHistory.map((h, i) => `S${h.set}=${h.score}`).join(" · ") || "(aucune réponse)"}
-          </p>
+            plus besoin de recalculer quoi que ce soit ici. PAS de className
+            "screen" ici (min-height:60vh + centrage vertical, cf.
+            screens.css) : une seconde section "screen" à la suite de celle
+            d'AppConceptIntroScreen empilait deux centrages verticaux,
+            créant un espace énorme entre les deux — cf. bug rapporté par le
+            user. */}
+        <div style={{ width: "100%", display: "flex", justifyContent: "center", padding: "0 16px 24px" }}>
+          <div className="card" style={{ textAlign: "left", fontSize: "0.8em", width: "100%", maxWidth: 320 }}>
+            <p className="muted" style={{ margin: 0 }}>
+              Niveau (contrôle temporaire) : dernier set maîtrisé = <strong>{finalLevel}</strong> / 11
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              1ère leçon de ce set : {startLesson ?? "?"}
+            </p>
+            <p className="muted" style={{ margin: "4px 0 0" }}>
+              Historique du vrai test : {realHistory.map((h, i) => `S${h.set}=${h.score}`).join(" · ") || "(aucune réponse)"}
+            </p>
+          </div>
         </div>
-      </section>
+      </>
     );
   }
 
-  // Échecs (score=1) par set, calculés à partir de realHistory — sert au
-  // user à vérifier en direct la politique de passage au set suivant
-  // (seuil dynamique selon ce compte, cf. demande explicite du user).
-  const failuresBySet = Array.from(
-    { length: 11 },
-    (_, i) => realHistory.filter((h) => h.set === i + 1 && h.score === 1).length
-  );
-
   return (
     <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
-      <div
-        style={{
-          marginBottom: 4,
-          fontSize: "0.75em",
-          color: "var(--textSecondary)",
-          textAlign: "center",
-        }}
-      >
-        Échecs par set (contrôle temporaire) : {failuresBySet.map((c, i) => `S${i + 1}=${c}`).join(" · ")}
-      </div>
-      <div
-        style={{
-          marginBottom: 8,
-          fontSize: "0.75em",
-          color: "var(--textSecondary)",
-          textAlign: "center",
-        }}
-      >
-        Set actuel (contrôle temporaire) : {currentSet} / 11
-      </div>
       <div className="card card-illustration" style={{ textAlign: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
           <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--cardBorder)" }}>
@@ -652,8 +561,9 @@ export default function ConversationTestScreen() {
               color: "var(--textSecondary)",
             }}
           >
-            <strong style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Test conversationnel : </strong>
-            un professeur IA va te faire passer 11 exercices de traduction à l'oral pour évaluer ton niveau.
+            <strong style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Evaluation orale : </strong>
+            Le professeure גלי va évaluer ton niveau en hébreu à travers quelques exercices de traduction. (Entre 5
+            et 10 minutes).
           </p>
         </div>
 

@@ -140,9 +140,11 @@ export default function ExamenCibleScreen() {
 
   return (
     <section className="screen">
-      <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
-        <span className="binyan-pill" style={{ backgroundColor: "var(--validationPleine)", marginInlineStart: 0 }} />
-        Examen {displayLessonNumber(code)} - {displayChapitreLabel(chapId)}
+      <h1>
+        Examen{" "}
+        <span style={{ fontSize: "0.5em", fontWeight: 400 }}>
+          {displayChapitreLabel(chapId)}.{displayLessonNumber(code)}
+        </span>
       </h1>
 
       {/* Avertissement systématique (indépendant de ecrit_passed/

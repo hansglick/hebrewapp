@@ -6,13 +6,12 @@ import {
   getCurrentOnboardingExam,
   getCurrentQuicktestExam,
   skipOnboarding,
-  startOnboardingExam,
-  startQuicktestExam,
 } from "../../api/onboarding";
 import { getIdentity } from "../../api/identity";
 import { evaluateOral, evaluateTranslation } from "../../api/gemini";
 import { mediaUrl } from "../../api/media";
 import { blobToWavBlob } from "../../utils/audioEncode";
+import { AppConceptIntroScreen } from "../../components/AppConceptIntroScreen";
 import HebrewInput from "../../components/HebrewInput";
 import { OralAnswerCapture } from "../../components/OralAnswerCapture";
 import { GeminiWaiting } from "../../components/GeminiWaiting";
@@ -78,9 +77,8 @@ function StarRating({ rating }) {
 
 export default function OnboardingScreen({ onCompleted }) {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState("loading"); // loading | intro | test-intro | question | done
+  const [phase, setPhase] = useState("loading"); // loading | intro | question | done
   const [startError, setStartError] = useState(null);
-  const [starting, setStarting] = useState(false);
   const [skipping, setSkipping] = useState(false);
   const pseudo = getIdentity()?.pseudo ?? "";
 
@@ -145,23 +143,6 @@ export default function OnboardingScreen({ onCompleted }) {
     setIsRecording(false);
     setResult(null);
     setGeminiError(null);
-  }
-
-  async function handleStart(chosenVariant) {
-    setVariant(chosenVariant);
-    setStarting(true);
-    setStartError(null);
-    try {
-      const data = await (chosenVariant === "quick" ? startQuicktestExam() : startOnboardingExam());
-      setQuestionNumber(data.question_number);
-      setTotalQuestions(data.total_questions);
-      setQuestion(data.question);
-      setPhase("question");
-    } catch (e) {
-      setStartError(e.message);
-    } finally {
-      setStarting(false);
-    }
   }
 
   async function handleSkip() {
@@ -277,12 +258,41 @@ export default function OnboardingScreen({ onCompleted }) {
         <h1 className="hebrew" style={{ direction: "rtl", fontWeight: 400 }}>
           שלום <strong style={{ fontWeight: 600 }}>{pseudo}</strong> !
         </h1>
+        {/* Encadré auparavant sur son propre écran ("test-intro", supprimé —
+            cf. demande explicite du user), déplacé ici entre le titre et le
+            bouton "Evalue ton niveau!". marginTop:-8 : réduit de moitié le
+            gap:16px de .screen entre le titre et cet encadré — cf. demande
+            explicite du user. */}
+        <div className="card" style={{ marginTop: -8 }}>
+          <p className="muted" style={{ fontSize: "0.765em", margin: 0 }}>
+            Afin de te faire démarrer dans les meilleures conditions, ton professeure{" "}
+            <span style={{ fontStyle: "italic" }}>'גלי'</span> va te poser quelques questions afin d'évaluer
+            ton niveau en hébreu.
+          </p>
+          {/* margin:"1em 0 0" (pas "8px 0 0") : saute une ligne entre
+              chaque paragraphe — cf. demande explicite du user. */}
+          <p className="muted" style={{ fontSize: "0.765em", margin: "1em 0 0" }}>
+            Pas de panique, si ton professeure t'a mal évalué, tu pourras toujours monter ou descendre de
+            niveau en cliquant sur le logo central de la barre de contrôle.
+          </p>
+          <p className="muted" style={{ fontSize: "0.765em", margin: "1em 0 0" }}>
+            Toutefois, si tu le souhaites, tu peux commencer dès à présent à la première leçon!
+          </p>
+        </div>
+        {startError && (
+          <p className="muted" style={{ color: "var(--annulationPleine)" }}>
+            {startError}
+          </p>
+        )}
+        {/* "Evalue ton niveau!" navigue désormais directement vers le test
+            conversationnel (l'ancien écran intermédiaire "test-intro" a été
+            supprimé) — cf. demande explicite du user. */}
         <button
           type="button"
           className="exam-tile green"
           style={{ cursor: "pointer" }}
           disabled={skipping}
-          onClick={() => setPhase("test-intro")}
+          onClick={() => navigate("/dev/conversation-eval")}
         >
           Evalue ton niveau!
         </button>
@@ -299,108 +309,20 @@ export default function OnboardingScreen({ onCompleted }) {
     );
   }
 
-  if (phase === "test-intro") {
-    return (
-      <section className="screen">
-        {/* 1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%, cf. demande
-            explicite du user. */}
-        <h1 style={{ fontSize: "1.4em" }}>Evalue ton niveau!</h1>
-        {/* Encadré de même largeur que le bouton "Commencer le test !" (.card
-            et .exam-tile partagent width:100%/max-width:320px) ; police
-            réduite de 15% (0.9em * 0.85 = 0.765em) — cf. demande explicite
-            du user. */}
-        <div className="card">
-          <p className="muted" style={{ fontSize: "0.765em", margin: 0 }}>
-            Afin de te faire démarrer dans les meilleures conditions, ton professeure{" "}
-            <span style={{ fontStyle: "italic" }}>'Gali'</span> va te poser quelques questions afin d'évaluer
-            ton niveau en hébreu.
-          </p>
-          <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
-            Pas de panique, si ton professeure t'a mal évalué, tu pourras toujours monter ou descendre de
-            niveau en cliquant sur le logo central de la barre de contrôle.
-          </p>
-          <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
-            Toutefois, si tu le souhaites, tu peux commencer directement à la première leçon.
-          </p>
-        </div>
-        {startError && (
-          <p className="muted" style={{ color: "var(--annulationPleine)" }}>
-            {startError}
-          </p>
-        )}
-        {/* Les boutons "Commencez le test" (algorithme adaptatif quick-test)
-            et "QCM" ont été retirés de cet écran — cf. demande explicite du
-            user. Leurs structures sous-jacentes (handleStart("quick"),
-            route /dev/qcm-niveau, backend/app/quicktest_exam.py) restent
-            intactes, au cas où il faille les réafficher plus tard. */}
-        {/* Outil de conception (pas encore le vrai algorithme de niveau) :
-            lance le test conversationnel (Gemini Live, 11 exercices de
-            traduction notés) — cf. demande explicite du user. Couleur vive
-            (exam-tile green, pas pastel) : c'est désormais LE bouton
-            principal de cet écran. */}
-        <button
-          type="button"
-          className="exam-tile green"
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/dev/conversation-eval")}
-        >
-          Commencer le test!
-        </button>
-        <button
-          type="button"
-          className="exam-tile green pastel"
-          style={{ cursor: "pointer" }}
-          disabled={starting || skipping}
-          onClick={handleSkip}
-        >
-          Commencer à la première leçon
-        </button>
-      </section>
-    );
-  }
-
   if (phase === "done") {
+    // "[label du chapitre].[index de la leçon]" à partir de
+    // doneResult.reference_lesson (toujours présent, y compris pour
+    // skipOnboarding, cf. son retour {"reference_lesson": ...}).
     const chapId = doneResult.reference_lesson ? doneResult.reference_lesson.split(".")[0] : null;
-    // "[label du chapitre].[index de la leçon]" — cf. demande explicite du
-    // user. Repli sur un titre/message génériques si reference_lesson
-    // manque (ex: skipOnboarding, qui ne fixe pas de niveau estimé).
-    const levelLabel = chapId ? `${displayChapitreLabel(chapId)}.${displayLessonNumber(doneResult.reference_lesson)}` : null;
-    return (
-      <section className="screen">
-        {/* 1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%. "Félicitations
-            tu as le niveau" en graisse normale, le niveau lui-même en gras —
-            cf. demande explicite du user. */}
-        <h1 style={{ fontSize: "1.4em", fontWeight: 400 }}>
-          {levelLabel ? (
-            <>
-              Félicitations tu as le niveau <strong style={{ fontWeight: 600 }}>{levelLabel}</strong> !
-            </>
-          ) : (
-            "C'est parti !"
-          )}
-        </h1>
-        {/* Encadré de même largeur que le bouton "Commencer" ci-dessous
-            (.card et .exam-tile partagent width:100%/max-width:320px) — cf.
-            demande explicite du user. */}
-        <div className="card">
-          <p className="muted" style={{ fontSize: "0.9em", margin: 0 }}>
-            {levelLabel ? (
-              <>
-                Ton niveau vient d'être estimé à partir des résultats du test d'évaluation, tu as le niveau{" "}
-                <strong style={{ fontWeight: 600 }}>{levelLabel}</strong>. Tu pourras toujours monter ou
-                descendre de niveau en cliquant sur le milieu de la barre de contrôle si tu estimes que
-                cela ne reflète pas ton niveau réel.
-              </>
-            ) : (
-              "Ton niveau de départ vient d'être fixé à partir de tes réponses. Tu peux commencer à apprendre dès maintenant."
-            )}
-          </p>
-        </div>
-        <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={onCompleted}>
-          Commencer
-        </button>
-      </section>
-    );
+    const levelLabel = chapId ? `${displayChapitreLabel(chapId)}.${displayLessonNumber(doneResult.reference_lesson)}` : "?";
+    // Ancien écran "Résultats" (Félicitations/"C'est parti !") supprimé —
+    // remplacé par la même page de transition qui présente le concept de
+    // l'app (Apprendre/Parler/Renforcer/Examen) qu'après le test
+    // conversationnel, cf. AppConceptIntroScreen — cf. demande explicite du
+    // user. onStart=onCompleted (pas de nouvel appel de placement ici : le
+    // niveau a déjà été fixé par skipOnboarding/l'avancée du QCM juste
+    // avant).
+    return <AppConceptIntroScreen pseudo={pseudo} levelLabel={levelLabel} onStart={onCompleted} />;
   }
 
   // true dès l'envoi de la réponse (pendant l'attente ET une fois notée) —

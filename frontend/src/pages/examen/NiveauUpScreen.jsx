@@ -64,15 +64,16 @@ export function NiveauUpScreen({ code, finalResult }) {
           1.4em = 2em (taille par défaut d'un h1) * 0.7 : -30%, cf. demande
           explicite du user. */}
       <h1 style={{ textAlign: "center", fontWeight: 400, fontSize: "1.4em" }}>
-        Félicitations {pseudo && <strong style={{ fontWeight: 600 }}>{pseudo}</strong>}, tu atteins le niveau{" "}
-        <strong style={{ fontWeight: 600 }}>
+        Félicitations {pseudo && <strong style={{ fontWeight: 600 }}>{pseudo}</strong>},<br />
+        tu atteins le niveau{" "}
+        <strong style={{ fontWeight: 600, fontSize: "0.5em" }}>
           {displayChapitreLabel(chapId)} {displayLessonNumber(code)}
         </strong>{" "}
         !
       </h1>
 
       <div ref={gainsCardRef} className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320 }}>
-        <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Tes gains :</p>
+        <p style={{ margin: 0, fontWeight: 600, color: "var(--textPrimary)" }}>Résumé :</p>
         <ul
           style={{
             margin: "4px 0 0",

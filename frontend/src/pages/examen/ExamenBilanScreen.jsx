@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { displayLessonCode } from "../../utils/lessonDisplay";
+import { displayChapitreLabel } from "../../utils/chapitreDisplay";
+import { displayLessonNumber } from "../../utils/lessonDisplay";
 import { mediaUrl } from "../../api/media";
 import { NiveauUpScreen } from "./NiveauUpScreen";
 
 const FORMAT_LABELS = { ecrit: "écrit", oral: "oral" };
 
-const labelStyle = { fontStyle: "italic", color: "var(--textSecondary)", fontSize: "0.75em" };
+const labelStyle = { fontWeight: 600, color: "var(--textSecondary)", fontSize: "0.75em" };
 const valueStyle = { color: "var(--textPrimary)", fontSize: "0.75em" };
 
 export function ExamenBilanScreen({ code, finalResult, onRetour }) {
   const navigate = useNavigate();
   const { current, niveau_updated: niveauUpdated, attempt_id: attemptId } = finalResult;
   const [showFelicitations, setShowFelicitations] = useState(false);
+  const chapId = code.split(".")[0];
 
   if (showFelicitations) {
     return <NiveauUpScreen code={code} finalResult={finalResult} />;
@@ -20,8 +22,14 @@ export function ExamenBilanScreen({ code, finalResult, onRetour }) {
 
   return (
     <section className="screen">
-      <h1>
-        Examen {displayLessonCode(code)} / {FORMAT_LABELS[current.exam_type]}
+      {/* Même police (taille non gras 1.4em + niveau en gras) que le titre
+          de NiveauUpScreen ("montée de niveau") — cf. demande explicite du
+          user. */}
+      <h1 style={{ textAlign: "center", fontWeight: 400, fontSize: "1.4em" }}>
+        Bilan de l'examen ({FORMAT_LABELS[current.exam_type]}){" "}
+        <strong style={{ fontWeight: 600, fontSize: "0.5em" }}>
+          {displayChapitreLabel(chapId)}.{displayLessonNumber(code)}
+        </strong>
       </h1>
 
       <div className="card" style={{ textAlign: "start", width: "100%", maxWidth: 320, fontSize: "0.85em" }}>

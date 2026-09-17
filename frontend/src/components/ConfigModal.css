@@ -27,6 +27,17 @@
   justify-content: space-between;
 }
 
+/* Desktop UNIQUEMENT (même seuil que .accueil-columns/screens.css) : la
+   croix de fermeture passe à gauche (row-reverse inverse simplement l'ordre
+   visuel des deux enfants, justify-content:space-between les garde chacun
+   à une extrémité) — cf. demande explicite du user. Mobile inchangé (croix
+   à droite). */
+@media (min-width: 601px) {
+  .config-modal-header {
+    flex-direction: row-reverse;
+  }
+}
+
 .config-modal-row {
   display: flex;
   align-items: center;

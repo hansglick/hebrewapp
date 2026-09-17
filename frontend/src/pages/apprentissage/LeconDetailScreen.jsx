@@ -31,9 +31,20 @@ export default function LeconDetailScreen() {
 
   return (
     <section className="screen">
-      <h1>
-        Leçon {displayChapitreLabel(chapId)}.{displayLessonNumber(code)}
-      </h1>
+      {/* .card partage déjà width:100%/max-width:320px avec .tile-list
+          (screens.css) — même largeur que les tuiles ci-dessous sans
+          wrapper supplémentaire ; fond/bordure rendus invisibles ici — cf.
+          demande explicite du user. */}
+      <div className="card" style={{ background: "transparent", border: "none", textAlign: "center" }}>
+        {/* -33% (2em * 0.67 = 1.34em) ; non gras sauf le niveau — cf.
+            demande explicite du user. */}
+        <h1 style={{ margin: 0, fontSize: "0.938em", fontWeight: 400, fontStyle: "italic" }}>
+          Matériel pédagogique de la leçon{" "}
+          <strong style={{ fontWeight: 600, fontStyle: "normal" }}>
+            {displayChapitreLabel(chapId)}.{displayLessonNumber(code)}
+          </strong>
+        </h1>
+      </div>
 
       <div className="tile-list">
         {lecon.text && (

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppConceptIntroScreen } from "../../components/AppConceptIntroScreen";
 import HebrewInput from "../../components/HebrewInput";
 import { SectionTitle } from "../../components/QuoteBlock";
 import { displayChapitreLabel } from "../../utils/chapitreDisplay";
@@ -41,8 +42,7 @@ const stepHr = (
 const PHASES = [
   { key: "inscription", label: "Inscription" },
   { key: "intro", label: "Intro onboarding" },
-  { key: "test-intro", label: "Modalités du test" },
-  { key: "done", label: "Résultat" },
+  { key: "done", label: "Concept de l'app" },
 ];
 
 // Parcours complet de l'onboarding, de l'inscription jusqu'au clic final qui
@@ -67,29 +67,58 @@ export default function OnboardingJourneyPreviewScreen() {
   // d'exemple arbitraire pour le chemin "test complété".
   const [doneLesson, setDoneLesson] = useState("0.01");
 
+  const tabs = (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 16 }}>
+      {PHASES.map((p) => (
+        <button
+          key={p.key}
+          type="button"
+          className="link-btn"
+          style={{
+            border: "1px solid var(--cardBorder)",
+            borderRadius: 8,
+            padding: "4px 10px",
+            fontSize: "0.8em",
+            textDecoration: "none",
+            background: phase === p.key ? "var(--accent)" : "none",
+            color: phase === p.key ? "#fff" : "var(--accent)",
+          }}
+          onClick={() => setPhase(p.key)}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+  );
+
+  // AppConceptIntroScreen a déjà son propre <section className="screen">
+  // (composant partagé aussi utilisé seul par ConversationTestScreen.jsx/
+  // OnboardingScreen.jsx) — rendu ici en dehors de la section ci-dessous
+  // (pas imbriqué dedans) pour la phase "done", afin de ne pas emboîter
+  // deux ".screen" l'un dans l'autre.
+  if (phase === "done") {
+    return (
+      <>
+        {/* PAS de className "screen" ici (min-height:60vh + centrage
+            vertical, cf. screens.css) : empilé avec la section "screen"
+            d'AppConceptIntroScreen juste après, ça créait un espace énorme
+            entre les deux — cf. bug rapporté par le user. */}
+        <div style={{ width: "100%", padding: "24px 16px 0", boxSizing: "border-box" }}>{tabs}</div>
+        <AppConceptIntroScreen
+          pseudo={pseudo || "דוגמה"}
+          levelLabel={`${displayChapitreLabel("0")}.${displayLessonNumber(doneLesson)}`}
+          // Dernière étape du parcours : navigue vers le VRAI écran
+          // d'accueil (pas une reproduction fictive) — cf. demande
+          // explicite du user ("jusqu'à l'arrivée à la page d'accueil").
+          onStart={() => navigate("/")}
+        />
+      </>
+    );
+  }
+
   return (
     <section className="screen">
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 16 }}>
-        {PHASES.map((p) => (
-          <button
-            key={p.key}
-            type="button"
-            className="link-btn"
-            style={{
-              border: "1px solid var(--cardBorder)",
-              borderRadius: 8,
-              padding: "4px 10px",
-              fontSize: "0.8em",
-              textDecoration: "none",
-              background: phase === p.key ? "var(--accent)" : "none",
-              color: phase === p.key ? "#fff" : "var(--accent)",
-            }}
-            onClick={() => setPhase(p.key)}
-          >
-            {p.label}
-          </button>
-        ))}
-      </div>
+      {tabs}
 
       {phase === "inscription" && (
         <>
@@ -169,43 +198,21 @@ export default function OnboardingJourneyPreviewScreen() {
           <h1 className="hebrew" style={{ direction: "rtl", fontWeight: 400 }}>
             שלום <strong style={{ fontWeight: 600 }}>{pseudo || "דוגמה"}</strong> !
           </h1>
-          <button
-            type="button"
-            className="exam-tile green"
-            style={{ cursor: "pointer" }}
-            onClick={() => setPhase("test-intro")}
-          >
-            Evalue ton niveau!
-          </button>
-          <button
-            type="button"
-            className="exam-tile green pastel"
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              setDoneLesson("0.01");
-              setPhase("done");
-            }}
-          >
-            Commencer à la première leçon
-          </button>
-        </>
-      )}
-
-      {phase === "test-intro" && (
-        <>
-          <h1 style={{ fontSize: "1.4em" }}>Evalue ton niveau!</h1>
-          <div className="card">
+          {/* Encadré auparavant sur son propre écran ("test-intro", supprimé
+              — cf. demande explicite du user), déplacé ici entre le titre et
+              le bouton "Evalue ton niveau!". */}
+          <div className="card" style={{ marginTop: -8 }}>
             <p className="muted" style={{ fontSize: "0.765em", margin: 0 }}>
               Afin de te faire démarrer dans les meilleures conditions, ton professeure{" "}
-              <span style={{ fontStyle: "italic" }}>'Gali'</span> va te poser quelques questions afin
+              <span style={{ fontStyle: "italic" }}>'גלי'</span> va te poser quelques questions afin
               d'évaluer ton niveau en hébreu.
             </p>
-            <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
+            <p className="muted" style={{ fontSize: "0.765em", margin: "1em 0 0" }}>
               Pas de panique, si ton professeure t'a mal évalué, tu pourras toujours monter ou descendre de
               niveau en cliquant sur le logo central de la barre de contrôle.
             </p>
-            <p className="muted" style={{ fontSize: "0.765em", margin: "8px 0 0" }}>
-              Toutefois, si tu le souhaites, tu peux commencer directement à la première leçon.
+            <p className="muted" style={{ fontSize: "0.765em", margin: "1em 0 0" }}>
+              Toutefois, si tu le souhaites, tu peux commencer dès à présent à la première leçon!
             </p>
           </div>
           {/* Le vrai bouton navigue vers /dev/conversation-eval (test en
@@ -221,7 +228,7 @@ export default function OnboardingJourneyPreviewScreen() {
               setPhase("done");
             }}
           >
-            Commencer le test!
+            Evalue ton niveau!
           </button>
           <button
             type="button"
@@ -233,34 +240,6 @@ export default function OnboardingJourneyPreviewScreen() {
             }}
           >
             Commencer à la première leçon
-          </button>
-        </>
-      )}
-
-      {phase === "done" && (
-        <>
-          <h1 style={{ fontSize: "1.4em", fontWeight: 400 }}>
-            Félicitations tu as le niveau{" "}
-            <strong style={{ fontWeight: 600 }}>
-              {displayChapitreLabel("0")}.{displayLessonNumber(doneLesson)}
-            </strong>{" "}
-            !
-          </h1>
-          <div className="card">
-            <p className="muted" style={{ fontSize: "0.9em", margin: 0 }}>
-              Ton niveau vient d'être estimé à partir des résultats du test d'évaluation, tu as le niveau{" "}
-              <strong style={{ fontWeight: 600 }}>
-                {displayChapitreLabel("0")}.{displayLessonNumber(doneLesson)}
-              </strong>
-              . Tu pourras toujours monter ou descendre de niveau en cliquant sur le milieu de la barre de
-              contrôle si tu estimes que cela ne reflète pas ton niveau réel.
-            </p>
-          </div>
-          {/* Dernière étape du parcours : navigue vers le VRAI écran
-              d'accueil (pas une reproduction fictive) — cf. demande
-              explicite du user ("jusqu'à l'arrivée à la page d'accueil"). */}
-          <button type="button" className="exam-tile green" style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-            Commencer
           </button>
         </>
       )}
