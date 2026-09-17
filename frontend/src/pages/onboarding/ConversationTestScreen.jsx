@@ -558,8 +558,26 @@ export default function ConversationTestScreen() {
     );
   }
 
+  // Échecs (score=1) par set, calculés à partir de realHistory — sert au
+  // user à vérifier en direct la politique de passage au set suivant
+  // (seuil dynamique selon ce compte, cf. demande explicite du user).
+  const failuresBySet = Array.from(
+    { length: 11 },
+    (_, i) => realHistory.filter((h) => h.set === i + 1 && h.score === 1).length
+  );
+
   return (
     <section className="screen" style={{ justifyContent: "flex-start", marginTop: 24, marginBottom: "auto" }}>
+      <div
+        style={{
+          marginBottom: 4,
+          fontSize: "0.75em",
+          color: "var(--textSecondary)",
+          textAlign: "center",
+        }}
+      >
+        Échecs par set (contrôle temporaire) : {failuresBySet.map((c, i) => `S${i + 1}=${c}`).join(" · ")}
+      </div>
       <div
         style={{
           marginBottom: 8,

@@ -28,7 +28,10 @@ STOP_STREAK = 3
 # score=1 intercalés ne remettent pas ce compteur à zéro, seul un passage
 # de set le fait) ; "mastered_level" (utilisé pour le rapport final,
 # "dernier set contenant au moins un score de 3") reste lui mis à jour dès
-# le 1er score=3, indépendamment de ce seuil d'avancement.
+# le 1er score=3, indépendamment de ce seuil d'avancement. Valeur de BASE :
+# si l'étudiant a déjà échoué exactement 2 fois dans le set courant
+# (`ones_in_set == 2`), le seuil réellement appliqué passe à 3 au lieu de
+# 2 — cf. demande explicite du user (voir son usage plus bas).
 REQUIRED_THREES_PER_SET = 2
 
 
@@ -132,8 +135,16 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             warmup_scores: list[int] = []
             current_set = 1
             mastered_level = 0  # dernier set où AU MOINS UN score=3 a été obtenu
-            threes_in_set = 0  # score=3 requis dans le set courant pour avancer
-            consecutive_ones = 0
+            threes_in_set = 0  # score=3 déjà obtenus dans le set courant
+            # score=1 déjà obtenus DANS LE SET COURANT (pas seulement
+            # consécutifs, cf. demande explicite du user) — remis à 0
+            # uniquement quand on avance réellement au set suivant, PAS à
+            # chaque score=3 intercalé (contrairement à l'ancien
+            # `consecutive_ones`, qui se remettait à 0 à tort dès un score=3
+            # sans que le set n'ait avancé, cassant le calcul du seuil requis
+            # ci-dessous et la règle d'arrêt "3 scores de 1 au sein du même
+            # set, pas forcément consécutifs").
+            ones_in_set = 0
             final_level = None
             last_sent_set = None
             ended = False
@@ -173,7 +184,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
 
             async def from_gemini():
                 nonlocal user_buffer, user_turn_start_ts
-                nonlocal current_set, mastered_level, threes_in_set, consecutive_ones, final_level, last_sent_set, ended
+                nonlocal current_set, mastered_level, threes_in_set, ones_in_set, final_level, last_sent_set, ended
                 nonlocal pending_phrase, ended_notified
                 flushed_this_turn = False
                 ai_turn_start_ts = None
@@ -328,20 +339,29 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                     # set compte comme maîtrisé dans le
                                     # rapport final, même s'il n'est pas
                                     # (encore) suffisant pour AVANCER au set
-                                    # suivant (cf. REQUIRED_THREES_PER_SET).
+                                    # suivant. Seuil requis DYNAMIQUE selon le
+                                    # nombre de score=1 déjà obtenus dans ce
+                                    # même set — cf. demande explicite du
+                                    # user : 2 scores=3 suffisent si moins de
+                                    # 2 échecs dans le set, 3 scores=3 sont
+                                    # nécessaires si exactement 2 échecs (au-
+                                    # delà, la règle d'arrêt ci-dessous met
+                                    # fin au test avant que ce seuil ne soit
+                                    # même consulté).
                                     mastered_level = current_set
-                                    consecutive_ones = 0
                                     threes_in_set += 1
-                                    if threes_in_set >= REQUIRED_THREES_PER_SET:
+                                    required_threes = 3 if ones_in_set == 2 else REQUIRED_THREES_PER_SET
+                                    if threes_in_set >= required_threes:
                                         if current_set >= 11:
                                             final_level = 11
                                             ended = True
                                         else:
                                             current_set += 1
                                             threes_in_set = 0
+                                            ones_in_set = 0
                                 else:
-                                    consecutive_ones += 1
-                                    if consecutive_ones >= STOP_STREAK:
+                                    ones_in_set += 1
+                                    if ones_in_set >= STOP_STREAK:
                                         final_level = mastered_level
                                         ended = True
 
