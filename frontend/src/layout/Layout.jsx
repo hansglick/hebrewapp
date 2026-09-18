@@ -100,6 +100,24 @@ export default function Layout() {
     });
   }, [hasIdentity]);
 
+  // Le test conversationnel (bypass, cf. ONBOARDING_BYPASS_PATHS) ne passe
+  // jamais par OnboardingScreen ni son callback `onCompleted` — sans ce
+  // second re-check, `showOnboarding` restait bloqué à `true` après son
+  // retour à l'accueil (navigate("/") dans ConversationTestScreen), ce qui
+  // affichait à nouveau l'écran d'intro de l'onboarding au lieu de l'accueil
+  // — cf. bug rapporté par le user. Scopé à "showOnboarding déjà vrai ET on
+  // vient d'atterrir sur '/'" pour ne pas refaire ces 2 appels à chaque
+  // navigation une fois l'onboarding réellement terminé.
+  useEffect(() => {
+    if (!hasIdentity || !showOnboarding || location.pathname !== "/") return;
+    getCurrentOnboardingExam().then((r) => {
+      if (r.in_progress) return;
+      getCurrentQuicktestExam().then((rq) => {
+        if (!rq.in_progress) setShowOnboarding(false);
+      });
+    });
+  }, [location.pathname, showOnboarding, hasIdentity]);
+
   // Layout reste monté d'une route à l'autre (Outlet), donc on recharge le
   // niveau à chaque changement de page plutôt qu'une seule fois au montage —
   // sinon un examen réussi ailleurs ne se reflèterait jamais ici sans reload.

@@ -22,6 +22,12 @@ router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
 # bruit/souffle déclencherait un appel Whisper pour rien.
 MIN_TURN_BYTES = 9600
 
+# Kill switch : passer à False pour revenir instantanément à l'ancien
+# comportement (aucune vérification de parole avant `report_evaluation`) si
+# ce garde-fou s'avérait pire que le problème qu'il corrige — cf. demande
+# explicite du user. Cf. son usage plus bas (`heard_user_audio_since_phrase`).
+REQUIRE_USER_AUDIO_BEFORE_SCORE = True
+
 STOP_STREAK = 3
 # Nombre de scores=3 requis DANS LE SET COURANT avant de passer au set
 # suivant — cf. demande explicite du user. Pas forcément consécutifs (des
@@ -167,9 +173,21 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             # est alors terminée, la prochaine devra être une VRAIE
             # nouvelle pioche).
             pending_phrase: dict | None = None
+            # True dès que l'étudiant a émis une quantité significative
+            # d'audio (même seuil que MIN_TURN_BYTES, cf. transcribe_and_send)
+            # DEPUIS que `pending_phrase` a été tiré — remis à False à chaque
+            # nouvelle vraie pioche (jamais sur un `next_question` idempotent,
+            # cf. commentaire sur `pending_phrase`). Sert de garde-fou contre
+            # un `report_evaluation` prématuré (le modèle notant une question
+            # avant que l'étudiant n'ait eu l'occasion d'y répondre) — cf. bug
+            # rapporté par le user (une "seconde question" apparaît juste
+            # après la première du test réel, avec un score fantôme
+            # comptabilisé pour la première). Piloté par
+            # REQUIRE_USER_AUDIO_BEFORE_SCORE ci-dessus.
+            heard_user_audio_since_phrase = False
 
             async def from_browser():
-                nonlocal user_buffer, user_turn_start_ts
+                nonlocal user_buffer, user_turn_start_ts, heard_user_audio_since_phrase
                 try:
                     while not ended:
                         msg = await websocket.receive_json()
@@ -178,6 +196,8 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             if not user_buffer:
                                 user_turn_start_ts = time.time()
                             user_buffer.extend(pcm_bytes)
+                            if len(user_buffer) >= MIN_TURN_BYTES:
+                                heard_user_audio_since_phrase = True
                             await session.send_realtime_input(
                                 audio=types.Blob(data=pcm_bytes, mime_type="audio/pcm;rate=16000")
                             )
@@ -187,7 +207,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             async def from_gemini():
                 nonlocal user_buffer, user_turn_start_ts
                 nonlocal current_set, mastered_level, threes_in_set, ones_in_set, final_level, last_sent_set, ended
-                nonlocal pending_phrase, ended_notified
+                nonlocal pending_phrase, ended_notified, heard_user_audio_since_phrase
                 flushed_this_turn = False
                 ai_turn_start_ts = None
                 # Filet de sécurité : la fin de test (règle 7) n'impose pas
@@ -321,7 +341,19 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 # (premier appel gagne, pas de rollback des
                                 # compteurs pour un second appel, plus simple
                                 # et plus sûr qu'une logique de correction).
+                                # Garde-fou supplémentaire (cf.
+                                # REQUIRE_USER_AUDIO_BEFORE_SCORE) : un
+                                # `report_evaluation` qui arrive alors que
+                                # l'étudiant n'a encore rien dit depuis que la
+                                # phrase courante a été servie est ignoré —
+                                # sans lui, un score prématuré (le modèle se
+                                # trompant sur son propre état, typiquement
+                                # juste après la transition vers le test réel)
+                                # comptait à tort ET libérait `pending_phrase`,
+                                # provoquant une "seconde question" inattendue.
                                 if pending_phrase is None:
+                                    continue
+                                if REQUIRE_USER_AUDIO_BEFORE_SCORE and not heard_user_audio_since_phrase:
                                     continue
                                 answered_french = pending_phrase["french"]
                                 await safe_send(
@@ -394,6 +426,10 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 if pending_phrase is None:
                                     pool = remaining_by_set.get(current_set) or []
                                     pending_phrase = pool.pop() if pool else None
+                                    # Nouvelle vraie pioche : l'étudiant n'a
+                                    # encore rien dit à propos d'ELLE, cf.
+                                    # REQUIRE_USER_AUDIO_BEFORE_SCORE.
+                                    heard_user_audio_since_phrase = False
                                 phrase = pending_phrase
                                 await session.send_tool_response(
                                     function_responses=types.FunctionResponse(

@@ -60,6 +60,12 @@ const PREVIEWS = [
     description:
       "De l'inscription à l'arrivée sur l'accueil (valeurs simulées, pas de vrai compte créé) — pour évaluer rapidement le rendu graphique de tout le parcours.",
   },
+  {
+    to: "/dev/palette-accueil",
+    label: "Calibration palette — Accueil",
+    description:
+      "Aperçu en direct de l'écran d'accueil avec 10 couleurs éditables (control barre / main space / tuile) — sans impact sur le reste de l'app.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec
