@@ -508,7 +508,9 @@ export default function ConversationTestScreen() {
       navigate("/");
     }
 
-    return <AppConceptIntroScreen pseudo={pseudo} levelLabel={levelLabel} onStart={handleStartAdventure} />;
+    return (
+      <AppConceptIntroScreen pseudo={pseudo} levelLabel={levelLabel} onStart={handleStartAdventure} testJustEnded />
+    );
   }
 
   return (

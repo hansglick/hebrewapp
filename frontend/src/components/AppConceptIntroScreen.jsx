@@ -7,8 +7,12 @@ import { MaskIcon } from "./MaskIcon";
 // leçon" pendant l'onboarding, cf. OnboardingScreen.jsx) : cf. demande
 // explicite du user ("la même page... qui s'affiche après l'estimation du
 // niveau"), extrait ici en composant partagé pour ne pas dupliquer ce
-// contenu entre les deux écrans.
-export function AppConceptIntroScreen({ pseudo, levelLabel, onStart }) {
+// contenu entre les deux écrans. `testJustEnded` (par défaut false) :
+// n'affiche la 1ère phrase de l'encadré ("le test s'est arrêté...") que
+// pour le parcours du test conversationnel, pas pour le "commencer à la
+// première leçon" (aucun test n'a eu lieu dans ce cas) — cf. demande
+// explicite du user.
+export function AppConceptIntroScreen({ pseudo, levelLabel, onStart, testJustEnded = false }) {
   return (
     <section className="screen">
       <h1 style={{ fontSize: "1.4em", fontWeight: 400, textAlign: "center" }}>
@@ -17,6 +21,9 @@ export function AppConceptIntroScreen({ pseudo, levelLabel, onStart }) {
       </h1>
 
       <div className="card" style={{ textAlign: "left", fontSize: "0.85em" }}>
+        {testJustEnded && (
+          <p style={{ margin: "0 0 12px" }}>Le test s'est arrêté car nous venons de déterminer ton niveau.</p>
+        )}
         <p style={{ margin: 0 }}>
           D'après les résultats du test, tu serais de niveau <strong>{levelLabel}</strong>. Commence dès à
           présent à apprendre l'hébreu. À chaque leçon, ton objectif est de réussir l'examen afin de
