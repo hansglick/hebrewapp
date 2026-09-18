@@ -22,11 +22,20 @@ router = APIRouter(prefix="/api/conversation-eval", tags=["conversation-eval"])
 # bruit/souffle déclencherait un appel Whisper pour rien.
 MIN_TURN_BYTES = 9600
 
-# Kill switch : passer à False pour revenir instantanément à l'ancien
-# comportement (aucune vérification de parole avant `report_evaluation`) si
-# ce garde-fou s'avérait pire que le problème qu'il corrige — cf. demande
-# explicite du user. Cf. son usage plus bas (`heard_user_audio_since_phrase`).
-REQUIRE_USER_AUDIO_BEFORE_SCORE = True
+# Kill switch : DÉSACTIVÉ (cf. bug rapporté par le user) — le signal utilisé
+# (`len(user_buffer)`, cf. `heard_user_audio_since_phrase` plus bas) partage
+# le même buffer que le flush de transcription Whisper, qui peut être vidé
+# PLUSIEURS fois pendant une seule réponse de l'étudiant (dès que l'IA
+# produit un nouveau tour de parole) — fragmentant l'accumulation en petits
+# morceaux qui, individuellement, ne franchissaient jamais le seuil, même
+# quand l'étudiant avait bel et bien répondu normalement. Un score de 3
+# parfaitement valide pouvait ainsi être ignoré à tort : `pending_phrase` ne
+# se libérait jamais, et le `next_question` suivant renvoyait la MÊME
+# phrase déjà notée — l'étudiant se voyait alors "redemander" une réponse
+# déjà validée, et le niveau final retombait à 0 malgré de bons scores. Ne
+# PAS repasser à True sans remplacer ce signal par un compteur dédié,
+# indépendant des flushs de transcription.
+REQUIRE_USER_AUDIO_BEFORE_SCORE = False
 
 STOP_STREAK = 3
 # Nombre de scores=3 requis DANS LE SET COURANT avant de passer au set
