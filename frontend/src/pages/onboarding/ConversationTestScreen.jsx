@@ -508,34 +508,7 @@ export default function ConversationTestScreen() {
       navigate("/");
     }
 
-    return (
-      <>
-        <AppConceptIntroScreen pseudo={pseudo} levelLabel={levelLabel} onStart={handleStartAdventure} />
-
-        {/* Vérification temporaire (cf. demande explicite du user "par
-            souci de contrôle") : le niveau est désormais déterminé EN
-            DIRECT par le serveur (dernier set avec au moins un score de 3),
-            plus besoin de recalculer quoi que ce soit ici. PAS de className
-            "screen" ici (min-height:60vh + centrage vertical, cf.
-            screens.css) : une seconde section "screen" à la suite de celle
-            d'AppConceptIntroScreen empilait deux centrages verticaux,
-            créant un espace énorme entre les deux — cf. bug rapporté par le
-            user. */}
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", padding: "0 16px 24px" }}>
-          <div className="card" style={{ textAlign: "left", fontSize: "0.8em", width: "100%", maxWidth: 320 }}>
-            <p className="muted" style={{ margin: 0 }}>
-              Niveau (contrôle temporaire) : dernier set maîtrisé = <strong>{finalLevel}</strong> / 11
-            </p>
-            <p className="muted" style={{ margin: "4px 0 0" }}>
-              1ère leçon de ce set : {startLesson ?? "?"}
-            </p>
-            <p className="muted" style={{ margin: "4px 0 0" }}>
-              Historique du vrai test : {realHistory.map((h, i) => `S${h.set}=${h.score}`).join(" · ") || "(aucune réponse)"}
-            </p>
-          </div>
-        </div>
-      </>
-    );
+    return <AppConceptIntroScreen pseudo={pseudo} levelLabel={levelLabel} onStart={handleStartAdventure} />;
   }
 
   return (

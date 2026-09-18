@@ -37,6 +37,26 @@ MIN_TURN_BYTES = 9600
 # indépendant des flushs de transcription.
 REQUIRE_USER_AUDIO_BEFORE_SCORE = False
 
+# Filet de sécurité contre un modèle qui s'arrête de lui-même (cf. règle 7 du
+# prompt, "ne t'arrête jamais de poser des questions" — l'IA n'a plus AUCUNE
+# autorité sur la fin du test, cf. demande explicite du user). Remplace
+# l'ancienne détection du mot "raccroche" dans la parole de l'IA (peu fiable :
+# soit elle ne disait rien du tout et restait silencieuse, soit elle pouvait
+# le prononcer à tort) par une surveillance du DÉLAI depuis le dernier appel
+# à `next_question` — si ce délai dépasse ce seuil ALORS QUE la dernière
+# question tirée a déjà été notée (`pending_phrase is None`, donc rien
+# n'explique légitimement l'attente, contrairement à une reformulation en
+# cours), on relance l'IA nous-mêmes avec un message silencieux.
+WATCHDOG_CHECK_INTERVAL_S = 2
+WATCHDOG_STALL_THRESHOLD_S = 15
+
+LOG_TAG = "[conv-eval]"
+
+WATCHDOG_NUDGE_TEXT = (
+    "[Message système, ne jamais évoquer devant l'étudiant] Le test continue. "
+    "Appelle immédiatement l'outil next_question pour poser la question suivante."
+)
+
 STOP_STREAK = 3
 # Nombre de scores=3 requis DANS LE SET COURANT avant de passer au set
 # suivant — cf. demande explicite du user. Pas forcément consécutifs (des
@@ -194,6 +214,37 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             # comptabilisé pour la première). Piloté par
             # REQUIRE_USER_AUDIO_BEFORE_SCORE ci-dessus.
             heard_user_audio_since_phrase = False
+            # Horodatage du dernier appel (fresh OU idempotent) à
+            # `next_question` — None tant que le vrai test n'a pas commencé
+            # (le watchdog ne doit rien surveiller avant ça). Cf.
+            # WATCHDOG_STALL_THRESHOLD_S plus haut.
+            last_next_question_ts: float | None = None
+            # Empêche de spammer plusieurs relances pour le MÊME blocage —
+            # remis à False dès que le modèle rappelle `next_question`
+            # (fresh ou idempotent), signe qu'il a repris la main.
+            watchdog_nudged = False
+
+            async def watchdog():
+                nonlocal watchdog_nudged
+                while not ended:
+                    await asyncio.sleep(WATCHDOG_CHECK_INTERVAL_S)
+                    if ended:
+                        return
+                    if last_next_question_ts is None or pending_phrase is not None or watchdog_nudged:
+                        # Test réel pas encore commencé, question encore
+                        # ouverte (reformulation en cours, attente normale),
+                        # ou relance déjà envoyée pour ce blocage.
+                        continue
+                    if time.time() - last_next_question_ts > WATCHDOG_STALL_THRESHOLD_S:
+                        watchdog_nudged = True
+                        print(
+                            f"{LOG_TAG} WATCHDOG : "
+                            f"{time.time() - last_next_question_ts:.1f}s sans next_question, relance silencieuse"
+                        )
+                        await session.send_client_content(
+                            turns=types.Content(role="user", parts=[types.Part.from_text(text=WATCHDOG_NUDGE_TEXT)]),
+                            turn_complete=True,
+                        )
 
             async def from_browser():
                 nonlocal user_buffer, user_turn_start_ts, heard_user_audio_since_phrase
@@ -217,19 +268,9 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                 nonlocal user_buffer, user_turn_start_ts
                 nonlocal current_set, mastered_level, threes_in_set, ones_in_set, final_level, last_sent_set, ended
                 nonlocal pending_phrase, ended_notified, heard_user_audio_since_phrase
+                nonlocal last_next_question_ts, watchdog_nudged
                 flushed_this_turn = False
                 ai_turn_start_ts = None
-                # Filet de sécurité : la fin de test (règle 7) n'impose pas
-                # d'appeler un outil particulier, elle est purement
-                # conversationnelle — si le modèle "oublie" d'appeler
-                # report_evaluation la 3e fois tout en respectant la règle à
-                # l'oral, le compteur ci-dessus n'atteint jamais le seuil et
-                # rien n'est jamais envoyé, cf. bug rapporté par le user
-                # ("l'agent avertit mais rien ne se passe au raccroché"). On
-                # détecte donc aussi la mention explicite de "raccroche"
-                # dans ce que l'IA vient de dire, et on force la fin nous-
-                # mêmes le cas échéant, avec le niveau déjà connu.
-                ai_text_buffer = ""
                 while True:
                     turn = session.receive()
                     async for response in turn:
@@ -427,6 +468,11 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # lot (réponse best-effort, la conversation se
                             # termine juste après).
                             for fc in next_question_calls:
+                                # Le modèle a rappelé l'outil : il a repris la
+                                # main, le watchdog peut se réarmer pour le
+                                # prochain blocage éventuel.
+                                last_next_question_ts = time.time()
+                                watchdog_nudged = False
                                 # Idempotent : tant qu'aucun score réel n'est
                                 # arrivé depuis, un nouvel appel renvoie la
                                 # MÊME phrase déjà servie, jamais une
@@ -460,7 +506,6 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 got_output = True
                                 if ai_turn_start_ts is None:
                                     ai_turn_start_ts = time.time()
-                                ai_text_buffer += content.output_transcription.text
                                 await safe_send(
                                     {"type": "ai_transcript", "text": content.output_transcription.text}
                                 )
@@ -469,24 +514,14 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 flushed_this_turn = False
                                 ai_turn_start_ts = None
 
-                                # Filet de sécurité (cf. commentaire plus
-                                # haut) : si l'IA vient de prononcer
-                                # "raccroche"/"raccrocher" sans que le
-                                # compteur d'outils n'ait détecté la fin,
-                                # force la fin nous-mêmes avec le niveau déjà
-                                # connu.
-                                if not ended and "raccroch" in ai_text_buffer.lower():
-                                    final_level = mastered_level
-                                    ended = True
-                                ai_text_buffer = ""
-
                                 if ended:
                                     # Le niveau a déjà été envoyé dès sa
                                     # détection (cf. plus haut) — on laisse
-                                    # juste le tour d'au revoir de l'IA (déjà
-                                    # déclenché par sa propre règle 7, aucun
-                                    # message silencieux injecté ici) se
-                                    # terminer complètement avant de couper.
+                                    # juste le tour de parole EN COURS de
+                                    # l'IA se terminer avant de couper, pour
+                                    # ne pas l'interrompre en plein mot
+                                    # (l'IA n'a plus son mot à dire sur la
+                                    # fin elle-même, cf. règle 7 du prompt).
                                     # Fermer la socket ICI (pas seulement
                                     # dans le finally englobant) : sinon
                                     # from_browser reste bloqué sur son
@@ -514,6 +549,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             async with asyncio.TaskGroup() as tg:
                 tg.create_task(from_browser())
                 tg.create_task(from_gemini())
+                tg.create_task(watchdog())
 
     except* WebSocketDisconnect:
         pass
