@@ -317,6 +317,14 @@ ALORS :
 
 ---
 
+### 10. Style littéraire
+
+La réponse doit avoir un style littéraire, i.e. elle pourrait être écrite telle quelle dans un livre sans aucune modification. Si tel n'est pas le cas alors tu devras assigner à la réponse un 'score = 1'
+
+En écoutant la réponse, tente de retranscrire chacun des mots prononcés et évalue avec objectivité si la phrase a un style suffisamment littéraire pour pouvoir apparaître dans un livre SANS AUCUNE MODIFICATION. Si tu perçois une once de style télégraphiste (mots manquants, mots mâchés, verbe pas conjugés, préposition manquante) ou un style volontairement simplifié, ou encore un hébreu rudimentaire alors tu accorderas 'score = 1' à la réponse de l'étudiant
+
+---
+
 # DÉCISION FINALE
 
 Applique obligatoirement cette procédure :
@@ -332,7 +340,8 @@ Applique obligatoirement cette procédure :
    - nombre ;
    - syntaxe ;
    - élément essentiel manquant ;
-   - prononciation modifiant ou rendant ambigu un mot.
+   - prononciation modifiant ou rendant ambigu un mot ;
+   - style non littéraire (télégraphique, simplifié, hébreu rudimentaire).
 
 2. Si tu identifies AU MOINS UNE erreur réelle :
    → `score = 1`
