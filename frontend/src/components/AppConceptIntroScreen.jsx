@@ -21,10 +21,8 @@ export function AppConceptIntroScreen({ pseudo, levelLabel, onStart, testJustEnd
       </h1>
 
       <div className="card" style={{ textAlign: "left", fontSize: "0.85em" }}>
-        {testJustEnded && (
-          <p style={{ margin: "0 0 12px" }}>Le test s'est arrêté car nous venons de déterminer ton niveau.</p>
-        )}
         <p style={{ margin: 0 }}>
+          {testJustEnded && "Le test s'est arrêté car nous venons de déterminer ton niveau. "}
           D'après les résultats du test, tu serais de niveau <strong>{levelLabel}</strong>. Commence dès à
           présent à apprendre l'hébreu. À chaque leçon, ton objectif est de réussir l'examen afin de
           débloquer la leçon suivante. Pour réussir ce challenge, tu peux explorer les 4 options qui

@@ -468,6 +468,25 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                             # lot (réponse best-effort, la conversation se
                             # termine juste après).
                             for fc in next_question_calls:
+                                # Le test vient de se terminer dans CE MÊME
+                                # lot (score qui atteint le seuil ET
+                                # next_question bundlés ensemble par le
+                                # modèle, cf. demande explicite du user) :
+                                # réponse vide plutôt que de piocher une
+                                # VRAIE phrase — sinon le modèle l'annonçait
+                                # à voix haute, et l'étudiant entendait une
+                                # question fantôme juste après la fin du
+                                # test, alors que la connexion est sur le
+                                # point de se fermer. Le protocole reste
+                                # respecté (une réponse est bien envoyée),
+                                # elle n'a juste plus rien à dire.
+                                if ended:
+                                    await session.send_tool_response(
+                                        function_responses=types.FunctionResponse(
+                                            id=fc.id, name=fc.name, response={"french": "", "set": current_set}
+                                        )
+                                    )
+                                    continue
                                 # Le modèle a rappelé l'outil : il a repris la
                                 # main, le watchdog peut se réarmer pour le
                                 # prochain blocage éventuel.
