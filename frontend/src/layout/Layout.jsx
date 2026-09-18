@@ -105,11 +105,21 @@ export default function Layout() {
   // second re-check, `showOnboarding` restait bloqué à `true` après son
   // retour à l'accueil (navigate("/") dans ConversationTestScreen), ce qui
   // affichait à nouveau l'écran d'intro de l'onboarding au lieu de l'accueil
-  // — cf. bug rapporté par le user. Scopé à "showOnboarding déjà vrai ET on
-  // vient d'atterrir sur '/'" pour ne pas refaire ces 2 appels à chaque
-  // navigation une fois l'onboarding réellement terminé.
+  // — cf. bug rapporté par le user. Scopé au trajet EXACT "on vient d'un
+  // bypass path -> on atterrit sur '/'" (via `prevPathRef`, PAS juste
+  // "showOnboarding est vrai et pathname === '/'") : juste après une
+  // inscription, `showOnboarding` passe à `true` alors que le pathname est
+  // déjà "/" (AuthFlow ne navigue jamais) — un garde plus large re-
+  // déclenchait alors ce check immédiatement, avec aucun test encore
+  // démarré, et repassait `showOnboarding` à `false` avant même que l'écran
+  // d'onboarding n'ait eu la moindre chance de s'afficher (régression
+  // rapportée par le user : plus aucun test à l'inscription).
+  const prevPathRef = useRef(location.pathname);
   useEffect(() => {
-    if (!hasIdentity || !showOnboarding || location.pathname !== "/") return;
+    const prevPath = prevPathRef.current;
+    prevPathRef.current = location.pathname;
+    if (!hasIdentity || !showOnboarding) return;
+    if (location.pathname !== "/" || !ONBOARDING_BYPASS_PATHS.includes(prevPath)) return;
     getCurrentOnboardingExam().then((r) => {
       if (r.in_progress) return;
       getCurrentQuicktestExam().then((rq) => {
