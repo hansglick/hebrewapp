@@ -289,6 +289,19 @@ export default function ConversationTestScreen() {
   const [status, setStatus] = useState("");
   const [aiBuffer, setAiBuffer] = useState("");
   const [lastCompletedAi, setLastCompletedAi] = useState("");
+  // Affichage de la question courante à partir du VRAI test uniquement (cf.
+  // demande explicite du user) : dès la question posée après l'échauffement,
+  // le bloc reste figé sur `frozenQuestionText` pendant le feedback de l'IA
+  // (pas de mise à jour "en direct"), puis repasse en flux mot par mot
+  // (`liveQuestionText`) dès que le backend signale ("question_started")
+  // qu'il vient de piocher la question suivante — juste avant que l'IA ne
+  // commence à la prononcer. `realTestStarted` bascule une fois pour toutes
+  // au premier signal reçu ; avant ça (règles + échauffement), le bloc
+  // continue de se comporter comme avant (aiBuffer/lastCompletedAi, flux
+  // continu sans distinction feedback/question).
+  const [realTestStarted, setRealTestStarted] = useState(false);
+  const [frozenQuestionText, setFrozenQuestionText] = useState("");
+  const [liveQuestionText, setLiveQuestionText] = useState("");
   // Échauffement noté séparément, jamais compté dans le niveau, mais
   // conservé (pas effacé) et affiché avec le vrai test, séparé par une
   // barre — cf. demande explicite du user. [{french, score}, ...].
@@ -306,6 +319,12 @@ export default function ConversationTestScreen() {
 
   const aiBufferRef = useRef("");
   const setStartsRef = useRef([]);
+  // Refs miroir des états ci-dessus, lues dans `ws.onmessage` (fermeture
+  // créée une seule fois) pour éviter de dépendre d'un state potentiellement
+  // périmé — même pattern que `aiBufferRef`.
+  const realTestStartedRef = useRef(false);
+  const liveQuestionRef = useRef("");
+  const showingLiveQuestionRef = useRef(false);
 
   const wsRef = useRef(null);
   const micContextRef = useRef(null);
@@ -399,12 +418,46 @@ export default function ConversationTestScreen() {
       } else if (msg.type === "ai_transcript") {
         aiBufferRef.current += msg.text;
         setAiBuffer(aiBufferRef.current);
+        if (showingLiveQuestionRef.current) {
+          liveQuestionRef.current += msg.text;
+          setLiveQuestionText(liveQuestionRef.current);
+        }
       } else if (msg.type === "turn_complete") {
         const finished = aiBufferRef.current;
         aiBufferRef.current = "";
         setAiBuffer("");
         if (finished) {
           setLastCompletedAi(finished);
+        }
+        // La question qui vient d'être entièrement énoncée devient le
+        // nouveau texte figé, affiché sans changement pendant tout le
+        // feedback suivant — cf. demande explicite du user. Ne s'applique
+        // que si ce tour de parole contenait bien une question (signalée
+        // par "question_started" plus bas) ET qu'au moins un mot en a déjà
+        // été reçu : un même message serveur peut regrouper l'appel d'outil
+        // next_question (qui arme le flux en direct ci-dessus) ET le
+        // turn_complete du tour PRÉCÉDENT (le feedback, pas la nouvelle
+        // question) — sans cette 2e condition, ce turn_complete "en retard"
+        // figeait la question sur du texte encore vide avant même qu'elle
+        // ait pu s'afficher (bug rapporté par le user). On ignore alors ce
+        // turn_complete et on continue d'attendre le vrai contenu.
+        if (showingLiveQuestionRef.current && liveQuestionRef.current) {
+          showingLiveQuestionRef.current = false;
+          setFrozenQuestionText(liveQuestionRef.current);
+          liveQuestionRef.current = "";
+          setLiveQuestionText("");
+        }
+      } else if (msg.type === "question_started") {
+        // Le backend vient de piocher la question suivante, juste avant que
+        // l'IA ne commence à la prononcer : à partir de maintenant, le flux
+        // "mot par mot" reprend pour CETTE question (cf. demande explicite
+        // du user), jusqu'à son "turn_complete" ci-dessus.
+        showingLiveQuestionRef.current = true;
+        liveQuestionRef.current = "";
+        setLiveQuestionText("");
+        if (!realTestStartedRef.current) {
+          realTestStartedRef.current = true;
+          setRealTestStarted(true);
         }
       } else if (msg.type === "set_starts") {
         setStartsRef.current = msg.codes;
@@ -452,6 +505,12 @@ export default function ConversationTestScreen() {
     aiBufferRef.current = "";
     setWarmupScores([]);
     setRealHistory([]);
+    realTestStartedRef.current = false;
+    setRealTestStarted(false);
+    showingLiveQuestionRef.current = false;
+    liveQuestionRef.current = "";
+    setLiveQuestionText("");
+    setFrozenQuestionText("");
     start();
   }
 
@@ -576,7 +635,11 @@ export default function ConversationTestScreen() {
             transition: "background-color 0.2s",
           }}
         >
-          {renderWithAsteriskBold(aiBuffer || lastCompletedAi || "…")}
+          {renderWithAsteriskBold(
+            realTestStarted
+              ? liveQuestionText || frozenQuestionText || "…"
+              : aiBuffer || lastCompletedAi || "…"
+          )}
         </div>
 
         {/* Détail question par question (échauffement puis vrai test,

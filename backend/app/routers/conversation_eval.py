@@ -69,6 +69,50 @@ STOP_STREAK = 3
 # 2 — cf. demande explicite du user (voir son usage plus bas).
 REQUIRED_THREES_PER_SET = 2
 
+# Stratégie de tirage adaptative au sein d'un set (cf. demande explicite du
+# user) : le pool curé d'un set (ordre chronologique = ordre affiché sur
+# /dev/phrase-curation) est découpé en 3 strates de taille égale (le reste
+# de la division va aux premières strates, ex. 10 phrases -> 4/3/3). La 1ère
+# question d'un set est tirée au hasard dans tout le set ; ensuite, un
+# score=3 fait avancer à la strate SUIVANTE (cyclique 0->1->2->0), un
+# score=1 fait repiocher dans la MÊME strate.
+NUM_STRATA = 3
+
+
+def _split_into_strata(pool: list[dict]) -> list[list[dict]]:
+    base, extra = divmod(len(pool), NUM_STRATA)
+    strata: list[list[dict]] = []
+    start = 0
+    for i in range(NUM_STRATA):
+        size = base + (1 if i < extra else 0)
+        strata.append(list(pool[start : start + size]))
+        start += size
+    return strata
+
+
+def _draw_from_strata(
+    strata: list[list[dict]], last_stratum: int | None, last_score: int | None
+) -> tuple[dict | None, int | None]:
+    """Pioche une phrase dans les strates `strata` (mutées en place : la
+    phrase piochée en est retirée), selon la stratégie ci-dessus. Repli
+    automatique sur une autre strate non vide si la strate ciblée est
+    épuisée. Retourne (None, None) si le set entier est épuisé."""
+    if last_stratum is None:
+        candidates = [i for i, s in enumerate(strata) if s]
+        if not candidates:
+            return None, None
+        weights = [len(strata[i]) for i in candidates]
+        target = random.choices(candidates, weights=weights, k=1)[0]
+    else:
+        target = (last_stratum + 1) % len(strata) if last_score == 3 else last_stratum
+        if not strata[target]:
+            fallback = [i for i, s in enumerate(strata) if s]
+            if not fallback:
+                return None, None
+            target = random.choice(fallback)
+    phrase = strata[target].pop()
+    return phrase, target
+
 
 class ApplyPlacementRequest(BaseModel):
     start_lesson: str
@@ -118,19 +162,19 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
     # leçon de départ recommandée une fois le niveau (index de set) connu.
     await websocket.send_json({"type": "set_starts", "codes": conversation_eval.first_lesson_per_set()})
 
-    # Pools mélangés une fois par connexion : le tirage dans un set se fait
-    # ensuite par simple .pop(), sans remise au sein de cette session — cf.
-    # demande explicite du user ("tirer aléatoirement une question dans le
-    # set"). Limité aux phrases retenues manuellement via l'outil de
-    # curation (/dev/phrase-curation, cf. demande explicite du user) —
-    # chaque pool en compte au moins 82 (vérifié), jamais de risque
-    # d'épuisement (au plus 3 tirages par set avant que le test n'avance ou
-    # ne s'arrête).
-    remaining_by_set: dict[int, list[dict]] = {}
+    # Strates mélangées une fois par connexion : le tirage dans une strate se
+    # fait ensuite par simple .pop(), sans remise au sein de cette session —
+    # cf. _draw_from_strata pour la stratégie de choix de strate. Limité aux
+    # phrases retenues manuellement via l'outil de curation
+    # (/dev/phrase-curation, cf. demande explicite du user) — chaque pool en
+    # compte au moins 82 (vérifié), jamais de risque d'épuisement (au plus 3
+    # tirages par set avant que le test n'avance ou ne s'arrête).
+    remaining_strata_by_set: dict[int, list[list[dict]]] = {}
     for set_index, pool in selected_phrases_by_set().items():
-        shuffled = list(pool)
-        random.shuffle(shuffled)
-        remaining_by_set[set_index] = shuffled
+        strata = _split_into_strata(pool)
+        for stratum in strata:
+            random.shuffle(stratum)
+        remaining_strata_by_set[set_index] = strata
 
     send_lock = asyncio.Lock()
 
@@ -202,6 +246,18 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
             # est alors terminée, la prochaine devra être une VRAIE
             # nouvelle pioche).
             pending_phrase: dict | None = None
+            # Strate (0/1/2) dont `pending_phrase` a été tirée — permet, une
+            # fois la question notée, de mettre à jour `last_stratum` avec la
+            # strate RÉELLEMENT utilisée (utile en cas de repli, cf.
+            # _draw_from_strata) plutôt que la strate initialement visée.
+            pending_phrase_stratum: int | None = None
+            # Strate de la dernière question RÉELLEMENT posée dans le set
+            # courant, et son score — pilotent le tirage adaptatif de la
+            # prochaine question (cf. _draw_from_strata). Remis à None dès
+            # qu'on avance à un nouveau set (1ère question d'un set = tirage
+            # au hasard dans tout le set, cf. demande explicite du user).
+            last_stratum: int | None = None
+            last_score: int | None = None
             # True dès que l'étudiant a émis une quantité significative
             # d'audio (même seuil que MIN_TURN_BYTES, cf. transcribe_and_send)
             # DEPUIS que `pending_phrase` a été tiré — remis à False à chaque
@@ -268,6 +324,7 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                 nonlocal user_buffer, user_turn_start_ts
                 nonlocal current_set, mastered_level, threes_in_set, ones_in_set, final_level, last_sent_set, ended
                 nonlocal pending_phrase, ended_notified, heard_user_audio_since_phrase
+                nonlocal pending_phrase_stratum, last_stratum, last_score
                 nonlocal last_next_question_ts, watchdog_nudged
                 flushed_this_turn = False
                 ai_turn_start_ts = None
@@ -417,7 +474,14 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 # La question qui vient d'être notée est
                                 # terminée : le prochain `next_question`
                                 # devra vraiment piocher une nouvelle phrase.
+                                # `last_stratum`/`last_score` retiennent la
+                                # strate et le score de CETTE question pour
+                                # piloter le tirage de la suivante (cf.
+                                # _draw_from_strata).
+                                last_stratum = pending_phrase_stratum
+                                last_score = score
                                 pending_phrase = None
+                                pending_phrase_stratum = None
                                 if score == 3:
                                     # "Au moins un score=3" suffit pour que ce
                                     # set compte comme maîtrisé dans le
@@ -443,6 +507,11 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                             current_set += 1
                                             threes_in_set = 0
                                             ones_in_set = 0
+                                            # Nouveau set : 1ère question
+                                            # tirée au hasard dans tout le
+                                            # set, cf. demande explicite du
+                                            # user.
+                                            last_stratum = None
                                 else:
                                     ones_in_set += 1
                                     if ones_in_set >= STOP_STREAK:
@@ -498,12 +567,31 @@ async def conversation_eval_ws(websocket: WebSocket, pseudo: str, pin: str):
                                 # nouvelle pioche — cf. bug rapporté par le
                                 # user.
                                 if pending_phrase is None:
-                                    pool = remaining_by_set.get(current_set) or []
-                                    pending_phrase = pool.pop() if pool else None
+                                    strata = remaining_strata_by_set.get(current_set) or [[], [], []]
+                                    pending_phrase, pending_phrase_stratum = _draw_from_strata(
+                                        strata, last_stratum, last_score
+                                    )
+                                    print(
+                                        f"{LOG_TAG} DRAW set={current_set} last_stratum={last_stratum} "
+                                        f"last_score={last_score} -> stratum={pending_phrase_stratum} "
+                                        f"phrase={(pending_phrase or {}).get('french')!r} "
+                                        f"remaining_sizes={[len(s) for s in strata]}"
+                                    )
                                     # Nouvelle vraie pioche : l'étudiant n'a
                                     # encore rien dit à propos d'ELLE, cf.
                                     # REQUIRE_USER_AUDIO_BEFORE_SCORE.
                                     heard_user_audio_since_phrase = False
+                                    # Signal dédié, envoyé AVANT que l'IA ne
+                                    # commence à prononcer cette question —
+                                    # permet au frontend de distinguer "l'IA
+                                    # parle pour donner son feedback" de
+                                    # "l'IA énonce la question suivante" et
+                                    # de figer/reprendre le flux en direct au
+                                    # bon moment (cf. demande explicite du
+                                    # user). Rien à signaler si le set est
+                                    # épuisé (pending_phrase reste None).
+                                    if pending_phrase is not None:
+                                        await safe_send({"type": "question_started"})
                                 phrase = pending_phrase
                                 await session.send_tool_response(
                                     function_responses=types.FunctionResponse(

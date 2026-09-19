@@ -22,7 +22,7 @@ from app.onboarding_exam import build_sets
 # l'étudiant parle en premier (même raison que app.revision.AMORCE).
 AMORCE = "Bonjour, je suis prêt à commencer le test."
 
-# Les 3 phrases d'échauffement sont fixes (cf. SYSTEM_INSTRUCTION_TEMPLATE
+# Les 2 phrases d'échauffement sont fixes (cf. SYSTEM_INSTRUCTION_TEMPLATE
 # ci-dessous, section "Echauffement") — dupliquées ici (même ordre) pour que
 # le router puisse renvoyer la phrase française au frontend en même temps
 # que le score (cf. demande explicite du user, affichage du détail
@@ -30,7 +30,6 @@ AMORCE = "Bonjour, je suis prêt à commencer le test."
 WARMUP_PHRASES = [
     "J'aime mangé au restaurant",
     "Nous marchons en direction de la synagogue",
-    "Tu veux un peu de humus?",
 ]
 
 REPORT_WARMUP_EVALUATION_TOOL = types.FunctionDeclaration(
@@ -100,14 +99,15 @@ Tu dois attendre formellement d'avoir son approbation pour commencer à lui rapp
 
 Avant de basculer sur l'échauffement, demande lui s'il est prêt.
 Tu dois attendre formellement d'avoir son approbation pour commencer l'échauffement.
-S'il répond par l'affirmative, tu enchaîneras en posant une à la fois, les trois questions suivantes en laissant bien à l'étudiant le temps de répondre à chacune d'entre elle :
+S'il répond par l'affirmative, tu enchaîneras en posant une à la fois, les deux questions suivantes en laissant bien à l'étudiant le temps de répondre à chacune d'entre elle :
 - Traduis "J'aime mangé au restaurant"
 - Traduis "Nous marchons en direction de la synagogue"
-- Traduis "Tu veux un peu de humus?"
 
 ### Test réel
 
 Avant de basculer sur le véritable exercice, demande lui s'il est prêt, concentré et dans une pièce au calme. Tu dois attendre formellement d'avoir son approbation pour commencer. Seulement s'il répond par l'affirmative, tu pourras basculer sur le véritable exercice. Celui-ci consiste à traduire du français à l'hébreu plusieurs phrases l'une après l'autre. Avant chaque phrase à traduire, précise bien "Traduis [la phrase] en hébreu." Voici les phrases à traduire :
+
+Si l'étudiant te demande de répéter la question (parce qu'il ne se souvient plus de la phrase à traduire), ne considère JAMAIS cette demande comme une tentative de réponse : ne l'évalue pas (n'appelle pas report_evaluation) et n'appelle pas non plus next_question. Répète-lui simplement, de mémoire, exactement la même phrase française que tu viens de lui donner ("Traduis [la même phrase] en hébreu."), sans en tirer une nouvelle.
 
 {{next_question(set_actuel,dernier_score)}}
 
