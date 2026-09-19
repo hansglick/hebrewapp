@@ -52,13 +52,20 @@ export default function CoinCultureFastScreen() {
 
   const zones = COIN_CULTURE_ZONES.map((zone) => ({
     ...zone,
-    available: zone.rawTypes.some((t) => availableRawTypes.includes(t)),
+    available: zone.alwaysAvailable || zone.rawTypes.some((t) => availableRawTypes.includes(t)),
   }));
   const activeZone = zones.find((z) => z.key === activeZoneKey) ?? null;
 
   function handleZoneClick(zone) {
     if (isHoverCapable) {
-      if (zone.available) navigate(zone.route(chapId, code));
+      if (zone.available) {
+        navigate(zone.route(chapId, code));
+      } else {
+        // Desktop : un clic sur un segment indisponible affiche le même
+        // message d'indisponibilité que le 2e tap mobile, au lieu de ne
+        // rien faire — cf. demande explicite du user.
+        setDeniedZoneKey(zone.key);
+      }
       return;
     }
     if (activeZoneKey !== zone.key) {
@@ -73,7 +80,7 @@ export default function CoinCultureFastScreen() {
     }
   }
 
-  const imageUrl = mediaUrl("logos/culture_homepage_bubbly.png");
+  const imageUrl = mediaUrl("logos/homepageomer.png");
 
   return (
     <section className="screen">
@@ -154,7 +161,11 @@ export default function CoinCultureFastScreen() {
               stroke="transparent"
               strokeWidth={4}
               style={{ cursor: "pointer" }}
-              onMouseEnter={() => isHoverCapable && setActiveZoneKey(zone.key)}
+              onMouseEnter={() => {
+                if (!isHoverCapable) return;
+                setActiveZoneKey(zone.key);
+                setDeniedZoneKey(null);
+              }}
               onMouseLeave={() => isHoverCapable && setActiveZoneKey((k) => (k === zone.key ? null : k))}
               onClick={(e) => {
                 e.stopPropagation();
@@ -188,7 +199,23 @@ export default function CoinCultureFastScreen() {
                 Pas d'item {activeZone.itemLabel} présent dans cette leçon
               </span>
             ) : (
-              activeZone.message
+              <>
+                {/* Pastille rouge si des items de ce type existent pour
+                    cette leçon, grise sinon — cf. demande explicite du
+                    user. */}
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: activeZone.available ? "var(--annulationPleine)" : "var(--textSecondary)",
+                    marginInlineEnd: 6,
+                    verticalAlign: "middle",
+                  }}
+                />
+                {activeZone.message}
+              </>
             )}
           </div>
         )}

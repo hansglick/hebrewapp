@@ -286,13 +286,16 @@ export default function OnboardingScreen({ onCompleted }) {
         )}
         {/* "Evalue ton niveau!" navigue désormais directement vers le test
             conversationnel (l'ancien écran intermédiaire "test-intro" a été
-            supprimé) — cf. demande explicite du user. */}
+            supprimé) — cf. demande explicite du user. `?real=1` : signale à
+            ConversationTestScreen qu'on vient du vrai parcours (pas de
+            l'outil /dev), pour masquer le verbatim détaillé de chaque
+            évaluation — cf. demande explicite du user. */}
         <button
           type="button"
           className="exam-tile green"
           style={{ cursor: "pointer" }}
           disabled={skipping}
-          onClick={() => navigate("/dev/conversation-eval")}
+          onClick={() => navigate("/dev/conversation-eval?real=1")}
         >
           Evalue ton niveau!
         </button>

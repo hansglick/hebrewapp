@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { applyConversationEvalPlacement, conversationEvalWebSocketUrl } from "../../api/conversationEval";
 import { getIdentity } from "../../api/identity";
 import { AppConceptIntroScreen } from "../../components/AppConceptIntroScreen";
@@ -276,6 +276,14 @@ function ScoresChart({ scores }) {
 
 export default function ConversationTestScreen() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Distingue le vrai parcours d'onboarding (OnboardingScreen navigue ici
+  // avec ?real=1) de l'accès direct via /dev : dans l'app réelle, aucun
+  // verbatim détaillant l'évaluation de chaque réponse ne doit apparaître
+  // (seule la dernière réplique de l'IA persiste) — l'outil de dev, lui,
+  // garde l'affichage complet question par question — cf. demande
+  // explicite du user.
+  const isRealApp = searchParams.get("real") === "1";
   const pseudo = getIdentity()?.pseudo ?? "";
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState("");
@@ -571,49 +579,52 @@ export default function ConversationTestScreen() {
           {renderWithAsteriskBold(aiBuffer || lastCompletedAi || "…")}
         </div>
 
-        {/* Reprend l'espace laissé par le verbatim intégral retiré (cf.
-            demande explicite du user) : détail question par question
-            (échauffement puis vrai test, séparés par une barre), au lieu du
-            texte brut de toute la conversation. */}
-        <div
-          style={{
-            marginTop: 12,
-            border: "1px solid var(--cardBorder)",
-            background: "var(--bg)",
-            borderRadius: 8,
-            padding: "12px 14px",
-            minHeight: 60,
-            fontSize: "0.85em",
-            color: "var(--textSecondary)",
-            textAlign: "left",
-            direction: "ltr",
-          }}
-        >
-          {warmupScores.length === 0 && realHistory.length === 0 ? (
-            <span className="muted">…</span>
-          ) : (
-            <>
-              {warmupScores.map((entry, i) => (
-                <div key={`w-${i}`}>
-                  • Set 0 — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
-                </div>
-              ))}
-              {warmupScores.length > 0 && realHistory.length > 0 && (
-                <div style={{ textAlign: "center" }}>===================================</div>
-              )}
-              {realHistory.map((entry, i) => (
-                <Fragment key={`r-${i}`}>
-                  {i > 0 && entry.set !== realHistory[i - 1].set && (
-                    <div style={{ textAlign: "center" }}>===================================</div>
-                  )}
-                  <div>
-                    • Set {entry.set} — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
+        {/* Détail question par question (échauffement puis vrai test,
+            séparés par une barre) — UNIQUEMENT dans l'outil de dev, jamais
+            dans le vrai parcours d'onboarding (cf. `isRealApp`, seule la
+            dernière réplique de l'IA ci-dessus doit y persister) — cf.
+            demande explicite du user. */}
+        {!isRealApp && (
+          <div
+            style={{
+              marginTop: 12,
+              border: "1px solid var(--cardBorder)",
+              background: "var(--bg)",
+              borderRadius: 8,
+              padding: "12px 14px",
+              minHeight: 60,
+              fontSize: "0.85em",
+              color: "var(--textSecondary)",
+              textAlign: "left",
+              direction: "ltr",
+            }}
+          >
+            {warmupScores.length === 0 && realHistory.length === 0 ? (
+              <span className="muted">…</span>
+            ) : (
+              <>
+                {warmupScores.map((entry, i) => (
+                  <div key={`w-${i}`}>
+                    • Set 0 — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
                   </div>
-                </Fragment>
-              ))}
-            </>
-          )}
-        </div>
+                ))}
+                {warmupScores.length > 0 && realHistory.length > 0 && (
+                  <div style={{ textAlign: "center" }}>===================================</div>
+                )}
+                {realHistory.map((entry, i) => (
+                  <Fragment key={`r-${i}`}>
+                    {i > 0 && entry.set !== realHistory[i - 1].set && (
+                      <div style={{ textAlign: "center" }}>===================================</div>
+                    )}
+                    <div>
+                      • Set {entry.set} — {entry.french} — {entry.score === 3 ? "✅" : "❌"}
+                    </div>
+                  </Fragment>
+                ))}
+              </>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
