@@ -22,6 +22,7 @@ export const getRacine = (shoresh) => fetchJson(`/api/racines/${encodeURICompone
 
 export const getChansons = () => fetchJson("/api/chansons");
 export const getRandomChanson = () => fetchJson("/api/chansons/random");
+export const getLatestChanson = () => fetchJson("/api/chansons/latest");
 export const getChanson = (position) => fetchJson(`/api/chansons/${position}`);
 
 function withCurrent(path, current) {

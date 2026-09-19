@@ -121,6 +121,20 @@ def random_chanson():
     return random.choice(data)
 
 
+# add_chanson (app.data_loader) ajoute toujours en fin de liste, sans champ
+# date dédié — la dernière chanson de la liste EST la plus récemment
+# téléchargée, cf. demande explicite du user (afficher celle-ci en premier
+# à l'ouverture de "Player"). Doit rester déclaré AVANT /chansons/{position}
+# (sinon FastAPI tente de convertir "latest" en int et échoue, cf. même
+# ordre pour /chansons/random ci-dessus).
+@router.get("/chansons/latest")
+def latest_chanson():
+    data = get_dataset("chanson")
+    if not data:
+        raise HTTPException(404, "Aucune chanson")
+    return data[-1]
+
+
 @router.get("/chansons/{position}")
 def get_chanson(position: int):
     data = get_dataset("chanson")

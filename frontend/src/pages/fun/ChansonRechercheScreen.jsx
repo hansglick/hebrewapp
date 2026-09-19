@@ -83,7 +83,16 @@ export default function ChansonRechercheScreen() {
 
       {loading && (
         <WaitingVideo
-          label={busy ? "Le service de traduction est encombré, repasser dans une heure." : undefined}
+          // Complète le texte d'attente par défaut de WaitingVideo (repris
+          // ici explicitement, pas juste `undefined`, pour pouvoir lui
+          // ajouter la suite sans toucher au texte partagé par les autres
+          // écrans qui utilisent ce composant) — cf. demande explicite du
+          // user, pas de retour à la ligne dans l'ajout.
+          label={
+            busy
+              ? "Le service de traduction est encombré, repasser dans une heure."
+              : "Patientez quelques instants ... Tu peux toutefois vaquer à tes occupations, les paroles seront de toute façon disponibles quand la requête aura aboutie"
+          }
           urgent={busy}
         />
       )}

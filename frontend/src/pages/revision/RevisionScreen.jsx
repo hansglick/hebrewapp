@@ -240,7 +240,11 @@ export default function RevisionScreen() {
         {/* Plus de titre — cf. demande explicite du user. Même disposition
             que JdrScreen : micro à gauche, séparé du texte introductif par
             une fine bordure verticale grise. */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
+        {/* alignItems:"flex-start" (au lieu de "center") : le micro doit
+            démarrer au même niveau que le haut de "Révisions", pas être
+            centré sur toute la hauteur de la colonne texte+puces devenue
+            plus grande — cf. demande explicite du user. */}
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 12, width: "100%" }}>
           <div style={{ flexShrink: 0, paddingInlineEnd: 12, borderInlineEnd: "1px solid var(--cardBorder)" }}>
             <MicrophoneIcon
               size={48}
@@ -249,10 +253,37 @@ export default function RevisionScreen() {
               onClick={running ? stop : start}
             />
           </div>
-          <p style={{ flex: 1, minWidth: 0, margin: 0, fontSize: "0.8em", fontStyle: "italic", textAlign: "start", color: "var(--textSecondary)" }}>
-            <strong style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Révisions : </strong>
-            révise les nouveaux mots, verbes et tournures de phrases de la leçon avec ton professeur.
-          </p>
+          {/* Texte introductif + effectifs dans la MÊME colonne (plutôt que
+              la liste en frère de toute la ligne icône+texte) : elle hérite
+              ainsi du même point de départ à gauche que le texte, sans
+              valeur de décalage codée en dur — cf. demande explicite du
+              user (les puces apparaissaient sous l'icône, pas sous le
+              texte). */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ margin: 0, fontSize: "0.8em", fontStyle: "italic", textAlign: "start", color: "var(--textSecondary)" }}>
+              <strong style={{ fontStyle: "normal", color: "var(--textPrimary)" }}>Révisions : </strong>
+              révise les nouveaux mots, verbes et tournures de phrases de la leçon avec ton professeur. N'hésite
+              pas à indiquer à Gali quels type d'items souhaites-tu prioriser entre Vocabulaire, Verbes et Phrases
+            </p>
+
+            {/* Effectifs de la leçon par catégorie — pour que l'étudiant
+                sache combien d'items il peut demander à prioriser (cf.
+                phrase introductive ci-dessus) — cf. demande explicite du
+                user. */}
+            <ul
+              style={{
+                margin: "8px 0 0",
+                paddingInlineStart: 20,
+                textAlign: "start",
+                fontSize: "0.8em",
+                color: "var(--textSecondary)",
+              }}
+            >
+              <li><em>Vocabulaire</em> : {revision.nb_mots}</li>
+              <li><em>Verbes</em> : {revision.nb_verbes}</li>
+              <li><em>Phrases</em> : {revision.nb_phrases}</li>
+            </ul>
+          </div>
         </div>
 
         {status && (

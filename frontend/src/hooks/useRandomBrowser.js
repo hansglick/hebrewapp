@@ -20,6 +20,12 @@ function depsEqual(a, b) {
 // valeur (pas par un simple flag "consommé une fois") pour rester correcte
 // sous StrictMode, qui rejoue l'effet une seconde fois au montage en dev.
 //
+// `initialFetch`, si fourni, remplace UNIQUEMENT ce tout premier tirage au
+// montage (ex: la chanson la plus récente plutôt qu'une au hasard) —
+// `next()` continue d'utiliser `fetchRandom` normalement. Vaut `fetchRandom`
+// par défaut (comportement inchangé pour tous les appelants existants) —
+// cf. demande explicite du user (ChansonScreen depuis la tuile "Player").
+//
 // `fetchRandom` reçoit un second argument `seenRecency` (tableau de
 // draw_key déjà tirés via le pool récence OU le pool "unexplored" côté
 // backend, cf. app.difficulty.weighted_pick/pick_unexplored) — les
@@ -30,7 +36,7 @@ function depsEqual(a, b) {
 // automatiquement à partir de `result.pool` ("recency" ou "unexplored") +
 // `result.draw_key` si présents sur l'objet renvoyé — aucune gestion
 // manuelle requise côté appelant.
-export function useRandomBrowser(fetchRandom, deps = [], initialCurrent) {
+export function useRandomBrowser(fetchRandom, deps = [], initialCurrent, initialFetch = fetchRandom) {
   const [current, setCurrent] = useState(initialCurrent ?? null);
   const [history, setHistory] = useState([]);
   const seenRecencyRef = useRef(new Set());
@@ -50,7 +56,7 @@ export function useRandomBrowser(fetchRandom, deps = [], initialCurrent) {
     skipDepsRef.current = null;
     setHistory([]);
     seenRecencyRef.current = new Set();
-    fetchRandom(undefined, Array.from(seenRecencyRef.current)).then(trackAndSet);
+    initialFetch(undefined, Array.from(seenRecencyRef.current)).then(trackAndSet);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 

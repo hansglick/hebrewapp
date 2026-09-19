@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { getRandomChanson } from "../../api/content";
+import { getRandomChanson, getLatestChanson } from "../../api/content";
 import { youtubeEmbedUrl } from "../../api/media";
 import { useSwipe } from "../../hooks/useSwipe";
 import { useRandomBrowser } from "../../hooks/useRandomBrowser";
@@ -16,10 +16,15 @@ export default function ChansonScreen() {
   // l'affiche directement au lieu d'en tirer un au hasard (cf. restoreMot
   // dans MotScreen, même principe).
   const initialChanson = location.state?.initialChanson;
+  // Depuis la tuile "Player" (pas de chanson déjà connue via location.state),
+  // la toute première chanson affichée est la plus récemment téléchargée
+  // (getLatestChanson) plutôt qu'un tirage au hasard — cf. demande explicite
+  // du user. `next()`/`back()` continuent de piocher au hasard normalement.
   const { current: chanson, next, back } = useRandomBrowser(
     getRandomChanson,
     initialChanson ? ["__initial__"] : [],
-    initialChanson
+    initialChanson,
+    getLatestChanson
   );
 
   // Animation "tourner la page" au changement de chanson — même technique

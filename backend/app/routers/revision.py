@@ -9,6 +9,7 @@ from google.genai import types
 
 from app import revision
 from app.auth import get_user_id
+from app.data_loader import get_dataset
 from app.lesson_order import all_lesson_codes_in_order
 from app.openai_client import extract_verbatim
 
@@ -23,7 +24,19 @@ MIN_TURN_BYTES = 9600
 def get_revision(code: str):
     if code not in all_lesson_codes_in_order():
         raise HTTPException(404, f"Leçon inconnue : {code!r}")
-    return {"lesson_code": code}
+    # Comptes affichés dans le texte introductif de l'écran (cf.
+    # RevisionScreen.jsx) — pour que l'étudiant sache combien d'items de
+    # chaque catégorie il peut demander à prioriser, cf. demande explicite
+    # du user. Même source que get_lecon_exploration (app.routers.chapters).
+    lesson = get_dataset("lesson").get(code, {})
+    phrases_key = lesson.get("phrases")
+    nb_phrases = len(get_dataset("phrase").get(phrases_key, [])) if phrases_key else 0
+    return {
+        "lesson_code": code,
+        "nb_mots": len(lesson.get("words") or []),
+        "nb_verbes": len(lesson.get("verbs") or []),
+        "nb_phrases": nb_phrases,
+    }
 
 
 def _pcm_to_wav_bytes(pcm_bytes: bytes, sample_rate: int = 16000) -> bytes:
