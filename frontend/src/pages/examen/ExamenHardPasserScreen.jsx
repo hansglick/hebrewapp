@@ -57,7 +57,7 @@ function StepBadge({ number, background, color }) {
 // Même trait que QuestionEcriteScreen/ExamenEcritScreen entre le bloc
 // "Traduis" et le bloc "Réponse" — cf. StepBadge ci-dessus.
 const stepHr = (
-  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "16px 0" }} />
 );
 
 // Pastille utilisée UNIQUEMENT par le bloc quizz — variante décalée
@@ -632,7 +632,7 @@ export default function ExamenHardPasserScreen() {
             </tbody>
           </table>
 
-          <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "1em 0 0" }} />
+          <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "1em 0 0" }} />
 
           {geminiError && (
             <>
@@ -707,8 +707,8 @@ export default function ExamenHardPasserScreen() {
               }}
             >
               <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-                <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
-                  <QuizzStepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
+                  <QuizzStepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
                   Traduis le mot
                 </SectionTitle>
               </div>
@@ -716,11 +716,11 @@ export default function ExamenHardPasserScreen() {
               <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{capitalize(q.french)}</p>
 
               <div className="quizz-hr">
-                <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
+                <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: 0 }} />
               </div>
 
               <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-                <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+                <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
                   <QuizzStepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
                   Double-tap pour choisir la réponse
                 </SectionTitle>
@@ -757,9 +757,10 @@ export default function ExamenHardPasserScreen() {
           {q.type === "traduction" && (
             <>
               <QuoteBlock
+                background="var(--cardBg)"
                 label={
                   <>
-                    <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                    <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
                     Traduis
                   </>
                 }
@@ -796,7 +797,13 @@ export default function ExamenHardPasserScreen() {
                     <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
                     Réponse
                   </SectionTitle>
-                  <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={3} />
+                  <HebrewInput
+                    key={index}
+                    value={studentSolution}
+                    onChange={setStudentSolution}
+                    rows={3}
+                    textareaStyle={{ background: "var(--cardBg)" }}
+                  />
                 </div>
               )}
               {!answer && !pendingAnswers[index] && q.direction === "francais" && (
@@ -810,7 +817,7 @@ export default function ExamenHardPasserScreen() {
                     value={studentSolution}
                     onChange={(e) => setStudentSolution(e.target.value)}
                     rows={3}
-                    style={{ width: "100%", fontFamily: "inherit" }}
+                    style={{ width: "100%", fontFamily: "inherit", background: "var(--cardBg)" }}
                   />
                 </div>
               )}
@@ -837,7 +844,7 @@ export default function ExamenHardPasserScreen() {
                     <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
                   </p>
 
-                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
                   <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
                     <tbody>
@@ -909,7 +916,7 @@ export default function ExamenHardPasserScreen() {
                     <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
                   </p>
 
-                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+                  <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
                   <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
                     <tbody>
@@ -1014,7 +1021,7 @@ export default function ExamenHardPasserScreen() {
                       </tr>
                       <tr>
                         <td colSpan={2} style={{ padding: "8px 0", border: "1px solid transparent" }}>
-                          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
+                          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: 0 }} />
                         </td>
                       </tr>
                       <tr>

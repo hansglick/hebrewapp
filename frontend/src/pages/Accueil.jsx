@@ -238,10 +238,9 @@ export default function Accueil() {
         <div className="tile-list" style={{ gap: 8, margin: 0 }}>
           <Link to="/parler" className="card-link">
             <div className="card" style={{ textAlign: "center" }}>
-              {/* Étoile dorée à bordure noire, coin haut droit — cf.
-                  demande explicite du user. .card a déjà position:relative
-                  (screens.css), donc ce badge se positionne par rapport à
-                  la tuile elle-même. */}
+              {/* Étoile dorée, coin haut droit — cf. demande explicite du
+                  user. .card a déjà position:relative (screens.css), donc
+                  ce badge se positionne par rapport à la tuile elle-même. */}
               <svg
                 viewBox="0 0 20 20"
                 width={20}
@@ -250,10 +249,7 @@ export default function Accueil() {
               >
                 <polygon
                   points="10,1 12.9,7.6 20,8.1 14.5,12.9 16.2,20 10,16.2 3.8,20 5.5,12.9 0,8.1 7.1,7.6"
-                  fill="#ffd700"
-                  stroke="#000"
-                  strokeWidth="1"
-                  strokeLinejoin="round"
+                  fill="var(--accueilStarBg)"
                 />
               </svg>
               <TileTitle src="/speak.png">Parler</TileTitle>

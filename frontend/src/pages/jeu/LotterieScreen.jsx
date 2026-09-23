@@ -36,7 +36,7 @@ function StepBadge({ number, background, color }) {
 }
 
 const sectionHr = (
-  <hr style={{ width: "100%", maxWidth: 480, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "20px 0" }} />
+  <hr style={{ width: "100%", maxWidth: 480, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "20px 0" }} />
 );
 
 const TICKETS = [
@@ -94,7 +94,7 @@ export default function LotterieScreen() {
           assez de points — cf. demande explicite du user. */}
       <div style={{ width: "100%", maxWidth: 480 }}>
         <SectionTitle>
-          <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+          <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
           Achète un lot
         </SectionTitle>
       </div>

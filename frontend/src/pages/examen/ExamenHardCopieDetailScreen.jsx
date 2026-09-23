@@ -100,7 +100,7 @@ export default function ExamenHardCopieDetailScreen() {
         </tbody>
       </table>
 
-      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "1em 0 0" }} />
+      <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "1em 0 0" }} />
 
       {q.type === "verbe" && (
         <>
@@ -148,7 +148,7 @@ export default function ExamenHardCopieDetailScreen() {
             <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
             <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
           </p>
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
           <StarRating rating={answer.score} />
           {answer.observations?.length > 0 && (
             <ul
@@ -177,7 +177,7 @@ export default function ExamenHardCopieDetailScreen() {
             <span style={{ color: "var(--textPrimary)" }}>Réponse de l'étudiant : </span>
             <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
           </p>
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
               <tr>

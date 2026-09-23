@@ -15,7 +15,19 @@ function formatMinutesSeconds(totalSeconds) {
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
-export function AudioTrackFooter({ currentTime, duration, rate, onCycleRate }) {
+export function AudioTrackFooter({
+  currentTime,
+  duration,
+  rate,
+  onCycleRate,
+  // Surcharges ponctuelles de la police (horodatage/vitesse) — pour les
+  // écrans qui veulent une couleur différente sans changer les tokens
+  // partagés timerFg/speedPillFg par tous les usages de ce composant
+  // (AudioPlayer, VoicePrefill, blocs 3 "Réponse"...), cf. demande
+  // explicite du user.
+  timerColor,
+  speedFg,
+}) {
   return (
     <div
       style={{
@@ -29,7 +41,7 @@ export function AudioTrackFooter({ currentTime, duration, rate, onCycleRate }) {
       <span
         style={{
           fontSize: "0.7em",
-          color: "var(--textSecondary)",
+          color: timerColor || "var(--timerFg)",
           fontVariantNumeric: "tabular-nums",
         }}
       >
@@ -45,8 +57,8 @@ export function AudioTrackFooter({ currentTime, duration, rate, onCycleRate }) {
         type="button"
         onClick={onCycleRate}
         style={{
-          background: "var(--cardBorder)",
-          color: "var(--textSecondary)",
+          background: "var(--speedPillBg)",
+          color: speedFg || "var(--speedPillFg)",
           border: "none",
           borderRadius: 999,
           padding: "2px 8px",

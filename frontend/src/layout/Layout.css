@@ -116,8 +116,11 @@
   color: var(--chromeTextPrimary);
 }
 
+/* Même gris que le séparateur vertical (.header-divider) plutôt que
+   chromeTextSecondary — cf. demande explicite du user (cohérence des gris
+   de la barre de contrôle). */
 .header-niveau-lesson-code {
-  color: var(--chromeTextSecondary) !important;
+  color: var(--chromeDivider) !important;
 }
 
 .header-niveau img {

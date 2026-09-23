@@ -36,7 +36,7 @@ function StepBadge({ number, background, color }) {
 }
 
 const stepHr = (
-  <hr style={{ width: "70%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+  <hr style={{ width: "70%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "16px 0" }} />
 );
 
 const PHASES = [
@@ -128,7 +128,7 @@ export default function OnboardingJourneyPreviewScreen() {
               valeurs"). */}
           <div style={{ width: "70%", maxWidth: 320, display: "flow-root" }}>
             <SectionTitle fontSize="0.84em">
-              <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+              <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
               Entre ton pseudo
             </SectionTitle>
           </div>
@@ -148,7 +148,7 @@ export default function OnboardingJourneyPreviewScreen() {
 
           <div style={{ width: "70%", maxWidth: 320, display: "flow-root" }}>
             <SectionTitle fontSize="0.84em">
-              <StepBadge number={2} background="#dbeafe" color="#1d4ed8" />
+              <StepBadge number={2} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
               Entre ton mot de passe
             </SectionTitle>
           </div>
@@ -162,7 +162,7 @@ export default function OnboardingJourneyPreviewScreen() {
 
           <div style={{ width: "70%", maxWidth: 320, display: "flow-root", marginTop: -8 }}>
             <SectionTitle fontSize="0.84em">
-              <StepBadge number={3} background="#dbeafe" color="#1d4ed8" />
+              <StepBadge number={3} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
               Re-entre ton mot de passe
             </SectionTitle>
           </div>

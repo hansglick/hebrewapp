@@ -88,6 +88,180 @@ const basePaletteLight = {
   chromePanelBorder: "#2e303a",
   chromeDivider: "#4b5563",
   chromeDanger: "#ff6b6b",
+  // Fond/chiffre des pastilles d'étape (StepBadge), nuance des titres
+  // d'énoncé "soft" (SectionTitle) et fond du bouton spécial (Hard Exam) —
+  // jusqu'ici codés en dur dans chaque écran plutôt que pilotés par la
+  // palette ; tokenisés pour que la palette V2 éditable (cf.
+  // computePaletteV2 plus bas) puisse les changer. Valeurs inchangées ici
+  // (identiques aux anciens littéraux).
+  stepBadgeBlueBg: "#dbeafe",
+  stepBadgeBlueFg: "#1d4ed8",
+  stepBadgeOrangeBg: "#ffedd5",
+  stepBadgeOrangeFg: "#c2410c",
+  enonceSoft: "#9ca3af",
+  examSpecialBg: "#f97316",
+  // Fond/bordure de la tuile "Examen" (.card-dark, écran d'accueil) —
+  // jusqu'ici codé en dur (#000), raccordé en V2 directement à la base
+  // "Vert5" (cf. demande explicite du user — remplace la dérivée foncée
+  // de Vert5, elle-même remplaçant le raccordement direct au "Noir"
+  // décidés précédemment). Valeur inchangée ici.
+  tuileAlertBg: "#000000",
+  // Fond du panneau lecteur audio (questions orales) — jusqu'ici codé en
+  // dur (#fff), raccordé à la base "Blanc" (cf. demande explicite du
+  // user). Valeur inchangée ici.
+  audioPanelBg: "#ffffff",
+  // Traits horizontaux (<hr>, ~21 écrans), piste de la barre de lecture
+  // (AudioPlayer, écran leçon/texte) et pastille de vitesse
+  // (AudioTrackFooter) — partageaient jusqu'ici `cardBorder`, découplés
+  // ici pour pouvoir les raccorder à la base "Gris1" en V2 sans toucher
+  // aux bordures de tuiles/encadrés (cf. demande explicite du user).
+  // Valeur inchangée ici (identique à l'ancien cardBorder).
+  dividerColor: "#e5e4e7",
+  // Fond/triangle du bouton lecture (AudioPlayer, écran leçon/texte) —
+  // jusqu'ici var(--speakerIcon)/blanc en dur, découplés pour les
+  // raccorder aux bases "Vert5"/"Gris1" en V2 sans toucher aux icônes
+  // haut-parleur ailleurs dans l'app (cf. demande explicite du user).
+  // Valeurs inchangées ici.
+  audioToggleBg: "#000000",
+  audioToggleFg: "#ffffff",
+  // Sélection HE/FR (radio) de l'écran leçon/texte — jusqu'ici
+  // var(--speakerIcon) en dur, découplée pour la raccorder à la base
+  // "Vert5" en V2 sans toucher au même toggle sur l'écran Dictionnaire
+  // (cf. demande explicite du user). Valeur inchangée ici.
+  texteRadioAccent: "#000000",
+  // Logo haut-parleur de l'écran Apprendre/Traductions (QuestionEcriteScreen)
+  // — jusqu'ici var(--speakerIcon) partagé (noir fixe, jamais lié au thème
+  // ni à la palette), découplé pour le raccorder à la base "Noir" en V2
+  // sans toucher aux autres logos haut-parleur de l'app (Mot, Verbe,
+  // Dictionnaire, curiosités...) — cf. demande explicite du user. Valeur
+  // inchangée ici.
+  traductionsSpeakerIcon: "#000000",
+  // Barre de citation verticale (QuoteBlock) — jusqu'ici var(--tileAccent)
+  // partagé (avec le bouton lecture des questions orales, les titres
+  // "Contenu"/"Question" et la bordure de la mini-tuile "Réponse"),
+  // découplée pour la raccorder à une dérivée foncée de la base "Rouge7"
+  // en V2 sans toucher aux autres usages de tileAccent — cf. demande
+  // explicite du user. Valeur inchangée ici (identique à l'ancien
+  // tileAccent).
+  citationBarColor: "#1e3a5f",
+  examToggleTrack: "#4b4d57",
+  // Pastille "1"/"Traduis" (StepBadge + titre) de la phrase à traduire, dans
+  // examen blanc (QuestionEcriteScreen, mode "prof") et examen écrit
+  // (ExamenEcritScreen) uniquement — jusqu'ici stepBadgeBlueBg/Fg (fond du
+  // rond) + tileAccent (texte "Traduis") partagés avec tous les autres
+  // badges/titres de l'app, découplés pour les raccorder à une dérivée
+  // pastel de "Rouge7" (fond) et à "Rouge7" direct (chiffre + titre) en V2
+  // sans toucher aux autres badges — cf. demande explicite du user.
+  // Valeurs inchangées ici (identiques aux anciens littéraux).
+  examTraduisBadgeBg: "#dbeafe",
+  examTraduisBadgeFg: "#1d4ed8",
+  examTraduisTitleColor: "#1e3a5f",
+  // Titres "Traduis" et "Réponse" (texte, hors pastille), examen blanc
+  // UNIQUEMENT (QuestionEcriteScreen, mode "prof") — découplé de
+  // examTraduisTitleColor (qui reste rouge7 en V2 pour examen écrit) pour
+  // le raccorder à la base "Noir" de la palette en V2 sans toucher à
+  // examen écrit — cf. demande explicite du user. Valeur inchangée ici.
+  examBlancTitleColor: "#1e3a5f",
+  // Fond de l'étoile dorée (badge coin haut-droit de la tuile "Parler",
+  // écran d'accueil) — jusqu'ici littéral SVG fixe (#ffd700), tokenisé
+  // pour le raccorder à la base "Rouge7" en V2 — cf. demande explicite du
+  // user. Valeur inchangée ici.
+  accueilStarBg: "#ffd700",
+  // Bordure de l'image (écran Apprendre/Texte) — jusqu'ici var(--cardBorder)
+  // partagé avec toutes les bordures d'encadrés, découplée pour la
+  // raccorder à la base "Blanc" en V2 sans toucher aux autres bordures —
+  // cf. demande explicite du user. Valeur inchangée ici (identique à
+  // l'ancien cardBorder).
+  texteImageBorder: "#e5e4e7",
+  // Fond/police de la pastille de vitesse de lecture (AudioTrackFooter,
+  // partagée par AudioPlayer et AudioProgressBlock) — jusqu'ici
+  // dividerColor/textSecondary partagés (l'un avec les traits/la barre de
+  // lecture, l'autre avec tout le texte secondaire de l'app), découplés
+  // pour les raccorder directement à "Bg 1" (fond, même couleur que le
+  // fond principal de l'écran) et à "Color 1" (police) en V2 sans toucher
+  // aux autres usages — cf. demande explicite du user. Valeurs inchangées
+  // ici (identiques aux anciens dividerColor/textSecondary).
+  speedPillBg: "#e5e4e7",
+  speedPillFg: "#6b6375",
+  // Chiffres du minuteur ("0:00 / 2:34", AudioTrackFooter, même écran) —
+  // jusqu'ici var(--textSecondary) partagé, découplés pour les raccorder à
+  // la base "Vert5" en V2 (même traitement que la police de la pastille de
+  // vitesse) sans toucher au texte secondaire ailleurs dans l'app — cf.
+  // demande explicite du user. Valeur inchangée ici.
+  timerFg: "#6b6375",
+  // Titres des 3 blocs audio (OralAnswerCapture : "Ecoute le contenu",
+  // "Ecoute la question", "Enregistre ta réponse"/"Réponse") — jusqu'ici
+  // var(--tileAccent) (défaut de SectionTitle), découplés pour les
+  // raccorder à la base "Noir" ("Control 1") en V2 sans toucher aux
+  // autres titres utilisant le même défaut — cf. demande explicite du
+  // user. Valeur inchangée ici.
+  audioBlockTitleColor: "#1e3a5f",
+  // Fond des pastilles 1 et 2 des blocs audio (mêmes 3 blocs) — jusqu'ici
+  // var(--stepBadgeBlueBg) partagé, découplé pour le raccorder à une
+  // dérivée pastel de la base "Rouge7" ("Color 2") en V2 sans toucher aux
+  // autres pastilles bleues de l'app — cf. demande explicite du user.
+  // Valeur inchangée ici. La pastille 3 (validationGrisee) n'est pas
+  // concernée (non mentionnée par le user).
+  audioBlockBadgeBg: "#dbeafe",
+  // Icônes lecture/pause des 3 blocs audio (.audio-progress-block-icon,
+  // partagée par AudioProgressBlock et le bloc "Réponse" d'OralAnswerCapture)
+  // — jusqu'ici var(--tileAccent), découplée pour la raccorder à une
+  // dérivée foncée de la base "Gris5" en V2 (blocs 1 et 2 uniquement — cf.
+  // audioBlockIconColorLast pour le 3e bloc) sans toucher aux autres
+  // usages de tileAccent — cf. demande explicite du user. Valeur
+  // inchangée ici.
+  audioBlockIconColor: "#1e3a5f",
+  // Police (chiffres) des pastilles 1 et 2 des blocs audio — jusqu'ici
+  // var(--stepBadgeBlueFg) partagé, découplée pour la raccorder
+  // directement à la base "Rouge7" ("Color 2") en V2 sans toucher aux
+  // autres pastilles bleues de l'app — cf. demande explicite du user.
+  // Valeur inchangée ici.
+  audioBlockBadgeFg: "#1d4ed8",
+  // Icône lecture/pause du 3e bloc audio ("Réponse") uniquement — jusqu'ici
+  // var(--audioBlockIconColor) partagé avec les 2 autres blocs (Contenu/
+  // Question), découplée pour la raccorder à une dérivée foncée de la
+  // base "Vert5" ("Color 1") en V2, différente de celle des 2 premiers
+  // blocs (Gris5) — cf. demande explicite du user. Valeur inchangée ici.
+  audioBlockIconColorLast: "#1e3a5f",
+  // Titre "Question [x]" (écran QuestionOraleScreen) — jusqu'ici
+  // var(--tileAccent), découplé pour le raccorder à la base "Noir"
+  // ("Control 1") en V2 sans toucher aux autres usages de tileAccent —
+  // cf. demande explicite du user. Valeur inchangée ici.
+  questionOraleTitleColor: "#1e3a5f",
+  // Police de l'horodatage et de la pastille de vitesse de lecture des
+  // blocs audio 1 et 2 (Contenu/Question, AudioProgressBlock) — jusqu'ici
+  // timerFg/speedPillFg partagés (avec AudioPlayer leçon/texte, VoicePrefill,
+  // le bloc 3 "Réponse" en enregistrement), découplées pour les raccorder
+  // à une dérivée foncée de la base "Gris5" en V2 sans toucher aux autres
+  // usages — cf. demande explicite du user. Valeurs inchangées ici.
+  audioBlockTimerColor: "#6b6375",
+  audioBlockSpeedFg: "#6b6375",
+  // Trait séparateur entre les 3 blocs audio (OralAnswerCapture,
+  // .oral-answer-capture-divider) — jusqu'ici var(--cardBorder) partagé
+  // avec toutes les bordures d'encadrés, découplé pour le raccorder à
+  // "Bg 2" en V2 (même couleur que les autres traits horizontaux de
+  // l'app, dividerColor) sans toucher aux bordures de tuiles/encadrés —
+  // cf. demande explicite du user. Valeur inchangée ici (identique à
+  // l'ancien cardBorder).
+  audioBlockDividerColor: "#e5e4e7",
+  // Pastille "2"/"Réponse" (StepBadge) des écrans examen blanc, examen
+  // (écrit) et compréhension orale (bloc 3, OralAnswerCapture) — jusqu'ici
+  // validationGrisee/Pleine partagés avec TOUTES les autres pastilles
+  // "Réponse" de l'app (MotScreen, VerbeScreen, QuizzScreen...), découplés
+  // pour raccorder le fond directement à la base "Vert5" ("Color 1", sans
+  // dérivation pastel) et la police à "Bg 2" en V2, sans toucher aux
+  // autres pastilles — cf. demande explicite du user. Valeurs inchangées
+  // ici (identiques aux anciens validationGrisee/Pleine).
+  enonceBadgeVertBg: "#b2f2bb",
+  enonceBadgeVertFg: "#2f9e44",
+  // Piste des toggles "Pré-remplir avec la voix"/"Clavier hébreu" au sein
+  // de HebrewInput, dans l'écran examen blanc uniquement (QuestionEcriteScreen,
+  // mode "prof") — jusqu'ici var(--bg) partagé (le style ".switch" commun à
+  // TOUS les usages de HebrewInput : inscription, connexion, dictionnaire...),
+  // découplé pour le raccorder à la dérivée claire de "Vert5" en V2 sans
+  // toucher aux autres usages de HebrewInput — cf. demande explicite du
+  // user. Valeur inchangée ici (identique à l'ancien var(--bg)).
+  examHebrewToggleTrack: "#ffffff",
 };
 
 const basePaletteDark = {
@@ -124,7 +298,191 @@ const basePaletteDark = {
   chromePanelBorder: "#2e303a",
   chromeDivider: "#4b5563",
   chromeDanger: "#ff6b6b",
+  stepBadgeBlueBg: "#dbeafe",
+  stepBadgeBlueFg: "#1d4ed8",
+  stepBadgeOrangeBg: "#ffedd5",
+  stepBadgeOrangeFg: "#c2410c",
+  enonceSoft: "#9ca3af",
+  examSpecialBg: "#f97316",
+  tuileAlertBg: "#000000",
+  audioPanelBg: "#ffffff",
+  dividerColor: "#2e303a",
+  audioToggleBg: "#000000",
+  audioToggleFg: "#ffffff",
+  texteRadioAccent: "#000000",
+  traductionsSpeakerIcon: "#000000",
+  citationBarColor: "#1e3a5f",
+  examToggleTrack: "#4b4d57",
+  examHebrewToggleTrack: "#16171d",
+  examTraduisBadgeBg: "#dbeafe",
+  examTraduisBadgeFg: "#1d4ed8",
+  examTraduisTitleColor: "#1e3a5f",
+  examBlancTitleColor: "#1e3a5f",
+  accueilStarBg: "#ffd700",
+  texteImageBorder: "#2e303a",
+  speedPillBg: "#2e303a",
+  speedPillFg: "#9ca3af",
+  timerFg: "#9ca3af",
+  audioBlockTitleColor: "#1e3a5f",
+  audioBlockBadgeBg: "#dbeafe",
+  audioBlockIconColor: "#1e3a5f",
+  audioBlockBadgeFg: "#1d4ed8",
+  audioBlockIconColorLast: "#1e3a5f",
+  questionOraleTitleColor: "#1e3a5f",
+  audioBlockTimerColor: "#9ca3af",
+  audioBlockSpeedFg: "#9ca3af",
+  audioBlockDividerColor: "#2e303a",
+  enonceBadgeVertBg: "#69db7c",
+  enonceBadgeVertFg: "#40c057",
 };
+
+// Palette V2 — regroupement de nuances demandé par le user (audit couleurs
+// de cette session), THÈME CLAIR SEULEMENT. Toggle TEMPORAIRE (cf.
+// ConfigContext.jsx/ConfigModal.jsx, "Nouvelle palette (test)") pour
+// comparer côte à côte avec l'ancienne palette avant de trancher — à
+// retirer une fois la décision prise (repasser basePaletteLight en unique
+// source, ou remplacer ses valeurs par celles-ci).
+//
+// Réduite à 8 couleurs de BASE, éditables en direct (pipette ou champ
+// hexadécimal, cf. ConfigModal) — tout le reste de la palette V2 est
+// DÉRIVÉ de ces 8 couleurs par mélange linéaire sRGB, cf. computePaletteV2
+// ci-dessous. Valeurs par défaut = celles retenues lors du regroupement
+// initial (cf. demande explicite du user) :
+// - Noir/Blanc : assignation directe (chromeBg+textPrimary / chromeTextPrimary+bg).
+// - Gris1 (cardBg) : assignation directe, ne dérive rien (reste seul).
+// - Gris5 : base de Gris2 (cardBorder, +70% blanc) et Gris7
+//   (textSecondary+chromeDivider fusionnés, +38% vers #1a1a1a).
+// - Bleu6 : base de Bleu9 (tileAccent, +65% vers #1a1a1a) et Bleu1
+//   (stepBadgeBlueBg, +84% blanc) ; assigné aussi à logoAccent/stepBadgeBlueFg.
+// - Vert5 : base de Vert1 (validationGrisee, +63% blanc) ; assigné aussi à
+//   validationPleine/accent.
+// - Rouge7 : base de Rouge1 (annulationGrisee, +74% blanc) ; assigné aussi
+//   à annulationPleine/chromeDanger.
+// - Orange5 : base de Orange8 (stepBadgeOrangeFg, -22% vers noir) et
+//   Orange1 (stepBadgeOrangeBg, +82% blanc) ; assigné aussi à
+//   warning/examSpecialBg.
+// Deux dérivations restent un peu plus éloignées de leur ancienne cible
+// que les autres (Bleu9, Orange8) : la base est plus saturée que l'ancienne
+// teinte visée, aucun mélange simple ne rapproche parfaitement — cf.
+// demande explicite du user ("je te laisse le choix de la fonction
+// d'interpolation... tant que le résultat n'est pas trop éloigné").
+export const PALETTE_V2_BASE_DEFAULTS = {
+  noir: "#000000",
+  blanc: "#ffffff",
+  gris1: "#f4f3ec",
+  gris5: "#9ca3af",
+  bleu6: "#1d4ed8",
+  vert5: "#2f9e44",
+  rouge7: "#e03131",
+  orange5: "#f97316",
+};
+
+export const PALETTE_V2_BASE_LABELS = {
+  noir: "Control 1",
+  bleu6: "Control 2",
+  blanc: "Bg 1",
+  gris1: "Bg 2",
+  vert5: "Color 1",
+  rouge7: "Color 2",
+  gris5: "Gris 5",
+  orange5: "Orange 5",
+};
+
+function clampByte(n) {
+  return Math.max(0, Math.min(255, Math.round(n)));
+}
+
+function hexToRgb(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());
+  if (!m) return { r: 0, g: 0, b: 0 };
+  const n = parseInt(m[1], 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+function rgbToHex({ r, g, b }) {
+  return (
+    "#" +
+    [r, g, b]
+      .map((v) => clampByte(v).toString(16).padStart(2, "0"))
+      .join("")
+  );
+}
+
+// Mélange linéaire sRGB de `hexA` vers `hexB`, `t` dans [0,1] (0 = hexA
+// pur, 1 = hexB pur) — cf. commentaire PALETTE_V2_BASE_DEFAULTS plus haut.
+export function mixHex(hexA, hexB, t) {
+  const a = hexToRgb(hexA);
+  const b = hexToRgb(hexB);
+  return rgbToHex({
+    r: a.r + (b.r - a.r) * t,
+    g: a.g + (b.g - a.g) * t,
+    b: a.b + (b.b - a.b) * t,
+  });
+}
+
+// Calcule la palette V2 complète (tous les tokens concernés) à partir des
+// 8 couleurs de base — appelée à chaque édition d'une base (pipette ou
+// champ hexadécimal, cf. ConfigModal) pour recalculer les dérivées en
+// direct.
+export function computePaletteV2(bases) {
+  const b = { ...PALETTE_V2_BASE_DEFAULTS, ...bases };
+  return {
+    ...basePaletteLight,
+    chromeBg: b.noir,
+    textPrimary: b.noir,
+    tuileAlertBg: b.vert5,
+    accueilStarBg: b.rouge7,
+    texteImageBorder: b.blanc,
+    speedPillBg: b.blanc,
+    speedPillFg: b.vert5,
+    timerFg: b.vert5,
+    audioBlockTitleColor: b.noir,
+    audioBlockBadgeBg: mixHex(b.rouge7, "#1a1a1a", 0.65),
+    audioBlockIconColor: mixHex(b.gris5, "#1a1a1a", 0.38),
+    audioBlockBadgeFg: b.gris1,
+    audioBlockIconColorLast: mixHex(b.vert5, "#1a1a1a", 0.65),
+    questionOraleTitleColor: b.noir,
+    audioBlockTimerColor: mixHex(b.gris5, "#1a1a1a", 0.38),
+    audioBlockSpeedFg: mixHex(b.gris5, "#1a1a1a", 0.38),
+    audioBlockDividerColor: b.gris1,
+    enonceBadgeVertBg: b.vert5,
+    enonceBadgeVertFg: b.gris1,
+    chromeTextPrimary: b.blanc,
+    bg: b.blanc,
+    cardBg: b.gris1,
+    audioPanelBg: b.gris1,
+    dividerColor: b.gris1,
+    audioToggleBg: b.vert5,
+    audioToggleFg: b.gris1,
+    texteRadioAccent: b.vert5,
+    traductionsSpeakerIcon: b.noir,
+    citationBarColor: b.rouge7,
+    examToggleTrack: mixHex(b.vert5, "#ffffff", 0.63),
+    examHebrewToggleTrack: mixHex(b.vert5, "#ffffff", 0.63),
+    examTraduisBadgeBg: mixHex(b.rouge7, "#1a1a1a", 0.65),
+    examTraduisBadgeFg: b.gris1,
+    examTraduisTitleColor: b.rouge7,
+    examBlancTitleColor: b.noir,
+    enonceSoft: b.gris5,
+    cardBorder: mixHex(b.gris5, "#ffffff", 0.7),
+    textSecondary: mixHex(b.gris5, "#1a1a1a", 0.38),
+    chromeDivider: mixHex(b.gris5, "#1a1a1a", 0.38),
+    logoAccent: b.bleu6,
+    stepBadgeBlueFg: b.bleu6,
+    tileAccent: mixHex(b.bleu6, "#1a1a1a", 0.65),
+    stepBadgeBlueBg: mixHex(b.bleu6, "#ffffff", 0.84),
+    validationPleine: b.vert5,
+    accent: b.vert5,
+    validationGrisee: mixHex(b.vert5, "#ffffff", 0.63),
+    annulationPleine: b.rouge7,
+    chromeDanger: b.rouge7,
+    annulationGrisee: mixHex(b.rouge7, "#ffffff", 0.74),
+    warning: b.orange5,
+    examSpecialBg: b.orange5,
+    stepBadgeOrangeFg: mixHex(b.orange5, "#000000", 0.22),
+    stepBadgeOrangeBg: mixHex(b.orange5, "#ffffff", 0.82),
+  };
+}
 
 function buildTheme(p) {
   return {
@@ -161,6 +519,42 @@ function buildTheme(p) {
     chromePanelBorder: p.chromePanelBorder,
     chromeDivider: p.chromeDivider,
     chromeDanger: p.chromeDanger,
+    stepBadgeBlueBg: p.stepBadgeBlueBg,
+    stepBadgeBlueFg: p.stepBadgeBlueFg,
+    stepBadgeOrangeBg: p.stepBadgeOrangeBg,
+    stepBadgeOrangeFg: p.stepBadgeOrangeFg,
+    enonceSoft: p.enonceSoft,
+    examSpecialBg: p.examSpecialBg,
+    tuileAlertBg: p.tuileAlertBg,
+    audioPanelBg: p.audioPanelBg,
+    dividerColor: p.dividerColor,
+    audioToggleBg: p.audioToggleBg,
+    audioToggleFg: p.audioToggleFg,
+    texteRadioAccent: p.texteRadioAccent,
+    traductionsSpeakerIcon: p.traductionsSpeakerIcon,
+    citationBarColor: p.citationBarColor,
+    examToggleTrack: p.examToggleTrack,
+    examHebrewToggleTrack: p.examHebrewToggleTrack,
+    examTraduisBadgeBg: p.examTraduisBadgeBg,
+    examTraduisBadgeFg: p.examTraduisBadgeFg,
+    examTraduisTitleColor: p.examTraduisTitleColor,
+    examBlancTitleColor: p.examBlancTitleColor,
+    accueilStarBg: p.accueilStarBg,
+    texteImageBorder: p.texteImageBorder,
+    speedPillBg: p.speedPillBg,
+    speedPillFg: p.speedPillFg,
+    timerFg: p.timerFg,
+    audioBlockTitleColor: p.audioBlockTitleColor,
+    audioBlockBadgeBg: p.audioBlockBadgeBg,
+    audioBlockIconColor: p.audioBlockIconColor,
+    audioBlockBadgeFg: p.audioBlockBadgeFg,
+    audioBlockIconColorLast: p.audioBlockIconColorLast,
+    questionOraleTitleColor: p.questionOraleTitleColor,
+    audioBlockTimerColor: p.audioBlockTimerColor,
+    audioBlockSpeedFg: p.audioBlockSpeedFg,
+    audioBlockDividerColor: p.audioBlockDividerColor,
+    enonceBadgeVertBg: p.enonceBadgeVertBg,
+    enonceBadgeVertFg: p.enonceBadgeVertFg,
   };
 }
 
@@ -168,6 +562,11 @@ export const appConfig = {
   theme: {
     light: buildTheme(basePaletteLight),
     dark: buildTheme(basePaletteDark),
+    // Toggle temporaire (cf. ConfigContext.jsx) — pas d'équivalent sombre,
+    // le regroupement demandé ne portait que sur le thème clair. Valeurs
+    // par défaut (les 8 bases jamais retouchées) ; ConfigContext recalcule
+    // via computePaletteV2() dès qu'une base est éditée.
+    lightV2: buildTheme(computePaletteV2(PALETTE_V2_BASE_DEFAULTS)),
   },
   fontFamily: {
     latin: "system-ui, 'Segoe UI', Roboto, sans-serif",

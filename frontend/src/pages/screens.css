@@ -202,9 +202,9 @@
 /* Tuile "Examen" de l'accueil : fond noir, texte blanc, quel que soit le
    thème — cf. demande explicite du user. */
 .card-dark {
-  background: #000;
+  background: var(--tuileAlertBg);
   color: #fff;
-  border-color: #000;
+  border-color: var(--tuileAlertBg);
 }
 
 /* 4 colonnes (Apprendre / Parler / Réviser / Examen) linéaires sur une même
@@ -290,7 +290,7 @@
 /* Tuile "Hard Exam" (écran de montée de niveau) — même orange que le reste
    de l'app (cf. WaitingVideo.css), cf. demande explicite du user. */
 .exam-tile.orange {
-  background: #f97316;
+  background: var(--examSpecialBg);
   color: #fff;
   border: none;
   cursor: pointer;

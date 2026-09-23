@@ -1,5 +1,15 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { appConfig } from "./appConfig";
+import { appConfig, computePaletteV2, PALETTE_V2_BASE_DEFAULTS } from "./appConfig";
+
+const PALETTE_V2_BASES_KEY = "palette-v2-bases";
+
+function loadPaletteV2Bases() {
+  try {
+    const raw = localStorage.getItem(PALETTE_V2_BASES_KEY);
+    if (raw) return { ...PALETTE_V2_BASE_DEFAULTS, ...JSON.parse(raw) };
+  } catch (e) {}
+  return { ...PALETTE_V2_BASE_DEFAULTS };
+}
 
 const ConfigContext = createContext(null);
 
@@ -26,6 +36,26 @@ export function ConfigProvider({ children }) {
   const [oralBackgroundEval, setOralBackgroundEval] = useState(
     () => localStorage.getItem("oral-background-eval") === "true"
   );
+  // Toggle TEMPORAIRE (cf. appConfig.js::basePaletteLightV2) pour comparer
+  // l'ancienne et la nouvelle palette (regroupement de nuances) — à
+  // retirer une fois la décision prise. N'a d'effet qu'en thème clair
+  // (pas de variante sombre définie).
+  const [paletteV2, setPaletteV2] = useState(
+    () => localStorage.getItem("palette-v2") === "true"
+  );
+  // Les 8 couleurs de base de la palette V2 (cf. appConfig.js,
+  // PALETTE_V2_BASE_DEFAULTS/computePaletteV2), éditables une à une depuis
+  // Configuration (pipette ou champ hexadécimal) — tout le reste de la
+  // palette V2 est recalculé à partir d'elles à chaque changement.
+  const [paletteV2Bases, setPaletteV2Bases] = useState(loadPaletteV2Bases);
+
+  function setPaletteV2Base(key, hex) {
+    setPaletteV2Bases((prev) => ({ ...prev, [key]: hex }));
+  }
+
+  function resetPaletteV2Bases() {
+    setPaletteV2Bases({ ...PALETTE_V2_BASE_DEFAULTS });
+  }
 
   useEffect(() => {
     localStorage.setItem("god-mode", godMode ? "true" : "false");
@@ -40,7 +70,20 @@ export function ConfigProvider({ children }) {
   }, [oralBackgroundEval]);
 
   useEffect(() => {
-    const theme = appConfig.theme[themeMode];
+    localStorage.setItem("palette-v2", paletteV2 ? "true" : "false");
+  }, [paletteV2]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(PALETTE_V2_BASES_KEY, JSON.stringify(paletteV2Bases));
+    } catch (e) {}
+  }, [paletteV2Bases]);
+
+  useEffect(() => {
+    const theme =
+      themeMode === "light" && paletteV2
+        ? computePaletteV2(paletteV2Bases)
+        : appConfig.theme[themeMode];
     const root = document.documentElement;
     Object.entries(theme).forEach(([key, value]) => {
       root.style.setProperty(`--${key}`, value);
@@ -51,7 +94,7 @@ export function ConfigProvider({ children }) {
     root.style.setProperty("--font-size-base", `${appConfig.fontSize[fontScale]}px`);
     root.style.setProperty("--font-size-hebrew-large", `${appConfig.fontSize.hebrewLarge}px`);
     root.dataset.theme = themeMode;
-  }, [themeMode, fontScale]);
+  }, [themeMode, fontScale, paletteV2, paletteV2Bases]);
 
   const value = useMemo(
     () => ({
@@ -65,8 +108,13 @@ export function ConfigProvider({ children }) {
       setEvalWaitMode,
       oralBackgroundEval,
       setOralBackgroundEval,
+      paletteV2,
+      setPaletteV2,
+      paletteV2Bases,
+      setPaletteV2Base,
+      resetPaletteV2Bases,
     }),
-    [themeMode, fontScale, godMode, evalWaitMode, oralBackgroundEval]
+    [themeMode, fontScale, godMode, evalWaitMode, oralBackgroundEval, paletteV2, paletteV2Bases]
   );
 
   return <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>;

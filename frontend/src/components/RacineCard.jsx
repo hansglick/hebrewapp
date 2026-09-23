@@ -38,7 +38,7 @@ export function RacineCard({ racine }) {
         <p className="muted" style={{ margin: "8px 0 0", textAlign: "center" }}>
           {highlightRacine(racine.sens, racine.shoresh)}
         </p>
-        <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", margin: "1.2em 0 0" }} />
+        <hr style={{ border: "none", borderTop: "1px solid var(--dividerColor)", margin: "1.2em 0 0" }} />
         <ul className="words-list" style={{ marginTop: "1.5em", marginBottom: "1.5em" }}>
           {racine.words.map((w) => (
             <li key={w.hebrew} className="racine-word-row">

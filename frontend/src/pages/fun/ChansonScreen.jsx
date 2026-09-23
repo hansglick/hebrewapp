@@ -100,7 +100,7 @@ export default function ChansonScreen() {
             </p>
           )}
         </div>
-        <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", width: "100%", maxWidth: 320 }} />
+        <hr style={{ border: "none", borderTop: "1px solid var(--dividerColor)", width: "100%", maxWidth: 320 }} />
         {isFlipCopy ? (
           <div style={{ width: 280, height: 158, borderRadius: 8, background: "var(--cardBg)" }} />
         ) : (
@@ -113,7 +113,7 @@ export default function ChansonScreen() {
             style={{ border: "none", borderRadius: 8 }}
           />
         )}
-        <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", width: "100%", maxWidth: 320 }} />
+        <hr style={{ border: "none", borderTop: "1px solid var(--dividerColor)", width: "100%", maxWidth: 320 }} />
         <div style={{ userSelect: "text" }}>
           {cardChanson.lyrics.map((vers) => (
             <div key={vers.index} style={{ marginBottom: "1.5em" }}>

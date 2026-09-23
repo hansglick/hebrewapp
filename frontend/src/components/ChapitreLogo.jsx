@@ -5,6 +5,16 @@ import { useConfig } from "../config/ConfigContext";
 // Logo accolé au label d'un chapitre — dimensionné en `em` pour rester à
 // peine plus grand que la lettre la plus haute du texte à côté duquel il
 // s'affiche, quel que soit le contexte (titre, tuile, texte courant...).
+//
+// Tentative avortée (cf. demande explicite du user) : remplacer ce
+// blend-mode par une VRAIE recoloration CSS (SVG récupéré via fetch(),
+// groupes de couleur remplacés par currentColor, injecté inline pour
+// suivre var(--chromeTextPrimary)/palette V2). Le fichier est pourtant bien
+// servi par le backend (200, CORS correct en curl), mais le fetch() échoue
+// systématiquement côté navigateur (constaté à la fois en automatisé ET
+// par le user en direct) — cause non identifiée. Revenu à cette version
+// (fonctionnelle, mais non raccordée à la palette) en attendant de
+// comprendre le blocage.
 export function ChapitreLogo({ chapId, size = "4.6em", style, ...rest }) {
   const { themeMode } = useConfig();
   const file = chapitreLogoFile(chapId);

@@ -187,8 +187,8 @@ export default function QuizzScreen() {
             révision/mot (aucun zoom là-bas), cf. demande explicite du
             user ("même taille que révision/mots"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-          <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
-            <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+          <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
+            <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
             Traduis le mot
           </SectionTitle>
         </div>
@@ -205,7 +205,7 @@ export default function QuizzScreen() {
             style={{
               width: "100%",
               border: "none",
-              borderTop: "1px solid var(--cardBorder)",
+              borderTop: "1px solid var(--dividerColor)",
               margin: 0,
             }}
           />
@@ -219,7 +219,7 @@ export default function QuizzScreen() {
             user ("même espace... entre le titre du bloc 2 et la barre
             horizontale au-dessus"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75), marginTop: 0 }}>
-          <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+          <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
             <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
             Double-tap pour choisir la réponse
           </SectionTitle>

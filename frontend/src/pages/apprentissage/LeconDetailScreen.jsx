@@ -82,6 +82,20 @@ export default function LeconDetailScreen() {
         {hasCuriosite && (
           <Link to={`/apprentissage/${chapId}/${code}/curiosite-fast`} className="card-link">
             <div className="card" style={{ textAlign: "center", ...notVisitedStyle("curiosite") }}>
+              {/* Étoile dorée, coin haut droit — même forme/couleur/position
+                  relative que sur la tuile "Parler" de l'accueil (cf.
+                  Accueil.jsx) — cf. demande explicite du user. */}
+              <svg
+                viewBox="0 0 20 20"
+                width={20}
+                height={20}
+                style={{ position: "absolute", top: -8, right: -8 }}
+              >
+                <polygon
+                  points="10,1 12.9,7.6 20,8.1 14.5,12.9 16.2,20 10,16.2 3.8,20 5.5,12.9 0,8.1 7.1,7.6"
+                  fill="var(--accueilStarBg)"
+                />
+              </svg>
               {/* Même logo (toupie) que le portail Culture du bandeau
                   desktop — cf. DreidelIcon.jsx, demande explicite du user. */}
               <TileTitle src="/dreidel.png" gap={20}>Coin culture</TileTitle>

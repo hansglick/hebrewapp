@@ -141,6 +141,8 @@ export function AudioProgressBlock({ src }) {
         duration={duration}
         rate={rate}
         onCycleRate={() => setRate(PLAYBACK_RATE_CYCLE)}
+        timerColor="var(--audioBlockTimerColor)"
+        speedFg="var(--audioBlockSpeedFg)"
       />
     </div>
   );

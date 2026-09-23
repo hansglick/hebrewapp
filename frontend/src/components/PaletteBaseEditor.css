@@ -1,0 +1,73 @@
+.palette-base-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--chromePanelBorder);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.palette-base-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--chromeTextSecondary);
+}
+
+.palette-base-editor-head .palette-base-reset {
+  font-size: 0.78rem;
+}
+
+.palette-base-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.palette-base-swatch {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.palette-base-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  color: var(--chromeTextPrimary);
+}
+
+.palette-base-hex {
+  width: 84px;
+  flex-shrink: 0;
+  font-family: "SF Mono", Consolas, monospace;
+  font-size: 0.78rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--chromePanelBorder);
+  background: var(--chromeBg);
+  color: var(--chromeTextPrimary);
+}
+
+.palette-base-pipette {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid var(--chromePanelBorder);
+  background: none;
+  color: var(--chromeTextPrimary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.palette-base-pipette:hover {
+  background: var(--chromePanelBorder);
+}

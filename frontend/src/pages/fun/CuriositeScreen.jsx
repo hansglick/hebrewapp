@@ -271,7 +271,7 @@ export default function CuriositeScreen({ type, types, lessonCode }) {
                 {cardSpeakButton}
               </div>
             )}
-            <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", margin: "0 0 12px" }} />
+            <hr style={{ border: "none", borderTop: "1px solid var(--dividerColor)", margin: "0 0 12px" }} />
           </>
         )}
 
@@ -312,7 +312,7 @@ export default function CuriositeScreen({ type, types, lessonCode }) {
           </div>
         )}
 
-        <hr style={{ border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0 0" }} />
+        <hr style={{ border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0 0" }} />
 
         {showDetails && (
           <ul

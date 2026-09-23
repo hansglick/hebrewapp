@@ -2,9 +2,23 @@ import { useNavigate } from "react-router-dom";
 import { SunIcon, MoonIcon } from "./SunMoonIcons";
 import { SignOutIcon } from "./SignOutIcon";
 import { DictionaryIcon } from "./DictionaryIcon";
+import { PaletteBaseEditor } from "./PaletteBaseEditor";
 import "./ConfigModal.css";
 
-export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, godMode, setGodMode, onLogout }) {
+export function ConfigModal({
+  isOpen,
+  onClose,
+  themeMode,
+  setThemeMode,
+  godMode,
+  setGodMode,
+  paletteV2,
+  setPaletteV2,
+  paletteV2Bases,
+  setPaletteV2Base,
+  resetPaletteV2Bases,
+  onLogout,
+}) {
   const navigate = useNavigate();
   if (!isOpen) return null;
 
@@ -41,14 +55,17 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, godMode,
             onClick={goToDictionnaire}
             aria-label="Dictionnaire"
           >
-            <DictionaryIcon size={22} />
+            {/* Sans `color` explicite, retombe sur le rouge par défaut de
+                DictionaryIcon — cf. demande explicite du user ("même le
+                dictionnaire logo" doit devenir blanc). */}
+            <DictionaryIcon size={22} color="var(--chromeTextPrimary)" />
           </button>
         </div>
 
         <div className="config-modal-row">
           <span>Thème</span>
           <div className="switch-wrap">
-            <SunIcon size={14} color={themeMode === "light" ? "var(--textPrimary)" : "var(--textSecondary)"} />
+            <SunIcon size={14} color={themeMode === "light" ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)"} />
             <button
               type="button"
               className={`switch${themeMode === "dark" ? " on" : ""}`}
@@ -59,7 +76,7 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, godMode,
             >
               <span className="switch-knob" />
             </button>
-            <MoonIcon size={14} color={themeMode === "dark" ? "var(--textPrimary)" : "var(--textSecondary)"} />
+            <MoonIcon size={14} color={themeMode === "dark" ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)"} />
           </div>
         </div>
 
@@ -74,7 +91,7 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, godMode,
               côté inactif en textSecondary, dans un .switch-wrap) — cf.
               demande explicite du user. */}
           <div className="switch-wrap">
-            <span style={{ fontSize: "0.75em", fontWeight: 600, color: !godMode ? "var(--textPrimary)" : "var(--textSecondary)" }}>
+            <span style={{ fontSize: "0.75em", fontWeight: 600, color: !godMode ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
               off
             </span>
             <button
@@ -87,11 +104,51 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, godMode,
             >
               <span className="switch-knob" />
             </button>
-            <span style={{ fontSize: "0.75em", fontWeight: 600, color: godMode ? "var(--textPrimary)" : "var(--textSecondary)" }}>
+            <span style={{ fontSize: "0.75em", fontWeight: 600, color: godMode ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
               on
             </span>
           </div>
         </div>
+
+        {/* Toggle TEMPORAIRE (cf. appConfig.js::basePaletteLightV2) — pour
+            comparer côte à côte l'ancienne et la nouvelle palette
+            (regroupement de nuances) avant de trancher. Sans effet en
+            thème sombre (aucune variante sombre définie), cf. demande
+            explicite du user. À retirer une fois la décision prise. */}
+        <div className="config-modal-row">
+          <span>Nouvelle palette (test)</span>
+          <div className="switch-wrap">
+            <span style={{ fontSize: "0.75em", fontWeight: 600, color: !paletteV2 ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
+              off
+            </span>
+            <button
+              type="button"
+              className={`switch${paletteV2 ? " on" : ""}`}
+              role="switch"
+              aria-checked={paletteV2}
+              aria-label="Basculer la nouvelle palette (test)"
+              onClick={() => setPaletteV2(!paletteV2)}
+            >
+              <span className="switch-knob" />
+            </button>
+            <span style={{ fontSize: "0.75em", fontWeight: 600, color: paletteV2 ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
+              on
+            </span>
+          </div>
+        </div>
+
+        {/* Éditeur des 8 couleurs de base — uniquement visible quand la
+            palette V2 est active, puisque c'est elle qu'il pilote (cf.
+            demande explicite du user, "modifier chacune des valeurs, soit
+            à partir d'une pipette, soit à partir d'un champ
+            hexadécimal"). */}
+        {paletteV2 && (
+          <PaletteBaseEditor
+            bases={paletteV2Bases}
+            onChangeBase={setPaletteV2Base}
+            onReset={resetPaletteV2Bases}
+          />
+        )}
 
         <div className="config-modal-row">
           <span>Déconnexion</span>
@@ -102,7 +159,9 @@ export function ConfigModal({ isOpen, onClose, themeMode, setThemeMode, godMode,
             onClick={onLogout}
             aria-label="Déconnexion"
           >
-            <SignOutIcon size={26} />
+            {/* Sans `color` explicite, retombe sur un gris fixe (pas même
+                un token de thème) — cf. demande explicite du user. */}
+            <SignOutIcon size={26} color="var(--chromeTextPrimary)" />
           </button>
         </div>
       </div>

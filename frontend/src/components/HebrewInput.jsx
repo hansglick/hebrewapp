@@ -96,6 +96,16 @@ export default function HebrewInput({
   showVoicePrefill = true,
   forceKeyboardHidden = false,
   highlightKeyboardToggle = false,
+  // Surcharge ponctuelle du fond du champ (cf. .hebrew-input-textarea,
+  // var(--inputBg) par défaut) — pour les écrans qui veulent un fond
+  // différent sans changer ce token partagé par tous les usages de ce
+  // composant (Inscription, Connexion, Dictionnaire...), cf. demande
+  // explicite du user.
+  textareaStyle,
+  // Idem pour le rail des toggles "Pré-remplir avec la voix"/"Clavier
+  // hébreu" (cf. .switch, var(--bg) par défaut) — cf. demande explicite
+  // du user.
+  toggleTrackColor,
 }) {
   const [activeKey, setActiveKey] = useState(null);
   // Masqué par défaut (toggle à gauche) tant que le user ne l'a jamais
@@ -260,6 +270,7 @@ export default function HebrewInput({
           dir="rtl"
           className="hebrew-input-textarea"
           placeholder={placeholder}
+          style={textareaStyle}
         />
         {/* Toujours monté tant que showVoicePrefill est vrai (seule la classe
             "open" change) : nécessaire pour l'animation d'ouverture/fermeture
@@ -292,6 +303,7 @@ export default function HebrewInput({
               aria-checked={voicePrefillVisible}
               aria-label="Afficher/masquer le pré-remplissage vocal"
               onClick={() => setVoicePrefillVisible((v) => !v)}
+              style={toggleTrackColor ? { background: toggleTrackColor } : undefined}
             >
               <span className="switch-knob" />
             </button>
@@ -309,6 +321,7 @@ export default function HebrewInput({
             aria-checked={keyboardVisible}
             aria-label="Afficher/masquer le clavier hébreu"
             onClick={() => setKeyboardVisible((v) => !v)}
+            style={toggleTrackColor ? { background: toggleTrackColor } : undefined}
           >
             <span className="switch-knob" />
           </button>

@@ -443,8 +443,8 @@ export default function VerbeScreen() {
               ...(isBase ? null : { marginTop: frozenBadge1MarginTop }),
             }}
           >
-            <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
-              <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+            <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
+              <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
               Conjugue le verbe
             </SectionTitle>
           </div>
@@ -687,7 +687,7 @@ export default function VerbeScreen() {
                 width: "75%",
                 maxWidth: 240,
                 border: "none",
-                borderTop: "1px solid var(--cardBorder)",
+                borderTop: "1px solid var(--dividerColor)",
                 margin: 0,
                 marginTop: 1,
               }}
@@ -771,7 +771,7 @@ export default function VerbeScreen() {
               <hr
                 style={{
                   border: "none",
-                  borderTop: "1px solid var(--cardBorder)",
+                  borderTop: "1px solid var(--dividerColor)",
                   margin: 0,
                 }}
               />
@@ -862,7 +862,7 @@ export default function VerbeScreen() {
                 aux marginTop posés directement dans l'ambiant (ex: la
                 rangée temps/personne juste au-dessus). */}
             <div style={{ width: "70%", maxWidth: 400, marginTop: 20.99, display: "flow-root", zoom: 1 / 1.5 }}>
-              <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+              <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
                 <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
                 Réponse
               </SectionTitle>

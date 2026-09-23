@@ -281,7 +281,7 @@ export default function QuestionOraleScreen() {
             BLOCK_GAP), pas besoin de marge supplémentaire en dessous. */}
         <h1
           style={{
-            color: "var(--tileAccent)",
+            color: "var(--questionOraleTitleColor)",
             fontSize: "1.176em",
             fontWeight: 700,
             textAlign: "center",
@@ -335,7 +335,7 @@ export default function QuestionOraleScreen() {
             </span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -444,7 +444,7 @@ export default function QuestionOraleScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--cardBorder)",
+                      borderTop: "1px solid var(--dividerColor)",
                       margin: 0,
                     }}
                   />

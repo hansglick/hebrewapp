@@ -332,7 +332,7 @@ export default function MotScreen() {
               width: "70%",
               maxWidth: 400,
               border: "none",
-              borderTop: "1px solid var(--cardBorder)",
+              borderTop: "1px solid var(--dividerColor)",
               margin: 0,
             }}
           />
@@ -404,8 +404,8 @@ export default function MotScreen() {
           <div style={{ width: "70%", maxWidth: 400, marginTop: 14, marginBottom: -1, display: "flow-root" }}>
             {/* gris non gras (au lieu du bleu marine par défaut) — cf.
                 demande explicite du user. */}
-            <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
-              <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+            <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
+              <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
               Traduis le mot hébreu
             </SectionTitle>
           </div>
@@ -463,7 +463,7 @@ export default function MotScreen() {
             <hr
               style={{
                 border: "none",
-                borderTop: "1px solid var(--cardBorder)",
+                borderTop: "1px solid var(--dividerColor)",
                 margin: 0,
               }}
             />
@@ -486,7 +486,7 @@ export default function MotScreen() {
           <div style={{ width: "70%", maxWidth: 400, marginTop: 7, display: "flow-root" }}>
             {/* gris non gras (au lieu du bleu marine par défaut) — cf.
                 demande explicite du user. */}
-            <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+            <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
               <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
               Réponse
             </SectionTitle>

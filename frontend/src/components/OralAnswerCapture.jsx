@@ -152,8 +152,8 @@ export function OralAnswerCapture({
     <div className="oral-answer-capture">
       <div className="oral-answer-capture-block">
         <div style={titleAxisStyle}>
-          <SectionTitle fontSize="0.84em">
-            <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+          <SectionTitle fontSize="0.84em" color="var(--audioBlockTitleColor)">
+            <StepBadge number={1} background="var(--audioBlockBadgeBg)" color="var(--audioBlockBadgeFg)" />
             Ecoute le contenu
           </SectionTitle>
         </div>
@@ -163,8 +163,8 @@ export function OralAnswerCapture({
       <div className="oral-answer-capture-divider" />
       <div className="oral-answer-capture-block">
         <div style={titleAxisStyle}>
-          <SectionTitle fontSize="0.84em">
-            <StepBadge number={2} background="#dbeafe" color="#1d4ed8" />
+          <SectionTitle fontSize="0.84em" color="var(--audioBlockTitleColor)">
+            <StepBadge number={2} background="var(--audioBlockBadgeBg)" color="var(--audioBlockBadgeFg)" />
             Ecoute la question
           </SectionTitle>
         </div>
@@ -176,8 +176,8 @@ export function OralAnswerCapture({
           <div className="oral-answer-capture-divider" />
           <div className="oral-answer-capture-block">
             <div style={titleAxisStyle}>
-              <SectionTitle fontSize="0.84em">
-                <StepBadge number={3} background="var(--validationGrisee)" color="var(--validationPleine)" />
+              <SectionTitle fontSize="0.84em" color="var(--audioBlockTitleColor)">
+                <StepBadge number={3} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                 {showRecorder ? "Enregistre ta réponse" : "Réponse"}
               </SectionTitle>
             </div>
@@ -212,6 +212,7 @@ export function OralAnswerCapture({
                         style={{
                           WebkitMaskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
                           maskImage: `url(${isPlaying ? PAUSE_ICON_URL : LECTURE_ICON_URL})`,
+                          backgroundColor: "var(--audioBlockIconColorLast)",
                         }}
                       />
                     </button>

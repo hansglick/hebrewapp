@@ -46,7 +46,7 @@ function StepBadge({ number, background, color }) {
 // Même format de trait que les écrans onboarding/révision — cf. demande
 // explicite du user.
 const stepHr = (
-  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "16px 0" }} />
 );
 
 // Trait du mode Auto + encadré invisible des phrases (même largeur, cf.
@@ -369,7 +369,7 @@ export default function QuestionEcriteScreen() {
             width: "70%",
             maxWidth: 320,
             border: "none",
-            borderTop: "1px solid var(--cardBorder)",
+            borderTop: "1px solid var(--dividerColor)",
             margin: 0,
           }}
         />
@@ -392,7 +392,7 @@ export default function QuestionEcriteScreen() {
           style={{ marginTop: 24 }}
           onClick={() => speak(cardPhrase.hebrew)}
         >
-          <SpeakerIcon size={30} color="var(--speakerIcon)" />
+          <SpeakerIcon size={30} color="var(--traductionsSpeakerIcon)" />
         </button>
       </div>
     );
@@ -442,10 +442,11 @@ export default function QuestionEcriteScreen() {
       >
         {cardEvalMode === "prof" && (
           <QuoteBlock
+            background="var(--cardBg)"
             label={
               <>
-                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
-                Traduis
+                <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
+                <span style={{ color: "var(--examBlancTitleColor)" }}>Traduis</span>
               </>
             }
           >
@@ -466,7 +467,7 @@ export default function QuestionEcriteScreen() {
                 </p>
                 <span style={{ color: "var(--cardBorder)", fontWeight: 400 }}>|</span>
                 <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
-                  <SpeakerIcon size={20.25} color="var(--speakerIcon)" />
+                  <SpeakerIcon size={20.25} color="var(--traductionsSpeakerIcon)" />
                 </button>
               </div>
             ) : (
@@ -517,7 +518,7 @@ export default function QuestionEcriteScreen() {
                 }}
               >
                 <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
-                  <SpeakerIcon size={33} color="var(--speakerIcon)" />
+                  <SpeakerIcon size={33} color="var(--traductionsSpeakerIcon)" />
                 </button>
                 {/* 1.728em = 2.16em * 0.8 : -20% — cf. demande explicite du
                     user. */}
@@ -564,7 +565,7 @@ export default function QuestionEcriteScreen() {
                 width: AUTO_HR_WIDTH,
                 maxWidth: AUTO_HR_MAX_WIDTH,
                 border: "none",
-                borderTop: "1px solid var(--cardBorder)",
+                borderTop: "1px solid var(--dividerColor)",
                 margin: 0,
               }}
             />
@@ -680,7 +681,7 @@ export default function QuestionEcriteScreen() {
                 >
                   {targetIsHebrew && (
                     <button type="button" className="speak-btn" onClick={() => speak(cardPhrase.hebrew)}>
-                      <SpeakerIcon size={44} color="var(--speakerIcon)" />
+                      <SpeakerIcon size={44} color="var(--traductionsSpeakerIcon)" />
                     </button>
                   )}
                   <button
@@ -709,8 +710,8 @@ export default function QuestionEcriteScreen() {
               <>
                 {targetIsHebrew ? (
                   <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle>
-                      <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                    <SectionTitle color="var(--examBlancTitleColor)">
+                      <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                       Réponse
                     </SectionTitle>
                     <HebrewInput
@@ -718,12 +719,14 @@ export default function QuestionEcriteScreen() {
                       value={cardStudentSolution}
                       onChange={setStudentSolution}
                       rows={3}
+                      textareaStyle={{ background: "var(--cardBg)" }}
+                      toggleTrackColor="var(--examHebrewToggleTrack)"
                     />
                   </div>
                 ) : (
                   <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle>
-                      <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                    <SectionTitle color="var(--examBlancTitleColor)">
+                      <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                       Réponse
                     </SectionTitle>
                     <textarea
@@ -731,7 +734,7 @@ export default function QuestionEcriteScreen() {
                       value={cardStudentSolution}
                       onChange={(e) => setStudentSolution(e.target.value)}
                       rows={3}
-                      style={{ width: "100%", fontFamily: "inherit" }}
+                      style={{ width: "100%", fontFamily: "inherit", background: "var(--cardBg)" }}
                     />
                   </div>
                 )}
@@ -764,7 +767,7 @@ export default function QuestionEcriteScreen() {
                 </p>
 
                 <hr
-                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
+                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }}
                 />
 
                 <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
@@ -803,7 +806,7 @@ export default function QuestionEcriteScreen() {
                 </table>
 
                 <hr
-                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
+                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }}
                 />
 
                 <button
@@ -835,7 +838,7 @@ export default function QuestionEcriteScreen() {
                 </ul>
 
                 <hr
-                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }}
+                  style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }}
                 />
 
                 <button

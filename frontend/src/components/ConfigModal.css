@@ -8,17 +8,28 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
+/* Même habillage que le panneau "Plus d'options" mobile (cf.
+   .header-mobile-panel, Layout.css) plutôt que le style "carte de contenu"
+   suivant le thème clair/sombre — cf. demande explicite du user (cohérence
+   desktop/mobile) : fond et police toujours sombres, indépendamment du
+   thème choisi. */
 .config-modal {
   width: 90%;
   max-width: 340px;
-  background: var(--cardBg);
-  color: var(--textPrimary);
-  border: 1px solid var(--cardBorder);
+  background: var(--chromeBg);
+  color: var(--chromeTextPrimary);
+  border: 1px solid var(--chromePanelBorder);
   border-radius: 10px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+/* La croix de fermeture utilisait la couleur "lien" générique (verte) —
+   tranchait avec le nouveau fond sombre, cf. demande explicite du user. */
+.config-modal-header .link-btn {
+  color: var(--chromeTextPrimary);
 }
 
 .config-modal-header {
@@ -75,4 +86,19 @@
 
 .switch.on .switch-knob {
   transform: translateX(18px);
+}
+
+/* Piste grise + curseur blanc, comme le même toggle dans le panneau mobile
+   (cf. .header-mobile-panel .switch, Layout.css) — sélecteur à 3 classes
+   pour gagner de façon fiable sur .switch-wrap .switch (Layout.css, même
+   spécificité à 2 classes, dont le résultat dépendrait sinon de l'ordre de
+   chargement des feuilles de style) — cf. demande explicite du user
+   ("bouton toggle blanc"). */
+.config-modal .switch-wrap .switch {
+  border-color: var(--chromeToggleTrack);
+  background: var(--chromeToggleTrack);
+}
+
+.config-modal .switch-wrap .switch-knob {
+  background: var(--chromeTextPrimary);
 }

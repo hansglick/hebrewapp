@@ -9,7 +9,7 @@
 .audio-progress-block-panel {
   width: 100%;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--audioPanelBg);
   border-radius: 10px;
   padding: 14px;
 }
@@ -57,9 +57,10 @@
   display: block;
   width: 100%;
   height: 100%;
-  /* Bleu nuit, même teinte que la bordure/étiquette des tuiles (var(--tileAccent),
-     cf. LabeledTile.jsx) — cf. demande explicite du user. */
-  background-color: var(--tileAccent);
+  /* Découplé de var(--tileAccent) pour raccorder les icônes lecture/pause
+     des blocs audio à une dérivée foncée de "Rouge7" en V2 sans toucher à
+     la bordure/étiquette des tuiles — cf. demande explicite du user. */
+  background-color: var(--audioBlockIconColor);
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;

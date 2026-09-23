@@ -27,14 +27,14 @@ export function SectionTitle({ children, fontSize = "0.7em", fontWeight = 700, c
 // et la barre de citation verticale sur le bord gauche, dans la même
 // couleur que la mini tuile "Réponse" (var(--tileAccent), cf. LabeledTile)
 // et épaissie (+200%, cf. demande explicite du user).
-export function QuoteBlock({ children, label = "Traduis", marginTop = 20 }) {
+export function QuoteBlock({ children, label = "Traduis", marginTop = 20, background = "var(--bg)" }) {
   return (
     <div style={{ width: "100%", maxWidth: 320, marginTop }}>
       <SectionTitle>{label}</SectionTitle>
       <div
         style={{
           position: "relative",
-          background: "var(--bg)",
+          background,
           padding: "14px 14px 14px 24px",
           boxSizing: "border-box",
         }}
@@ -47,7 +47,7 @@ export function QuoteBlock({ children, label = "Traduis", marginTop = 20 }) {
             transform: "translateY(-50%)",
             width: 6.3,
             height: "49%",
-            background: "var(--tileAccent)",
+            background: "var(--citationBarColor)",
           }}
         />
         {children}

@@ -84,7 +84,7 @@ function StepBadge({ number, background, color }) {
 // Même trait que QuestionEcriteScreen (examen blanc) entre le bloc "Traduis"
 // et le bloc "Réponse" — cf. demande explicite du user (cf. StepBadge).
 const stepHr = (
-  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "16px 0" }} />
 );
 
 // Pastille utilisée UNIQUEMENT par le bloc quizz — variante décalée
@@ -557,17 +557,18 @@ export default function ExamenEcritScreen() {
               width: "100%",
               maxWidth: 320,
               border: "none",
-              borderTop: "1px solid var(--cardBorder)",
+              borderTop: "1px solid var(--dividerColor)",
               margin: "1em 0 0",
             }}
           />
 
           {q.type !== "quizz" && (
             <QuoteBlock
+              background="var(--cardBg)"
               label={
                 <>
-                  <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
-                  Traduis
+                  <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
+                  <span style={{ color: "var(--examTraduisTitleColor)" }}>Traduis</span>
                 </>
               }
             >
@@ -615,8 +616,8 @@ export default function ExamenEcritScreen() {
               }}
             >
               <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-                <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
-                  <QuizzStepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
+                  <QuizzStepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
                   Traduis le mot
                 </SectionTitle>
               </div>
@@ -624,11 +625,11 @@ export default function ExamenEcritScreen() {
               <p style={{ color: "var(--textPrimary)", margin: 0, fontSize: "0.96em" }}>{capitalize(q.french)}</p>
 
               <div className="quizz-hr">
-                <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
+                <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: 0 }} />
               </div>
 
               <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-                <SectionTitle fontSize="0.84em" color="#9ca3af" fontWeight={400}>
+                <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
                   <QuizzStepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
                   Double-tap pour choisir la réponse
                 </SectionTitle>
@@ -666,10 +667,16 @@ export default function ExamenEcritScreen() {
             <>
               <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
                 <SectionTitle>
-                  <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+                  <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                   Réponse
                 </SectionTitle>
-                <HebrewInput key={index} value={studentSolution} onChange={setStudentSolution} rows={3} />
+                <HebrewInput
+                  key={index}
+                  value={studentSolution}
+                  onChange={setStudentSolution}
+                  rows={3}
+                  textareaStyle={{ background: "var(--cardBg)" }}
+                />
               </div>
               <button
                 type="button"
@@ -717,7 +724,7 @@ export default function ExamenEcritScreen() {
                 <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
               </p>
 
-              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+              <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
               <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
                 <tbody>

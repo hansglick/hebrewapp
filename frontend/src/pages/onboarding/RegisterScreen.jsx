@@ -37,7 +37,7 @@ function StepBadge({ number, background, color }) {
 
 // Même format de trait que l'écran révision/verbe (StepBadge/SectionTitle
 // ci-dessus) — cf. demande explicite du user.
-const stepHr = <hr style={{ width: "70%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />;
+const stepHr = <hr style={{ width: "70%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "16px 0" }} />;
 
 export default function RegisterScreen({ onRegistered, onBack }) {
   const [pseudo, setPseudo] = useState("");
@@ -74,7 +74,7 @@ export default function RegisterScreen({ onRegistered, onBack }) {
     <section className="screen">
       <div style={{ width: "70%", maxWidth: 320, display: "flow-root" }}>
         <SectionTitle fontSize="0.84em">
-          <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+          <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
           Entre ton pseudo
         </SectionTitle>
       </div>
@@ -94,7 +94,7 @@ export default function RegisterScreen({ onRegistered, onBack }) {
 
       <div style={{ width: "70%", maxWidth: 320, display: "flow-root" }}>
         <SectionTitle fontSize="0.84em">
-          <StepBadge number={2} background="#dbeafe" color="#1d4ed8" />
+          <StepBadge number={2} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
           Entre ton mot de passe
         </SectionTitle>
       </div>
@@ -112,7 +112,7 @@ export default function RegisterScreen({ onRegistered, onBack }) {
           les autres paires de blocs — cf. demande explicite du user. */}
       <div style={{ width: "70%", maxWidth: 320, display: "flow-root", marginTop: -8 }}>
         <SectionTitle fontSize="0.84em">
-          <StepBadge number={3} background="#dbeafe" color="#1d4ed8" />
+          <StepBadge number={3} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
           Re-entre ton mot de passe
         </SectionTitle>
       </div>

@@ -84,10 +84,9 @@ export default function ParlerScreen() {
         {referenceLesson && (
           <Link to={`/jdr/${referenceLesson}`} className="card-link">
             <div className="card" style={{ textAlign: "center" }}>
-              {/* Étoile dorée à bordure noire, coin haut droit — même
-                  forme/couleur/position relative que sur la tuile "Parler"
-                  de l'accueil (cf. Accueil.jsx) — cf. demande explicite du
-                  user. */}
+              {/* Étoile dorée, coin haut droit — même forme/couleur/position
+                  relative que sur la tuile "Parler" de l'accueil (cf.
+                  Accueil.jsx) — cf. demande explicite du user. */}
               <svg
                 viewBox="0 0 20 20"
                 width={20}
@@ -96,10 +95,7 @@ export default function ParlerScreen() {
               >
                 <polygon
                   points="10,1 12.9,7.6 20,8.1 14.5,12.9 16.2,20 10,16.2 3.8,20 5.5,12.9 0,8.1 7.1,7.6"
-                  fill="#ffd700"
-                  stroke="#000"
-                  strokeWidth="1"
-                  strokeLinejoin="round"
+                  fill="var(--accueilStarBg)"
                 />
               </svg>
               <TileTitle src="/role.png" gap={20}>Jeu de rôle</TileTitle>

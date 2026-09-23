@@ -7,6 +7,7 @@ import OnboardingScreen from "../pages/onboarding/OnboardingScreen";
 import AuthFlow from "../pages/onboarding/AuthFlow";
 import { useWallet } from "../context/WalletContext";
 import { getUnreadNotificationCount } from "../api/content";
+import { mediaUrl } from "../api/media";
 import { DictionaryIcon } from "../components/DictionaryIcon";
 import { HouseIcon } from "../components/HouseIcon";
 import { DreidelIcon } from "../components/DreidelIcon";
@@ -74,7 +75,17 @@ export default function Layout() {
   // partir (voir les gardes `hasIdentity &&` ci-dessous).
   const [hasIdentity, setHasIdentity] = useState(() => !!getIdentity());
   const { wallet, refreshWallet } = useWallet();
-  const { themeMode, setThemeMode, godMode, setGodMode } = useConfig();
+  const {
+    themeMode,
+    setThemeMode,
+    godMode,
+    setGodMode,
+    paletteV2,
+    setPaletteV2,
+    paletteV2Bases,
+    setPaletteV2Base,
+    resetPaletteV2Bases,
+  } = useConfig();
   const location = useLocation();
   const navigate = useNavigate();
   const { timer } = useExamTimer();
@@ -308,7 +319,7 @@ export default function Layout() {
                   onClick={() => navigate("/jeu/cartes")}
                   title="Ma collection"
                 >
-                  <span style={{ fontSize: 32, lineHeight: 1 }}>💎</span> {wallet.gems}
+                  <img src={mediaUrl("logos/diamant.png")} alt="" style={{ width: 32, height: 32 }} /> {wallet.gems}
                   <span className="exam-tile-tooltip">
                     Vous avez récolté {wallet.gems} gems — voir ta collection de cartes
                   </span>
@@ -387,7 +398,12 @@ export default function Layout() {
                     height: 24,
                     padding: "0 3px",
                     borderRadius: 999,
-                    background: "var(--annulationPleine)",
+                    // Même rouge que "Abandonner l'épreuve"/le minuteur en
+                    // fin de temps (chromeDanger), plutôt que le rouge du
+                    // CONTENU (annulationPleine) — cf. demande explicite du
+                    // user (un seul rouge "danger" pour toute la barre de
+                    // contrôle).
+                    background: "var(--chromeDanger)",
                     color: "#fff",
                     fontSize: "0.6em",
                     fontWeight: 700,
@@ -490,7 +506,7 @@ export default function Layout() {
                       className="header-mobile-panel-row"
                       onClick={() => navigate("/jeu/cartes")}
                     >
-                      <span style={{ fontSize: 20, lineHeight: 1 }}>💎</span>
+                      <img src={mediaUrl("logos/diamant.png")} alt="" style={{ width: 20, height: 20 }} />
                       <span>{wallet.gems} gems</span>
                     </button>
                   </>
@@ -598,6 +614,11 @@ export default function Layout() {
         setThemeMode={setThemeMode}
         godMode={godMode}
         setGodMode={setGodMode}
+        paletteV2={paletteV2}
+        setPaletteV2={setPaletteV2}
+        paletteV2Bases={paletteV2Bases}
+        setPaletteV2Base={setPaletteV2Base}
+        resetPaletteV2Bases={resetPaletteV2Bases}
         onLogout={handleLogout}
       />
       <main className="app-content">

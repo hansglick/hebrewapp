@@ -122,7 +122,7 @@ export default function ExamenCopieDetailScreen() {
           width: "100%",
           maxWidth: 320,
           border: "none",
-          borderTop: "1px solid var(--cardBorder)",
+          borderTop: "1px solid var(--dividerColor)",
           margin: "1em 0 0",
         }}
       />
@@ -153,7 +153,7 @@ export default function ExamenCopieDetailScreen() {
             <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.translation}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -199,7 +199,7 @@ export default function ExamenCopieDetailScreen() {
             <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.rapport}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -268,7 +268,7 @@ export default function ExamenCopieDetailScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--cardBorder)",
+                      borderTop: "1px solid var(--dividerColor)",
                       margin: 0,
                     }}
                   />
@@ -313,7 +313,7 @@ export default function ExamenCopieDetailScreen() {
             <span style={{ fontStyle: "italic", color: "var(--textSecondary)" }}>{answer.verbatim}</span>
           </p>
 
-          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: "12px 0" }} />
+          <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: "12px 0" }} />
 
           <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 320 }}>
             <tbody>
@@ -422,7 +422,7 @@ export default function ExamenCopieDetailScreen() {
                     style={{
                       width: "100%",
                       border: "none",
-                      borderTop: "1px solid var(--cardBorder)",
+                      borderTop: "1px solid var(--dividerColor)",
                       margin: 0,
                     }}
                   />

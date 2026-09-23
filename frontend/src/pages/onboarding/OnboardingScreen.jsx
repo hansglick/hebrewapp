@@ -60,7 +60,7 @@ function StepBadge({ number, background, color, centerOnEdge = true }) {
 // désalignait le trait par rapport aux blocs — cf. demande explicite du
 // user.
 const stepHr = (
-  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--cardBorder)", margin: "16px 0" }} />
+  <hr style={{ width: "100%", maxWidth: 320, border: "none", borderTop: "1px solid var(--dividerColor)", margin: "16px 0" }} />
 );
 
 function StarRating({ rating }) {
@@ -363,7 +363,7 @@ export default function OnboardingScreen({ onCompleted }) {
           <QuoteBlock
             label={
               <>
-                <StepBadge number={1} background="#dbeafe" color="#1d4ed8" />
+                <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
                 Traduis
               </>
             }
@@ -440,7 +440,7 @@ export default function OnboardingScreen({ onCompleted }) {
               {stepHr}
               <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
                 <SectionTitle>
-                  <StepBadge number={3} background="#ffedd5" color="#c2410c" />
+                  <StepBadge number={3} background="var(--stepBadgeOrangeBg)" color="var(--stepBadgeOrangeFg)" />
                   Évaluation
                 </SectionTitle>
                 <div style={{ marginTop: "1em" }}>
@@ -508,7 +508,7 @@ export default function OnboardingScreen({ onCompleted }) {
               <div style={{ width: "100%", maxWidth: 320, marginTop: -8 }}>
                 <div style={{ marginLeft: 33.5 }}>
                   <SectionTitle>
-                    <StepBadge number={4} background="#ffedd5" color="#c2410c" centerOnEdge={false} />
+                    <StepBadge number={4} background="var(--stepBadgeOrangeBg)" color="var(--stepBadgeOrangeFg)" centerOnEdge={false} />
                     Évaluation
                   </SectionTitle>
                 </div>

@@ -62,7 +62,7 @@ export default function TexteScreen() {
       <ActionHints {...swipeHandlers.hints} />
       <img
         className="screen-image texte-image"
-        style={{ maxHeight: 384, border: "2.68px solid var(--cardBorder)" }}
+        style={{ maxHeight: 384, border: "2.68px solid var(--texteImageBorder)" }}
         src={mediaUrl(texte.imagepath)}
         alt={texte.title}
         draggable={false}
@@ -76,6 +76,7 @@ export default function TexteScreen() {
               name="langue"
               checked={view === "hebrew"}
               onChange={() => setView("hebrew")}
+              style={{ accentColor: "var(--texteRadioAccent)" }}
             />
             <FlagIsrael />
           </label>
@@ -85,16 +86,17 @@ export default function TexteScreen() {
               name="langue"
               checked={view === "french"}
               onChange={() => setView("french")}
+              style={{ accentColor: "var(--texteRadioAccent)" }}
             />
             <FlagFrance />
           </label>
         </div>
       </div>
 
-      <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--cardBorder)", margin: 0 }} />
+      <hr style={{ width: "100%", border: "none", borderTop: "1px solid var(--dividerColor)", margin: 0 }} />
 
       {view === "hebrew" && (
-        <div style={{ marginTop: "1.5em" }}>
+        <div style={{ marginTop: "1.5em", background: "var(--cardBg)", borderRadius: 10, padding: "14px 16px", width: "100%", boxSizing: "border-box" }}>
           {hebrewGroups.map((group, i) => (
             <p key={i} className="texte-hebrew">
               {group.speaker && <strong>{group.speaker}: </strong>}
@@ -105,7 +107,7 @@ export default function TexteScreen() {
       )}
 
       {view === "french" && (
-        <div style={{ marginTop: "1.5em" }}>
+        <div style={{ marginTop: "1.5em", background: "var(--cardBg)", borderRadius: 10, padding: "14px 16px", width: "100%", boxSizing: "border-box" }}>
           {frenchGroups.map((group, i) => (
             <p key={i} className="texte-french">
               {group.speaker && <strong>{group.speaker} : </strong>}
