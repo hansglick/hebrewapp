@@ -34,6 +34,8 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
+        border: `3.015px solid ${color}`,
+        boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
         marginRight: 12,
@@ -404,8 +406,8 @@ export default function MotScreen() {
           <div style={{ width: "70%", maxWidth: 400, marginTop: 14, marginBottom: -1, display: "flow-root" }}>
             {/* gris non gras (au lieu du bleu marine par défaut) — cf.
                 demande explicite du user. */}
-            <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
-              <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
+            <SectionTitle fontSize="0.84em" color="var(--examTraduisBadgeFg)" fontWeight={400}>
+              <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
               Traduis le mot hébreu
             </SectionTitle>
           </div>
@@ -486,8 +488,8 @@ export default function MotScreen() {
           <div style={{ width: "70%", maxWidth: 400, marginTop: 7, display: "flow-root" }}>
             {/* gris non gras (au lieu du bleu marine par défaut) — cf.
                 demande explicite du user. */}
-            <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
-              <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+            <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)" fontWeight={400}>
+              <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
               Réponse
             </SectionTitle>
           </div>

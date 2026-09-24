@@ -3,6 +3,7 @@ import { SunIcon, MoonIcon } from "./SunMoonIcons";
 import { SignOutIcon } from "./SignOutIcon";
 import { DictionaryIcon } from "./DictionaryIcon";
 import { PaletteBaseEditor } from "./PaletteBaseEditor";
+import { SKIN_LABELS } from "../config/appConfig";
 import "./ConfigModal.css";
 
 export function ConfigModal({
@@ -12,8 +13,8 @@ export function ConfigModal({
   setThemeMode,
   godMode,
   setGodMode,
-  paletteV2,
-  setPaletteV2,
+  skin,
+  setSkin,
   paletteV2Bases,
   setPaletteV2Base,
   resetPaletteV2Bases,
@@ -110,39 +111,34 @@ export function ConfigModal({
           </div>
         </div>
 
-        {/* Toggle TEMPORAIRE (cf. appConfig.js::basePaletteLightV2) — pour
-            comparer côte à côte l'ancienne et la nouvelle palette
-            (regroupement de nuances) avant de trancher. Sans effet en
-            thème sombre (aucune variante sombre définie), cf. demande
-            explicite du user. À retirer une fois la décision prise. */}
+        {/* Sélecteur de skin (cf. appConfig.js::SKIN_PRESETS) — remplace
+            l'ancien toggle binaire "Nouvelle palette (test)" pour permettre
+            de choisir entre la palette d'origine, un preset figé ("Kindle",
+            capturé lors de l'ajustement de la palette V2) et la palette
+            personnalisée éditable — cf. demande explicite du user. Sans
+            effet en thème sombre (aucune variante sombre définie pour
+            "kindle"/"custom"). */}
         <div className="config-modal-row">
-          <span>Nouvelle palette (test)</span>
-          <div className="switch-wrap">
-            <span style={{ fontSize: "0.75em", fontWeight: 600, color: !paletteV2 ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
-              off
-            </span>
-            <button
-              type="button"
-              className={`switch${paletteV2 ? " on" : ""}`}
-              role="switch"
-              aria-checked={paletteV2}
-              aria-label="Basculer la nouvelle palette (test)"
-              onClick={() => setPaletteV2(!paletteV2)}
-            >
-              <span className="switch-knob" />
-            </button>
-            <span style={{ fontSize: "0.75em", fontWeight: 600, color: paletteV2 ? "var(--chromeTextPrimary)" : "var(--chromeTextSecondary)" }}>
-              on
-            </span>
-          </div>
+          <span>Skin</span>
+          <select
+            className="config-modal-select"
+            value={skin}
+            onChange={(e) => setSkin(e.target.value)}
+            aria-label="Choisir le skin de l'application"
+          >
+            {Object.entries(SKIN_LABELS).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
 
-        {/* Éditeur des 8 couleurs de base — uniquement visible quand la
-            palette V2 est active, puisque c'est elle qu'il pilote (cf.
-            demande explicite du user, "modifier chacune des valeurs, soit
-            à partir d'une pipette, soit à partir d'un champ
-            hexadécimal"). */}
-        {paletteV2 && (
+        {/* Éditeur des 8 couleurs de base — uniquement visible pour le skin
+            "Personnalisée", puisque c'est lui qu'il pilote (cf. demande
+            explicite du user, "modifier chacune des valeurs, soit à partir
+            d'une pipette, soit à partir d'un champ hexadécimal"). */}
+        {skin === "custom" && (
           <PaletteBaseEditor
             bases={paletteV2Bases}
             onChangeBase={setPaletteV2Base}

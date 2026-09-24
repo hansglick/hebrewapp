@@ -32,6 +32,8 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
+        border: `3.015px solid ${color}`,
+        boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
         marginRight: 12,
@@ -446,7 +448,7 @@ export default function QuestionEcriteScreen() {
             label={
               <>
                 <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
-                <span style={{ color: "var(--examBlancTitleColor)" }}>Traduis</span>
+                <span style={{ color: "var(--examTraduisBadgeFg)" }}>Traduis</span>
               </>
             }
           >
@@ -710,7 +712,7 @@ export default function QuestionEcriteScreen() {
               <>
                 {targetIsHebrew ? (
                   <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle color="var(--examBlancTitleColor)">
+                    <SectionTitle color="var(--enonceBadgeVertFg)">
                       <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                       Réponse
                     </SectionTitle>
@@ -725,7 +727,7 @@ export default function QuestionEcriteScreen() {
                   </div>
                 ) : (
                   <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle color="var(--examBlancTitleColor)">
+                    <SectionTitle color="var(--enonceBadgeVertFg)">
                       <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                       Réponse
                     </SectionTitle>

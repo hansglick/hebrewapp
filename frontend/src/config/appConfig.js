@@ -145,23 +145,23 @@ const basePaletteLight = {
   // tileAccent).
   citationBarColor: "#1e3a5f",
   examToggleTrack: "#4b4d57",
-  // Pastille "1"/"Traduis" (StepBadge + titre) de la phrase à traduire, dans
-  // examen blanc (QuestionEcriteScreen, mode "prof") et examen écrit
-  // (ExamenEcritScreen) uniquement — jusqu'ici stepBadgeBlueBg/Fg (fond du
-  // rond) + tileAccent (texte "Traduis") partagés avec tous les autres
-  // badges/titres de l'app, découplés pour les raccorder à une dérivée
-  // pastel de "Rouge7" (fond) et à "Rouge7" direct (chiffre + titre) en V2
-  // sans toucher aux autres badges — cf. demande explicite du user.
-  // Valeurs inchangées ici (identiques aux anciens littéraux).
+  // Pastille "1" ("Traduis" et équivalents) : examen blanc, examen écrit,
+  // révisions (QuizzScreen), leçon/mot (MotScreen) et leçon/verbe
+  // (VerbeScreen) — jusqu'ici
+  // stepBadgeBlueBg/Fg partagés avec tous les autres badges "1" de l'app
+  // (onboarding, dev preview...), découplés pour les raccorder à une
+  // dérivée foncée de "Rouge7" (fond) et à "Bg 2" (police) en V2 sans
+  // toucher aux badges non listés ci-dessus — cf. demande explicite du
+  // user ("même format que examen blanc"). Valeurs inchangées ici
+  // (identiques aux anciens littéraux).
   examTraduisBadgeBg: "#dbeafe",
   examTraduisBadgeFg: "#1d4ed8",
-  examTraduisTitleColor: "#1e3a5f",
-  // Titres "Traduis" et "Réponse" (texte, hors pastille), examen blanc
-  // UNIQUEMENT (QuestionEcriteScreen, mode "prof") — découplé de
-  // examTraduisTitleColor (qui reste rouge7 en V2 pour examen écrit) pour
-  // le raccorder à la base "Noir" de la palette en V2 sans toucher à
-  // examen écrit — cf. demande explicite du user. Valeur inchangée ici.
-  examBlancTitleColor: "#1e3a5f",
+  // Trait vertical fin entre "temps" et "personne" (écran leçon/révisions
+  // verbe, VerbeScreen) — jusqu'ici var(--cardBorder) partagé avec toutes
+  // les bordures d'encadrés, découplé pour le raccorder à "Bg 2" en V2
+  // sans toucher aux autres bordures — cf. demande explicite du user.
+  // Valeur inchangée ici (identique à l'ancien cardBorder).
+  verbeVerticalDivider: "#e5e4e7",
   // Fond de l'étoile dorée (badge coin haut-droit de la tuile "Parler",
   // écran d'accueil) — jusqu'ici littéral SVG fixe (#ffd700), tokenisé
   // pour le raccorder à la base "Rouge7" en V2 — cf. demande explicite du
@@ -189,13 +189,6 @@ const basePaletteLight = {
   // vitesse) sans toucher au texte secondaire ailleurs dans l'app — cf.
   // demande explicite du user. Valeur inchangée ici.
   timerFg: "#6b6375",
-  // Titres des 3 blocs audio (OralAnswerCapture : "Ecoute le contenu",
-  // "Ecoute la question", "Enregistre ta réponse"/"Réponse") — jusqu'ici
-  // var(--tileAccent) (défaut de SectionTitle), découplés pour les
-  // raccorder à la base "Noir" ("Control 1") en V2 sans toucher aux
-  // autres titres utilisant le même défaut — cf. demande explicite du
-  // user. Valeur inchangée ici.
-  audioBlockTitleColor: "#1e3a5f",
   // Fond des pastilles 1 et 2 des blocs audio (mêmes 3 blocs) — jusqu'ici
   // var(--stepBadgeBlueBg) partagé, découplé pour le raccorder à une
   // dérivée pastel de la base "Rouge7" ("Color 2") en V2 sans toucher aux
@@ -244,14 +237,17 @@ const basePaletteLight = {
   // cf. demande explicite du user. Valeur inchangée ici (identique à
   // l'ancien cardBorder).
   audioBlockDividerColor: "#e5e4e7",
-  // Pastille "2"/"Réponse" (StepBadge) des écrans examen blanc, examen
-  // (écrit) et compréhension orale (bloc 3, OralAnswerCapture) — jusqu'ici
-  // validationGrisee/Pleine partagés avec TOUTES les autres pastilles
-  // "Réponse" de l'app (MotScreen, VerbeScreen, QuizzScreen...), découplés
-  // pour raccorder le fond directement à la base "Vert5" ("Color 1", sans
-  // dérivation pastel) et la police à "Bg 2" en V2, sans toucher aux
-  // autres pastilles — cf. demande explicite du user. Valeurs inchangées
-  // ici (identiques aux anciens validationGrisee/Pleine).
+  // Pastille "2" ("Réponse" et équivalents) : examen blanc, examen écrit,
+  // compréhension orale (bloc 3, OralAnswerCapture), révisions
+  // (QuizzScreen), leçon/mot (MotScreen) et leçon/verbe (VerbeScreen) —
+  // jusqu'ici validationGrisee/Pleine partagés avec TOUTES les autres
+  // pastilles "Réponse" de l'app (onboarding...), découplés pour raccorder
+  // le fond
+  // directement à la base "Vert5" ("Color 1", sans dérivation pastel) et
+  // la police à "Bg 2" en V2, sans toucher aux badges non listés ci-dessus
+  // — cf. demande explicite du user ("même format que examen blanc").
+  // Valeurs inchangées ici (identiques aux anciens validationGrisee/
+  // Pleine).
   enonceBadgeVertBg: "#b2f2bb",
   enonceBadgeVertFg: "#2f9e44",
   // Piste des toggles "Pré-remplir avec la voix"/"Clavier hébreu" au sein
@@ -316,14 +312,12 @@ const basePaletteDark = {
   examHebrewToggleTrack: "#16171d",
   examTraduisBadgeBg: "#dbeafe",
   examTraduisBadgeFg: "#1d4ed8",
-  examTraduisTitleColor: "#1e3a5f",
-  examBlancTitleColor: "#1e3a5f",
+  verbeVerticalDivider: "#2e303a",
   accueilStarBg: "#ffd700",
   texteImageBorder: "#2e303a",
   speedPillBg: "#2e303a",
   speedPillFg: "#9ca3af",
   timerFg: "#9ca3af",
-  audioBlockTitleColor: "#1e3a5f",
   audioBlockBadgeBg: "#dbeafe",
   audioBlockIconColor: "#1e3a5f",
   audioBlockBadgeFg: "#1d4ed8",
@@ -375,6 +369,30 @@ export const PALETTE_V2_BASE_DEFAULTS = {
   vert5: "#2f9e44",
   rouge7: "#e03131",
   orange5: "#f97316",
+};
+
+// Skins prêts à l'emploi (jeu complet des 8 couleurs de base, cf.
+// PALETTE_V2_BASE_DEFAULTS) — sélectionnables depuis Configuration en plus
+// de la palette "Personnalisée" (éditable une à une). "kindle" capture les
+// valeurs personnalisées choisies par le user lors de cette session
+// d'ajustement de la palette V2 — cf. demande explicite du user.
+export const SKIN_PRESETS = {
+  kindle: {
+    noir: "#1c2b4a",
+    blanc: "#f3ecdc",
+    gris1: "#fbf8f0",
+    gris5: "#9ca3af",
+    bleu6: "#d6c288",
+    vert5: "#5c7a5e",
+    rouge7: "#a8433a",
+    orange5: "#f97316",
+  },
+};
+
+export const SKIN_LABELS = {
+  default: "Palette d'origine",
+  kindle: "Kindle",
+  custom: "Personnalisée",
 };
 
 export const PALETTE_V2_BASE_LABELS = {
@@ -436,17 +454,16 @@ export function computePaletteV2(bases) {
     speedPillBg: b.blanc,
     speedPillFg: b.vert5,
     timerFg: b.vert5,
-    audioBlockTitleColor: b.noir,
-    audioBlockBadgeBg: mixHex(b.rouge7, "#1a1a1a", 0.65),
+    audioBlockBadgeBg: b.gris1,
     audioBlockIconColor: mixHex(b.gris5, "#1a1a1a", 0.38),
-    audioBlockBadgeFg: b.gris1,
+    audioBlockBadgeFg: mixHex(b.rouge7, "#1a1a1a", 0.65),
     audioBlockIconColorLast: mixHex(b.vert5, "#1a1a1a", 0.65),
     questionOraleTitleColor: b.noir,
     audioBlockTimerColor: mixHex(b.gris5, "#1a1a1a", 0.38),
     audioBlockSpeedFg: mixHex(b.gris5, "#1a1a1a", 0.38),
     audioBlockDividerColor: b.gris1,
-    enonceBadgeVertBg: b.vert5,
-    enonceBadgeVertFg: b.gris1,
+    enonceBadgeVertBg: b.gris1,
+    enonceBadgeVertFg: b.vert5,
     chromeTextPrimary: b.blanc,
     bg: b.blanc,
     cardBg: b.gris1,
@@ -459,10 +476,9 @@ export function computePaletteV2(bases) {
     citationBarColor: b.rouge7,
     examToggleTrack: mixHex(b.vert5, "#ffffff", 0.63),
     examHebrewToggleTrack: mixHex(b.vert5, "#ffffff", 0.63),
-    examTraduisBadgeBg: mixHex(b.rouge7, "#1a1a1a", 0.65),
-    examTraduisBadgeFg: b.gris1,
-    examTraduisTitleColor: b.rouge7,
-    examBlancTitleColor: b.noir,
+    examTraduisBadgeBg: b.gris1,
+    examTraduisBadgeFg: mixHex(b.rouge7, "#1a1a1a", 0.65),
+    verbeVerticalDivider: b.gris1,
     enonceSoft: b.gris5,
     cardBorder: mixHex(b.gris5, "#ffffff", 0.7),
     textSecondary: mixHex(b.gris5, "#1a1a1a", 0.38),
@@ -537,14 +553,12 @@ function buildTheme(p) {
     examHebrewToggleTrack: p.examHebrewToggleTrack,
     examTraduisBadgeBg: p.examTraduisBadgeBg,
     examTraduisBadgeFg: p.examTraduisBadgeFg,
-    examTraduisTitleColor: p.examTraduisTitleColor,
-    examBlancTitleColor: p.examBlancTitleColor,
+    verbeVerticalDivider: p.verbeVerticalDivider,
     accueilStarBg: p.accueilStarBg,
     texteImageBorder: p.texteImageBorder,
     speedPillBg: p.speedPillBg,
     speedPillFg: p.speedPillFg,
     timerFg: p.timerFg,
-    audioBlockTitleColor: p.audioBlockTitleColor,
     audioBlockBadgeBg: p.audioBlockBadgeBg,
     audioBlockIconColor: p.audioBlockIconColor,
     audioBlockBadgeFg: p.audioBlockBadgeFg,

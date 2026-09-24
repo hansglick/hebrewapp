@@ -73,6 +73,8 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
+        border: `3.015px solid ${color}`,
+        boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
         marginRight: 12,
@@ -443,8 +445,8 @@ export default function VerbeScreen() {
               ...(isBase ? null : { marginTop: frozenBadge1MarginTop }),
             }}
           >
-            <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
-              <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
+            <SectionTitle fontSize="0.84em" color="var(--examTraduisBadgeFg)" fontWeight={400}>
+              <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
               Conjugue le verbe
             </SectionTitle>
           </div>
@@ -757,7 +759,7 @@ export default function VerbeScreen() {
               <span style={{ fontSize: "calc(1.3em * 0.64 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>
                 {capitalize(tempsLabel)}
               </span>
-              <span style={{ width: 1, height: "1.2em", background: "var(--cardBorder)" }} />
+              <span style={{ width: 1, height: "1.2em", background: "var(--verbeVerticalDivider)" }} />
               {/* 0.64 = 0.8 * 0.8 : -20% supplémentaires — cf. demande
                   explicite du user. */}
               <span style={{ fontSize: "calc(1.3em * 0.64 / 1.5)", color: "var(--textPrimary)", fontWeight: 700 }}>
@@ -862,8 +864,8 @@ export default function VerbeScreen() {
                 aux marginTop posés directement dans l'ambiant (ex: la
                 rangée temps/personne juste au-dessus). */}
             <div style={{ width: "70%", maxWidth: 400, marginTop: 20.99, display: "flow-root", zoom: 1 / 1.5 }}>
-              <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
-                <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+              <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)" fontWeight={400}>
+                <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                 Réponse
               </SectionTitle>
             </div>

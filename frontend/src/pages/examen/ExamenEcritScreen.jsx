@@ -70,6 +70,8 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
+        border: `3.015px solid ${color}`,
+        boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
         marginRight: 12,
@@ -568,7 +570,7 @@ export default function ExamenEcritScreen() {
               label={
                 <>
                   <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
-                  <span style={{ color: "var(--examTraduisTitleColor)" }}>Traduis</span>
+                  <span style={{ color: "var(--examTraduisBadgeFg)" }}>Traduis</span>
                 </>
               }
             >
@@ -666,7 +668,7 @@ export default function ExamenEcritScreen() {
           {!answer && q.type !== "quizz" && pendingAnswers[index] === undefined && (
             <>
               <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                <SectionTitle>
+                <SectionTitle color="var(--enonceBadgeVertFg)">
                   <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                   Réponse
                 </SectionTitle>

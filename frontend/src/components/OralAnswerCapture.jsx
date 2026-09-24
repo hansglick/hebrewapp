@@ -34,6 +34,8 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
+        border: `3.015px solid ${color}`,
+        boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
         marginRight: 12,
@@ -152,7 +154,7 @@ export function OralAnswerCapture({
     <div className="oral-answer-capture">
       <div className="oral-answer-capture-block">
         <div style={titleAxisStyle}>
-          <SectionTitle fontSize="0.84em" color="var(--audioBlockTitleColor)">
+          <SectionTitle fontSize="0.84em" color="var(--audioBlockBadgeFg)">
             <StepBadge number={1} background="var(--audioBlockBadgeBg)" color="var(--audioBlockBadgeFg)" />
             Ecoute le contenu
           </SectionTitle>
@@ -163,7 +165,7 @@ export function OralAnswerCapture({
       <div className="oral-answer-capture-divider" />
       <div className="oral-answer-capture-block">
         <div style={titleAxisStyle}>
-          <SectionTitle fontSize="0.84em" color="var(--audioBlockTitleColor)">
+          <SectionTitle fontSize="0.84em" color="var(--audioBlockBadgeFg)">
             <StepBadge number={2} background="var(--audioBlockBadgeBg)" color="var(--audioBlockBadgeFg)" />
             Ecoute la question
           </SectionTitle>
@@ -176,7 +178,7 @@ export function OralAnswerCapture({
           <div className="oral-answer-capture-divider" />
           <div className="oral-answer-capture-block">
             <div style={titleAxisStyle}>
-              <SectionTitle fontSize="0.84em" color="var(--audioBlockTitleColor)">
+              <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)">
                 <StepBadge number={3} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
                 {showRecorder ? "Enregistre ta réponse" : "Réponse"}
               </SectionTitle>

@@ -27,6 +27,8 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
+        border: `3.015px solid ${color}`,
+        boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
         // marginRight:6 (au lieu de 12) : réduit de 50% l'espace vers le
@@ -187,8 +189,8 @@ export default function QuizzScreen() {
             révision/mot (aucun zoom là-bas), cf. demande explicite du
             user ("même taille que révision/mots"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-          <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
-            <StepBadge number={1} background="var(--stepBadgeBlueBg)" color="var(--stepBadgeBlueFg)" />
+          <SectionTitle fontSize="0.84em" color="var(--examTraduisBadgeFg)" fontWeight={400}>
+            <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
             Traduis le mot
           </SectionTitle>
         </div>
@@ -219,8 +221,8 @@ export default function QuizzScreen() {
             user ("même espace... entre le titre du bloc 2 et la barre
             horizontale au-dessus"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75), marginTop: 0 }}>
-          <SectionTitle fontSize="0.84em" color="var(--enonceSoft)" fontWeight={400}>
-            <StepBadge number={2} background="var(--validationGrisee)" color="var(--validationPleine)" />
+          <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)" fontWeight={400}>
+            <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
             Double-tap pour choisir la réponse
           </SectionTitle>
         </div>

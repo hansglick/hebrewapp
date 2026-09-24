@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { appConfig, computePaletteV2, PALETTE_V2_BASE_DEFAULTS } from "./appConfig";
+import { appConfig, computePaletteV2, PALETTE_V2_BASE_DEFAULTS, SKIN_PRESETS } from "./appConfig";
 
 const PALETTE_V2_BASES_KEY = "palette-v2-bases";
 
@@ -36,12 +36,13 @@ export function ConfigProvider({ children }) {
   const [oralBackgroundEval, setOralBackgroundEval] = useState(
     () => localStorage.getItem("oral-background-eval") === "true"
   );
-  // Toggle TEMPORAIRE (cf. appConfig.js::basePaletteLightV2) pour comparer
-  // l'ancienne et la nouvelle palette (regroupement de nuances) — à
-  // retirer une fois la décision prise. N'a d'effet qu'en thème clair
-  // (pas de variante sombre définie).
-  const [paletteV2, setPaletteV2] = useState(
-    () => localStorage.getItem("palette-v2") === "true"
+  // Skin actif : "default" (palette d'origine), "kindle" (preset figé, cf.
+  // appConfig.js::SKIN_PRESETS) ou "custom" (palette V2 éditable une à une,
+  // cf. paletteV2Bases ci-dessous) — sélectionnable depuis Configuration,
+  // cf. demande explicite du user. N'a d'effet qu'en thème clair (pas de
+  // variante sombre définie pour "kindle"/"custom").
+  const [skin, setSkin] = useState(
+    () => localStorage.getItem("active-skin") || "default"
   );
   // Les 8 couleurs de base de la palette V2 (cf. appConfig.js,
   // PALETTE_V2_BASE_DEFAULTS/computePaletteV2), éditables une à une depuis
@@ -70,8 +71,8 @@ export function ConfigProvider({ children }) {
   }, [oralBackgroundEval]);
 
   useEffect(() => {
-    localStorage.setItem("palette-v2", paletteV2 ? "true" : "false");
-  }, [paletteV2]);
+    localStorage.setItem("active-skin", skin);
+  }, [skin]);
 
   useEffect(() => {
     try {
@@ -81,8 +82,10 @@ export function ConfigProvider({ children }) {
 
   useEffect(() => {
     const theme =
-      themeMode === "light" && paletteV2
+      themeMode === "light" && skin === "custom"
         ? computePaletteV2(paletteV2Bases)
+        : themeMode === "light" && skin === "kindle"
+        ? computePaletteV2(SKIN_PRESETS.kindle)
         : appConfig.theme[themeMode];
     const root = document.documentElement;
     Object.entries(theme).forEach(([key, value]) => {
@@ -94,7 +97,7 @@ export function ConfigProvider({ children }) {
     root.style.setProperty("--font-size-base", `${appConfig.fontSize[fontScale]}px`);
     root.style.setProperty("--font-size-hebrew-large", `${appConfig.fontSize.hebrewLarge}px`);
     root.dataset.theme = themeMode;
-  }, [themeMode, fontScale, paletteV2, paletteV2Bases]);
+  }, [themeMode, fontScale, skin, paletteV2Bases]);
 
   const value = useMemo(
     () => ({
@@ -108,13 +111,13 @@ export function ConfigProvider({ children }) {
       setEvalWaitMode,
       oralBackgroundEval,
       setOralBackgroundEval,
-      paletteV2,
-      setPaletteV2,
+      skin,
+      setSkin,
       paletteV2Bases,
       setPaletteV2Base,
       resetPaletteV2Bases,
     }),
-    [themeMode, fontScale, godMode, evalWaitMode, oralBackgroundEval, paletteV2, paletteV2Bases]
+    [themeMode, fontScale, godMode, evalWaitMode, oralBackgroundEval, skin, paletteV2Bases]
   );
 
   return <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>;

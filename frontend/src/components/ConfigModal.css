@@ -56,6 +56,17 @@
   gap: 12px;
 }
 
+/* Sélecteur de skin (cf. ConfigModal.jsx) — même fond sombre/police que le
+   reste du panneau, pas le style natif clair du navigateur. */
+.config-modal-select {
+  background: var(--chromeBg);
+  color: var(--chromeTextPrimary);
+  border: 1px solid var(--chromePanelBorder);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.85em;
+}
+
 .switch-wrap {
   display: flex;
   align-items: center;

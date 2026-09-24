@@ -80,8 +80,8 @@ export default function Layout() {
     setThemeMode,
     godMode,
     setGodMode,
-    paletteV2,
-    setPaletteV2,
+    skin,
+    setSkin,
     paletteV2Bases,
     setPaletteV2Base,
     resetPaletteV2Bases,
@@ -614,8 +614,8 @@ export default function Layout() {
         setThemeMode={setThemeMode}
         godMode={godMode}
         setGodMode={setGodMode}
-        paletteV2={paletteV2}
-        setPaletteV2={setPaletteV2}
+        skin={skin}
+        setSkin={setSkin}
         paletteV2Bases={paletteV2Bases}
         setPaletteV2Base={setPaletteV2Base}
         resetPaletteV2Bases={resetPaletteV2Bases}
