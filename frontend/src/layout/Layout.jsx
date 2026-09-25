@@ -17,6 +17,8 @@ import { ShekelIcon } from "../components/ShekelIcon";
 import { MagenDavidIcon } from "../components/MagenDavidIcon";
 import { GearIcon } from "../components/GearIcon";
 import { ConfigModal } from "../components/ConfigModal";
+import { PaletteBaseEditor } from "../components/PaletteBaseEditor";
+import { SKIN_LABELS } from "../config/appConfig";
 import { SunIcon, MoonIcon } from "../components/SunMoonIcons";
 import { SignOutIcon } from "../components/SignOutIcon";
 import { useConfig } from "../config/ConfigContext";
@@ -586,6 +588,34 @@ export default function Layout() {
                     </span>
                   </div>
                 </div>
+                {/* Skin (cf. ConfigModal) — dupliqué ici comme Thème/God
+                    Mode ci-dessus : le bouton "Configuration" qui ouvre
+                    ConfigModal est hide-on-mobile, donc ce panneau est le
+                    seul accès à ce réglage sur mobile — cf. demande
+                    explicite du user (le sélecteur de skin était
+                    inaccessible sur mobile). */}
+                <div className="header-mobile-panel-row" style={{ justifyContent: "space-between" }}>
+                  <span>Skin</span>
+                  <select
+                    className="config-modal-select"
+                    value={skin}
+                    onChange={(e) => setSkin(e.target.value)}
+                    aria-label="Choisir le skin de l'application"
+                  >
+                    {Object.entries(SKIN_LABELS).map(([key, label]) => (
+                      <option key={key} value={key}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {skin === "custom" && (
+                  <PaletteBaseEditor
+                    bases={paletteV2Bases}
+                    onChangeBase={setPaletteV2Base}
+                    onReset={resetPaletteV2Bases}
+                  />
+                )}
                 <button
                   type="button"
                   className="header-mobile-panel-row"

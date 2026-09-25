@@ -1,14 +1,17 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { appConfig, computePaletteV2, PALETTE_V2_BASE_DEFAULTS, SKIN_PRESETS } from "./appConfig";
+import { appConfig, computePaletteV2, SKIN_PRESETS } from "./appConfig";
 
 const PALETTE_V2_BASES_KEY = "palette-v2-bases";
 
+// Le skin "Kindle" sert de point de départ par défaut pour la palette
+// "Personnalisée" (au lieu de PALETTE_V2_BASE_DEFAULTS) — cf. demande
+// explicite du user.
 function loadPaletteV2Bases() {
   try {
     const raw = localStorage.getItem(PALETTE_V2_BASES_KEY);
-    if (raw) return { ...PALETTE_V2_BASE_DEFAULTS, ...JSON.parse(raw) };
+    if (raw) return { ...SKIN_PRESETS.kindle, ...JSON.parse(raw) };
   } catch (e) {}
-  return { ...PALETTE_V2_BASE_DEFAULTS };
+  return { ...SKIN_PRESETS.kindle };
 }
 
 const ConfigContext = createContext(null);
@@ -55,7 +58,7 @@ export function ConfigProvider({ children }) {
   }
 
   function resetPaletteV2Bases() {
-    setPaletteV2Bases({ ...PALETTE_V2_BASE_DEFAULTS });
+    setPaletteV2Bases({ ...SKIN_PRESETS.kindle });
   }
 
   useEffect(() => {
