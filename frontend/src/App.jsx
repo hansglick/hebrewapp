@@ -24,6 +24,7 @@ import FunChoiceScreen from "./pages/fun/FunChoiceScreen";
 import ChansonChoiceScreen from "./pages/fun/ChansonChoiceScreen";
 import ChansonScreen from "./pages/fun/ChansonScreen";
 import ChansonRechercheScreen from "./pages/fun/ChansonRechercheScreen";
+import ChansonCatalogueScreen from "./pages/fun/ChansonCatalogueScreen";
 import BibleChoiceScreen from "./pages/fun/BibleChoiceScreen";
 import CuriositeScreen from "./pages/fun/CuriositeScreen";
 import NiveauScreen from "./pages/NiveauScreen";
@@ -167,6 +168,7 @@ function App() {
         <Route path="fun/chansons" element={<ChansonChoiceScreen />} />
         <Route path="fun/chansons/exploration" element={<ChansonScreen />} />
         <Route path="fun/chansons/recherche" element={<ChansonRechercheScreen />} />
+        <Route path="fun/chansons/catalogue" element={<ChansonCatalogueScreen />} />
         <Route path="fun/bible" element={<BibleChoiceScreen />} />
         <Route path="fun/bible/proverbes" element={<CuriositeScreen type="proverb" />} />
         <Route path="fun/bible/tanakh" element={<CuriositeScreen type="tanakh" />} />

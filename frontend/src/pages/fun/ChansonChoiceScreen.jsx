@@ -21,6 +21,11 @@ export default function ChansonChoiceScreen() {
             <TileImageTitle src={mediaUrl("logos/lyrics.svg")}>Rechercher les paroles!</TileImageTitle>
           </div>
         </Link>
+        <Link to="/fun/chansons/catalogue" className="card-link">
+          <div className="card">
+            <TileImageTitle src={mediaUrl("logos/bdd.png")}>Catalogue</TileImageTitle>
+          </div>
+        </Link>
       </div>
     </section>
   );
