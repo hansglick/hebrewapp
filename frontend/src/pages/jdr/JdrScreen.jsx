@@ -49,9 +49,6 @@ function base64ToInt16(b64) {
   return new Int16Array(bytes.buffer);
 }
 
-// Coupe la conversation au bout de 5 minutes — évite qu'une session oubliée
-// ouverte ne consomme du quota Gemini Live/Whisper indéfiniment.
-const MAX_DURATION_MS = 5 * 60 * 1000;
 
 function isErrorStatus(status) {
   return status.startsWith("Micro refusé") || status.startsWith("Erreur") || status.startsWith("Connexion fermée");
@@ -87,7 +84,6 @@ export default function JdrScreen() {
   const processorRef = useRef(null);
   const playbackContextRef = useRef(null);
   const nextPlaybackTimeRef = useRef(0);
-  const autoStopTimeoutRef = useRef(null);
   // Distingue un arrêt volontaire (bouton, minuteur) d'une vraie coupure —
   // sans ça, ws.onclose (déclenché de façon asynchrone par wsRef.current?.close()
   // dans stop()) écraserait le statut qu'on vient de positionner.
@@ -177,11 +173,6 @@ export default function JdrScreen() {
 
     setStatus("Connexion...");
 
-    autoStopTimeoutRef.current = setTimeout(() => {
-      stop();
-      setStatus("Conversation terminée (durée maximale de 5 minutes atteinte).");
-    }, MAX_DURATION_MS);
-
     const ws = new WebSocket(jdrWebSocketUrl(code));
     wsRef.current = ws;
 
@@ -249,7 +240,6 @@ export default function JdrScreen() {
 
   function stop() {
     intentionalStopRef.current = true;
-    clearTimeout(autoStopTimeoutRef.current);
     setRunning(false);
     setStatus("");
     aiBufferRef.current = "";
