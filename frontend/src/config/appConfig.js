@@ -390,7 +390,7 @@ export const SKIN_PRESETS = {
 };
 
 export const SKIN_LABELS = {
-  default: "Palette d'origine",
+  regular: "Regular",
   kindle: "Kindle",
   custom: "Personnalisée",
 };

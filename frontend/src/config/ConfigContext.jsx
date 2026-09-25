@@ -39,13 +39,13 @@ export function ConfigProvider({ children }) {
   const [oralBackgroundEval, setOralBackgroundEval] = useState(
     () => localStorage.getItem("oral-background-eval") === "true"
   );
-  // Skin actif : "default" (palette d'origine), "kindle" (preset figé, cf.
-  // appConfig.js::SKIN_PRESETS) ou "custom" (palette V2 éditable une à une,
-  // cf. paletteV2Bases ci-dessous) — sélectionnable depuis Configuration,
-  // cf. demande explicite du user. N'a d'effet qu'en thème clair (pas de
-  // variante sombre définie pour "kindle"/"custom").
+  // Skin actif : "regular" (palette d'origine), "kindle" (preset figé, cf.
+  // appConfig.js::SKIN_PRESETS — skin PAR DÉFAUT) ou "custom" (palette V2
+  // éditable une à une, cf. paletteV2Bases ci-dessous) — sélectionnable
+  // depuis Configuration, cf. demande explicite du user. N'a d'effet qu'en
+  // thème clair (pas de variante sombre définie pour "kindle"/"custom").
   const [skin, setSkin] = useState(
-    () => localStorage.getItem("active-skin") || "default"
+    () => localStorage.getItem("active-skin") || "kindle"
   );
   // Les 8 couleurs de base de la palette V2 (cf. appConfig.js,
   // PALETTE_V2_BASE_DEFAULTS/computePaletteV2), éditables une à une depuis
