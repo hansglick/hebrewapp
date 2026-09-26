@@ -58,7 +58,7 @@ function StarRating({ rating }) {
 // traduction dans Examen doit être strictement le même que celui utilisé
 // dans examen blanc / HE + Teacher").
 const STEP_BADGE_SIZE = 25;
-function StepBadge({ number, background, color }) {
+function StepBadge({ number, background, color, borderColor }) {
   return (
     <span
       style={{
@@ -70,7 +70,7 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
-        border: `3.015px solid ${color}`,
+        border: `3.015px solid ${borderColor ?? color}`,
         boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
@@ -569,8 +569,8 @@ export default function ExamenEcritScreen() {
               background="var(--cardBg)"
               label={
                 <>
-                  <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
-                  <span style={{ color: "var(--examTraduisBadgeFg)" }}>Traduis</span>
+                  <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" borderColor="var(--examTraduisBadgeBorder)" />
+                  <span style={{ color: "var(--color2TitleColor)" }}>Traduis</span>
                 </>
               }
             >
@@ -668,8 +668,8 @@ export default function ExamenEcritScreen() {
           {!answer && q.type !== "quizz" && pendingAnswers[index] === undefined && (
             <>
               <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                <SectionTitle color="var(--enonceBadgeVertFg)">
-                  <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
+                <SectionTitle color="var(--color1TitleColor)">
+                  <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" borderColor="var(--enonceBadgeVertBorder)" />
                   Réponse
                 </SectionTitle>
                 <HebrewInput

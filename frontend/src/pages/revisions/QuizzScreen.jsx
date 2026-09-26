@@ -15,7 +15,7 @@ import "../screens.css";
 // MotScreen.jsx::StepBadge, même taille/police) — cf. demande explicite
 // du user ("en s'inspirant de ce qui a été fait dans révisions/mot").
 const STEP_BADGE_SIZE = 25;
-function StepBadge({ number, background, color }) {
+function StepBadge({ number, background, color, borderColor }) {
   return (
     <span
       style={{
@@ -27,7 +27,7 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
-        border: `3.015px solid ${color}`,
+        border: `3.015px solid ${borderColor ?? color}`,
         boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
@@ -189,8 +189,8 @@ export default function QuizzScreen() {
             révision/mot (aucun zoom là-bas), cf. demande explicite du
             user ("même taille que révision/mots"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75) }}>
-          <SectionTitle fontSize="0.84em" color="var(--examTraduisBadgeFg)" fontWeight={400}>
-            <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
+          <SectionTitle fontSize="0.84em" color="var(--color2TitleColor)" fontWeight={400}>
+            <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" borderColor="var(--examTraduisBadgeBorder)" />
             Traduis le mot
           </SectionTitle>
         </div>
@@ -221,8 +221,8 @@ export default function QuizzScreen() {
             user ("même espace... entre le titre du bloc 2 et la barre
             horizontale au-dessus"). */}
         <div className="quizz-title-row" style={{ display: "flow-root", zoom: 1 / (1.6 * 0.75), marginTop: 0 }}>
-          <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)" fontWeight={400}>
-            <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
+          <SectionTitle fontSize="0.84em" color="var(--color1TitleColor)" fontWeight={400}>
+            <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" borderColor="var(--enonceBadgeVertBorder)" />
             Double-tap pour choisir la réponse
           </SectionTitle>
         </div>

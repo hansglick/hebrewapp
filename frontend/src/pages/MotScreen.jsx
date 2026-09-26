@@ -22,7 +22,7 @@ const SHIN_ICON_URL = "/shinletter.png";
 // orales (cf. OralAnswerCapture.jsx::StepBadge, même taille/police) — cf.
 // demande explicite du user.
 const STEP_BADGE_SIZE = 25;
-function StepBadge({ number, background, color }) {
+function StepBadge({ number, background, color, borderColor }) {
   return (
     <span
       style={{
@@ -34,7 +34,7 @@ function StepBadge({ number, background, color }) {
         borderRadius: "50%",
         background,
         color,
-        border: `3.015px solid ${color}`,
+        border: `3.015px solid ${borderColor ?? color}`,
         boxSizing: "content-box",
         fontSize: "0.9375em",
         fontWeight: 700,
@@ -406,8 +406,8 @@ export default function MotScreen() {
           <div style={{ width: "70%", maxWidth: 400, marginTop: 14, marginBottom: -1, display: "flow-root" }}>
             {/* gris non gras (au lieu du bleu marine par défaut) — cf.
                 demande explicite du user. */}
-            <SectionTitle fontSize="0.84em" color="var(--examTraduisBadgeFg)" fontWeight={400}>
-              <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" />
+            <SectionTitle fontSize="0.84em" color="var(--color2TitleColor)" fontWeight={400}>
+              <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" borderColor="var(--examTraduisBadgeBorder)" />
               Traduis le mot hébreu
             </SectionTitle>
           </div>
@@ -488,8 +488,8 @@ export default function MotScreen() {
           <div style={{ width: "70%", maxWidth: 400, marginTop: 7, display: "flow-root" }}>
             {/* gris non gras (au lieu du bleu marine par défaut) — cf.
                 demande explicite du user. */}
-            <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)" fontWeight={400}>
-              <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" />
+            <SectionTitle fontSize="0.84em" color="var(--color1TitleColor)" fontWeight={400}>
+              <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" borderColor="var(--enonceBadgeVertBorder)" />
               Réponse
             </SectionTitle>
           </div>

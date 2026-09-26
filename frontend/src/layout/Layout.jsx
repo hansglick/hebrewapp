@@ -364,7 +364,12 @@ export default function Layout() {
                   {displayLessonNumber(niveau.level)}
                 </span>{" "}
                 {displayChapitreLabel(niveau.level.split(".")[0])}
-                <ChapitreLogo chapId={niveau.level.split(".")[0]} size="2.4em" style={{ marginInlineStart: "-0.6em" }} />
+                <ChapitreLogo
+                  chapId={niveau.level.split(".")[0]}
+                  size="2.4em"
+                  color="var(--chromeTextPrimary)"
+                  style={{ marginInlineStart: "-0.6em" }}
+                />
               </>
             ) : (
               "…"

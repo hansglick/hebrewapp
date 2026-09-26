@@ -401,7 +401,7 @@
    lieu d'un bouton "Valider"). */
 .quizz-bubble.selected {
   background: var(--validationGrisee);
-  color: var(--textPrimary);
+  color: var(--quizzSelectedBubbleFg);
   border-color: var(--validationGrisee);
   font-weight: 600;
 }

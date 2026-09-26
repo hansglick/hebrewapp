@@ -209,7 +209,13 @@ export default function Accueil() {
               collage des boîtes DOM — mesuré via Claude in Chrome — cf.
               demande explicite du user ("rapprocher le logo de l'index de
               leçon"). */}
-          <ChapitreLogo chapId={chapId} size="36px" style={{ marginInlineStart: -20 }} />
+          <ChapitreLogo
+            chapId={chapId}
+            size="36px"
+            color="var(--accueilLeconLogoBorder)"
+            bgColor="var(--accueilLeconLogoBg)"
+            style={{ marginInlineStart: -20 }}
+          />
         </p>
       )}
 

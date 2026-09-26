@@ -118,7 +118,7 @@
 }
 
 .bottom-nav-toggle-label {
-  color: var(--chromeTextSecondary);
+  color: var(--bottomNavToggleLabelColor);
   font-size: 0.7em;
   font-weight: 600;
   letter-spacing: 0.02em;
