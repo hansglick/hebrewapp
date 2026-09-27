@@ -87,8 +87,8 @@ export function ConfigProvider({ children }) {
     const theme =
       themeMode === "light" && skin === "custom"
         ? computePaletteV2(paletteV2Bases)
-        : themeMode === "light" && skin === "kindle"
-        ? computePaletteV2(SKIN_PRESETS.kindle)
+        : themeMode === "light" && SKIN_PRESETS[skin]
+        ? computePaletteV2(SKIN_PRESETS[skin])
         : appConfig.theme[themeMode];
     const root = document.documentElement;
     Object.entries(theme).forEach(([key, value]) => {

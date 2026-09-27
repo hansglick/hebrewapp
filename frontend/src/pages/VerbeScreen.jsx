@@ -445,7 +445,7 @@ export default function VerbeScreen() {
               ...(isBase ? null : { marginTop: frozenBadge1MarginTop }),
             }}
           >
-            <SectionTitle fontSize="0.84em" color="var(--color2TitleColor)" fontWeight={400}>
+            <SectionTitle fontSize="0.84em" color="var(--examTraduisBadgeFg)" fontWeight={400}>
               <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" borderColor="var(--examTraduisBadgeBorder)" />
               Conjugue le verbe
             </SectionTitle>
@@ -864,7 +864,7 @@ export default function VerbeScreen() {
                 aux marginTop posés directement dans l'ambiant (ex: la
                 rangée temps/personne juste au-dessus). */}
             <div style={{ width: "70%", maxWidth: 400, marginTop: 20.99, display: "flow-root", zoom: 1 / 1.5 }}>
-              <SectionTitle fontSize="0.84em" color="var(--color1TitleColor)" fontWeight={400}>
+              <SectionTitle fontSize="0.84em" color="var(--enonceBadgeVertFg)" fontWeight={400}>
                 <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" borderColor="var(--enonceBadgeVertBorder)" />
                 Réponse
               </SectionTitle>

@@ -160,16 +160,6 @@ const basePaletteLight = {
   // V2 sans dépendre du thème — cf. demande explicite du user. Valeur
   // inchangée ici (identique à l'ancien examTraduisBadgeFg).
   examTraduisBadgeBorder: "#1d4ed8",
-  // Titre des pastilles "1" (partagé avec "Ecoute le contenu"/"Ecoute la
-  // question", compréhension orale) — TOUJOURS une dérivée claire de
-  // "Color 2", clair ET sombre (contrairement au fond/à la bordure, qui
-  // restent fixes en clair) — cf. demande explicite du user. Valeur
-  // inchangée ici.
-  color2TitleColor: "#9ca3af",
-  // Titre des pastilles "2" ("Réponse" et équivalents, partout où elles
-  // apparaissent) — TOUJOURS une dérivée claire de "Color 1", clair ET
-  // sombre — cf. demande explicite du user. Valeur inchangée ici.
-  color1TitleColor: "#9ca3af",
   // Trait vertical fin entre "temps" et "personne" (écran leçon/révisions
   // verbe, VerbeScreen) — jusqu'ici var(--cardBorder) partagé avec toutes
   // les bordures d'encadrés, découplé pour le raccorder à "Bg 2" en V2
@@ -357,8 +347,6 @@ const basePaletteDark = {
   examTraduisBadgeBg: "#dbeafe",
   examTraduisBadgeFg: "#1d4ed8",
   examTraduisBadgeBorder: "#1d4ed8",
-  color2TitleColor: "#9ca3af",
-  color1TitleColor: "#9ca3af",
   verbeVerticalDivider: "#2e303a",
   quizzSelectedBubbleFg: "#f3f4f6",
   bottomNavToggleLabelColor: "#9ca3af",
@@ -426,9 +414,10 @@ export const PALETTE_V2_BASE_DEFAULTS = {
 
 // Skins prêts à l'emploi (jeu complet des 8 couleurs de base, cf.
 // PALETTE_V2_BASE_DEFAULTS) — sélectionnables depuis Configuration en plus
-// de la palette "Personnalisée" (éditable une à une). "kindle" capture les
-// valeurs personnalisées choisies par le user lors de cette session
-// d'ajustement de la palette V2 — cf. demande explicite du user.
+// de la palette "Personnalisée" (éditable une à une). "kindle" et "night"
+// capturent chacun les valeurs personnalisées choisies par le user lors de
+// cette session d'ajustement de la palette V2 — cf. demande explicite du
+// user.
 export const SKIN_PRESETS = {
   kindle: {
     noir: "#1c2b4a",
@@ -440,11 +429,22 @@ export const SKIN_PRESETS = {
     rouge7: "#a8433a",
     orange5: "#f97316",
   },
+  night: {
+    noir: "#d6c288",
+    blanc: "#1c2b4a",
+    gris1: "#253147",
+    gris5: "#b1d3fc",
+    bleu6: "#6e5717",
+    vert5: "#5c7a5e",
+    rouge7: "#a8433a",
+    orange5: "#f97316",
+  },
 };
 
 export const SKIN_LABELS = {
   regular: "Regular",
   kindle: "Kindle",
+  night: "Night",
   custom: "Personnalisée",
 };
 
@@ -537,8 +537,8 @@ export function computePaletteV2(bases) {
     timerFg: bg1IsDark ? b.noir : b.vert5,
     audioBlockBadgeBg: b.gris1,
     audioBlockIconColor: bg1IsDark ? b.noir : gris5Ink(0.38),
-    audioBlockBadgeFg: bg1IsDark ? mixHex(b.rouge7, "#ffffff", 0.7) : b.rouge7,
-    audioBlockBadgeBorder: b.gris1,
+    audioBlockBadgeFg: bg1IsDark ? mixHex(b.rouge7, "#ffffff", 0.7) : mixHex(b.rouge7, "#1a1a1a", 0.65),
+    audioBlockBadgeBorder: bg1IsDark ? b.gris1 : mixHex(b.rouge7, "#1a1a1a", 0.65),
     audioBlockIconColorLast: bg1IsDark ? b.noir : mixHex(b.vert5, "#1a1a1a", 0.65),
     questionOraleTitleColor: b.noir,
     audioBlockTimerColor: bg1IsDark ? b.noir : gris5Ink(0.38),
@@ -546,7 +546,7 @@ export function computePaletteV2(bases) {
     audioBlockDividerColor: b.gris1,
     enonceBadgeVertBg: b.gris1,
     enonceBadgeVertFg: bg1IsDark ? mixHex(b.vert5, "#ffffff", 0.7) : b.vert5,
-    enonceBadgeVertBorder: b.gris1,
+    enonceBadgeVertBorder: bg1IsDark ? b.gris1 : b.vert5,
     chromeTextPrimary: b.blanc,
     bg: b.blanc,
     cardBg: b.gris1,
@@ -560,10 +560,8 @@ export function computePaletteV2(bases) {
     examToggleTrack: mixHex(b.vert5, "#ffffff", 0.63),
     examHebrewToggleTrack: mixHex(b.vert5, "#ffffff", 0.63),
     examTraduisBadgeBg: b.gris1,
-    examTraduisBadgeFg: bg1IsDark ? mixHex(b.rouge7, "#ffffff", 0.7) : b.rouge7,
-    examTraduisBadgeBorder: b.gris1,
-    color2TitleColor: mixHex(b.rouge7, "#ffffff", 0.7),
-    color1TitleColor: mixHex(b.vert5, "#ffffff", 0.7),
+    examTraduisBadgeFg: bg1IsDark ? mixHex(b.rouge7, "#ffffff", 0.7) : mixHex(b.rouge7, "#1a1a1a", 0.65),
+    examTraduisBadgeBorder: bg1IsDark ? b.gris1 : mixHex(b.rouge7, "#1a1a1a", 0.65),
     verbeVerticalDivider: b.gris1,
     quizzSelectedBubbleFg: bg1IsDark ? b.vert5 : b.noir,
     bottomNavToggleLabelColor: bg1IsDark ? b.blanc : "#9ca3af",
@@ -645,8 +643,6 @@ function buildTheme(p) {
     examTraduisBadgeBg: p.examTraduisBadgeBg,
     examTraduisBadgeFg: p.examTraduisBadgeFg,
     examTraduisBadgeBorder: p.examTraduisBadgeBorder,
-    color2TitleColor: p.color2TitleColor,
-    color1TitleColor: p.color1TitleColor,
     verbeVerticalDivider: p.verbeVerticalDivider,
     quizzSelectedBubbleFg: p.quizzSelectedBubbleFg,
     bottomNavToggleLabelColor: p.bottomNavToggleLabelColor,

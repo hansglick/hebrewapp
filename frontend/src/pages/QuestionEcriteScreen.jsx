@@ -448,7 +448,7 @@ export default function QuestionEcriteScreen() {
             label={
               <>
                 <StepBadge number={1} background="var(--examTraduisBadgeBg)" color="var(--examTraduisBadgeFg)" borderColor="var(--examTraduisBadgeBorder)" />
-                <span style={{ color: "var(--color2TitleColor)" }}>Traduis</span>
+                <span style={{ color: "var(--examTraduisBadgeFg)" }}>Traduis</span>
               </>
             }
           >
@@ -712,7 +712,7 @@ export default function QuestionEcriteScreen() {
               <>
                 {targetIsHebrew ? (
                   <div className="exam-teacher-input" style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle color="var(--color1TitleColor)">
+                    <SectionTitle color="var(--enonceBadgeVertFg)">
                       <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" borderColor="var(--enonceBadgeVertBorder)" />
                       Réponse
                     </SectionTitle>
@@ -727,7 +727,7 @@ export default function QuestionEcriteScreen() {
                   </div>
                 ) : (
                   <div style={{ width: "100%", maxWidth: 320, marginTop: 20 }}>
-                    <SectionTitle color="var(--color1TitleColor)">
+                    <SectionTitle color="var(--enonceBadgeVertFg)">
                       <StepBadge number={2} background="var(--enonceBadgeVertBg)" color="var(--enonceBadgeVertFg)" borderColor="var(--enonceBadgeVertBorder)" />
                       Réponse
                     </SectionTitle>
