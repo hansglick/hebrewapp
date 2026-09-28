@@ -1,0 +1,617 @@
+[
+    {
+        "id": 46,
+        "items_action": [
+            [
+                "להדליק",
+                "allumer"
+            ],
+            [
+                "לבדוק",
+                "tester"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "כבל",
+                "câble"
+            ],
+            [
+                "אוזניות",
+                "écouteurs"
+            ],
+            [
+                "טלוויזיה",
+                "télévision"
+            ],
+            [
+                "טלפון חכם",
+                "smartphone"
+            ]
+        ],
+        "scene_title": "Le magasin d'électronique",
+        "prompt": "In an electronics store, a customer is turning on a television while testing a smartphone. Around them on display are a computer with a glowing screen, a coiled cable, and some headphones. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 47,
+        "items_action": [
+            [
+                "להשקות",
+                "arroser"
+            ],
+            [
+                "לשתול",
+                "planter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "צמח",
+                "plante"
+            ],
+            [
+                "עציץ",
+                "pot"
+            ],
+            [
+                "אדמה",
+                "terre"
+            ],
+            [
+                "כף",
+                "pelle"
+            ],
+            [
+                "פרח",
+                "fleur"
+            ],
+            [
+                "עץ",
+                "arbre"
+            ]
+        ],
+        "scene_title": "La pépinière (Mishtala)",
+        "prompt": "In a lush plant nursery, a gardener is planting a small tree in a pot filled with soil using a shovel, while another person waters a blooming flower and a green plant. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 48,
+        "items_action": [
+            [
+                "לגזור",
+                "couper"
+            ],
+            [
+                "למרוח",
+                "vernir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "לק",
+                "vernis à ongles"
+            ],
+            [
+                "פצירה",
+                "lime à ongles"
+            ],
+            [
+                "מראה",
+                "miroir"
+            ],
+            [
+                "מגבת",
+                "serviette"
+            ],
+            [
+                "כורסה",
+                "fauteuil"
+            ],
+            [
+                "מספריים",
+                "ciseaux"
+            ]
+        ],
+        "scene_title": "L'institut de beauté et manucure",
+        "prompt": "In a beauty and manicure salon, a beautician sitting in a comfortable armchair is cutting nails with scissors and applying nail polish to a client. On the table, there is a nail file, a soft towel, and a small mirror reflecting the scene. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 49,
+        "items_action": [
+            [
+                "לפתוח",
+                "ouvrir"
+            ],
+            [
+                "לשטוף",
+                "rincer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כיסא",
+                "fauteuil"
+            ],
+            [
+                "מנורה",
+                "lampe"
+            ],
+            [
+                "מסכה",
+                "masque"
+            ],
+            [
+                "שן",
+                "dent"
+            ],
+            [
+                "מזרק",
+                "seringue"
+            ],
+            [
+                "סינר",
+                "bavoir"
+            ]
+        ],
+        "scene_title": "Le cabinet du dentiste",
+        "prompt": "In a dentist's office under a bright lamp, a patient wearing a bib is opening their mouth wide to show a tooth, while the dentist, wearing a mask, holds a syringe and prepares to rinse the mouth. The patient is sitting comfortably in a large dental chair. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 50,
+        "items_action": [
+            [
+                "לבדוק",
+                "examiner"
+            ],
+            [
+                "לשקול",
+                "peser"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כלב",
+                "chien"
+            ],
+            [
+                "חתול",
+                "chat"
+            ],
+            [
+                "סטטוסקופ",
+                "stéthoscope"
+            ],
+            [
+                "כלוב",
+                "cage"
+            ],
+            [
+                "משקל",
+                "balance"
+            ],
+            [
+                "רצועה",
+                "laisse"
+            ]
+        ],
+        "scene_title": "La clinique vétérinaire",
+        "prompt": "In a veterinary clinic, a vet is examining a dog with a stethoscope and weighing a cat on a metal scale. Nearby, there is an open cage and a leash resting on the examination table. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 51,
+        "items_action": [
+            [
+                "לצעוק",
+                "crier"
+            ],
+            [
+                "להחזיק",
+                "tenir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "שלט",
+                "pancarte"
+            ],
+            [
+                "דגל",
+                "drapeau"
+            ],
+            [
+                "מגפון",
+                "mégaphone"
+            ],
+            [
+                "שוטר",
+                "policier"
+            ],
+            [
+                "קהל",
+                "foule"
+            ],
+            [
+                "מחסום",
+                "barrière"
+            ]
+        ],
+        "scene_title": "La manifestation dans la rue",
+        "prompt": "In a street protest, a large crowd is shouting through a megaphone and holding a blank sign and a flag. A policeman stands guard behind a metal barrier, watching the energetic demonstrators. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 52,
+        "items_action": [
+            [
+                "לחכות",
+                "attendre"
+            ],
+            [
+                "לנהוג",
+                "conduire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מונית",
+                "taxi"
+            ],
+            [
+                "נהג",
+                "chauffeur"
+            ],
+            [
+                "נוסע",
+                "passager"
+            ],
+            [
+                "תמרור",
+                "panneau"
+            ],
+            [
+                "מזוודה",
+                "valise"
+            ],
+            [
+                "כביש",
+                "route"
+            ]
+        ],
+        "scene_title": "La station de taxis",
+        "prompt": "At a taxi stand by the road, a passenger with a suitcase is waiting next to a signpost while a driver prepares to drive the yellow taxi. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 53,
+        "items_action": [
+            [
+                "לחתום",
+                "signer"
+            ],
+            [
+                "לשבת",
+                "s'asseoir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "דרכון",
+                "passeport"
+            ],
+            [
+                "תעודת זהות",
+                "carte d'identité"
+            ],
+            [
+                "טופס",
+                "formulaire"
+            ],
+            [
+                "פקיד",
+                "employé"
+            ],
+            [
+                "חותמת",
+                "tampon"
+            ],
+            [
+                "חדר המתנה",
+                "salle d'attente"
+            ]
+        ],
+        "scene_title": "Le bureau du ministère de l'Intérieur (Misrad Hapnim)",
+        "prompt": "In the waiting room of a government office, a person is sitting down to sign a form while a clerk stamps a passport and an ID card. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 54,
+        "items_action": [
+            [
+                "לשבור",
+                "casser"
+            ],
+            [
+                "לשתות",
+                "boire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חופה",
+                "dais"
+            ],
+            [
+                "כוס",
+                "verre"
+            ],
+            [
+                "טבעת",
+                "bague"
+            ],
+            [
+                "כלה",
+                "mariée"
+            ],
+            [
+                "חתן",
+                "marié"
+            ],
+            [
+                "רב",
+                "rabbin"
+            ]
+        ],
+        "scene_title": "Le mariage juif sous la Houppa",
+        "prompt": "Under a traditional canopy, a groom is breaking a glass with his foot and getting ready to drink wine, while the bride holds a ring and the rabbi watches joyfully. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 55,
+        "items_action": [
+            [
+                "להתפלל",
+                "prier"
+            ],
+            [
+                "לקרוא",
+                "lire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספר תורה",
+                "rouleau de la Torah"
+            ],
+            [
+                "סידור",
+                "livre de prières"
+            ],
+            [
+                "כיפה",
+                "kippa"
+            ],
+            [
+                "טלית",
+                "châle de prière"
+            ],
+            [
+                "במה",
+                "estrade"
+            ],
+            [
+                "ארון קודש",
+                "arche sainte"
+            ]
+        ],
+        "scene_title": "L'intérieur de la synagogue",
+        "prompt": "Inside a synagogue near the holy ark, a man wearing a kippah and a prayer shawl is praying and reading from a prayer book on the wooden bimah, with a beautiful Torah scroll unrolled before him. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 56,
+        "items_action": [
+            [
+                "להרכיב",
+                "assembler"
+            ],
+            [
+                "למדוד",
+                "mesurer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספה",
+                "canapé"
+            ],
+            [
+                "מיטה",
+                "lit"
+            ],
+            [
+                "שולחן",
+                "table"
+            ],
+            [
+                "כיסא",
+                "chaise"
+            ],
+            [
+                "ארון",
+                "armoire"
+            ],
+            [
+                "שטיח",
+                "tapis"
+            ]
+        ],
+        "scene_title": "Le magasin de meubles",
+        "prompt": "In a furniture store, a worker is assembling a wooden wardrobe and measuring a table with a tape measure. The showroom also displays a cozy sofa, a bed, a chair, and a patterned rug on the floor. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 57,
+        "items_action": [
+            [
+                "להראות",
+                "montrer"
+            ],
+            [
+                "לחתום",
+                "signer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חוזה",
+                "contrat"
+            ],
+            [
+                "מפתח",
+                "clé"
+            ],
+            [
+                "בית",
+                "maison"
+            ],
+            [
+                "דגם",
+                "maquette"
+            ],
+            [
+                "סוכן",
+                "agent"
+            ],
+            [
+                "עט",
+                "stylo"
+            ]
+        ],
+        "scene_title": "L'agence immobilière",
+        "prompt": "In a real estate agency, an agent is showing a miniature model of a house and handing over a key to a client who is signing a contract with a pen. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 58,
+        "items_action": [
+            [
+                "לשיר",
+                "chanter"
+            ],
+            [
+                "להקליט",
+                "enregistrer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מיקרופון",
+                "microphone"
+            ],
+            [
+                "אוזניות",
+                "casque"
+            ],
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "זכוכית",
+                "vitre"
+            ],
+            [
+                "כלי נגינה",
+                "instrument"
+            ],
+            [
+                "כבל",
+                "câble"
+            ]
+        ],
+        "scene_title": "Le studio d'enregistrement",
+        "prompt": "In a professional recording studio, a musician wearing headphones is singing into a microphone and playing a musical instrument to record a track. Behind a soundproof glass window, a producer works at a computer surrounded by coiled cables. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 59,
+        "items_action": [
+            [
+                "להפליג",
+                "naviguer"
+            ],
+            [
+                "לקשור",
+                "attacher"
+            ]
+        ],
+        "items_elements": [
+            [
+                "סירה",
+                "bateau"
+            ],
+            [
+                "יאכטה",
+                "yacht"
+            ],
+            [
+                "חבל",
+                "corde"
+            ],
+            [
+                "עוגן",
+                "ancre"
+            ],
+            [
+                "מים",
+                "eau"
+            ],
+            [
+                "מזח",
+                "quai"
+            ]
+        ],
+        "scene_title": "Le port de plaisance (Marina)",
+        "prompt": "At a sunny marina, a sailor is tying a rope to a dock to secure a small boat, while a large yacht sails on the calm water with its anchor pulled up. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 60,
+        "items_action": [
+            [
+                "לקפל",
+                "plier"
+            ],
+            [
+                "להכניס",
+                "insérer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מכונת כביסה",
+                "machine à laver"
+            ],
+            [
+                "מייבש",
+                "sèche-linge"
+            ],
+            [
+                "סל",
+                "panier"
+            ],
+            [
+                "סבון",
+                "lessive"
+            ],
+            [
+                "מטבע",
+                "pièce"
+            ],
+            [
+                "בגדים",
+                "vêtements"
+            ]
+        ],
+        "scene_title": "La laverie automatique",
+        "prompt": "Inside a bright laundromat, a person is inserting a coin into a washing machine and pouring laundry detergent, while another customer folds clean clothes into a basket next to a dryer. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    }
+]

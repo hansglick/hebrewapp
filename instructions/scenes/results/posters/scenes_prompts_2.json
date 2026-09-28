@@ -1,0 +1,617 @@
+[
+    {
+        "id": 16,
+        "items_action": [
+            [
+                "לחתום",
+                "signer"
+            ],
+            [
+                "לקרוא",
+                "lire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חוזה",
+                "contrat"
+            ],
+            [
+                "עט",
+                "stylo"
+            ],
+            [
+                "עורך דין",
+                "avocat"
+            ],
+            [
+                "שולחן",
+                "bureau"
+            ],
+            [
+                "מסמך",
+                "document"
+            ],
+            [
+                "חותמת",
+                "tampon"
+            ]
+        ],
+        "scene_title": "La signature du contrat de location chez l'avocat",
+        "prompt": "A lawyer and a client sit at a desk, with the client reading a contract document and preparing to sign it with a pen, while an official stamp rests nearby. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 17,
+        "items_action": [
+            [
+                "להמתין",
+                "patienter"
+            ],
+            [
+                "לבדוק",
+                "examiner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "רופא",
+                "médecin"
+            ],
+            [
+                "חולה",
+                "patient"
+            ],
+            [
+                "כרטיס",
+                "carte"
+            ],
+            [
+                "מסכה",
+                "masque"
+            ],
+            [
+                "כיסא",
+                "chaise"
+            ],
+            [
+                "סטטוסקופ",
+                "stéthoscope"
+            ]
+        ],
+        "scene_title": "La clinique médicale (Koupat Holim)",
+        "prompt": "A doctor wearing a medical mask uses a stethoscope to examine a patient sitting on a chair, while another patient waits nearby holding a clinic card. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 18,
+        "items_action": [
+            [
+                "לשלם",
+                "payer"
+            ],
+            [
+                "לתת",
+                "donner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "תרופה",
+                "médicament"
+            ],
+            [
+                "רוקח",
+                "pharmacien"
+            ],
+            [
+                "מרשם",
+                "ordonnance"
+            ],
+            [
+                "קופה",
+                "caisse"
+            ],
+            [
+                "מדף",
+                "étagère"
+            ],
+            [
+                "כדורים",
+                "pilules"
+            ]
+        ],
+        "scene_title": "La pharmacie",
+        "prompt": "A pharmacist gives medicine and pill bottles from a shelf to a customer in exchange for a medical prescription, while the customer pays at the cash register. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 19,
+        "items_action": [
+            [
+                "לשכב",
+                "s'allonger"
+            ],
+            [
+                "לדחוף",
+                "pousser"
+            ]
+        ],
+        "items_elements": [
+            [
+                "אלונקה",
+                "brancard"
+            ],
+            [
+                "אחות",
+                "infirmière"
+            ],
+            [
+                "מיטה",
+                "lit"
+            ],
+            [
+                "אינפוזיה",
+                "perfusion"
+            ],
+            [
+                "כיסא גלגלים",
+                "fauteuil roulant"
+            ],
+            [
+                "מוניטור",
+                "moniteur"
+            ]
+        ],
+        "scene_title": "La salle d'urgence de l'hôpital",
+        "prompt": "An injured patient lies down on a hospital bed connected to an IV drip and a medical monitor, while a nurse pushes a stretcher past an empty wheelchair. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 20,
+        "items_action": [
+            [
+                "לקנות",
+                "acheter"
+            ],
+            [
+                "למדוד",
+                "essayer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חנות",
+                "magasin"
+            ],
+            [
+                "שקית",
+                "sac"
+            ],
+            [
+                "מדרגות נעות",
+                "escalator"
+            ],
+            [
+                "חלון ראווה",
+                "vitrine"
+            ],
+            [
+                "בגדים",
+                "vêtements"
+            ],
+            [
+                "כסף",
+                "argent"
+            ]
+        ],
+        "scene_title": "Le centre commercial (Canyon)",
+        "prompt": "Inside a busy mall with an escalator, a customer tries on clothes in a store, while another buys items, handing over money and receiving a shopping bag near a bright shop window. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 21,
+        "items_action": [
+            [
+                "להפקיד",
+                "déposer"
+            ],
+            [
+                "למשוך",
+                "retirer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "פקיד",
+                "employé"
+            ],
+            [
+                "מזומן",
+                "espèces"
+            ],
+            [
+                "כספומט",
+                "distributeur"
+            ],
+            [
+                "תור",
+                "file d'attente"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "צ'ק",
+                "chèque"
+            ]
+        ],
+        "scene_title": "Le guichet de la banque",
+        "prompt": "Customers stand in a queue at a bank, where one person deposits a check with a bank employee behind a screen, and another withdraws cash from an ATM machine. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 22,
+        "items_action": [
+            [
+                "לעצור",
+                "arrêter"
+            ],
+            [
+                "לחקור",
+                "interroger"
+            ]
+        ],
+        "items_elements": [
+            [
+                "שוטר",
+                "policier"
+            ],
+            [
+                "אזיקים",
+                "menottes"
+            ],
+            [
+                "ניידת",
+                "voiture de police"
+            ],
+            [
+                "תא",
+                "cellule"
+            ],
+            [
+                "נשק",
+                "arme"
+            ],
+            [
+                "טופס",
+                "formulaire"
+            ]
+        ],
+        "scene_title": "Le commissariat de police",
+        "prompt": "Inside a police station with a visible holding cell and a police car parked outside, a police officer with a weapon on his belt interrogates a suspect in handcuffs, filling out a form after the arrest. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 23,
+        "items_action": [
+            [
+                "לשפוט",
+                "juger"
+            ],
+            [
+                "להעיד",
+                "témoigner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "שופט",
+                "juge"
+            ],
+            [
+                "פטיש",
+                "marteau"
+            ],
+            [
+                "דוכן",
+                "barre des témoins"
+            ],
+            [
+                "קהל",
+                "public"
+            ],
+            [
+                "גלימה",
+                "robe"
+            ],
+            [
+                "סנגור",
+                "avocat de la défense"
+            ]
+        ],
+        "scene_title": "La salle d'audience du tribunal",
+        "prompt": "A judge in a black robe strikes a gavel to judge a case, while a person testifies at the witness stand under the watchful eyes of a defense attorney and an audience. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 24,
+        "items_action": [
+            [
+                "לתקן",
+                "réparer"
+            ],
+            [
+                "להרים",
+                "soulever"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מוסכניק",
+                "mécanicien"
+            ],
+            [
+                "רכב",
+                "voiture"
+            ],
+            [
+                "גלגל",
+                "roue"
+            ],
+            [
+                "מנוע",
+                "moteur"
+            ],
+            [
+                "כלי עבודה",
+                "outils"
+            ],
+            [
+                "שמן",
+                "huile"
+            ]
+        ],
+        "scene_title": "Le garage automobile (Mousakh)",
+        "prompt": "A mechanic repairs a lifted car in a garage, inspecting the engine and a removed wheel using various tools and a can of motor oil. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 25,
+        "items_action": [
+            [
+                "לתדלק",
+                "faire le plein"
+            ],
+            [
+                "לנקות",
+                "nettoyer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "דלק",
+                "essence"
+            ],
+            [
+                "משאבה",
+                "pompe"
+            ],
+            [
+                "פיה",
+                "pistolet"
+            ],
+            [
+                "מתדלק",
+                "pompiste"
+            ],
+            [
+                "פח",
+                "poubelle"
+            ],
+            [
+                "חלון",
+                "vitre"
+            ]
+        ],
+        "scene_title": "La station-service",
+        "prompt": "A gas station attendant uses a pump nozzle to refuel a car with gasoline, while simultaneously cleaning the car window near a trash can. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 26,
+        "items_action": [
+            [
+                "לגזור",
+                "couper"
+            ],
+            [
+                "לחפוף",
+                "laver"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספר",
+                "coiffeur"
+            ],
+            [
+                "מספריים",
+                "ciseaux"
+            ],
+            [
+                "מראה",
+                "miroir"
+            ],
+            [
+                "מסרק",
+                "peigne"
+            ],
+            [
+                "שיער",
+                "cheveux"
+            ],
+            [
+                "פן",
+                "sèche-cheveux"
+            ]
+        ],
+        "scene_title": "Le salon de coiffure",
+        "prompt": "A hairdresser washes a client's hair and uses scissors and a comb to cut it in front of a large mirror, with a hair dryer resting on the counter. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 27,
+        "items_action": [
+            [
+                "להתאמן",
+                "s'entraîner"
+            ],
+            [
+                "לרוץ",
+                "courir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "משקולות",
+                "haltères"
+            ],
+            [
+                "הליכון",
+                "tapis roulant"
+            ],
+            [
+                "מגבת",
+                "serviette"
+            ],
+            [
+                "מאמן",
+                "coach"
+            ],
+            [
+                "בקבוק",
+                "bouteille"
+            ],
+            [
+                "מזרן",
+                "tapis"
+            ]
+        ],
+        "scene_title": "La salle de sport",
+        "prompt": "A coach watches people exercise in a gym, where one person runs on a treadmill and another trains with dumbbells on a mat, keeping a towel and a water bottle nearby. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 28,
+        "items_action": [
+            [
+                "לשחק",
+                "jouer"
+            ],
+            [
+                "להתנדנד",
+                "se balancer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מגלשה",
+                "toboggan"
+            ],
+            [
+                "נדנדה",
+                "balançoire"
+            ],
+            [
+                "חול",
+                "sable"
+            ],
+            [
+                "ספסל",
+                "banc"
+            ],
+            [
+                "עץ",
+                "arbre"
+            ],
+            [
+                "ילד",
+                "enfant"
+            ]
+        ],
+        "scene_title": "Le parc public avec aire de jeux",
+        "prompt": "A child plays on a slide and swings on a playground swing set above a sandbox, while parents relax on a bench under a large tree. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 29,
+        "items_action": [
+            [
+                "לצלות",
+                "griller"
+            ],
+            [
+                "לנפנף",
+                "éventer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מנגל",
+                "barbecue"
+            ],
+            [
+                "בשר",
+                "viande"
+            ],
+            [
+                "פחמים",
+                "charbon"
+            ],
+            [
+                "פיתה",
+                "pita"
+            ],
+            [
+                "שיפוד",
+                "brochette"
+            ],
+            [
+                "מלקחיים",
+                "pince"
+            ]
+        ],
+        "scene_title": "Le barbecue de Yom Ha'atzmaout (Mangal)",
+        "prompt": "A person fans the glowing charcoal of a barbecue grill and uses tongs to grill meat and skewers, with fresh pita bread waiting on a nearby table. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 30,
+        "items_action": [
+            [
+                "לאפות",
+                "cuire"
+            ],
+            [
+                "לארוז",
+                "emballer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "לחם",
+                "pain"
+            ],
+            [
+                "עוגה",
+                "gâteau"
+            ],
+            [
+                "מאפה",
+                "pâtisserie"
+            ],
+            [
+                "אופה",
+                "boulanger"
+            ],
+            [
+                "תנור",
+                "four"
+            ],
+            [
+                "מגש",
+                "plateau"
+            ]
+        ],
+        "scene_title": "La boulangerie-pâtisserie",
+        "prompt": "A baker takes a tray of fresh bread and pastries out of a hot oven to bake them, while another worker packs a beautiful cake for a customer. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    }
+]

@@ -1,0 +1,13 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "id": {
+            "type": "int",
+            "description": "L'identifiant de la scène"
+        },        
+        "prompt": {
+            "type": "str",
+            "description": "un prompt en anglais qui permettra ultérieurement de générer une image illustrant les mots de vocabulaire représentés par les items actions et éléments."
+        }
+    }
+}

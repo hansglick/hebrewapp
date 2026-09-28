@@ -75,6 +75,14 @@ export default function LeconDetailScreen() {
             </div>
           </Link>
         )}
+        {/* Scène "vie quotidienne" associée par roulement sur 60 scènes
+            (cf. scene_index_for côté backend) — toujours présente, quelle
+            que soit la leçon. */}
+        <Link to={`/apprentissage/${chapId}/${code}/scene`} className="card-link">
+          <div className="card" style={{ textAlign: "center", ...notVisitedStyle("scene") }}>
+            <TileTitle src="/scene.png" gap={20}>Scène</TileTitle>
+          </div>
+        </Link>
         {/* Remplace l'ancienne tuile "Coin culture" (liste de tuiles, cf.
             CuriositeListScreen) — seule la variante "image map" (cf.
             CoinCultureFastScreen) reste proposée ici, désormais sous le

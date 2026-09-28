@@ -1,0 +1,602 @@
+[
+    {
+        "id": 1,
+        "items_action": [
+            [
+                "לשקול",
+                "peser"
+            ],
+            [
+                "לשלם",
+                "payer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "עגבניה",
+                "tomate"
+            ],
+            [
+                "שקית",
+                "sac"
+            ],
+            [
+                "משקל",
+                "balance"
+            ],
+            [
+                "מטבע",
+                "pièce de monnaie"
+            ],
+            [
+                "מוכר",
+                "vendeur"
+            ],
+            [
+                "פרי",
+                "fruit"
+            ]
+        ],
+        "scene_title": "Le marché en plein air (Le Shouk)"
+    },
+    {
+        "id": 2,
+        "items_action": [
+            [
+                "להדליק",
+                "allumer"
+            ],
+            [
+                "למזוג",
+                "verser"
+            ]
+        ],
+        "items_elements": [
+            [
+                "נר",
+                "bougie"
+            ],
+            [
+                "יין",
+                "vin"
+            ],
+            [
+                "חלה",
+                "pain de shabbat"
+            ],
+            [
+                "כוס",
+                "verre"
+            ],
+            [
+                "שולחן",
+                "table"
+            ],
+            [
+                "מפה",
+                "nappe"
+            ]
+        ],
+        "scene_title": "Le repas de Shabbat en famille"
+    },
+    {
+        "id": 3,
+        "items_action": [
+            [
+                "לטגן",
+                "frire"
+            ],
+            [
+                "לארוז",
+                "emballer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "פיתה",
+                "pain pita"
+            ],
+            [
+                "חומוס",
+                "houmous"
+            ],
+            [
+                "צ'יפס",
+                "frites"
+            ],
+            [
+                "סלט",
+                "salade"
+            ],
+            [
+                "מפית",
+                "serviette"
+            ],
+            [
+                "שיפוד",
+                "broche"
+            ]
+        ],
+        "scene_title": "Le stand de falafel et shawarma"
+    },
+    {
+        "id": 4,
+        "items_action": [
+            [
+                "לשחק",
+                "jouer"
+            ],
+            [
+                "לשחות",
+                "nager"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מטקה",
+                "raquette de plage"
+            ],
+            [
+                "כדור",
+                "balle"
+            ],
+            [
+                "חול",
+                "sable"
+            ],
+            [
+                "ים",
+                "mer"
+            ],
+            [
+                "שמשיה",
+                "parasol"
+            ],
+            [
+                "מגבת",
+                "serviette de plage"
+            ]
+        ],
+        "scene_title": "La plage animée de Tel-Aviv et ses joueurs de matkot"
+    },
+    {
+        "id": 5,
+        "items_action": [
+            [
+                "לדחוף",
+                "pousser"
+            ],
+            [
+                "לסרוק",
+                "scanner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "עגלה",
+                "chariot"
+            ],
+            [
+                "מדף",
+                "rayon"
+            ],
+            [
+                "קופה",
+                "caisse"
+            ],
+            [
+                "ברקוד",
+                "code-barres"
+            ],
+            [
+                "שקית",
+                "sac en plastique"
+            ],
+            [
+                "קבלה",
+                "reçu"
+            ]
+        ],
+        "scene_title": "Le supermarché"
+    },
+    {
+        "id": 6,
+        "items_action": [
+            [
+                "לכתוב",
+                "écrire"
+            ],
+            [
+                "לקרוא",
+                "lire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "לוח",
+                "tableau"
+            ],
+            [
+                "מחברת",
+                "cahier"
+            ],
+            [
+                "עט",
+                "stylo"
+            ],
+            [
+                "ספר",
+                "livre"
+            ],
+            [
+                "מורה",
+                "professeur"
+            ],
+            [
+                "כיסא",
+                "chaise"
+            ]
+        ],
+        "scene_title": "L'Oulpan (classe d'hébreu)"
+    },
+    {
+        "id": 7,
+        "items_action": [
+            [
+                "לשלוח",
+                "envoyer"
+            ],
+            [
+                "להחתים",
+                "tamponner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חבילה",
+                "colis"
+            ],
+            [
+                "מעטפה",
+                "enveloppe"
+            ],
+            [
+                "בול",
+                "timbre"
+            ],
+            [
+                "תיבת דואר",
+                "boîte aux lettres"
+            ],
+            [
+                "אשנב",
+                "guichet"
+            ],
+            [
+                "דוור",
+                "facteur"
+            ]
+        ],
+        "scene_title": "Le bureau de poste"
+    },
+    {
+        "id": 8,
+        "items_action": [
+            [
+                "לשבת",
+                "s'asseoir"
+            ],
+            [
+                "למסור",
+                "remettre"
+            ]
+        ],
+        "items_elements": [
+            [
+                "טופס",
+                "formulaire"
+            ],
+            [
+                "דרכון",
+                "passeport"
+            ],
+            [
+                "מזוודה",
+                "valise"
+            ],
+            [
+                "משרד",
+                "bureau"
+            ],
+            [
+                "דגל",
+                "drapeau"
+            ],
+            [
+                "עולה חדש",
+                "nouvel immigrant"
+            ]
+        ],
+        "scene_title": "Le centre d'intégration (Merkaz Klita)"
+    },
+    {
+        "id": 9,
+        "items_action": [
+            [
+                "לחכות",
+                "attendre"
+            ],
+            [
+                "לעלות",
+                "monter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "אוטובוס",
+                "bus"
+            ],
+            [
+                "תחנה",
+                "arrêt de bus"
+            ],
+            [
+                "כרטיס",
+                "carte de transport"
+            ],
+            [
+                "ספסל",
+                "banc"
+            ],
+            [
+                "שלט",
+                "panneau"
+            ],
+            [
+                "נוסע",
+                "passager"
+            ]
+        ],
+        "scene_title": "L'arrêt de bus et la file d'attente"
+    },
+    {
+        "id": 10,
+        "items_action": [
+            [
+                "לרדת",
+                "descendre"
+            ],
+            [
+                "לקנות",
+                "acheter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "רכבת",
+                "train"
+            ],
+            [
+                "רציף",
+                "quai"
+            ],
+            [
+                "כרטיס",
+                "billet"
+            ],
+            [
+                "שעון",
+                "horloge"
+            ],
+            [
+                "מכונה",
+                "distributeur"
+            ],
+            [
+                "מסילה",
+                "rail"
+            ]
+        ],
+        "scene_title": "La gare ferroviaire"
+    },
+    {
+        "id": 11,
+        "items_action": [
+            [
+                "להראות",
+                "montrer"
+            ],
+            [
+                "להפקיד",
+                "déposer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מטוס",
+                "avion"
+            ],
+            [
+                "דרכון",
+                "passeport"
+            ],
+            [
+                "עגלה",
+                "chariot à bagages"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "כרטיס טיסה",
+                "billet d'avion"
+            ],
+            [
+                "מאבטח",
+                "agent de sécurité"
+            ]
+        ],
+        "scene_title": "L'aéroport Ben Gourion (zone des départs)"
+    },
+    {
+        "id": 12,
+        "items_action": [
+            [
+                "להתפלל",
+                "prier"
+            ],
+            [
+                "לגעת",
+                "toucher"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כותל",
+                "mur"
+            ],
+            [
+                "פתק",
+                "mot en papier"
+            ],
+            [
+                "סידור",
+                "livre de prière"
+            ],
+            [
+                "כיפה",
+                "kippa"
+            ],
+            [
+                "אבן",
+                "pierre"
+            ],
+            [
+                "מתפלל",
+                "fidèle"
+            ]
+        ],
+        "scene_title": "Le Mur des Lamentations (Kotel)"
+    },
+    {
+        "id": 13,
+        "items_action": [
+            [
+                "להצדיע",
+                "saluer"
+            ],
+            [
+                "ללבוש",
+                "porter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מדים",
+                "uniforme"
+            ],
+            [
+                "נשק",
+                "arme"
+            ],
+            [
+                "כומתה",
+                "béret"
+            ],
+            [
+                "נעליים",
+                "bottes"
+            ],
+            [
+                "קיטבג",
+                "sac militaire"
+            ],
+            [
+                "חייל",
+                "soldat"
+            ]
+        ],
+        "scene_title": "La base militaire de Tsahal (enrôlement)"
+    },
+    {
+        "id": 14,
+        "items_action": [
+            [
+                "להקליד",
+                "taper à l'ordinateur"
+            ],
+            [
+                "לשתות",
+                "boire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "מקלדת",
+                "clavier"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "מכונת קפה",
+                "machine à café"
+            ],
+            [
+                "אוזניות",
+                "casque audio"
+            ],
+            [
+                "כיסא",
+                "chaise de bureau"
+            ]
+        ],
+        "scene_title": "Le bureau open-space d'une start-up"
+    },
+    {
+        "id": 15,
+        "items_action": [
+            [
+                "לבשל",
+                "cuisiner"
+            ],
+            [
+                "לנקות",
+                "nettoyer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספה",
+                "canapé"
+            ],
+            [
+                "טלוויזיה",
+                "télévision"
+            ],
+            [
+                "מקרר",
+                "réfrigérateur"
+            ],
+            [
+                "צלחת",
+                "assiette"
+            ],
+            [
+                "מטאטא",
+                "balai"
+            ],
+            [
+                "שותף",
+                "colocataire"
+            ]
+        ],
+        "scene_title": "L'appartement en colocation (salon et cuisine)"
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "scene_title": "Le marché en plein air (Le Shouk)"
+    },
+    {
+        "id": 2,
+        "scene_title": "Le repas de Shabbat en famille"
+    },
+    {
+        "id": 3,
+        "scene_title": "Le stand de falafel et shawarma"
+    },
+    {
+        "id": 4,
+        "scene_title": "La plage animée de Tel-Aviv et ses joueurs de matkot"
+    },
+    {
+        "id": 5,
+        "scene_title": "Le supermarché"
+    },
+    {
+        "id": 6,
+        "scene_title": "L'Oulpan (classe d'hébreu)"
+    },
+    {
+        "id": 7,
+        "scene_title": "Le bureau de poste"
+    },
+    {
+        "id": 8,
+        "scene_title": "Le centre d'intégration (Merkaz Klita)"
+    },
+    {
+        "id": 9,
+        "scene_title": "L'arrêt de bus et la file d'attente"
+    },
+    {
+        "id": 10,
+        "scene_title": "La gare ferroviaire"
+    },
+    {
+        "id": 11,
+        "scene_title": "L'aéroport Ben Gourion (zone des départs)"
+    },
+    {
+        "id": 12,
+        "scene_title": "Le Mur des Lamentations (Kotel)"
+    },
+    {
+        "id": 13,
+        "scene_title": "La base militaire de Tsahal (enrôlement)"
+    },
+    {
+        "id": 14,
+        "scene_title": "Le bureau open-space d'une start-up"
+    },
+    {
+        "id": 15,
+        "scene_title": "L'appartement en colocation (salon et cuisine)"
+    }
+]

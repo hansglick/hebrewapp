@@ -7,6 +7,7 @@ export const getChapitre = (chapId) => fetchJson(`/api/chapitres/${chapId}`);
 export const getLecons = (chapId) => fetchJson(`/api/chapitres/${chapId}/lecons`);
 export const getLecon = (code) => fetchJson(`/api/lecons/${code}`);
 export const getLeconExploration = (code) => fetchJson(`/api/lecons/${code}/exploration`);
+export const getLeconScene = (code) => fetchJson(`/api/lecons/${code}/scene`);
 export const getTexte = (code) => fetchJson(`/api/textes/${code}`);
 
 export const getBinyans = () => fetchJson("/api/binyans");

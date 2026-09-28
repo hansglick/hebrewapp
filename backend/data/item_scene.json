@@ -1,0 +1,5102 @@
+{
+  "1": {
+    "scene_title": "Le marché en plein air (Le Shouk)",
+    "hotspots": [
+      {
+        "hebrew": "לשקול",
+        "french": "peser",
+        "box": [
+          0.469,
+          0.391,
+          0.879,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "לשלם",
+        "french": "payer",
+        "box": [
+          0.293,
+          0.488,
+          0.508,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "עגבניה",
+        "french": "tomate",
+        "box": [
+          0.508,
+          0.514,
+          0.664,
+          0.579
+        ]
+      },
+      {
+        "hebrew": "שקית",
+        "french": "sac",
+        "box": [
+          0.029,
+          0.703,
+          0.41,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "משקל",
+        "french": "balance",
+        "box": [
+          0.41,
+          0.391,
+          0.859,
+          0.69
+        ]
+      },
+      {
+        "hebrew": "מטבע",
+        "french": "pièce de monnaie",
+        "box": [
+          0.43,
+          0.521,
+          0.508,
+          0.566
+        ]
+      },
+      {
+        "hebrew": "מוכר",
+        "french": "vendeur",
+        "box": [
+          0.605,
+          0.247,
+          1.0,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "פרי",
+        "french": "fruit",
+        "box": [
+          0.225,
+          0.495,
+          0.449,
+          0.566
+        ]
+      }
+    ]
+  },
+  "2": {
+    "scene_title": "Le repas de Shabbat en famille",
+    "hotspots": [
+      {
+        "hebrew": "להדליק",
+        "french": "allumer",
+        "box": [
+          0.273,
+          0.469,
+          0.469,
+          0.573
+        ]
+      },
+      {
+        "hebrew": "למזוג",
+        "french": "verser",
+        "box": [
+          0.547,
+          0.423,
+          0.781,
+          0.54
+        ]
+      },
+      {
+        "hebrew": "נר",
+        "french": "bougie",
+        "box": [
+          0.322,
+          0.488,
+          0.508,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "יין",
+        "french": "vin",
+        "box": [
+          0.596,
+          0.443,
+          0.771,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "חלה",
+        "french": "pain de shabbat",
+        "box": [
+          0.41,
+          0.566,
+          0.781,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "כוס",
+        "french": "verre",
+        "box": [
+          0.571,
+          0.485,
+          0.64,
+          0.547
+        ]
+      },
+      {
+        "hebrew": "שולחן",
+        "french": "table",
+        "box": [
+          0.0,
+          0.508,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "מפה",
+        "french": "nappe",
+        "box": [
+          0.0,
+          0.521,
+          1.0,
+          0.846
+        ]
+      }
+    ]
+  },
+  "3": {
+    "scene_title": "Le stand de falafel et shawarma",
+    "hotspots": [
+      {
+        "hebrew": "לטגן",
+        "french": "frire",
+        "box": [
+          0.225,
+          0.566,
+          0.488,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "לארוז",
+        "french": "emballer",
+        "box": [
+          0.547,
+          0.586,
+          0.928,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "פיתה",
+        "french": "pain pita",
+        "box": [
+          0.508,
+          0.768,
+          0.879,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "חומוס",
+        "french": "houmous",
+        "box": [
+          0.146,
+          0.703,
+          0.322,
+          0.794
+        ]
+      },
+      {
+        "hebrew": "צ'יפס",
+        "french": "frites",
+        "box": [
+          0.059,
+          0.553,
+          0.41,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "סלט",
+        "french": "salade",
+        "box": [
+          0.332,
+          0.749,
+          0.547,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מפית",
+        "french": "serviette",
+        "box": [
+          0.469,
+          0.651,
+          0.664,
+          0.755
+        ]
+      },
+      {
+        "hebrew": "שיפוד",
+        "french": "broche",
+        "box": [
+          0.361,
+          0.117,
+          0.547,
+          0.553
+        ]
+      }
+    ]
+  },
+  "4": {
+    "scene_title": "La plage animée de Tel-Aviv et ses joueurs de matkot",
+    "hotspots": [
+      {
+        "hebrew": "לשחק",
+        "french": "jouer",
+        "box": [
+          0.059,
+          0.586,
+          0.391,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "לשחות",
+        "french": "nager",
+        "box": [
+          0.146,
+          0.312,
+          0.322,
+          0.377
+        ]
+      },
+      {
+        "hebrew": "מטקה",
+        "french": "raquette de plage",
+        "box": [
+          0.146,
+          0.618,
+          0.322,
+          0.736
+        ]
+      },
+      {
+        "hebrew": "כדור",
+        "french": "balle",
+        "box": [
+          0.479,
+          0.599,
+          0.547,
+          0.625
+        ]
+      },
+      {
+        "hebrew": "חול",
+        "french": "sable",
+        "box": [
+          0.0,
+          0.749,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "ים",
+        "french": "mer",
+        "box": [
+          0.0,
+          0.15,
+          1.0,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "שמשיה",
+        "french": "parasol",
+        "box": [
+          0.576,
+          0.286,
+          0.947,
+          0.527
+        ]
+      },
+      {
+        "hebrew": "מגבת",
+        "french": "serviette de plage",
+        "box": [
+          0.391,
+          0.501,
+          0.928,
+          0.618
+        ]
+      }
+    ]
+  },
+  "5": {
+    "scene_title": "Le supermarché",
+    "hotspots": [
+      {
+        "hebrew": "לדחוף",
+        "french": "pousser",
+        "box": [
+          0.225,
+          0.534,
+          0.391,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "לסרוק",
+        "french": "scanner",
+        "box": [
+          0.713,
+          0.443,
+          0.879,
+          0.553
+        ]
+      },
+      {
+        "hebrew": "עגלה",
+        "french": "chariot",
+        "box": [
+          0.039,
+          0.618,
+          0.371,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מדף",
+        "french": "rayon",
+        "box": [
+          0.0,
+          0.15,
+          0.547,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "קופה",
+        "french": "caisse",
+        "box": [
+          0.508,
+          0.417,
+          1.0,
+          0.833
+        ]
+      },
+      {
+        "hebrew": "ברקוד",
+        "french": "code-barres",
+        "box": [
+          0.713,
+          0.456,
+          0.859,
+          0.54
+        ]
+      },
+      {
+        "hebrew": "שקית",
+        "french": "sac en plastique",
+        "box": [
+          0.576,
+          0.703,
+          0.762,
+          0.833
+        ]
+      },
+      {
+        "hebrew": "קבלה",
+        "french": "reçu",
+        "box": [
+          0.83,
+          0.625,
+          0.977,
+          0.846
+        ]
+      }
+    ]
+  },
+  "6": {
+    "scene_title": "L'Oulpan (classe d'hébreu)",
+    "hotspots": [
+      {
+        "hebrew": "לכתוב",
+        "french": "écrire",
+        "box": [
+          0.127,
+          0.625,
+          0.527,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "לקרוא",
+        "french": "lire",
+        "box": [
+          0.566,
+          0.521,
+          0.947,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "לוח",
+        "french": "tableau",
+        "box": [
+          0.664,
+          0.176,
+          1.0,
+          0.384
+        ]
+      },
+      {
+        "hebrew": "מחברת",
+        "french": "cahier",
+        "box": [
+          0.322,
+          0.645,
+          0.527,
+          0.71
+        ]
+      },
+      {
+        "hebrew": "עט",
+        "french": "stylo",
+        "box": [
+          0.41,
+          0.638,
+          0.488,
+          0.677
+        ]
+      },
+      {
+        "hebrew": "ספר",
+        "french": "livre",
+        "box": [
+          0.566,
+          0.632,
+          0.879,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "מורה",
+        "french": "professeur",
+        "box": [
+          0.527,
+          0.234,
+          0.684,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "כיסא",
+        "french": "chaise",
+        "box": [
+          0.605,
+          0.684,
+          0.928,
+          0.911
+        ]
+      }
+    ]
+  },
+  "7": {
+    "scene_title": "Le bureau de poste",
+    "hotspots": [
+      {
+        "hebrew": "לשלוח",
+        "french": "envoyer",
+        "box": [
+          0.273,
+          0.391,
+          0.566,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "להחתים",
+        "french": "tamponner",
+        "box": [
+          0.488,
+          0.566,
+          0.664,
+          0.664
+        ]
+      },
+      {
+        "hebrew": "חבילה",
+        "french": "colis",
+        "box": [
+          0.254,
+          0.54,
+          0.488,
+          0.645
+        ]
+      },
+      {
+        "hebrew": "מעטפה",
+        "french": "enveloppe",
+        "box": [
+          0.391,
+          0.443,
+          0.547,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "בול",
+        "french": "timbre",
+        "box": [
+          0.449,
+          0.449,
+          0.518,
+          0.475
+        ]
+      },
+      {
+        "hebrew": "תיבת דואר",
+        "french": "boîte aux lettres",
+        "box": [
+          0.186,
+          0.671,
+          0.479,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "אשנב",
+        "french": "guichet",
+        "box": [
+          0.0,
+          0.586,
+          1.0,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "דוור",
+        "french": "facteur",
+        "box": [
+          0.732,
+          0.339,
+          1.0,
+          0.814
+        ]
+      }
+    ]
+  },
+  "8": {
+    "scene_title": "Le centre d'intégration (Merkaz Klita)",
+    "hotspots": [
+      {
+        "hebrew": "לשבת",
+        "french": "s'asseoir",
+        "box": [
+          0.059,
+          0.553,
+          0.488,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "למסור",
+        "french": "remettre",
+        "box": [
+          0.43,
+          0.566,
+          0.664,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "טופס",
+        "french": "formulaire",
+        "box": [
+          0.596,
+          0.573,
+          0.781,
+          0.638
+        ]
+      },
+      {
+        "hebrew": "דרכון",
+        "french": "passeport",
+        "box": [
+          0.459,
+          0.586,
+          0.605,
+          0.645
+        ]
+      },
+      {
+        "hebrew": "מזוודה",
+        "french": "valise",
+        "box": [
+          0.059,
+          0.768,
+          0.342,
+          0.977
+        ]
+      },
+      {
+        "hebrew": "משרד",
+        "french": "bureau",
+        "box": [
+          0.264,
+          0.553,
+          1.0,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "דגל",
+        "french": "drapeau",
+        "box": [
+          0.029,
+          0.039,
+          0.566,
+          0.326
+        ]
+      },
+      {
+        "hebrew": "עולה חדש",
+        "french": "nouvel immigrant",
+        "box": [
+          0.059,
+          0.404,
+          0.488,
+          0.879
+        ]
+      }
+    ]
+  },
+  "9": {
+    "scene_title": "L'arrêt de bus et la file d'attente",
+    "hotspots": [
+      {
+        "hebrew": "לחכות",
+        "french": "attendre",
+        "box": [
+          0.098,
+          0.534,
+          0.42,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "לעלות",
+        "french": "monter",
+        "box": [
+          0.586,
+          0.43,
+          0.879,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "אוטובוס",
+        "french": "bus",
+        "box": [
+          0.42,
+          0.221,
+          1.0,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "תחנה",
+        "french": "arrêt de bus",
+        "box": [
+          0.293,
+          0.286,
+          0.42,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "כרטיס",
+        "french": "carte de transport",
+        "box": [
+          0.752,
+          0.501,
+          0.849,
+          0.553
+        ]
+      },
+      {
+        "hebrew": "ספסל",
+        "french": "banc",
+        "box": [
+          0.029,
+          0.618,
+          0.41,
+          0.925
+        ]
+      },
+      {
+        "hebrew": "שלט",
+        "french": "panneau",
+        "box": [
+          0.293,
+          0.286,
+          0.42,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "נוסע",
+        "french": "passager",
+        "box": [
+          0.586,
+          0.43,
+          0.849,
+          0.814
+        ]
+      }
+    ]
+  },
+  "10": {
+    "scene_title": "La gare ferroviaire",
+    "hotspots": [
+      {
+        "hebrew": "לרדת",
+        "french": "descendre",
+        "box": [
+          0.176,
+          0.443,
+          0.449,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "לקנות",
+        "french": "acheter",
+        "box": [
+          0.586,
+          0.423,
+          0.928,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "רכבת",
+        "french": "train",
+        "box": [
+          0.0,
+          0.247,
+          0.449,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "רציף",
+        "french": "quai",
+        "box": [
+          0.0,
+          0.651,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "כרטיס",
+        "french": "billet",
+        "box": [
+          0.586,
+          0.521,
+          0.645,
+          0.56
+        ]
+      },
+      {
+        "hebrew": "שעון",
+        "french": "horloge",
+        "box": [
+          0.508,
+          0.026,
+          0.801,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "מכונה",
+        "french": "distributeur",
+        "box": [
+          0.771,
+          0.423,
+          1.0,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "מסילה",
+        "french": "rail",
+        "box": [
+          0.176,
+          0.749,
+          0.547,
+          0.911
+        ]
+      }
+    ]
+  },
+  "11": {
+    "scene_title": "L'aéroport Ben Gourion (zone des départs)",
+    "hotspots": [
+      {
+        "hebrew": "להראות",
+        "french": "montrer",
+        "box": [
+          0.586,
+          0.521,
+          0.781,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "להפקיד",
+        "french": "déposer",
+        "box": [
+          0.098,
+          0.618,
+          0.449,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מטוס",
+        "french": "avion",
+        "box": [
+          0.0,
+          0.215,
+          0.488,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "דרכון",
+        "french": "passeport",
+        "box": [
+          0.615,
+          0.566,
+          0.703,
+          0.632
+        ]
+      },
+      {
+        "hebrew": "עגלה",
+        "french": "chariot à bagages",
+        "box": [
+          0.039,
+          0.651,
+          0.449,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "מסך",
+        "french": "écran",
+        "box": [
+          0.537,
+          0.221,
+          0.781,
+          0.443
+        ]
+      },
+      {
+        "hebrew": "כרטיס טיסה",
+        "french": "billet d'avion",
+        "box": [
+          0.713,
+          0.573,
+          0.781,
+          0.625
+        ]
+      },
+      {
+        "hebrew": "מאבטח",
+        "french": "agent de sécurité",
+        "box": [
+          0.752,
+          0.475,
+          0.977,
+          0.911
+        ]
+      }
+    ]
+  },
+  "12": {
+    "scene_title": "Le Mur des Lamentations (Kotel)",
+    "hotspots": [
+      {
+        "hebrew": "להתפלל",
+        "french": "prier",
+        "box": [
+          0.381,
+          0.456,
+          0.977,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "לגעת",
+        "french": "toucher",
+        "box": [
+          0.146,
+          0.391,
+          0.42,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "כותל",
+        "french": "mur",
+        "box": [
+          0.0,
+          0.0,
+          0.811,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "פתק",
+        "french": "mot en papier",
+        "box": [
+          0.176,
+          0.443,
+          0.322,
+          0.534
+        ]
+      },
+      {
+        "hebrew": "סידור",
+        "french": "livre de prière",
+        "box": [
+          0.381,
+          0.618,
+          0.664,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "כיפה",
+        "french": "kippa",
+        "box": [
+          0.508,
+          0.319,
+          0.645,
+          0.378
+        ]
+      },
+      {
+        "hebrew": "אבן",
+        "french": "pierre",
+        "box": [
+          0.098,
+          0.391,
+          0.41,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "מתפלל",
+        "french": "fidèle",
+        "box": [
+          0.381,
+          0.319,
+          0.977,
+          1.0
+        ]
+      }
+    ]
+  },
+  "13": {
+    "scene_title": "La base militaire de Tsahal (enrôlement)",
+    "hotspots": [
+      {
+        "hebrew": "להצדיע",
+        "french": "saluer",
+        "box": [
+          0.586,
+          0.26,
+          0.801,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "ללבוש",
+        "french": "porter",
+        "box": [
+          0.107,
+          0.312,
+          0.547,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "מדים",
+        "french": "uniforme",
+        "box": [
+          0.166,
+          0.345,
+          0.488,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "נשק",
+        "french": "arme",
+        "box": [
+          0.215,
+          0.312,
+          0.42,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "כומתה",
+        "french": "béret",
+        "box": [
+          0.273,
+          0.221,
+          0.41,
+          0.28
+        ]
+      },
+      {
+        "hebrew": "נעליים",
+        "french": "bottes",
+        "box": [
+          0.244,
+          0.768,
+          0.449,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "קיטבג",
+        "french": "sac militaire",
+        "box": [
+          0.059,
+          0.514,
+          0.312,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "חייל",
+        "french": "soldat",
+        "box": [
+          0.557,
+          0.26,
+          0.898,
+          0.814
+        ]
+      }
+    ]
+  },
+  "14": {
+    "scene_title": "Le bureau open-space d'une start-up",
+    "hotspots": [
+      {
+        "hebrew": "להקליד",
+        "french": "taper à l'ordinateur",
+        "box": [
+          0.391,
+          0.664,
+          0.703,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "לשתות",
+        "french": "boire",
+        "box": [
+          0.596,
+          0.254,
+          0.859,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "מחשב",
+        "french": "ordinateur",
+        "box": [
+          0.469,
+          0.475,
+          0.811,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "מקלדת",
+        "french": "clavier",
+        "box": [
+          0.459,
+          0.664,
+          0.703,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "מסך",
+        "french": "écran",
+        "box": [
+          0.488,
+          0.488,
+          0.781,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "מכונת קפה",
+        "french": "machine à café",
+        "box": [
+          0.83,
+          0.365,
+          1.0,
+          0.566
+        ]
+      },
+      {
+        "hebrew": "אוזניות",
+        "french": "casque audio",
+        "box": [
+          0.215,
+          0.456,
+          0.332,
+          0.54
+        ]
+      },
+      {
+        "hebrew": "כיסא",
+        "french": "chaise de bureau",
+        "box": [
+          0.0,
+          0.488,
+          0.488,
+          1.0
+        ]
+      }
+    ]
+  },
+  "15": {
+    "scene_title": "L'appartement en colocation (salon et cuisine)",
+    "hotspots": [
+      {
+        "hebrew": "לבשל",
+        "french": "cuisiner",
+        "box": [
+          0.146,
+          0.423,
+          0.488,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "לנקות",
+        "french": "nettoyer",
+        "box": [
+          0.518,
+          0.326,
+          0.879,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "ספה",
+        "french": "canapé",
+        "box": [
+          0.713,
+          0.488,
+          1.0,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "טלוויזיה",
+        "french": "télévision",
+        "box": [
+          0.713,
+          0.254,
+          1.0,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "מקרר",
+        "french": "réfrigérateur",
+        "box": [
+          0.176,
+          0.26,
+          0.488,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "צלחת",
+        "french": "assiette",
+        "box": [
+          0.146,
+          0.651,
+          0.371,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "מטאטא",
+        "french": "balai",
+        "box": [
+          0.586,
+          0.391,
+          0.859,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "שותף",
+        "french": "colocataire",
+        "box": [
+          0.518,
+          0.326,
+          0.879,
+          0.781
+        ]
+      }
+    ]
+  },
+  "16": {
+    "scene_title": "La signature du contrat de location chez l'avocat",
+    "hotspots": [
+      {
+        "hebrew": "לחתום",
+        "french": "signer",
+        "box": [
+          0.449,
+          0.573,
+          0.664,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "לקרוא",
+        "french": "lire",
+        "box": [
+          0.039,
+          0.26,
+          0.488,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "חוזה",
+        "french": "contrat",
+        "box": [
+          0.273,
+          0.645,
+          0.664,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "עט",
+        "french": "stylo",
+        "box": [
+          0.479,
+          0.599,
+          0.605,
+          0.664
+        ]
+      },
+      {
+        "hebrew": "עורך דין",
+        "french": "avocat",
+        "box": [
+          0.039,
+          0.26,
+          0.488,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "שולחן",
+        "french": "bureau",
+        "box": [
+          0.0,
+          0.618,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מסמך",
+        "french": "document",
+        "box": [
+          0.771,
+          0.749,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "חותמת",
+        "french": "tampon",
+        "box": [
+          0.713,
+          0.703,
+          0.859,
+          0.794
+        ]
+      }
+    ]
+  },
+  "17": {
+    "scene_title": "La clinique médicale (Koupat Holim)",
+    "hotspots": [
+      {
+        "hebrew": "להמתין",
+        "french": "patienter",
+        "box": [
+          0.781,
+          0.352,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "לבדוק",
+        "french": "examiner",
+        "box": [
+          0.273,
+          0.319,
+          0.664,
+          0.534
+        ]
+      },
+      {
+        "hebrew": "רופא",
+        "french": "médecin",
+        "box": [
+          0.43,
+          0.254,
+          0.879,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "חולה",
+        "french": "patient",
+        "box": [
+          0.059,
+          0.273,
+          0.449,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "כרטיס",
+        "french": "carte",
+        "box": [
+          0.625,
+          0.684,
+          0.771,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "מסכה",
+        "french": "masque",
+        "box": [
+          0.527,
+          0.319,
+          0.664,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "כיסא",
+        "french": "chaise",
+        "box": [
+          0.039,
+          0.456,
+          0.391,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "סטטוסקופ",
+        "french": "stéthoscope",
+        "box": [
+          0.273,
+          0.326,
+          0.439,
+          0.508
+        ]
+      }
+    ]
+  },
+  "18": {
+    "scene_title": "La pharmacie",
+    "hotspots": [
+      {
+        "hebrew": "לשלם",
+        "french": "payer",
+        "box": [
+          0.576,
+          0.716,
+          0.781,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "לתת",
+        "french": "donner",
+        "box": [
+          0.439,
+          0.508,
+          0.635,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "תרופה",
+        "french": "médicament",
+        "box": [
+          0.469,
+          0.54,
+          0.732,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "רוקח",
+        "french": "pharmacien",
+        "box": [
+          0.059,
+          0.306,
+          0.547,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מרשם",
+        "french": "ordonnance",
+        "box": [
+          0.332,
+          0.605,
+          0.469,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "קופה",
+        "french": "caisse",
+        "box": [
+          0.098,
+          0.671,
+          0.488,
+          0.839
+        ]
+      },
+      {
+        "hebrew": "מדף",
+        "french": "étagère",
+        "box": [
+          0.0,
+          0.0,
+          0.605,
+          0.508
+        ]
+      },
+      {
+        "hebrew": "כדורים",
+        "french": "pilules",
+        "box": [
+          0.586,
+          0.54,
+          0.732,
+          0.618
+        ]
+      }
+    ]
+  },
+  "19": {
+    "scene_title": "La salle d'urgence de l'hôpital",
+    "hotspots": [
+      {
+        "hebrew": "לשכב",
+        "french": "s'allonger",
+        "box": [
+          0.059,
+          0.417,
+          0.41,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "לדחוף",
+        "french": "pousser",
+        "box": [
+          0.391,
+          0.553,
+          0.732,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "אלונקה",
+        "french": "brancard",
+        "box": [
+          0.576,
+          0.586,
+          1.0,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "אחות",
+        "french": "infirmière",
+        "box": [
+          0.391,
+          0.475,
+          0.605,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מיטה",
+        "french": "lit",
+        "box": [
+          0.059,
+          0.417,
+          0.41,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "אינפוזיה",
+        "french": "perfusion",
+        "box": [
+          0.195,
+          0.312,
+          0.293,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "כיסא גלגלים",
+        "french": "fauteuil roulant",
+        "box": [
+          0.801,
+          0.469,
+          1.0,
+          0.599
+        ]
+      },
+      {
+        "hebrew": "מוניטור",
+        "french": "moniteur",
+        "box": [
+          0.283,
+          0.391,
+          0.41,
+          0.508
+        ]
+      }
+    ]
+  },
+  "20": {
+    "scene_title": "Le centre commercial (Canyon)",
+    "hotspots": [
+      {
+        "hebrew": "לקנות",
+        "french": "acheter",
+        "box": [
+          0.527,
+          0.612,
+          0.801,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "למדוד",
+        "french": "essayer",
+        "box": [
+          0.273,
+          0.488,
+          0.547,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "חנות",
+        "french": "magasin",
+        "box": [
+          0.273,
+          0.456,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "שקית",
+        "french": "sac",
+        "box": [
+          0.684,
+          0.735,
+          0.879,
+          0.833
+        ]
+      },
+      {
+        "hebrew": "מדרגות נעות",
+        "french": "escalator",
+        "box": [
+          0.0,
+          0.098,
+          0.557,
+          0.488
+        ]
+      },
+      {
+        "hebrew": "חלון ראווה",
+        "french": "vitrine",
+        "box": [
+          0.586,
+          0.254,
+          1.0,
+          0.488
+        ]
+      },
+      {
+        "hebrew": "בגדים",
+        "french": "vêtements",
+        "box": [
+          0.586,
+          0.456,
+          1.0,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "כסף",
+        "french": "argent",
+        "box": [
+          0.664,
+          0.671,
+          0.781,
+          0.71
+        ]
+      }
+    ]
+  },
+  "21": {
+    "scene_title": "Le guichet de la banque",
+    "hotspots": [
+      {
+        "hebrew": "להפקיד",
+        "french": "déposer",
+        "box": [
+          0.225,
+          0.43,
+          0.547,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "למשוך",
+        "french": "retirer",
+        "box": [
+          0.684,
+          0.391,
+          0.977,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "פקיד",
+        "french": "employé",
+        "box": [
+          0.078,
+          0.423,
+          0.322,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "מזומן",
+        "french": "espèces",
+        "box": [
+          0.801,
+          0.521,
+          0.928,
+          0.573
+        ]
+      },
+      {
+        "hebrew": "כספומט",
+        "french": "distributeur",
+        "box": [
+          0.684,
+          0.352,
+          0.977,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "תור",
+        "french": "file d'attente",
+        "box": [
+          0.0,
+          0.54,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "מסך",
+        "french": "écran",
+        "box": [
+          0.781,
+          0.391,
+          0.938,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "צ'ק",
+        "french": "chèque",
+        "box": [
+          0.225,
+          0.521,
+          0.41,
+          0.566
+        ]
+      }
+    ]
+  },
+  "22": {
+    "scene_title": "Le commissariat de police",
+    "hotspots": [
+      {
+        "hebrew": "לעצור",
+        "french": "arrêter",
+        "box": [
+          0.586,
+          0.475,
+          0.977,
+          0.977
+        ]
+      },
+      {
+        "hebrew": "לחקור",
+        "french": "interroger",
+        "box": [
+          0.039,
+          0.534,
+          0.439,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "שוטר",
+        "french": "policier",
+        "box": [
+          0.039,
+          0.417,
+          0.439,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "אזיקים",
+        "french": "menottes",
+        "box": [
+          0.586,
+          0.625,
+          0.732,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "ניידת",
+        "french": "voiture de police",
+        "box": [
+          0.0,
+          0.221,
+          0.342,
+          0.365
+        ]
+      },
+      {
+        "hebrew": "תא",
+        "french": "cellule",
+        "box": [
+          0.625,
+          0.098,
+          1.0,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "נשק",
+        "french": "arme",
+        "box": [
+          0.098,
+          0.651,
+          0.215,
+          0.729
+        ]
+      },
+      {
+        "hebrew": "טופס",
+        "french": "formulaire",
+        "box": [
+          0.244,
+          0.645,
+          0.586,
+          0.716
+        ]
+      }
+    ]
+  },
+  "23": {
+    "scene_title": "La salle d'audience du tribunal",
+    "hotspots": [
+      {
+        "hebrew": "לשפוט",
+        "french": "juger",
+        "box": [
+          0.654,
+          0.319,
+          0.977,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "להעיד",
+        "french": "témoigner",
+        "box": [
+          0.127,
+          0.547,
+          0.449,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "שופט",
+        "french": "juge",
+        "box": [
+          0.684,
+          0.319,
+          1.0,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "פטיש",
+        "french": "marteau",
+        "box": [
+          0.654,
+          0.423,
+          0.781,
+          0.508
+        ]
+      },
+      {
+        "hebrew": "דוכן",
+        "french": "barre des témoins",
+        "box": [
+          0.127,
+          0.547,
+          0.449,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "קהל",
+        "french": "public",
+        "box": [
+          0.0,
+          0.254,
+          0.547,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "גלימה",
+        "french": "robe",
+        "box": [
+          0.713,
+          0.391,
+          0.977,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "סנגור",
+        "french": "avocat de la défense",
+        "box": [
+          0.273,
+          0.397,
+          0.547,
+          0.625
+        ]
+      }
+    ]
+  },
+  "24": {
+    "scene_title": "Le garage automobile (Mousakh)",
+    "hotspots": [
+      {
+        "hebrew": "לתקן",
+        "french": "réparer",
+        "box": [
+          0.391,
+          0.475,
+          0.762,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "להרים",
+        "french": "soulever",
+        "box": [
+          0.205,
+          0.156,
+          1.0,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "מוסכניק",
+        "french": "mécanicien",
+        "box": [
+          0.469,
+          0.43,
+          0.762,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "רכב",
+        "french": "voiture",
+        "box": [
+          0.205,
+          0.156,
+          1.0,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "גלגל",
+        "french": "roue",
+        "box": [
+          0.0,
+          0.671,
+          0.508,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "מנוע",
+        "french": "moteur",
+        "box": [
+          0.225,
+          0.475,
+          0.605,
+          0.632
+        ]
+      },
+      {
+        "hebrew": "כלי עבודה",
+        "french": "outils",
+        "box": [
+          0.146,
+          0.586,
+          0.488,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "שמן",
+        "french": "huile",
+        "box": [
+          0.02,
+          0.54,
+          0.186,
+          0.632
+        ]
+      }
+    ]
+  },
+  "25": {
+    "scene_title": "La station-service",
+    "hotspots": [
+      {
+        "hebrew": "לתדלק",
+        "french": "faire le plein",
+        "box": [
+          0.41,
+          0.521,
+          0.605,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "לנקות",
+        "french": "nettoyer",
+        "box": [
+          0.576,
+          0.417,
+          0.732,
+          0.534
+        ]
+      },
+      {
+        "hebrew": "דלק",
+        "french": "essence",
+        "box": [
+          0.264,
+          0.384,
+          0.391,
+          0.443
+        ]
+      },
+      {
+        "hebrew": "משאבה",
+        "french": "pompe",
+        "box": [
+          0.127,
+          0.26,
+          0.391,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "פיה",
+        "french": "pistolet",
+        "box": [
+          0.41,
+          0.521,
+          0.605,
+          0.599
+        ]
+      },
+      {
+        "hebrew": "מתדלק",
+        "french": "pompiste",
+        "box": [
+          0.332,
+          0.345,
+          0.605,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "פח",
+        "french": "poubelle",
+        "box": [
+          0.039,
+          0.586,
+          0.254,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "חלון",
+        "french": "vitre",
+        "box": [
+          0.576,
+          0.423,
+          0.732,
+          0.553
+        ]
+      }
+    ]
+  },
+  "26": {
+    "scene_title": "Le salon de coiffure",
+    "hotspots": [
+      {
+        "hebrew": "לגזור",
+        "french": "couper",
+        "box": [
+          0.322,
+          0.384,
+          0.547,
+          0.508
+        ]
+      },
+      {
+        "hebrew": "לחפוף",
+        "french": "laver",
+        "box": [
+          0.273,
+          0.423,
+          0.605,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "ספר",
+        "french": "coiffeur",
+        "box": [
+          0.078,
+          0.208,
+          0.684,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "מספריים",
+        "french": "ciseaux",
+        "box": [
+          0.322,
+          0.384,
+          0.449,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "מראה",
+        "french": "miroir",
+        "box": [
+          0.469,
+          0.085,
+          1.0,
+          0.638
+        ]
+      },
+      {
+        "hebrew": "מסרק",
+        "french": "peigne",
+        "box": [
+          0.41,
+          0.384,
+          0.547,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "שיער",
+        "french": "cheveux",
+        "box": [
+          0.273,
+          0.456,
+          0.605,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "פן",
+        "french": "sèche-cheveux",
+        "box": [
+          0.762,
+          0.645,
+          0.928,
+          0.749
+        ]
+      }
+    ]
+  },
+  "27": {
+    "scene_title": "La salle de sport",
+    "hotspots": [
+      {
+        "hebrew": "להתאמן",
+        "french": "s'entraîner",
+        "box": [
+          0.381,
+          0.254,
+          0.605,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "לרוץ",
+        "french": "courir",
+        "box": [
+          0.605,
+          0.339,
+          1.0,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "משקולות",
+        "french": "haltères",
+        "box": [
+          0.391,
+          0.286,
+          0.576,
+          0.345
+        ]
+      },
+      {
+        "hebrew": "הליכון",
+        "french": "tapis roulant",
+        "box": [
+          0.801,
+          0.475,
+          1.0,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "מגבת",
+        "french": "serviette",
+        "box": [
+          0.332,
+          0.573,
+          0.469,
+          0.625
+        ]
+      },
+      {
+        "hebrew": "מאמן",
+        "french": "coach",
+        "box": [
+          0.059,
+          0.312,
+          0.41,
+          0.964
+        ]
+      },
+      {
+        "hebrew": "בקבוק",
+        "french": "bouteille",
+        "box": [
+          0.459,
+          0.566,
+          0.527,
+          0.638
+        ]
+      },
+      {
+        "hebrew": "מזרן",
+        "french": "tapis",
+        "box": [
+          0.381,
+          0.807,
+          0.645,
+          0.898
+        ]
+      }
+    ]
+  },
+  "28": {
+    "scene_title": "Le parc public avec aire de jeux",
+    "hotspots": [
+      {
+        "hebrew": "לשחק",
+        "french": "jouer",
+        "box": [
+          0.098,
+          0.501,
+          0.488,
+          0.762
+        ]
+      },
+      {
+        "hebrew": "להתנדנד",
+        "french": "se balancer",
+        "box": [
+          0.322,
+          0.384,
+          0.625,
+          0.645
+        ]
+      },
+      {
+        "hebrew": "מגלשה",
+        "french": "toboggan",
+        "box": [
+          0.098,
+          0.501,
+          0.488,
+          0.762
+        ]
+      },
+      {
+        "hebrew": "נדנדה",
+        "french": "balançoire",
+        "box": [
+          0.273,
+          0.384,
+          0.625,
+          0.645
+        ]
+      },
+      {
+        "hebrew": "חול",
+        "french": "sable",
+        "box": [
+          0.0,
+          0.671,
+          0.83,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "ספסל",
+        "french": "banc",
+        "box": [
+          0.703,
+          0.553,
+          0.977,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "עץ",
+        "french": "arbre",
+        "box": [
+          0.625,
+          0.0,
+          1.0,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "ילד",
+        "french": "enfant",
+        "box": [
+          0.176,
+          0.521,
+          0.41,
+          0.736
+        ]
+      }
+    ]
+  },
+  "29": {
+    "scene_title": "Le barbecue de Yom Ha'atzmaout (Mangal)",
+    "hotspots": [
+      {
+        "hebrew": "לצלות",
+        "french": "griller",
+        "box": [
+          0.391,
+          0.521,
+          0.879,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "לנפנף",
+        "french": "éventer",
+        "box": [
+          0.146,
+          0.423,
+          0.41,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "מנגל",
+        "french": "barbecue",
+        "box": [
+          0.0,
+          0.605,
+          0.547,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "בשר",
+        "french": "viande",
+        "box": [
+          0.098,
+          0.625,
+          0.508,
+          0.69
+        ]
+      },
+      {
+        "hebrew": "פחמים",
+        "french": "charbon",
+        "box": [
+          0.0,
+          0.749,
+          0.293,
+          0.879
+        ]
+      },
+      {
+        "hebrew": "פיתה",
+        "french": "pita",
+        "box": [
+          0.449,
+          0.749,
+          0.762,
+          0.866
+        ]
+      },
+      {
+        "hebrew": "שיפוד",
+        "french": "brochette",
+        "box": [
+          0.195,
+          0.671,
+          0.449,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "מלקחיים",
+        "french": "pince",
+        "box": [
+          0.547,
+          0.553,
+          0.879,
+          0.651
+        ]
+      }
+    ]
+  },
+  "30": {
+    "scene_title": "La boulangerie-pâtisserie",
+    "hotspots": [
+      {
+        "hebrew": "לאפות",
+        "french": "cuire",
+        "box": [
+          0.059,
+          0.286,
+          0.391,
+          0.514
+        ]
+      },
+      {
+        "hebrew": "לארוז",
+        "french": "emballer",
+        "box": [
+          0.508,
+          0.436,
+          0.977,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "לחם",
+        "french": "pain",
+        "box": [
+          0.127,
+          0.618,
+          0.41,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "עוגה",
+        "french": "gâteau",
+        "box": [
+          0.625,
+          0.547,
+          0.811,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "מאפה",
+        "french": "pâtisserie",
+        "box": [
+          0.176,
+          0.417,
+          0.371,
+          0.508
+        ]
+      },
+      {
+        "hebrew": "אופה",
+        "french": "boulanger",
+        "box": [
+          0.273,
+          0.286,
+          0.547,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "תנור",
+        "french": "four",
+        "box": [
+          0.0,
+          0.124,
+          0.322,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "מגש",
+        "french": "plateau",
+        "box": [
+          0.059,
+          0.404,
+          0.371,
+          0.508
+        ]
+      }
+    ]
+  },
+  "31": {
+    "scene_title": "Le café de quartier",
+    "hotspots": [
+      {
+        "hebrew": "לשתות",
+        "french": "boire",
+        "box": [
+          0.146,
+          0.625,
+          0.547,
+          0.833
+        ]
+      },
+      {
+        "hebrew": "להזמין",
+        "french": "commander",
+        "box": [
+          0.488,
+          0.286,
+          0.977,
+          0.735
+        ]
+      },
+      {
+        "hebrew": "ספל",
+        "french": "tasse",
+        "box": [
+          0.332,
+          0.625,
+          0.449,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "עוגה",
+        "french": "gâteau",
+        "box": [
+          0.332,
+          0.749,
+          0.547,
+          0.833
+        ]
+      },
+      {
+        "hebrew": "מלצר",
+        "french": "serveur",
+        "box": [
+          0.752,
+          0.286,
+          0.977,
+          0.638
+        ]
+      },
+      {
+        "hebrew": "שולחן",
+        "french": "table",
+        "box": [
+          0.127,
+          0.749,
+          0.879,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "תפריט",
+        "french": "menu",
+        "box": [
+          0.625,
+          0.43,
+          0.762,
+          0.501
+        ]
+      },
+      {
+        "hebrew": "קופה",
+        "french": "caisse",
+        "box": [
+          0.811,
+          0.443,
+          1.0,
+          0.618
+        ]
+      }
+    ]
+  },
+  "32": {
+    "scene_title": "Le restaurant gastronomique",
+    "hotspots": [
+      {
+        "hebrew": "לטעום",
+        "french": "goûter",
+        "box": [
+          0.0,
+          0.651,
+          0.664,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "להגיש",
+        "french": "servir",
+        "box": [
+          0.547,
+          0.391,
+          0.859,
+          0.566
+        ]
+      },
+      {
+        "hebrew": "כוס יין",
+        "french": "verre de vin",
+        "box": [
+          0.83,
+          0.645,
+          0.967,
+          0.866
+        ]
+      },
+      {
+        "hebrew": "צלחת",
+        "french": "assiette",
+        "box": [
+          0.391,
+          0.762,
+          0.83,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "מזלג",
+        "french": "fourchette",
+        "box": [
+          0.547,
+          0.735,
+          0.664,
+          0.794
+        ]
+      },
+      {
+        "hebrew": "סכין",
+        "french": "couteau",
+        "box": [
+          0.391,
+          0.735,
+          0.547,
+          0.801
+        ]
+      },
+      {
+        "hebrew": "מפית",
+        "french": "serviette",
+        "box": [
+          0.0,
+          0.892,
+          0.322,
+          0.977
+        ]
+      },
+      {
+        "hebrew": "שף",
+        "french": "chef",
+        "box": [
+          0.566,
+          0.143,
+          0.859,
+          0.54
+        ]
+      }
+    ]
+  },
+  "33": {
+    "scene_title": "La salle de cinéma",
+    "hotspots": [
+      {
+        "hebrew": "לשבת",
+        "french": "s'asseoir",
+        "box": [
+          0.225,
+          0.475,
+          0.635,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "להקרין",
+        "french": "projeter",
+        "box": [
+          0.391,
+          0.195,
+          1.0,
+          0.488
+        ]
+      },
+      {
+        "hebrew": "מסך",
+        "french": "écran",
+        "box": [
+          0.684,
+          0.254,
+          1.0,
+          0.488
+        ]
+      },
+      {
+        "hebrew": "מושב",
+        "french": "siège",
+        "box": [
+          0.0,
+          0.553,
+          0.547,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "כרטיס",
+        "french": "billet",
+        "box": [
+          0.547,
+          0.625,
+          0.635,
+          0.677
+        ]
+      },
+      {
+        "hebrew": "פופקורן",
+        "french": "pop-corn",
+        "box": [
+          0.449,
+          0.605,
+          0.586,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "מקרן",
+        "french": "projecteur",
+        "box": [
+          0.098,
+          0.039,
+          0.439,
+          0.254
+        ]
+      },
+      {
+        "hebrew": "מעבר",
+        "french": "allée",
+        "box": [
+          0.762,
+          0.521,
+          0.879,
+          0.846
+        ]
+      }
+    ]
+  },
+  "34": {
+    "scene_title": "La scène du théâtre",
+    "hotspots": [
+      {
+        "hebrew": "לשחק",
+        "french": "jouer",
+        "box": [
+          0.322,
+          0.365,
+          0.703,
+          0.67
+        ]
+      },
+      {
+        "hebrew": "למחוא כפיים",
+        "french": "applaudir",
+        "box": [
+          0.0,
+          0.67,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "במה",
+        "french": "scène",
+        "box": [
+          0.146,
+          0.618,
+          0.849,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "וילון",
+        "french": "rideau",
+        "box": [
+          0.0,
+          0.0,
+          0.225,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "שחקן",
+        "french": "acteur",
+        "box": [
+          0.322,
+          0.365,
+          0.703,
+          0.67
+        ]
+      },
+      {
+        "hebrew": "תחפושת",
+        "french": "costume",
+        "box": [
+          0.371,
+          0.423,
+          0.664,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "זרקור",
+        "french": "projecteur",
+        "box": [
+          0.391,
+          0.117,
+          0.664,
+          0.365
+        ]
+      },
+      {
+        "hebrew": "קהל",
+        "french": "public",
+        "box": [
+          0.0,
+          0.67,
+          1.0,
+          1.0
+        ]
+      }
+    ]
+  },
+  "35": {
+    "scene_title": "Le musée d'art",
+    "hotspots": [
+      {
+        "hebrew": "להתבונן",
+        "french": "observer",
+        "box": [
+          0.596,
+          0.397,
+          0.762,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "לצלם",
+        "french": "photographier",
+        "box": [
+          0.381,
+          0.521,
+          0.586,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "ציור",
+        "french": "tableau",
+        "box": [
+          0.674,
+          0.091,
+          0.977,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "מסגרת",
+        "french": "cadre",
+        "box": [
+          0.674,
+          0.091,
+          0.977,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "פסל",
+        "french": "sculpture",
+        "box": [
+          0.059,
+          0.319,
+          0.322,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "תערוכה",
+        "french": "exposition",
+        "box": [
+          0.0,
+          0.339,
+          0.088,
+          0.508
+        ]
+      },
+      {
+        "hebrew": "שומר",
+        "french": "gardien",
+        "box": [
+          0.479,
+          0.397,
+          0.596,
+          0.632
+        ]
+      },
+      {
+        "hebrew": "מבקר",
+        "french": "visiteur",
+        "box": [
+          0.596,
+          0.397,
+          0.762,
+          0.768
+        ]
+      }
+    ]
+  },
+  "36": {
+    "scene_title": "La bibliothèque municipale",
+    "hotspots": [
+      {
+        "hebrew": "לקרוא",
+        "french": "lire",
+        "box": [
+          0.0,
+          0.599,
+          0.381,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "לשאול",
+        "french": "emprunter",
+        "box": [
+          0.625,
+          0.553,
+          0.781,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "ספר",
+        "french": "livre",
+        "box": [
+          0.146,
+          0.671,
+          0.381,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "מדף",
+        "french": "étagère",
+        "box": [
+          0.0,
+          0.221,
+          0.4,
+          0.67
+        ]
+      },
+      {
+        "hebrew": "ספרן",
+        "french": "bibliothécaire",
+        "box": [
+          0.625,
+          0.456,
+          0.781,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "שולחן עבודה",
+        "french": "bureau",
+        "box": [
+          0.625,
+          0.632,
+          1.0,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מחשב",
+        "french": "ordinateur",
+        "box": [
+          0.752,
+          0.514,
+          0.918,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "מנורת קריאה",
+        "french": "lampe de lecture",
+        "box": [
+          0.283,
+          0.566,
+          0.488,
+          0.762
+        ]
+      }
+    ]
+  },
+  "37": {
+    "scene_title": "Le campus universitaire",
+    "hotspots": [
+      {
+        "hebrew": "ללמוד",
+        "french": "étudier",
+        "box": [
+          0.098,
+          0.618,
+          0.635,
+          0.957
+        ]
+      },
+      {
+        "hebrew": "לכתוב",
+        "french": "écrire",
+        "box": [
+          0.322,
+          0.703,
+          0.605,
+          0.794
+        ]
+      },
+      {
+        "hebrew": "סטודנט",
+        "french": "étudiant",
+        "box": [
+          0.146,
+          0.618,
+          0.635,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "תיק גב",
+        "french": "sac à dos",
+        "box": [
+          0.146,
+          0.632,
+          0.312,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "מחברת",
+        "french": "cahier",
+        "box": [
+          0.322,
+          0.703,
+          0.605,
+          0.794
+        ]
+      },
+      {
+        "hebrew": "דשא",
+        "french": "pelouse",
+        "box": [
+          0.0,
+          0.586,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "אופניים",
+        "french": "vélo",
+        "box": [
+          0.02,
+          0.391,
+          0.557,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "מרצה",
+        "french": "professeur",
+        "box": [
+          0.645,
+          0.221,
+          0.928,
+          0.69
+        ]
+      }
+    ]
+  },
+  "38": {
+    "scene_title": "La ferme agricole dans le Golan",
+    "hotspots": [
+      {
+        "hebrew": "לקטוף",
+        "french": "cueillir",
+        "box": [
+          0.146,
+          0.423,
+          0.41,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "לנהוג",
+        "french": "conduire",
+        "box": [
+          0.518,
+          0.605,
+          0.781,
+          0.794
+        ]
+      },
+      {
+        "hebrew": "טרקטור",
+        "french": "tracteur",
+        "box": [
+          0.43,
+          0.605,
+          0.928,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "פרה",
+        "french": "vache",
+        "box": [
+          0.527,
+          0.488,
+          0.703,
+          0.573
+        ]
+      },
+      {
+        "hebrew": "עץ",
+        "french": "arbre",
+        "box": [
+          0.0,
+          0.0,
+          0.547,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "פרי",
+        "french": "fruit",
+        "box": [
+          0.225,
+          0.553,
+          0.41,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "חקלאי",
+        "french": "agriculteur",
+        "box": [
+          0.146,
+          0.377,
+          0.41,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "אסם",
+        "french": "grange",
+        "box": [
+          0.732,
+          0.43,
+          1.0,
+          0.703
+        ]
+      }
+    ]
+  },
+  "39": {
+    "scene_title": "L'avant-poste sur une colline",
+    "hotspots": [
+      {
+        "hebrew": "לשמור",
+        "french": "garder",
+        "box": [
+          0.322,
+          0.586,
+          0.449,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "לתצפת",
+        "french": "observer",
+        "box": [
+          0.352,
+          0.612,
+          0.42,
+          0.645
+        ]
+      },
+      {
+        "hebrew": "משקפת",
+        "french": "jumelles",
+        "box": [
+          0.352,
+          0.612,
+          0.42,
+          0.645
+        ]
+      },
+      {
+        "hebrew": "חייל",
+        "french": "soldat",
+        "box": [
+          0.322,
+          0.586,
+          0.449,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "אנטנה",
+        "french": "antenne",
+        "box": [
+          0.645,
+          0.039,
+          0.781,
+          0.443
+        ]
+      },
+      {
+        "hebrew": "גדר",
+        "french": "clôture",
+        "box": [
+          0.0,
+          0.488,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "דגל",
+        "french": "drapeau",
+        "box": [
+          0.391,
+          0.26,
+          0.566,
+          0.339
+        ]
+      },
+      {
+        "hebrew": "אוהל",
+        "french": "tente",
+        "box": [
+          0.547,
+          0.43,
+          1.0,
+          0.664
+        ]
+      }
+    ]
+  },
+  "40": {
+    "scene_title": "Le chantier de construction",
+    "hotspots": [
+      {
+        "hebrew": "לבנות",
+        "french": "construire",
+        "box": [
+          0.537,
+          0.553,
+          0.879,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "להרים",
+        "french": "soulever",
+        "box": [
+          0.469,
+          0.182,
+          0.703,
+          0.352
+        ]
+      },
+      {
+        "hebrew": "מנוף",
+        "french": "grue",
+        "box": [
+          0.762,
+          0.0,
+          1.0,
+          0.573
+        ]
+      },
+      {
+        "hebrew": "קסדה",
+        "french": "casque",
+        "box": [
+          0.596,
+          0.443,
+          0.684,
+          0.495
+        ]
+      },
+      {
+        "hebrew": "פועל",
+        "french": "ouvrier",
+        "box": [
+          0.586,
+          0.443,
+          0.879,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "לבנים",
+        "french": "briques",
+        "box": [
+          0.449,
+          0.566,
+          0.879,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מלט",
+        "french": "ciment",
+        "box": [
+          0.811,
+          0.651,
+          1.0,
+          0.801
+        ]
+      },
+      {
+        "hebrew": "דחפור",
+        "french": "bulldozer",
+        "box": [
+          0.0,
+          0.43,
+          0.469,
+          0.703
+        ]
+      }
+    ]
+  },
+  "41": {
+    "scene_title": "La réception de l'hôtel",
+    "hotspots": [
+      {
+        "hebrew": "לשלם",
+        "french": "payer",
+        "box": [
+          0.166,
+          0.488,
+          0.41,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "לסחוב",
+        "french": "porter",
+        "box": [
+          0.625,
+          0.553,
+          0.938,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מפתח",
+        "french": "clé",
+        "box": [
+          0.391,
+          0.475,
+          0.459,
+          0.534
+        ]
+      },
+      {
+        "hebrew": "מזוודה",
+        "french": "valise",
+        "box": [
+          0.625,
+          0.553,
+          0.781,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "פקיד קבלה",
+        "french": "réceptionniste",
+        "box": [
+          0.41,
+          0.391,
+          0.645,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "דלפק",
+        "french": "comptoir",
+        "box": [
+          0.166,
+          0.553,
+          0.645,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "סבל",
+        "french": "porteur",
+        "box": [
+          0.771,
+          0.423,
+          0.938,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מעלית",
+        "french": "ascenseur",
+        "box": [
+          0.684,
+          0.306,
+          0.928,
+          0.586
+        ]
+      }
+    ]
+  },
+  "42": {
+    "scene_title": "La piscine municipale",
+    "hotspots": [
+      {
+        "hebrew": "לשחות",
+        "french": "nager",
+        "box": [
+          0.557,
+          0.553,
+          0.977,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "לקפוץ",
+        "french": "sauter",
+        "box": [
+          0.107,
+          0.111,
+          0.488,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "מים",
+        "french": "eau",
+        "box": [
+          0.0,
+          0.26,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "בגד ים",
+        "french": "maillot de bain",
+        "box": [
+          0.244,
+          0.228,
+          0.41,
+          0.423
+        ]
+      },
+      {
+        "hebrew": "מגבת",
+        "french": "serviette",
+        "box": [
+          0.713,
+          0.319,
+          0.859,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "מציל",
+        "french": "maître-nageur",
+        "box": [
+          0.732,
+          0.195,
+          0.977,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "משרוקית",
+        "french": "sifflet",
+        "box": [
+          0.771,
+          0.26,
+          0.83,
+          0.299
+        ]
+      },
+      {
+        "hebrew": "מקפצה",
+        "french": "plongeoir",
+        "box": [
+          0.176,
+          0.625,
+          1.0,
+          0.794
+        ]
+      }
+    ]
+  },
+  "43": {
+    "scene_title": "Le parc zoologique",
+    "hotspots": [
+      {
+        "hebrew": "להאכיל",
+        "french": "nourrir",
+        "box": [
+          0.625,
+          0.586,
+          1.0,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "להצביע",
+        "french": "pointer",
+        "box": [
+          0.371,
+          0.553,
+          0.508,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "כלוב",
+        "french": "cage",
+        "box": [
+          0.596,
+          0.0,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "קוף",
+        "french": "singe",
+        "box": [
+          0.625,
+          0.618,
+          0.879,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "פיל",
+        "french": "éléphant",
+        "box": [
+          0.02,
+          0.319,
+          0.381,
+          0.566
+        ]
+      },
+      {
+        "hebrew": "שלט",
+        "french": "panneau",
+        "box": [
+          0.059,
+          0.651,
+          0.312,
+          0.755
+        ]
+      },
+      {
+        "hebrew": "גדר",
+        "french": "barrière",
+        "box": [
+          0.0,
+          0.436,
+          0.605,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "מטפל",
+        "french": "soigneur",
+        "box": [
+          0.781,
+          0.475,
+          1.0,
+          0.846
+        ]
+      }
+    ]
+  },
+  "44": {
+    "scene_title": "La boutique de vêtements",
+    "hotspots": [
+      {
+        "hebrew": "למדוד",
+        "french": "essayer",
+        "box": [
+          0.273,
+          0.365,
+          0.488,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "לקפל",
+        "french": "plier",
+        "box": [
+          0.645,
+          0.423,
+          0.879,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "חולצה",
+        "french": "chemise",
+        "box": [
+          0.273,
+          0.436,
+          0.488,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "מכנסיים",
+        "french": "pantalon",
+        "box": [
+          0.273,
+          0.651,
+          0.488,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מראה",
+        "french": "miroir",
+        "box": [
+          0.059,
+          0.319,
+          0.322,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "קולב",
+        "french": "cintre",
+        "box": [
+          0.762,
+          0.586,
+          0.957,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "תא מדידה",
+        "french": "cabine d'essayage",
+        "box": [
+          0.0,
+          0.039,
+          0.605,
+          0.365
+        ]
+      },
+      {
+        "hebrew": "מוכר",
+        "french": "vendeur",
+        "box": [
+          0.664,
+          0.365,
+          1.0,
+          0.846
+        ]
+      }
+    ]
+  },
+  "45": {
+    "scene_title": "La quincaillerie (magasin Tambour)",
+    "hotspots": [
+      {
+        "hebrew": "לקנות",
+        "french": "acheter",
+        "box": [
+          0.391,
+          0.365,
+          0.635,
+          0.488
+        ]
+      },
+      {
+        "hebrew": "להחזיק",
+        "french": "tenir",
+        "box": [
+          0.098,
+          0.586,
+          0.293,
+          0.67
+        ]
+      },
+      {
+        "hebrew": "פטיש",
+        "french": "marteau",
+        "box": [
+          0.518,
+          0.508,
+          0.732,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "מסמר",
+        "french": "clou",
+        "box": [
+          0.635,
+          0.553,
+          0.703,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "מברשת",
+        "french": "pinceau",
+        "box": [
+          0.098,
+          0.605,
+          0.293,
+          0.67
+        ]
+      },
+      {
+        "hebrew": "פח צבע",
+        "french": "pot de peinture",
+        "box": [
+          0.469,
+          0.384,
+          0.605,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "בורג",
+        "french": "vis",
+        "box": [
+          0.732,
+          0.618,
+          0.811,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "מברג",
+        "french": "tournevis",
+        "box": [
+          0.645,
+          0.586,
+          0.859,
+          0.638
+        ]
+      }
+    ]
+  },
+  "46": {
+    "scene_title": "Le magasin d'électronique",
+    "hotspots": [
+      {
+        "hebrew": "להדליק",
+        "french": "allumer",
+        "box": [
+          0.371,
+          0.488,
+          0.488,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "לבדוק",
+        "french": "tester",
+        "box": [
+          0.391,
+          0.456,
+          0.488,
+          0.534
+        ]
+      },
+      {
+        "hebrew": "מחשב",
+        "french": "ordinateur",
+        "box": [
+          0.742,
+          0.501,
+          1.0,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מסך",
+        "french": "écran",
+        "box": [
+          0.586,
+          0.085,
+          0.928,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "כבל",
+        "french": "câble",
+        "box": [
+          0.43,
+          0.566,
+          0.635,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "אוזניות",
+        "french": "écouteurs",
+        "box": [
+          0.508,
+          0.625,
+          0.723,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "טלוויזיה",
+        "french": "télévision",
+        "box": [
+          0.586,
+          0.085,
+          0.928,
+          0.469
+        ]
+      },
+      {
+        "hebrew": "טלפון חכם",
+        "french": "smartphone",
+        "box": [
+          0.41,
+          0.456,
+          0.488,
+          0.521
+        ]
+      }
+    ]
+  },
+  "47": {
+    "scene_title": "La pépinière (Mishtala)",
+    "hotspots": [
+      {
+        "hebrew": "להשקות",
+        "french": "arroser",
+        "box": [
+          0.654,
+          0.508,
+          0.938,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "לשתול",
+        "french": "planter",
+        "box": [
+          0.215,
+          0.553,
+          0.527,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "צמח",
+        "french": "plante",
+        "box": [
+          0.547,
+          0.15,
+          0.732,
+          0.273
+        ]
+      },
+      {
+        "hebrew": "עציץ",
+        "french": "pot",
+        "box": [
+          0.264,
+          0.684,
+          0.586,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "אדמה",
+        "french": "terre",
+        "box": [
+          0.283,
+          0.703,
+          0.547,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "כף",
+        "french": "pelle",
+        "box": [
+          0.273,
+          0.671,
+          0.41,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "פרח",
+        "french": "fleur",
+        "box": [
+          0.566,
+          0.605,
+          0.879,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "עץ",
+        "french": "arbre",
+        "box": [
+          0.332,
+          0.553,
+          0.488,
+          0.716
+        ]
+      }
+    ]
+  },
+  "48": {
+    "scene_title": "L'institut de beauté et manucure",
+    "hotspots": [
+      {
+        "hebrew": "לגזור",
+        "french": "couper",
+        "box": [
+          0.508,
+          0.488,
+          0.801,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "למרוח",
+        "french": "vernir",
+        "box": [
+          0.381,
+          0.488,
+          0.664,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "לק",
+        "french": "vernis à ongles",
+        "box": [
+          0.381,
+          0.645,
+          0.449,
+          0.71
+        ]
+      },
+      {
+        "hebrew": "פצירה",
+        "french": "lime à ongles",
+        "box": [
+          0.322,
+          0.71,
+          0.557,
+          0.755
+        ]
+      },
+      {
+        "hebrew": "מראה",
+        "french": "miroir",
+        "box": [
+          0.146,
+          0.547,
+          0.361,
+          0.729
+        ]
+      },
+      {
+        "hebrew": "מגבת",
+        "french": "serviette",
+        "box": [
+          0.273,
+          0.768,
+          0.605,
+          0.866
+        ]
+      },
+      {
+        "hebrew": "כורסה",
+        "french": "fauteuil",
+        "box": [
+          0.0,
+          0.319,
+          0.342,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "מספריים",
+        "french": "ciseaux",
+        "box": [
+          0.527,
+          0.488,
+          0.645,
+          0.566
+        ]
+      }
+    ]
+  },
+  "49": {
+    "scene_title": "Le cabinet du dentiste",
+    "hotspots": [
+      {
+        "hebrew": "לפתוח",
+        "french": "ouvrir",
+        "box": [
+          0.273,
+          0.391,
+          0.527,
+          0.495
+        ]
+      },
+      {
+        "hebrew": "לשטוף",
+        "french": "rincer",
+        "box": [
+          0.391,
+          0.365,
+          0.635,
+          0.488
+        ]
+      },
+      {
+        "hebrew": "כיסא",
+        "french": "fauteuil",
+        "box": [
+          0.078,
+          0.391,
+          0.684,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "מנורה",
+        "french": "lampe",
+        "box": [
+          0.146,
+          0.0,
+          0.508,
+          0.26
+        ]
+      },
+      {
+        "hebrew": "מסכה",
+        "french": "masque",
+        "box": [
+          0.586,
+          0.26,
+          0.752,
+          0.339
+        ]
+      },
+      {
+        "hebrew": "שן",
+        "french": "dent",
+        "box": [
+          0.381,
+          0.423,
+          0.449,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "מזרק",
+        "french": "seringue",
+        "box": [
+          0.449,
+          0.365,
+          0.605,
+          0.443
+        ]
+      },
+      {
+        "hebrew": "סינר",
+        "french": "bavoir",
+        "box": [
+          0.273,
+          0.488,
+          0.605,
+          0.651
+        ]
+      }
+    ]
+  },
+  "50": {
+    "scene_title": "La clinique vétérinaire",
+    "hotspots": [
+      {
+        "hebrew": "לבדוק",
+        "french": "examiner",
+        "box": [
+          0.225,
+          0.241,
+          0.439,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "לשקול",
+        "french": "peser",
+        "box": [
+          0.713,
+          0.377,
+          0.947,
+          0.671
+        ]
+      },
+      {
+        "hebrew": "כלב",
+        "french": "chien",
+        "box": [
+          0.098,
+          0.241,
+          0.439,
+          0.54
+        ]
+      },
+      {
+        "hebrew": "חתול",
+        "french": "chat",
+        "box": [
+          0.713,
+          0.521,
+          0.928,
+          0.671
+        ]
+      },
+      {
+        "hebrew": "סטטוסקופ",
+        "french": "stéthoscope",
+        "box": [
+          0.225,
+          0.384,
+          0.361,
+          0.443
+        ]
+      },
+      {
+        "hebrew": "כלוב",
+        "french": "cage",
+        "box": [
+          0.0,
+          0.586,
+          0.391,
+          0.866
+        ]
+      },
+      {
+        "hebrew": "משקל",
+        "french": "balance",
+        "box": [
+          0.625,
+          0.377,
+          0.947,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "רצועה",
+        "french": "laisse",
+        "box": [
+          0.479,
+          0.703,
+          0.762,
+          0.768
+        ]
+      }
+    ]
+  },
+  "51": {
+    "scene_title": "La manifestation dans la rue",
+    "hotspots": [
+      {
+        "hebrew": "לצעוק",
+        "french": "crier",
+        "box": [
+          0.176,
+          0.391,
+          0.645,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "להחזיק",
+        "french": "tenir",
+        "box": [
+          0.508,
+          0.182,
+          0.781,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "שלט",
+        "french": "pancarte",
+        "box": [
+          0.02,
+          0.111,
+          0.488,
+          0.365
+        ]
+      },
+      {
+        "hebrew": "דגל",
+        "french": "drapeau",
+        "box": [
+          0.508,
+          0.182,
+          0.781,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "מגפון",
+        "french": "mégaphone",
+        "box": [
+          0.449,
+          0.423,
+          0.645,
+          0.566
+        ]
+      },
+      {
+        "hebrew": "שוטר",
+        "french": "policier",
+        "box": [
+          0.752,
+          0.339,
+          0.977,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "קהל",
+        "french": "foule",
+        "box": [
+          0.0,
+          0.358,
+          0.664,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "מחסום",
+        "french": "barrière",
+        "box": [
+          0.654,
+          0.586,
+          1.0,
+          0.814
+        ]
+      }
+    ]
+  },
+  "52": {
+    "scene_title": "La station de taxis",
+    "hotspots": [
+      {
+        "hebrew": "לחכות",
+        "french": "attendre",
+        "box": [
+          0.146,
+          0.417,
+          0.41,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "לנהוג",
+        "french": "conduire",
+        "box": [
+          0.391,
+          0.456,
+          0.879,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "מונית",
+        "french": "taxi",
+        "box": [
+          0.391,
+          0.456,
+          1.0,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "נהג",
+        "french": "chauffeur",
+        "box": [
+          0.566,
+          0.488,
+          0.762,
+          0.618
+        ]
+      },
+      {
+        "hebrew": "נוסע",
+        "french": "passager",
+        "box": [
+          0.146,
+          0.417,
+          0.41,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "תמרור",
+        "french": "panneau",
+        "box": [
+          0.146,
+          0.182,
+          0.322,
+          0.299
+        ]
+      },
+      {
+        "hebrew": "מזוודה",
+        "french": "valise",
+        "box": [
+          0.283,
+          0.703,
+          0.547,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "כביש",
+        "french": "route",
+        "box": [
+          0.518,
+          0.365,
+          1.0,
+          0.456
+        ]
+      }
+    ]
+  },
+  "53": {
+    "scene_title": "Le bureau du ministère de l'Intérieur (Misrad Hapnim)",
+    "hotspots": [
+      {
+        "hebrew": "לחתום",
+        "french": "signer",
+        "box": [
+          0.381,
+          0.586,
+          0.635,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "לשבת",
+        "french": "s'asseoir",
+        "box": [
+          0.088,
+          0.397,
+          0.459,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "דרכון",
+        "french": "passeport",
+        "box": [
+          0.615,
+          0.508,
+          0.742,
+          0.566
+        ]
+      },
+      {
+        "hebrew": "תעודת זהות",
+        "french": "carte d'identité",
+        "box": [
+          0.752,
+          0.547,
+          0.849,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "טופס",
+        "french": "formulaire",
+        "box": [
+          0.381,
+          0.612,
+          0.635,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "פקיד",
+        "french": "employé",
+        "box": [
+          0.771,
+          0.286,
+          1.0,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "חותמת",
+        "french": "tampon",
+        "box": [
+          0.625,
+          0.488,
+          0.781,
+          0.553
+        ]
+      },
+      {
+        "hebrew": "חדר המתנה",
+        "french": "salle d'attente",
+        "box": [
+          0.0,
+          0.312,
+          0.42,
+          0.488
+        ]
+      }
+    ]
+  },
+  "54": {
+    "scene_title": "Le mariage juif sous la Houppa",
+    "hotspots": [
+      {
+        "hebrew": "לשבור",
+        "french": "casser",
+        "box": [
+          0.479,
+          0.814,
+          0.664,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "לשתות",
+        "french": "boire",
+        "box": [
+          0.459,
+          0.43,
+          0.605,
+          0.553
+        ]
+      },
+      {
+        "hebrew": "חופה",
+        "french": "dais",
+        "box": [
+          0.0,
+          0.0,
+          1.0,
+          0.215
+        ]
+      },
+      {
+        "hebrew": "כוס",
+        "french": "verre",
+        "box": [
+          0.459,
+          0.43,
+          0.586,
+          0.54
+        ]
+      },
+      {
+        "hebrew": "טבעת",
+        "french": "bague",
+        "box": [
+          0.596,
+          0.384,
+          0.703,
+          0.456
+        ]
+      },
+      {
+        "hebrew": "כלה",
+        "french": "mariée",
+        "box": [
+          0.43,
+          0.286,
+          0.762,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "חתן",
+        "french": "marié",
+        "box": [
+          0.273,
+          0.254,
+          0.605,
+          0.911
+        ]
+      },
+      {
+        "hebrew": "רב",
+        "french": "rabbin",
+        "box": [
+          0.752,
+          0.26,
+          0.977,
+          0.846
+        ]
+      }
+    ]
+  },
+  "55": {
+    "scene_title": "L'intérieur de la synagogue",
+    "hotspots": [
+      {
+        "hebrew": "להתפלל",
+        "french": "prier",
+        "box": [
+          0.488,
+          0.26,
+          0.928,
+          0.879
+        ]
+      },
+      {
+        "hebrew": "לקרוא",
+        "french": "lire",
+        "box": [
+          0.488,
+          0.618,
+          0.928,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "ספר תורה",
+        "french": "rouleau de la Torah",
+        "box": [
+          0.039,
+          0.651,
+          0.977,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "סידור",
+        "french": "livre de prières",
+        "box": [
+          0.039,
+          0.586,
+          0.293,
+          0.671
+        ]
+      },
+      {
+        "hebrew": "כיפה",
+        "french": "kippa",
+        "box": [
+          0.576,
+          0.26,
+          0.684,
+          0.306
+        ]
+      },
+      {
+        "hebrew": "טלית",
+        "french": "châle de prière",
+        "box": [
+          0.488,
+          0.391,
+          0.928,
+          0.716
+        ]
+      },
+      {
+        "hebrew": "במה",
+        "french": "estrade",
+        "box": [
+          0.0,
+          0.618,
+          1.0,
+          0.879
+        ]
+      },
+      {
+        "hebrew": "ארון קודש",
+        "french": "arche sainte",
+        "box": [
+          0.586,
+          0.0,
+          1.0,
+          0.651
+        ]
+      }
+    ]
+  },
+  "56": {
+    "scene_title": "Le magasin de meubles",
+    "hotspots": [
+      {
+        "hebrew": "להרכיב",
+        "french": "assembler",
+        "box": [
+          0.391,
+          0.15,
+          0.586,
+          0.436
+        ]
+      },
+      {
+        "hebrew": "למדוד",
+        "french": "mesurer",
+        "box": [
+          0.586,
+          0.456,
+          0.977,
+          0.684
+        ]
+      },
+      {
+        "hebrew": "ספה",
+        "french": "canapé",
+        "box": [
+          0.02,
+          0.586,
+          0.684,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "מיטה",
+        "french": "lit",
+        "box": [
+          0.0,
+          0.312,
+          0.449,
+          0.599
+        ]
+      },
+      {
+        "hebrew": "שולחן",
+        "french": "table",
+        "box": [
+          0.469,
+          0.488,
+          1.0,
+          0.768
+        ]
+      },
+      {
+        "hebrew": "כיסא",
+        "french": "chaise",
+        "box": [
+          0.0,
+          0.475,
+          0.176,
+          0.658
+        ]
+      },
+      {
+        "hebrew": "ארון",
+        "french": "armoire",
+        "box": [
+          0.098,
+          0.098,
+          0.479,
+          0.436
+        ]
+      },
+      {
+        "hebrew": "שטיח",
+        "french": "tapis",
+        "box": [
+          0.586,
+          0.768,
+          1.0,
+          0.977
+        ]
+      }
+    ]
+  },
+  "57": {
+    "scene_title": "L'agence immobilière",
+    "hotspots": [
+      {
+        "hebrew": "להראות",
+        "french": "montrer",
+        "box": [
+          0.43,
+          0.449,
+          0.801,
+          0.664
+        ]
+      },
+      {
+        "hebrew": "לחתום",
+        "french": "signer",
+        "box": [
+          0.391,
+          0.684,
+          0.762,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "חוזה",
+        "french": "contrat",
+        "box": [
+          0.391,
+          0.684,
+          0.762,
+          0.781
+        ]
+      },
+      {
+        "hebrew": "מפתח",
+        "french": "clé",
+        "box": [
+          0.43,
+          0.449,
+          0.576,
+          0.521
+        ]
+      },
+      {
+        "hebrew": "בית",
+        "french": "maison",
+        "box": [
+          0.479,
+          0.54,
+          0.801,
+          0.664
+        ]
+      },
+      {
+        "hebrew": "דגם",
+        "french": "maquette",
+        "box": [
+          0.479,
+          0.54,
+          0.801,
+          0.664
+        ]
+      },
+      {
+        "hebrew": "סוכן",
+        "french": "agent",
+        "box": [
+          0.586,
+          0.254,
+          1.0,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "עט",
+        "french": "stylo",
+        "box": [
+          0.469,
+          0.703,
+          0.605,
+          0.762
+        ]
+      }
+    ]
+  },
+  "58": {
+    "scene_title": "Le studio d'enregistrement",
+    "hotspots": [
+      {
+        "hebrew": "לשיר",
+        "french": "chanter",
+        "box": [
+          0.391,
+          0.605,
+          0.957,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "להקליט",
+        "french": "enregistrer",
+        "box": [
+          0.127,
+          0.182,
+          0.928,
+          0.586
+        ]
+      },
+      {
+        "hebrew": "מיקרופון",
+        "french": "microphone",
+        "box": [
+          0.586,
+          0.605,
+          0.957,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "אוזניות",
+        "french": "casque",
+        "box": [
+          0.4,
+          0.521,
+          0.566,
+          0.625
+        ]
+      },
+      {
+        "hebrew": "מחשב",
+        "french": "ordinateur",
+        "box": [
+          0.332,
+          0.345,
+          0.645,
+          0.43
+        ]
+      },
+      {
+        "hebrew": "זכוכית",
+        "french": "vitre",
+        "box": [
+          0.059,
+          0.02,
+          0.684,
+          0.495
+        ]
+      },
+      {
+        "hebrew": "כלי נגינה",
+        "french": "instrument",
+        "box": [
+          0.176,
+          0.703,
+          0.732,
+          0.944
+        ]
+      },
+      {
+        "hebrew": "כבל",
+        "french": "câble",
+        "box": [
+          0.713,
+          0.039,
+          0.859,
+          0.326
+        ]
+      }
+    ]
+  },
+  "59": {
+    "scene_title": "Le port de plaisance (Marina)",
+    "hotspots": [
+      {
+        "hebrew": "להפליג",
+        "french": "naviguer",
+        "box": [
+          0.449,
+          0.039,
+          1.0,
+          0.43
+        ]
+      },
+      {
+        "hebrew": "לקשור",
+        "french": "attacher",
+        "box": [
+          0.078,
+          0.625,
+          0.439,
+          0.846
+        ]
+      },
+      {
+        "hebrew": "סירה",
+        "french": "bateau",
+        "box": [
+          0.508,
+          0.625,
+          0.928,
+          0.801
+        ]
+      },
+      {
+        "hebrew": "יאכטה",
+        "french": "yacht",
+        "box": [
+          0.449,
+          0.039,
+          1.0,
+          0.43
+        ]
+      },
+      {
+        "hebrew": "חבל",
+        "french": "corde",
+        "box": [
+          0.225,
+          0.625,
+          0.391,
+          0.749
+        ]
+      },
+      {
+        "hebrew": "עוגן",
+        "french": "ancre",
+        "box": [
+          0.449,
+          0.339,
+          0.547,
+          0.404
+        ]
+      },
+      {
+        "hebrew": "מים",
+        "french": "eau",
+        "box": [
+          0.0,
+          0.43,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "hebrew": "מזח",
+        "french": "quai",
+        "box": [
+          0.0,
+          0.423,
+          0.664,
+          0.651
+        ]
+      }
+    ]
+  },
+  "60": {
+    "scene_title": "La laverie automatique",
+    "hotspots": [
+      {
+        "hebrew": "לקפל",
+        "french": "plier",
+        "box": [
+          0.645,
+          0.391,
+          0.879,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "להכניס",
+        "french": "insérer",
+        "box": [
+          0.273,
+          0.586,
+          0.449,
+          0.671
+        ]
+      },
+      {
+        "hebrew": "מכונת כביסה",
+        "french": "machine à laver",
+        "box": [
+          0.0,
+          0.488,
+          0.439,
+          0.814
+        ]
+      },
+      {
+        "hebrew": "מייבש",
+        "french": "sèche-linge",
+        "box": [
+          0.732,
+          0.221,
+          1.0,
+          0.651
+        ]
+      },
+      {
+        "hebrew": "סל",
+        "french": "panier",
+        "box": [
+          0.811,
+          0.553,
+          1.0,
+          0.703
+        ]
+      },
+      {
+        "hebrew": "סבון",
+        "french": "lessive",
+        "box": [
+          0.283,
+          0.586,
+          0.449,
+          0.671
+        ]
+      },
+      {
+        "hebrew": "מטבע",
+        "french": "pièce",
+        "box": [
+          0.273,
+          0.599,
+          0.332,
+          0.638
+        ]
+      },
+      {
+        "hebrew": "בגדים",
+        "french": "vêtements",
+        "box": [
+          0.771,
+          0.488,
+          0.879,
+          0.566
+        ]
+      }
+    ]
+  }
+}

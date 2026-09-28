@@ -1,0 +1,617 @@
+[
+    {
+        "id": 1,
+        "items_action": [
+            [
+                "לשקול",
+                "peser"
+            ],
+            [
+                "לשלם",
+                "payer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "עגבניה",
+                "tomate"
+            ],
+            [
+                "שקית",
+                "sac"
+            ],
+            [
+                "משקל",
+                "balance"
+            ],
+            [
+                "מטבע",
+                "pièce de monnaie"
+            ],
+            [
+                "מוכר",
+                "vendeur"
+            ],
+            [
+                "פרי",
+                "fruit"
+            ]
+        ],
+        "scene_title": "Le marché en plein air (Le Shouk)",
+        "prompt": "A lively outdoor market scene where a seller is weighing fresh tomatoes and assorted fruit on a scale, while a customer holding a reusable bag is paying by handing a coin to the seller. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 2,
+        "items_action": [
+            [
+                "להדליק",
+                "allumer"
+            ],
+            [
+                "למזוג",
+                "verser"
+            ]
+        ],
+        "items_elements": [
+            [
+                "נר",
+                "bougie"
+            ],
+            [
+                "יין",
+                "vin"
+            ],
+            [
+                "חלה",
+                "pain de shabbat"
+            ],
+            [
+                "כוס",
+                "verre"
+            ],
+            [
+                "שולחן",
+                "table"
+            ],
+            [
+                "מפה",
+                "nappe"
+            ]
+        ],
+        "scene_title": "Le repas de Shabbat en famille",
+        "prompt": "A warm family gathering around a table covered with a white tablecloth for the Shabbat meal, where one person is lighting a candle and another is pouring wine into a glass next to a braided challah bread. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 3,
+        "items_action": [
+            [
+                "לטגן",
+                "frire"
+            ],
+            [
+                "לארוז",
+                "emballer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "פיתה",
+                "pain pita"
+            ],
+            [
+                "חומוס",
+                "houmous"
+            ],
+            [
+                "צ'יפס",
+                "frites"
+            ],
+            [
+                "סלט",
+                "salade"
+            ],
+            [
+                "מפית",
+                "serviette"
+            ],
+            [
+                "שיפוד",
+                "broche"
+            ]
+        ],
+        "scene_title": "Le stand de falafel et shawarma",
+        "prompt": "A bustling street food stand featuring a large rotating meat skewer on a spit, where a cook is frying french fries and wrapping a pita bread filled with hummus and salad in a paper napkin. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 4,
+        "items_action": [
+            [
+                "לשחק",
+                "jouer"
+            ],
+            [
+                "לשחות",
+                "nager"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מטקה",
+                "raquette de plage"
+            ],
+            [
+                "כדור",
+                "balle"
+            ],
+            [
+                "חול",
+                "sable"
+            ],
+            [
+                "ים",
+                "mer"
+            ],
+            [
+                "שמשיה",
+                "parasol"
+            ],
+            [
+                "מגבת",
+                "serviette de plage"
+            ]
+        ],
+        "scene_title": "La plage animée de Tel-Aviv et ses joueurs de matkot",
+        "prompt": "A vibrant beach scene on the sand near the sea, where two people are playing with a beach racket and a small ball, while someone else swims in the water near a beach towel and a beach umbrella. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 5,
+        "items_action": [
+            [
+                "לדחוף",
+                "pousser"
+            ],
+            [
+                "לסרוק",
+                "scanner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "עגלה",
+                "chariot"
+            ],
+            [
+                "מדף",
+                "rayon"
+            ],
+            [
+                "קופה",
+                "caisse"
+            ],
+            [
+                "ברקוד",
+                "code-barres"
+            ],
+            [
+                "שקית",
+                "sac en plastique"
+            ],
+            [
+                "קבלה",
+                "reçu"
+            ]
+        ],
+        "scene_title": "Le supermarché",
+        "prompt": "A supermarket setting where a customer pushes a shopping cart down an aisle lined with a fully stocked shelf, while a cashier scans a barcode on an item at the checkout, next to a plastic bag and a receipt. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 6,
+        "items_action": [
+            [
+                "לכתוב",
+                "écrire"
+            ],
+            [
+                "לקרוא",
+                "lire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "לוח",
+                "tableau"
+            ],
+            [
+                "מחברת",
+                "cahier"
+            ],
+            [
+                "עט",
+                "stylo"
+            ],
+            [
+                "ספר",
+                "livre"
+            ],
+            [
+                "מורה",
+                "professeur"
+            ],
+            [
+                "כיסא",
+                "chaise"
+            ]
+        ],
+        "scene_title": "L'Oulpan (classe d'hébreu)",
+        "prompt": "A classroom environment where a teacher stands near a large board, while a student sitting on a chair writes in a notebook with a pen, and another student reads a book. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 7,
+        "items_action": [
+            [
+                "לשלוח",
+                "envoyer"
+            ],
+            [
+                "להחתים",
+                "tamponner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חבילה",
+                "colis"
+            ],
+            [
+                "מעטפה",
+                "enveloppe"
+            ],
+            [
+                "בול",
+                "timbre"
+            ],
+            [
+                "תיבת דואר",
+                "boîte aux lettres"
+            ],
+            [
+                "אשנב",
+                "guichet"
+            ],
+            [
+                "דוור",
+                "facteur"
+            ]
+        ],
+        "scene_title": "Le bureau de poste",
+        "prompt": "Inside a post office, a customer at the counter is sending a parcel and an envelope with a postage stamp, while a clerk stamps a document next to a traditional mailbox and a postman. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 8,
+        "items_action": [
+            [
+                "לשבת",
+                "s'asseoir"
+            ],
+            [
+                "למסור",
+                "remettre"
+            ]
+        ],
+        "items_elements": [
+            [
+                "טופס",
+                "formulaire"
+            ],
+            [
+                "דרכון",
+                "passeport"
+            ],
+            [
+                "מזוודה",
+                "valise"
+            ],
+            [
+                "משרד",
+                "bureau"
+            ],
+            [
+                "דגל",
+                "drapeau"
+            ],
+            [
+                "עולה חדש",
+                "nouvel immigrant"
+            ]
+        ],
+        "scene_title": "Le centre d'intégration (Merkaz Klita)",
+        "prompt": "In an office decorated with a flag, a new immigrant sits down with a suitcase and hands over a passport and a printed form to an integration clerk sitting across the desk. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 9,
+        "items_action": [
+            [
+                "לחכות",
+                "attendre"
+            ],
+            [
+                "לעלות",
+                "monter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "אוטובוס",
+                "bus"
+            ],
+            [
+                "תחנה",
+                "arrêt de bus"
+            ],
+            [
+                "כרטיס",
+                "carte de transport"
+            ],
+            [
+                "ספסל",
+                "banc"
+            ],
+            [
+                "שלט",
+                "panneau"
+            ],
+            [
+                "נוסע",
+                "passager"
+            ]
+        ],
+        "scene_title": "L'arrêt de bus et la file d'attente",
+        "prompt": "At a bus stop marked by a sign, a passenger waits patiently on a bench while another person boards an arriving bus, holding a transport card in their hand. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 10,
+        "items_action": [
+            [
+                "לרדת",
+                "descendre"
+            ],
+            [
+                "לקנות",
+                "acheter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "רכבת",
+                "train"
+            ],
+            [
+                "רציף",
+                "quai"
+            ],
+            [
+                "כרטיס",
+                "billet"
+            ],
+            [
+                "שעון",
+                "horloge"
+            ],
+            [
+                "מכונה",
+                "distributeur"
+            ],
+            [
+                "מסילה",
+                "rail"
+            ]
+        ],
+        "scene_title": "La gare ferroviaire",
+        "prompt": "On a busy train platform featuring a large clock and a railway track, a passenger gets off a newly arrived train while another person buys a ticket from an automated vending machine. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 11,
+        "items_action": [
+            [
+                "להראות",
+                "montrer"
+            ],
+            [
+                "להפקיד",
+                "déposer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מטוס",
+                "avion"
+            ],
+            [
+                "דרכון",
+                "passeport"
+            ],
+            [
+                "עגלה",
+                "chariot à bagages"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "כרטיס טיסה",
+                "billet d'avion"
+            ],
+            [
+                "מאבטח",
+                "agent de sécurité"
+            ]
+        ],
+        "scene_title": "L'aéroport Ben Gourion (zone des départs)",
+        "prompt": "In an airport departure hall with a large screen and an airplane visible through the window, a traveler shows their passport and flight ticket to a security guard, while another passenger drops off their bags onto a luggage cart. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 12,
+        "items_action": [
+            [
+                "להתפלל",
+                "prier"
+            ],
+            [
+                "לגעת",
+                "toucher"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כותל",
+                "mur"
+            ],
+            [
+                "פתק",
+                "mot en papier"
+            ],
+            [
+                "סידור",
+                "livre de prière"
+            ],
+            [
+                "כיפה",
+                "kippa"
+            ],
+            [
+                "אבן",
+                "pierre"
+            ],
+            [
+                "מתפלל",
+                "fidèle"
+            ]
+        ],
+        "scene_title": "Le Mur des Lamentations (Kotel)",
+        "prompt": "A worshipper wearing a kippah prays intensely while holding a prayer book near a massive ancient stone wall, gently touching the stone to place a small folded paper note into its crevices. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 13,
+        "items_action": [
+            [
+                "להצדיע",
+                "saluer"
+            ],
+            [
+                "ללבוש",
+                "porter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מדים",
+                "uniforme"
+            ],
+            [
+                "נשק",
+                "arme"
+            ],
+            [
+                "כומתה",
+                "béret"
+            ],
+            [
+                "נעליים",
+                "bottes"
+            ],
+            [
+                "קיטבג",
+                "sac militaire"
+            ],
+            [
+                "חייל",
+                "soldat"
+            ]
+        ],
+        "scene_title": "La base militaire de Tsahal (enrôlement)",
+        "prompt": "A proud young soldier wearing a neat military uniform, sturdy boots, and a beret salutes their commanding officer while carrying a heavy military bag and a secured weapon on a strap. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 14,
+        "items_action": [
+            [
+                "להקליד",
+                "taper à l'ordinateur"
+            ],
+            [
+                "לשתות",
+                "boire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "מקלדת",
+                "clavier"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "מכונת קפה",
+                "machine à café"
+            ],
+            [
+                "אוזניות",
+                "casque audio"
+            ],
+            [
+                "כיסא",
+                "chaise de bureau"
+            ]
+        ],
+        "scene_title": "Le bureau open-space d'une start-up",
+        "prompt": "In a modern open-space office, an employee sitting on an office chair with headphones types on a keyboard in front of a computer screen, while a coworker drinks from a mug next to a coffee machine. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 15,
+        "items_action": [
+            [
+                "לבשל",
+                "cuisiner"
+            ],
+            [
+                "לנקות",
+                "nettoyer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספה",
+                "canapé"
+            ],
+            [
+                "טלוויזיה",
+                "télévision"
+            ],
+            [
+                "מקרר",
+                "réfrigérateur"
+            ],
+            [
+                "צלחת",
+                "assiette"
+            ],
+            [
+                "מטאטא",
+                "balai"
+            ],
+            [
+                "שותף",
+                "colocataire"
+            ]
+        ],
+        "scene_title": "L'appartement en colocation (salon et cuisine)",
+        "prompt": "Inside a shared apartment, one roommate cooks in the kitchen near a refrigerator while holding a plate, and the other roommate cleans the floor with a broom in the living room near a sofa and a television. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    }
+]

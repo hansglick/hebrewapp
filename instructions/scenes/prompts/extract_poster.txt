@@ -1,0 +1,15 @@
+
+Tu es concepteur pédagogique spécialisé dans l'apprentissage de l'hébreu moderne pour adultes.
+Génère 60 scènes différentes qui permettront d'apprendre du vocabulaire dans un contexte spécifique.
+Chaque scène doit correspondre à un environnement ou une situation facilement représentable dans UNE SEULE ILLUSTRATION.
+
+# CONTRAINTES
+
+Les 60 scènes doivent :
+ - être diversifiées et tirées de la vie quotidienne, logement, alimentation et courses, transports, santé, administration et démarches, travail, études, famille, vie sociale, loisirs, situations d'urgence, services, vie dans l'espace public, culture et habitudes locales. N"hésite pas à imaginer des scènes plus spécifiques à la vie en Israël comme : shouk, repas de shabbat, enrôlement dans Tsahal, la startup de Tel-Aviv, l'avant poste sur une colline, le stand de fallafel, la plage et ses joueurs de racketball, le barbecue sur la plage, le canyon (centre commercial), le centre d'intégration pour nouveaux immigrants (absorbtion center), le Kotel, une ferme dans le Golan, etc. Ne te limite cependant PAS aux exemples ci-dessus : trouve toi-même d'autres scènes pertinentes et authentiques.
+ - être uniques : chaque nouvelle scène doit apporter un champ lexical substantiellement différent. Evite les scènes trop similaire comme supermarché et épicerie.
+ - être visualisables ou illustrables : on doit pouvoir générer l'illustration cette scène et qu'elle soit facilement identifiable.
+
+
+
+

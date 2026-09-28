@@ -1,0 +1,17 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "id": {
+            "type": "int",
+            "description": "La copie de l'identifiant de la scène"
+        },        
+        "items_action": {
+            "type": "list[list[str]]",
+            "description": "une liste de longueur 6 de sous-listes représentant les items actions de la scène. Chaque sous liste représente la paire : [verbe hébreu (sans nikkud) , verbe traduit français]"
+        },
+        "items_elements": {
+            "type": "list[list[str]]",
+            "description": "une liste de longueur 6 de sous-listes représentant les items actions de la scène. Chaque sous liste représente la paire : [mot en hébreu (sans nikkud) , mot traduit en français]"
+        }
+    }
+}

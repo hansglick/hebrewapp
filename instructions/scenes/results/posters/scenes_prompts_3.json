@@ -1,0 +1,617 @@
+[
+    {
+        "id": 31,
+        "items_action": [
+            [
+                "לשתות",
+                "boire"
+            ],
+            [
+                "להזמין",
+                "commander"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספל",
+                "tasse"
+            ],
+            [
+                "עוגה",
+                "gâteau"
+            ],
+            [
+                "מלצר",
+                "serveur"
+            ],
+            [
+                "שולחן",
+                "table"
+            ],
+            [
+                "תפריט",
+                "menu"
+            ],
+            [
+                "קופה",
+                "caisse"
+            ]
+        ],
+        "scene_title": "Le café de quartier",
+        "prompt": "In a cozy neighborhood cafe, a customer sits at a table drinking from a cup while eating a slice of cake. Another person is ordering from a menu held by a friendly waiter near the cash register. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 32,
+        "items_action": [
+            [
+                "לטעום",
+                "goûter"
+            ],
+            [
+                "להגיש",
+                "servir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כוס יין",
+                "verre de vin"
+            ],
+            [
+                "צלחת",
+                "assiette"
+            ],
+            [
+                "מזלג",
+                "fourchette"
+            ],
+            [
+                "סכין",
+                "couteau"
+            ],
+            [
+                "מפית",
+                "serviette"
+            ],
+            [
+                "שף",
+                "chef"
+            ]
+        ],
+        "scene_title": "Le restaurant gastronomique",
+        "prompt": "In an elegant gourmet restaurant, a customer uses a fork, knife, and a folded napkin to taste a beautifully plated dish on a plate, paired with a wine glass. In the background, a proud chef is serving a new culinary creation. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 33,
+        "items_action": [
+            [
+                "לשבת",
+                "s'asseoir"
+            ],
+            [
+                "להקרין",
+                "projeter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "מושב",
+                "siège"
+            ],
+            [
+                "כרטיס",
+                "billet"
+            ],
+            [
+                "פופקורן",
+                "pop-corn"
+            ],
+            [
+                "מקרן",
+                "projecteur"
+            ],
+            [
+                "מעבר",
+                "allée"
+            ]
+        ],
+        "scene_title": "La salle de cinéma",
+        "prompt": "Inside a movie theater, a person holding a ticket and a bucket of popcorn is about to sit in a plush seat near the aisle. Above them, a large projector is projecting a bright beam of light onto the main screen. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 34,
+        "items_action": [
+            [
+                "לשחק",
+                "jouer"
+            ],
+            [
+                "למחוא כפיים",
+                "applaudir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "במה",
+                "scène"
+            ],
+            [
+                "וילון",
+                "rideau"
+            ],
+            [
+                "שחקן",
+                "acteur"
+            ],
+            [
+                "תחפושת",
+                "costume"
+            ],
+            [
+                "זרקור",
+                "projecteur"
+            ],
+            [
+                "קהל",
+                "public"
+            ]
+        ],
+        "scene_title": "La scène du théâtre",
+        "prompt": "On a grand theater stage framed by a heavy curtain, an actor wearing an elaborate costume is acting under a bright spotlight. Below the stage, the audience is enthusiastically applauding the performance. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 35,
+        "items_action": [
+            [
+                "להתבונן",
+                "observer"
+            ],
+            [
+                "לצלם",
+                "photographier"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ציור",
+                "tableau"
+            ],
+            [
+                "מסגרת",
+                "cadre"
+            ],
+            [
+                "פסל",
+                "sculpture"
+            ],
+            [
+                "תערוכה",
+                "exposition"
+            ],
+            [
+                "שומר",
+                "gardien"
+            ],
+            [
+                "מבקר",
+                "visiteur"
+            ]
+        ],
+        "scene_title": "Le musée d'art",
+        "prompt": "In a spacious art exhibition, a visitor is photographing a beautiful sculpture while another person closely observes a painting displayed in an ornate frame. A museum guard stands nearby, watching over the gallery. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 36,
+        "items_action": [
+            [
+                "לקרוא",
+                "lire"
+            ],
+            [
+                "לשאול",
+                "emprunter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספר",
+                "livre"
+            ],
+            [
+                "מדף",
+                "étagère"
+            ],
+            [
+                "ספרן",
+                "bibliothécaire"
+            ],
+            [
+                "שולחן עבודה",
+                "bureau"
+            ],
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "מנורת קריאה",
+                "lampe de lecture"
+            ]
+        ],
+        "scene_title": "La bibliothèque municipale",
+        "prompt": "Inside a quiet municipal library lined with a tall bookshelf, a person is reading a book at a desk illuminated by a reading lamp. Nearby, a librarian sits behind a computer, helping someone borrow a stack of books. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 37,
+        "items_action": [
+            [
+                "ללמוד",
+                "étudier"
+            ],
+            [
+                "לכתוב",
+                "écrire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "סטודנט",
+                "étudiant"
+            ],
+            [
+                "תיק גב",
+                "sac à dos"
+            ],
+            [
+                "מחברת",
+                "cahier"
+            ],
+            [
+                "דשא",
+                "pelouse"
+            ],
+            [
+                "אופניים",
+                "vélo"
+            ],
+            [
+                "מרצה",
+                "professeur"
+            ]
+        ],
+        "scene_title": "Le campus universitaire",
+        "prompt": "On a sunny university campus lawn, a student with a backpack is sitting on the grass, studying and writing in a notebook. A bicycle is parked nearby, and a professor is walking past them. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 38,
+        "items_action": [
+            [
+                "לקטוף",
+                "cueillir"
+            ],
+            [
+                "לנהוג",
+                "conduire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "טרקטור",
+                "tracteur"
+            ],
+            [
+                "פרה",
+                "vache"
+            ],
+            [
+                "עץ",
+                "arbre"
+            ],
+            [
+                "פרי",
+                "fruit"
+            ],
+            [
+                "חקלאי",
+                "agriculteur"
+            ],
+            [
+                "אסם",
+                "grange"
+            ]
+        ],
+        "scene_title": "La ferme agricole dans le Golan",
+        "prompt": "On a peaceful farm, an agricultural worker is picking fresh fruit from a large tree, while a farmer is driving a green tractor near a wooden barn. A spotted cow is grazing quietly in the background. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 39,
+        "items_action": [
+            [
+                "לשמור",
+                "garder"
+            ],
+            [
+                "לתצפת",
+                "observer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "משקפת",
+                "jumelles"
+            ],
+            [
+                "חייל",
+                "soldat"
+            ],
+            [
+                "אנטנה",
+                "antenne"
+            ],
+            [
+                "גדר",
+                "clôture"
+            ],
+            [
+                "דגל",
+                "drapeau"
+            ],
+            [
+                "אוהל",
+                "tente"
+            ]
+        ],
+        "scene_title": "L'avant-poste sur une colline",
+        "prompt": "At a hilltop outpost surrounded by a wire fence, a soldier is guarding the area and observing the horizon through binoculars. Behind them, there is a sturdy tent, a tall antenna, and a flag blowing in the wind. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 40,
+        "items_action": [
+            [
+                "לבנות",
+                "construire"
+            ],
+            [
+                "להרים",
+                "soulever"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מנוף",
+                "grue"
+            ],
+            [
+                "קסדה",
+                "casque"
+            ],
+            [
+                "פועל",
+                "ouvrier"
+            ],
+            [
+                "לבנים",
+                "briques"
+            ],
+            [
+                "מלט",
+                "ciment"
+            ],
+            [
+                "דחפור",
+                "bulldozer"
+            ]
+        ],
+        "scene_title": "Le chantier de construction",
+        "prompt": "At a busy construction site, a worker wearing a safety helmet is building a wall using bricks and wet cement. Nearby, a heavy bulldozer clears the ground while a tall crane is lifting materials into the air. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 41,
+        "items_action": [
+            [
+                "לשלם",
+                "payer"
+            ],
+            [
+                "לסחוב",
+                "porter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מפתח",
+                "clé"
+            ],
+            [
+                "מזוודה",
+                "valise"
+            ],
+            [
+                "פקיד קבלה",
+                "réceptionniste"
+            ],
+            [
+                "דלפק",
+                "comptoir"
+            ],
+            [
+                "סבל",
+                "porteur"
+            ],
+            [
+                "מעלית",
+                "ascenseur"
+            ]
+        ],
+        "scene_title": "La réception de l'hôtel",
+        "prompt": "In an elegant hotel lobby, a guest is paying at the front counter while a receptionist hands them a room key. Nearby, a helpful porter is carrying a heavy suitcase towards an open elevator. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 42,
+        "items_action": [
+            [
+                "לשחות",
+                "nager"
+            ],
+            [
+                "לקפוץ",
+                "sauter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מים",
+                "eau"
+            ],
+            [
+                "בגד ים",
+                "maillot de bain"
+            ],
+            [
+                "מגבת",
+                "serviette"
+            ],
+            [
+                "מציל",
+                "maître-nageur"
+            ],
+            [
+                "משרוקית",
+                "sifflet"
+            ],
+            [
+                "מקפצה",
+                "plongeoir"
+            ]
+        ],
+        "scene_title": "La piscine municipale",
+        "prompt": "At a bright municipal pool, a person in a swimsuit is jumping off a diving board into the sparkling water, while another is swimming happily. A lifeguard with a whistle stands nearby holding a folded towel. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 43,
+        "items_action": [
+            [
+                "להאכיל",
+                "nourrir"
+            ],
+            [
+                "להצביע",
+                "pointer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כלוב",
+                "cage"
+            ],
+            [
+                "קוף",
+                "singe"
+            ],
+            [
+                "פיל",
+                "éléphant"
+            ],
+            [
+                "שלט",
+                "panneau"
+            ],
+            [
+                "גדר",
+                "barrière"
+            ],
+            [
+                "מטפל",
+                "soigneur"
+            ]
+        ],
+        "scene_title": "Le parc zoologique",
+        "prompt": "In a lively zoo, a child points excitedly at a large elephant standing behind a wooden fence next to an informational sign. Nearby, a zookeeper is feeding a playful monkey inside a spacious cage. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 44,
+        "items_action": [
+            [
+                "למדוד",
+                "essayer"
+            ],
+            [
+                "לקפל",
+                "plier"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חולצה",
+                "chemise"
+            ],
+            [
+                "מכנסיים",
+                "pantalon"
+            ],
+            [
+                "מראה",
+                "miroir"
+            ],
+            [
+                "קולב",
+                "cintre"
+            ],
+            [
+                "תא מדידה",
+                "cabine d'essayage"
+            ],
+            [
+                "מוכר",
+                "vendeur"
+            ]
+        ],
+        "scene_title": "La boutique de vêtements",
+        "prompt": "Inside a modern clothing boutique, a customer is trying on a shirt and pants in front of a tall mirror near the fitting room. A friendly salesperson is folding clothes next to a rack holding an empty hanger. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    },
+    {
+        "id": 45,
+        "items_action": [
+            [
+                "לקנות",
+                "acheter"
+            ],
+            [
+                "להחזיק",
+                "tenir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "פטיש",
+                "marteau"
+            ],
+            [
+                "מסמר",
+                "clou"
+            ],
+            [
+                "מברשת",
+                "pinceau"
+            ],
+            [
+                "פח צבע",
+                "pot de peinture"
+            ],
+            [
+                "בורג",
+                "vis"
+            ],
+            [
+                "מברג",
+                "tournevis"
+            ]
+        ],
+        "scene_title": "La quincaillerie (magasin Tambour)",
+        "prompt": "In a local hardware store, a customer is buying a pot of paint and holding a paintbrush. On the display counter, there is a hammer, a nail, a screwdriver, and a screw neatly arranged. Detailed, clean-line illustrative style with a warm, muted pastel palette and omnipresent fine paper grain texture overlay. Defined shadows and high complex visual fidelity. Ensuring there is absolutely no visible text, letters, words, or characters from the Latin alphabet anywhere in the image. All surfaces must be completely clean."
+    }
+]

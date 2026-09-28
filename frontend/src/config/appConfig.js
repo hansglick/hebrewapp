@@ -292,6 +292,16 @@ const basePaletteLight = {
   // toucher aux autres usages de HebrewInput — cf. demande explicite du
   // user. Valeur inchangée ici (identique à l'ancien var(--bg)).
   examHebrewToggleTrack: "#ffffff",
+  // Popup hotspot de la tuile "Scène" (SceneScreen) : fond blanc fixe,
+  // indépendant du thème/skin (l'illustration elle-même ne suit pas le
+  // thème) — cf. demande explicite du user. Le mot hébreu doit donc rester
+  // sombre même dans un skin où "Control 1" est clair (ex: Night) : valeur
+  // fixe ici, dérivée systématiquement vers le noir en V2 (cf.
+  // computePaletteV2) plutôt que de suivre bg1IsDark comme le reste de la
+  // palette. Le mot français reprend "Gris 5" tel quel (déjà lisible sur
+  // blanc dans les 3 skins existants).
+  sceneAccentFg: "#1a1a1a",
+  sceneMutedFg: "#9ca3af",
 };
 
 const basePaletteDark = {
@@ -369,6 +379,10 @@ const basePaletteDark = {
   enonceBadgeVertBg: "#69db7c",
   enonceBadgeVertFg: "#40c057",
   enonceBadgeVertBorder: "#40c057",
+  // Cf. commentaire basePaletteLight : fixe, ne suit pas le thème sombre
+  // (fond blanc de la popup lui-même fixe).
+  sceneAccentFg: "#1a1a1a",
+  sceneMutedFg: "#9ca3af",
 };
 
 // Palette V2 — regroupement de nuances demandé par le user (audit couleurs
@@ -586,6 +600,13 @@ export function computePaletteV2(bases) {
     examSpecialBg: b.orange5,
     stepBadgeOrangeFg: mixHex(b.orange5, "#000000", 0.22),
     stepBadgeOrangeBg: mixHex(b.orange5, "#ffffff", 0.82),
+    // Popup hotspot "Scène" : fond blanc fixe (hors palette, cf.
+    // SceneScreen), donc le mot hébreu doit rester sombre quel que soit le
+    // skin — "Control 1" foncé systématiquement vers le noir (pas de repli
+    // bg1IsDark ici) plutôt que la valeur brute de la base, qui peut être
+    // claire dans un skin comme Night — cf. demande explicite du user.
+    sceneAccentFg: mixHex(b.noir, "#000000", 0.65),
+    sceneMutedFg: b.gris5,
   };
 }
 
@@ -665,6 +686,8 @@ function buildTheme(p) {
     enonceBadgeVertBg: p.enonceBadgeVertBg,
     enonceBadgeVertFg: p.enonceBadgeVertFg,
     enonceBadgeVertBorder: p.enonceBadgeVertBorder,
+    sceneAccentFg: p.sceneAccentFg,
+    sceneMutedFg: p.sceneMutedFg,
   };
 }
 

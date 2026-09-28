@@ -1,0 +1,602 @@
+[
+    {
+        "id": 16,
+        "items_action": [
+            [
+                "לחתום",
+                "signer"
+            ],
+            [
+                "לקרוא",
+                "lire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חוזה",
+                "contrat"
+            ],
+            [
+                "עט",
+                "stylo"
+            ],
+            [
+                "עורך דין",
+                "avocat"
+            ],
+            [
+                "שולחן",
+                "bureau"
+            ],
+            [
+                "מסמך",
+                "document"
+            ],
+            [
+                "חותמת",
+                "tampon"
+            ]
+        ],
+        "scene_title": "La signature du contrat de location chez l'avocat"
+    },
+    {
+        "id": 17,
+        "items_action": [
+            [
+                "להמתין",
+                "patienter"
+            ],
+            [
+                "לבדוק",
+                "examiner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "רופא",
+                "médecin"
+            ],
+            [
+                "חולה",
+                "patient"
+            ],
+            [
+                "כרטיס",
+                "carte"
+            ],
+            [
+                "מסכה",
+                "masque"
+            ],
+            [
+                "כיסא",
+                "chaise"
+            ],
+            [
+                "סטטוסקופ",
+                "stéthoscope"
+            ]
+        ],
+        "scene_title": "La clinique médicale (Koupat Holim)"
+    },
+    {
+        "id": 18,
+        "items_action": [
+            [
+                "לשלם",
+                "payer"
+            ],
+            [
+                "לתת",
+                "donner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "תרופה",
+                "médicament"
+            ],
+            [
+                "רוקח",
+                "pharmacien"
+            ],
+            [
+                "מרשם",
+                "ordonnance"
+            ],
+            [
+                "קופה",
+                "caisse"
+            ],
+            [
+                "מדף",
+                "étagère"
+            ],
+            [
+                "כדורים",
+                "pilules"
+            ]
+        ],
+        "scene_title": "La pharmacie"
+    },
+    {
+        "id": 19,
+        "items_action": [
+            [
+                "לשכב",
+                "s'allonger"
+            ],
+            [
+                "לדחוף",
+                "pousser"
+            ]
+        ],
+        "items_elements": [
+            [
+                "אלונקה",
+                "brancard"
+            ],
+            [
+                "אחות",
+                "infirmière"
+            ],
+            [
+                "מיטה",
+                "lit"
+            ],
+            [
+                "אינפוזיה",
+                "perfusion"
+            ],
+            [
+                "כיסא גלגלים",
+                "fauteuil roulant"
+            ],
+            [
+                "מוניטור",
+                "moniteur"
+            ]
+        ],
+        "scene_title": "La salle d'urgence de l'hôpital"
+    },
+    {
+        "id": 20,
+        "items_action": [
+            [
+                "לקנות",
+                "acheter"
+            ],
+            [
+                "למדוד",
+                "essayer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חנות",
+                "magasin"
+            ],
+            [
+                "שקית",
+                "sac"
+            ],
+            [
+                "מדרגות נעות",
+                "escalator"
+            ],
+            [
+                "חלון ראווה",
+                "vitrine"
+            ],
+            [
+                "בגדים",
+                "vêtements"
+            ],
+            [
+                "כסף",
+                "argent"
+            ]
+        ],
+        "scene_title": "Le centre commercial (Canyon)"
+    },
+    {
+        "id": 21,
+        "items_action": [
+            [
+                "להפקיד",
+                "déposer"
+            ],
+            [
+                "למשוך",
+                "retirer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "פקיד",
+                "employé"
+            ],
+            [
+                "מזומן",
+                "espèces"
+            ],
+            [
+                "כספומט",
+                "distributeur"
+            ],
+            [
+                "תור",
+                "file d'attente"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "צ'ק",
+                "chèque"
+            ]
+        ],
+        "scene_title": "Le guichet de la banque"
+    },
+    {
+        "id": 22,
+        "items_action": [
+            [
+                "לעצור",
+                "arrêter"
+            ],
+            [
+                "לחקור",
+                "interroger"
+            ]
+        ],
+        "items_elements": [
+            [
+                "שוטר",
+                "policier"
+            ],
+            [
+                "אזיקים",
+                "menottes"
+            ],
+            [
+                "ניידת",
+                "voiture de police"
+            ],
+            [
+                "תא",
+                "cellule"
+            ],
+            [
+                "נשק",
+                "arme"
+            ],
+            [
+                "טופס",
+                "formulaire"
+            ]
+        ],
+        "scene_title": "Le commissariat de police"
+    },
+    {
+        "id": 23,
+        "items_action": [
+            [
+                "לשפוט",
+                "juger"
+            ],
+            [
+                "להעיד",
+                "témoigner"
+            ]
+        ],
+        "items_elements": [
+            [
+                "שופט",
+                "juge"
+            ],
+            [
+                "פטיש",
+                "marteau"
+            ],
+            [
+                "דוכן",
+                "barre des témoins"
+            ],
+            [
+                "קהל",
+                "public"
+            ],
+            [
+                "גלימה",
+                "robe"
+            ],
+            [
+                "סנגור",
+                "avocat de la défense"
+            ]
+        ],
+        "scene_title": "La salle d'audience du tribunal"
+    },
+    {
+        "id": 24,
+        "items_action": [
+            [
+                "לתקן",
+                "réparer"
+            ],
+            [
+                "להרים",
+                "soulever"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מוסכניק",
+                "mécanicien"
+            ],
+            [
+                "רכב",
+                "voiture"
+            ],
+            [
+                "גלגל",
+                "roue"
+            ],
+            [
+                "מנוע",
+                "moteur"
+            ],
+            [
+                "כלי עבודה",
+                "outils"
+            ],
+            [
+                "שמן",
+                "huile"
+            ]
+        ],
+        "scene_title": "Le garage automobile (Mousakh)"
+    },
+    {
+        "id": 25,
+        "items_action": [
+            [
+                "לתדלק",
+                "faire le plein"
+            ],
+            [
+                "לנקות",
+                "nettoyer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "דלק",
+                "essence"
+            ],
+            [
+                "משאבה",
+                "pompe"
+            ],
+            [
+                "פיה",
+                "pistolet"
+            ],
+            [
+                "מתדלק",
+                "pompiste"
+            ],
+            [
+                "פח",
+                "poubelle"
+            ],
+            [
+                "חלון",
+                "vitre"
+            ]
+        ],
+        "scene_title": "La station-service"
+    },
+    {
+        "id": 26,
+        "items_action": [
+            [
+                "לגזור",
+                "couper"
+            ],
+            [
+                "לחפוף",
+                "laver"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספר",
+                "coiffeur"
+            ],
+            [
+                "מספריים",
+                "ciseaux"
+            ],
+            [
+                "מראה",
+                "miroir"
+            ],
+            [
+                "מסרק",
+                "peigne"
+            ],
+            [
+                "שיער",
+                "cheveux"
+            ],
+            [
+                "פן",
+                "sèche-cheveux"
+            ]
+        ],
+        "scene_title": "Le salon de coiffure"
+    },
+    {
+        "id": 27,
+        "items_action": [
+            [
+                "להתאמן",
+                "s'entraîner"
+            ],
+            [
+                "לרוץ",
+                "courir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "משקולות",
+                "haltères"
+            ],
+            [
+                "הליכון",
+                "tapis roulant"
+            ],
+            [
+                "מגבת",
+                "serviette"
+            ],
+            [
+                "מאמן",
+                "coach"
+            ],
+            [
+                "בקבוק",
+                "bouteille"
+            ],
+            [
+                "מזרן",
+                "tapis"
+            ]
+        ],
+        "scene_title": "La salle de sport"
+    },
+    {
+        "id": 28,
+        "items_action": [
+            [
+                "לשחק",
+                "jouer"
+            ],
+            [
+                "להתנדנד",
+                "se balancer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מגלשה",
+                "toboggan"
+            ],
+            [
+                "נדנדה",
+                "balançoire"
+            ],
+            [
+                "חול",
+                "sable"
+            ],
+            [
+                "ספסל",
+                "banc"
+            ],
+            [
+                "עץ",
+                "arbre"
+            ],
+            [
+                "ילד",
+                "enfant"
+            ]
+        ],
+        "scene_title": "Le parc public avec aire de jeux"
+    },
+    {
+        "id": 29,
+        "items_action": [
+            [
+                "לצלות",
+                "griller"
+            ],
+            [
+                "לנפנף",
+                "éventer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מנגל",
+                "barbecue"
+            ],
+            [
+                "בשר",
+                "viande"
+            ],
+            [
+                "פחמים",
+                "charbon"
+            ],
+            [
+                "פיתה",
+                "pita"
+            ],
+            [
+                "שיפוד",
+                "brochette"
+            ],
+            [
+                "מלקחיים",
+                "pince"
+            ]
+        ],
+        "scene_title": "Le barbecue de Yom Ha'atzmaout (Mangal)"
+    },
+    {
+        "id": 30,
+        "items_action": [
+            [
+                "לאפות",
+                "cuire"
+            ],
+            [
+                "לארוז",
+                "emballer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "לחם",
+                "pain"
+            ],
+            [
+                "עוגה",
+                "gâteau"
+            ],
+            [
+                "מאפה",
+                "pâtisserie"
+            ],
+            [
+                "אופה",
+                "boulanger"
+            ],
+            [
+                "תנור",
+                "four"
+            ],
+            [
+                "מגש",
+                "plateau"
+            ]
+        ],
+        "scene_title": "La boulangerie-pâtisserie"
+    }
+]

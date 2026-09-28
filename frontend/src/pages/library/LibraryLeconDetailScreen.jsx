@@ -94,6 +94,14 @@ export default function LibraryLeconDetailScreen() {
           </Link>
         )}
 
+        {/* Même couleur que "Phrases", juste avant la première tuile
+            orange ("Révise le concept") — cf. demande explicite du user. */}
+        <Link to={`/apprentissage/${chapId}/${code}/scene`} className="card-link">
+          <div className="card" style={tileStyle("var(--validationPleine)")}>
+            Scène
+          </div>
+        </Link>
+
         {/* Orange (comme les autres tuiles "conversation"), mais orange
             PASTEL/grisée et non cliquable si la leçon n'introduit aucun
             concept grammatical (cf. lecon.has_concept, backend) — cf.

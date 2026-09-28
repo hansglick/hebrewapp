@@ -4,6 +4,7 @@ from app import curiosites
 from app.auth import get_current_user_id
 from app.data_loader import get_dataset
 from app.database import get_connection
+from app.lesson_order import scene_index_for
 from app.text_questions import questions_for_text
 
 router = APIRouter(prefix="/api", tags=["chapters"])
@@ -73,7 +74,32 @@ def get_lecon(code: str):
     # cf. item_concept.json, champ "presence".
     has_concept = bool(get_dataset("concept").get(code, {}).get("presence"))
 
-    return {**lesson, "has_oral_questions": has_oral_questions, "has_concept": has_concept}
+    return {
+        **lesson,
+        "has_oral_questions": has_oral_questions,
+        "has_concept": has_concept,
+        "scene_index": scene_index_for(code),
+    }
+
+
+@router.get("/lecons/{code}/scene")
+def get_lecon_scene(code: str):
+    """Scène "vie quotidienne" (illustration + hotspots hébreu/français)
+    associée à la leçon `code` par roulement sur les 60 scènes disponibles
+    (cf. scene_index_for) — image servie via /media, cf. mediaUrl côté
+    frontend."""
+    lessons = get_dataset("lesson")
+    if code not in lessons:
+        raise HTTPException(404, "Leçon introuvable")
+
+    index = scene_index_for(code)
+    scene = get_dataset("scene")[str(index)]
+    return {
+        "index": index,
+        "image": f"images_scene/scene_{index}.jpg",
+        "scene_title": scene["scene_title"],
+        "hotspots": scene["hotspots"],
+    }
 
 
 @router.get("/lecons/{code}/exploration")
@@ -128,6 +154,12 @@ def get_lecon_exploration(code: str, user_id: int = Depends(get_current_user_id)
             "seen": seen_count("texte", [text_code]) if text_code else 0,
             "total": text_total,
         }
+
+        # Toujours 1 : chaque leçon a une scène (roulement sur 60, cf.
+        # scene_index_for), même clé "vu" que texte/traductions (le code de
+        # la leçon elle-même, pas l'index de scène partagé) — cf. demande
+        # explicite du user.
+        categories["scene"] = {"seen": seen_count("scene", [code]), "total": 1}
 
         oral_seen = 0
         questions = questions_for_text(get_dataset("text"), text_code) if text_code else []

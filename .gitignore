@@ -6,6 +6,7 @@
 # folder like logos/ still get copied over).
 backend/results/*
 !backend/results/images_concept/
+!backend/results/images_scene/
 !backend/results/logos/
 
 # Sources PDF de travail hors ligne - pas utilisées par l'app, juste lourdes

@@ -1,0 +1,602 @@
+[
+    {
+        "id": 31,
+        "items_action": [
+            [
+                "לשתות",
+                "boire"
+            ],
+            [
+                "להזמין",
+                "commander"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספל",
+                "tasse"
+            ],
+            [
+                "עוגה",
+                "gâteau"
+            ],
+            [
+                "מלצר",
+                "serveur"
+            ],
+            [
+                "שולחן",
+                "table"
+            ],
+            [
+                "תפריט",
+                "menu"
+            ],
+            [
+                "קופה",
+                "caisse"
+            ]
+        ],
+        "scene_title": "Le café de quartier"
+    },
+    {
+        "id": 32,
+        "items_action": [
+            [
+                "לטעום",
+                "goûter"
+            ],
+            [
+                "להגיש",
+                "servir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כוס יין",
+                "verre de vin"
+            ],
+            [
+                "צלחת",
+                "assiette"
+            ],
+            [
+                "מזלג",
+                "fourchette"
+            ],
+            [
+                "סכין",
+                "couteau"
+            ],
+            [
+                "מפית",
+                "serviette"
+            ],
+            [
+                "שף",
+                "chef"
+            ]
+        ],
+        "scene_title": "Le restaurant gastronomique"
+    },
+    {
+        "id": 33,
+        "items_action": [
+            [
+                "לשבת",
+                "s'asseoir"
+            ],
+            [
+                "להקרין",
+                "projeter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "מושב",
+                "siège"
+            ],
+            [
+                "כרטיס",
+                "billet"
+            ],
+            [
+                "פופקורן",
+                "pop-corn"
+            ],
+            [
+                "מקרן",
+                "projecteur"
+            ],
+            [
+                "מעבר",
+                "allée"
+            ]
+        ],
+        "scene_title": "La salle de cinéma"
+    },
+    {
+        "id": 34,
+        "items_action": [
+            [
+                "לשחק",
+                "jouer"
+            ],
+            [
+                "למחוא כפיים",
+                "applaudir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "במה",
+                "scène"
+            ],
+            [
+                "וילון",
+                "rideau"
+            ],
+            [
+                "שחקן",
+                "acteur"
+            ],
+            [
+                "תחפושת",
+                "costume"
+            ],
+            [
+                "זרקור",
+                "projecteur"
+            ],
+            [
+                "קהל",
+                "public"
+            ]
+        ],
+        "scene_title": "La scène du théâtre"
+    },
+    {
+        "id": 35,
+        "items_action": [
+            [
+                "להתבונן",
+                "observer"
+            ],
+            [
+                "לצלם",
+                "photographier"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ציור",
+                "tableau"
+            ],
+            [
+                "מסגרת",
+                "cadre"
+            ],
+            [
+                "פסל",
+                "sculpture"
+            ],
+            [
+                "תערוכה",
+                "exposition"
+            ],
+            [
+                "שומר",
+                "gardien"
+            ],
+            [
+                "מבקר",
+                "visiteur"
+            ]
+        ],
+        "scene_title": "Le musée d'art"
+    },
+    {
+        "id": 36,
+        "items_action": [
+            [
+                "לקרוא",
+                "lire"
+            ],
+            [
+                "לשאול",
+                "emprunter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספר",
+                "livre"
+            ],
+            [
+                "מדף",
+                "étagère"
+            ],
+            [
+                "ספרן",
+                "bibliothécaire"
+            ],
+            [
+                "שולחן עבודה",
+                "bureau"
+            ],
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "מנורת קריאה",
+                "lampe de lecture"
+            ]
+        ],
+        "scene_title": "La bibliothèque municipale"
+    },
+    {
+        "id": 37,
+        "items_action": [
+            [
+                "ללמוד",
+                "étudier"
+            ],
+            [
+                "לכתוב",
+                "écrire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "סטודנט",
+                "étudiant"
+            ],
+            [
+                "תיק גב",
+                "sac à dos"
+            ],
+            [
+                "מחברת",
+                "cahier"
+            ],
+            [
+                "דשא",
+                "pelouse"
+            ],
+            [
+                "אופניים",
+                "vélo"
+            ],
+            [
+                "מרצה",
+                "professeur"
+            ]
+        ],
+        "scene_title": "Le campus universitaire"
+    },
+    {
+        "id": 38,
+        "items_action": [
+            [
+                "לקטוף",
+                "cueillir"
+            ],
+            [
+                "לנהוג",
+                "conduire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "טרקטור",
+                "tracteur"
+            ],
+            [
+                "פרה",
+                "vache"
+            ],
+            [
+                "עץ",
+                "arbre"
+            ],
+            [
+                "פרי",
+                "fruit"
+            ],
+            [
+                "חקלאי",
+                "agriculteur"
+            ],
+            [
+                "אסם",
+                "grange"
+            ]
+        ],
+        "scene_title": "La ferme agricole dans le Golan"
+    },
+    {
+        "id": 39,
+        "items_action": [
+            [
+                "לשמור",
+                "garder"
+            ],
+            [
+                "לתצפת",
+                "observer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "משקפת",
+                "jumelles"
+            ],
+            [
+                "חייל",
+                "soldat"
+            ],
+            [
+                "אנטנה",
+                "antenne"
+            ],
+            [
+                "גדר",
+                "clôture"
+            ],
+            [
+                "דגל",
+                "drapeau"
+            ],
+            [
+                "אוהל",
+                "tente"
+            ]
+        ],
+        "scene_title": "L'avant-poste sur une colline"
+    },
+    {
+        "id": 40,
+        "items_action": [
+            [
+                "לבנות",
+                "construire"
+            ],
+            [
+                "להרים",
+                "soulever"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מנוף",
+                "grue"
+            ],
+            [
+                "קסדה",
+                "casque"
+            ],
+            [
+                "פועל",
+                "ouvrier"
+            ],
+            [
+                "לבנים",
+                "briques"
+            ],
+            [
+                "מלט",
+                "ciment"
+            ],
+            [
+                "דחפור",
+                "bulldozer"
+            ]
+        ],
+        "scene_title": "Le chantier de construction"
+    },
+    {
+        "id": 41,
+        "items_action": [
+            [
+                "לשלם",
+                "payer"
+            ],
+            [
+                "לסחוב",
+                "porter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מפתח",
+                "clé"
+            ],
+            [
+                "מזוודה",
+                "valise"
+            ],
+            [
+                "פקיד קבלה",
+                "réceptionniste"
+            ],
+            [
+                "דלפק",
+                "comptoir"
+            ],
+            [
+                "סבל",
+                "porteur"
+            ],
+            [
+                "מעלית",
+                "ascenseur"
+            ]
+        ],
+        "scene_title": "La réception de l'hôtel"
+    },
+    {
+        "id": 42,
+        "items_action": [
+            [
+                "לשחות",
+                "nager"
+            ],
+            [
+                "לקפוץ",
+                "sauter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מים",
+                "eau"
+            ],
+            [
+                "בגד ים",
+                "maillot de bain"
+            ],
+            [
+                "מגבת",
+                "serviette"
+            ],
+            [
+                "מציל",
+                "maître-nageur"
+            ],
+            [
+                "משרוקית",
+                "sifflet"
+            ],
+            [
+                "מקפצה",
+                "plongeoir"
+            ]
+        ],
+        "scene_title": "La piscine municipale"
+    },
+    {
+        "id": 43,
+        "items_action": [
+            [
+                "להאכיל",
+                "nourrir"
+            ],
+            [
+                "להצביע",
+                "pointer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כלוב",
+                "cage"
+            ],
+            [
+                "קוף",
+                "singe"
+            ],
+            [
+                "פיל",
+                "éléphant"
+            ],
+            [
+                "שלט",
+                "panneau"
+            ],
+            [
+                "גדר",
+                "barrière"
+            ],
+            [
+                "מטפל",
+                "soigneur"
+            ]
+        ],
+        "scene_title": "Le parc zoologique"
+    },
+    {
+        "id": 44,
+        "items_action": [
+            [
+                "למדוד",
+                "essayer"
+            ],
+            [
+                "לקפל",
+                "plier"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חולצה",
+                "chemise"
+            ],
+            [
+                "מכנסיים",
+                "pantalon"
+            ],
+            [
+                "מראה",
+                "miroir"
+            ],
+            [
+                "קולב",
+                "cintre"
+            ],
+            [
+                "תא מדידה",
+                "cabine d'essayage"
+            ],
+            [
+                "מוכר",
+                "vendeur"
+            ]
+        ],
+        "scene_title": "La boutique de vêtements"
+    },
+    {
+        "id": 45,
+        "items_action": [
+            [
+                "לקנות",
+                "acheter"
+            ],
+            [
+                "להחזיק",
+                "tenir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "פטיש",
+                "marteau"
+            ],
+            [
+                "מסמר",
+                "clou"
+            ],
+            [
+                "מברשת",
+                "pinceau"
+            ],
+            [
+                "פח צבע",
+                "pot de peinture"
+            ],
+            [
+                "בורג",
+                "vis"
+            ],
+            [
+                "מברג",
+                "tournevis"
+            ]
+        ],
+        "scene_title": "La quincaillerie (magasin Tambour)"
+    }
+]

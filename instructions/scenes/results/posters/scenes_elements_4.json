@@ -1,0 +1,602 @@
+[
+    {
+        "id": 46,
+        "items_action": [
+            [
+                "להדליק",
+                "allumer"
+            ],
+            [
+                "לבדוק",
+                "tester"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "מסך",
+                "écran"
+            ],
+            [
+                "כבל",
+                "câble"
+            ],
+            [
+                "אוזניות",
+                "écouteurs"
+            ],
+            [
+                "טלוויזיה",
+                "télévision"
+            ],
+            [
+                "טלפון חכם",
+                "smartphone"
+            ]
+        ],
+        "scene_title": "Le magasin d'électronique"
+    },
+    {
+        "id": 47,
+        "items_action": [
+            [
+                "להשקות",
+                "arroser"
+            ],
+            [
+                "לשתול",
+                "planter"
+            ]
+        ],
+        "items_elements": [
+            [
+                "צמח",
+                "plante"
+            ],
+            [
+                "עציץ",
+                "pot"
+            ],
+            [
+                "אדמה",
+                "terre"
+            ],
+            [
+                "כף",
+                "pelle"
+            ],
+            [
+                "פרח",
+                "fleur"
+            ],
+            [
+                "עץ",
+                "arbre"
+            ]
+        ],
+        "scene_title": "La pépinière (Mishtala)"
+    },
+    {
+        "id": 48,
+        "items_action": [
+            [
+                "לגזור",
+                "couper"
+            ],
+            [
+                "למרוח",
+                "vernir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "לק",
+                "vernis à ongles"
+            ],
+            [
+                "פצירה",
+                "lime à ongles"
+            ],
+            [
+                "מראה",
+                "miroir"
+            ],
+            [
+                "מגבת",
+                "serviette"
+            ],
+            [
+                "כורסה",
+                "fauteuil"
+            ],
+            [
+                "מספריים",
+                "ciseaux"
+            ]
+        ],
+        "scene_title": "L'institut de beauté et manucure"
+    },
+    {
+        "id": 49,
+        "items_action": [
+            [
+                "לפתוח",
+                "ouvrir"
+            ],
+            [
+                "לשטוף",
+                "rincer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כיסא",
+                "fauteuil"
+            ],
+            [
+                "מנורה",
+                "lampe"
+            ],
+            [
+                "מסכה",
+                "masque"
+            ],
+            [
+                "שן",
+                "dent"
+            ],
+            [
+                "מזרק",
+                "seringue"
+            ],
+            [
+                "סינר",
+                "bavoir"
+            ]
+        ],
+        "scene_title": "Le cabinet du dentiste"
+    },
+    {
+        "id": 50,
+        "items_action": [
+            [
+                "לבדוק",
+                "examiner"
+            ],
+            [
+                "לשקול",
+                "peser"
+            ]
+        ],
+        "items_elements": [
+            [
+                "כלב",
+                "chien"
+            ],
+            [
+                "חתול",
+                "chat"
+            ],
+            [
+                "סטטוסקופ",
+                "stéthoscope"
+            ],
+            [
+                "כלוב",
+                "cage"
+            ],
+            [
+                "משקל",
+                "balance"
+            ],
+            [
+                "רצועה",
+                "laisse"
+            ]
+        ],
+        "scene_title": "La clinique vétérinaire"
+    },
+    {
+        "id": 51,
+        "items_action": [
+            [
+                "לצעוק",
+                "crier"
+            ],
+            [
+                "להחזיק",
+                "tenir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "שלט",
+                "pancarte"
+            ],
+            [
+                "דגל",
+                "drapeau"
+            ],
+            [
+                "מגפון",
+                "mégaphone"
+            ],
+            [
+                "שוטר",
+                "policier"
+            ],
+            [
+                "קהל",
+                "foule"
+            ],
+            [
+                "מחסום",
+                "barrière"
+            ]
+        ],
+        "scene_title": "La manifestation dans la rue"
+    },
+    {
+        "id": 52,
+        "items_action": [
+            [
+                "לחכות",
+                "attendre"
+            ],
+            [
+                "לנהוג",
+                "conduire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מונית",
+                "taxi"
+            ],
+            [
+                "נהג",
+                "chauffeur"
+            ],
+            [
+                "נוסע",
+                "passager"
+            ],
+            [
+                "תמרור",
+                "panneau"
+            ],
+            [
+                "מזוודה",
+                "valise"
+            ],
+            [
+                "כביש",
+                "route"
+            ]
+        ],
+        "scene_title": "La station de taxis"
+    },
+    {
+        "id": 53,
+        "items_action": [
+            [
+                "לחתום",
+                "signer"
+            ],
+            [
+                "לשבת",
+                "s'asseoir"
+            ]
+        ],
+        "items_elements": [
+            [
+                "דרכון",
+                "passeport"
+            ],
+            [
+                "תעודת זהות",
+                "carte d'identité"
+            ],
+            [
+                "טופס",
+                "formulaire"
+            ],
+            [
+                "פקיד",
+                "employé"
+            ],
+            [
+                "חותמת",
+                "tampon"
+            ],
+            [
+                "חדר המתנה",
+                "salle d'attente"
+            ]
+        ],
+        "scene_title": "Le bureau du ministère de l'Intérieur (Misrad Hapnim)"
+    },
+    {
+        "id": 54,
+        "items_action": [
+            [
+                "לשבור",
+                "casser"
+            ],
+            [
+                "לשתות",
+                "boire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חופה",
+                "dais"
+            ],
+            [
+                "כוס",
+                "verre"
+            ],
+            [
+                "טבעת",
+                "bague"
+            ],
+            [
+                "כלה",
+                "mariée"
+            ],
+            [
+                "חתן",
+                "marié"
+            ],
+            [
+                "רב",
+                "rabbin"
+            ]
+        ],
+        "scene_title": "Le mariage juif sous la Houppa"
+    },
+    {
+        "id": 55,
+        "items_action": [
+            [
+                "להתפלל",
+                "prier"
+            ],
+            [
+                "לקרוא",
+                "lire"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספר תורה",
+                "rouleau de la Torah"
+            ],
+            [
+                "סידור",
+                "livre de prières"
+            ],
+            [
+                "כיפה",
+                "kippa"
+            ],
+            [
+                "טלית",
+                "châle de prière"
+            ],
+            [
+                "במה",
+                "estrade"
+            ],
+            [
+                "ארון קודש",
+                "arche sainte"
+            ]
+        ],
+        "scene_title": "L'intérieur de la synagogue"
+    },
+    {
+        "id": 56,
+        "items_action": [
+            [
+                "להרכיב",
+                "assembler"
+            ],
+            [
+                "למדוד",
+                "mesurer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "ספה",
+                "canapé"
+            ],
+            [
+                "מיטה",
+                "lit"
+            ],
+            [
+                "שולחן",
+                "table"
+            ],
+            [
+                "כיסא",
+                "chaise"
+            ],
+            [
+                "ארון",
+                "armoire"
+            ],
+            [
+                "שטיח",
+                "tapis"
+            ]
+        ],
+        "scene_title": "Le magasin de meubles"
+    },
+    {
+        "id": 57,
+        "items_action": [
+            [
+                "להראות",
+                "montrer"
+            ],
+            [
+                "לחתום",
+                "signer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "חוזה",
+                "contrat"
+            ],
+            [
+                "מפתח",
+                "clé"
+            ],
+            [
+                "בית",
+                "maison"
+            ],
+            [
+                "דגם",
+                "maquette"
+            ],
+            [
+                "סוכן",
+                "agent"
+            ],
+            [
+                "עט",
+                "stylo"
+            ]
+        ],
+        "scene_title": "L'agence immobilière"
+    },
+    {
+        "id": 58,
+        "items_action": [
+            [
+                "לשיר",
+                "chanter"
+            ],
+            [
+                "להקליט",
+                "enregistrer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מיקרופון",
+                "microphone"
+            ],
+            [
+                "אוזניות",
+                "casque"
+            ],
+            [
+                "מחשב",
+                "ordinateur"
+            ],
+            [
+                "זכוכית",
+                "vitre"
+            ],
+            [
+                "כלי נגינה",
+                "instrument"
+            ],
+            [
+                "כבל",
+                "câble"
+            ]
+        ],
+        "scene_title": "Le studio d'enregistrement"
+    },
+    {
+        "id": 59,
+        "items_action": [
+            [
+                "להפליג",
+                "naviguer"
+            ],
+            [
+                "לקשור",
+                "attacher"
+            ]
+        ],
+        "items_elements": [
+            [
+                "סירה",
+                "bateau"
+            ],
+            [
+                "יאכטה",
+                "yacht"
+            ],
+            [
+                "חבל",
+                "corde"
+            ],
+            [
+                "עוגן",
+                "ancre"
+            ],
+            [
+                "מים",
+                "eau"
+            ],
+            [
+                "מזח",
+                "quai"
+            ]
+        ],
+        "scene_title": "Le port de plaisance (Marina)"
+    },
+    {
+        "id": 60,
+        "items_action": [
+            [
+                "לקפל",
+                "plier"
+            ],
+            [
+                "להכניס",
+                "insérer"
+            ]
+        ],
+        "items_elements": [
+            [
+                "מכונת כביסה",
+                "machine à laver"
+            ],
+            [
+                "מייבש",
+                "sèche-linge"
+            ],
+            [
+                "סל",
+                "panier"
+            ],
+            [
+                "סבון",
+                "lessive"
+            ],
+            [
+                "מטבע",
+                "pièce"
+            ],
+            [
+                "בגדים",
+                "vêtements"
+            ]
+        ],
+        "scene_title": "La laverie automatique"
+    }
+]

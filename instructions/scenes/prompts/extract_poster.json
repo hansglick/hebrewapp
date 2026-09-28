@@ -1,0 +1,13 @@
+{
+    "nom_modele": "ResultatExtraction",
+    "champs": {
+        "id": {
+            "type": "int",
+            "description": "L'identifiant de la scène"
+        },        
+        "scene_title": {
+            "type": "str",
+            "description": "Le titre de la scène en quelques mots (en français)"
+        }
+    }
+}

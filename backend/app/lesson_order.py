@@ -66,6 +66,19 @@ def level_score(level: str) -> int | None:
     return codes.index(level) + 1
 
 
+def scene_index_for(code: str, total_scenes: int = 60) -> int:
+    """Index (1..total_scenes) de la scène "vie quotidienne" associée à la
+    leçon `code`, par roulement sur l'ordre global du cours (la leçon 1 et
+    la leçon total_scenes+1 partagent la même scène) — cf. demande
+    explicite du user. Retombe sur la scène 1 si `code` est introuvable
+    dans la progression (ne devrait pas arriver pour un code de leçon
+    valide)."""
+    codes = all_lesson_codes_in_order()
+    if code not in codes:
+        return 1
+    return (codes.index(code) % total_scenes) + 1
+
+
 def entry_gate_code(code: str) -> str | None:
     """Dernière leçon du chapitre PRÉCÉDENT celui de `code` — l'examen
     "très long" à réussir (écrit ET oral) avant de pouvoir sauter à

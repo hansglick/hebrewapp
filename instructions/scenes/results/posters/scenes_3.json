@@ -1,0 +1,62 @@
+[
+    {
+        "id": 31,
+        "scene_title": "Le café de quartier"
+    },
+    {
+        "id": 32,
+        "scene_title": "Le restaurant gastronomique"
+    },
+    {
+        "id": 33,
+        "scene_title": "La salle de cinéma"
+    },
+    {
+        "id": 34,
+        "scene_title": "La scène du théâtre"
+    },
+    {
+        "id": 35,
+        "scene_title": "Le musée d'art"
+    },
+    {
+        "id": 36,
+        "scene_title": "La bibliothèque municipale"
+    },
+    {
+        "id": 37,
+        "scene_title": "Le campus universitaire"
+    },
+    {
+        "id": 38,
+        "scene_title": "La ferme agricole dans le Golan"
+    },
+    {
+        "id": 39,
+        "scene_title": "L'avant-poste sur une colline"
+    },
+    {
+        "id": 40,
+        "scene_title": "Le chantier de construction"
+    },
+    {
+        "id": 41,
+        "scene_title": "La réception de l'hôtel"
+    },
+    {
+        "id": 42,
+        "scene_title": "La piscine municipale"
+    },
+    {
+        "id": 43,
+        "scene_title": "Le parc zoologique"
+    },
+    {
+        "id": 44,
+        "scene_title": "La boutique de vêtements"
+    },
+    {
+        "id": 45,
+        "scene_title": "La quincaillerie (magasin Tambour)"
+    }
+]
