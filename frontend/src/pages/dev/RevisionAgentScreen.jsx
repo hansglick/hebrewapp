@@ -1,0 +1,207 @@
+import { useEffect, useState } from "react";
+import { getChapitres, getLecons } from "../../api/content";
+import { getRevisionTexts } from "../../api/revisionAgent";
+import ComprehensionBoard from "./revisionAgent/ComprehensionBoard";
+import ReadingBoard from "./revisionAgent/ReadingBoard";
+import SessionSteps from "./revisionAgent/SessionSteps";
+import { useRevisionSession } from "./revisionAgent/useRevisionSession";
+import "../screens.css";
+import "./RevisionAgentScreen.css";
+
+// Tâches que l'agent fera réviser à l'étudiant (cf. demande explicite du
+// user) — « Lecture » et « Compréhension de texte » sont branchées, le
+// déroulé des autres sera décrit dans un second temps.
+const LIVE_TASKS = ["lecture", "comprehension"];
+const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une leçon qui a un texte
+const TASKS = [
+  { id: "lecture", label: "Lecture" },
+  { id: "comprehension", label: "Compréhension de texte" },
+  { id: "expression", label: "Expression libre" },
+  { id: "declinaison", label: "Déclinaison" },
+  { id: "completion", label: "Complétion" },
+  { id: "mot", label: "Mot" },
+  { id: "question", label: "Question" },
+];
+
+// Voix prédéfinies Gemini Live (même liste fermée que le prototype
+// livecoach : un nom inconnu retombe silencieusement sur une voix par
+// défaut). Style indiqué par Google · registre mesuré.
+const VOICES = [
+  ["Achernar", "feutrée · aiguë"], ["Achird", "amicale · grave"], ["Algenib", "rocailleuse · médium"],
+  ["Algieba", "douce · médium"], ["Alnilam", "ferme · grave"], ["Aoede", "légère · aiguë"],
+  ["Autonoe", "lumineuse · aiguë"], ["Callirrhoe", "décontractée · aiguë"], ["Charon", "informative · grave"],
+  ["Despina", "douce · aiguë"], ["Enceladus", "soufflée · grave"], ["Erinome", "claire · aiguë"],
+  ["Fenrir", "vive · grave"], ["Gacrux", "mûre · grave"], ["Iapetus", "claire · grave"],
+  ["Kore", "ferme · aiguë"], ["Laomedeia", "enjouée · médium"], ["Leda", "jeune · aiguë"],
+  ["Orus", "ferme · médium"], ["Puck", "enjouée · grave"], ["Pulcherrima", "affirmée · grave"],
+  ["Rasalgethi", "informative · aiguë"], ["Sadachbia", "animée · médium"], ["Sadaltager", "érudite · grave"],
+  ["Schedar", "égale · grave"], ["Sulafat", "chaleureuse · aiguë"], ["Umbriel", "décontractée · grave"],
+  ["Vindemiatrix", "tendre · aiguë"], ["Zephyr", "lumineuse · aiguë"], ["Zubenelgenubi", "détendue · médium"],
+];
+const DEFAULT_VOICE = "Zephyr"; // voix déjà utilisée par les autres conversations de l'app
+
+// Périmètre de l'agent : les 20 premières leçons, 0.01 → 0.20 (cf. demande
+// explicite du user).
+const LESSON_CHAPTER = "0";
+const LAST_LESSON = 20;
+
+// Agent conversationnel (Gemini Live 3.8, gemini-3.8-live) qui fait réviser
+// une leçon à l'étudiant (cf. app.revision_agent). Tâche « Lecture » :
+// reprise du prototype livecoach (prof Gemini Live, verbatim par Gemini 3.5
+// Flash-Lite, évaluation par gpt-6.1-sol) — le passage est tiré de la leçon
+// choisie et/ou des leçons antérieures selon les cases cochées. Tâche
+// « Compréhension de texte » : le prof seul pose des questions en boucle sur
+// le texte de la leçon choisie (les cases cochées n'y changent rien). Ces
+// deux tâches ne sont proposées que pour les leçons qui ont un texte.
+// Accessible uniquement via /dev.
+export default function RevisionAgentScreen() {
+  const [lessons, setLessons] = useState([]);
+  const [lessonCode, setLessonCode] = useState("");
+  const [voice, setVoice] = useState(DEFAULT_VOICE);
+  const [task, setTask] = useState(TASKS[0].id);
+  const [currentLesson, setCurrentLesson] = useState(true);
+  const [previousLessons, setPreviousLessons] = useState(false);
+  const [texts, setTexts] = useState(null); // leçons qui ont un texte de lecture
+  const [sessionTask, setSessionTask] = useState(null); // tâche de la dernière séance lancée (son affichage reste après l'arrêt)
+  const [error, setError] = useState("");
+  const session = useRevisionSession();
+  const active = session.status !== "idle";
+
+  useEffect(() => {
+    getChapitres()
+      .then((chapitres) => {
+        const chapitre = chapitres.find((c) => c.id === LESSON_CHAPTER);
+        return getLecons(LESSON_CHAPTER).then((lecons) => [
+          { chapitre, lecons: lecons.filter((l) => Number(l.code.split(".")[1]) <= LAST_LESSON) },
+        ]);
+      })
+      .then((groups) => {
+        setLessons(groups);
+        setLessonCode(groups[0]?.lecons[0]?.code ?? "");
+      })
+      .catch((e) => setError(e.message ?? String(e)));
+    getRevisionTexts()
+      .then(setTexts)
+      .catch((e) => setError(e.message ?? String(e)));
+  }, []);
+
+  // Lecture et compréhension n'ont pas de sens pour une leçon sans texte (cf. demande explicite du user).
+  const hasText = texts?.includes(lessonCode) ?? false;
+  const needsText = (id) => TEXT_TASKS.includes(id) && !hasText;
+  const taskAvailable = (id) => LIVE_TASKS.includes(id) && !needsText(id);
+  const scopeChosen = currentLesson || previousLessons;
+  const ready = Boolean(lessonCode && voice && taskAvailable(task) && scopeChosen);
+
+  const toggleSession = () => {
+    if (active) session.stop();
+    else {
+      setSessionTask(task);
+      session.start({ lesson: lessonCode, voice, task, current: currentLesson, previous: previousLessons });
+    }
+  };
+
+  return (
+    <section className="screen revision-agent">
+      <h1 style={{ fontSize: "1.4em" }}>Agent de révision</h1>
+      {error && <p className="muted">Impossible de charger les leçons : {error}</p>}
+
+      <fieldset className="card revision-agent-form" disabled={active}>
+        <label className="revision-agent-field">
+          Leçon
+          <select value={lessonCode} onChange={(e) => setLessonCode(e.target.value)}>
+            {lessons.map(({ chapitre, lecons }) => (
+              <optgroup key={chapitre.id} label={`Chapitre ${chapitre.id} — ${chapitre.titre}`}>
+                {lecons.map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.titre_texte ? `${l.code} — ${l.titre_texte}` : l.code}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+
+        <label className="revision-agent-field">
+          Voix du prof
+          <select value={voice} onChange={(e) => setVoice(e.target.value)}>
+            {VOICES.map(([name, description]) => (
+              <option key={name} value={name}>
+                {name} — {description}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="revision-agent-field">
+          Tâche
+          <select value={task} onChange={(e) => setTask(e.target.value)}>
+            {TASKS.map((t) => (
+              <option key={t.id} value={t.id} disabled={needsText(t.id)}>
+                {t.label}
+                {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <div className="revision-agent-field">
+          Contenu révisé
+          <div className="revision-agent-scope">
+            <label>
+              <input type="checkbox" checked={currentLesson} onChange={(e) => setCurrentLesson(e.target.checked)} />
+              Leçon en cours
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={previousLessons}
+                onChange={(e) => setPreviousLessons(e.target.checked)}
+              />
+              Leçons antérieures
+            </label>
+          </div>
+        </div>
+
+        {!scopeChosen && <p className="muted revision-agent-note">Coche au moins un contenu à réviser.</p>}
+        {scopeChosen && !taskAvailable(task) && (
+          <p className="muted revision-agent-note">
+            {needsText(task) ? "Cette leçon n'a pas de texte." : "Cette tâche n'est pas encore disponible."}
+          </p>
+        )}
+      </fieldset>
+
+      <button
+        type="button"
+        className={`revision-agent-start ${active ? "revision-agent-stop" : ""}`}
+        onClick={toggleSession}
+        disabled={!active && !ready}
+      >
+        {active ? "Arrêter la séance" : "Lancer la révision"}
+      </button>
+
+      {active && (
+        <SessionSteps
+          status={session.status}
+          phase={session.phase}
+          seconds={session.seconds}
+          showSteps={sessionTask === "lecture"}
+        />
+      )}
+      {sessionTask === "comprehension" ? (
+        <ComprehensionBoard
+          teacher={session.teacher}
+          text={session.text}
+          highlight={session.highlight}
+          notice={session.notice}
+        />
+      ) : (
+        <ReadingBoard
+          teacher={session.teacher}
+          passage={session.passage}
+          verdict={session.verdict}
+          notice={session.notice}
+        />
+      )}
+    </section>
+  );
+}

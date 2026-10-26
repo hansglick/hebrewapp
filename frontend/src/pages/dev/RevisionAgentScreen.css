@@ -1,0 +1,507 @@
+/* Agent de révision (cf. RevisionAgentScreen.jsx) — formulaire de réglages,
+   mêmes variables de couleur que le reste de l'app (clair/sombre). */
+.revision-agent {
+  justify-content: flex-start;
+  margin-top: 24px;
+  margin-bottom: auto;
+}
+
+.revision-agent-form {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: start;
+}
+
+.revision-agent-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--textPrimary);
+}
+
+.revision-agent-field select {
+  width: 100%;
+  background: var(--bg);
+  color: var(--textPrimary);
+  border: 1px solid var(--cardBorder);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.revision-agent-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  font-weight: 400;
+}
+
+.revision-agent-scope label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.revision-agent-start {
+  margin-top: 4px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--validationPleine);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.revision-agent-start:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+fieldset.revision-agent-form {
+  margin: 0;
+  min-width: 0;
+}
+
+fieldset.revision-agent-form:disabled {
+  opacity: 0.7;
+}
+
+.revision-agent-note {
+  margin: 0;
+  font-size: 0.8em;
+}
+
+.revision-agent > .revision-agent-start {
+  width: 100%;
+  max-width: 480px;
+}
+
+.revision-agent-stop {
+  background: var(--annulationPleine);
+}
+
+/* Séance « Lecture » (cf. revisionAgent/) — repris du prototype livecoach. */
+.ra-stage,
+.ra-board {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: start;
+}
+
+.ra-stage {
+  align-items: center;
+  text-align: center;
+}
+
+.ra-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 1.5em;
+}
+
+.ra-live {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--validationPleine);
+}
+
+.ra-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--validationPleine);
+  animation: ra-blink 1.4s ease-in-out infinite;
+}
+
+.ra-mono {
+  margin: 0;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 0.8em;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.ra-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ra-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 5px;
+  border-radius: 999px;
+  border: 1px solid var(--cardBorder);
+  font-size: 0.8em;
+  font-weight: 500;
+  color: var(--textSecondary);
+}
+
+.ra-step-dot {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.9em;
+  font-weight: 600;
+  background: var(--bg);
+}
+
+.ra-step-current {
+  border-color: var(--validationPleine);
+  color: var(--textPrimary);
+}
+
+.ra-step-current .ra-step-dot {
+  background: var(--validationPleine);
+  color: #fff;
+}
+
+.ra-step-done {
+  color: var(--validationPleine);
+}
+
+.ra-spinner {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ra-spinner span {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.ra-spinner span:first-child {
+  inset: -5px;
+  border-top-color: var(--validationPleine);
+  border-right-color: var(--validationPleine);
+  animation: ra-spin 0.9s linear infinite;
+}
+
+.ra-spinner span:last-child {
+  inset: -9px;
+  border-width: 1.5px;
+  border-bottom-color: var(--validationPleine);
+  opacity: 0.55;
+  animation: ra-spin 1.5s linear infinite reverse;
+}
+
+.ra-board {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.ra-alert {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(217, 45, 45, 0.12);
+  color: var(--annulationPleine);
+}
+
+.ra-speech {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--cardBg);
+  border: 1px solid var(--dividerColor, var(--cardBorder));
+}
+
+.ra-speech-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.ra-speech-row + .ra-speech-row {
+  padding-top: 10px;
+  border-top: 1px solid var(--dividerColor, var(--cardBorder));
+}
+
+.ra-flag {
+  width: 28px;
+  height: 20px;
+  margin-top: 5px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.ra-speech-he,
+.ra-speech-fr {
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.ra-speech-he {
+  font-size: 1.3em;
+  font-weight: 500;
+  color: var(--textPrimary);
+}
+
+.ra-speech-fr {
+  font-size: 0.9em;
+  color: var(--textSecondary);
+}
+
+.ra-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-inline-start: 2px;
+  vertical-align: -0.15em;
+  background: var(--validationPleine);
+  animation: ra-blink 0.9s steps(1) infinite;
+}
+
+.ra-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--cardBorder);
+  border-radius: 14px;
+}
+
+.ra-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+}
+
+.ra-label {
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--validationPleine);
+}
+
+.ra-passage {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ra-passage p {
+  margin: 0;
+  font-size: 1.6em;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--textPrimary);
+}
+
+.ra-passage-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ra-passage-french p {
+  margin: 0 0 4px;
+  font-size: 0.9em;
+  color: var(--textSecondary);
+}
+
+.ra-ghost {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--cardBorder);
+  background: transparent;
+  color: var(--textSecondary);
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.ra-block-title {
+  margin: 0 0 6px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--textSecondary);
+}
+
+.ra-verdict-passage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--cardBorder);
+}
+
+.ra-verdict-passage p {
+  margin: 0;
+  font-size: 1.35em;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.ra-mistake {
+  background: rgba(224, 168, 0, 0.22);
+  color: inherit;
+  border-radius: 4px;
+  padding: 0 2px;
+  box-shadow: inset 0 -2px 0 #e0a800;
+}
+
+.ra-mistake-severe {
+  background: rgba(217, 45, 45, 0.18);
+  box-shadow: inset 0 -2px 0 #d92d2d;
+}
+
+.ra-audio {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: 36px;
+  margin-bottom: 8px;
+}
+
+.ra-remarks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9em;
+  line-height: 1.45;
+}
+
+.ra-remarks li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  border-top: 1px solid var(--dividerColor, var(--cardBorder));
+}
+
+.ra-remark-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ra-word,
+.ra-kind {
+  border-radius: 6px;
+  background: rgba(224, 168, 0, 0.22);
+  color: var(--textPrimary);
+}
+
+.ra-word {
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 2px 10px;
+}
+
+.ra-kind {
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+}
+
+.ra-kind-severe {
+  background: rgba(217, 45, 45, 0.18);
+}
+
+.ra-phon {
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 0.8em;
+  color: var(--textSecondary);
+}
+
+.ra-phon b {
+  color: var(--textPrimary);
+}
+
+@keyframes ra-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ra-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-dot,
+  .ra-caret {
+    animation: none;
+  }
+  .ra-spinner span {
+    animation-duration: 3s;
+  }
+}
+
+/* Compréhension de texte : texte de la leçon, phrase de la solution surlignée. */
+.ra-text-title {
+  margin: 0;
+  font-size: 1.2em;
+  color: var(--textPrimary);
+}
+
+.ra-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ra-text p {
+  margin: 0;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 1.3em;
+  line-height: 1.6;
+  color: var(--textPrimary);
+  transition: background-color 0.4s, box-shadow 0.4s;
+}
+
+.ra-text p.ra-text-solution {
+  background: rgba(224, 168, 0, 0.25);
+  box-shadow: inset -3px 0 0 #e0a800;
+}

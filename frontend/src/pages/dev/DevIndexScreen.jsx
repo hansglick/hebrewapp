@@ -66,6 +66,12 @@ const PREVIEWS = [
     description:
       "Aperçu en direct de l'écran d'accueil avec 10 couleurs éditables (control barre / main space / tuile) — sans impact sur le reste de l'app.",
   },
+  {
+    to: "/dev/revision-agent",
+    label: "Agent de révision",
+    description:
+      "Un professeur IA fait réviser une leçon à l'étudiant : choix de la leçon, de la voix du prof, de la tâche et du contenu révisé (leçon en cours / leçons antérieures).",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec

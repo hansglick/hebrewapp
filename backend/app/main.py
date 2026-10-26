@@ -27,6 +27,7 @@ from app.routers import (
     practice,
     qcm,
     revision,
+    revision_agent,
     stats,
     tts,
     wallet,
@@ -54,6 +55,7 @@ app.include_router(wallet.router)
 app.include_router(curiosites.router)
 app.include_router(jdr.router)
 app.include_router(revision.router)
+app.include_router(revision_agent.router)
 app.include_router(concept.router)
 app.include_router(qcm.router)
 app.include_router(conversation_eval.router)
