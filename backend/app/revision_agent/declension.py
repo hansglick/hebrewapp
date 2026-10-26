@@ -78,6 +78,10 @@ class DeclensionSession(TeacherSession):
         self.lesson = lesson
         self.pool = pool
         self.used: set[str] = set()  # phrases déjà proposées dans la séance
+        # Après un échec, l'exercice suivant attend que l'élève appuie sur « Question suivante » (cf. demande
+        # explicite du user) : la réponse à phrase_suivante, bloquante, est retenue jusque-là.
+        self.paused = False
+        self.pending_call: dict | None = None
         super().__init__(browser, GeminiLive(voice, prompts.DECLENSION_INSTRUCTIONS, prompts.DECLENSION_START,
                                              [NEXT_SENTENCE_TOOL, CORRECTION_TOOL]))
 
@@ -97,20 +101,38 @@ class DeclensionSession(TeacherSession):
 
     async def on_tool_call(self, call: dict) -> None:
         if call["name"] == NEXT_SENTENCE_TOOL["name"]:
-            exercise = self.draw()
-            if exercise is None:
-                await self.live.tool_response(call["id"], call["name"], {"erreur": "aucune phrase disponible"})
+            if self.paused:
+                log.info("exercice suivant en attente de l'élève")
+                self.pending_call = call
                 return
-            log.info("exercice : %s · %s", exercise.sentence, exercise.instruction)
-            await self.to_browser(CLEAR_ANSWER)
-            await self.to_browser({"type": "exercise", "exercise": {
-                "lesson": exercise.lesson, "sentence": exercise.sentence, "target": list(exercise.target),
-            }})
-            await self.live.tool_response(call["id"], call["name"], {
-                "phrase": exercise.sentence, "consigne": exercise.instruction,
-            })
+            await self.next_exercise(call)
         elif call["name"] == CORRECTION_TOOL["name"]:
             await self.to_browser(answer_message(call["args"]))
+            if not call["args"].get("reussi"):
+                self.paused = True
+                await self.to_browser({"type": "pause", "paused": True})
             await self.live.tool_response(call["id"], call["name"], {"resultat": "correction affichée"}, silent=True)
         else:
             await super().on_tool_call(call)
+
+    async def on_browser_message(self, data: dict) -> None:
+        if data.get("type") == "next" and self.paused:
+            self.paused = False
+            await self.to_browser({"type": "pause", "paused": False})
+            call, self.pending_call = self.pending_call, None
+            if call:  # sinon, le prof n'a pas encore demandé la phrase suivante : elle partira dès qu'il le fera
+                await self.next_exercise(call)
+
+    async def next_exercise(self, call: dict) -> None:
+        exercise = self.draw()
+        if exercise is None:
+            await self.live.tool_response(call["id"], call["name"], {"erreur": "aucune phrase disponible"})
+            return
+        log.info("exercice : %s · %s", exercise.sentence, exercise.instruction)
+        await self.to_browser(CLEAR_ANSWER)
+        await self.to_browser({"type": "exercise", "exercise": {
+            "lesson": exercise.lesson, "sentence": exercise.sentence, "target": list(exercise.target),
+        }})
+        await self.live.tool_response(call["id"], call["name"], {
+            "phrase": exercise.sentence, "consigne": exercise.instruction,
+        })

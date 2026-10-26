@@ -269,6 +269,8 @@ export default function RevisionAgentScreen() {
           exercise={session.exercise}
           answer={session.answer}
           notice={session.notice}
+          paused={session.paused}
+          onNext={session.next}
         />
       ) : (
         <ReadingBoard

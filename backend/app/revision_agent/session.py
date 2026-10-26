@@ -117,8 +117,11 @@ class TeacherSession:
             if message.get("bytes") is not None:
                 if self.started_at is not None:
                     await self.on_microphone(message["bytes"])
-            elif message.get("text") and json.loads(message["text"]).get("type") == "stop":
-                return
+            elif message.get("text"):
+                data = json.loads(message["text"])
+                if data.get("type") == "stop":
+                    return
+                await self.on_browser_message(data)
 
     async def on_microphone(self, pcm: bytes) -> None:
         await self.live.send_audio(pcm)
@@ -181,6 +184,8 @@ class TeacherSession:
     async def on_started(self) -> None: ...
 
     async def on_user_text(self, text: str) -> None: ...
+
+    async def on_browser_message(self, data: dict) -> None: ...
 
     async def on_tool_call(self, call: dict) -> None:
         await self.live.tool_response(call["id"], call["name"], {"erreur": "fonction inconnue"})

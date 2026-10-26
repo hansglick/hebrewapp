@@ -633,3 +633,16 @@ fieldset.revision-agent-form:disabled {
   font-size: 0.95em;
   color: var(--textSecondary);
 }
+
+/* Déclinaison : après un échec, l'élève déclenche lui-même l'exercice suivant. */
+.ra-next {
+  align-self: center;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 10px;
+  background: var(--validationPleine);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+}

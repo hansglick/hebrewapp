@@ -12,6 +12,7 @@ import { AudioLink } from "./audio";
 // (début de phrase, indice), answer et solution (phrase d'origine, mots du
 // concept). Mot : exercise (mot, traduction, indice), answer et solution.
 // Question : exercise (phrase, indice), answer et solution (question modèle).
+// paused : après un échec en déclinaison, l'exercice suivant attend next().
 export function useRevisionSession() {
   const [status, setStatus] = useState("idle");
   const [phase, setPhase] = useState(null);
@@ -27,6 +28,7 @@ export function useRevisionSession() {
   const [exercise, setExercise] = useState(null);
   const [solution, setSolution] = useState(null);
   const [notice, setNotice] = useState(null);
+  const [paused, setPaused] = useState(false);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -64,6 +66,7 @@ export function useRevisionSession() {
       setExercise(null);
       setSolution(null);
       setNotice(null);
+      setPaused(false);
       setStatus("connecting");
 
       const audio = new AudioLink();
@@ -115,6 +118,9 @@ export function useRevisionSession() {
           case "solution":
             setSolution(msg.solution);
             break;
+          case "pause":
+            setPaused(msg.paused);
+            break;
           case "interrupt":
             audioRef.current?.flush();
             break;
@@ -130,6 +136,7 @@ export function useRevisionSession() {
         teardown();
         setStatus("idle");
         setPhase(null);
+        setPaused(false);
       };
 
       try {
@@ -151,5 +158,13 @@ export function useRevisionSession() {
     else ws.close();
   }, []);
 
-  return { status, phase, seconds, teacher, passage, verdict, text, highlight, hint, answer, exercise, solution, notice, start, stop };
+  const next = useCallback(() => {
+    const ws = wsRef.current;
+    if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: "next" }));
+  }, []);
+
+  return {
+    status, phase, seconds, teacher, passage, verdict, text, highlight, hint, answer, exercise, solution, notice, paused,
+    start, stop, next,
+  };
 }

@@ -5,7 +5,9 @@ import TeacherSpeech from "./TeacherSpeech";
 // parole du prof, la phrase à transformer (le sujet ou le pronom objet à
 // modifier surligné), puis — au moment de la correction seulement — sa phrase
 // telle que le prof l'a comprise, mots fautifs en rouge, réussi / échec.
-export default function DeclensionBoard({ teacher, exercise, answer, notice }) {
+// Après un échec, l'exercice suivant attend que l'élève appuie sur
+// « Question suivante ».
+export default function DeclensionBoard({ teacher, exercise, answer, notice, paused, onNext }) {
   if (!teacher && !exercise && !answer && !notice) return null;
 
   return (
@@ -28,6 +30,12 @@ export default function DeclensionBoard({ teacher, exercise, answer, notice }) {
       )}
 
       {answer && <AnswerCard answer={answer} />}
+
+      {paused && (
+        <button type="button" className="ra-next" onClick={onNext}>
+          Question suivante
+        </button>
+      )}
     </div>
   );
 }
