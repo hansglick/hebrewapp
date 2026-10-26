@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { getChapitres, getLecons } from "../../api/content";
-import { getRevisionTexts } from "../../api/revisionAgent";
+import { getRevisionTexts, getRevisionVocabulary } from "../../api/revisionAgent";
+import CompletionBoard from "./revisionAgent/CompletionBoard";
 import ComprehensionBoard from "./revisionAgent/ComprehensionBoard";
+import DeclensionBoard from "./revisionAgent/DeclensionBoard";
+import ExpressionBoard from "./revisionAgent/ExpressionBoard";
+import QuestionBoard from "./revisionAgent/QuestionBoard";
 import ReadingBoard from "./revisionAgent/ReadingBoard";
+import WordBoard from "./revisionAgent/WordBoard";
 import SessionSteps from "./revisionAgent/SessionSteps";
 import { useRevisionSession } from "./revisionAgent/useRevisionSession";
 import "../screens.css";
 import "./RevisionAgentScreen.css";
 
 // Tâches que l'agent fera réviser à l'étudiant (cf. demande explicite du
-// user) — « Lecture » et « Compréhension de texte » sont branchées, le
-// déroulé des autres sera décrit dans un second temps.
-const LIVE_TASKS = ["lecture", "comprehension"];
+// user) — toutes sont branchées.
+const LIVE_TASKS = ["lecture", "comprehension", "expression", "declinaison", "completion", "mot", "question"];
+// Phrases tirées des leçons cochées : toutes les leçons en ont.
+const PHRASE_TASKS = ["declinaison", "completion", "mot", "question"];
+// Leçons dont toutes les phrases sont déjà des questions : rien à faire questionner.
+const QUESTIONLESS_LESSONS = ["0.15"];
 const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une leçon qui a un texte
 const TASKS = [
   { id: "lecture", label: "Lecture" },
@@ -52,8 +60,17 @@ const LAST_LESSON = 20;
 // choisie et/ou des leçons antérieures selon les cases cochées. Tâche
 // « Compréhension de texte » : le prof seul pose des questions en boucle sur
 // le texte de la leçon choisie (les cases cochées n'y changent rien). Ces
-// deux tâches ne sont proposées que pour les leçons qui ont un texte.
-// Accessible uniquement via /dev.
+// deux tâches ne sont proposées que pour les leçons qui ont un texte. Tâche
+// « Expression libre » : le prof seul pose des questions de mise en
+// situation, avec pour matière les mots et verbes des leçons cochées. Tâche
+// « Déclinaison » : l'application tire une phrase des leçons cochées et une
+// transformation, le prof la fait faire et corrige. Tâche « Complétion » :
+// l'application tire une phrase et un de ses concepts et la tronque, l'élève
+// la complète en suivant l'indice. Tâche « Mot » : l'application tire une
+// phrase et un mot du vocabulaire qu'elle contient, l'élève construit une
+// phrase avec ce mot en suivant l'indice. Tâche « Question » : l'application
+// tire une affirmation et un indice (groupe interrogatif), l'élève pose la
+// question qui y mène. Accessible uniquement via /dev.
 export default function RevisionAgentScreen() {
   const [lessons, setLessons] = useState([]);
   const [lessonCode, setLessonCode] = useState("");
@@ -62,6 +79,7 @@ export default function RevisionAgentScreen() {
   const [currentLesson, setCurrentLesson] = useState(true);
   const [previousLessons, setPreviousLessons] = useState(false);
   const [texts, setTexts] = useState(null); // leçons qui ont un texte de lecture
+  const [vocabularyLessons, setVocabularyLessons] = useState(null); // leçons qui apportent des mots ou des verbes
   const [sessionTask, setSessionTask] = useState(null); // tâche de la dernière séance lancée (son affichage reste après l'arrêt)
   const [error, setError] = useState("");
   const session = useRevisionSession();
@@ -83,12 +101,28 @@ export default function RevisionAgentScreen() {
     getRevisionTexts()
       .then(setTexts)
       .catch((e) => setError(e.message ?? String(e)));
+    getRevisionVocabulary()
+      .then(setVocabularyLessons)
+      .catch((e) => setError(e.message ?? String(e)));
   }, []);
 
   // Lecture et compréhension n'ont pas de sens pour une leçon sans texte (cf. demande explicite du user).
   const hasText = texts?.includes(lessonCode) ?? false;
   const needsText = (id) => TEXT_TASKS.includes(id) && !hasText;
-  const taskAvailable = (id) => LIVE_TASKS.includes(id) && !needsText(id);
+  // L'expression libre a besoin de mots ou de verbes dans les leçons cochées (codes « 0.NN » : l'ordre
+  // alphabétique est celui des leçons).
+  const hasVocabulary = (vocabularyLessons ?? []).some(
+    (code) => (currentLesson && code === lessonCode) || (previousLessons && code < lessonCode),
+  );
+  const needsVocabulary = (id) => id === "expression" && !hasVocabulary;
+  // Toutes les leçons ont des phrases à décliner, à compléter et des mots à employer : seule la toute
+  // première leçon n'a pas de leçon antérieure.
+  const firstLesson = lessons[0]?.lecons[0]?.code;
+  const needsPhrases = (id) => PHRASE_TASKS.includes(id) && !currentLesson && lessonCode === firstLesson;
+  const needsAnswers = (id) =>
+    id === "question" && currentLesson && !previousLessons && QUESTIONLESS_LESSONS.includes(lessonCode);
+  const taskAvailable = (id) =>
+    LIVE_TASKS.includes(id) && !needsText(id) && !needsVocabulary(id) && !needsPhrases(id) && !needsAnswers(id);
   const scopeChosen = currentLesson || previousLessons;
   const ready = Boolean(lessonCode && voice && taskAvailable(task) && scopeChosen);
 
@@ -136,9 +170,10 @@ export default function RevisionAgentScreen() {
           Tâche
           <select value={task} onChange={(e) => setTask(e.target.value)}>
             {TASKS.map((t) => (
-              <option key={t.id} value={t.id} disabled={needsText(t.id)}>
+              <option key={t.id} value={t.id} disabled={needsText(t.id) || needsVocabulary(t.id)}>
                 {t.label}
                 {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
+                {needsVocabulary(t.id) ? " (aucun mot dans les leçons cochées)" : ""}
               </option>
             ))}
           </select>
@@ -165,7 +200,15 @@ export default function RevisionAgentScreen() {
         {!scopeChosen && <p className="muted revision-agent-note">Coche au moins un contenu à réviser.</p>}
         {scopeChosen && !taskAvailable(task) && (
           <p className="muted revision-agent-note">
-            {needsText(task) ? "Cette leçon n'a pas de texte." : "Cette tâche n'est pas encore disponible."}
+            {needsText(task)
+              ? "Cette leçon n'a pas de texte."
+              : needsVocabulary(task)
+                ? "Aucun mot ni verbe dans les leçons cochées."
+                : needsPhrases(task)
+                  ? "Aucune leçon antérieure à la première leçon."
+                  : needsAnswers(task)
+                    ? "Cette leçon ne contient que des questions."
+                    : "Cette tâche n'est pas encore disponible."}
           </p>
         )}
       </fieldset>
@@ -192,6 +235,39 @@ export default function RevisionAgentScreen() {
           teacher={session.teacher}
           text={session.text}
           highlight={session.highlight}
+          notice={session.notice}
+        />
+      ) : sessionTask === "expression" ? (
+        <ExpressionBoard teacher={session.teacher} hint={session.hint} answer={session.answer} notice={session.notice} />
+      ) : sessionTask === "question" ? (
+        <QuestionBoard
+          teacher={session.teacher}
+          exercise={session.exercise}
+          answer={session.answer}
+          solution={session.solution}
+          notice={session.notice}
+        />
+      ) : sessionTask === "mot" ? (
+        <WordBoard
+          teacher={session.teacher}
+          exercise={session.exercise}
+          answer={session.answer}
+          solution={session.solution}
+          notice={session.notice}
+        />
+      ) : sessionTask === "completion" ? (
+        <CompletionBoard
+          teacher={session.teacher}
+          exercise={session.exercise}
+          answer={session.answer}
+          solution={session.solution}
+          notice={session.notice}
+        />
+      ) : sessionTask === "declinaison" ? (
+        <DeclensionBoard
+          teacher={session.teacher}
+          exercise={session.exercise}
+          answer={session.answer}
           notice={session.notice}
         />
       ) : (

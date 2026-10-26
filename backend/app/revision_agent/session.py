@@ -139,11 +139,14 @@ class TeacherSession:
             log.info("élève : %s", event.data)
             await self.on_user_text(event.data)
         elif event.kind == "turn_complete":
+            log.info("fin du tour du prof")
             self.end_turn()
         elif event.kind == "tool_call":
             log.info("fonction %s %s", event.data["name"], event.data["args"])
             await self.on_tool_call(event.data)
         elif event.kind == "interrupted":
+            # Gemini a détecté de la parole côté élève pendant que le prof parlait.
+            log.info("prof interrompu")
             self.end_turn()
             self.playback_until = self.teacher_until = now
             await self.to_browser({"type": "interrupt"})

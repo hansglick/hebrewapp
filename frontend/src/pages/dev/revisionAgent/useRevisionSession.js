@@ -6,6 +6,12 @@ import { AudioLink } from "./audio";
 // status "idle" | "connecting" | "live". Lecture : phase "greeting" |
 // "instruction" | "reading" | "verdict" | "done", passage, verdict.
 // Compréhension : text (texte de la leçon) et highlight (phrases surlignées).
+// Expression libre : hint (mots de l'indice) et answer (phrase de l'élève
+// comprise par le prof, mots fautifs, réussite). Déclinaison : exercise
+// (phrase à transformer, mot à modifier) et answer. Complétion : exercise
+// (début de phrase, indice), answer et solution (phrase d'origine, mots du
+// concept). Mot : exercise (mot, traduction, indice), answer et solution.
+// Question : exercise (phrase, indice), answer et solution (question modèle).
 export function useRevisionSession() {
   const [status, setStatus] = useState("idle");
   const [phase, setPhase] = useState(null);
@@ -16,6 +22,10 @@ export function useRevisionSession() {
   const [verdict, setVerdict] = useState(null);
   const [text, setText] = useState(null);
   const [highlight, setHighlight] = useState([]);
+  const [hint, setHint] = useState([]);
+  const [answer, setAnswer] = useState(null);
+  const [exercise, setExercise] = useState(null);
+  const [solution, setSolution] = useState(null);
   const [notice, setNotice] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
@@ -49,6 +59,10 @@ export function useRevisionSession() {
       setVerdict(null);
       setText(null);
       setHighlight([]);
+      setHint([]);
+      setAnswer(null);
+      setExercise(null);
+      setSolution(null);
       setNotice(null);
       setStatus("connecting");
 
@@ -89,6 +103,18 @@ export function useRevisionSession() {
           case "highlight":
             setHighlight(msg.phrases);
             break;
+          case "hint":
+            setHint(msg.words);
+            break;
+          case "answer":
+            setAnswer(msg.answer);
+            break;
+          case "exercise":
+            setExercise(msg.exercise);
+            break;
+          case "solution":
+            setSolution(msg.solution);
+            break;
           case "interrupt":
             audioRef.current?.flush();
             break;
@@ -125,5 +151,5 @@ export function useRevisionSession() {
     else ws.close();
   }, []);
 
-  return { status, phase, seconds, teacher, passage, verdict, text, highlight, notice, start, stop };
+  return { status, phase, seconds, teacher, passage, verdict, text, highlight, hint, answer, exercise, solution, notice, start, stop };
 }

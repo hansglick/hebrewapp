@@ -1,0 +1,5044 @@
+{
+ "0.01:0": [
+  {
+   "text": "הן גרות בתל אביב ודוד גר בירושלים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הן גרות ואיפה דוד גר?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.01:1": [
+  {
+   "text": "אתם לומדים בתל אביב ?",
+   "questions": []
+  },
+  {
+   "text": "כן אנחנו לומדים בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אתם לומדים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.01:2": [
+  {
+   "text": "חנה איפה את גרה ?",
+   "questions": []
+  },
+  {
+   "text": "אני גרה בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה את גרה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.01:3": [
+  {
+   "text": "חנה ושרה גרות בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה חנה ושרה גרות?",
+     "interrogative": "איפה"
+    }
+   ]
+  },
+  {
+   "text": "הן לומדות עברית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הן לומדות?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.01:4": [
+  {
+   "text": "דוד תלמיד ?",
+   "questions": []
+  },
+  {
+   "text": "כן הוא תלמיד.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי תלמיד?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.01:5": [
+  {
+   "text": "דוד וחנה לומדים עברית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד וחנה לומדים?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.01:6": [
+  {
+   "text": "דוד וחנה לומדים עברית בתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד וחנה לומדים בתל אביב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה דוד וחנה לומדים עברית?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.01:7": [
+  {
+   "text": "חנה גרה בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה חנה גרה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גרה בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.01:8": [
+  {
+   "text": "דוד גר בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה דוד גר?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.01:9": [
+  {
+   "text": "כן, חנה תלמידה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי תלמידה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.01:10": [
+  {
+   "text": "מה דוד וחנה לומדים ?",
+   "questions": []
+  }
+ ],
+ "0.01:11": [
+  {
+   "text": "איפה דוד וחנה לומדים עברית ?",
+   "questions": []
+  }
+ ],
+ "0.01:12": [
+  {
+   "text": "איפה חנה גרה ?",
+   "questions": []
+  }
+ ],
+ "0.01:13": [
+  {
+   "text": "איפה דוד גר ?",
+   "questions": []
+  }
+ ],
+ "0.01:14": [
+  {
+   "text": "חנה תלמידה ?",
+   "questions": []
+  }
+ ],
+ "0.01:15": [
+  {
+   "text": "אני אלי, מי אתה?",
+   "questions": []
+  },
+  {
+   "text": "אתה רוני?",
+   "questions": []
+  }
+ ],
+ "0.01:16": [
+  {
+   "text": "לא, אני לא רוני, אני איציק.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי אתה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.01:17": [
+  {
+   "text": "זה דוד, זאת חנה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי זה ומי זאת?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "הוא תלמיד, היא תלמידה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי תלמיד ומי תלמידה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.01:18": [
+  {
+   "text": "מה הם לומדים?",
+   "questions": []
+  }
+ ],
+ "0.01:19": [
+  {
+   "text": "הם לומדים עברית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הם לומדים?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.01:20": [
+  {
+   "text": "חנה ודוד, איפה אתם לומדים עברית?",
+   "questions": []
+  }
+ ],
+ "0.01:21": [
+  {
+   "text": "אנחנו לומדים עברית בתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתם לומדים בתל אביב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה אתם לומדים עברית?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.01:22": [
+  {
+   "text": "חנה, איפה את גרה?",
+   "questions": []
+  }
+ ],
+ "0.01:23": [
+  {
+   "text": "אני גרה בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה את גרה?",
+     "interrogative": "איפה"
+    }
+   ]
+  },
+  {
+   "text": "דוד, איפה אתה גר?",
+   "questions": []
+  }
+ ],
+ "0.01:24": [
+  {
+   "text": "גם אני גר בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה גם אתה גר?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.02:0": [
+  {
+   "text": "הוא קורא ספר בכיתה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הוא קורא ספר?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא קורא בכיתה?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.02:1": [
+  {
+   "text": "חנה ולאה קוראות עיתון וכותבות מכתב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קורא עיתון וכותב מכתב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:2": [
+  {
+   "text": "דוד יושב בכיתה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה דוד יושב?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי יושב בכיתה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:3": [
+  {
+   "text": "הם לא גרים בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם לא גרים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.02:4": [
+  {
+   "text": "את לומדת עברית בתל אביב?",
+   "questions": []
+  },
+  {
+   "text": "כן, אני לומדת עברית בתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה את לומדת בתל אביב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה את לומדת עברית?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.02:5": [
+  {
+   "text": "חנה ולאה תלמידות?",
+   "questions": []
+  },
+  {
+   "text": "כן, הן תלמידות.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הן?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.02:6": [
+  {
+   "text": "רוני קורא עיתון.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה רוני קורא?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי קורא עיתון?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:7": [
+  {
+   "text": "דוד כותב מכתב לחנה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד כותב לחנה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי דוד כותב מכתב?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי כותב מכתב לחנה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:8": [
+  {
+   "text": "חנה גרה בישראל.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה חנה גרה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר בישראל?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:9": [
+  {
+   "text": "רוני מישראל.",
+   "questions": [
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה רוני?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.02:10": [
+  {
+   "text": "יעל ושלמה גרים בישראל.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יעל ושלמה גרים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר בישראל?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:11": [
+  {
+   "text": "יעל ושלמה לומדים עברית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יעל ושלמה לומדים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד עברית?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:12": [
+  {
+   "text": "מה רוני קורא ?",
+   "questions": []
+  }
+ ],
+ "0.02:13": [
+  {
+   "text": "מה דוד כותב ?",
+   "questions": []
+  }
+ ],
+ "0.02:14": [
+  {
+   "text": "איפה חנה גרה ?",
+   "questions": []
+  }
+ ],
+ "0.02:15": [
+  {
+   "text": "מאיפה רוני ?",
+   "questions": []
+  }
+ ],
+ "0.02:16": [
+  {
+   "text": "איפה יעל ושלמה גרים ?",
+   "questions": []
+  }
+ ],
+ "0.02:17": [
+  {
+   "text": "מה יעל ושלמה לומדים ?",
+   "questions": []
+  }
+ ],
+ "0.02:18": [
+  {
+   "text": "שלום רוני, מה אתה קורא ?",
+   "questions": []
+  }
+ ],
+ "0.02:19": [
+  {
+   "text": "אני קורא עיתון, ואתה דוד מה אתה כותב ?",
+   "questions": []
+  }
+ ],
+ "0.02:20": [
+  {
+   "text": "אני כותב מכתב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה כותב?",
+     "interrogative": "מה"
+    }
+   ]
+  },
+  {
+   "text": "המכתב לחנה, היא גרה בישראל.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי המכתב?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה חנה גרה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.02:21": [
+  {
+   "text": "חנה מישראל ?",
+   "questions": []
+  }
+ ],
+ "0.02:22": [
+  {
+   "text": "כן, היא מישראל.",
+   "questions": [
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה היא?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  },
+  {
+   "text": "ואתה רוני, מאיפה אתה ?",
+   "questions": []
+  }
+ ],
+ "0.02:23": [
+  {
+   "text": "גם אני מישראל.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי גם מישראל?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.02:24": [
+  {
+   "text": "רוני, מי אלה ?",
+   "questions": []
+  }
+ ],
+ "0.02:25": [
+  {
+   "text": "זה שלמה וזאת יעל.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי אלה?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "הם גם גרים בישראל.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם גם גרים?",
+     "interrogative": "איפה"
+    }
+   ]
+  },
+  {
+   "text": "בישראל הם לומדים עברית.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם לומדים עברית?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הם לומדים בישראל?",
+     "interrogative": "מה"
+    }
+   ]
+  },
+  {
+   "text": "הם לומדים בכיתה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם לומדים?",
+     "interrogative": "איפה"
+    }
+   ]
+  },
+  {
+   "text": "בכיתה הם יושבים, כותבים וקוראים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם יושבים, כותבים וקוראים?",
+     "interrogative": "איפה"
+    }
+   ]
+  },
+  {
+   "text": "הכיתה בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הכיתה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.03:0": [
+  {
+   "text": "איפה אתה גר?",
+   "questions": []
+  }
+ ],
+ "0.03:1": [
+  {
+   "text": "אני קורא ספר!",
+   "questions": []
+  }
+ ],
+ "0.03:2": [
+  {
+   "text": "זה ספר, זה עיתון, זה מכתב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה זה?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.03:3": [
+  {
+   "text": "כן זאת שרה, זאת תלמידה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי זאת?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.03:4": [
+  {
+   "text": "היא לומדת עברית בכיתה, היא לא מישראל.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה היא לומדת בכיתה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה היא לומדת עברית?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.03:5": [
+  {
+   "text": "התלמידים לומדים עברית, הם מתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה התלמידים לומדים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה הם?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.03:6": [
+  {
+   "text": "דוד, מי הם?",
+   "questions": []
+  },
+  {
+   "text": "ומה הם כותבים?",
+   "questions": []
+  }
+ ],
+ "0.03:7": [
+  {
+   "text": "בתל אביב התלמידים יושבים וקוראים עיתון.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה התלמידים יושבים וקוראים עיתון?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.03:8": [
+  {
+   "text": "אני לומד עברית, אני מתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה לומד?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה אתה?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.03:9": [
+  {
+   "text": "אני קורא ספר ואתה כותב מכתב לחנה.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי אני כותב מכתב?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.03:10": [
+  {
+   "text": "מאיפה אתה?",
+   "questions": []
+  },
+  {
+   "text": "אני מישראל.",
+   "questions": [
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה אתה?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.03:11": [
+  {
+   "text": "גם הם גרים בתל אביב ולומדים עברית.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה גם הם גרים ולומדים עברית?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.03:12": [
+  {
+   "text": "איפה אתה יושב?",
+   "questions": []
+  }
+ ],
+ "0.03:13": [
+  {
+   "text": "גם אתם כותבים מכתבים?",
+   "questions": []
+  }
+ ],
+ "0.04:0": [
+  {
+   "text": "לאן אתם טסים ?",
+   "questions": []
+  }
+ ],
+ "0.04:1": [
+  {
+   "text": "לאן אתן נוסעות ?",
+   "questions": []
+  },
+  {
+   "text": "אנחנו נוסעות לפריז.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן אתן נוסעות?",
+     "interrogative": "לאן"
+    }
+   ]
+  }
+ ],
+ "0.04:2": [
+  {
+   "text": "חנה מטיילת בפריז עם שלמה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה חנה מטיילת עם שלמה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי חנה מטיילת בפריז?",
+     "interrogative": "עם מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מטיילת בפריז עם שלמה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.04:3": [
+  {
+   "text": "מה אתה עושה בישראל ?",
+   "questions": []
+  },
+  {
+   "text": "אני מטייל בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אתה מטייל?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.04:4": [
+  {
+   "text": "שלמה טס לישראל.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן שלמה טס?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי טס לישראל?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.04:5": [
+  {
+   "text": "דוד נוסע לפריז.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן דוד נוסע?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נוסע לפריז?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.04:6": [
+  {
+   "text": "דוד נוסע ברכבת.",
+   "questions": [
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה דוד נוסע?",
+     "interrogative": "במה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נוסע ברכבת?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.04:7": [
+  {
+   "text": "דוד נוסע עם חנה.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי דוד נוסע?",
+     "interrogative": "עם מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נוסע עם חנה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.04:8": [
+  {
+   "text": "שלמה מטייל בירושלים ובתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה מטייל?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מטייל בירושלים ובתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.04:9": [
+  {
+   "text": "לאן שלמה טס ?",
+   "questions": []
+  }
+ ],
+ "0.04:10": [
+  {
+   "text": "לאן דוד נוסע ?",
+   "questions": []
+  }
+ ],
+ "0.04:11": [
+  {
+   "text": "דוד נוסע ברכבת או טס במטוס ?",
+   "questions": []
+  }
+ ],
+ "0.04:12": [
+  {
+   "text": "עם מי דוד נוסע ?",
+   "questions": []
+  }
+ ],
+ "0.04:13": [
+  {
+   "text": "מה שלמה עושה בישראל ?",
+   "questions": []
+  }
+ ],
+ "0.04:14": [
+  {
+   "text": "שלום שלמה, לאן אתה טס?",
+   "questions": []
+  }
+ ],
+ "0.04:15": [
+  {
+   "text": "אני טס לישראל במטוס ואתה דוד לאן אתה נוסע?",
+   "questions": []
+  }
+ ],
+ "0.04:16": [
+  {
+   "text": "אני נוסע ברכבת לפריז.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן אתה נוסע ברכבת?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה אתה נוסע לפריז?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.04:17": [
+  {
+   "text": "עם מי אתה נוסע?",
+   "questions": []
+  }
+ ],
+ "0.04:18": [
+  {
+   "text": "אני נוסע עם חנה.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי אתה נוסע?",
+     "interrogative": "עם מי"
+    }
+   ]
+  }
+ ],
+ "0.04:19": [
+  {
+   "text": "פריז זאת עיר גדולה ויפה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה זאת פריז?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.04:20": [
+  {
+   "text": "גם ירושלים זאת עיר גדולה ויפה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה זאת ירושלים?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.04:21": [
+  {
+   "text": "שלמה, מה אתה עושה בישראל?",
+   "questions": []
+  }
+ ],
+ "0.04:22": [
+  {
+   "text": "בישראל אני מטייל בירושלים ובתל-אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אתה מטייל בישראל?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.04:23": [
+  {
+   "text": "איפה אתה לומד?",
+   "questions": []
+  }
+ ],
+ "0.04:24": [
+  {
+   "text": "אני לומד בבית.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אתה לומד?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.04:25": [
+  {
+   "text": "לאן אתה נוסע?",
+   "questions": []
+  }
+ ],
+ "0.04:26": [
+  {
+   "text": "אני נוסע לישראל.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן אתה נוסע?",
+     "interrogative": "לאן"
+    }
+   ]
+  }
+ ],
+ "0.05:0": [
+  {
+   "text": "הן גרות בתל אביב ודוד גר בירושלים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הן גרות?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה דוד גר?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:1": [
+  {
+   "text": "אתם לומדים בתל אביב?",
+   "questions": []
+  },
+  {
+   "text": "כן אנחנו לומדים בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אתם לומדים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:2": [
+  {
+   "text": "חנה ושרה גרות בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה חנה ושרה גרות?",
+     "interrogative": "איפה"
+    }
+   ]
+  },
+  {
+   "text": "הן לומדות עברית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הן לומדות?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.05:3": [
+  {
+   "text": "שלמה גר בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה גר?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.05:4": [
+  {
+   "text": "לא, אין טלוויזיה בדירה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה אין טלוויזיה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:5": [
+  {
+   "text": "שלמה לומד בדירה, קורא ספר ושומע מוסיקה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה שלמה שומע בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה לומד?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:6": [
+  {
+   "text": "מהחלון בדירה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא רואה מהחלון בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.05:7": [
+  {
+   "text": "איפה שלמה גר ?",
+   "questions": []
+  }
+ ],
+ "0.05:8": [
+  {
+   "text": "יש טלוויזיה בדירה ?",
+   "questions": []
+  }
+ ],
+ "0.05:9": [
+  {
+   "text": "מה שלמה עושה בדירה ?",
+   "questions": []
+  }
+ ],
+ "0.05:10": [
+  {
+   "text": "מה שלמה רואה מהחלון ?",
+   "questions": []
+  }
+ ],
+ "0.05:11": [
+  {
+   "text": "שלמה גר בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה גר?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.05:12": [
+  {
+   "text": "הוא לומד עברית באולפן בתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא לומד באולפן בתל אביב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה הוא לומד עברית?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד עברית באולפן בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.05:13": [
+  {
+   "text": "הוא גר על יד תל אביב בדירה קטנה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הוא גר?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר על יד תל אביב בדירה קטנה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.05:14": [
+  {
+   "text": "בדירה יש שולחן גדול כיסא ומיטה קטנה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה יש שולחן גדול, כיסא ומיטה קטנה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:15": [
+  {
+   "text": "בדירה יש ספרים אבל אין טלוויזיה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה יש ספרים אבל אין טלוויזיה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:16": [
+  {
+   "text": "שלמה לומד בדירה, קורא ספר ושומע מוסיקה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה שלמה שומע בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה לומד?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:17": [
+  {
+   "text": "מהחלון בדירה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא רואה מהחלון בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.05:18": [
+  {
+   "text": "בשבת, שלמה לא עובד ולא לומד הוא נח.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לא עובד ולא לומד ונח?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.05:19": [
+  {
+   "text": "אין ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.05:20": [
+  {
+   "text": "יש ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.05:21": [
+  {
+   "text": "אין תלמידים בכיתה",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אין תלמידים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:22": [
+  {
+   "text": "יש תלמידים בכיתה",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש תלמידים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.05:23": [
+  {
+   "text": "אין עיתון",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.05:24": [
+  {
+   "text": "יש עיתון",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.06:0": [
+  {
+   "text": "איפה אתה?",
+   "questions": []
+  }
+ ],
+ "0.06:1": [
+  {
+   "text": "לאן אתה טס?",
+   "questions": []
+  }
+ ],
+ "0.06:2": [
+  {
+   "text": "אני נוסע ברכבת לתל אביב.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן אתה נוסע ברכבת?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "en quoi ?",
+     "question": "במה אתה נוסע לתל אביב?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.06:3": [
+  {
+   "text": "ירושלים, זאת עיר קטנה?",
+   "questions": []
+  }
+ ],
+ "0.06:4": [
+  {
+   "text": "דוד, מה אתה עושה בפריז?",
+   "questions": []
+  }
+ ],
+ "0.06:5": [
+  {
+   "text": "בדירה בתל אביב יש שולחן, כיסאות וטלוויזיה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש שולחן, כיסאות וטלוויזיה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש בדירה בתל אביב?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.06:6": [
+  {
+   "text": "בשבת הם לא עובדים, הם נחים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לא עובדים בשבת ונחים?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.06:7": [
+  {
+   "text": "אתה שומע מוזיקה והיא לומדת.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי שומע מוזיקה ומי לומדת?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.06:8": [
+  {
+   "text": "בגינה אין מכוניות.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אין מכוניות?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין בגינה?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.06:9": [
+  {
+   "text": "בפריז יש מכוניות וגם אוטובוסים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש מכוניות וגם אוטובוסים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש בפריז?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.06:10": [
+  {
+   "text": "ליד השולחן יש מיטה גדולה ויפה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש מיטה גדולה ויפה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש על יד השולחן?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.06:11": [
+  {
+   "text": "מהחלון של הדירה, הוא רואה גינה יפה.",
+   "questions": [
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה הוא רואה גינה יפה?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.07:0": [
+  {
+   "text": "בבוקר הם קמים מוקדם.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קם מוקדם בבוקר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:1": [
+  {
+   "text": "שרה מתרחצת בערב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי מתרחצת בערב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:2": [
+  {
+   "text": "התלמידים מדברים בכיתה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה התלמידים מדברים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מדבר בכיתה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:3": [
+  {
+   "text": "את אוכלת במסעדה בערב?",
+   "questions": []
+  }
+ ],
+ "0.07:4": [
+  {
+   "text": "שלמה לומד עברית בכיתה בירושלים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה שלמה לומד בכיתה בירושלים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה לומד עברית?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד עברית בכיתה בירושלים?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:5": [
+  {
+   "text": "שלמה אוכל עוגה ופירות בבוקר.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה שלמה אוכל בבוקר?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי אוכל עוגה ופירות בבוקר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:6": [
+  {
+   "text": "שלמה שותה קפה בבוקר.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה שלמה שותה בבוקר?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי שותה קפה בבוקר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:7": [
+  {
+   "text": "שלמה יושב על יד חנה.",
+   "questions": [
+    {
+     "hint": "à côté de qui ?",
+     "question": "על יד מי שלמה יושב?",
+     "interrogative": "על יד מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי יושב על יד חנה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:8": [
+  {
+   "text": "איפה שלמה לומד עברית ?",
+   "questions": []
+  }
+ ],
+ "0.07:9": [
+  {
+   "text": "מה שלמה אוכל בבוקר ?",
+   "questions": []
+  }
+ ],
+ "0.07:10": [
+  {
+   "text": "מה שלמה שותה בבוקר ?",
+   "questions": []
+  }
+ ],
+ "0.07:11": [
+  {
+   "text": "על יד מי שלמה יושב ?",
+   "questions": []
+  }
+ ],
+ "0.07:12": [
+  {
+   "text": "שלמה לומד עברית בכיתה בירושלים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה שלמה לומד בכיתה בירושלים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה שלמה לומד עברית?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד עברית בכיתה בירושלים?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:13": [
+  {
+   "text": "בבוקר הוא קם מוקדם, מתרחץ ואוכל ארוחת בוקר עוגה, פירות ושותה קפה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קם מוקדם בבוקר, מתרחץ ואוכל ארוחת בוקר, עוגה ופירות, ושותה קפה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:14": [
+  {
+   "text": "הוא נוסע באוטובוס לאולפן.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן הוא נוסע באוטובוס?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "par quel moyen ?",
+     "question": "במה הוא נוסע לאולפן?",
+     "interrogative": "במה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נוסע באוטובוס לאולפן?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:15": [
+  {
+   "text": "בכיתה יש הרבה תלמידים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש הרבה תלמידים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.07:16": [
+  {
+   "text": "חנה באה גם ללמוד.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי באה גם ללמוד?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:17": [
+  {
+   "text": "שלמה יושב על יד חנה.",
+   "questions": [
+    {
+     "hint": "à côté de qui ?",
+     "question": "על יד מי שלמה יושב?",
+     "interrogative": "על יד מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי יושב על יד חנה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:18": [
+  {
+   "text": "בצהריים הוא הולך לאכול במסעדה ארוחת צהריים עם החברים בכיתה.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי הוא הולך לאכול במסעדה ארוחת צהריים בצהריים?",
+     "interrogative": "עם מי"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא הולך לאכול במסעדה עם החברים בכיתה בצהריים?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.07:19": [
+  {
+   "text": "הם יושבים, אוכלים, ומדברים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי יושב, אוכל ומדבר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:20": [
+  {
+   "text": "בערב הוא הולך לקולנוע עם חנה.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן הוא הולך בערב עם חנה?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי הוא הולך לקולנוע בערב?",
+     "interrogative": "עם מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי הולך לקולנוע עם חנה בערב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.07:21": [
+  {
+   "text": "הם רוצים לראות סרט טוב בקולנוע.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הם רוצים לראות בקולנוע?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה הם רוצים לראות סרט טוב?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי רוצה לראות סרט טוב בקולנוע?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.08:0": [
+  {
+   "text": "יש להם גינה יפה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש להם?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש גינה יפה?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:1": [
+  {
+   "text": "יש לו מיטה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לו?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש מיטה?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:2": [
+  {
+   "text": "שרה, יש לך חבר?",
+   "questions": []
+  },
+  {
+   "text": "לא, אין לי חבר.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין לך?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.08:3": [
+  {
+   "text": "אנחנו גרים בתל אביב ויש לנו מכונית.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי גר בתל אביב ויש לו מכונית?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.08:4": [
+  {
+   "text": "אין לי ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין לך?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי אין ספר?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:5": [
+  {
+   "text": "יש לי ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לך?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש ספר?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:6": [
+  {
+   "text": "יש לרוני ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לרוני?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש ספר?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:7": [
+  {
+   "text": "לרוני יש ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לרוני?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש ספר?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:8": [
+  {
+   "text": "אין לרוני ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין לרוני?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי אין ספר?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.08:9": [
+  {
+   "text": "לרוני אין ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אין לרוני?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי אין ספר?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:0": [
+  {
+   "text": "אנחנו עושים הרבה דברים בשיעור.",
+   "questions": [
+    {
+     "hint": "que ?",
+     "question": "מה אתם עושים בשיעור?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה אתם עושים הרבה דברים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.09:1": [
+  {
+   "text": "המורים מלמדים טוב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי מלמד טוב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.09:2": [
+  {
+   "text": "חנה אוהבת ללמוד עם דוד.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי חנה אוהבת ללמוד?",
+     "interrogative": "עם מי"
+    }
+   ]
+  }
+ ],
+ "0.09:3": [
+  {
+   "text": "הן מטיילות במרכז העיר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הן מטיילות?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.09:4": [
+  {
+   "text": "דוד עושה הרבה דברים בשיעור, הוא לומד לקרוא לכתוב וגם כמובן לדבר.",
+   "questions": [
+    {
+     "hint": "que ?",
+     "question": "מה דוד עושה בשיעור?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.09:5": [
+  {
+   "text": "דוד מספר לתלמידים מאיפה הוא בא.",
+   "questions": [
+    {
+     "hint": "que ?",
+     "question": "מה דוד מספר לתלמידים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי דוד מספר מאיפה הוא בא?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:6": [
+  {
+   "text": "כן, יש למורה הרבה הרבה סבלנות.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי יש הרבה הרבה סבלנות?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:7": [
+  {
+   "text": "לא, בשבת אין לדוד שיעור.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי אין שיעור בשבת?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:8": [
+  {
+   "text": "דוד מטייל במרכז העיר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה דוד מטייל?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מטייל במרכז העיר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.09:9": [
+  {
+   "text": "מה דוד עושה בשיעור?",
+   "questions": []
+  }
+ ],
+ "0.09:10": [
+  {
+   "text": "מה דוד מספר לתלמידים בכיתה?",
+   "questions": []
+  }
+ ],
+ "0.09:11": [
+  {
+   "text": "יש למורה סבלנות?",
+   "questions": []
+  }
+ ],
+ "0.09:12": [
+  {
+   "text": "לדוד יש שיעור בשבת?",
+   "questions": []
+  }
+ ],
+ "0.09:13": [
+  {
+   "text": "איפה דוד מטייל בשבת?",
+   "questions": []
+  }
+ ],
+ "0.09:14": [
+  {
+   "text": "לדוד יש שיעור.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי יש שיעור?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "quoi ?",
+     "question": "מה יש לדוד?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.09:15": [
+  {
+   "text": "בשיעור הוא עושה הרבה דברים, הוא לומד לקרוא לכתוב וגם כמובן לדבר.",
+   "questions": [
+    {
+     "hint": "que ?",
+     "question": "מה הוא עושה בשיעור?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.09:16": [
+  {
+   "text": "בכיתה הוא מספר לתלמידים מאיפה הוא בא.",
+   "questions": [
+    {
+     "hint": "que ?",
+     "question": "מה הוא מספר לתלמידים בכיתה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה הוא מספר לתלמידים מאיפה הוא בא?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי הוא מספר בכיתה מאיפה הוא בא?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:17": [
+  {
+   "text": "לדוד יש מורה טובה.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי יש מורה טובה?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:18": [
+  {
+   "text": "הוא אוהב ללמוד עם המורה והתלמידים.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי הוא אוהב ללמוד?",
+     "interrogative": "עם מי"
+    }
+   ]
+  }
+ ],
+ "0.09:19": [
+  {
+   "text": "יש לו גם חברים טובים בכיתה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש לו גם חברים טובים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש גם חברים טובים בכיתה?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.09:20": [
+  {
+   "text": "המורה מלמדת טוב ויש לה הרבה הרבה סבלנות.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי מלמדת טוב ויש לה הרבה הרבה סבלנות?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.09:21": [
+  {
+   "text": "בשבת דוד לא לומד, אין לו שיעור, יש לו זמן לטייל במרכז העיר.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לא לומד בשבת?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.09:22": [
+  {
+   "text": "במרכז העיר יש הרבה חנויות והרבה הרבה מכוניות ורעש.",
+   "questions": [
+    {
+     "hint": "quoi ?",
+     "question": "מה יש במרכז העיר?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה יש הרבה חנויות והרבה הרבה מכוניות ורעש?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.09:23": [
+  {
+   "text": "אבל אין הרבה מסעדות.",
+   "questions": [
+    {
+     "hint": "de quoi ?",
+     "question": "ממה אין הרבה?",
+     "interrogative": "ממה"
+    }
+   ]
+  }
+ ],
+ "0.10:0": [
+  {
+   "text": "אנחנו אוכלים פירות.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתם אוכלים?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:1": [
+  {
+   "text": "הם רוצים לראות את הסרט הזה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הם רוצים לראות?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:2": [
+  {
+   "text": "אתה אוהב את הספר הזה?",
+   "questions": []
+  }
+ ],
+ "0.10:3": [
+  {
+   "text": "היא שומעת את דוד.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי היא שומעת?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי שומע את דוד?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.10:4": [
+  {
+   "text": "אתם לא אוכלים את העוגה הזאת?",
+   "questions": []
+  }
+ ],
+ "0.10:5": [
+  {
+   "text": "דוד רואה סרט.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד רואה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי רואה סרט?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "הוא רואה את הסרט עם חנה.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי הוא רואה את הסרט?",
+     "interrogative": "עם מי"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא רואה עם חנה?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:6": [
+  {
+   "text": "המורה מלמדת תלמידים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי המורה מלמדת?",
+     "interrogative": "את מי"
+    }
+   ]
+  },
+  {
+   "text": "המורה מלמדת את התלמידים בכיתה באולפן.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה המורה מלמדת את התלמידים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "את מי המורה מלמדת בכיתה באולפן?",
+     "interrogative": "את מי"
+    }
+   ]
+  }
+ ],
+ "0.10:7": [
+  {
+   "text": "דוד אוהב לטייל בתל אביב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה דוד אוהב לטייל?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי אוהב לטייל בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "הוא אוהב את תל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא אוהב?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:8": [
+  {
+   "text": "דוד עושה קפה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד עושה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי עושה קפה?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "הוא עושה את הקפה לחנה.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי הוא עושה את הקפה?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.10:9": [
+  {
+   "text": "אני אוכל את התפוח",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה אוכל?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:10": [
+  {
+   "text": "אני אוכל תפוח",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה אוכל?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:11": [
+  {
+   "text": "אני לומד את השיעור",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה לומד?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:12": [
+  {
+   "text": "אני לומד שיעור",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה לומד?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:13": [
+  {
+   "text": "אני כותבת את המכתב",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה את כותבת?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:14": [
+  {
+   "text": "אני כותבת מכתב",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה את כותבת?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:15": [
+  {
+   "text": "אני קורא את הספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה קורא?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:16": [
+  {
+   "text": "אני קורא ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה קורא?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:17": [
+  {
+   "text": "אני רוצה את העוגה הזאת",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה רוצה?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:18": [
+  {
+   "text": "אני רוצה עוגה",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה רוצה?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.10:19": [
+  {
+   "text": "אני אוהב את חנה",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי אתה אוהב?",
+     "interrogative": "את מי"
+    }
+   ]
+  }
+ ],
+ "0.11:0": [
+  {
+   "text": "אחרי השיעור המורה נחה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי נחה אחרי השיעור?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה המורה נחה?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:1": [
+  {
+   "text": "לאה וחנה פותחות את הספרים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה לאה וחנה פותחות?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי פותח את הספרים?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:2": [
+  {
+   "text": "דוד רואה את חנה כמעט כל יום.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי דוד רואה כמעט כל יום?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי רואה את חנה כמעט כל יום?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:3": [
+  {
+   "text": "הם נחים בבית.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם נחים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נח בבית?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:4": [
+  {
+   "text": "אחרי חודש הוא מדבר יותר טוב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי מדבר יותר טוב אחרי חודש?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:5": [
+  {
+   "text": "אחרי שאני קם אני מתרחץ.",
+   "questions": [
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה אתה מתרחץ?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:6": [
+  {
+   "text": "בבוקר אנחנו הולכים לאולפן אחר כך אנחנו נחים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי הולך בבוקר לאולפן ואחר כך נח?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:7": [
+  {
+   "text": "אחרי היום הזה היא רוצה לטייל.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי רוצה לטייל אחרי היום הזה?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה היא רוצה לטייל?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:8": [
+  {
+   "text": "לדוד יש הרבה חברים.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי יש הרבה חברים?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לדוד?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.11:9": [
+  {
+   "text": "החברים של דוד לומדים גם באולפן.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה החברים של דוד לומדים גם?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד גם באולפן?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:10": [
+  {
+   "text": "הם רואים את דוד כמעט כל יום בכיתה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי הם רואים כמעט כל יום בכיתה?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה הם רואים את דוד כמעט כל יום?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי רואה את דוד כמעט כל יום בכיתה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:11": [
+  {
+   "text": "בכיתה דוד לומד, פותח את הספר וקורא.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה דוד לומד, פותח את הספר וקורא?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד בכיתה, פותח את הספר וקורא?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:12": [
+  {
+   "text": "עכשיו, אחרי חודש הוא קורא יותר טוב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קורא יותר טוב עכשיו, אחרי חודש?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:13": [
+  {
+   "text": "אחרי השיעור הוא עייף צמא ורעב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי עייף צמא ורעב אחרי השיעור?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה הוא עייף צמא ורעב?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:14": [
+  {
+   "text": "אחרי השיעור הוא אוכל בבית ונח.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הוא אוכל ונח אחרי השיעור?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה הוא אוכל בבית ונח?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:15": [
+  {
+   "text": "אחר כך הוא לומד את השיעור.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא לומד אחר כך?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד את השיעור אחר כך?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:16": [
+  {
+   "text": "הוא רוצה ואוהב ללמוד את השיעור בבית קפה עם חנה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא רוצה ואוהב ללמוד בבית קפה עם חנה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה הוא רוצה ואוהב ללמוד את השיעור עם חנה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי הוא רוצה ואוהב ללמוד את השיעור בבית קפה?",
+     "interrogative": "עם מי"
+    }
+   ]
+  }
+ ],
+ "0.11:17": [
+  {
+   "text": "הם שותים קפה ואוכלים עוגה טעימה ופירות.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי שותה קפה ואוכל עוגה טעימה ופירות?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:18": [
+  {
+   "text": "אחרי שהם לומדים ביחד הם הולכים לטייל במרכז העיר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם הולכים לטייל אחרי שהם לומדים ביחד?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה הם הולכים לטייל במרכז העיר?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:19": [
+  {
+   "text": "הוא אוכל ארוחת בוקר אחר כך הוא קורא עיתון.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי אוכל ארוחת בוקר ואחר כך קורא עיתון?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:20": [
+  {
+   "text": "אחרי השיעור, הוא נח.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי נח אחרי השיעור?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה הוא נח?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.11:21": [
+  {
+   "text": "אחרי חודש הוא קורא יותר טוב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קורא יותר טוב אחרי חודש?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.11:22": [
+  {
+   "text": "אחרי שהם שותים קפה הם הולכים לטייל.",
+   "questions": [
+    {
+     "hint": "après quoi ?",
+     "question": "אחרי מה הם הולכים לטייל?",
+     "interrogative": "אחרי מה"
+    }
+   ]
+  }
+ ],
+ "0.12:0": [
+  {
+   "text": "היא מספרת לתלמידים מאיפה היא.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי היא מספרת מאיפה היא?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה היא מספרת לתלמידים?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.12:1": [
+  {
+   "text": "הם רוצים לאכול במסעדה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הם רוצים לאכול?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי רוצה לאכול במסעדה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.12:2": [
+  {
+   "text": "המורות פותחות את הספרים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה המורות פותחות?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.12:3": [
+  {
+   "text": "אתם עובדים כל יום?",
+   "questions": []
+  }
+ ],
+ "0.12:4": [
+  {
+   "text": "היא מטיילת במרכז העיר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה היא מטיילת?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מטיילת במרכז העיר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.12:5": [
+  {
+   "text": "כל בוקר דוד קם ומתרחץ.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קם ומתרחץ כל בוקר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.12:6": [
+  {
+   "text": "אנחנו אוהבים לקרוא עיתון בעברית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתם אוהבים לקרוא בעברית?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.12:7": [
+  {
+   "text": "היא טסה לישראל במטוס.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן היא טסה במטוס?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה היא טסה לישראל?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.12:8": [
+  {
+   "text": "אני נוסע ברכבת לפריז.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן אתה נוסע ברכבת?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה אתה נוסע לפריז?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.12:9": [
+  {
+   "text": "הן רואות טלוויזיה ושומעות מוזיקה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי רואה טלוויזיה ושומעת מוזיקה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.12:10": [
+  {
+   "text": "התלמידים לומדים והמורים מלמדים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לומד ומי מלמד?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.12:11": [
+  {
+   "text": "בבוקר אתה קם מוקדם.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי קם מוקדם בבוקר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.13:0": [
+  {
+   "text": "אנחנו לומדים עברית באולפן, בתל אביב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתם לומדים באולפן בתל אביב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה אתם לומדים עברית?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד עברית באולפן בתל אביב?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.13:1": [
+  {
+   "text": "הן מטיילות במרכז העיר עם חברים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הן מטיילות עם חברים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי הן מטיילות במרכז העיר?",
+     "interrogative": "עם מי"
+    }
+   ]
+  }
+ ],
+ "0.13:2": [
+  {
+   "text": "איפה אתם גרים?",
+   "questions": []
+  },
+  {
+   "text": "אתם גרים בתל אביב או בחיפה?",
+   "questions": []
+  }
+ ],
+ "0.13:3": [
+  {
+   "text": "לאן אתם הולכים?",
+   "questions": []
+  }
+ ],
+ "0.13:4": [
+  {
+   "text": "מאיפה אתם מדברים עברית?",
+   "questions": []
+  }
+ ],
+ "0.13:5": [
+  {
+   "text": "אני רוצה לנסוע לפריז, אבל ברכבת, לא במטוס.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "לאן אתה רוצה לנסוע ברכבת ולא במטוס?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה אתה רוצה לנסוע לפריז?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.13:6": [
+  {
+   "text": "בבוקר, הוא אוכל ארוחת בוקר ובערב הוא מתרחץ.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי אוכל ארוחת בוקר בבוקר ומתרחץ בערב?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא אוכל בבוקר?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.13:7": [
+  {
+   "text": "אתה נוסע לקולנוע באוטו?",
+   "questions": []
+  }
+ ],
+ "0.13:8": [
+  {
+   "text": "אתה הולך למסעדה ואתה אוכל עוגה ופירות טובים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי הולך למסעדה ואוכל עוגה ופירות טובים?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "où ?",
+     "question": "לאן אני הולך?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אני אוכל?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.13:9": [
+  {
+   "text": "אתה נוסע באוטובוס היום?",
+   "questions": []
+  }
+ ],
+ "0.13:10": [
+  {
+   "text": "אין לו הרבה זמן, הוא עובד הבוקר.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי אין הרבה זמן?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.13:11": [
+  {
+   "text": "איפה יש בית קפה?",
+   "questions": []
+  }
+ ],
+ "0.13:12": [
+  {
+   "text": "יש בית קפה במרכז העיר ליד הקולנוע.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש בית קפה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש במרכז העיר על יד הקולנוע?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à côté de quoi ?",
+     "question": "על יד מה יש בית קפה במרכז העיר?",
+     "interrogative": "על יד מה"
+    }
+   ]
+  }
+ ],
+ "0.13:13": [
+  {
+   "text": "אין הרבה חנויות בחיפה, אבל אני אוהב את העיר הזאת.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אין הרבה חנויות?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה אוהב?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.13:14": [
+  {
+   "text": "אין לה סבלנות וכמובן אין לה חברים.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי אין סבלנות וכמובן אין חברים?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.13:15": [
+  {
+   "text": "לחנה אין הרבה זמן אבל יש לה הרבה סבלנות.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי אין הרבה זמן?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.13:16": [
+  {
+   "text": "התלמיד לומד מהמורה אבל המורה מלמד את התלמיד.",
+   "questions": [
+    {
+     "hint": "de qui ?",
+     "question": "ממי התלמיד לומד?",
+     "interrogative": "ממי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "את מי המורה מלמד?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד מהמורה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.13:17": [
+  {
+   "text": "אחרי חודש באולפן, הוא מדבר עברית טוב.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי מדבר עברית טוב אחרי חודש באולפן?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.13:18": [
+  {
+   "text": "אני פותח את הספר, אני קורא את הטקסט, אני כותב את השיעור.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה קורא?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה כותב?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.13:19": [
+  {
+   "text": "הוא רעב, הוא אוכל.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי רעב?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "הוא צמא, הוא שותה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי צמא?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.14:0": [
+  {
+   "text": "אני רואה את החברים במרכז העיר.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי אתה רואה במרכז העיר?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה אתה רואה את החברים?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.14:1": [
+  {
+   "text": "אני אוהב עוגות.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה אוהב?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.14:2": [
+  {
+   "text": "אנחנו שומעים את המוזיקה בחדר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אתם שומעים את המוזיקה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.14:3": [
+  {
+   "text": "היא אוכלת את העוגה הטעימה בדירה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה היא אוכלת בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "où ?",
+     "question": "איפה היא אוכלת את העוגה הטעימה?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.14:4": [
+  {
+   "text": "הוא נוסע לעיר הגדולה ברכבת.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן הוא נוסע ברכבת?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה הוא נוסע לעיר הגדולה?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.14:5": [
+  {
+   "text": "הן טסות לישראל במטוס הגדול והיפה.",
+   "questions": [
+    {
+     "hint": "vers où ?",
+     "question": "לאן הן טסות במטוס הגדול והיפה?",
+     "interrogative": "לאן"
+    }
+   ]
+  }
+ ],
+ "0.14:6": [
+  {
+   "text": "אתם נוסעים מוקדם במכונית הגדולה עם החברים הטובים.",
+   "questions": [
+    {
+     "hint": "avec qui ?",
+     "question": "עם מי אנחנו נוסעים מוקדם במכונית הגדולה?",
+     "interrogative": "עם מי"
+    },
+    {
+     "hint": "avec quel moyen de transport ?",
+     "question": "במה אנחנו נוסעים מוקדם עם החברים הטובים?",
+     "interrogative": "במה"
+    }
+   ]
+  }
+ ],
+ "0.14:7": [
+  {
+   "text": "אתה כותב את המכתב לתלמידים הטובים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אני כותב לתלמידים הטובים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי אני כותב את המכתב?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.14:8": [
+  {
+   "text": "את יושבת בכיתה, לומדת את השיעור וקוראת את הספר הקטן.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה אני יושבת, לומדת את השיעור וקוראת את הספר הקטן?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.14:9": [
+  {
+   "text": "מי רוצה ללכת למסעדה הגדולה?",
+   "questions": []
+  }
+ ],
+ "0.15:0": [
+  {
+   "text": "איפה חנה גרה?",
+   "questions": []
+  }
+ ],
+ "0.15:1": [
+  {
+   "text": "מה אתם אוהבים לשתות?",
+   "questions": []
+  }
+ ],
+ "0.15:2": [
+  {
+   "text": "לאן אתה טס?",
+   "questions": []
+  }
+ ],
+ "0.15:3": [
+  {
+   "text": "למה הם לא אוכלים?",
+   "questions": []
+  }
+ ],
+ "0.15:4": [
+  {
+   "text": "איך את נוסעת לאולפן?",
+   "questions": []
+  }
+ ],
+ "0.15:5": [
+  {
+   "text": "לאיזו עיר את נוסעת?",
+   "questions": []
+  }
+ ],
+ "0.15:6": [
+  {
+   "text": "את מי אתה רואה היום?",
+   "questions": []
+  }
+ ],
+ "0.15:7": [
+  {
+   "text": "איזה פרי אתה רוצה לאכול?",
+   "questions": []
+  }
+ ],
+ "0.15:8": [
+  {
+   "text": "מאיפה הם באים?",
+   "questions": []
+  }
+ ],
+ "0.16:0": [
+  {
+   "text": "איך קוראים לך?",
+   "questions": []
+  }
+ ],
+ "0.16:1": [
+  {
+   "text": "מתי אתן באות לבקר בישראל?",
+   "questions": []
+  }
+ ],
+ "0.16:2": [
+  {
+   "text": "מה הוא הכי אוהב בישראל?",
+   "questions": []
+  }
+ ],
+ "0.16:3": [
+  {
+   "text": "איפה התלמידים גרים?",
+   "questions": []
+  }
+ ],
+ "0.16:4": [
+  {
+   "text": "איזה ספר את קוראת?",
+   "questions": []
+  }
+ ],
+ "0.16:5": [
+  {
+   "text": "מתי הן נוסעות לישראל?",
+   "questions": []
+  }
+ ],
+ "0.16:6": [
+  {
+   "text": "דוד מישראל.",
+   "questions": [
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה דוד?",
+     "interrogative": "מאיפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מישראל?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:7": [
+  {
+   "text": "הוא רופא.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי רופא?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:8": [
+  {
+   "text": "לחנה יש שלושה ילדים.",
+   "questions": [
+    {
+     "hint": "combien ?",
+     "question": "כמה ילדים יש לחנה?",
+     "interrogative": "כמה"
+    }
+   ]
+  }
+ ],
+ "0.16:9": [
+  {
+   "text": "לא, דוד לא נשוי, הוא רווק.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לא נשוי?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:10": [
+  {
+   "text": "המשפחה של חנה גרה בירושלים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה המשפחה של חנה גרה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גר בירושלים?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:11": [
+  {
+   "text": "מאיפה דוד?",
+   "questions": []
+  }
+ ],
+ "0.16:12": [
+  {
+   "text": "במה הוא עובד?",
+   "questions": []
+  }
+ ],
+ "0.16:13": [
+  {
+   "text": "כמה ילדים יש לחנה?",
+   "questions": []
+  }
+ ],
+ "0.16:14": [
+  {
+   "text": "דוד נשוי?",
+   "questions": []
+  }
+ ],
+ "0.16:15": [
+  {
+   "text": "באיזו עיר המשפחה של חנה גרה?",
+   "questions": []
+  }
+ ],
+ "0.16:16": [
+  {
+   "text": "שלום, קוראים לי חנה, איך קוראים לך?",
+   "questions": []
+  }
+ ],
+ "0.16:17": [
+  {
+   "text": "קוראים לי דוד, נעים מאוד.",
+   "questions": []
+  }
+ ],
+ "0.16:18": [
+  {
+   "text": "נעים מאוד דוד.",
+   "questions": []
+  },
+  {
+   "text": "מאיפה אתה?",
+   "questions": []
+  }
+ ],
+ "0.16:19": [
+  {
+   "text": "אני מישראל ואת חנה, מאיפה את?",
+   "questions": []
+  }
+ ],
+ "0.16:20": [
+  {
+   "text": "אני מצרפת.",
+   "questions": [
+    {
+     "hint": "d'où ?",
+     "question": "מאיפה את?",
+     "interrogative": "מאיפה"
+    }
+   ]
+  }
+ ],
+ "0.16:21": [
+  {
+   "text": "את עובדת?",
+   "questions": []
+  }
+ ],
+ "0.16:22": [
+  {
+   "text": "כן, אני עובדת ואתה דוד אתה עובד?",
+   "questions": []
+  }
+ ],
+ "0.16:23": [
+  {
+   "text": "כן, אני עובד.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי עובד?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:24": [
+  {
+   "text": "במה אתה עובד?",
+   "questions": []
+  }
+ ],
+ "0.16:25": [
+  {
+   "text": "אני רופא.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי רופא?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "אני גר בתל אביב ועובד בחיפה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי גר בתל אביב ועובד בחיפה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:26": [
+  {
+   "text": "זה רחוק.",
+   "questions": [
+    {
+     "hint": "qu'est-ce qui ?",
+     "question": "מה רחוק?",
+     "interrogative": "מה"
+    }
+   ]
+  },
+  {
+   "text": "איך אתה נוסע לחיפה?",
+   "questions": []
+  },
+  {
+   "text": "ברכבת או באוטובוס?",
+   "questions": []
+  }
+ ],
+ "0.16:27": [
+  {
+   "text": "יש לי רכב.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לך?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש רכב?",
+     "interrogative": "למי"
+    }
+   ]
+  },
+  {
+   "text": "אני נוסע ברכב לעבודה.",
+   "questions": [
+    {
+     "hint": "avec quoi ?",
+     "question": "במה אתה נוסע לעבודה?",
+     "interrogative": "במה"
+    },
+    {
+     "hint": "où ?",
+     "question": "לאן אתה נוסע ברכב?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נוסע ברכב לעבודה?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "את נשואה?",
+   "questions": []
+  }
+ ],
+ "0.16:28": [
+  {
+   "text": "כן, אני נשואה לשלמה ויש לנו שלושה ילדים קטנים וחמודים.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי את נשואה?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "combien ?",
+     "question": "כמה ילדים קטנים וחמודים יש לכם?",
+     "interrogative": "כמה"
+    }
+   ]
+  },
+  {
+   "text": "ואתה דוד, גם אתה נשוי?",
+   "questions": []
+  }
+ ],
+ "0.16:29": [
+  {
+   "text": "לא, אני לא נשוי, אני רווק.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לא נשוי?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "חנה, יש לך משפחה בישראל?",
+   "questions": []
+  }
+ ],
+ "0.16:30": [
+  {
+   "text": "כן, יש לי משפחה גדולה שגרה בירושלים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה גרה המשפחה הגדולה שיש לך?",
+     "interrogative": "איפה"
+    }
+   ]
+  }
+ ],
+ "0.16:31": [
+  {
+   "text": "מתי את באה לבקר בישראל?",
+   "questions": []
+  }
+ ],
+ "0.16:32": [
+  {
+   "text": "אני באה לבקר בישראל באוגוסט, כשיש לי חופשה.",
+   "questions": [
+    {
+     "hint": "quand ?",
+     "question": "מתי את באה לבקר בישראל?",
+     "interrogative": "מתי"
+    },
+    {
+     "hint": "où ?",
+     "question": "לאן את באה לבקר באוגוסט, כשיש לך חופשה?",
+     "interrogative": "לאן"
+    }
+   ]
+  },
+  {
+   "text": "אני מבקרת את המשפחה בירושלים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה את מבקרת את המשפחה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "את מי את מבקרת בירושלים?",
+     "interrogative": "את מי"
+    }
+   ]
+  }
+ ],
+ "0.16:33": [
+  {
+   "text": "איזו עיר את הכי אוהבת בישראל?",
+   "questions": []
+  }
+ ],
+ "0.16:34": [
+  {
+   "text": "אני הכי אוהבת את העיר ירושלים.",
+   "questions": [
+    {
+     "hint": "quelle ville ?",
+     "question": "איזו עיר את הכי אוהבת?",
+     "interrogative": "איזו עיר"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי הכי אוהב את העיר ירושלים?",
+     "interrogative": "מי"
+    }
+   ]
+  },
+  {
+   "text": "היא יפה ומיוחדת.",
+   "questions": [
+    {
+     "hint": "comment ?",
+     "question": "איך היא?",
+     "interrogative": "איך"
+    }
+   ]
+  }
+ ],
+ "0.16:35": [
+  {
+   "text": "גם אני מאוד אוהב את ירושלים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה גם אתה מאוד אוהב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי גם מאוד אוהב את ירושלים?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.16:36": [
+  {
+   "text": "איזה ספר אתה קורא כשיש לך זמן?",
+   "questions": []
+  }
+ ],
+ "0.16:37": [
+  {
+   "text": "אני קורא את הספר החדש של עמוס עוז.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה קורא?",
+     "interrogative": "מה"
+    }
+   ]
+  },
+  {
+   "text": "הוא מאוד מעניין.",
+   "questions": [
+    {
+     "hint": "comment ?",
+     "question": "איך הוא?",
+     "interrogative": "איך"
+    }
+   ]
+  },
+  {
+   "text": "אני מאוד אוהב את הספר הזה.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה מאוד אוהב?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מאוד אוהב את הספר הזה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.17:0": [
+  {
+   "text": "היא רוצה לגור בישראל, היא צריכה ללמוד עברית.",
+   "questions": [
+    {
+     "hint": "pourquoi ?",
+     "question": "למה היא צריכה ללמוד עברית?",
+     "interrogative": "למה"
+    }
+   ]
+  }
+ ],
+ "0.17:1": [
+  {
+   "text": "היום, התלמידים צריכים לקרוא ולכתוב.",
+   "questions": [
+    {
+     "hint": "quand ?",
+     "question": "מתי התלמידים צריכים לקרוא ולכתוב?",
+     "interrogative": "מתי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי צריך לקרוא ולכתוב היום?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.17:2": [
+  {
+   "text": "אתה יכול לבוא בשבת?",
+   "questions": []
+  }
+ ],
+ "0.17:3": [
+  {
+   "text": "לאן אתם צריכים ללכת?",
+   "questions": []
+  }
+ ],
+ "0.17:4": [
+  {
+   "text": "צריך לקנות תפוחים.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה צריך?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.17:5": [
+  {
+   "text": "אתה יכול לספר לי מאיפה אתה בא?",
+   "questions": []
+  }
+ ],
+ "0.17:6": [
+  {
+   "text": "בבוקר, הן צריכות לקום מוקדם.",
+   "questions": [
+    {
+     "hint": "quand ?",
+     "question": "מתי הן צריכות לקום מוקדם?",
+     "interrogative": "מתי"
+    }
+   ]
+  }
+ ],
+ "0.17:7": [
+  {
+   "text": "אתם יכולים לנסוע ברכבת.",
+   "questions": [
+    {
+     "hint": "comment ?",
+     "question": "איך אנחנו יכולים לנסוע?",
+     "interrogative": "איך"
+    }
+   ]
+  }
+ ],
+ "0.17:8": [
+  {
+   "text": "אנחנו צריכים לנוח.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתם צריכים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי צריך לנוח?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.17:9": [
+  {
+   "text": "הוא לא יכול לבוא, הוא צריך לעבוד.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא צריך?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.18:0": [
+  {
+   "text": "דנה חוזרת הביתה.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "לאן דנה חוזרת?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי חוזרת הביתה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:1": [
+  {
+   "text": "הם צריכים לקנות ירקות.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הם צריכים לקנות?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי צריך לקנות ירקות?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:2": [
+  {
+   "text": "הוא מסדר את הבית.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הוא מסדר?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מסדר את הבית?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:3": [
+  {
+   "text": "אין לנו זמן, אנחנו ממהרים.",
+   "questions": [
+    {
+     "hint": "pourquoi ?",
+     "question": "למה אתם ממהרים?",
+     "interrogative": "למה"
+    }
+   ]
+  }
+ ],
+ "0.18:4": [
+  {
+   "text": "איפה את פוגשת את חנה?",
+   "questions": []
+  }
+ ],
+ "0.18:5": [
+  {
+   "text": "דוד צריך לקנות בשר, דגים וירקות לשבת.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד צריך לקנות לשבת?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי צריך לקנות בשר, דגים וירקות לשבת?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:6": [
+  {
+   "text": "דוד ממהר כי אין לו הרבה זמן.",
+   "questions": [
+    {
+     "hint": "pourquoi ?",
+     "question": "למה דוד ממהר?",
+     "interrogative": "למה"
+    }
+   ]
+  }
+ ],
+ "0.18:7": [
+  {
+   "text": "דוד צריך לפגוש את חנה.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי דוד צריך לפגוש?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי צריך לפגוש את חנה?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:8": [
+  {
+   "text": "הוא פוגש את חנה בבית קפה במרכז העיר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הוא פוגש את חנה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "את מי הוא פוגש בבית קפה במרכז העיר?",
+     "interrogative": "את מי"
+    }
+   ]
+  }
+ ],
+ "0.18:9": [
+  {
+   "text": "הם אוכלים ארוחה חמה, שותים משקה קר ומדברים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי אוכל ארוחה חמה, שותה משקה קר ומדבר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:10": [
+  {
+   "text": "מה דוד צריך לקנות לשבת?",
+   "questions": []
+  }
+ ],
+ "0.18:11": [
+  {
+   "text": "למה דוד ממהר?",
+   "questions": []
+  }
+ ],
+ "0.18:12": [
+  {
+   "text": "את מי דוד צריך לפגוש?",
+   "questions": []
+  }
+ ],
+ "0.18:13": [
+  {
+   "text": "איפה הוא פוגש את חנה?",
+   "questions": []
+  }
+ ],
+ "0.18:14": [
+  {
+   "text": "מה דוד והחברים אוכלים ומה הם שותים?",
+   "questions": []
+  }
+ ],
+ "0.18:15": [
+  {
+   "text": "דוד מזמין חברים לשבת.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "את מי דוד מזמין לשבת?",
+     "interrogative": "את מי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי מזמין חברים לשבת?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:16": [
+  {
+   "text": "הוא צריך לקנות בשר, דגים וירקות ואחר כך הוא צריך לחזור הביתה לסדר ולבשל.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי צריך לקנות בשר, דגים וירקות ואחר כך צריך לחזור הביתה לסדר ולבשל?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:17": [
+  {
+   "text": "דוד ממהר כי אין לו הרבה זמן.",
+   "questions": [
+    {
+     "hint": "pourquoi ?",
+     "question": "למה דוד ממהר?",
+     "interrogative": "למה"
+    }
+   ]
+  }
+ ],
+ "0.18:18": [
+  {
+   "text": "הוא גם צריך לפגוש את חנה בבית קפה במרכז העיר.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה הוא גם צריך לפגוש את חנה?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "את מי הוא גם צריך לפגוש בבית קפה במרכז העיר?",
+     "interrogative": "את מי"
+    }
+   ]
+  }
+ ],
+ "0.18:19": [
+  {
+   "text": "הוא לא יכול לשבת עם חנה בבית הקפה הרבה זמן, יש לו הרבה דברים לעשות והוא צריך למהר.",
+   "questions": [
+    {
+     "hint": "pourquoi ?",
+     "question": "למה הוא לא יכול לשבת עם חנה בבית הקפה הרבה זמן?",
+     "interrogative": "למה"
+    }
+   ]
+  }
+ ],
+ "0.18:20": [
+  {
+   "text": "החברים באים לבית של דוד בערב.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "לאן החברים באים בערב?",
+     "interrogative": "לאן"
+    },
+    {
+     "hint": "quand ?",
+     "question": "מתי החברים באים לבית של דוד?",
+     "interrogative": "מתי"
+    }
+   ]
+  }
+ ],
+ "0.18:21": [
+  {
+   "text": "הם יושבים, אוכלים ארוחה חמה, שותים משקה קר ומדברים.",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי יושב, אוכל ארוחה חמה, שותה משקה קר ומדבר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.18:22": [
+  {
+   "text": "קר לך?",
+   "questions": []
+  }
+ ],
+ "0.18:23": [
+  {
+   "text": "לא, לא קר לי.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי לא קר?",
+     "interrogative": "למי"
+    }
+   ]
+  },
+  {
+   "text": "חם לי!",
+   "questions": []
+  }
+ ],
+ "0.18:24": [
+  {
+   "text": "חם לכם?",
+   "questions": []
+  }
+ ],
+ "0.18:25": [
+  {
+   "text": "כן, חם לנו.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי חם?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.19:0": [
+  {
+   "text": "בדירה יש שבעה חלונות וארבע מיטות.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש שבעה חלונות וארבע מיטות?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש בדירה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "combien de fenêtres et combien de lits ?",
+     "question": "כמה חלונות וכמה מיטות יש בדירה?",
+     "interrogative": "כמה חלונות וכמה מיטות"
+    }
+   ]
+  }
+ ],
+ "0.19:1": [
+  {
+   "text": "אני רואה שני אוטובוסים ושלוש עשרה מכוניות.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה רואה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "combien de bus et combien de voitures ?",
+     "question": "כמה אוטובוסים וכמה מכוניות אתה רואה?",
+     "interrogative": "כמה אוטובוסים וכמה מכוניות"
+    }
+   ]
+  }
+ ],
+ "0.19:2": [
+  {
+   "text": "יש לה טלוויזיה אחת.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "combien de télévisions ?",
+     "question": "כמה טלוויזיות יש לה?",
+     "interrogative": "כמה טלוויזיות"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש טלוויזיה אחת?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.19:3": [
+  {
+   "text": "יש אחד עשר כיסאות בכיתה וחמישה עשר ספרים.",
+   "questions": [
+    {
+     "hint": "où ?",
+     "question": "איפה יש אחד עשר כיסאות וחמישה עשר ספרים?",
+     "interrogative": "איפה"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש בכיתה?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "combien de chaises et combien de livres ?",
+     "question": "כמה כיסאות וכמה ספרים יש בכיתה?",
+     "interrogative": "כמה כיסאות וכמה ספרים"
+    }
+   ]
+  }
+ ],
+ "0.19:4": [
+  {
+   "text": "יש לי שלושה מורים ושלוש מורות.",
+   "questions": [
+    {
+     "hint": "à qui ?",
+     "question": "למי יש שלושה מורים ושלוש מורות?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "combien de professeurs et combien de professeures ?",
+     "question": "כמה מורים וכמה מורות יש לך?",
+     "interrogative": "כמה מורים וכמה מורות"
+    }
+   ]
+  }
+ ],
+ "0.20:0": [
+  {
+   "text": "חנה נותנת לדוד ספר",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה חנה נותנת לדוד?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי חנה נותנת ספר?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי נותן לדוד ספר?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.20:1": [
+  {
+   "text": "הילדים של איתן לומדים עברית",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה הילדים של איתן לומדים?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי לומד עברית?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.20:2": [
+  {
+   "text": "התלמידים לא יכולים לבוא היום",
+   "questions": [
+    {
+     "hint": "qui ?",
+     "question": "מי לא יכול לבוא היום?",
+     "interrogative": "מי"
+    },
+    {
+     "hint": "quand ?",
+     "question": "מתי התלמידים לא יכולים לבוא?",
+     "interrogative": "מתי"
+    }
+   ]
+  }
+ ],
+ "0.20:3": [
+  {
+   "text": "לאיתן יש שני ספרים",
+   "questions": [
+    {
+     "hint": "combien de livres ?",
+     "question": "כמה ספרים יש לאיתן?",
+     "interrogative": "כמה ספרים"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש שני ספרים?",
+     "interrogative": "למי"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לאיתן?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.20:4": [
+  {
+   "text": "דוד צריך ספר אחד",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה דוד צריך?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "combien de livres ?",
+     "question": "כמה ספרים דוד צריך?",
+     "interrogative": "כמה ספרים"
+    },
+    {
+     "hint": "qui ?",
+     "question": "מי צריך ספר אחד?",
+     "interrogative": "מי"
+    }
+   ]
+  }
+ ],
+ "0.20:5": [
+  {
+   "text": "כי שלושה תלמידים חולים ושלוש תלמידות לא יכולות לבוא היום",
+   "questions": [
+    {
+     "hint": "pourquoi ?",
+     "question": "למה רק חמישה תלמידים באים לכיתה?",
+     "interrogative": "למה"
+    }
+   ]
+  }
+ ],
+ "0.20:6": [
+  {
+   "text": "לדוד יש שלושה בנים",
+   "questions": [
+    {
+     "hint": "combien de garçons ?",
+     "question": "כמה בנים יש לדוד?",
+     "interrogative": "כמה בנים"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש שלושה בנים?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.20:7": [
+  {
+   "text": "לאיתן יש שלוש בנות",
+   "questions": [
+    {
+     "hint": "combien de filles ?",
+     "question": "כמה בנות יש לאיתן?",
+     "interrogative": "כמה בנות"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי יש שלוש בנות?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.20:8": [
+  {
+   "text": "כמה ספרים יש לאיתן?",
+   "questions": []
+  }
+ ],
+ "0.20:9": [
+  {
+   "text": "כמה ספרים דוד צריך?",
+   "questions": []
+  }
+ ],
+ "0.20:10": [
+  {
+   "text": "למה רק חמישה תלמידים באים לכיתה?",
+   "questions": []
+  }
+ ],
+ "0.20:11": [
+  {
+   "text": "כמה בנים יש לדוד?",
+   "questions": []
+  }
+ ],
+ "0.20:12": [
+  {
+   "text": "כמה בנות יש לאיתן?",
+   "questions": []
+  }
+ ],
+ "0.20:13": [
+  {
+   "text": "שלום איתן, כמה ספרים יש לך?",
+   "questions": []
+  }
+ ],
+ "0.20:14": [
+  {
+   "text": "יש לי שני ספרים.",
+   "questions": [
+    {
+     "hint": "combien de livres ?",
+     "question": "כמה ספרים יש לך?",
+     "interrogative": "כמה ספרים"
+    },
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה יש לך?",
+     "interrogative": "מה"
+    }
+   ]
+  }
+ ],
+ "0.20:15": [
+  {
+   "text": "אני צריך ספר.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה צריך?",
+     "interrogative": "מה"
+    }
+   ]
+  },
+  {
+   "text": "אין לי ספר, אתה יכול בבקשה לתת לי ספר אחד?",
+   "questions": []
+  }
+ ],
+ "0.20:16": [
+  {
+   "text": "כמובן דוד, אני יכול לתת לך ספר אחד.",
+   "questions": [
+    {
+     "hint": "qu'est-ce que ?",
+     "question": "מה אתה יכול לתת לי?",
+     "interrogative": "מה"
+    },
+    {
+     "hint": "combien de livres ?",
+     "question": "כמה ספרים אתה יכול לתת לי?",
+     "interrogative": "כמה ספרים"
+    },
+    {
+     "hint": "à qui ?",
+     "question": "למי אתה יכול לתת ספר אחד?",
+     "interrogative": "למי"
+    }
+   ]
+  }
+ ],
+ "0.20:17": [
+  {
+   "text": "תודה רבה.",
+   "questions": []
+  }
+ ],
+ "0.20:18": [
+  {
+   "text": "כמה תלמידים באים היום לכיתה?",
+   "questions": []
+  }
+ ],
+ "0.20:19": [
+  {
+   "text": "היום באים לכיתה רק חמישה תלמידים ושתי תלמידות.",
+   "questions": [
+    {
+     "hint": "combien d'élèves ?",
+     "question": "כמה תלמידים וכמה תלמידות באים היום לכיתה?",
+     "interrogative": "כמה תלמידים וכמה תלמידות"
+    },
+    {
+     "hint": "quand ?",
+     "question": "מתי באים לכיתה רק חמישה תלמידים ושתי תלמידות?",
+     "interrogative": "מתי"
+    },
+    {
+     "hint": "où ?",
+     "question": "לאן באים היום רק חמישה תלמידים ושתי תלמידות?",
+     "interrogative": "לאן"
+    }
+   ]
+  }
+ ],
+ "0.20:20": [
+  {
+   "text": "איפה כולם?",
+   "questions": []
+  }
+ ],
+ "0.20:21": [
+  {
+   "text": "שלושה תלמידים חולים ושלוש תלמידות לא יכולות לבוא היום.",
+   "questions": [
+    {
+     "hint": "combien ?",
+     "question": "כמה תלמידים חולים וכמה תלמידות לא יכולות לבוא היום?",
+     "interrogative": "כמה"
+    }
+   ]
+  }
+ ],
+ "0.20:22": [
+  {
+   "text": "כמה ילדים יש לך?",
+   "questions": []
+  }
+ ],
+ "0.20:23": [
+  {
+   "text": "יש לי שלושה בנים ובת אחת.",
+   "questions": [
+    {
+     "hint": "combien de garçons et de filles ?",
+     "question": "כמה בנים וכמה בנות יש לך?",
+     "interrogative": "כמה בנים וכמה בנות"
+    }
+   ]
+  },
+  {
+   "text": "כמה ילדים יש לך?",
+   "questions": []
+  }
+ ],
+ "0.20:24": [
+  {
+   "text": "יש לי שלוש בנות ושני בנים וגם הם לומדים עברית.",
+   "questions": [
+    {
+     "hint": "combien de filles et de garçons ?",
+     "question": "כמה בנות וכמה בנים יש לך שגם הם לומדים עברית?",
+     "interrogative": "כמה בנות וכמה בנים"
+    }
+   ]
+  }
+ ]
+}

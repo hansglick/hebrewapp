@@ -505,3 +505,131 @@ fieldset.revision-agent-form:disabled {
   background: rgba(224, 168, 0, 0.25);
   box-shadow: inset -3px 0 0 #e0a800;
 }
+
+/* Expression libre : indice (mots en hébreu) et réponse de l'élève corrigée. */
+.ra-hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ra-hint-word {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--cardBorder);
+  font-size: 1.3em;
+  font-weight: 500;
+  color: var(--textPrimary);
+}
+
+.ra-answer {
+  margin: 0;
+  font-size: 1.35em;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--textPrimary);
+}
+
+.ra-answer-error {
+  background: rgba(217, 45, 45, 0.18);
+  color: #d92d2d;
+  border-radius: 4px;
+  padding: 0 2px;
+  box-shadow: inset 0 -2px 0 #d92d2d;
+}
+
+.ra-result {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ra-result-success {
+  background: var(--validationPleine);
+}
+
+.ra-result-failure {
+  background: var(--annulationPleine);
+}
+
+/* Compréhension de texte : deux fenêtres séparées (prof / texte), côte à côte
+   sur grand écran, l'une sous l'autre sur mobile ; chacune défile seule. */
+.ra-duo {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .ra-duo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.ra-window {
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ra-window .ra-speech {
+  position: static;
+  border: none;
+  padding: 0;
+}
+
+.ra-window-body {
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Déclinaison : sujet ou pronom objet à modifier, dans la phrase à transformer. */
+.ra-target {
+  background: rgba(224, 168, 0, 0.25);
+  color: inherit;
+  border-radius: 4px;
+  padding: 0 3px;
+  box-shadow: inset 0 -2px 0 #e0a800;
+}
+
+/* Complétion : indice (action de la phrase, concept à pratiquer). */
+.ra-clue {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  font-size: 0.9em;
+}
+
+.ra-clue dt {
+  font-weight: 600;
+  color: var(--textSecondary);
+}
+
+.ra-clue dd {
+  margin: 0;
+  color: var(--textPrimary);
+}
+
+/* Mot : mot ou verbe à employer, avec sa traduction. */
+.ra-word-hebrew {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--textPrimary);
+}
+
+.ra-word-french {
+  margin: 0;
+  font-size: 0.95em;
+  color: var(--textSecondary);
+}

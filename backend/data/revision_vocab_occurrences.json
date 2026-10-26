@@ -1,0 +1,5407 @@
+{
+ "0.01:0": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרות"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.01:1": [
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:10": [
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:11": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:12": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.01:13": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.01:14": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידה"
+  }
+ ],
+ "0.01:17": [
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "זה"
+  },
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "זאת"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמיד"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידה"
+  }
+ ],
+ "0.01:18": [
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:19": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:2": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.01:20": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:21": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:22": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.01:23": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.01:24": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.01:3": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרות"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדות"
+  }
+ ],
+ "0.01:4": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמיד"
+  }
+ ],
+ "0.01:5": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:6": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.01:7": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.01:8": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.01:9": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידה"
+  }
+ ],
+ "0.02:0": [
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  }
+ ],
+ "0.02:1": [
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  },
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתב"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "וכותבות"
+  }
+ ],
+ "0.02:10": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  }
+ ],
+ "0.02:11": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.02:13": [
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  }
+ ],
+ "0.02:14": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.02:15": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.02:16": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  }
+ ],
+ "0.02:17": [
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.02:19": [
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  }
+ ],
+ "0.02:2": [
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  }
+ ],
+ "0.02:20": [
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתב"
+  },
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "המכתב"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.02:22": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.02:23": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  }
+ ],
+ "0.02:24": [
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "אלה"
+  }
+ ],
+ "0.02:25": [
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "זה"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "וזאת"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "הכיתה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותבים"
+  }
+ ],
+ "0.02:3": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  }
+ ],
+ "0.02:4": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדת"
+  }
+ ],
+ "0.02:5": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידות"
+  }
+ ],
+ "0.02:6": [
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  }
+ ],
+ "0.02:7": [
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתב"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  }
+ ],
+ "0.02:8": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.03:0": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.03:10": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.03:11": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "ולומדים"
+  }
+ ],
+ "0.03:12": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  }
+ ],
+ "0.03:13": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתבים"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותבים"
+  }
+ ],
+ "0.03:2": [
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "זה"
+  },
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  },
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתב"
+  }
+ ],
+ "0.03:3": [
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "זאת"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידה"
+  }
+ ],
+ "0.03:4": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדת"
+  }
+ ],
+ "0.03:5": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.03:6": [
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותבים"
+  }
+ ],
+ "0.03:7": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  }
+ ],
+ "0.03:8": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.03:9": [
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתב"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  }
+ ],
+ "0.04:0": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טסים"
+  }
+ ],
+ "0.04:1": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "לפריז"
+  }
+ ],
+ "0.04:10": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  }
+ ],
+ "0.04:11": [
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "מטוס",
+   "kind": "mot",
+   "surface": "במטוס"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.04:14": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.04:15": [
+  {
+   "key": "מטוס",
+   "kind": "mot",
+   "surface": "במטוס"
+  },
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.04:16": [
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "לפריז"
+  }
+ ],
+ "0.04:19": [
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "פריז"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "זאת"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "עיר"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדולה"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "ויפה"
+  }
+ ],
+ "0.04:2": [
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "בפריז"
+  }
+ ],
+ "0.04:20": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "ירושלים"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "זאת"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "עיר"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדולה"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "ויפה"
+  }
+ ],
+ "0.04:22": [
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  }
+ ],
+ "0.04:23": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.04:24": [
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.04:25": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  }
+ ],
+ "0.04:4": [
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.04:5": [
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "לפריז"
+  }
+ ],
+ "0.04:6": [
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  }
+ ],
+ "0.04:8": [
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  }
+ ],
+ "0.04:9": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.05:0": [
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרות"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.05:1": [
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.05:10": [
+  {
+   "key": "חלון",
+   "kind": "mot",
+   "surface": "מהחלון"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.05:11": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.05:12": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "באולפן"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.05:13": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "קטן",
+   "kind": "mot",
+   "surface": "קטנה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.05:14": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "שולחן",
+   "kind": "mot",
+   "surface": "שולחן"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדול"
+  },
+  {
+   "key": "כיסא",
+   "kind": "mot",
+   "surface": "כיסא"
+  },
+  {
+   "key": "מיטה",
+   "kind": "mot",
+   "surface": "ומיטה"
+  },
+  {
+   "key": "קטן",
+   "kind": "mot",
+   "surface": "קטנה"
+  }
+ ],
+ "0.05:15": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  },
+  {
+   "key": "אבל",
+   "kind": "mot",
+   "surface": "אבל"
+  },
+  {
+   "key": "טלוויזיה",
+   "kind": "mot",
+   "surface": "טלוויזיה"
+  }
+ ],
+ "0.05:16": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "מוסיקה",
+   "kind": "mot",
+   "surface": "מוסיקה"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  },
+  {
+   "key": "לשמוע",
+   "kind": "verbe",
+   "surface": "ושומע"
+  }
+ ],
+ "0.05:17": [
+  {
+   "key": "חלון",
+   "kind": "mot",
+   "surface": "מהחלון"
+  },
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכוניות"
+  },
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "אוטובוסים"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "וגם"
+  },
+  {
+   "key": "גינה",
+   "kind": "mot",
+   "surface": "גינה"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדולה"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.05:18": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובד"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "נח"
+  }
+ ],
+ "0.05:19": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.05:2": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרות"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדות"
+  }
+ ],
+ "0.05:20": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.05:21": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  }
+ ],
+ "0.05:22": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  }
+ ],
+ "0.05:23": [
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  }
+ ],
+ "0.05:24": [
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  }
+ ],
+ "0.05:3": [
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.05:4": [
+  {
+   "key": "טלוויזיה",
+   "kind": "mot",
+   "surface": "טלוויזיה"
+  },
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  }
+ ],
+ "0.05:5": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "מוסיקה",
+   "kind": "mot",
+   "surface": "מוסיקה"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  },
+  {
+   "key": "לשמוע",
+   "kind": "verbe",
+   "surface": "ושומע"
+  }
+ ],
+ "0.05:6": [
+  {
+   "key": "חלון",
+   "kind": "mot",
+   "surface": "מהחלון"
+  },
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכוניות"
+  },
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "אוטובוסים"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "וגם"
+  },
+  {
+   "key": "גינה",
+   "kind": "mot",
+   "surface": "גינה"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדולה"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.05:7": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  }
+ ],
+ "0.05:8": [
+  {
+   "key": "טלוויזיה",
+   "kind": "mot",
+   "surface": "טלוויזיה"
+  },
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  }
+ ],
+ "0.05:9": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  }
+ ],
+ "0.06:0": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  }
+ ],
+ "0.06:1": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.06:10": [
+  {
+   "key": "שולחן",
+   "kind": "mot",
+   "surface": "השולחן"
+  },
+  {
+   "key": "מיטה",
+   "kind": "mot",
+   "surface": "מיטה"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדולה"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "ויפה"
+  }
+ ],
+ "0.06:11": [
+  {
+   "key": "חלון",
+   "kind": "mot",
+   "surface": "מהחלון"
+  },
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "הדירה"
+  },
+  {
+   "key": "גינה",
+   "kind": "mot",
+   "surface": "גינה"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "יפה"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.06:2": [
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  }
+ ],
+ "0.06:3": [
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "ירושלים"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "זאת"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "עיר"
+  },
+  {
+   "key": "קטן",
+   "kind": "mot",
+   "surface": "קטנה"
+  }
+ ],
+ "0.06:4": [
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "בפריז"
+  }
+ ],
+ "0.06:5": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "שולחן",
+   "kind": "mot",
+   "surface": "שולחן"
+  },
+  {
+   "key": "כיסא",
+   "kind": "mot",
+   "surface": "כיסאות"
+  },
+  {
+   "key": "טלוויזיה",
+   "kind": "mot",
+   "surface": "וטלוויזיה"
+  }
+ ],
+ "0.06:6": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובדים"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "נחים"
+  }
+ ],
+ "0.06:7": [
+  {
+   "key": "מוסיקה",
+   "kind": "mot",
+   "surface": "מוזיקה"
+  },
+  {
+   "key": "לשמוע",
+   "kind": "verbe",
+   "surface": "שומע"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדת"
+  }
+ ],
+ "0.06:8": [
+  {
+   "key": "גינה",
+   "kind": "mot",
+   "surface": "בגינה"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכוניות"
+  }
+ ],
+ "0.06:9": [
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "בפריז"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכוניות"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "וגם"
+  },
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "אוטובוסים"
+  }
+ ],
+ "0.07:0": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  },
+  {
+   "key": "מוקדם",
+   "kind": "mot",
+   "surface": "מוקדם"
+  },
+  {
+   "key": "לקום",
+   "kind": "verbe",
+   "surface": "קמים"
+  }
+ ],
+ "0.07:1": [
+  {
+   "key": "ערב",
+   "kind": "mot",
+   "surface": "בערב"
+  },
+  {
+   "key": "להתרחץ",
+   "kind": "verbe",
+   "surface": "מתרחצת"
+  }
+ ],
+ "0.07:10": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  }
+ ],
+ "0.07:12": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.07:13": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  },
+  {
+   "key": "מוקדם",
+   "kind": "mot",
+   "surface": "מוקדם"
+  },
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בוקר"
+  },
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "עוגה"
+  },
+  {
+   "key": "פרי",
+   "kind": "mot",
+   "surface": "פירות"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "לקום",
+   "kind": "verbe",
+   "surface": "קם"
+  },
+  {
+   "key": "להתרחץ",
+   "kind": "verbe",
+   "surface": "מתרחץ"
+  }
+ ],
+ "0.07:14": [
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "באוטובוס"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "לאולפן"
+  }
+ ],
+ "0.07:15": [
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  }
+ ],
+ "0.07:16": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "ללמוד"
+  }
+ ],
+ "0.07:18": [
+  {
+   "key": "צהרים",
+   "kind": "mot",
+   "surface": "בצהריים"
+  },
+  {
+   "key": "מסעדה",
+   "kind": "mot",
+   "surface": "במסעדה"
+  },
+  {
+   "key": "צהרים",
+   "kind": "mot",
+   "surface": "צהריים"
+  },
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "החברים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולך"
+  }
+ ],
+ "0.07:19": [
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "ומדברים"
+  }
+ ],
+ "0.07:2": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "מדברים"
+  }
+ ],
+ "0.07:20": [
+  {
+   "key": "ערב",
+   "kind": "mot",
+   "surface": "בערב"
+  },
+  {
+   "key": "קולנוע",
+   "kind": "mot",
+   "surface": "לקולנוע"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולך"
+  }
+ ],
+ "0.07:21": [
+  {
+   "key": "סרט",
+   "kind": "mot",
+   "surface": "סרט"
+  },
+  {
+   "key": "קולנוע",
+   "kind": "mot",
+   "surface": "בקולנוע"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצים"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "לראות"
+  }
+ ],
+ "0.07:3": [
+  {
+   "key": "מסעדה",
+   "kind": "mot",
+   "surface": "במסעדה"
+  },
+  {
+   "key": "ערב",
+   "kind": "mot",
+   "surface": "בערב"
+  }
+ ],
+ "0.07:4": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.07:5": [
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "עוגה"
+  },
+  {
+   "key": "פרי",
+   "kind": "mot",
+   "surface": "ופירות"
+  },
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  }
+ ],
+ "0.07:6": [
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  }
+ ],
+ "0.07:8": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.07:9": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  }
+ ],
+ "0.08:0": [
+  {
+   "key": "גינה",
+   "kind": "mot",
+   "surface": "גינה"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "יפה"
+  }
+ ],
+ "0.08:1": [
+  {
+   "key": "מיטה",
+   "kind": "mot",
+   "surface": "מיטה"
+  }
+ ],
+ "0.08:2": [
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "חבר"
+  }
+ ],
+ "0.08:3": [
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכונית"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  }
+ ],
+ "0.08:4": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.08:5": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.08:6": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.08:7": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.08:8": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.08:9": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.09:0": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "דבר",
+   "kind": "mot",
+   "surface": "דברים"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "בשיעור"
+  }
+ ],
+ "0.09:1": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורים"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טוב"
+  }
+ ],
+ "0.09:10": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "לתלמידים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "לספר",
+   "kind": "verbe",
+   "surface": "מספר"
+  }
+ ],
+ "0.09:11": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "למורה"
+  },
+  {
+   "key": "סבלנות",
+   "kind": "mot",
+   "surface": "סבלנות"
+  }
+ ],
+ "0.09:12": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "שיעור"
+  },
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "בשבת"
+  }
+ ],
+ "0.09:13": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "בשבת"
+  }
+ ],
+ "0.09:14": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "שיעור"
+  }
+ ],
+ "0.09:15": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "בשיעור"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "דבר",
+   "kind": "mot",
+   "surface": "דברים"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "וגם"
+  },
+  {
+   "key": "כמובן",
+   "kind": "mot",
+   "surface": "כמובן"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "לכתוב"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "לדבר"
+  }
+ ],
+ "0.09:16": [
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "לתלמידים"
+  },
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  },
+  {
+   "key": "לספר",
+   "kind": "verbe",
+   "surface": "מספר"
+  }
+ ],
+ "0.09:17": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "מורה"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טובה"
+  }
+ ],
+ "0.09:18": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורה"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "והתלמידים"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "ללמוד"
+  }
+ ],
+ "0.09:19": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "חברים"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טובים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  }
+ ],
+ "0.09:2": [
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהבת"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "ללמוד"
+  }
+ ],
+ "0.09:20": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורה"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טוב"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "סבלנות",
+   "kind": "mot",
+   "surface": "סבלנות"
+  }
+ ],
+ "0.09:21": [
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "בשבת"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "שיעור"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.09:22": [
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "חנות",
+   "kind": "mot",
+   "surface": "חנויות"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "והרבה"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכוניות"
+  },
+  {
+   "key": "רעש",
+   "kind": "mot",
+   "surface": "ורעש"
+  }
+ ],
+ "0.09:23": [
+  {
+   "key": "אבל",
+   "kind": "mot",
+   "surface": "אבל"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "מסעדה",
+   "kind": "mot",
+   "surface": "מסעדות"
+  }
+ ],
+ "0.09:3": [
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  }
+ ],
+ "0.09:4": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "דבר",
+   "kind": "mot",
+   "surface": "דברים"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "בשיעור"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "וגם"
+  },
+  {
+   "key": "כמובן",
+   "kind": "mot",
+   "surface": "כמובן"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "לכתוב"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "לדבר"
+  }
+ ],
+ "0.09:5": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "לתלמידים"
+  },
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  },
+  {
+   "key": "לספר",
+   "kind": "verbe",
+   "surface": "מספר"
+  }
+ ],
+ "0.09:6": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "למורה"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "סבלנות",
+   "kind": "mot",
+   "surface": "סבלנות"
+  }
+ ],
+ "0.09:7": [
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "בשבת"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "שיעור"
+  }
+ ],
+ "0.09:8": [
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  }
+ ],
+ "0.09:9": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "בשיעור"
+  }
+ ],
+ "0.10:0": [
+  {
+   "key": "פרי",
+   "kind": "mot",
+   "surface": "פירות"
+  }
+ ],
+ "0.10:1": [
+  {
+   "key": "סרט",
+   "kind": "mot",
+   "surface": "הסרט"
+  },
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "הזה"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצים"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "לראות"
+  }
+ ],
+ "0.10:11": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.10:12": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "שיעור"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.10:13": [
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "המכתב"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותבת"
+  }
+ ],
+ "0.10:14": [
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "מכתב"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותבת"
+  }
+ ],
+ "0.10:15": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספר"
+  }
+ ],
+ "0.10:16": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.10:17": [
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "העוגה"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "הזאת"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  }
+ ],
+ "0.10:18": [
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "עוגה"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  }
+ ],
+ "0.10:19": [
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.10:2": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספר"
+  },
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "הזה"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.10:3": [
+  {
+   "key": "לשמוע",
+   "kind": "verbe",
+   "surface": "שומעת"
+  }
+ ],
+ "0.10:4": [
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "העוגה"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "הזאת"
+  }
+ ],
+ "0.10:5": [
+  {
+   "key": "סרט",
+   "kind": "mot",
+   "surface": "סרט"
+  },
+  {
+   "key": "סרט",
+   "kind": "mot",
+   "surface": "הסרט"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.10:6": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורה"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "באולפן"
+  }
+ ],
+ "0.10:7": [
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.10:8": [
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "הקפה"
+  }
+ ],
+ "0.11:0": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורה"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "נחה"
+  }
+ ],
+ "0.11:1": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספרים"
+  }
+ ],
+ "0.11:10": [
+  {
+   "key": "כמעט",
+   "kind": "mot",
+   "surface": "כמעט"
+  },
+  {
+   "key": "כל",
+   "kind": "mot",
+   "surface": "כל"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "יום"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואים"
+  }
+ ],
+ "0.11:11": [
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספר"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.11:12": [
+  {
+   "key": "עכשיו",
+   "kind": "mot",
+   "surface": "עכשיו"
+  },
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "חודש",
+   "kind": "mot",
+   "surface": "חודש"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טוב"
+  }
+ ],
+ "0.11:13": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "עייף",
+   "kind": "mot",
+   "surface": "עייף"
+  },
+  {
+   "key": "צמא",
+   "kind": "mot",
+   "surface": "צמא"
+  },
+  {
+   "key": "רעב",
+   "kind": "mot",
+   "surface": "ורעב"
+  }
+ ],
+ "0.11:14": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בבית"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "ונח"
+  }
+ ],
+ "0.11:15": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  }
+ ],
+ "0.11:16": [
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בבית"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "ואוהב"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "ללמוד"
+  }
+ ],
+ "0.11:17": [
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "עוגה"
+  },
+  {
+   "key": "טעים",
+   "kind": "mot",
+   "surface": "טעימה"
+  },
+  {
+   "key": "פרי",
+   "kind": "mot",
+   "surface": "ופירות"
+  }
+ ],
+ "0.11:18": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "ביחד",
+   "kind": "mot",
+   "surface": "ביחד"
+  },
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולכים"
+  }
+ ],
+ "0.11:19": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בוקר"
+  },
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  }
+ ],
+ "0.11:2": [
+  {
+   "key": "כמעט",
+   "kind": "mot",
+   "surface": "כמעט"
+  },
+  {
+   "key": "כל",
+   "kind": "mot",
+   "surface": "כל"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "יום"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.11:20": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "נח"
+  }
+ ],
+ "0.11:21": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "חודש",
+   "kind": "mot",
+   "surface": "חודש"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טוב"
+  }
+ ],
+ "0.11:22": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולכים"
+  }
+ ],
+ "0.11:3": [
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בבית"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "נחים"
+  }
+ ],
+ "0.11:4": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "חודש",
+   "kind": "mot",
+   "surface": "חודש"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טוב"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "מדבר"
+  }
+ ],
+ "0.11:5": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "לקום",
+   "kind": "verbe",
+   "surface": "קם"
+  },
+  {
+   "key": "להתרחץ",
+   "kind": "verbe",
+   "surface": "מתרחץ"
+  }
+ ],
+ "0.11:6": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "לאולפן"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולכים"
+  },
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "נחים"
+  }
+ ],
+ "0.11:7": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  },
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "הזה"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  }
+ ],
+ "0.11:8": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "חברים"
+  }
+ ],
+ "0.11:9": [
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "החברים"
+  },
+  {
+   "key": "של",
+   "kind": "mot",
+   "surface": "של"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "באולפן"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.12:0": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "לתלמידים"
+  },
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  },
+  {
+   "key": "לספר",
+   "kind": "verbe",
+   "surface": "מספרת"
+  }
+ ],
+ "0.12:1": [
+  {
+   "key": "מסעדה",
+   "kind": "mot",
+   "surface": "במסעדה"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצים"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "לאכול"
+  }
+ ],
+ "0.12:10": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "והמורים"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  },
+  {
+   "key": "ללמד",
+   "kind": "verbe",
+   "surface": "מלמדים"
+  }
+ ],
+ "0.12:11": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  },
+  {
+   "key": "מוקדם",
+   "kind": "mot",
+   "surface": "מוקדם"
+  },
+  {
+   "key": "לקום",
+   "kind": "verbe",
+   "surface": "קם"
+  }
+ ],
+ "0.12:2": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורות"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספרים"
+  }
+ ],
+ "0.12:3": [
+  {
+   "key": "כל",
+   "kind": "mot",
+   "surface": "כל"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "יום"
+  },
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובדים"
+  }
+ ],
+ "0.12:4": [
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "לטייל",
+   "kind": "verbe",
+   "surface": "מטיילת"
+  }
+ ],
+ "0.12:5": [
+  {
+   "key": "כל",
+   "kind": "mot",
+   "surface": "כל"
+  },
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בוקר"
+  },
+  {
+   "key": "לקום",
+   "kind": "verbe",
+   "surface": "קם"
+  },
+  {
+   "key": "להתרחץ",
+   "kind": "verbe",
+   "surface": "ומתרחץ"
+  }
+ ],
+ "0.12:6": [
+  {
+   "key": "עיתון",
+   "kind": "mot",
+   "surface": "עיתון"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "בעברית"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהבים"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "לקרוא"
+  }
+ ],
+ "0.12:7": [
+  {
+   "key": "מטוס",
+   "kind": "mot",
+   "surface": "במטוס"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טסה"
+  }
+ ],
+ "0.12:8": [
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "לפריז"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.12:9": [
+  {
+   "key": "טלוויזיה",
+   "kind": "mot",
+   "surface": "טלוויזיה"
+  },
+  {
+   "key": "מוסיקה",
+   "kind": "mot",
+   "surface": "מוזיקה"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואות"
+  },
+  {
+   "key": "לשמוע",
+   "kind": "verbe",
+   "surface": "ושומעות"
+  }
+ ],
+ "0.13:0": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "באולפן"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.13:1": [
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "חברים"
+  },
+  {
+   "key": "לטייל",
+   "kind": "verbe",
+   "surface": "מטיילות"
+  }
+ ],
+ "0.13:10": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "הבוקר"
+  },
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובד"
+  }
+ ],
+ "0.13:11": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בית"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  }
+ ],
+ "0.13:12": [
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בית"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "קולנוע",
+   "kind": "mot",
+   "surface": "הקולנוע"
+  }
+ ],
+ "0.13:13": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "חנות",
+   "kind": "mot",
+   "surface": "חנויות"
+  },
+  {
+   "key": "אבל",
+   "kind": "mot",
+   "surface": "אבל"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "זאת",
+   "kind": "mot",
+   "surface": "הזאת"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.13:14": [
+  {
+   "key": "סבלנות",
+   "kind": "mot",
+   "surface": "סבלנות"
+  },
+  {
+   "key": "כמובן",
+   "kind": "mot",
+   "surface": "וכמובן"
+  },
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "חברים"
+  }
+ ],
+ "0.13:15": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "אבל",
+   "kind": "mot",
+   "surface": "אבל"
+  },
+  {
+   "key": "סבלנות",
+   "kind": "mot",
+   "surface": "סבלנות"
+  }
+ ],
+ "0.13:16": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמיד"
+  },
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "מהמורה"
+  },
+  {
+   "key": "אבל",
+   "kind": "mot",
+   "surface": "אבל"
+  },
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "המורה"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומד"
+  },
+  {
+   "key": "ללמד",
+   "kind": "verbe",
+   "surface": "מלמד"
+  }
+ ],
+ "0.13:17": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "חודש",
+   "kind": "mot",
+   "surface": "חודש"
+  },
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "באולפן"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טוב"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "מדבר"
+  }
+ ],
+ "0.13:18": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספר"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קורא"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  }
+ ],
+ "0.13:19": [
+  {
+   "key": "רעב",
+   "kind": "mot",
+   "surface": "רעב"
+  },
+  {
+   "key": "צמא",
+   "kind": "mot",
+   "surface": "צמא"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכל"
+  }
+ ],
+ "0.13:2": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  }
+ ],
+ "0.13:3": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולכים"
+  }
+ ],
+ "0.13:4": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "מדברים"
+  }
+ ],
+ "0.13:5": [
+  {
+   "key": "פריז",
+   "kind": "mot",
+   "surface": "לפריז"
+  },
+  {
+   "key": "אבל",
+   "kind": "mot",
+   "surface": "אבל"
+  },
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "מטוס",
+   "kind": "mot",
+   "surface": "במטוס"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "לנסוע"
+  }
+ ],
+ "0.13:6": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  },
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בוקר"
+  },
+  {
+   "key": "ערב",
+   "kind": "mot",
+   "surface": "ובערב"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכל"
+  },
+  {
+   "key": "להתרחץ",
+   "kind": "verbe",
+   "surface": "מתרחץ"
+  }
+ ],
+ "0.13:7": [
+  {
+   "key": "קולנוע",
+   "kind": "mot",
+   "surface": "לקולנוע"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.13:8": [
+  {
+   "key": "מסעדה",
+   "kind": "mot",
+   "surface": "למסעדה"
+  },
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "עוגה"
+  },
+  {
+   "key": "פרי",
+   "kind": "mot",
+   "surface": "ופירות"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "טובים"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "הולך"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכל"
+  }
+ ],
+ "0.13:9": [
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "באוטובוס"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.14:0": [
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "החברים"
+  },
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.14:1": [
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "עוגות"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.14:2": [
+  {
+   "key": "מוסיקה",
+   "kind": "mot",
+   "surface": "המוזיקה"
+  },
+  {
+   "key": "לשמוע",
+   "kind": "verbe",
+   "surface": "שומעים"
+  }
+ ],
+ "0.14:3": [
+  {
+   "key": "עוגה",
+   "kind": "mot",
+   "surface": "העוגה"
+  },
+  {
+   "key": "טעים",
+   "kind": "mot",
+   "surface": "הטעימה"
+  },
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכלת"
+  }
+ ],
+ "0.14:4": [
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "לעיר"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "הגדולה"
+  },
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.14:5": [
+  {
+   "key": "מטוס",
+   "kind": "mot",
+   "surface": "במטוס"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "הגדול"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "והיפה"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טסות"
+  }
+ ],
+ "0.14:6": [
+  {
+   "key": "מוקדם",
+   "kind": "mot",
+   "surface": "מוקדם"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "במכונית"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "הגדולה"
+  },
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "החברים"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "הטובים"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסעים"
+  }
+ ],
+ "0.14:7": [
+  {
+   "key": "מכתב",
+   "kind": "mot",
+   "surface": "המכתב"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "לתלמידים"
+  },
+  {
+   "key": "טוב",
+   "kind": "mot",
+   "surface": "הטובים"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "כותב"
+  }
+ ],
+ "0.14:8": [
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "שיעור",
+   "kind": "mot",
+   "surface": "השיעור"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספר"
+  },
+  {
+   "key": "קטן",
+   "kind": "mot",
+   "surface": "הקטן"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדת"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "וקוראת"
+  }
+ ],
+ "0.14:9": [
+  {
+   "key": "מסעדה",
+   "kind": "mot",
+   "surface": "למסעדה"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "הגדולה"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "ללכת"
+  }
+ ],
+ "0.15:0": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.15:1": [
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהבים"
+  }
+ ],
+ "0.15:2": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "לטוס",
+   "kind": "verbe",
+   "surface": "טס"
+  }
+ ],
+ "0.15:3": [
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכלים"
+  }
+ ],
+ "0.15:4": [
+  {
+   "key": "אולפן",
+   "kind": "mot",
+   "surface": "לאולפן"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסעת"
+  }
+ ],
+ "0.15:5": [
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "עיר"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסעת"
+  }
+ ],
+ "0.15:6": [
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.15:7": [
+  {
+   "key": "פרי",
+   "kind": "mot",
+   "surface": "פרי"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "לאכול"
+  }
+ ],
+ "0.15:8": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.16:0": [
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קוראים"
+  }
+ ],
+ "0.16:10": [
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "המשפחה"
+  },
+  {
+   "key": "של",
+   "kind": "mot",
+   "surface": "של"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.16:11": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.16:12": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובד"
+  }
+ ],
+ "0.16:13": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.16:14": [
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשוי"
+  }
+ ],
+ "0.16:15": [
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "עיר"
+  },
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "המשפחה"
+  },
+  {
+   "key": "של",
+   "kind": "mot",
+   "surface": "של"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרה"
+  }
+ ],
+ "0.16:16": [
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קוראים"
+  }
+ ],
+ "0.16:17": [
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קוראים"
+  }
+ ],
+ "0.16:18": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.16:19": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  }
+ ],
+ "0.16:2": [
+  {
+   "key": "הכי",
+   "kind": "mot",
+   "surface": "הכי"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.16:21": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובדת"
+  }
+ ],
+ "0.16:22": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובדת"
+  },
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובד"
+  }
+ ],
+ "0.16:23": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובד"
+  }
+ ],
+ "0.16:24": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "עובד"
+  }
+ ],
+ "0.16:25": [
+  {
+   "key": "רופא",
+   "kind": "mot",
+   "surface": "רופא"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גר"
+  },
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "ועובד"
+  }
+ ],
+ "0.16:26": [
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "זה"
+  },
+  {
+   "key": "רחוק",
+   "kind": "mot",
+   "surface": "רחוק"
+  },
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "באוטובוס"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.16:27": [
+  {
+   "key": "רכב",
+   "kind": "mot",
+   "surface": "רכב"
+  },
+  {
+   "key": "רכב",
+   "kind": "mot",
+   "surface": "ברכב"
+  },
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשואה"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.16:28": [
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשואה"
+  },
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  },
+  {
+   "key": "קטן",
+   "kind": "mot",
+   "surface": "קטנים"
+  },
+  {
+   "key": "חמוד",
+   "kind": "mot",
+   "surface": "וחמודים"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשוי"
+  }
+ ],
+ "0.16:29": [
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשוי"
+  },
+  {
+   "key": "רווק",
+   "kind": "mot",
+   "surface": "רווק"
+  },
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "משפחה"
+  }
+ ],
+ "0.16:3": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "גרים"
+  }
+ ],
+ "0.16:30": [
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "משפחה"
+  },
+  {
+   "key": "גדול",
+   "kind": "mot",
+   "surface": "גדולה"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "שגרה"
+  }
+ ],
+ "0.16:32": [
+  {
+   "key": "אוגוסט",
+   "kind": "mot",
+   "surface": "באוגוסט"
+  },
+  {
+   "key": "חופשה",
+   "kind": "mot",
+   "surface": "חופשה"
+  },
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "המשפחה"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "בירושלים"
+  }
+ ],
+ "0.16:33": [
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "עיר"
+  },
+  {
+   "key": "הכי",
+   "kind": "mot",
+   "surface": "הכי"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהבת"
+  }
+ ],
+ "0.16:34": [
+  {
+   "key": "הכי",
+   "kind": "mot",
+   "surface": "הכי"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "ירושלים"
+  },
+  {
+   "key": "יפה",
+   "kind": "mot",
+   "surface": "יפה"
+  },
+  {
+   "key": "מיוחד",
+   "kind": "mot",
+   "surface": "ומיוחדת"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהבת"
+  }
+ ],
+ "0.16:35": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "ירושלים",
+   "kind": "mot",
+   "surface": "ירושלים"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.16:36": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קורא"
+  }
+ ],
+ "0.16:37": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "הספר"
+  },
+  {
+   "key": "של",
+   "kind": "mot",
+   "surface": "של"
+  },
+  {
+   "key": "מעניין",
+   "kind": "mot",
+   "surface": "מעניין"
+  },
+  {
+   "key": "זה",
+   "kind": "mot",
+   "surface": "הזה"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קורא"
+  },
+  {
+   "key": "לאהוב",
+   "kind": "verbe",
+   "surface": "אוהב"
+  }
+ ],
+ "0.16:4": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קוראת"
+  }
+ ],
+ "0.16:5": [
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסעות"
+  }
+ ],
+ "0.16:7": [
+  {
+   "key": "רופא",
+   "kind": "mot",
+   "surface": "רופא"
+  }
+ ],
+ "0.16:8": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.16:9": [
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשוי"
+  },
+  {
+   "key": "רווק",
+   "kind": "mot",
+   "surface": "רווק"
+  }
+ ],
+ "0.17:0": [
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "לרצות",
+   "kind": "verbe",
+   "surface": "רוצה"
+  },
+  {
+   "key": "לגור",
+   "kind": "verbe",
+   "surface": "לגור"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "ללמוד"
+  }
+ ],
+ "0.17:1": [
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "לקרוא"
+  },
+  {
+   "key": "לכתוב",
+   "kind": "verbe",
+   "surface": "ולכתוב"
+  }
+ ],
+ "0.17:2": [
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "בשבת"
+  }
+ ],
+ "0.17:3": [
+  {
+   "key": "לאן",
+   "kind": "mot",
+   "surface": "לאן"
+  },
+  {
+   "key": "ללכת",
+   "kind": "verbe",
+   "surface": "ללכת"
+  }
+ ],
+ "0.17:5": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "מאיפה"
+  },
+  {
+   "key": "לספר",
+   "kind": "verbe",
+   "surface": "לספר"
+  }
+ ],
+ "0.17:6": [
+  {
+   "key": "בוקר",
+   "kind": "mot",
+   "surface": "בבוקר"
+  },
+  {
+   "key": "מוקדם",
+   "kind": "mot",
+   "surface": "מוקדם"
+  },
+  {
+   "key": "לקום",
+   "kind": "verbe",
+   "surface": "לקום"
+  }
+ ],
+ "0.17:7": [
+  {
+   "key": "רכבת",
+   "kind": "mot",
+   "surface": "ברכבת"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "לנסוע"
+  }
+ ],
+ "0.17:8": [
+  {
+   "key": "לנוח",
+   "kind": "verbe",
+   "surface": "לנוח"
+  }
+ ],
+ "0.17:9": [
+  {
+   "key": "לעבוד",
+   "kind": "verbe",
+   "surface": "לעבוד"
+  }
+ ],
+ "0.18:0": [
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "הביתה"
+  }
+ ],
+ "0.18:1": [
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "ירקות"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  }
+ ],
+ "0.18:10": [
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "לשבת"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  }
+ ],
+ "0.18:11": [
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "ממהר"
+  }
+ ],
+ "0.18:13": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  }
+ ],
+ "0.18:14": [
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "והחברים"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכלים"
+  }
+ ],
+ "0.18:15": [
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "חברים"
+  },
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "לשבת"
+  },
+  {
+   "key": "להזמין",
+   "kind": "verbe",
+   "surface": "מזמין"
+  }
+ ],
+ "0.18:16": [
+  {
+   "key": "בשר",
+   "kind": "mot",
+   "surface": "בשר"
+  },
+  {
+   "key": "דג",
+   "kind": "mot",
+   "surface": "דגים"
+  },
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "וירקות"
+  },
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "הביתה"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  },
+  {
+   "key": "לבשל",
+   "kind": "verbe",
+   "surface": "ולבשל"
+  }
+ ],
+ "0.18:17": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "ממהר"
+  }
+ ],
+ "0.18:18": [
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "גם"
+  },
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בבית"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  }
+ ],
+ "0.18:19": [
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בבית"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "הקפה"
+  },
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "דבר",
+   "kind": "mot",
+   "surface": "דברים"
+  },
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "למהר"
+  }
+ ],
+ "0.18:2": [
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "הבית"
+  }
+ ],
+ "0.18:20": [
+  {
+   "key": "חבר",
+   "kind": "mot",
+   "surface": "החברים"
+  },
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "לבית"
+  },
+  {
+   "key": "של",
+   "kind": "mot",
+   "surface": "של"
+  },
+  {
+   "key": "ערב",
+   "kind": "mot",
+   "surface": "בערב"
+  }
+ ],
+ "0.18:21": [
+  {
+   "key": "ארוחה",
+   "kind": "mot",
+   "surface": "ארוחה"
+  },
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חמה"
+  },
+  {
+   "key": "משקה",
+   "kind": "mot",
+   "surface": "משקה"
+  },
+  {
+   "key": "קר",
+   "kind": "mot",
+   "surface": "קר"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכלים"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "ומדברים"
+  }
+ ],
+ "0.18:22": [
+  {
+   "key": "קר",
+   "kind": "mot",
+   "surface": "קר"
+  }
+ ],
+ "0.18:23": [
+  {
+   "key": "קר",
+   "kind": "mot",
+   "surface": "קר"
+  },
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חם"
+  }
+ ],
+ "0.18:24": [
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חם"
+  }
+ ],
+ "0.18:25": [
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חם"
+  }
+ ],
+ "0.18:3": [
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "ממהרים"
+  }
+ ],
+ "0.18:4": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  }
+ ],
+ "0.18:5": [
+  {
+   "key": "בשר",
+   "kind": "mot",
+   "surface": "בשר"
+  },
+  {
+   "key": "דג",
+   "kind": "mot",
+   "surface": "דגים"
+  },
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "וירקות"
+  },
+  {
+   "key": "שבת",
+   "kind": "mot",
+   "surface": "לשבת"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  }
+ ],
+ "0.18:6": [
+  {
+   "key": "הרבה",
+   "kind": "mot",
+   "surface": "הרבה"
+  },
+  {
+   "key": "זמן",
+   "kind": "mot",
+   "surface": "זמן"
+  },
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "ממהר"
+  }
+ ],
+ "0.18:8": [
+  {
+   "key": "בית",
+   "kind": "mot",
+   "surface": "בבית"
+  },
+  {
+   "key": "קפה",
+   "kind": "mot",
+   "surface": "קפה"
+  },
+  {
+   "key": "מרכז",
+   "kind": "mot",
+   "surface": "במרכז"
+  },
+  {
+   "key": "עיר",
+   "kind": "mot",
+   "surface": "העיר"
+  }
+ ],
+ "0.18:9": [
+  {
+   "key": "ארוחה",
+   "kind": "mot",
+   "surface": "ארוחה"
+  },
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חמה"
+  },
+  {
+   "key": "משקה",
+   "kind": "mot",
+   "surface": "משקה"
+  },
+  {
+   "key": "קר",
+   "kind": "mot",
+   "surface": "קר"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "אוכלים"
+  },
+  {
+   "key": "לדבר",
+   "kind": "verbe",
+   "surface": "ומדברים"
+  }
+ ],
+ "0.19:0": [
+  {
+   "key": "דירה",
+   "kind": "mot",
+   "surface": "בדירה"
+  },
+  {
+   "key": "חלון",
+   "kind": "mot",
+   "surface": "חלונות"
+  },
+  {
+   "key": "מיטה",
+   "kind": "mot",
+   "surface": "מיטות"
+  }
+ ],
+ "0.19:1": [
+  {
+   "key": "אוטובוס",
+   "kind": "mot",
+   "surface": "אוטובוסים"
+  },
+  {
+   "key": "מכונית",
+   "kind": "mot",
+   "surface": "מכוניות"
+  },
+  {
+   "key": "לראות",
+   "kind": "verbe",
+   "surface": "רואה"
+  }
+ ],
+ "0.19:2": [
+  {
+   "key": "טלוויזיה",
+   "kind": "mot",
+   "surface": "טלוויזיה"
+  }
+ ],
+ "0.19:3": [
+  {
+   "key": "כיסא",
+   "kind": "mot",
+   "surface": "כיסאות"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "בכיתה"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  }
+ ],
+ "0.19:4": [
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "מורים"
+  },
+  {
+   "key": "מורה",
+   "kind": "mot",
+   "surface": "מורות"
+  }
+ ],
+ "0.20:0": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "לתת",
+   "kind": "verbe",
+   "surface": "נותנת"
+  }
+ ],
+ "0.20:1": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "הילדים"
+  },
+  {
+   "key": "של",
+   "kind": "mot",
+   "surface": "של"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.20:10": [
+  {
+   "key": "רק",
+   "kind": "mot",
+   "surface": "רק"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "לכיתה"
+  }
+ ],
+ "0.20:11": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  }
+ ],
+ "0.20:12": [
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בנות"
+  }
+ ],
+ "0.20:13": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  }
+ ],
+ "0.20:14": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  }
+ ],
+ "0.20:15": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "בבקשה",
+   "kind": "mot",
+   "surface": "בבקשה"
+  },
+  {
+   "key": "לתת",
+   "kind": "verbe",
+   "surface": "לתת"
+  }
+ ],
+ "0.20:16": [
+  {
+   "key": "כמובן",
+   "kind": "mot",
+   "surface": "כמובן"
+  },
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  },
+  {
+   "key": "לתת",
+   "kind": "verbe",
+   "surface": "לתת"
+  }
+ ],
+ "0.20:18": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "לכיתה"
+  }
+ ],
+ "0.20:19": [
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  },
+  {
+   "key": "כיתה",
+   "kind": "mot",
+   "surface": "לכיתה"
+  },
+  {
+   "key": "רק",
+   "kind": "mot",
+   "surface": "רק"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידות"
+  }
+ ],
+ "0.20:2": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "התלמידים"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  }
+ ],
+ "0.20:20": [
+  {
+   "key": "איפה",
+   "kind": "mot",
+   "surface": "איפה"
+  },
+  {
+   "key": "כולם",
+   "kind": "mot",
+   "surface": "כולם"
+  }
+ ],
+ "0.20:21": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "חולה",
+   "kind": "mot",
+   "surface": "חולים"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידות"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  }
+ ],
+ "0.20:22": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.20:23": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  },
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "ובת"
+  },
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.20:24": [
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בנות"
+  },
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  },
+  {
+   "key": "גם",
+   "kind": "mot",
+   "surface": "וגם"
+  },
+  {
+   "key": "עברית",
+   "kind": "mot",
+   "surface": "עברית"
+  },
+  {
+   "key": "ללמוד",
+   "kind": "verbe",
+   "surface": "לומדים"
+  }
+ ],
+ "0.20:3": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  }
+ ],
+ "0.20:4": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספר"
+  }
+ ],
+ "0.20:5": [
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידים"
+  },
+  {
+   "key": "חולה",
+   "kind": "mot",
+   "surface": "חולים"
+  },
+  {
+   "key": "תלמיד",
+   "kind": "mot",
+   "surface": "תלמידות"
+  },
+  {
+   "key": "יום",
+   "kind": "mot",
+   "surface": "היום"
+  }
+ ],
+ "0.20:6": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  }
+ ],
+ "0.20:7": [
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בנות"
+  }
+ ],
+ "0.20:8": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  }
+ ],
+ "0.20:9": [
+  {
+   "key": "ספר",
+   "kind": "mot",
+   "surface": "ספרים"
+  }
+ ]
+}
