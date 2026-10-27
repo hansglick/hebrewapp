@@ -4,7 +4,8 @@
 // question ou énoncé), la réponse de l'élève et son évaluation ; à droite, la
 // matière pédagogique (le texte de la leçon…), qui reste visible pendant
 // qu'on fait défiler.
-// La conversation et la matière sont toujours là ; l'exercice, la réponse et
+// La conversation et la matière (s'il y en a une : materialLabel) sont
+// toujours là ; l'exercice, la réponse et
 // l'évaluation n'apparaissent qu'au moment de servir, en se déroulant vers le
 // bas comme un volet qu'on tire (un nouvel exercice — exerciseKey — se
 // déroule à nouveau).
@@ -41,7 +42,7 @@ export default function TaskLayout({
   materialAside,
 }) {
   return (
-    <div className="ra-layout">
+    <div className={`ra-layout ${materialLabel ? "" : "ra-layout-single"}`}>
       <div className="ra-layout-main">
         <Zone className="ra-zone-conversation" label="Conversation" empty="Le prof va prendre la parole…">
           {conversation}
@@ -68,14 +69,16 @@ export default function TaskLayout({
           </Volet>
         )}
       </div>
-      <Zone
-        className="ra-zone-material"
-        label={materialLabel ?? "Matière"}
-        aside={materialAside}
-        empty="Le texte s'affichera ici."
-      >
-        {material}
-      </Zone>
+      {materialLabel && (
+        <Zone
+          className="ra-zone-material"
+          label={materialLabel}
+          aside={materialAside}
+          empty="Le texte s'affichera ici."
+        >
+          {material}
+        </Zone>
+      )}
     </div>
   );
 }

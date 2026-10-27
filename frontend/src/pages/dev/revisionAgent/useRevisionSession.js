@@ -9,13 +9,15 @@ import { AudioLink } from "./audio";
 // et excerpts (extraits qui répondent à la question, [phrase, début, fin]),
 // question (servie par l'app), evaluation (réponse, fautes commentées, notes
 // de langue et de compréhension) et paused ; phase "done" à la fin.
-// Expression libre : hint (mots de l'indice) et answer (phrase de l'élève
-// comprise par le prof, mots fautifs, réussite). Déclinaison : exercise
+// Expression libre : question (posée par le prof, avec son indice),
+// evaluation (réponse, fautes commentées, note de langue, solution) et
+// paused ; phase "done" à la fin. Déclinaison : exercise
 // (phrase à transformer, mot à modifier) et answer. Complétion : exercise
 // (début de phrase, indice), answer et solution (phrase d'origine, mots du
 // concept). Mot : exercise (mot, traduction, indice), answer et solution.
 // Question : exercise (phrase, indice), answer et solution (question modèle).
-// paused : après un échec en déclinaison ou une évaluation en compréhension,
+// paused : après un échec en déclinaison ou une évaluation (compréhension,
+// expression libre),
 // l'exercice suivant attend next().
 export function useRevisionSession() {
   const [status, setStatus] = useState("idle");
@@ -28,7 +30,6 @@ export function useRevisionSession() {
   const [text, setText] = useState(null);
   const [highlight, setHighlight] = useState([]);
   const [excerpts, setExcerpts] = useState([]);
-  const [hint, setHint] = useState([]);
   const [answer, setAnswer] = useState(null);
   const [exercise, setExercise] = useState(null);
   const [solution, setSolution] = useState(null);
@@ -69,7 +70,6 @@ export function useRevisionSession() {
       setText(null);
       setHighlight([]);
       setExcerpts([]);
-      setHint([]);
       setAnswer(null);
       setExercise(null);
       setSolution(null);
@@ -116,9 +116,6 @@ export function useRevisionSession() {
           case "highlight":
             setHighlight(msg.phrases);
             setExcerpts(msg.excerpts ?? []);
-            break;
-          case "hint":
-            setHint(msg.words);
             break;
           case "answer":
             setAnswer(msg.answer);
@@ -181,7 +178,7 @@ export function useRevisionSession() {
   }, []);
 
   return {
-    status, phase, seconds, teacher, passage, verdict, text, highlight, excerpts, hint, answer, exercise, solution, notice, paused,
+    status, phase, seconds, teacher, passage, verdict, text, highlight, excerpts, answer, exercise, solution, notice, paused,
     question, evaluation, start, stop, next,
   };
 }

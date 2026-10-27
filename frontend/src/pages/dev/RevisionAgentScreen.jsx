@@ -231,7 +231,15 @@ export default function RevisionAgentScreen() {
             onNext={session.next}
           />
         ) : sessionTask === "expression" ? (
-          <ExpressionBoard teacher={session.teacher} hint={session.hint} answer={session.answer} notice={session.notice} />
+          <ExpressionBoard
+            teacher={session.teacher}
+            question={session.question}
+            evaluation={session.evaluation}
+            done={session.phase === "done"}
+            notice={session.notice}
+            paused={session.paused}
+            onNext={session.next}
+          />
         ) : sessionTask === "question" ? (
           <QuestionBoard
             teacher={session.teacher}

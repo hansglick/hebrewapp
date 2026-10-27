@@ -130,12 +130,15 @@ class GeminiLive:
     async def tool_response(self, call_id: str, name: str, response: dict, silent: bool = False,
                             when_idle: bool = False) -> None:
         """Réponse à une fonction non bloquante — silent : intégrée par le prof sans qu'il prenne la parole ;
-        when_idle : il y réagit dès qu'il a fini de parler."""
+        when_idle : il y réagit dès qu'il a fini de parler.
+        scheduling se place au niveau de la FunctionResponse : glissé dans son contenu, il n'est pas appliqué (le prof
+        reprend alors la parole, et peut même prononcer « silent »)."""
+        function_response = {"id": call_id, "name": name, "response": response}
         if silent:
-            response = {**response, "scheduling": "SILENT"}
+            function_response["scheduling"] = "SILENT"
         elif when_idle:
-            response = {**response, "scheduling": "WHEN_IDLE"}
-        await self._send({"toolResponse": {"functionResponses": [{"id": call_id, "name": name, "response": response}]}})
+            function_response["scheduling"] = "WHEN_IDLE"
+        await self._send({"toolResponse": {"functionResponses": [function_response]}})
 
     async def close(self) -> None:
         await self.ws.close()

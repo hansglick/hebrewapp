@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { Answer, Evaluation } from "./Assessment";
 import TaskLayout from "./TaskLayout";
 import TeacherSpeech from "./TeacherSpeech";
-
-// Compare les mots sans ponctuation ni voyelles (nikud).
-const normalize = (word) => word.replace(/[֑-ׇ]/g, "").replace(/[^א-ת]/g, "");
 
 // Les deux dimensions de l'évaluation (cf. app.revision_agent.comprehension), notées de 0 à 5 étoiles.
 const SCORES = [
@@ -18,89 +16,6 @@ const SCORES = [
     "la réponse est-elle vraie d'après le texte ?",
   ],
 ];
-const MAX_STARS = 5;
-
-function Stars({ count }) {
-  return (
-    <span
-      className="ra-stars"
-      role="img"
-      aria-label={`${count} étoile${count > 1 ? "s" : ""} sur ${MAX_STARS}`}
-    >
-      {Array.from({ length: MAX_STARS }, (_, i) => (
-        <span
-          key={i}
-          className={i < count ? "ra-star-on" : "ra-star-off"}
-          aria-hidden="true"
-        >
-          ★
-        </span>
-      ))}
-    </span>
-  );
-}
-
-// Réponse de l'élève, telle que le prof l'a entendue, fautes en rouge.
-function Answer({ evaluation }) {
-  const errors = new Set(
-    evaluation.errors.map((e) => normalize(e.word)).filter(Boolean),
-  );
-  if (!evaluation.answer) return <p className="muted">(pas de réponse)</p>;
-  return (
-    <p className="ra-answer" dir="rtl" lang="he">
-      {evaluation.answer.split(" ").map((word, i) => (
-        <span key={i}>
-          {i > 0 && " "}
-          {errors.has(normalize(word)) ? (
-            <mark className="ra-answer-error">{word}</mark>
-          ) : (
-            word
-          )}
-        </span>
-      ))}
-    </p>
-  );
-}
-
-// Évaluation de la réponse : le commentaire de chaque faute surlignée, puis
-// les deux notes en étoiles, chacune justifiée si elle n'est pas parfaite.
-// Le prof ne la commente pas.
-function Evaluation({ evaluation }) {
-  return (
-    <>
-      {evaluation.errors.length > 0 && (
-        <ul className="ra-error-comments">
-          {evaluation.errors.map((error, i) => (
-            <li key={i}>
-              {error.word && (
-                <mark className="ra-answer-error" dir="rtl" lang="he">
-                  {error.word}
-                </mark>
-              )}
-              <span>{error.comment}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="ra-scores">
-        {SCORES.map(([key, label, description]) => (
-          <div key={key} className="ra-score">
-            <div className="ra-score-head">
-              <span className="ra-score-label" title={description}>
-                {label}
-              </span>
-              <Stars count={evaluation[key].stars} />
-            </div>
-            {evaluation[key].justification && (
-              <p className="ra-score-why">{evaluation[key].justification}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
 
 // Phrase du texte, les extraits qui répondent à la question ([début, fin])
 // mis en évidence.
@@ -183,7 +98,7 @@ export default function ComprehensionBoard({
 
   const assessment = evaluation && (
     <>
-      <Evaluation evaluation={evaluation} />
+      <Evaluation evaluation={evaluation} scores={SCORES} />
       {paused && (
         <button type="button" className="ra-next" onClick={onNext}>
           Question suivante

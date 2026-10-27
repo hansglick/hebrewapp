@@ -37,26 +37,34 @@ INTERROGATIVES = [
     (15, "איזה / איזו", "quel ? / quelle ?"),
 ]
 
+PRONOUNS = {"אני", "אתה", "את", "הוא", "היא", "אנחנו", "אתם", "אתן", "הם", "הן"}
+
 PROMPT = """Tu es professeur d'hébreu pour des francophones débutants. Exercice : l'élève voit une phrase hébraïque
 (la réponse) et un indice en français, et doit poser à voix haute la question qui a cette phrase pour réponse.
 
-Pour chaque phrase numérotée ci-dessous, propose de 0 à 3 questions :
+Pour chaque phrase numérotée ci-dessous, propose de 0 à 3 questions. La qualité prime sur la quantité : mieux vaut
+peu de questions, toutes pertinentes, que beaucoup de questions artificielles. Ne propose une question que si un
+locuteur natif pourrait vraiment la poser dans une conversation, et que la phrase y répondrait naturellement ; si
+aucune question naturelle ne mène à la phrase, n'en propose aucune (liste vide), c'est un résultat normal.
 - La phrase doit être une réponse naturelle et complète à la question (un interlocuteur pourrait la dire telle quelle).
+- Jamais de question « qui ? » (מי) sur un sujet qui n'est qu'un pronom personnel (הוא, היא, הם, אני…) : la
+  réponse « lui » ou « elle » n'a aucun sens hors contexte (« הוא תלמיד, היא תלמידה. » → pas « מי תלמיד? »).
+  « Qui ? » ne porte que sur une personne nommée (prénom, nom) : « דוד שומע מוזיקה. » → « מי שומע מוזיקה? ».
 - La question porte sur une information présente dans la phrase (lieu, personne, objet, action, provenance,
   destination, raison, moment, quantité, manière…) ; chaque question proposée porte sur une information différente.
 - La question reprend le verbe et les autres éléments de la phrase, seule l'information demandée est remplacée par
   le mot interrogatif : « הוא קורא ספר בכיתה. » → « איפה הוא קורא ספר? » (et non « איפה הוא? ») ;
   « אני באה לבקר בישראל באוגוסט » → « מתי את באה לבקר בישראל? ».
-- Toute affirmation, même très simple (« רוני קורא עיתון. » → « מה רוני קורא? »), reçoit au moins une question.
 - La question commence par un mot interrogatif de la liste autorisée, éventuellement précédé d'une préposition
   (ex. עם מי, של מי, למי, במה) ; jamais de question fermée (oui / non).
 - La question n'emploie que des mots, des verbes conjugués et des tournures du vocabulaire et des concepts fournis,
   plus les pronoms personnels et les prénoms de la phrase. Elle est grammaticalement correcte, sans nikkoud,
   et se termine par « ? ». Adapte la personne si besoin (la phrase dit « je », la question dit « tu »).
 - L'indice est le groupe interrogatif traduit en français, court, en minuscules, terminé par « ? »
-  (ex. « où ? », « avec qui ? », « qu'est-ce que ? », « d'où ? », « à qui ? »).
+  (ex. « où ? », « avec qui ? », « quoi ? », « d'où ? », « à qui ? »). מה seul se traduit toujours « quoi ? »
+  (jamais « qu'est-ce que ? » ni « que ? ») ; avec une préposition : « avec quoi ? » (במה), « sur quoi ? » (על מה)…
 - Aucune question (liste vide) pour une phrase qui est déjà une question, une salutation, une exclamation,
-  un titre ou une phrase trop courte pour qu'une question naturelle y mène.
+  un titre, une phrase trop courte, ou dont toute question semblerait artificielle.
 
 Mots interrogatifs autorisés :
 {interrogatives}
@@ -83,6 +91,15 @@ class LessonQuestions(BaseModel):
     phrases: list[PhraseQuestions]
 
 
+def natural(text: str, question: Question) -> bool:
+    """Garde-fous après Sol (cf. demande explicite du user) : « מה » seul a pour indice « quoi ? », et pas de « qui ? »
+    sur un sujet qui n'est qu'un pronom (« הוא תלמיד » → « מי תלמיד? » n'a pas de sens)."""
+    if question.interrogative.strip() == "מה":
+        question.hint = "quoi ?"
+    first = text.replace(",", " ").split()[:1]
+    return not (question.interrogative.strip() == "מי" and first and first[0] in PRONOUNS)
+
+
 async def lesson_questions(client: AsyncOpenAI, code: str, items: list[dict]) -> dict[str, list[dict]]:
     level = int(code.split(".")[1])
     prompt = PROMPT.format(
@@ -99,7 +116,8 @@ async def lesson_questions(client: AsyncOpenAI, code: str, items: list[dict]) ->
         ],
         text_format=LessonQuestions,
     )
-    found = {p.number: p.questions for p in response.output_parsed.phrases}
+    found = {p.number: [q for q in p.questions if natural(items[p.number - 1]["text"], q)]
+             for p in response.output_parsed.phrases if 1 <= p.number <= len(items)}
     result: dict[str, list[dict]] = {}
     for i, u in enumerate(items, 1):
         result.setdefault(u["id"], []).append({

@@ -15,7 +15,8 @@ Messages propres à la tâche (backend → navigateur, en plus de ceux de sessio
          [] = plus rien de surligné)
   {"type": "question", "question": {"number": int, "hebrew": str} | null}
         (sans traduction, quand le prof commence à la poser)
-  {"type": "evaluation", "evaluation": {"answer": str, "errors": [{"word": str, "comment": str}],
+  {"type": "evaluation", "evaluation": {"answer": str,
+                                        "errors": [{"word": str, "kind": "language" | "truth", "comment": str}],
                                         "language": {"stars": int, "justification": str},
                                         "comprehension": {"stars": int, "justification": str}} | null}
   {"type": "pause", "paused": bool}                     (évaluation affichée : question suivante en attente de l'élève)
@@ -32,6 +33,8 @@ from fastapi import WebSocket
 
 from app.data_loader import get_dataset
 from app.revision_agent import prompts
+from app.revision_agent.evaluation import (JUSTIFICATION, QUESTION_FALLBACK_SECONDS, STARS, french, hebrew_answer,
+                                           rating)
 from app.revision_agent.gemini_live import GeminiLive
 from app.revision_agent.session import TeacherSession
 
@@ -39,9 +42,9 @@ log = logging.getLogger("revision_agent.comprehension")
 
 TEXT_FALLBACK_SECONDS = 60  # si le prof n'a toujours pas fait afficher le texte
 QUESTIONS_PER_ROUND = 3  # comme le prototype /dev/topic-prototype (cf. demande explicite du user)
-QUESTION_FALLBACK_SECONDS = 4  # si le prof n'a toujours pas commencé à poser la question
-MAX_STARS = 5
 NIKKUD = re.compile(r"[\u0591-\u05c7]")
+# Type de faute (fautes[].type) → type affiché, chacun dans sa couleur (cf. demande explicite du user).
+ERROR_KINDS = {"langue": "language", "veracite": "truth"}
 
 TEXT_TOOL = {
     "name": "afficher_texte",
@@ -57,11 +60,6 @@ NEXT_QUESTION_TOOL = {
     # Bloquante : le prof attend la question avant de la poser.
 }
 
-STARS = {"type": "INTEGER", "description": "De 0 à 5 étoiles"}
-JUSTIFICATION = {"type": "STRING",
-                 "description": "En français, en une ou deux phrases courtes, pourquoi la note n'est pas de 5 étoiles "
-                                "(vide si elle l'est)"}
-
 EVALUATION_TOOL = {
     "name": "evaluer_reponse",
     "description": "Affiche à l'écran de l'élève l'évaluation de sa réponse : sa réponse, ses fautes commentées, "
@@ -71,22 +69,29 @@ EVALUATION_TOOL = {
         "properties": {
             "reponse_eleve": {
                 "type": "STRING",
-                "description": "La réponse de l'élève en écriture hébraïque, exactement telle que tu l'as entendue, "
-                               "fautes comprises, sans la corriger (vide s'il n'a rien répondu)",
+                "description": "La réponse de l'élève, toujours en écriture hébraïque (jamais en lettres latines), "
+                               "exactement telle que tu l'as entendue, fautes comprises, sans la corriger "
+                               "(vide s'il n'a rien répondu)",
             },
             "fautes": {
                 "type": "ARRAY",
-                "description": "Chaque faute de langue de la réponse, dans l'ordre",
+                "description": "Chaque mot fautif de la réponse, dans l'ordre : faute de langue ou information fausse "
+                               "d'après le texte",
                 "items": {
                     "type": "OBJECT",
                     "properties": {
                         "mot": {"type": "STRING",
                                 "description": "Le mot fautif, recopié exactement tel qu'il est écrit dans reponse_eleve"},
+                        "type": {"type": "STRING", "enum": ["langue", "veracite"],
+                                 "description": "langue : faute de grammaire, de conjugaison, d'accord, de vocabulaire "
+                                                "ou de structure ; veracite : mot correct en hébreu, mais qui dit "
+                                                "une chose fausse d'après le texte"},
                         "commentaire": {"type": "STRING",
-                                        "description": "En français, en une phrase courte : la nature de la faute et "
-                                                       "la forme correcte (en hébreu)"},
+                                        "description": "En français (jamais en hébreu, sauf la forme correcte), en une "
+                                                       "phrase courte : la nature de la faute et la forme correcte, ou "
+                                                       "ce que dit le texte"},
                     },
-                    "required": ["mot", "commentaire"],
+                    "required": ["mot", "type", "commentaire"],
                 },
             },
             "note_langue": STARS,
@@ -128,11 +133,6 @@ def find_excerpts(phrases: list[str], excerpts: list[str]) -> list[list[int]]:
     return spans
 
 
-def rating(stars, justification) -> dict:
-    stars = max(0, min(MAX_STARS, int(stars))) if isinstance(stars, (int, float)) else 0
-    return {"stars": stars, "justification": str(justification or "").strip() if stars < MAX_STARS else ""}
-
-
 class ComprehensionSession(TeacherSession):
     def __init__(self, browser: WebSocket, voice: str, lesson: str):
         text = get_dataset("text")[lesson]
@@ -154,6 +154,7 @@ class ComprehensionSession(TeacherSession):
         # Question servie au prof, affichée seulement quand il commence à la poser (cf. demande explicite du user).
         self.pending_question: dict | None = None
         self.question_served_at = 0.0
+        self.heard = ""  # transcription de ce que l'élève a dit depuis la dernière question
 
     async def on_started(self) -> None:
         log.info("Séance de compréhension lancée · voix %s · leçon %s · %d questions", self.live.voice, self.lesson,
@@ -211,14 +212,25 @@ class ComprehensionSession(TeacherSession):
             return
         await self.live.app_message(prompts.next_question_message(self.serve_question()))
 
+    async def on_user_text(self, text: str) -> None:
+        # Ce que l'élève dit depuis la question (transcription automatique, en hébreu) : sa réponse, si le prof
+        # la rapporte en lettres latines.
+        self.heard += text
+
     async def evaluate(self, args: dict) -> None:
-        errors = [{"word": str(f.get("mot") or "").strip(), "comment": str(f.get("commentaire") or "").strip()}
+        errors = [{"word": str(f.get("mot") or "").strip(), "kind": ERROR_KINDS.get(f.get("type"), "language"),
+                   "comment": str(f.get("commentaire") or "").strip()}
                   for f in args.get("fautes") or [] if isinstance(f, dict)]
+        errors = [e for e in errors if e["word"] or e["comment"]]
+        answer = hebrew_answer(args.get("reponse_eleve"), self.heard)
+        language = rating(args.get("note_langue"), args.get("justification_langue"))
+        comprehension = rating(args.get("note_comprehension"), args.get("justification_comprehension"))
+        # Commentaires et justifications s'adressent à un francophone : toujours en français.
+        for item, key in [(e, "comment") for e in errors] + [(language, "justification"),
+                                                               (comprehension, "justification")]:
+            item[key] = await french(item[key])
         await self.to_browser({"type": "evaluation", "evaluation": {
-            "answer": str(args.get("reponse_eleve") or "").strip(),
-            "errors": [e for e in errors if e["word"] or e["comment"]],
-            "language": rating(args.get("note_langue"), args.get("justification_langue")),
-            "comprehension": rating(args.get("note_comprehension"), args.get("justification_comprehension")),
+            "answer": answer, "errors": errors, "language": language, "comprehension": comprehension,
         }})
         numbers = args.get("phrases_solution") or []
         excerpts = find_excerpts(self.phrases, args.get("extraits_solution") or [])
@@ -244,6 +256,7 @@ class ComprehensionSession(TeacherSession):
         log.info("question %d/%d : %s", self.asked, len(self.questions), question)
         # number ne s'affiche pas : il distingue seulement une question de la suivante à l'écran.
         self.pending_question = {"number": self.asked, "hebrew": question}
+        self.heard = ""
         self.question_served_at = time.monotonic()
         # La question ne s'affiche que dans la zone « Exercice », sans traduction (cf. demande explicite du user) :
         # le prof la prononce, mais sa prise de parole n'est ni traduite ni affichée dans la conversation. Ce qu'il
