@@ -5,7 +5,8 @@ import { AudioLink } from "./audio";
 // Séance avec le prof (cf. app.revision_agent.session pour le protocole) :
 // status "idle" | "connecting" | "live". Lecture : phase "greeting" |
 // "instruction" | "reading" | "verdict" | "done", passage, verdict.
-// Compréhension : text (texte de la leçon), highlight (phrases surlignées),
+// Compréhension : text (texte de la leçon), highlight (phrases surlignées)
+// et excerpts (extraits qui répondent à la question, [phrase, début, fin]),
 // question (servie par l'app), evaluation (réponse, fautes commentées, notes
 // de langue et de compréhension) et paused ; phase "done" à la fin.
 // Expression libre : hint (mots de l'indice) et answer (phrase de l'élève
@@ -26,6 +27,7 @@ export function useRevisionSession() {
   const [verdict, setVerdict] = useState(null);
   const [text, setText] = useState(null);
   const [highlight, setHighlight] = useState([]);
+  const [excerpts, setExcerpts] = useState([]);
   const [hint, setHint] = useState([]);
   const [answer, setAnswer] = useState(null);
   const [exercise, setExercise] = useState(null);
@@ -66,6 +68,7 @@ export function useRevisionSession() {
       setVerdict(null);
       setText(null);
       setHighlight([]);
+      setExcerpts([]);
       setHint([]);
       setAnswer(null);
       setExercise(null);
@@ -112,6 +115,7 @@ export function useRevisionSession() {
             break;
           case "highlight":
             setHighlight(msg.phrases);
+            setExcerpts(msg.excerpts ?? []);
             break;
           case "hint":
             setHint(msg.words);
@@ -177,7 +181,7 @@ export function useRevisionSession() {
   }, []);
 
   return {
-    status, phase, seconds, teacher, passage, verdict, text, highlight, hint, answer, exercise, solution, notice, paused,
+    status, phase, seconds, teacher, passage, verdict, text, highlight, excerpts, hint, answer, exercise, solution, notice, paused,
     question, evaluation, start, stop, next,
   };
 }

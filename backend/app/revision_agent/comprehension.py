@@ -1,16 +1,23 @@
-"""Tâche « Compréhension de texte » : le prof (seul, sans autre modèle) fait afficher le texte de la leçon une fois
-la consigne donnée, puis sert les questions de la leçon, l'une après l'autre. Il ne les choisit pas : l'application
-les lui donne et les affiche comme une consigne. Il évalue chaque réponse en silence, sur deux dimensions (langue et
-compréhension), sans la commenter ; l'élève relit l'évaluation et passe lui-même à la question suivante (cf. demande
-explicite du user).
+"""Tâche « Compréhension de texte » : le prof (seul, sans autre modèle) fait afficher le texte de la leçon, puis pose
+trois questions sur ce texte. Il ne les choisit pas, ni le moment de les poser : l'application les tire, les lui
+donne et les affiche comme une consigne. Il évalue chaque réponse en silence, sur deux dimensions (langue et
+compréhension, de 0 à 5 étoiles, justifiées), sans la commenter ; l'élève relit l'évaluation et passe lui-même à la
+question suivante (cf. demande explicite du user).
+
+Seule la première question est demandée par le prof (question_suivante, quand l'élève a lu le texte) ; les suivantes
+lui sont envoyées par l'application quand l'élève appuie sur « Question suivante ». Il ne peut donc jamais enchaîner
+de lui-même sur une question.
 
 Messages propres à la tâche (backend → navigateur, en plus de ceux de session.py) :
   {"type": "text", "lesson": str, "title": str, "phrases": [str]}
-  {"type": "highlight", "phrases": [int]}               (indices dans phrases ; [] = plus rien de surligné)
+  {"type": "highlight", "phrases": [int], "excerpts": [[int, int, int]]}
+        (phrases qui contiennent la solution, et dans ces phrases l'extrait exact qui y répond : [phrase, début, fin] ;
+         [] = plus rien de surligné)
   {"type": "question", "question": {"number": int, "hebrew": str} | null}
         (sans traduction, quand le prof commence à la poser)
   {"type": "evaluation", "evaluation": {"answer": str, "errors": [{"word": str, "comment": str}],
-                                        "language": int, "comprehension": int} | null}
+                                        "language": {"stars": int, "justification": str},
+                                        "comprehension": {"stars": int, "justification": str}} | null}
   {"type": "pause", "paused": bool}                     (évaluation affichée : question suivante en attente de l'élève)
   {"type": "phase", "phase": "done"}                    (toutes les questions ont été posées)
 Navigateur → backend : {"type": "next"} (question suivante).
@@ -18,6 +25,7 @@ Navigateur → backend : {"type": "next"} (question suivante).
 
 import logging
 import random
+import re
 import time
 
 from fastapi import WebSocket
@@ -32,28 +40,32 @@ log = logging.getLogger("revision_agent.comprehension")
 TEXT_FALLBACK_SECONDS = 60  # si le prof n'a toujours pas fait afficher le texte
 QUESTIONS_PER_ROUND = 3  # comme le prototype /dev/topic-prototype (cf. demande explicite du user)
 QUESTION_FALLBACK_SECONDS = 4  # si le prof n'a toujours pas commencé à poser la question
-MAX_SCORE = 10
+MAX_STARS = 5
+NIKKUD = re.compile(r"[\u0591-\u05c7]")
 
 TEXT_TOOL = {
     "name": "afficher_texte",
     "description": "Affiche le texte de la leçon à l'écran de l'élève.",
-    # Non bloquante : sa réponse peut être marquée SILENT, pour que le prof ne l'annonce pas.
-    "behavior": "NON_BLOCKING",
+    # Bloquante (comportement par défaut), appelée avant la consigne : le prof n'a encore rien dit qu'il pourrait
+    # répéter en reprenant la parole après la fonction.
 }
 
 NEXT_QUESTION_TOOL = {
     "name": "question_suivante",
-    "description": "Demande à l'application la question suivante, qu'elle affiche à l'écran de l'élève ; "
+    "description": "Demande à l'application la première question, qu'elle affiche à l'écran de l'élève ; "
                    "renvoie la question à lui poser.",
-    # Non bloquante : après une évaluation, la réponse attend que l'élève appuie sur « Question suivante », et le prof
-    # doit pouvoir lui répondre s'il parle entre-temps.
-    "behavior": "NON_BLOCKING",
+    # Bloquante : le prof attend la question avant de la poser.
 }
+
+STARS = {"type": "INTEGER", "description": "De 0 à 5 étoiles"}
+JUSTIFICATION = {"type": "STRING",
+                 "description": "En français, en une ou deux phrases courtes, pourquoi la note n'est pas de 5 étoiles "
+                                "(vide si elle l'est)"}
 
 EVALUATION_TOOL = {
     "name": "evaluer_reponse",
     "description": "Affiche à l'écran de l'élève l'évaluation de sa réponse : sa réponse, ses fautes commentées, "
-                   "ses deux notes, et surligne dans le texte la ou les phrases qui contiennent la solution.",
+                   "ses deux notes justifiées, et surligne dans le texte la ou les phrases qui contiennent la solution.",
     "parameters": {
         "type": "OBJECT",
         "properties": {
@@ -77,22 +89,48 @@ EVALUATION_TOOL = {
                     "required": ["mot", "commentaire"],
                 },
             },
-            "note_langue": {"type": "INTEGER", "description": "Note de langue, de 0 à 10"},
-            "note_comprehension": {"type": "INTEGER", "description": "Note de compréhension, de 0 à 10"},
+            "note_langue": STARS,
+            "justification_langue": JUSTIFICATION,
+            "note_comprehension": STARS,
+            "justification_comprehension": JUSTIFICATION,
             "phrases_solution": {
                 "type": "ARRAY", "items": {"type": "INTEGER"},
                 "description": "Numéros des phrases du texte qui contiennent la solution (tels qu'ils figurent dans "
                                "tes instructions)",
             },
+            "extraits_solution": {
+                "type": "ARRAY", "items": {"type": "STRING"},
+                "description": "Le ou les extraits du texte qui permettent de répondre correctement à la question, "
+                               "recopiés exactement tels qu'ils y sont écrits : seulement les mots utiles, pas toute "
+                               "la phrase",
+            },
         },
-        "required": ["reponse_eleve", "fautes", "note_langue", "note_comprehension", "phrases_solution"],
+        "required": ["reponse_eleve", "fautes", "note_langue", "justification_langue", "note_comprehension",
+                     "justification_comprehension", "phrases_solution", "extraits_solution"],
     },
     "behavior": "NON_BLOCKING",
 }
 
 
-def score(value) -> int:
-    return max(0, min(MAX_SCORE, int(value))) if isinstance(value, (int, float)) else 0
+def find_excerpts(phrases: list[str], excerpts: list[str]) -> list[list[int]]:
+    """Position de chaque extrait dans le texte, [phrase, début, fin], en ignorant nikkoud et ponctuation autour ;
+    un extrait introuvable est ignoré."""
+    spans = []
+    for excerpt in excerpts:
+        needle = NIKKUD.sub("", str(excerpt)).strip(" .,?!;:\"'«»")
+        if not needle:
+            continue
+        for i, phrase in enumerate(phrases):
+            start = phrase.find(needle)
+            if start >= 0:
+                spans.append([i, start, start + len(needle)])
+                break
+    return spans
+
+
+def rating(stars, justification) -> dict:
+    stars = max(0, min(MAX_STARS, int(stars))) if isinstance(stars, (int, float)) else 0
+    return {"stars": stars, "justification": str(justification or "").strip() if stars < MAX_STARS else ""}
 
 
 class ComprehensionSession(TeacherSession):
@@ -111,10 +149,8 @@ class ComprehensionSession(TeacherSession):
         self.text_shown = False
         self.highlighted: list[int] = []
         self.asked = 0  # questions déjà servies
-        # Après une évaluation, la question suivante attend que l'élève appuie sur « Question suivante » : l'appel de
-        # question_suivante reste sans réponse jusque-là.
+        # Après une évaluation, la question suivante attend que l'élève appuie sur « Question suivante ».
         self.paused = False
-        self.pending_call: dict | None = None
         # Question servie au prof, affichée seulement quand il commence à la poser (cf. demande explicite du user).
         self.pending_question: dict | None = None
         self.question_served_at = 0.0
@@ -148,13 +184,15 @@ class ComprehensionSession(TeacherSession):
         if call["name"] == TEXT_TOOL["name"]:
             if not self.text_shown:
                 await self.show_text()
-            await self.live.tool_response(call["id"], call["name"], {"consigne": prompts.TEXT_SHOWN}, silent=True)
+            await self.live.tool_response(call["id"], call["name"], {"consigne": prompts.TEXT_DISPLAYED})
         elif call["name"] == NEXT_QUESTION_TOOL["name"]:
-            if self.paused:
-                log.info("question suivante en attente de l'élève")
-                self.pending_call = call
+            if self.asked:
+                # Seule la première question est demandée par le prof : les suivantes viennent de l'élève (« Question
+                # suivante »), jamais du prof, qui enchaînerait sinon sans laisser relire l'évaluation.
+                log.info("question demandée par le prof hors de propos : refusée")
+                await self.live.tool_response(call["id"], call["name"], {"consigne": prompts.WAIT_FOR_NEXT})
                 return
-            await self.next_question(call)
+            await self.live.tool_response(call["id"], call["name"], {"question": self.serve_question()})
         elif call["name"] == EVALUATION_TOOL["name"]:
             await self.evaluate(call["args"])
             await self.live.tool_response(call["id"], call["name"], {"resultat": prompts.EVALUATION_SHOWN}, silent=True)
@@ -162,13 +200,16 @@ class ComprehensionSession(TeacherSession):
             await super().on_tool_call(call)
 
     async def on_browser_message(self, data: dict) -> None:
-        if data.get("type") == "next" and self.paused:
-            self.paused = False
-            await self.to_browser({"type": "pause", "paused": False})
-            await self.clear_exercise()
-            call, self.pending_call = self.pending_call, None
-            if call:  # sinon, le prof n'a pas encore demandé la question suivante : elle partira dès qu'il le fera
-                await self.next_question(call)
+        if data.get("type") != "next" or not self.paused:
+            return
+        self.paused = False
+        await self.to_browser({"type": "pause", "paused": False})
+        await self.clear_exercise()
+        if self.asked >= len(self.questions):
+            await self.to_browser({"type": "phase", "phase": "done"})
+            await self.live.app_message(prompts.NO_MORE_QUESTIONS)
+            return
+        await self.live.app_message(prompts.next_question_message(self.serve_question()))
 
     async def evaluate(self, args: dict) -> None:
         errors = [{"word": str(f.get("mot") or "").strip(), "comment": str(f.get("commentaire") or "").strip()}
@@ -176,13 +217,16 @@ class ComprehensionSession(TeacherSession):
         await self.to_browser({"type": "evaluation", "evaluation": {
             "answer": str(args.get("reponse_eleve") or "").strip(),
             "errors": [e for e in errors if e["word"] or e["comment"]],
-            "language": score(args.get("note_langue")),
-            "comprehension": score(args.get("note_comprehension")),
+            "language": rating(args.get("note_langue"), args.get("justification_langue")),
+            "comprehension": rating(args.get("note_comprehension"), args.get("justification_comprehension")),
         }})
         numbers = args.get("phrases_solution") or []
-        # Les phrases sont numérotées à partir de 1 dans les instructions du prof.
+        excerpts = find_excerpts(self.phrases, args.get("extraits_solution") or [])
+        # Les phrases sont numérotées à partir de 1 dans les instructions du prof ; celles des extraits trouvés sont
+        # surlignées même s'il a oublié leur numéro.
         await self.highlight(sorted({int(n) - 1 for n in numbers
-                                     if isinstance(n, (int, float)) and 1 <= n <= len(self.phrases)}))
+                                     if isinstance(n, (int, float)) and 1 <= n <= len(self.phrases)}
+                                    | {span[0] for span in excerpts}), excerpts)
         self.paused = True
         await self.to_browser({"type": "pause", "paused": True})
 
@@ -193,26 +237,21 @@ class ComprehensionSession(TeacherSession):
         if self.highlighted:
             await self.highlight([])
 
-    async def next_question(self, call: dict) -> None:
-        await self.clear_exercise()
-        if self.asked >= len(self.questions):
-            await self.to_browser({"type": "phase", "phase": "done"})
-            await self.live.tool_response(call["id"], call["name"], {"consigne": prompts.NO_MORE_QUESTIONS},
-                                      when_idle=True)
-            return
+    def serve_question(self) -> str:
+        """Question suivante, que le prof va poser : elle s'affichera dans la zone « Exercice » quand il commencera."""
         question = self.questions[self.asked]
         self.asked += 1
         log.info("question %d/%d : %s", self.asked, len(self.questions), question)
-        if not self.text_shown:
-            await self.show_text()
         # number ne s'affiche pas : il distingue seulement une question de la suivante à l'écran.
         self.pending_question = {"number": self.asked, "hebrew": question}
         self.question_served_at = time.monotonic()
         # La question ne s'affiche que dans la zone « Exercice », sans traduction (cf. demande explicite du user) :
-        # le prof la prononce, mais sa prise de parole n'est ni traduite ni affichée dans la conversation.
+        # le prof la prononce, mais sa prise de parole n'est ni traduite ni affichée dans la conversation. Ce qu'il
+        # disait avant est clos, pour que la question parte bien dans une nouvelle prise de parole.
+        self.end_turn()
         self.hidden_turn = True
-        await self.live.tool_response(call["id"], call["name"], {"question": question}, when_idle=True)
+        return question
 
-    async def highlight(self, indices: list[int]) -> None:
+    async def highlight(self, indices: list[int], excerpts: list[list[int]] | None = None) -> None:
         self.highlighted = indices
-        await self.to_browser({"type": "highlight", "phrases": indices})
+        await self.to_browser({"type": "highlight", "phrases": indices, "excerpts": excerpts or []})

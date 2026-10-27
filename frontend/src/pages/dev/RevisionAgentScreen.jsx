@@ -222,6 +222,7 @@ export default function RevisionAgentScreen() {
             teacher={session.teacher}
             text={session.text}
             highlight={session.highlight}
+            excerpts={session.excerpts}
             question={session.question}
             evaluation={session.evaluation}
             done={session.phase === "done"}

@@ -506,6 +506,16 @@ fieldset.revision-agent-form:disabled {
   box-shadow: inset -3px 0 0 #e0a800;
 }
 
+/* Extrait exact qui répond à la question, dans la phrase surlignée. */
+.ra-text-excerpt {
+  background: rgba(224, 168, 0, 0.55);
+  color: inherit;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 0 2px;
+  box-shadow: inset 0 -2px 0 #c08a00;
+}
+
 /* Expression libre : indice (mots en hébreu) et réponse de l'élève corrigée. */
 .ra-hint {
   display: flex;
@@ -768,40 +778,49 @@ fieldset.revision-agent-form:disabled {
 
 .ra-scores {
   display: flex;
+  flex-direction: column;
   gap: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--cardBorder);
 }
 
 .ra-score {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 4px;
+  text-align: start;
+}
+
+.ra-score-head {
+  display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 10px;
-  border-radius: 12px;
-  border: 2px solid currentColor;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .ra-score-label {
-  font-size: 0.8em;
   font-weight: 600;
+  color: var(--textPrimary);
 }
 
-.ra-score-value {
+.ra-stars {
   font-size: 1.4em;
-  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1;
 }
 
-.ra-score-good {
-  color: var(--validationPleine);
+.ra-star-on {
+  color: #e0a800;
 }
 
-.ra-score-fair {
-  color: #c08a00;
+.ra-star-off {
+  color: var(--cardBorder);
 }
 
-.ra-score-poor {
-  color: var(--annulationPleine);
+.ra-score-why {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--textSecondary);
 }
 
 .ra-done {
