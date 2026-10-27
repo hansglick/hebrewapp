@@ -127,10 +127,14 @@ class GeminiLive:
         """Indication ajoutée au contexte du prof, sans qu'il prenne la parole."""
         await self._say(f"(Message de l'application, pas de l'élève) {text}", respond=False)
 
-    async def tool_response(self, call_id: str, name: str, response: dict, silent: bool = False) -> None:
-        """silent : réponse à une fonction non bloquante, intégrée par le prof sans qu'il prenne la parole."""
+    async def tool_response(self, call_id: str, name: str, response: dict, silent: bool = False,
+                            when_idle: bool = False) -> None:
+        """Réponse à une fonction non bloquante — silent : intégrée par le prof sans qu'il prenne la parole ;
+        when_idle : il y réagit dès qu'il a fini de parler."""
         if silent:
             response = {**response, "scheduling": "SILENT"}
+        elif when_idle:
+            response = {**response, "scheduling": "WHEN_IDLE"}
         await self._send({"toolResponse": {"functionResponses": [{"id": call_id, "name": name, "response": response}]}})
 
     async def close(self) -> None:

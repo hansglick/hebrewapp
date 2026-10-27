@@ -7,6 +7,11 @@
      "hint": "où ?",
      "question": "איפה הן גרות ואיפה דוד גר?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelles villes ?",
+     "question": "באילו ערים הן ודוד גרים?",
+     "interrogative": "באילו ערים"
     }
    ]
   }
@@ -39,6 +44,11 @@
      "hint": "où ?",
      "question": "איפה את גרה?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר את גרה?",
+     "interrogative": "באיזו עיר"
     }
    ]
   }
@@ -51,6 +61,11 @@
      "hint": "où ?",
      "question": "איפה חנה ושרה גרות?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר חנה ושרה גרות?",
+     "interrogative": "באיזו עיר"
     }
    ]
   },
@@ -61,6 +76,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה הן לומדות?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה הן לומדות?",
+     "interrogative": "איזו שפה"
     }
    ]
   }
@@ -89,6 +109,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה דוד וחנה לומדים?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה דוד וחנה לומדים?",
+     "interrogative": "איזו שפה"
     }
    ]
   }
@@ -106,6 +131,11 @@
      "hint": "où ?",
      "question": "איפה דוד וחנה לומדים עברית?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה דוד וחנה לומדים בתל אביב?",
+     "interrogative": "איזו שפה"
     }
    ]
   }
@@ -123,6 +153,11 @@
      "hint": "qui ?",
      "question": "מי גרה בתל אביב?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר חנה גרה?",
+     "interrogative": "באיזו עיר"
     }
    ]
   }
@@ -140,6 +175,11 @@
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר דוד גר?",
+     "interrogative": "באיזו עיר"
     }
    ]
   }
@@ -244,6 +284,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה הם לומדים?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה הם לומדים?",
+     "interrogative": "איזו שפה"
     }
    ]
   }
@@ -267,6 +312,11 @@
      "hint": "où ?",
      "question": "איפה אתם לומדים עברית?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה אתם לומדים בתל אביב?",
+     "interrogative": "איזו שפה"
     }
    ]
   }
@@ -285,6 +335,11 @@
      "hint": "où ?",
      "question": "איפה את גרה?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר את גרה?",
+     "interrogative": "באיזו עיר"
     }
    ]
   },
@@ -301,6 +356,11 @@
      "hint": "où ?",
      "question": "איפה גם אתה גר?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר גם אתה גר?",
+     "interrogative": "באיזו עיר"
     }
    ]
   }
@@ -452,6 +512,11 @@
      "hint": "qui ?",
      "question": "מי גר בישראל?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quel pays ?",
+     "question": "באיזו ארץ חנה גרה?",
+     "interrogative": "באיזו ארץ"
     }
    ]
   }
@@ -464,6 +529,11 @@
      "hint": "d'où ?",
      "question": "מאיפה רוני?",
      "interrogative": "מאיפה"
+    },
+    {
+     "hint": "de quel pays ?",
+     "question": "מאיזו ארץ רוני?",
+     "interrogative": "מאיזו ארץ"
     }
    ]
   }
@@ -481,6 +551,11 @@
      "hint": "qui ?",
      "question": "מי גר בישראל?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quel pays ?",
+     "question": "באיזו ארץ יעל ושלמה גרים?",
+     "interrogative": "באיזו ארץ"
     }
    ]
   }
@@ -498,6 +573,11 @@
      "hint": "qui ?",
      "question": "מי לומד עברית?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה יעל ושלמה לומדים?",
+     "interrogative": "איזו שפה"
     }
    ]
   }
@@ -635,6 +715,11 @@
      "hint": "où ?",
      "question": "איפה הם גם גרים?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quel pays ?",
+     "question": "באיזו ארץ הם גם גרים?",
+     "interrogative": "באיזו ארץ"
     }
    ]
   },
@@ -650,6 +735,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה הם לומדים בישראל?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle langue ?",
+     "question": "איזו שפה הם לומדים בישראל?",
+     "interrogative": "איזו שפה"
     }
    ]
   },
@@ -680,6 +770,11 @@
      "hint": "où ?",
      "question": "איפה הכיתה?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר הכיתה?",
+     "interrogative": "באיזו עיר"
     }
    ]
   }
@@ -716,6 +811,11 @@
      "hint": "qui ?",
      "question": "מי זאת?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle élève ?",
+     "question": "איזו תלמידה זאת?",
+     "interrogative": "איזו תלמידה"
     }
    ]
   }
@@ -1075,6 +1175,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה זאת פריז?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle ville ?",
+     "question": "איזו עיר היא גדולה ויפה?",
+     "interrogative": "איזו עיר"
     }
    ]
   }
@@ -1087,6 +1192,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה זאת ירושלים?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle ville ?",
+     "question": "איזו עיר גם היא גדולה ויפה?",
+     "interrogative": "איזו עיר"
     }
    ]
   }
@@ -1264,6 +1374,11 @@
      "hint": "d'où ?",
      "question": "מאיפה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
      "interrogative": "מאיפה"
+    },
+    {
+     "hint": "de quelle fenêtre ?",
+     "question": "מאיזה חלון הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
+     "interrogative": "מאיזה חלון"
     }
    ]
   }
@@ -1327,6 +1442,11 @@
      "hint": "qui ?",
      "question": "מי לומד עברית באולפן בתל אביב?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quel oulpan ?",
+     "question": "באיזה אולפן הוא לומד עברית?",
+     "interrogative": "באיזה אולפן"
     }
    ]
   }
@@ -1344,6 +1464,11 @@
      "hint": "qui ?",
      "question": "מי גר על יד תל אביב בדירה קטנה?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quel appartement ?",
+     "question": "באיזו דירה הוא גר על יד תל אביב?",
+     "interrogative": "באיזו דירה"
     }
    ]
   }
@@ -1361,6 +1486,11 @@
      "hint": "où ?",
      "question": "איפה יש שולחן גדול, כיסא ומיטה קטנה?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "quelle table ?",
+     "question": "איזה שולחן יש בדירה, נוסף על כיסא ומיטה קטנה?",
+     "interrogative": "איזה שולחן"
     }
    ]
   }
@@ -1417,6 +1547,11 @@
      "hint": "d'où ?",
      "question": "מאיפה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
      "interrogative": "מאיפה"
+    },
+    {
+     "hint": "de quelle fenêtre ?",
+     "question": "מאיזה חלון הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
+     "interrogative": "מאיזה חלון"
     }
    ]
   }
@@ -1559,6 +1694,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה יש בדירה בתל אביב?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "dans quel appartement ?",
+     "question": "באיזו דירה יש שולחן, כיסאות וטלוויזיה?",
+     "interrogative": "באיזו דירה"
     }
    ]
   }
@@ -1634,6 +1774,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה יש על יד השולחן?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel lit ?",
+     "question": "איזו מיטה יש ליד השולחן?",
+     "interrogative": "איזו מיטה"
     }
    ]
   }
@@ -1646,6 +1791,11 @@
      "hint": "d'où ?",
      "question": "מאיפה הוא רואה גינה יפה?",
      "interrogative": "מאיפה"
+    },
+    {
+     "hint": "quel jardin ?",
+     "question": "איזו גינה הוא רואה מהחלון של הדירה?",
+     "interrogative": "איזו גינה"
     }
    ]
   }
@@ -1715,6 +1865,11 @@
      "hint": "qui ?",
      "question": "מי לומד עברית בכיתה בירושלים?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle classe ?",
+     "question": "באיזו כיתה שלמה לומד עברית?",
+     "interrogative": "באיזו כיתה"
     }
    ]
   }
@@ -1812,6 +1967,11 @@
      "hint": "qui ?",
      "question": "מי לומד עברית בכיתה בירושלים?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle classe ?",
+     "question": "באיזו כיתה שלמה לומד עברית?",
+     "interrogative": "באיזו כיתה"
     }
    ]
   }
@@ -1904,6 +2064,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה הוא הולך לאכול במסעדה עם החברים בכיתה בצהריים?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "avec quels amis ?",
+     "question": "עם אילו חברים הוא הולך לאכול במסעדה ארוחת צהריים בצהריים?",
+     "interrogative": "עם אילו חברים"
     }
    ]
   }
@@ -1960,6 +2125,11 @@
      "hint": "qui ?",
      "question": "מי רוצה לראות סרט טוב בקולנוע?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quel film ?",
+     "question": "איזה סרט הם רוצים לראות בקולנוע?",
+     "interrogative": "איזה סרט"
     }
    ]
   }
@@ -1977,6 +2147,11 @@
      "hint": "à qui ?",
      "question": "למי יש גינה יפה?",
      "interrogative": "למי"
+    },
+    {
+     "hint": "quel jardin ?",
+     "question": "איזו גינה יש להם?",
+     "interrogative": "איזו גינה"
     }
    ]
   }
@@ -2022,6 +2197,11 @@
      "hint": "qui ?",
      "question": "מי גר בתל אביב ויש לו מכונית?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle ville ?",
+     "question": "באיזו עיר אתם גרים ויש לכם מכונית?",
+     "interrogative": "באיזו עיר"
     }
    ]
   }
@@ -2189,6 +2369,11 @@
      "hint": "que ?",
      "question": "מה דוד עושה בשיעור?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelles choses ?",
+     "question": "אילו דברים דוד עושה בשיעור?",
+     "interrogative": "אילו דברים"
     }
    ]
   }
@@ -2306,6 +2491,11 @@
      "hint": "que ?",
      "question": "מה הוא עושה בשיעור?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelles choses ?",
+     "question": "אילו דברים הוא עושה בשיעור?",
+     "interrogative": "אילו דברים"
     }
    ]
   }
@@ -2340,6 +2530,11 @@
      "hint": "à qui ?",
      "question": "למי יש מורה טובה?",
      "interrogative": "למי"
+    },
+    {
+     "hint": "quelle enseignante ?",
+     "question": "איזו מורה יש לדוד?",
+     "interrogative": "איזו מורה"
     }
    ]
   }
@@ -2369,6 +2564,11 @@
      "hint": "à qui ?",
      "question": "למי יש גם חברים טובים בכיתה?",
      "interrogative": "למי"
+    },
+    {
+     "hint": "quels amis ?",
+     "question": "אילו חברים יש לו גם בכיתה?",
+     "interrogative": "אילו חברים"
     }
    ]
   }
@@ -2446,6 +2646,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה הם רוצים לראות?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel film ?",
+     "question": "איזה סרט הם רוצים לראות?",
+     "interrogative": "איזה סרט"
     }
    ]
   }
@@ -2507,6 +2712,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה הוא רואה עם חנה?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel film ?",
+     "question": "איזה סרט הוא רואה עם חנה?",
+     "interrogative": "איזה סרט"
     }
    ]
   }
@@ -2534,6 +2744,11 @@
      "hint": "qui ?",
      "question": "את מי המורה מלמדת בכיתה באולפן?",
      "interrogative": "את מי"
+    },
+    {
+     "hint": "quels élèves ?",
+     "question": "אילו תלמידים המורה מלמדת בכיתה באולפן?",
+     "interrogative": "אילו תלמידים"
     }
    ]
   }
@@ -2588,6 +2803,11 @@
      "hint": "à qui ?",
      "question": "למי הוא עושה את הקפה?",
      "interrogative": "למי"
+    },
+    {
+     "hint": "quel café ?",
+     "question": "איזה קפה הוא עושה לחנה?",
+     "interrogative": "איזה קפה"
     }
    ]
   }
@@ -2600,6 +2820,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה אוכל?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle pomme ?",
+     "question": "איזה תפוח אתה אוכל?",
+     "interrogative": "איזה תפוח"
     }
    ]
   }
@@ -2624,6 +2849,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה לומד?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle leçon ?",
+     "question": "איזה שיעור אתה לומד?",
+     "interrogative": "איזה שיעור"
     }
    ]
   }
@@ -2648,6 +2878,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה את כותבת?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle lettre ?",
+     "question": "איזה מכתב את כותבת?",
+     "interrogative": "איזה מכתב"
     }
    ]
   }
@@ -2672,6 +2907,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה קורא?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel livre ?",
+     "question": "איזה ספר אתה קורא?",
+     "interrogative": "איזה ספר"
     }
    ]
   }
@@ -2696,6 +2936,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה רוצה?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel gâteau ?",
+     "question": "איזו עוגה אני רוצה?",
+     "interrogative": "איזו עוגה"
     }
    ]
   }
@@ -2737,6 +2982,11 @@
      "hint": "après quoi ?",
      "question": "אחרי מה המורה נחה?",
      "interrogative": "אחרי מה"
+    },
+    {
+     "hint": "après quel cours ?",
+     "question": "אחרי איזה שיעור המורה נחה?",
+     "interrogative": "אחרי איזה שיעור"
     }
    ]
   }
@@ -2754,6 +3004,11 @@
      "hint": "qui ?",
      "question": "מי פותח את הספרים?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quels livres ?",
+     "question": "אילו ספרים לאה וחנה פותחות?",
+     "interrogative": "אילו ספרים"
     }
    ]
   }
@@ -2841,6 +3096,11 @@
      "hint": "après quoi ?",
      "question": "אחרי מה היא רוצה לטייל?",
      "interrogative": "אחרי מה"
+    },
+    {
+     "hint": "après quel jour ?",
+     "question": "אחרי איזה יום היא רוצה לטייל?",
+     "interrogative": "אחרי איזה יום"
     }
    ]
   }
@@ -2875,6 +3135,11 @@
      "hint": "qui ?",
      "question": "מי לומד גם באולפן?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quels amis ?",
+     "question": "אילו חברים לומדים גם באולפן?",
+     "interrogative": "אילו חברים"
     }
    ]
   }
@@ -2897,6 +3162,11 @@
      "hint": "qui ?",
      "question": "מי רואה את דוד כמעט כל יום בכיתה?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle classe ?",
+     "question": "באיזו כיתה הם רואים את דוד כמעט כל יום?",
+     "interrogative": "באיזו כיתה"
     }
    ]
   }
@@ -2914,6 +3184,11 @@
      "hint": "qui ?",
      "question": "מי לומד בכיתה, פותח את הספר וקורא?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "dans quelle classe ?",
+     "question": "באיזו כיתה דוד לומד, פותח את הספר וקורא?",
+     "interrogative": "באיזו כיתה"
     }
    ]
   }
@@ -2943,6 +3218,11 @@
      "hint": "après quoi ?",
      "question": "אחרי מה הוא עייף צמא ורעב?",
      "interrogative": "אחרי מה"
+    },
+    {
+     "hint": "après quel cours ?",
+     "question": "אחרי איזה שיעור הוא עייף, צמא ורעב?",
+     "interrogative": "אחרי איזה שיעור"
     }
    ]
   }
@@ -2960,6 +3240,11 @@
      "hint": "après quoi ?",
      "question": "אחרי מה הוא אוכל בבית ונח?",
      "interrogative": "אחרי מה"
+    },
+    {
+     "hint": "après quel cours ?",
+     "question": "אחרי איזה שיעור הוא אוכל בבית ונח?",
+     "interrogative": "אחרי איזה שיעור"
     }
    ]
   }
@@ -2977,6 +3262,11 @@
      "hint": "qui ?",
      "question": "מי לומד את השיעור אחר כך?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle leçon ?",
+     "question": "איזה שיעור הוא לומד אחר כך?",
+     "interrogative": "איזה שיעור"
     }
    ]
   }
@@ -2999,6 +3289,11 @@
      "hint": "avec qui ?",
      "question": "עם מי הוא רוצה ואוהב ללמוד את השיעור בבית קפה?",
      "interrogative": "עם מי"
+    },
+    {
+     "hint": "quelle leçon ?",
+     "question": "איזה שיעור הוא רוצה ואוהב ללמוד בבית קפה עם חנה?",
+     "interrogative": "איזה שיעור"
     }
    ]
   }
@@ -3011,6 +3306,11 @@
      "hint": "qui ?",
      "question": "מי שותה קפה ואוכל עוגה טעימה ופירות?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quel gâteau ?",
+     "question": "איזו עוגה הם אוכלים כשהם שותים קפה ואוכלים פירות?",
+     "interrogative": "איזו עוגה"
     }
    ]
   }
@@ -3040,6 +3340,11 @@
      "hint": "qui ?",
      "question": "מי אוכל ארוחת בוקר ואחר כך קורא עיתון?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quel repas ?",
+     "question": "איזו ארוחה הוא אוכל לפני שהוא קורא עיתון?",
+     "interrogative": "איזו ארוחה"
     }
    ]
   }
@@ -3057,6 +3362,11 @@
      "hint": "après quoi ?",
      "question": "אחרי מה הוא נח?",
      "interrogative": "אחרי מה"
+    },
+    {
+     "hint": "après quel cours ?",
+     "question": "אחרי איזה שיעור הוא נח?",
+     "interrogative": "אחרי איזה שיעור"
     }
    ]
   }
@@ -3098,6 +3408,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה היא מספרת לתלמידים?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "à quels élèves ?",
+     "question": "לאילו תלמידים היא מספרת מאיפה היא?",
+     "interrogative": "לאילו תלמידים"
     }
    ]
   }
@@ -3127,6 +3442,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה המורות פותחות?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quels livres ?",
+     "question": "אילו ספרים המורות פותחות?",
+     "interrogative": "אילו ספרים"
     }
    ]
   }
@@ -3174,6 +3494,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתם אוהבים לקרוא בעברית?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel journal ?",
+     "question": "איזה עיתון אתם אוהבים לקרוא?",
+     "interrogative": "איזה עיתון"
     }
    ]
   }
@@ -3367,6 +3692,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אני אוכל?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quels fruits ?",
+     "question": "אילו פירות אתה אוכל עם עוגה כשאתה הולך למסעדה?",
+     "interrogative": "אילו פירות"
     }
    ]
   }
@@ -3413,6 +3743,11 @@
      "hint": "à côté de quoi ?",
      "question": "על יד מה יש בית קפה במרכז העיר?",
      "interrogative": "על יד מה"
+    },
+    {
+     "hint": "près de quel cinéma ?",
+     "question": "ליד איזה קולנוע יש בית קפה במרכז העיר?",
+     "interrogative": "ליד איזה קולנוע"
     }
    ]
   }
@@ -3430,6 +3765,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה אוהב?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quelle ville ?",
+     "question": "איזו עיר אתה אוהב למרות שאין בה הרבה חנויות?",
+     "interrogative": "איזו עיר"
     }
    ]
   }
@@ -3505,6 +3845,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה כותב?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel livre ?",
+     "question": "איזה ספר אתה פותח כשאתה קורא את הטקסט וכותב את השיעור?",
+     "interrogative": "איזה ספר"
     }
    ]
   }
@@ -3544,6 +3889,11 @@
      "hint": "où ?",
      "question": "איפה אתה רואה את החברים?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "quels amis ?",
+     "question": "אילו חברים אתה רואה במרכז העיר?",
+     "interrogative": "אילו חברים"
     }
    ]
   }
@@ -3568,6 +3918,11 @@
      "hint": "où ?",
      "question": "איפה אתם שומעים את המוזיקה?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "quelle musique ?",
+     "question": "איזו מוזיקה אתם שומעים בחדר?",
+     "interrogative": "איזו מוזיקה"
     }
    ]
   }
@@ -3585,6 +3940,11 @@
      "hint": "où ?",
      "question": "איפה היא אוכלת את העוגה הטעימה?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "quel gâteau ?",
+     "question": "איזו עוגה היא אוכלת בדירה?",
+     "interrogative": "איזו עוגה"
     }
    ]
   }
@@ -3602,6 +3962,11 @@
      "hint": "avec quel moyen de transport ?",
      "question": "במה הוא נוסע לעיר הגדולה?",
      "interrogative": "במה"
+    },
+    {
+     "hint": "vers quelle ville ?",
+     "question": "לאיזו עיר הוא נוסע ברכבת?",
+     "interrogative": "לאיזו עיר"
     }
    ]
   }
@@ -3614,6 +3979,11 @@
      "hint": "vers où ?",
      "question": "לאן הן טסות במטוס הגדול והיפה?",
      "interrogative": "לאן"
+    },
+    {
+     "hint": "dans quel avion ?",
+     "question": "באיזה מטוס הן טסות לישראל?",
+     "interrogative": "באיזה מטוס"
     }
    ]
   }
@@ -3631,6 +4001,11 @@
      "hint": "avec quel moyen de transport ?",
      "question": "במה אנחנו נוסעים מוקדם עם החברים הטובים?",
      "interrogative": "במה"
+    },
+    {
+     "hint": "dans quelle voiture ?",
+     "question": "באיזו מכונית אתם נוסעים מוקדם עם החברים הטובים?",
+     "interrogative": "באיזו מכונית"
     }
    ]
   }
@@ -3648,6 +4023,11 @@
      "hint": "à qui ?",
      "question": "למי אני כותב את המכתב?",
      "interrogative": "למי"
+    },
+    {
+     "hint": "à quels élèves ?",
+     "question": "לאילו תלמידים אתה כותב את המכתב?",
+     "interrogative": "לאילו תלמידים"
     }
    ]
   }
@@ -3660,6 +4040,11 @@
      "hint": "où ?",
      "question": "איפה אני יושבת, לומדת את השיעור וקוראת את הספר הקטן?",
      "interrogative": "איפה"
+    },
+    {
+     "hint": "dans quelle classe ?",
+     "question": "באיזו כיתה את יושבת, לומדת את השיעור וקוראת את הספר הקטן?",
+     "interrogative": "באיזו כיתה"
     }
    ]
   }
@@ -3826,6 +4211,11 @@
      "hint": "qui ?",
      "question": "מי גר בירושלים?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle famille ?",
+     "question": "איזו משפחה גרה בירושלים?",
+     "interrogative": "איזו משפחה"
     }
    ]
   }
@@ -4111,14 +4501,14 @@
    "text": "אני הכי אוהבת את העיר ירושלים.",
    "questions": [
     {
-     "hint": "quelle ville ?",
-     "question": "איזו עיר את הכי אוהבת?",
-     "interrogative": "איזו עיר"
-    },
-    {
      "hint": "qui ?",
      "question": "מי הכי אוהב את העיר ירושלים?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle ville ?",
+     "question": "איזו עיר את הכי אוהבת?",
+     "interrogative": "איזו עיר"
     }
    ]
   },
@@ -4164,6 +4554,11 @@
      "hint": "qu'est-ce que ?",
      "question": "מה אתה קורא?",
      "interrogative": "מה"
+    },
+    {
+     "hint": "quel livre ?",
+     "question": "איזה ספר אתה קורא?",
+     "interrogative": "איזה ספר"
     }
    ]
   },
@@ -4189,6 +4584,11 @@
      "hint": "qui ?",
      "question": "מי מאוד אוהב את הספר הזה?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quel livre ?",
+     "question": "איזה ספר אתה מאוד אוהב?",
+     "interrogative": "איזה ספר"
     }
    ]
   }
@@ -4433,6 +4833,11 @@
      "hint": "qui ?",
      "question": "את מי הוא פוגש בבית קפה במרכז העיר?",
      "interrogative": "את מי"
+    },
+    {
+     "hint": "dans quel café ?",
+     "question": "באיזה בית קפה הוא פוגש את חנה?",
+     "interrogative": "באיזה בית קפה"
     }
    ]
   }
@@ -4445,6 +4850,11 @@
      "hint": "qui ?",
      "question": "מי אוכל ארוחה חמה, שותה משקה קר ומדבר?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle boisson ?",
+     "question": "איזה משקה הם שותים כשהם אוכלים ארוחה חמה ומדברים?",
+     "interrogative": "איזה משקה"
     }
    ]
   }
@@ -4533,6 +4943,11 @@
      "hint": "qui ?",
      "question": "את מי הוא גם צריך לפגוש בבית קפה במרכז העיר?",
      "interrogative": "את מי"
+    },
+    {
+     "hint": "dans quel café ?",
+     "question": "באיזה בית קפה הוא גם צריך לפגוש את חנה?",
+     "interrogative": "באיזה בית קפה"
     }
    ]
   }
@@ -4562,6 +4977,11 @@
      "hint": "quand ?",
      "question": "מתי החברים באים לבית של דוד?",
      "interrogative": "מתי"
+    },
+    {
+     "hint": "dans quelle maison ?",
+     "question": "לאיזה בית החברים באים בערב?",
+     "interrogative": "לאיזה בית"
     }
    ]
   }
@@ -4574,6 +4994,11 @@
      "hint": "qui ?",
      "question": "מי יושב, אוכל ארוחה חמה, שותה משקה קר ומדבר?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quelle boisson ?",
+     "question": "איזה משקה הם שותים כשהם יושבים, אוכלים ארוחה חמה ומדברים?",
+     "interrogative": "איזה משקה"
     }
    ]
   }
@@ -4753,6 +5178,11 @@
      "hint": "qui ?",
      "question": "מי לומד עברית?",
      "interrogative": "מי"
+    },
+    {
+     "hint": "quels enfants ?",
+     "question": "אילו ילדים לומדים עברית?",
+     "interrogative": "אילו ילדים"
     }
    ]
   }

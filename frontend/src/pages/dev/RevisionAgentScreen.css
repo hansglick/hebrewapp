@@ -591,6 +591,225 @@ fieldset.revision-agent-form:disabled {
   gap: 10px;
 }
 
+/* Gabarit d'une séance (cf. revisionAgent/TaskLayout.jsx) : conversation,
+   exercice et évaluation empilés au centre, matière pédagogique à droite —
+   l'une sous l'autre sur mobile. Chaque zone a son propre ton : conversation
+   discrète, exercice mis en avant, évaluation neutre. */
+.ra-layout {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.ra-layout-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.ra-zone {
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: start;
+}
+
+.ra-zone-empty {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.ra-zone .ra-speech {
+  position: static;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.ra-zone-conversation {
+  background: transparent;
+  border-style: dashed;
+}
+
+.ra-zone-conversation .ra-label {
+  color: var(--textSecondary);
+}
+
+.ra-zone-exercise {
+  border: 2px solid #e0a800;
+}
+
+.ra-zone-exercise .ra-label {
+  color: #c08a00;
+}
+
+/* Volet : une zone apparaît en se déroulant vers le bas — sa hauteur passe de
+   0 à la sienne pendant que son contenu descend du haut. */
+.ra-volet {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation: ra-volet-open 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.ra-volet-delayed {
+  animation-delay: 0.45s;
+}
+
+.ra-volet-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ra-volet-inner > .ra-zone {
+  animation: ra-volet-slide 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.ra-volet-delayed .ra-volet-inner > .ra-zone {
+  animation-delay: 0.45s;
+}
+
+@keyframes ra-volet-open {
+  from {
+    grid-template-rows: 0fr;
+  }
+  to {
+    grid-template-rows: 1fr;
+  }
+}
+
+@keyframes ra-volet-slide {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-volet,
+  .ra-volet-inner > .ra-zone {
+    animation: none;
+  }
+}
+
+@media (min-width: 1100px) {
+  .ra-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.75fr);
+  }
+
+  .ra-zone-material {
+    position: sticky;
+    top: 88px;
+    max-height: calc(100vh - 112px);
+    overflow-y: auto;
+  }
+}
+
+/* Compréhension : la question servie par l'application, présentée comme une
+   consigne (et non comme une prise de parole du prof), puis l'évaluation de la
+   réponse — fautes en rouge, leurs commentaires et les deux notes sur 10. */
+.ra-instruction {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border-left: 4px solid #e0a800;
+  border-radius: 8px;
+  background: rgba(224, 168, 0, 0.12);
+}
+
+.ra-instruction-label {
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--textSecondary);
+}
+
+.ra-instruction-he {
+  margin: 0;
+  font-size: 1.35em;
+  font-weight: 700;
+  color: var(--textPrimary);
+}
+
+.ra-instruction-fr {
+  margin: 0;
+  font-size: 0.9em;
+  font-style: italic;
+  color: var(--textSecondary);
+}
+
+.ra-error-comments {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9em;
+  text-align: start;
+}
+
+.ra-error-comments li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ra-error-comments mark {
+  flex-shrink: 0;
+}
+
+.ra-scores {
+  display: flex;
+  gap: 10px;
+}
+
+.ra-score {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid currentColor;
+}
+
+.ra-score-label {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.ra-score-value {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.ra-score-good {
+  color: var(--validationPleine);
+}
+
+.ra-score-fair {
+  color: #c08a00;
+}
+
+.ra-score-poor {
+  color: var(--annulationPleine);
+}
+
+.ra-done {
+  margin: 0;
+  font-weight: 600;
+  color: var(--validationPleine);
+}
+
 /* Déclinaison : sujet ou pronom objet à modifier, dans la phrase à transformer. */
 .ra-target {
   background: rgba(224, 168, 0, 0.25);
@@ -645,4 +864,62 @@ fieldset.revision-agent-form:disabled {
   font-size: 1em;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* Sur ordinateur : réglages dans une colonne fixe à gauche (ils restent visibles
+   pendant le défilement), séparés par une barre verticale de la séance en
+   cours (texte, prise de parole du prof, indice…), cf. demande explicite du
+   user. Sur mobile, tout reste empilé. */
+.revision-agent-controls,
+.revision-agent-session {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  /* Lève le plafond de 480px de .app-content (Layout.css), même technique que .curiosite-split. */
+  .app-content:has(.revision-agent) {
+    max-width: 1440px;
+  }
+
+  .revision-agent {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .revision-agent-controls {
+    position: sticky;
+    top: 88px;
+    align-self: flex-start;
+    flex: 0 0 340px;
+    max-height: calc(100vh - 112px);
+    overflow-y: auto;
+    padding-right: 24px;
+    box-sizing: border-box;
+  }
+
+  .revision-agent-controls h1 {
+    margin-top: 0;
+  }
+
+  .revision-agent-session {
+    flex: 1;
+    min-width: 0;
+    min-height: calc(100vh - 160px);
+    padding-left: 24px;
+    border-left: 2px solid var(--dividerColor);
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  .revision-agent-session .ra-stage,
+  .revision-agent-session .ra-board,
+  .revision-agent-session .ra-duo,
+  .revision-agent-session .ra-layout {
+    max-width: none;
+  }
 }

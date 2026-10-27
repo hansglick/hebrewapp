@@ -5,14 +5,17 @@ import { AudioLink } from "./audio";
 // Séance avec le prof (cf. app.revision_agent.session pour le protocole) :
 // status "idle" | "connecting" | "live". Lecture : phase "greeting" |
 // "instruction" | "reading" | "verdict" | "done", passage, verdict.
-// Compréhension : text (texte de la leçon) et highlight (phrases surlignées).
+// Compréhension : text (texte de la leçon), highlight (phrases surlignées),
+// question (servie par l'app), evaluation (réponse, fautes commentées, notes
+// de langue et de compréhension) et paused ; phase "done" à la fin.
 // Expression libre : hint (mots de l'indice) et answer (phrase de l'élève
 // comprise par le prof, mots fautifs, réussite). Déclinaison : exercise
 // (phrase à transformer, mot à modifier) et answer. Complétion : exercise
 // (début de phrase, indice), answer et solution (phrase d'origine, mots du
 // concept). Mot : exercise (mot, traduction, indice), answer et solution.
 // Question : exercise (phrase, indice), answer et solution (question modèle).
-// paused : après un échec en déclinaison, l'exercice suivant attend next().
+// paused : après un échec en déclinaison ou une évaluation en compréhension,
+// l'exercice suivant attend next().
 export function useRevisionSession() {
   const [status, setStatus] = useState("idle");
   const [phase, setPhase] = useState(null);
@@ -29,6 +32,8 @@ export function useRevisionSession() {
   const [solution, setSolution] = useState(null);
   const [notice, setNotice] = useState(null);
   const [paused, setPaused] = useState(false);
+  const [question, setQuestion] = useState(null);
+  const [evaluation, setEvaluation] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -67,6 +72,8 @@ export function useRevisionSession() {
       setSolution(null);
       setNotice(null);
       setPaused(false);
+      setQuestion(null);
+      setEvaluation(null);
       setStatus("connecting");
 
       const audio = new AudioLink();
@@ -118,6 +125,12 @@ export function useRevisionSession() {
           case "solution":
             setSolution(msg.solution);
             break;
+          case "question":
+            setQuestion(msg.question);
+            break;
+          case "evaluation":
+            setEvaluation(msg.evaluation);
+            break;
           case "pause":
             setPaused(msg.paused);
             break;
@@ -165,6 +178,6 @@ export function useRevisionSession() {
 
   return {
     status, phase, seconds, teacher, passage, verdict, text, highlight, hint, answer, exercise, solution, notice, paused,
-    start, stop, next,
+    question, evaluation, start, stop, next,
   };
 }

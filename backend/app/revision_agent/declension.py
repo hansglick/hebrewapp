@@ -56,13 +56,13 @@ def exercises_for(lesson: str, u: dict) -> list[Exercise]:
         found.append(Exercise(lesson, sentence, span, f"Changer le nombre du sujet « {subject} » (singulier ↔ pluriel)."))
         if subject not in NO_GENDER_CHANGE:
             found.append(Exercise(lesson, sentence, span, f"Changer le genre du sujet « {subject} » (masculin ↔ féminin)."))
-    pronoun = u["object_pronoun"]
-    span = pronoun in OBJECT_PRONOUNS and word_span(sentence, pronoun)
-    if span:
-        targets = [p for key, forms in OBJECT_PRONOUNS.items() if key != pronoun for p in forms]
-        target = random.choice(targets)
-        found.append(Exercise(lesson, sentence, span,
-                              f"Remplacer le pronom objet « {pronoun} » par « {target} » ({PRONOUN_LABEL[target]})."))
+    for pronoun in u["object_pronoun"]:  # tous les pronoms objets de l'énoncé
+        span = pronoun in OBJECT_PRONOUNS and word_span(sentence, pronoun)
+        if span:
+            targets = [p for key, forms in OBJECT_PRONOUNS.items() if key != pronoun for p in forms]
+            target = random.choice(targets)
+            found.append(Exercise(lesson, sentence, span,
+                                  f"Remplacer le pronom objet « {pronoun} » par « {target} » ({PRONOUN_LABEL[target]})."))
     return found
 
 

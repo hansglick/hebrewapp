@@ -1,8 +1,13 @@
-"""Phrases des leçons 0.01 → 0.20 découpées en énoncés et analysées (déclinaison, complétion) :
-revision_phrase_analysis.json, copie de livecoach/specific_data/phrase_analysis.json.
+"""Phrases d'exercice des leçons 0.01 → 0.20 (déclinaison, complétion, mot, question), découpées en énoncés et
+analysées. Deux pools, tirés de revision_phrase_analysis.json (copie de livecoach/specific_data/phrase_analysis.json),
+cf. demande explicite du user :
+- revision_concept_pool.json : les énoncés qui portent l'un des concepts retenus (scripts/build_revision_concept_pool.py) ;
+- revision_svc_pool.json : parmi les autres, ceux qui ont au moins un sujet, un verbe et un complément
+  (choisis par Sol, scripts/build_revision_svc_pool.py).
 
-Chaque énoncé : {"text", "concepts": [{"id": leçon du concept, "words": [mots du texte qui le portent]}],
-"action": {"fr", "he"}, "subject": {"fr", "he"}, "preposition", "object_pronoun"}.
+Chaque énoncé : {"text", "concepts": [{"id": leçon du concept, "title", "words": [mots du texte qui le portent]}],
+"action": {"fr", "he"}, "subject": {"fr", "he"}, "preposition": [toutes les prépositions],
+"object_pronoun": [toutes les prépositions déclinées : לי, אותו…]}.
 """
 
 import json
@@ -15,10 +20,13 @@ from app.revision_agent.passages import lesson_number
 
 @lru_cache(maxsize=1)
 def utterances() -> list[tuple[str, dict]]:
-    """(leçon, énoncé) pour chaque énoncé analysé, l'énoncé complété de l'identifiant de sa phrase (« leçon:index »)."""
-    with open(DATA_DIR / "revision_phrase_analysis.json", encoding="utf-8") as f:
-        analysis = json.load(f)
-    return [(phrase_id.split(":")[0], {**u, "id": phrase_id}) for phrase_id, items in analysis.items() for u in items]
+    """(leçon, énoncé) pour chaque énoncé des deux pools, l'énoncé complété de l'identifiant de sa phrase (« leçon:index »)."""
+    found = []
+    for name in ("revision_concept_pool.json", "revision_svc_pool.json"):
+        with open(DATA_DIR / name, encoding="utf-8") as f:
+            pool = json.load(f)
+        found += [(phrase_id.split(":")[0], {**u, "id": phrase_id}) for phrase_id, items in pool.items() for u in items]
+    return found
 
 
 def lesson_utterances(lesson: str, current: bool, previous: bool) -> list[tuple[str, dict]]:

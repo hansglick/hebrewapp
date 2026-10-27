@@ -1,9 +1,10 @@
 import logging
 
-from fastapi import APIRouter, WebSocket
+from fastapi import APIRouter, HTTPException, WebSocket
 
 from app.auth import get_user_id
 from app.config import GEMINI_API_KEY, OPENAI_API_KEY
+from app.data_loader import get_dataset
 from app.revision_agent.config import LAST_LESSON, LESSON_CHAPTER, VOICES
 from app.revision_agent.passages import candidate_lessons, lessons_with_text
 from app.revision_agent.completion import CompletionSession
@@ -17,6 +18,7 @@ from app.revision_agent.reading import ReadingSession
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.question import QuestionSession
 from app.revision_agent.question import exercises_for as question_exercises
+from app.revision_agent.topics import TASK_TYPES, topics_for
 from app.revision_agent.utterances import lesson_utterances
 from app.revision_agent.word import WordSession
 from app.revision_agent.word import exercises_for as word_exercises
@@ -36,6 +38,14 @@ def vocabulary_lessons():
     """Leçons du périmètre qui apportent des mots ou des verbes : la matière de l'expression libre."""
     codes = (f"{LESSON_CHAPTER}.{n:02d}" for n in range(1, LAST_LESSON + 1))
     return [code for code in codes if vocabulary(code, True, False)]
+
+
+@router.get("/topics")
+def topics(task: str, lesson: str):
+    """Sujets qualifiés d'une tâche au niveau `lesson`, avec leurs exercices (prototype sans agent)."""
+    if task not in TASK_TYPES or lesson_number(lesson) is None:
+        raise HTTPException(status_code=400, detail="Tâche ou leçon inconnue.")
+    return topics_for(task, lesson)
 
 
 @router.websocket("/ws")
@@ -64,6 +74,8 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Toujours le texte de la leçon choisie, quelles que soient les cases cochées (cf. demande explicite du user).
         if lesson not in lessons_with_text():
             return await refuse("Cette leçon n'a pas de texte.")
+        if not get_dataset("text")[lesson].get("questions"):
+            return await refuse("Ce texte n'a pas de questions.")
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
         session = ComprehensionSession(websocket, voice, lesson)

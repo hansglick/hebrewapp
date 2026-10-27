@@ -20,6 +20,8 @@ const LIVE_TASKS = ["lecture", "comprehension", "expression", "declinaison", "co
 const PHRASE_TASKS = ["declinaison", "completion", "mot", "question"];
 // Leçons dont toutes les phrases sont déjà des questions : rien à faire questionner.
 const QUESTIONLESS_LESSONS = ["0.15"];
+// Leçons dont le texte n'a pas de questions de compréhension.
+const TEXT_WITHOUT_QUESTIONS = ["0.11"];
 const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une leçon qui a un texte
 const TASKS = [
   { id: "lecture", label: "Lecture" },
@@ -31,22 +33,8 @@ const TASKS = [
   { id: "question", label: "Question" },
 ];
 
-// Voix prédéfinies Gemini Live (même liste fermée que le prototype
-// livecoach : un nom inconnu retombe silencieusement sur une voix par
-// défaut). Style indiqué par Google · registre mesuré.
-const VOICES = [
-  ["Achernar", "feutrée · aiguë"], ["Achird", "amicale · grave"], ["Algenib", "rocailleuse · médium"],
-  ["Algieba", "douce · médium"], ["Alnilam", "ferme · grave"], ["Aoede", "légère · aiguë"],
-  ["Autonoe", "lumineuse · aiguë"], ["Callirrhoe", "décontractée · aiguë"], ["Charon", "informative · grave"],
-  ["Despina", "douce · aiguë"], ["Enceladus", "soufflée · grave"], ["Erinome", "claire · aiguë"],
-  ["Fenrir", "vive · grave"], ["Gacrux", "mûre · grave"], ["Iapetus", "claire · grave"],
-  ["Kore", "ferme · aiguë"], ["Laomedeia", "enjouée · médium"], ["Leda", "jeune · aiguë"],
-  ["Orus", "ferme · médium"], ["Puck", "enjouée · grave"], ["Pulcherrima", "affirmée · grave"],
-  ["Rasalgethi", "informative · aiguë"], ["Sadachbia", "animée · médium"], ["Sadaltager", "érudite · grave"],
-  ["Schedar", "égale · grave"], ["Sulafat", "chaleureuse · aiguë"], ["Umbriel", "décontractée · grave"],
-  ["Vindemiatrix", "tendre · aiguë"], ["Zephyr", "lumineuse · aiguë"], ["Zubenelgenubi", "détendue · médium"],
-];
-const DEFAULT_VOICE = "Zephyr"; // voix déjà utilisée par les autres conversations de l'app
+// Voix du prof, fixée (cf. demande explicite du user) : une des voix prédéfinies de Gemini Live.
+const VOICE = "Enceladus";
 
 // Périmètre de l'agent : les 20 premières leçons, 0.01 → 0.20 (cf. demande
 // explicite du user).
@@ -74,7 +62,6 @@ const LAST_LESSON = 20;
 export default function RevisionAgentScreen() {
   const [lessons, setLessons] = useState([]);
   const [lessonCode, setLessonCode] = useState("");
-  const [voice, setVoice] = useState(DEFAULT_VOICE);
   const [task, setTask] = useState(TASKS[0].id);
   const [currentLesson, setCurrentLesson] = useState(true);
   const [previousLessons, setPreviousLessons] = useState(false);
@@ -109,177 +96,183 @@ export default function RevisionAgentScreen() {
   // Lecture et compréhension n'ont pas de sens pour une leçon sans texte (cf. demande explicite du user).
   const hasText = texts?.includes(lessonCode) ?? false;
   const needsText = (id) => TEXT_TASKS.includes(id) && !hasText;
+  const needsQuestions = (id) => id === "comprehension" && TEXT_WITHOUT_QUESTIONS.includes(lessonCode);
   // L'expression libre a besoin de mots ou de verbes dans les leçons cochées (codes « 0.NN » : l'ordre
   // alphabétique est celui des leçons).
   const hasVocabulary = (vocabularyLessons ?? []).some(
     (code) => (currentLesson && code === lessonCode) || (previousLessons && code < lessonCode),
   );
   const needsVocabulary = (id) => id === "expression" && !hasVocabulary;
-  // Toutes les leçons ont des phrases à décliner, à compléter et des mots à employer : seule la toute
-  // première leçon n'a pas de leçon antérieure.
+  // Toutes les leçons ont des phrases d'exercice (cf. les deux pools de app.revision_agent.utterances) : seule
+  // la toute première leçon n'a pas de leçon antérieure.
   const firstLesson = lessons[0]?.lecons[0]?.code;
   const needsPhrases = (id) => PHRASE_TASKS.includes(id) && !currentLesson && lessonCode === firstLesson;
   const needsAnswers = (id) =>
     id === "question" && currentLesson && !previousLessons && QUESTIONLESS_LESSONS.includes(lessonCode);
   const taskAvailable = (id) =>
-    LIVE_TASKS.includes(id) && !needsText(id) && !needsVocabulary(id) && !needsPhrases(id) && !needsAnswers(id);
+    LIVE_TASKS.includes(id) && !needsText(id) && !needsQuestions(id) && !needsVocabulary(id) && !needsPhrases(id) && !needsAnswers(id);
   const scopeChosen = currentLesson || previousLessons;
-  const ready = Boolean(lessonCode && voice && taskAvailable(task) && scopeChosen);
+  const ready = Boolean(lessonCode && taskAvailable(task) && scopeChosen);
 
   const toggleSession = () => {
     if (active) session.stop();
     else {
       setSessionTask(task);
-      session.start({ lesson: lessonCode, voice, task, current: currentLesson, previous: previousLessons });
+      session.start({ lesson: lessonCode, voice: VOICE, task, current: currentLesson, previous: previousLessons });
     }
   };
 
   return (
     <section className="screen revision-agent">
-      <h1 style={{ fontSize: "1.4em" }}>Agent de révision</h1>
-      {error && <p className="muted">Impossible de charger les leçons : {error}</p>}
+      <aside className="revision-agent-controls">
+        <h1 style={{ fontSize: "1.4em" }}>LiveCoach</h1>
+        {error && <p className="muted">Impossible de charger les leçons : {error}</p>}
 
-      <fieldset className="card revision-agent-form" disabled={active}>
-        <label className="revision-agent-field">
-          Leçon
-          <select value={lessonCode} onChange={(e) => setLessonCode(e.target.value)}>
-            {lessons.map(({ chapitre, lecons }) => (
-              <optgroup key={chapitre.id} label={`Chapitre ${chapitre.id} — ${chapitre.titre}`}>
-                {lecons.map((l) => (
-                  <option key={l.code} value={l.code}>
-                    {l.titre_texte ? `${l.code} — ${l.titre_texte}` : l.code}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-        </label>
+        <fieldset className="card revision-agent-form" disabled={active}>
+          <label className="revision-agent-field">
+            Leçon
+            <select value={lessonCode} onChange={(e) => setLessonCode(e.target.value)}>
+              {lessons.map(({ chapitre, lecons }) => (
+                <optgroup key={chapitre.id} label={`Chapitre ${chapitre.id} — ${chapitre.titre}`}>
+                  {lecons.map((l) => (
+                    <option key={l.code} value={l.code}>
+                      {l.titre_texte ? `${l.code} — ${l.titre_texte}` : l.code}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </label>
 
-        <label className="revision-agent-field">
-          Voix du prof
-          <select value={voice} onChange={(e) => setVoice(e.target.value)}>
-            {VOICES.map(([name, description]) => (
-              <option key={name} value={name}>
-                {name} — {description}
-              </option>
-            ))}
-          </select>
-        </label>
+          <label className="revision-agent-field">
+            Tâche
+            <select value={task} onChange={(e) => setTask(e.target.value)}>
+              {TASKS.map((t) => (
+                <option
+                  key={t.id}
+                  value={t.id}
+                  disabled={needsText(t.id) || needsQuestions(t.id) || needsVocabulary(t.id)}
+                >
+                  {t.label}
+                  {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
+                  {needsQuestions(t.id) ? " (pas de questions sur ce texte)" : ""}
+                  {needsVocabulary(t.id) ? " (aucun mot dans les leçons cochées)" : ""}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        <label className="revision-agent-field">
-          Tâche
-          <select value={task} onChange={(e) => setTask(e.target.value)}>
-            {TASKS.map((t) => (
-              <option key={t.id} value={t.id} disabled={needsText(t.id) || needsVocabulary(t.id)}>
-                {t.label}
-                {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
-                {needsVocabulary(t.id) ? " (aucun mot dans les leçons cochées)" : ""}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div className="revision-agent-field">
-          Contenu révisé
-          <div className="revision-agent-scope">
-            <label>
-              <input type="checkbox" checked={currentLesson} onChange={(e) => setCurrentLesson(e.target.checked)} />
-              Leçon en cours
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={previousLessons}
-                onChange={(e) => setPreviousLessons(e.target.checked)}
-              />
-              Leçons antérieures
-            </label>
+          <div className="revision-agent-field">
+            Contenu révisé
+            <div className="revision-agent-scope">
+              <label>
+                <input type="checkbox" checked={currentLesson} onChange={(e) => setCurrentLesson(e.target.checked)} />
+                Leçon en cours
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={previousLessons}
+                  onChange={(e) => setPreviousLessons(e.target.checked)}
+                />
+                Leçons antérieures
+              </label>
+            </div>
           </div>
-        </div>
 
-        {!scopeChosen && <p className="muted revision-agent-note">Coche au moins un contenu à réviser.</p>}
-        {scopeChosen && !taskAvailable(task) && (
-          <p className="muted revision-agent-note">
-            {needsText(task)
-              ? "Cette leçon n'a pas de texte."
-              : needsVocabulary(task)
-                ? "Aucun mot ni verbe dans les leçons cochées."
-                : needsPhrases(task)
-                  ? "Aucune leçon antérieure à la première leçon."
-                  : needsAnswers(task)
-                    ? "Cette leçon ne contient que des questions."
-                    : "Cette tâche n'est pas encore disponible."}
-          </p>
+          {!scopeChosen && <p className="muted revision-agent-note">Coche au moins un contenu à réviser.</p>}
+          {scopeChosen && !taskAvailable(task) && (
+            <p className="muted revision-agent-note">
+              {needsText(task)
+                ? "Cette leçon n'a pas de texte."
+                : needsQuestions(task)
+                  ? "Le texte de cette leçon n'a pas de questions."
+                  : needsVocabulary(task)
+                  ? "Aucun mot ni verbe dans les leçons cochées."
+                  : needsPhrases(task)
+                    ? "Aucune leçon antérieure à la première leçon."
+                    : needsAnswers(task)
+                      ? "Cette leçon ne contient que des questions."
+                      : "Cette tâche n'est pas encore disponible."}
+            </p>
+          )}
+        </fieldset>
+
+        <button
+          type="button"
+          className={`revision-agent-start ${active ? "revision-agent-stop" : ""}`}
+          onClick={toggleSession}
+          disabled={!active && !ready}
+        >
+          {active ? "Arrêter la séance" : "Lancer la révision"}
+        </button>
+      </aside>
+
+      <div className="revision-agent-session">
+        {active && (
+          <SessionSteps
+            status={session.status}
+            phase={session.phase}
+            seconds={session.seconds}
+            showSteps={sessionTask === "lecture"}
+          />
         )}
-      </fieldset>
-
-      <button
-        type="button"
-        className={`revision-agent-start ${active ? "revision-agent-stop" : ""}`}
-        onClick={toggleSession}
-        disabled={!active && !ready}
-      >
-        {active ? "Arrêter la séance" : "Lancer la révision"}
-      </button>
-
-      {active && (
-        <SessionSteps
-          status={session.status}
-          phase={session.phase}
-          seconds={session.seconds}
-          showSteps={sessionTask === "lecture"}
-        />
-      )}
-      {sessionTask === "comprehension" ? (
-        <ComprehensionBoard
-          teacher={session.teacher}
-          text={session.text}
-          highlight={session.highlight}
-          notice={session.notice}
-        />
-      ) : sessionTask === "expression" ? (
-        <ExpressionBoard teacher={session.teacher} hint={session.hint} answer={session.answer} notice={session.notice} />
-      ) : sessionTask === "question" ? (
-        <QuestionBoard
-          teacher={session.teacher}
-          exercise={session.exercise}
-          answer={session.answer}
-          solution={session.solution}
-          notice={session.notice}
-        />
-      ) : sessionTask === "mot" ? (
-        <WordBoard
-          teacher={session.teacher}
-          exercise={session.exercise}
-          answer={session.answer}
-          solution={session.solution}
-          notice={session.notice}
-        />
-      ) : sessionTask === "completion" ? (
-        <CompletionBoard
-          teacher={session.teacher}
-          exercise={session.exercise}
-          answer={session.answer}
-          solution={session.solution}
-          notice={session.notice}
-        />
-      ) : sessionTask === "declinaison" ? (
-        <DeclensionBoard
-          teacher={session.teacher}
-          exercise={session.exercise}
-          answer={session.answer}
-          notice={session.notice}
-          paused={session.paused}
-          onNext={session.next}
-        />
-      ) : (
-        <ReadingBoard
-          teacher={session.teacher}
-          passage={session.passage}
-          verdict={session.verdict}
-          notice={session.notice}
-        />
-      )}
+        {sessionTask === "comprehension" ? (
+          <ComprehensionBoard
+            teacher={session.teacher}
+            text={session.text}
+            highlight={session.highlight}
+            question={session.question}
+            evaluation={session.evaluation}
+            done={session.phase === "done"}
+            notice={session.notice}
+            paused={session.paused}
+            onNext={session.next}
+          />
+        ) : sessionTask === "expression" ? (
+          <ExpressionBoard teacher={session.teacher} hint={session.hint} answer={session.answer} notice={session.notice} />
+        ) : sessionTask === "question" ? (
+          <QuestionBoard
+            teacher={session.teacher}
+            exercise={session.exercise}
+            answer={session.answer}
+            solution={session.solution}
+            notice={session.notice}
+          />
+        ) : sessionTask === "mot" ? (
+          <WordBoard
+            teacher={session.teacher}
+            exercise={session.exercise}
+            answer={session.answer}
+            solution={session.solution}
+            notice={session.notice}
+          />
+        ) : sessionTask === "completion" ? (
+          <CompletionBoard
+            teacher={session.teacher}
+            exercise={session.exercise}
+            answer={session.answer}
+            solution={session.solution}
+            notice={session.notice}
+          />
+        ) : sessionTask === "declinaison" ? (
+          <DeclensionBoard
+            teacher={session.teacher}
+            exercise={session.exercise}
+            answer={session.answer}
+            notice={session.notice}
+            paused={session.paused}
+            onNext={session.next}
+          />
+        ) : (
+          <ReadingBoard
+            teacher={session.teacher}
+            passage={session.passage}
+            verdict={session.verdict}
+            notice={session.notice}
+          />
+        )}
+      </div>
     </section>
   );
 }

@@ -73,6 +73,7 @@ import ConversationChallengerScreen from "./pages/onboarding/ConversationChallen
 import PhraseCurationScreen from "./pages/dev/PhraseCurationScreen";
 import PaletteAccueilCalibrationScreen from "./pages/dev/PaletteAccueilCalibrationScreen";
 import RevisionAgentScreen from "./pages/dev/RevisionAgentScreen";
+import TopicPrototypeScreen from "./pages/dev/TopicPrototypeScreen";
 import JeuChoiceScreen from "./pages/jeu/JeuChoiceScreen";
 import RegleDuJeuScreen from "./pages/jeu/RegleDuJeuScreen";
 import LotterieScreen from "./pages/jeu/LotterieScreen";
@@ -154,6 +155,7 @@ function App() {
         <Route path="dev/phrase-curation" element={<PhraseCurationScreen />} />
         <Route path="dev/palette-accueil" element={<PaletteAccueilCalibrationScreen />} />
         <Route path="dev/revision-agent" element={<RevisionAgentScreen />} />
+        <Route path="dev/topic-prototype" element={<TopicPrototypeScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
         <Route path="examen/sauter" element={<ExamenSauterScreen />} />
         <Route path="examen/sauter/:chapId" element={<ExamenSauterChapitreScreen />} />

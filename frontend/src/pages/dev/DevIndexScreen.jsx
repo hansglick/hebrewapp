@@ -72,6 +72,12 @@ const PREVIEWS = [
     description:
       "Un professeur IA fait réviser une leçon à l'étudiant : choix de la leçon, de la voix du prof, de la tâche et du contenu révisé (leçon en cours / leçons antérieures).",
   },
+  {
+    to: "/dev/topic-prototype",
+    label: "Prototype sujets",
+    description:
+      "Sans agent : choix d'une leçon et d'une tâche, sujets disponibles en tuiles, tirage au hasard d'un sujet puis de ses exercices affichés un à un.",
+  },
 ];
 
 // Point d'entrée unique vers tous les écrans de développement (rendus avec

@@ -7,6 +7,10 @@ export const getRevisionTexts = () => apiFetch("/api/revision-agent/texts");
 // Leçons 0.01 → 0.20 qui apportent des mots ou des verbes : la matière de l'expression libre.
 export const getRevisionVocabulary = () => apiFetch("/api/revision-agent/vocabulary");
 
+// Sujets qualifiés d'une tâche au niveau `lesson`, avec leurs exercices (prototype sans agent).
+export const getRevisionTopics = (task, lesson) =>
+  apiFetch(`/api/revision-agent/topics?${new URLSearchParams({ task, lesson })}`);
+
 // Même technique que api/conversationChallenger.js (un WebSocket natif ne
 // permet pas d'en-têtes personnalisés) — l'identité passe donc en query
 // string, cf. app.routers.revision_agent qui la lit côté backend.

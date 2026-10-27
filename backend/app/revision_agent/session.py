@@ -47,6 +47,7 @@ class TeacherTurn:
     segments: list[dict] = field(default_factory=list)  # {"he": str, "fr": str | None}, dans l'ordre
     published: int = 0  # nombre de segments déjà affichés
     open: bool = True
+    shown: bool = True  # faux : prononcée mais jamais affichée (ex. question d'exercice, déjà affichée à part)
 
 
 def rms(pcm: bytes) -> float:
@@ -72,6 +73,7 @@ class TeacherSession:
         self.turn = TeacherTurn(id=0, open=False)
         self.turn_text_at = 0.0
         self.teacher_seq = 0
+        self.hidden_turn = False  # la prochaine prise de parole du prof ne sera pas affichée
         self.background: list[asyncio.Task] = []  # tâches propres à la séance, annulées à la fin
 
     # --- envois vers le navigateur ------------------------------------------
@@ -171,7 +173,10 @@ class TeacherSession:
 
     def on_agent_text(self, text: str, now: float) -> None:
         if not self.turn.open:
-            self.turn = TeacherTurn(id=self.turn.id + 1)
+            self.turn = TeacherTurn(id=self.turn.id + 1, shown=not self.hidden_turn)
+            self.hidden_turn = False
+            if not self.turn.shown:
+                self.background.append(asyncio.create_task(self.on_hidden_turn_started()))
         turn = self.turn
         turn.text += text
         self.turn_text_at = now
@@ -186,6 +191,9 @@ class TeacherSession:
     async def on_user_text(self, text: str) -> None: ...
 
     async def on_browser_message(self, data: dict) -> None: ...
+
+    async def on_hidden_turn_started(self) -> None:
+        """Le prof commence la prise de parole marquée par hidden_turn."""
 
     async def on_tool_call(self, call: dict) -> None:
         await self.live.tool_response(call["id"], call["name"], {"erreur": "fonction inconnue"})
@@ -202,10 +210,13 @@ class TeacherSession:
         if not hebrew.strip():
             return
         has_words = any(c.isalnum() for c in hebrew)
+        if has_words:
+            log.info("prof : %s", hebrew.strip())
+        if not turn.shown:
+            return  # rien à traduire ni à afficher
         segment = {"he": hebrew, "fr": None if has_words else ""}  # une simple pause (« ... ») n'a rien à traduire
         turn.segments.append(segment)
         if has_words:
-            log.info("prof : %s", hebrew.strip())
             self.background.append(asyncio.create_task(self.translate_segment(turn, segment)))
 
     def end_turn(self) -> None:
