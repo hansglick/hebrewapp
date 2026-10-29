@@ -173,6 +173,66 @@ function QuestionExercise({ exercise }) {
   );
 }
 
+// Expression libre : les indices qui existent pour la réponse (verbe à l'infinitif, mot du vocabulaire, complétion de
+// son concept), dévoilés un par un ; il peut n'y en avoir aucun (cf. demande explicite du user).
+function ExpressionExercise({ exercise }) {
+  const [shown, setShown] = useState(0);
+  const { verb, word, concept_tip, translation_tip, truncated_one, truncated_two } = exercise;
+  const hints = [
+    verb && (
+      <p key="verb" className="tp-hint">
+        Verbe : <span dir="rtl">{verb.hebrew}</span> ({verb.french})
+      </p>
+    ),
+    word && (
+      <p key="word" className="tp-hint">
+        Mot : <span dir="rtl">{word.hebrew}</span> ({word.french})
+      </p>
+    ),
+    concept_tip && (
+      <p key="tip" className="tp-hint">
+        {concept_tip}
+      </p>
+    ),
+    translation_tip && (
+      <p key="translation" className="tp-hint">
+        Sens de la réponse : {translation_tip}
+      </p>
+    ),
+    truncated_one && (
+      <p key="one" className="tp-hebrew" dir="rtl">
+        {truncated_one}…
+      </p>
+    ),
+    truncated_two && (
+      <p key="two" className="tp-hebrew" dir="rtl">
+        {truncated_two}…
+      </p>
+    ),
+  ].filter(Boolean);
+  return (
+    <>
+      <p className="tp-instruction">Réponds par une phrase complète :</p>
+      <p className="tp-hebrew" dir="rtl">
+        {exercise.question.hebrew}
+      </p>
+      <p className="tp-hint">{exercise.question.french}</p>
+      {hints.slice(0, shown)}
+      {shown < hints.length && (
+        <button type="button" className="tp-reveal" onClick={() => setShown(shown + 1)}>
+          Indice {shown + 1}/{hints.length}
+        </button>
+      )}
+      <Reveal label="Voir une réponse possible">
+        <p className="tp-hebrew" dir="rtl">
+          {exercise.text}
+        </p>
+        <p className="tp-hint">{exercise.text_fr}</p>
+      </Reveal>
+    </>
+  );
+}
+
 function Exercise({ type, exercise }) {
   switch (type) {
     case "concept":
@@ -206,15 +266,7 @@ function Exercise({ type, exercise }) {
         </>
       );
     case "expression":
-      return (
-        <>
-          <p className="tp-instruction">Réponds par une phrase complète :</p>
-          <p className="tp-hebrew" dir="rtl">
-            {exercise.question.hebrew}
-          </p>
-          <p className="tp-hint">{exercise.question.french}</p>
-        </>
-      );
+      return <ExpressionExercise exercise={exercise} />;
     default:
       return null;
   }

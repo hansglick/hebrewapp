@@ -1,9 +1,11 @@
+import { withoutNikkud } from "./hebrew";
+
 // Compare les mots sans ponctuation ni voyelles (nikud).
 const normalize = (word) => word.replace(/[֑-ׇ]/g, "").replace(/[^א-ת]/g, "");
 
 // Réponse de l'élève telle que le prof l'a comprise (expression libre,
 // déclinaison), affichée seulement au moment de la correction : mots fautifs
-// en rouge et mention réussi / échec.
+// en rouge et mention réussi / échec. Sans nikkoud.
 export default function AnswerCard({ answer }) {
   const errors = new Set(answer.errors.map(normalize).filter(Boolean));
 
@@ -17,7 +19,7 @@ export default function AnswerCard({ answer }) {
       </div>
       {answer.sentence ? (
         <p className="ra-answer" dir="rtl" lang="he">
-          {answer.sentence.split(" ").map((word, i) => (
+          {withoutNikkud(answer.sentence).split(" ").map((word, i) => (
             <span key={i}>
               {i > 0 && " "}
               {errors.has(normalize(word)) ? <mark className="ra-answer-error">{word}</mark> : word}

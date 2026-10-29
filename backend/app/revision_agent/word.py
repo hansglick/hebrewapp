@@ -2,8 +2,8 @@
 contient ; l'élève doit construire une phrase avec ce mot en suivant l'indice (l'action de la phrase ou l'un de ses
 concepts). Le prof juge la réponse, puis la phrase d'origine s'affiche toujours, le mot surligné.
 
-Les occurrences viennent de revision_vocab_occurrences.json, tiré des analyses de Sol (livecoach/samples/
-word_phrase_map) : pour chaque phrase, la forme de base de chaque mot ou verbe du vocabulaire et sa forme dans la phrase.
+Les occurrences viennent du champ « vocabulary » des énoncés (cf. utterances.py) : la forme de base de chaque mot ou
+verbe du vocabulaire présent dans l'énoncé, et sa forme dans l'énoncé.
 
 Messages propres à la tâche (backend → navigateur, en plus de ceux de session.py) :
   {"type": "exercise", "exercise": {"lesson": str, "word": str, "french": str, "kind": "mot" | "verbe",
@@ -12,7 +12,6 @@ Messages propres à la tâche (backend → navigateur, en plus de ceux de sessio
   {"type": "answer", ...}                               (cf. correction.py)
 """
 
-import json
 import logging
 import random
 from dataclasses import dataclass
@@ -20,10 +19,8 @@ from functools import lru_cache
 
 from fastapi import WebSocket
 
-from app.config import DATA_DIR
 from app.data_loader import get_dataset
 from app.revision_agent import prompts
-from app.revision_agent.completion import concept_title
 from app.revision_agent.correction import CLEAR_ANSWER, CORRECTION_TOOL, answer_message
 from app.revision_agent.gemini_live import GeminiLive
 from app.revision_agent.material import vocabulary
@@ -47,12 +44,11 @@ class Exercise:
 
 
 @lru_cache(maxsize=1)
-def occurrences() -> dict[str, list[dict]]:
-    with open(DATA_DIR / "revision_vocab_occurrences.json", encoding="utf-8") as f:
-        return json.load(f)
+def concept_title(concept_id: str) -> str:
+    concept = get_dataset("concept").get(concept_id) or {}
+    return (concept.get("concept") or "").strip().rstrip(".")
 
 
-@lru_cache(maxsize=1)
 def lexicon() -> dict[tuple[str, str], dict]:
     """(forme de base sans nikkoud ni espace, "mot" | "verbe") → {"hebrew", "french", "level"} (item_word, item_verbe)."""
     entries = {}
@@ -75,7 +71,7 @@ def exercises_for(lesson: str, u: dict, max_level: int) -> list[Exercise]:
     if not hints:
         return []
     found = []
-    for occurrence in occurrences().get(u["id"], []):
+    for occurrence in u["vocabulary"]:
         entry = lexicon().get((occurrence["key"].replace(" ", ""), occurrence["kind"]))
         span = word_span(u["text"], occurrence["surface"])
         if entry and span and entry["level"] <= max_level:

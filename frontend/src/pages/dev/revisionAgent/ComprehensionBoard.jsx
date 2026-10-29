@@ -1,27 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { Answer, Evaluation } from "./Assessment";
+import Followup from "./Followup";
 import TaskLayout from "./TaskLayout";
 import TeacherSpeech from "./TeacherSpeech";
 
-// Les deux dimensions de l'évaluation (cf. app.revision_agent.comprehension), notées de 0 à 5 étoiles.
-const SCORES = [
-  [
-    "language",
-    "Langue",
-    "accords, conjugaison, vocabulaire, structure de la phrase",
-  ],
-  [
-    "comprehension",
-    "Compréhension",
-    "la réponse est-elle vraie d'après le texte ?",
-  ],
-];
+const EXERCISE_NAMES = { comprehension: "Compréhension" };
 
-// Phrase du texte, les extraits qui répondent à la question ([début, fin])
-// mis en évidence.
+// Nom du personnage qui prend la parole, en tête d'une réplique de dialogue
+// (« דוד: שלום רוני… »).
+const SPEAKER = /^[^:.?!,]{1,20}:\s*/;
+
+// Phrase du texte : le nom du personnage qui parle en italique, plus clair (cf.
+// demande explicite du user), les extraits qui répondent à la question
+// ([début, fin]) mis en évidence.
 function Phrase({ phrase, spans }) {
-  const parts = [];
-  let at = 0;
+  const speaker = phrase.match(SPEAKER)?.[0] ?? "";
+  const parts = speaker
+    ? [
+        <span key="speaker" className="ra-text-speaker">
+          {speaker}
+        </span>,
+      ]
+    : [];
+  let at = speaker.length;
   [...spans]
     .sort((a, b) => a[0] - b[0])
     .forEach(([start, end], i) => {
@@ -57,7 +58,12 @@ export default function ComprehensionBoard({
   done,
   notice,
   paused,
+  answering,
+  languageSwitch,
+  closing,
+  score,
   onNext,
+  clock,
 }) {
   const phraseRefs = useRef([]);
   // Surlignage en cours au moment où le texte a été réduit : une nouvelle solution surlignée le rouvre.
@@ -65,6 +71,11 @@ export default function ComprehensionBoard({
   const collapsed =
     collapsedFor !== null &&
     (highlight.length === 0 || collapsedFor === highlight);
+
+  // Dernière question posée : elle reste au tableau, effacée, entre deux
+  // questions (cf. .ra-slate).
+  const [lastQuestion, setLastQuestion] = useState(null);
+  if (question && question !== lastQuestion) setLastQuestion(question);
 
   // La phrase surlignée peut être hors de vue : on la fait défiler jusqu'à elle.
   useEffect(() => {
@@ -74,62 +85,133 @@ export default function ComprehensionBoard({
     });
   }, [highlight]);
 
-  if (!teacher && !text && !notice) return null;
+  if (!teacher && !text && !notice && !clock) return null;
 
-  const conversation = (notice || teacher) && (
+  const speech = (notice || teacher) && (
     <>
       {notice && <p className="ra-alert">{notice}</p>}
-      {teacher && <TeacherSpeech key={teacher.id} line={teacher} />}
+      {teacher && (
+        <TeacherSpeech key={teacher.id} line={teacher} mode={languageSwitch} />
+      )}
     </>
   );
 
-  const exercise = done ? (
-    <p className="ra-done">Toutes les questions ont été posées.</p>
-  ) : (
-    question && (
-      <div className="ra-instruction">
-        <span className="ra-instruction-label">Question</span>
-        <p className="ra-instruction-he" dir="rtl" lang="he">
-          {question.hebrew}
-        </p>
+  // Évaluation orale : le mode de langue du prof, à la place des drapeaux de la
+  // réplique (cf. TeacherSpeech), et déjà là avant que le prof parle.
+  const conversation =
+    languageSwitch && !teacher ? (
+      <div className="ra-conversation-row">
+        {languageSwitch}
+        <div className="ra-conversation-main">
+          {speech || <p className="muted">Le prof va prendre la parole…</p>}
+        </div>
       </div>
-    )
-  );
+    ) : (
+      speech
+    );
 
-  const assessment = evaluation && (
-    <>
-      <Evaluation evaluation={evaluation} scores={SCORES} />
-      {paused && (
-        <button type="button" className="ra-next" onClick={onNext}>
-          Question suivante
-        </button>
-      )}
-    </>
-  );
-
-  const material = text && !collapsed && (
-    <>
-      {text.title && (
-        <h3 className="ra-text-title" dir="rtl" lang="he">
-          {text.title}
-        </h3>
-      )}
-      <div className="ra-text" dir="rtl" lang="he">
-        {text.phrases.map((phrase, i) => (
-          <p
-            key={i}
-            ref={(el) => (phraseRefs.current[i] = el)}
-            className={highlight.includes(i) ? "ra-text-solution" : undefined}
-          >
-            <Phrase
-              phrase={phrase}
-              spans={excerpts
-                .filter(([p]) => p === i)
-                .map(([, start, end]) => [start, end])}
-            />
+  // Comme en expression libre (cf. demande explicite du user) : dès la
+  // première question, la fenêtre reste en place jusqu'à la fin ; son contenu
+  // s'écrit sur un tableau, qui s'efface à chaque bonne réponse et avant la
+  // question suivante.
+  const shownQuestion = question ?? lastQuestion;
+  const erased =
+    !done &&
+    (closing || !question || (evaluation && evaluation.errors.length === 0));
+  const exercise = (shownQuestion || done) && (
+    <div
+      key={done ? "done" : `question-${shownQuestion.number}`}
+      className={`ra-slate ${erased ? "ra-slate-erased" : ""}`}
+    >
+      {done ? (
+        <p className="ra-done">Toutes les questions ont été posées.</p>
+      ) : (
+        <div className="ra-instruction">
+          <p className="ra-instruction-he" dir="rtl" lang="he">
+            {shownQuestion.hebrew}
           </p>
-        ))}
+          {/* Évaluation orale : ce que l'élève dit maintenant est sa réponse ;
+              le reste du temps, c'est la conversation. */}
+          {answering && <p className="ra-answering">À toi de répondre</p>}
+        </div>
+      )}
+    </div>
+  );
+
+  // Comme en expression libre (cf. demande explicite du user) : une seule
+  // fenêtre, la réponse, un trait, puis le commentaire de chaque faute
+  // surlignée (cf. .ra-assessment) ; réponse juste, seulement la réponse.
+  const assessment = evaluation && (
+    <div className="ra-assessment">
+      <Answer evaluation={evaluation} />
+      {evaluation.errors.length > 0 && (
+        <>
+          <hr className="ra-assessment-rule" />
+          <Evaluation evaluation={evaluation} />
+        </>
+      )}
+    </div>
+  );
+
+  // Comme en expression libre : « Question suivante » à droite, accolée à
+  // « Arrêter la séance », grisée tant qu'il n'y a pas de réponse évaluée.
+  const canGoOn = !done && !closing && Boolean(evaluation && paused);
+  const controls = clock && (
+    <>
+      <button
+        type="button"
+        className="ra-next ra-next-side"
+        onClick={onNext}
+        disabled={!canGoOn}
+      >
+        Question suivante
+      </button>
+      {clock}
+    </>
+  );
+
+  // Réduit, le texte se replie vers le haut comme un volet qu'on remonte (cf.
+  // demande explicite du user) ; il se déroule à nouveau quand on le rouvre.
+  // La poignée du bas du volet, en double trait, le remonte ou le tire.
+  const material = text && (
+    <>
+      <div className={`ra-fold ${collapsed ? "ra-fold-closed" : ""}`}>
+        <div className="ra-fold-inner">
+          <div className="ra-fold-content">
+            {text.title && (
+              <h3 className="ra-text-title" dir="rtl" lang="he">
+                {text.title}
+              </h3>
+            )}
+            <div className="ra-text" dir="rtl" lang="he">
+              {text.phrases.map((phrase, i) => (
+                <p
+                  key={i}
+                  ref={(el) => (phraseRefs.current[i] = el)}
+                  className={
+                    highlight.includes(i) ? "ra-text-solution" : undefined
+                  }
+                >
+                  <Phrase
+                    phrase={phrase}
+                    spans={excerpts
+                      .filter(([p]) => p === i)
+                      .map(([, start, end]) => [start, end])}
+                  />
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
+      <button
+        type="button"
+        className="ra-fold-handle"
+        onClick={() => setCollapsedFor(collapsed ? null : highlight)}
+        aria-expanded={!collapsed}
+        aria-label={collapsed ? "Afficher le texte" : "Réduire le texte"}
+        title={collapsed ? "Afficher le texte" : "Réduire le texte"}
+      />
     </>
   );
 
@@ -137,27 +219,16 @@ export default function ComprehensionBoard({
     <TaskLayout
       conversation={conversation || null}
       exercise={exercise || null}
-      exerciseKey={done ? "done" : question?.number}
-      answer={evaluation ? <Answer evaluation={evaluation} /> : null}
-      evaluation={assessment || null}
-      material={
-        material ||
-        (collapsed && <p className="muted ra-zone-empty">Texte réduit.</p>) ||
-        null
-      }
-      materialLabel={text ? `Texte de la leçon ${text.lesson}` : "Texte"}
-      materialAside={
-        text && (
-          <button
-            type="button"
-            className="ra-ghost"
-            onClick={() => setCollapsedFor(collapsed ? null : highlight)}
-            aria-expanded={!collapsed}
-          >
-            {collapsed ? "Afficher le texte" : "Réduire"}
-          </button>
-        )
-      }
+      exerciseKey="board"
+      exercisePersistent
+      exerciseLabel="Réponds à la question à propos du texte"
+      answer={assessment || null}
+      closing={closing}
+      clock={controls || null}
+      material={material || null}
+      materialLabel="Texte"
+      followup={text && <Followup history={score?.history ?? []} names={EXERCISE_NAMES} />}
+      followupLabel="Suivi"
     />
   );
 }

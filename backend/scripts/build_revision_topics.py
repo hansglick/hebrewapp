@@ -1,14 +1,14 @@
 """Construit le catalogue des sujets de révision de /dev/revision-agent et, pour chacun, la liste de ses exercices,
-à partir des deux pools (cf. demande explicite du user) :
-- concept (pool 1, revision_concept_pool.json) : un sujet par concept retenu ; exercice = complétion d'un énoncé coupé
-  au mot du concept ;
-- conjugaison (pool 2, revision_svc_pool.json) : un sujet par binyan, et dans le פעל par famille de racines (גזרה),
-  la seule qui change le présent ; plus les modaux צריך / יכול ; exercice = changer un sujet et accorder ses verbes ;
-- preposition (pool 2) : un seul sujet, ל décliné ; exercice = décliner autrement une préposition déclinée ;
-- lecture, comprehension : un sujet chacun ; exercice = le texte d'une leçon (un seul par tour) ;
-- expression : exercice = une question ouverte d'un texte de leçon, posée sans le texte ;
-- question : trois sujets (mot interrogatif simple, avec préposition, avec accord) ; exercice = une affirmation et
-  sa question modèle (revision_questions.json, Sol).
+à partir des énoncés du cours (revision_course.json, cf. scripts/build_revision_course.py et demande explicite du user) :
+- concept : un sujet par concept retenu ; exercice = complétion d'un énoncé coupé au mot du concept ;
+- conjugaison : un sujet par binyan, et dans le פעל par famille de racines (גזרה), la seule qui change le présent ;
+  plus les modaux צריך / יכול ; exercice = changer un sujet et accorder ses verbes ;
+- preposition : un seul sujet, ל décliné ; exercice = décliner autrement une préposition déclinée ;
+- lecture, comprehension : un sujet chacun ; exercice = le texte d'une leçon (un seul par tour, item_text.json) ;
+- expression : un sujet par sujet concept, conjugaison ou préposition ; exercice = une question naturelle dont la
+  réponse fait pratiquer ce sujet, avec ses indices s'ils existent (verbe, mot, complétion du concept) ;
+- question : trois sujets (mot interrogatif simple, avec préposition, avec accord, selon la catégorie de la
+  question) ; exercice = une affirmation et sa question modèle.
 
 Le binyan et la racine viennent de item_verbe.json ; la famille se déduit de la racine. Chaque exercice garde la leçon
 de sa phrase (début de l'identifiant). Tirage prévu : niveau L → sujets qualifiés (introduced_in ≤ L et au moins un
@@ -26,6 +26,7 @@ from collections import Counter
 from app.config import DATA_DIR
 from app.data_loader import get_dataset
 from app.revision_agent.passages import lessons_with_text
+from app.revision_agent.word import lexicon
 
 OUTPUT = DATA_DIR / "revision_topics.json"
 LAST_LESSON = 20
@@ -68,14 +69,9 @@ TEXT_TOPICS = {
     "lecture": ("lecture", "lecture", "Lecture à voix haute", "Lire à voix haute le texte d'une leçon."),
     "comprehension": ("comprehension", "comprehension", "Compréhension de texte",
                       "Lire le texte d'une leçon, puis répondre à des questions sur son contenu."),
-    "expression": ("expression", "expression", "Expression libre",
-                   "Répondre par une phrase complète à une question liée au texte d'une leçon, sans le texte : "
-                   "seules la grammaire et la plausibilité de la réponse comptent, pas sa véracité."),
 }
 # Question ouverte : elle contient un mot interrogatif (les autres appellent un oui ou un non).
 OPEN_QUESTION = re.compile(r"(?<![א-ת])[בלמש]?(?:מה|מי|איפה|מאיפה|לאן|למה|מתי|כמה|איך|איזה|איזו|אילו)(?![א-ת])")
-AGREEMENT = re.compile(r"(?<![א-ת])[בלמ]?(?:איזה|איזו|אילו)(?![א-ת])")
-SIMPLE_INTERROGATIVES = ("מה", "מי", "איפה", "מתי", "למה", "איך", "כמה")
 QUESTION_TOPICS = {
     "simple": ("Questions avec un mot interrogatif simple",
                "La question commence par le mot interrogatif (מה, מי, איפה, מתי, למה, איך, כמה), suivi du reste "
@@ -87,14 +83,6 @@ QUESTION_TOPICS = {
                "איזה (masculin), איזו (féminin) et אילו (pluriel) s'accordent avec le nom qui les suit : "
                "איזה ספר, איזו עיר, אילו ספרים ; une préposition éventuelle se place devant (באיזו עיר)."),
 }
-
-
-def question_category(interrogative: str) -> str:
-    """Catégorie d'une question d'après son groupe interrogatif (« איזה ספר », « עם מי », « כמה ספרים »…)."""
-    if AGREEMENT.search(interrogative):
-        return "accord"
-    first = interrogative.split()[0]
-    return "simple" if first in SIMPLE_INTERROGATIVES else "preposition"
 
 
 def lesson_of(phrase_id: str) -> str:
@@ -130,9 +118,8 @@ def verb_topic(infinitive: str, verbs: dict[str, dict]) -> str | None:
 
 
 def main() -> None:
-    model_questions = json.loads((DATA_DIR / "revision_questions.json").read_text(encoding="utf-8"))
-    concept_pool = json.loads((DATA_DIR / "revision_concept_pool.json").read_text(encoding="utf-8"))
-    svc_pool = json.loads((DATA_DIR / "revision_svc_pool.json").read_text(encoding="utf-8"))
+    course = json.loads((DATA_DIR / "revision_course.json").read_text(encoding="utf-8"))["phrases"]
+    utterances = [(phrase_id, u) for phrase_id, p in course.items() for u in p["utterances"]]
     verbs = {item["pure"].replace(" ", ""): item for item in get_dataset("verbe").values()}
 
     topics: dict[str, dict] = {}
@@ -142,7 +129,7 @@ def main() -> None:
                                             "introduced_in": introduced_in, "per_round": PER_ROUND.get(kind, 3),
                                             "exercises": []})
 
-    # Lecture, compréhension, expression libre : les textes des leçons et leurs questions ouvertes.
+    # Lecture, compréhension : les textes des leçons et leurs questions ouvertes.
     texts = get_dataset("text")
     for code in lessons_with_text():
         text = texts[code]
@@ -152,68 +139,102 @@ def main() -> None:
         topic(*TEXT_TOPICS["comprehension"])["exercises"].append({
             "lesson": code, "title": text.get("title", ""), "questions": open_questions,
         })
-        for q in open_questions:
-            topic(*TEXT_TOPICS["expression"])["exercises"].append({"lesson": code, "question": q})
 
-    # Question : les questions modèles de Sol (revision_questions.json), rangées par groupe interrogatif.
-    for phrase_id, entries in model_questions.items():
-        for entry in entries:
-            for q in entry["questions"]:
-                category = question_category(q["interrogative"])
-                # איזה / איזו / אילו n'apparaissent qu'en leçon 0.15 (concept des mots interrogatifs).
-                introduced_in = "0.15" if category == "accord" else None
-                topic(f"question:{category}", "question", *QUESTION_TOPICS[category], introduced_in)["exercises"].append({
-                    "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": entry["text"], **q,
-                })
+    # Question : les questions modèles de Sol, rangées par catégorie de groupe interrogatif.
+    for phrase_id, u in utterances:
+        for q in u["questions"]:
+            category = q["category"]
+            # איזה / איזו / אילו n'apparaissent qu'en leçon 0.15 (concept des mots interrogatifs).
+            introduced_in = "0.15" if category == "accord" else None
+            topic(f"question:{category}", "question", *QUESTION_TOPICS[category], introduced_in)["exercises"].append({
+                "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["he"], "hint": q["hint"],
+                "question": q["he"], "interrogative": q["interrogative"],
+            })
 
-    # Concepts (pool 1) : la règle est l'indice le plus fréquent rédigé par Sol pour ce concept.
+    # Concepts : la règle est l'indice le plus fréquent rédigé par Sol pour ce concept.
     tips: dict[str, Counter] = {}
-    for phrase_id, items in concept_pool.items():
-        for u in items:
-            for c in u["concepts"]:
-                tips.setdefault(c["concept"], Counter())[c["concept_tip"]] += 1
-                topic(f"concept:{c['concept']}", "concept", c["concept_definition"], "", c["concept"])["exercises"].append({
-                    "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["text"],
-                    "concept_word": c["concept_word"], "truncated_one": c["truncated_one"],
-                    "truncated_two": c["truncated_two"], "concept_tip": c["concept_tip"],
-                    "translation_tip": c["translation_tip"],
-                })
+    for phrase_id, u in utterances:
+        for c in u["concepts"]:
+            tips.setdefault(c["id"], Counter())[c["concept_tip"]] += 1
+            topic(f"concept:{c['id']}", "concept", c["definition"], "", c["id"])["exercises"].append({
+                "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["he"],
+                "concept_word": c["words"], "truncated_one": c["truncated_one"],
+                "truncated_two": c["truncated_two"], "concept_tip": c["concept_tip"],
+                "translation_tip": c["translation_tip"],
+            })
     for code, counter in tips.items():
         topics[f"concept:{code}"]["rule"] = counter.most_common(1)[0][0]
 
-    # Conjugaison et préposition déclinée (pool 2).
+    # Conjugaison et préposition déclinée.
     unknown = Counter()
-    for phrase_id, items in svc_pool.items():
-        for u in items:
-            for subject in u["subjects"]:
-                # Un sujet sert d'exercice à chaque sujet de conjugaison de ses verbes (une seule fois par sujet).
-                for topic_id in dict.fromkeys(verb_topic(v["infinitive"], verbs) for v in subject["verbs"]):
-                    if topic_id is None:
-                        unknown.update(v["infinitive"] for v in subject["verbs"] if not verb_topic(v["infinitive"], verbs))
-                        continue
-                    key = topic_id.split(":", 1)[1]
-                    if key == MODALS[0]:
-                        label, rule = MODALS[1:]
-                    elif key.startswith("paal-"):
-                        label, rule = PAAL_FAMILIES[key[len("paal-"):]]
-                    else:
-                        _, label, rule = next(b for b in BINYANIM.values() if b[0] == key)
-                    topic(topic_id, "conjugaison", label, rule)["exercises"].append({
-                        "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["text"], "subject": subject,
-                    })
-            for preposition in u["declined_prepositions"]:
-                if preposition["base"] == LAMED[0]:
-                    topic(f"preposition:{LAMED[0]}", "preposition", *LAMED[1:])["exercises"].append({
-                        "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["text"],
-                        "preposition": preposition,
-                    })
+    for phrase_id, u in utterances:
+        for subject in u["subjects"]:
+            # Un sujet sert d'exercice à chaque sujet de conjugaison de ses verbes (une seule fois par sujet).
+            for topic_id in dict.fromkeys(verb_topic(v["infinitive"], verbs) for v in subject["verbs"]):
+                if topic_id is None:
+                    unknown.update(v["infinitive"] for v in subject["verbs"] if not verb_topic(v["infinitive"], verbs))
+                    continue
+                key = topic_id.split(":", 1)[1]
+                if key == MODALS[0]:
+                    label, rule = MODALS[1:]
+                elif key.startswith("paal-"):
+                    label, rule = PAAL_FAMILIES[key[len("paal-"):]]
                 else:
-                    unknown[f"préposition {preposition['base']}"] += 1
+                    _, label, rule = next(b for b in BINYANIM.values() if b[0] == key)
+                topic(topic_id, "conjugaison", label, rule)["exercises"].append({
+                    "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["he"], "subject": subject,
+                })
+        for preposition in u["declined_prepositions"]:
+            if preposition["base"] == LAMED[0]:
+                topic(f"preposition:{LAMED[0]}", "preposition", *LAMED[1:])["exercises"].append({
+                    "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["he"],
+                    "preposition": preposition,
+                })
+            else:
+                unknown[f"préposition {preposition['base']}"] += 1
 
     # Leçon d'apparition : celle du concept, sinon la première leçon qui en fournit un exercice.
     for t in topics.values():
         t["exercises"].sort(key=lambda e: (e["lesson"], int(e["phrase_id"].split(":")[1]) if "phrase_id" in e else 0))
         t["introduced_in"] = t["introduced_in"] or t["exercises"][0]["lesson"]
+
+    # Expression libre : chaque question naturelle, rangée dans chaque sujet que sa réponse fait pratiquer (concept,
+    # conjugaison, ל décliné), dès la leçon de ce sujet. Indices, seulement s'ils existent (cf. demande explicite du
+    # user) : le verbe à l'infinitif, un mot du vocabulaire, et ceux de la complétion du concept.
+    words = lexicon()
+    for phrase_id, u in utterances:
+        if not u["questions"]:
+            continue
+        verb_topics = [(verb_topic(v["infinitive"], verbs), v) for s in u["subjects"] for v in s["verbs"]]
+        base_ids = [f"concept:{c['id']}" for c in u["concepts"]] + [t for t, _ in verb_topics if t]
+        base_ids += [f"preposition:{LAMED[0]}" for p in u["declined_prepositions"] if p["base"] == LAMED[0]]
+        # Le mot le plus récent du vocabulaire de la réponse (hors verbes).
+        found = [entry for o in u["vocabulary"] if o["kind"] == "mot"
+                 and (entry := words.get((o["key"].replace(" ", ""), "mot")))]
+        word = max(found, key=lambda e: e["level"], default=None)
+        for base_id in dict.fromkeys(base_ids):
+            base = topics[base_id]
+            # Le concept du sujet, sinon le premier de la réponse ; le verbe du sujet, sinon le premier de la réponse.
+            concept = next((c for c in u["concepts"] if base_id == f"concept:{c['id']}"),
+                           u["concepts"][0] if u["concepts"] else None)
+            verb = next((words.get((v["infinitive"], "verbe")) for t, v in verb_topics if t == base_id), None) or next(
+                (entry for _, v in verb_topics if (entry := words.get((v["infinitive"], "verbe")))), None)
+            hints = {
+                "verb": verb and {"hebrew": verb["hebrew"], "french": verb["french"]},
+                "word": word and {"hebrew": word["hebrew"], "french": word["french"]},
+                **({key: concept[key] for key in ("concept_tip", "translation_tip", "truncated_one", "truncated_two")}
+                   if concept else {}),
+            }
+            # Même intitulé et même règle que le sujet qu'il fait pratiquer.
+            expression = topic(f"expression:{base_id}", "expression", base["label"], base["rule"],
+                               base["introduced_in"])
+            expression["exercises"] += [{
+                "phrase_id": phrase_id, "lesson": lesson_of(phrase_id), "text": u["he"], "text_fr": u["fr"],
+                "question": {"hebrew": q["he"], "french": q["fr"]}, **hints,
+            } for q in u["questions"]]
+    for t in topics.values():
+        if t["type"] == "expression":
+            t["exercises"].sort(key=lambda e: (e["lesson"], int(e["phrase_id"].split(":")[1])))
     ordered = sorted(topics.values(), key=lambda t: (t["type"], t["introduced_in"], t["id"]))
     OUTPUT.write_text(json.dumps({"topics": ordered}, ensure_ascii=False, indent=4), encoding="utf-8")
 

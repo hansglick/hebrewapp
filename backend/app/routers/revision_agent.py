@@ -3,21 +3,21 @@ import logging
 from fastapi import APIRouter, HTTPException, WebSocket
 
 from app.auth import get_user_id
-from app.config import GEMINI_API_KEY, OPENAI_API_KEY
+from app.config import GEMINI_API_KEY
 from app.data_loader import get_dataset
 from app.revision_agent.config import LAST_LESSON, LESSON_CHAPTER, VOICES
-from app.revision_agent.passages import candidate_lessons, lessons_with_text
-from app.revision_agent.completion import CompletionSession
-from app.revision_agent.completion import exercises_for as completion_exercises
+from app.revision_agent.passages import lessons_with_text
+from app.revision_agent.completion import CompletionSession, availability, qualified_concepts
+from app.revision_agent.completion import draw_items as completion_items
 from app.revision_agent.comprehension import ComprehensionSession
 from app.revision_agent.declension import DeclensionSession
-from app.revision_agent.declension import exercises_for as declension_exercises
+from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.question import QuestionSession
-from app.revision_agent.question import exercises_for as question_exercises
+from app.revision_agent.question import draw_items as question_items
 from app.revision_agent.topics import TASK_TYPES, topics_for
 from app.revision_agent.utterances import lesson_utterances
 from app.revision_agent.word import WordSession
@@ -40,6 +40,14 @@ def vocabulary_lessons():
     return [code for code in codes if vocabulary(code, True, False)]
 
 
+@router.get("/completion")
+def completion_lessons():
+    """Nombre de complétions de chaque leçon du périmètre, par case (« current » : les concepts de la leçon,
+    « previous » : ceux des leçons antérieures) : une leçon sans aucun concept vu est grisée."""
+    codes = (f"{LESSON_CHAPTER}.{n:02d}" for n in range(1, LAST_LESSON + 1))
+    return {code: availability(code) for code in codes}
+
+
 @router.get("/topics")
 def topics(task: str, lesson: str):
     """Sujets qualifiés d'une tâche au niveau `lesson`, avec leurs exercices (prototype sans agent)."""
@@ -50,7 +58,7 @@ def topics(task: str, lesson: str):
 
 @router.websocket("/ws")
 async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson: str, voice: str, task: str,
-                            current: bool = True, previous: bool = False):
+                            current: bool = True, previous: bool = False, per_reading: int = 1):
     await websocket.accept()
 
     async def refuse(text: str, code: int = 1008) -> None:
@@ -64,12 +72,13 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
     if voice not in VOICES:
         return await refuse("Voix inconnue.")
     if task == "lecture":
-        lessons = candidate_lessons(lesson, current, previous)
-        if not lessons:
-            return await refuse("Aucun texte à lire pour ces leçons.")
-        if not (GEMINI_API_KEY and OPENAI_API_KEY):  # prof et extracteur (Gemini), évaluateur (OpenAI)
+        # Toujours le texte de la leçon choisie, quelles que soient les cases cochées (cf. demande explicite du user).
+        if lesson not in lessons_with_text():
+            return await refuse("Cette leçon n'a pas de texte.")
+        lessons = [lesson]
+        if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
-        session = ReadingSession(websocket, voice, lessons)
+        session = ReadingSession(websocket, voice, lessons, per_reading)
     elif task == "comprehension":
         # Toujours le texte de la leçon choisie, quelles que soient les cases cochées (cf. demande explicite du user).
         if lesson not in lessons_with_text():
@@ -78,28 +87,32 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
             return await refuse("Ce texte n'a pas de questions.")
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
+        # Toujours en conversation, évaluation orale comprise, comme l'expression libre (cf. demande explicite du user).
         session = ComprehensionSession(websocket, voice, lesson)
     elif task == "expression":
-        words = vocabulary(lesson, current, previous)
-        if not words:
-            return await refuse("Aucun vocabulaire pour ces leçons.")
+        # Questions tirées des sujets d'expression du niveau choisi, quelles que soient les cases cochées (cf.
+        # demande explicite du user) ; toujours en conversation, évaluation orale comprise.
+        if not topics_for("expression", lesson):
+            return await refuse("Aucune question d'expression libre à ce niveau.")
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
-        session = ExpressionSession(websocket, voice, lesson, words)
+        session = ExpressionSession(websocket, voice, lesson)
     elif task == "declinaison":
-        pool = lesson_utterances(lesson, current, previous)
-        if not any(declension_exercises(code, u) for code, u in pool):
+        # Phrases tirées dans les sujets de déclinaison du niveau, les leçons cochées d'abord (cf. declension.draw_items).
+        items = declension_items(lesson, current, previous)
+        if not items:
             return await refuse("Aucune phrase à décliner pour ces leçons.")
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
-        session = DeclensionSession(websocket, voice, lesson, pool)
+        session = DeclensionSession(websocket, voice, lesson, items)
     elif task == "completion":
-        pool = lesson_utterances(lesson, current, previous)
-        if not any(completion_exercises(code, u) for code, u in pool):
+        # Concepts déjà vus au niveau choisi, selon les cases cochées (cf. completion.draw_items).
+        items = completion_items(lesson, current, previous)
+        if not items:
             return await refuse("Aucune phrase à compléter pour ces leçons.")
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
-        session = CompletionSession(websocket, voice, lesson, pool)
+        session = CompletionSession(websocket, voice, lesson, items, qualified_concepts(lesson, current, previous))
     elif task == "mot":
         pool = lesson_utterances(lesson, current, previous)
         if not any(word_exercises(code, u, lesson_number(lesson)) for code, u in pool):
@@ -108,12 +121,12 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
             return await refuse("Clé API manquante côté serveur.", 1011)
         session = WordSession(websocket, voice, lesson, pool)
     elif task == "question":
-        pool = lesson_utterances(lesson, current, previous)
-        if not any(question_exercises(code, u) for code, u in pool):
+        items = question_items(lesson, current, previous)
+        if not items:
             return await refuse("Aucune phrase à questionner pour ces leçons.")
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
-        session = QuestionSession(websocket, voice, lesson, pool)
+        session = QuestionSession(websocket, voice, lesson, items)
     else:
         return await refuse("Cette tâche n'est pas encore disponible.")
 

@@ -1,4 +1,4 @@
-"""Textes de lecture des leçons 0.01 → 0.20, et tirage du passage à lire."""
+"""Textes de lecture des leçons 0.01 → 0.20, et tirage des extraits à lire."""
 
 import random
 
@@ -18,20 +18,14 @@ def lessons_with_text() -> list[str]:
     return sorted((code for code, n in numbers.items() if n and n <= LAST_LESSON), key=numbers.get)
 
 
-def candidate_lessons(lesson: str, current: bool, previous: bool) -> list[str]:
-    """Leçons où tirer le passage : la leçon choisie et/ou les leçons antérieures, selon les cases cochées."""
-    selected = lesson_number(lesson)
-    if selected is None:
-        return []
-    return [code for code in lessons_with_text()
-            if (current and lesson_number(code) == selected) or (previous and lesson_number(code) < selected)]
+EXTRACTS_PER_SESSION = 4  # lectures dans une séance (moins si le texte est trop court)
+MAX_PHRASES_PER_READING = 3  # phrases d'une lecture, au choix de l'élève (fenêtre « Configuration »)
 
 
-def sample_passage(lessons: list[str]) -> tuple[str, list[str], list[str]]:
-    """Tire une leçon, puis 1 à 3 phrases consécutives de son texte : (leçon, hébreu, français)."""
+def sample_reading(lessons: list[str]) -> tuple[str, str, list[str], int]:
+    """Tire une leçon et la réplique où commencer à lire, pour que EXTRACTS_PER_SESSION lectures d'une réplique
+    tiennent dans le texte : (leçon, titre, phrases, numéro de la première)."""
     lesson = random.choice(lessons)
-    phrases = get_dataset("text")[lesson]["phrases"]
-    n = random.randint(1, min(3, len(phrases)))
-    start = random.randint(0, len(phrases) - n)
-    window = phrases[start : start + n]
-    return lesson, [p["hebrew"] for p in window], [p["french"] for p in window]
+    text = get_dataset("text")[lesson]
+    phrases = [p["hebrew"] for p in text["phrases"]]
+    return lesson, text.get("title") or "", phrases, random.randint(0, max(0, len(phrases) - EXTRACTS_PER_SESSION))

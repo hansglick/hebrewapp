@@ -20,13 +20,16 @@ import logging
 import math
 import re
 import time
+import wave
 from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
 
 from fastapi import WebSocket, WebSocketDisconnect
 
-from app.revision_agent.config import SAMPLE_RATE
+from app.revision_agent.config import DEBUG_STUDENT_AUDIO, SAMPLE_RATE
 from app.revision_agent.gemini_live import GeminiLive, LiveEvent
-from app.revision_agent.translate import translate_to_french
+from app.revision_agent.translate import french_speech, translate_to_french
 
 log = logging.getLogger("revision_agent.session")
 
@@ -36,6 +39,13 @@ TEACHER_RMS = 150  # le flux audio du prof peut être continu : en dessous, c'es
 UTTERANCE_GAP_SECONDS = 0.4  # pause de transcription après laquelle le texte reçu est traduit et affiché
 TURN_GAP_SECONDS = 2.0  # sans fin de tour signalée : pause qui clôt la prise de parole
 SENTENCE_END = re.compile(r"[.!?]")
+HEBREW_LETTER = re.compile(r"[א-ת]")
+LATIN_LETTER = re.compile(r"[A-Za-zÀ-ÿ]")
+# Diagnostic de la voix de l'élève (cf. config.DEBUG_STUDENT_AUDIO).
+STUDENT_RMS = 300  # au-dessus : l'élève parle
+STUDENT_GAP_SECONDS = 0.3  # silence qui clôt un segment de voix
+DEBUG_AUDIO_SECONDS = 20  # durée du micro enregistrée à chaque évaluation
+DEBUG_AUDIO_DIR = Path(__file__).resolve().parents[2] / "results" / "revision_debug"
 
 
 @dataclass
@@ -75,6 +85,9 @@ class TeacherSession:
         self.teacher_seq = 0
         self.hidden_turn = False  # la prochaine prise de parole du prof ne sera pas affichée
         self.background: list[asyncio.Task] = []  # tâches propres à la séance, annulées à la fin
+        # Diagnostic : micro récent, et segment de voix de l'élève en cours (début, dernier instant audible).
+        self.mic = bytearray()
+        self.voice: tuple[float, float] | None = None
 
     # --- envois vers le navigateur ------------------------------------------
 
@@ -126,7 +139,32 @@ class TeacherSession:
                 await self.on_browser_message(data)
 
     async def on_microphone(self, pcm: bytes) -> None:
+        if DEBUG_STUDENT_AUDIO:
+            self.track_voice(pcm)
         await self.live.send_audio(pcm)
+
+    def track_voice(self, pcm: bytes) -> None:
+        """Diagnostic : garde les dernières secondes du micro et journalise chaque segment de voix de l'élève."""
+        self.mic += pcm
+        del self.mic[: max(0, len(self.mic) - DEBUG_AUDIO_SECONDS * BYTES_PER_SECOND)]
+        now = time.monotonic() - self.started_at
+        if rms(pcm) > STUDENT_RMS:
+            self.voice = (self.voice[0] if self.voice else now, now)
+        elif self.voice and now - self.voice[1] > STUDENT_GAP_SECONDS:
+            start, end = self.voice
+            log.info("voix élève : %.1f s → %.1f s (%.1f s)", start, end, end - start)
+            self.voice = None
+
+    def save_student_audio(self, label: str) -> None:
+        """Diagnostic : enregistre les dernières secondes du micro, pour réécouter ce que le prof a évalué."""
+        DEBUG_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+        path = DEBUG_AUDIO_DIR / f"{datetime.now():%Y%m%d-%H%M%S}-{label}.wav"
+        with wave.open(str(path), "wb") as wav:
+            wav.setnchannels(1)
+            wav.setsampwidth(2)
+            wav.setframerate(SAMPLE_RATE)
+            wav.writeframes(bytes(self.mic))
+        log.info("micro enregistré (%.1f s) : %s", len(self.mic) / BYTES_PER_SECOND, path.name)
 
     # --- prof → navigateur --------------------------------------------------
 
@@ -148,6 +186,8 @@ class TeacherSession:
             self.end_turn()
         elif event.kind == "tool_call":
             log.info("fonction %s %s", event.data["name"], event.data["args"])
+            if DEBUG_STUDENT_AUDIO and event.data["name"].startswith("evaluer") and self.started_at is not None:
+                self.save_student_audio(event.data["name"])
             await self.on_tool_call(event.data)
         elif event.kind == "interrupted":
             # Gemini a détecté de la parole côté élève pendant que le prof parlait.
@@ -184,6 +224,15 @@ class TeacherSession:
         ends = [m.end() for m in SENTENCE_END.finditer(turn.text, turn.cut)]
         if ends:
             self.queue_segment(ends[-1])
+
+    async def cut_teacher(self) -> bool:
+        """Coupe le prof s'il parle encore (l'audio en attente de lecture est jeté) ; vrai s'il parlait."""
+        if self.playback_until <= time.monotonic():
+            return False
+        self.end_turn()
+        self.playback_until = self.teacher_until = time.monotonic()
+        await self.to_browser({"type": "interrupt"})
+        return True
 
     # Points d'extension des tâches.
     async def on_started(self) -> None: ...
@@ -225,6 +274,18 @@ class TeacherSession:
         self.turn.open = False
 
     async def translate_segment(self, turn: TeacherTurn, segment: dict) -> None:
+        # Le prof parle parfois français (évaluation orale) : la phrase s'affiche telle quelle, ses mots hébreux
+        # réécrits en hébreu, et traduite en hébreu.
+        if len(LATIN_LETTER.findall(segment["he"])) >= len(HEBREW_LETTER.findall(segment["he"])):
+            segment["spoken_french"] = True
+            try:
+                french, segment["he_translation"] = await french_speech(segment["he"].strip())
+            except Exception:
+                log.exception("Traduction en hébreu impossible")
+                french, segment["he_translation"] = segment["he"].strip(), ""
+            segment["fr"] = french
+            await self.publish_turn(turn)
+            return
         try:
             segment["fr"] = await translate_to_french(segment["he"].strip())
         except Exception:
@@ -243,11 +304,17 @@ class TeacherSession:
             return
         turn.published = ready
         segments = turn.segments[:ready]
+        spoken_french = sum(1 for seg in segments if seg.get("spoken_french")) * 2 > len(segments)
         self.teacher_seq += 1
         await self.to_browser({
             "type": "teacher", "id": turn.id, "seq": self.teacher_seq,
-            "hebrew": "".join(seg["he"] for seg in segments).strip(),
+            # hebrew et french : la prise de parole dans les deux langues ; spoken : celle que le prof a parlée
+            # (« fr » pendant l'évaluation orale), affichée d'abord, l'autre étant la traduction à déplier.
+            "hebrew": " ".join(text for seg in segments
+                               if (text := (seg.get("he_translation", "") if seg.get("spoken_french")
+                                            else seg["he"]).strip())),
             "french": " ".join(seg["fr"].strip() for seg in segments if seg["fr"].strip()),
+            "spoken": "fr" if spoken_french else "he",
         })
 
     async def watch(self) -> None:

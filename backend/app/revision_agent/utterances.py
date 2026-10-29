@@ -1,13 +1,9 @@
-"""Phrases d'exercice des leçons 0.01 → 0.20 (déclinaison, complétion, mot, question), découpées en énoncés et
-analysées. Deux pools, tirés de revision_phrase_analysis.json (copie de livecoach/specific_data/phrase_analysis.json),
-cf. demande explicite du user :
-- revision_concept_pool.json : les énoncés qui portent l'un des concepts retenus (scripts/build_revision_concept_pool.py) ;
-- revision_svc_pool.json : parmi les autres, ceux qui ont au moins un sujet, un verbe et un complément
-  (choisis par Sol, scripts/build_revision_svc_pool.py).
+"""Phrases d'exercice des leçons 0.01 → 0.20 (déclinaison, complétion, mot, question), découpées en énoncés. Toutes
+leurs données sont dans un seul fichier, revision_course.json (scripts/build_revision_course.py, cf. demande explicite
+du user), dont le format est décrit dans ce script.
 
-Chaque énoncé : {"text", "concepts": [{"id": leçon du concept, "title", "words": [mots du texte qui le portent]}],
-"action": {"fr", "he"}, "subject": {"fr", "he"}, "preposition": [toutes les prépositions],
-"object_pronoun": [toutes les prépositions déclinées : לי, אותו…]}.
+Chaque énoncé y garde ses champs (« he », « fr », « concepts », « subjects », « declined_prepositions »,
+« vocabulary », « questions »…), plus « id » (l'identifiant de sa phrase, « leçon:index ») et « text » (= « he »).
 """
 
 import json
@@ -20,13 +16,11 @@ from app.revision_agent.passages import lesson_number
 
 @lru_cache(maxsize=1)
 def utterances() -> list[tuple[str, dict]]:
-    """(leçon, énoncé) pour chaque énoncé des deux pools, l'énoncé complété de l'identifiant de sa phrase (« leçon:index »)."""
-    found = []
-    for name in ("revision_concept_pool.json", "revision_svc_pool.json"):
-        with open(DATA_DIR / name, encoding="utf-8") as f:
-            pool = json.load(f)
-        found += [(phrase_id.split(":")[0], {**u, "id": phrase_id}) for phrase_id, items in pool.items() for u in items]
-    return found
+    """(leçon, énoncé) pour chaque énoncé du cours, l'énoncé complété de l'identifiant de sa phrase (« leçon:index »)."""
+    with open(DATA_DIR / "revision_course.json", encoding="utf-8") as f:
+        phrases = json.load(f)["phrases"]
+    return [(p["lesson"], {**u, "id": phrase_id, "text": u["he"]})
+            for phrase_id, p in phrases.items() for u in p["utterances"]]
 
 
 def lesson_utterances(lesson: str, current: bool, previous: bool) -> list[tuple[str, dict]]:
@@ -36,6 +30,16 @@ def lesson_utterances(lesson: str, current: bool, previous: bool) -> list[tuple[
         return []
     return [(code, u) for code, u in utterances()
             if (n := lesson_number(code)) is not None and ((current and n == selected) or (previous and n < selected))]
+
+
+# Mots qui ne font pas d'une phrase un autre exercice : « יש לרוני ספר », « אין לרוני ספר », « לרוני יש ספר »… sont
+# le même exercice (cf. demande explicite du user).
+SAME_EXERCISE_WORDS = {"יש", "אין", "לא"}
+
+
+def sentence_key(sentence: str) -> tuple[str, ...]:
+    """Ce qui distingue une phrase d'une autre au tirage : ses mots, sans ordre ni SAME_EXERCISE_WORDS."""
+    return tuple(sorted(set(re.findall(r"[א-ת]+", sentence)) - SAME_EXERCISE_WORDS))
 
 
 def word_span(sentence: str, word: str) -> tuple[int, int] | None:

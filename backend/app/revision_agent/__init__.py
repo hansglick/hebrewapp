@@ -1,7 +1,6 @@
 """Agent de révision (/dev/revision-agent) : un prof Gemini Live 3.8 fait réviser une leçon (0.01 → 0.20) à
-l'étudiant, tâche par tâche (lecture, compréhension de texte, expression libre). Pour la lecture — reprise du
-prototype livecoach — un extracteur (Gemini Flash-Lite) écrit le verbatim phonétique, un évaluateur (Sol) le
-compare au texte attendu ; les autres tâches reposent sur le prof seul."""
+l'étudiant, tâche par tâche (lecture, compréhension de texte, expression libre, déclinaison, question…). Le verbatim de l'élève
+vient toujours de Gemini Live ; des modèles rapides (Gemini Flash) complètent l'évaluation au besoin."""
 
 import logging
 

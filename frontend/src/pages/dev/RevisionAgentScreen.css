@@ -65,12 +65,18 @@
   cursor: not-allowed;
 }
 
-fieldset.revision-agent-form {
+/* Les réglages de la carte « Configuration », grisés pendant la séance. */
+.revision-agent-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   margin: 0;
+  padding: 0;
+  border: 0;
   min-width: 0;
 }
 
-fieldset.revision-agent-form:disabled {
+.revision-agent-fields:disabled {
   opacity: 0.7;
 }
 
@@ -79,13 +85,204 @@ fieldset.revision-agent-form:disabled {
   font-size: 0.8em;
 }
 
-.revision-agent > .revision-agent-start {
+/* Bouton de lancement et, pendant la séance, le chrono : deux tuiles de même
+   taille, côte à côte (cf. demande explicite du user). */
+.revision-agent-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.revision-agent-actions-live {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.revision-agent-actions .revision-agent-start {
+  margin-top: 0;
+}
+
+/* Colonne de droite : le texte, puis le chrono de la séance en bas à droite. */
+.ra-layout-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* « Arrêter la séance » à côté du chrono, en bas à droite. */
+.ra-layout-clock {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Évaluation orale : mode de langue du prof, en tête de la conversation. */
+.ra-conversation-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.ra-conversation-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.ra-language-mode {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64px;
+}
+
+.ra-language {
+  display: flex;
+  align-items: center;
+}
+
+/* Bulle qui explique le logo, à sa droite, sa pointe vers lui : blanche, le
+   texte du bleu des répliques du prof, elle arrive en fondu puis repart en
+   fondu (cf. LANGUAGE_HINT_* dans RevisionAgentScreen.jsx). */
+.ra-language-mode {
+  position: relative;
+}
+
+.ra-language-hint {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 12px);
+  z-index: 5;
+  --hint-bg: #fff;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: var(--hint-bg);
+  color: var(--textPrimary);
+  font-size: 0.8em;
+  font-style: italic;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.ra-language-hint::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  border: 7px solid transparent;
+  border-right-color: var(--hint-bg);
+  transform: translateY(-50%);
+}
+
+.ra-language-hint-in {
+  animation: ra-hint-fade-in 1s ease both;
+}
+
+.ra-language-hint-out {
+  animation: ra-hint-fade-out 1s ease both;
+}
+
+@keyframes ra-hint-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ra-hint-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* La grosse pastille (mode en cours) recouvre un peu la petite, dont le
+   drapeau reste reconnaissable (cf. demande explicite du user). */
+.ra-language-pill {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--cardBg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  opacity: 0.85;
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+}
+
+.ra-language-pill + .ra-language-pill {
+  margin-left: -5px;
+}
+
+.ra-language-pill:hover {
+  opacity: 1;
+}
+
+.ra-language-pill:disabled {
+  cursor: default;
+}
+
+.ra-language-active {
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  cursor: default;
+}
+
+.ra-language-pill .ra-flag {
   width: 100%;
-  max-width: 480px;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ra-layout-clock {
+  align-items: center;
+}
+
+.ra-layout-clock .ra-clock,
+.ra-layout-clock .revision-agent-start {
+  min-width: 136px;
+  margin-top: 0;
+}
+
+.ra-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--cardBorder);
+  border-radius: 8px;
+  background: var(--cardBg);
+  color: var(--validationPleine);
+  font-weight: 600;
+  box-sizing: border-box;
 }
 
 .revision-agent-stop {
   background: var(--annulationPleine);
+}
+
+/* Bande qui masque ou réaffiche les réglages : sur ordinateur seulement. */
+.revision-agent-rail {
+  display: none;
 }
 
 /* Séance « Lecture » (cf. revisionAgent/) — repris du prototype livecoach. */
@@ -135,81 +332,6 @@ fieldset.revision-agent-form:disabled {
   overflow-wrap: anywhere;
 }
 
-.ra-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.ra-step {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 12px 5px 5px;
-  border-radius: 999px;
-  border: 1px solid var(--cardBorder);
-  font-size: 0.8em;
-  font-weight: 500;
-  color: var(--textSecondary);
-}
-
-.ra-step-dot {
-  position: relative;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 0.9em;
-  font-weight: 600;
-  background: var(--bg);
-}
-
-.ra-step-current {
-  border-color: var(--validationPleine);
-  color: var(--textPrimary);
-}
-
-.ra-step-current .ra-step-dot {
-  background: var(--validationPleine);
-  color: #fff;
-}
-
-.ra-step-done {
-  color: var(--validationPleine);
-}
-
-.ra-spinner {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.ra-spinner span {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid transparent;
-}
-
-.ra-spinner span:first-child {
-  inset: -5px;
-  border-top-color: var(--validationPleine);
-  border-right-color: var(--validationPleine);
-  animation: ra-spin 0.9s linear infinite;
-}
-
-.ra-spinner span:last-child {
-  inset: -9px;
-  border-width: 1.5px;
-  border-bottom-color: var(--validationPleine);
-  opacity: 0.55;
-  animation: ra-spin 1.5s linear infinite reverse;
-}
-
 .ra-board {
   max-height: 70vh;
   overflow-y: auto;
@@ -248,6 +370,129 @@ fieldset.revision-agent-form:disabled {
   border-top: 1px solid var(--dividerColor, var(--cardBorder));
 }
 
+/* Drapeaux empilés à gauche ; la traduction, quand elle est affichée, sous
+   l'hébreu. */
+.ra-speech.ra-speech-row {
+  display: grid;
+}
+
+/* Sans drapeaux (mode de langue affiché à côté) : le texte, et en haut à
+   droite un petit bouton discret pour la traduction. */
+.ra-speech.ra-speech-plain {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.ra-speech-plain > .ra-speech-mode {
+  grid-column: 1;
+  align-self: center;
+}
+
+.ra-speech-plain > .ra-speech-texts {
+  grid-column: 2;
+}
+
+/* Espace de la traduction, sous la réplique : le mode de langue à cheval sur
+   le trait qui les sépare, le bouton de la traduction en haut à droite ;
+   traduction repliée, il ne reste que le trait et le bouton. */
+.ra-speech-translation-block {
+  position: relative;
+  min-height: 26px;
+  padding: 10px 44px 0 0;
+  border-top: 1px solid var(--dividerColor, var(--cardBorder));
+}
+
+.ra-speech-texts .ra-speech-translation-block > p {
+  padding-top: 0;
+  border-top: none;
+}
+
+.ra-speech-translation-block > .ra-translate-toggle {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  margin-top: 0;
+}
+
+.ra-speech-mode-straddle {
+  position: absolute;
+  top: 0;
+  left: -76px;
+  transform: translateY(-50%);
+}
+
+.ra-translate-toggle {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  margin-top: 4px;
+  padding: 2px 6px;
+  border: 1px solid var(--cardBorder);
+  border-radius: 6px;
+  background: none;
+  color: var(--textSecondary);
+  font-size: 0.75em;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.ra-translate-toggle:hover,
+.ra-translate-toggle[aria-expanded="true"] {
+  opacity: 1;
+}
+
+.ra-speech-flags {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 5px;
+}
+
+.ra-speech-flags .ra-flag {
+  margin-top: 0;
+}
+
+.ra-speech-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.ra-speech-texts .ra-speech-fr,
+.ra-speech-texts .ra-speech-translation {
+  padding-top: 10px;
+  border-top: 1px solid var(--dividerColor, var(--cardBorder));
+}
+
+/* Le prof a parlé français : c'est sa parole, pas une traduction. */
+.ra-speech-texts .ra-speech-spoken-fr {
+  padding-top: 0;
+  border-top: none;
+  font-size: 1.05em;
+  color: var(--textPrimary);
+}
+
+/* Drapeau français : affiche ou masque la traduction. */
+.ra-flag-button {
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+
+.ra-flag-button:hover,
+.ra-flag-button[aria-expanded="true"] {
+  opacity: 1;
+}
+
 .ra-flag {
   width: 28px;
   height: 20px;
@@ -272,6 +517,13 @@ fieldset.revision-agent-form:disabled {
 
 .ra-speech-fr {
   font-size: 0.9em;
+  color: var(--textSecondary);
+}
+
+/* L'hébreu traduit de ce que le prof a dit en français (évaluation orale). */
+.ra-speech-he.ra-speech-translation {
+  font-size: 1.1em;
+  font-weight: 400;
   color: var(--textSecondary);
 }
 
@@ -311,153 +563,6 @@ fieldset.revision-agent-form:disabled {
   color: var(--validationPleine);
 }
 
-.ra-passage {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.ra-passage p {
-  margin: 0;
-  font-size: 1.6em;
-  line-height: 1.5;
-  font-weight: 500;
-  color: var(--textPrimary);
-}
-
-.ra-passage-foot {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.ra-passage-french p {
-  margin: 0 0 4px;
-  font-size: 0.9em;
-  color: var(--textSecondary);
-}
-
-.ra-ghost {
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid var(--cardBorder);
-  background: transparent;
-  color: var(--textSecondary);
-  font-size: 0.8em;
-  cursor: pointer;
-}
-
-.ra-block-title {
-  margin: 0 0 6px;
-  font-size: 0.8em;
-  font-weight: 600;
-  color: var(--textSecondary);
-}
-
-.ra-verdict-passage {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--cardBorder);
-}
-
-.ra-verdict-passage p {
-  margin: 0;
-  font-size: 1.35em;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-.ra-mistake {
-  background: rgba(224, 168, 0, 0.22);
-  color: inherit;
-  border-radius: 4px;
-  padding: 0 2px;
-  box-shadow: inset 0 -2px 0 #e0a800;
-}
-
-.ra-mistake-severe {
-  background: rgba(217, 45, 45, 0.18);
-  box-shadow: inset 0 -2px 0 #d92d2d;
-}
-
-.ra-audio {
-  display: block;
-  width: 100%;
-  max-width: 420px;
-  height: 36px;
-  margin-bottom: 8px;
-}
-
-.ra-remarks {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  font-size: 0.9em;
-  line-height: 1.45;
-}
-
-.ra-remarks li {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 10px 0;
-  border-top: 1px solid var(--dividerColor, var(--cardBorder));
-}
-
-.ra-remark-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.ra-word,
-.ra-kind {
-  border-radius: 6px;
-  background: rgba(224, 168, 0, 0.22);
-  color: var(--textPrimary);
-}
-
-.ra-word {
-  font-size: 1.2em;
-  font-weight: 600;
-  padding: 2px 10px;
-}
-
-.ra-kind {
-  font-size: 0.7em;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 3px 8px;
-}
-
-.ra-kind-severe {
-  background: rgba(217, 45, 45, 0.18);
-}
-
-.ra-phon {
-  font-family: ui-monospace, "JetBrains Mono", monospace;
-  font-size: 0.8em;
-  color: var(--textSecondary);
-}
-
-.ra-phon b {
-  color: var(--textPrimary);
-}
-
-@keyframes ra-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes ra-blink {
   0%,
   100% {
@@ -473,22 +578,20 @@ fieldset.revision-agent-form:disabled {
   .ra-caret {
     animation: none;
   }
-  .ra-spinner span {
-    animation-duration: 3s;
-  }
 }
 
 /* Compréhension de texte : texte de la leçon, phrase de la solution surlignée. */
 .ra-text-title {
-  margin: 0;
+  margin: 0 0 1.4em;
   font-size: 1.2em;
+  text-align: center;
   color: var(--textPrimary);
 }
 
 .ra-text {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
 }
 
 .ra-text p {
@@ -496,9 +599,16 @@ fieldset.revision-agent-form:disabled {
   padding: 2px 8px;
   border-radius: 8px;
   font-size: 1.3em;
-  line-height: 1.6;
+  line-height: 1.4;
   color: var(--textPrimary);
   transition: background-color 0.4s, box-shadow 0.4s;
+}
+
+/* Dialogue : le nom de celui qui parle, dans un bleu plus clair que le texte
+   (#1c2b4a, --textPrimary). */
+.ra-text-speaker {
+  font-style: italic;
+  color: #5a74a8;
 }
 
 .ra-text p.ra-text-solution {
@@ -514,6 +624,151 @@ fieldset.revision-agent-form:disabled {
   border-radius: 4px;
   padding: 0 2px;
   box-shadow: inset 0 -2px 0 #c08a00;
+}
+
+/* Lecture : l'extrait à lire, surligné au stabilo de droite à gauche dans le
+   texte (cf. demande explicite du user), une réplique après l'autre
+   (--stroke : son rang), dans la couleur des surlignages du texte. */
+.ra-text .ra-reading-extract {
+  --hl-delay: calc(0.15s + var(--stroke, 0) * 0.7s);
+  padding: 0 2px;
+  border-radius: 4px;
+  color: inherit;
+  font-weight: 600;
+  background:
+    linear-gradient(rgba(224, 168, 0, 0.38), rgba(224, 168, 0, 0.38)) right top / 0% 100% no-repeat,
+    linear-gradient(#e0a800, #e0a800) right bottom / 0% 2px no-repeat;
+  animation: ra-reading-sweep 0.7s cubic-bezier(0.3, 0.6, 0.4, 1) var(--hl-delay) forwards;
+}
+
+@keyframes ra-reading-sweep {
+  to {
+    background-size: 100% 100%, 100% 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-text .ra-reading-extract {
+    animation: none;
+    background-size: 100% 100%, 100% 2px;
+  }
+}
+
+/* Lecture, contrôle : la case « Phonétique », en tête du texte, et la fenêtre
+   des deux verbatims et de la prononciation attendue. */
+.ra-phonetic {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 14px;
+  margin: 0;
+  font-size: 0.95em;
+}
+
+.ra-phonetic dt {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--textSecondary);
+}
+
+.ra-phonetic dd {
+  margin: 0;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  color: var(--textPrimary);
+}
+
+.ra-phonetic dd[lang="he"] {
+  font-family: inherit;
+  font-size: 1.1em;
+  text-align: start;
+}
+
+/* Lecture, dans le bloc des paramètres, hors du formulaire (il se grise
+   pendant la séance) : répliques par lecture et case « Phonétique ». */
+.revision-agent-reading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 14px;
+  font-size: 0.9em;
+}
+
+.revision-agent-per-reading {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.revision-agent-phonetic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Lecture : le haut-parleur, au bout de l'extrait à lire, dans la couleur du
+   liseré du surlignage ; il apparaît une fois l'extrait surligné. */
+.ra-speaker {
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: 8px;
+  padding: 2px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: #e0a800;
+  font-size: 1.05em;
+  vertical-align: middle;
+  cursor: pointer;
+  animation: ra-speaker-in 0.3s ease-out calc(0.85s + var(--stroke, 0) * 0.7s) both;
+}
+
+.ra-speaker:hover {
+  background: rgba(224, 168, 0, 0.18);
+}
+
+@keyframes ra-speaker-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-speaker {
+    animation: none;
+  }
+}
+
+.ra-stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ra-stepper button {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--cardBorder);
+  background: transparent;
+  color: var(--textPrimary);
+  font-size: 1.1em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ra-stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.ra-stepper-value {
+  min-width: 1.2em;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--textPrimary);
 }
 
 /* Expression libre : indice (mots en hébreu) et réponse de l'élève corrigée. */
@@ -645,7 +900,8 @@ fieldset.revision-agent-form:disabled {
   border-style: dashed;
 }
 
-.ra-zone-conversation .ra-label {
+.ra-zone-conversation .ra-label,
+.revision-agent-title {
   color: var(--textSecondary);
 }
 
@@ -700,7 +956,83 @@ fieldset.revision-agent-form:disabled {
   }
 }
 
+/* Texte réduit : il se replie vers le haut, comme un volet qu'on remonte ; le
+   texte ne bouge pas, il est caché ou dévoilé du haut vers le bas. */
+.ra-fold {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ra-fold-closed {
+  grid-template-rows: 0fr;
+}
+
+.ra-fold-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Le texte, lui aussi, est dévoilé à son apparition plutôt que de glisser. */
+.ra-volet-material .ra-volet-inner > .ra-zone {
+  animation: none;
+}
+
+/* Poignée du volet, en bas de la fenêtre du texte : une bande bleu foncé (la
+   couleur du titre) sur toute la largeur, à peine plus haute que son double
+   trait ; on la clique pour remonter le texte ou le tirer à nouveau. */
+.ra-fold-handle {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin: 16px -14px -12px;
+  padding: 3px 0;
+  border: none;
+  border-radius: 0 0 10px 10px;
+  background: var(--textPrimary);
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.ra-fold-handle::before,
+.ra-fold-handle::after {
+  content: "";
+  width: 44px;
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.75);
+  transition: width 0.15s;
+}
+
+.ra-fold-handle:hover,
+.ra-fold-handle:focus-visible {
+  filter: brightness(1.35);
+}
+
+.ra-fold-handle:hover::before,
+.ra-fold-handle:hover::after,
+.ra-fold-handle:focus-visible::before,
+.ra-fold-handle:focus-visible::after {
+  width: 56px;
+}
+
+/* Réduit, la poignée est collée sous l'en-tête. */
+.ra-zone-material:has(.ra-fold-closed) {
+  row-gap: 0;
+}
+
+.ra-zone-material:has(.ra-fold-closed) .ra-fold-handle {
+  margin-top: 8px;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .ra-fold {
+    transition: none;
+  }
+
   .ra-volet,
   .ra-volet-inner > .ra-zone {
     animation: none;
@@ -709,7 +1041,7 @@ fieldset.revision-agent-form:disabled {
 
 @media (min-width: 1100px) {
   .ra-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.75fr);
+    grid-template-columns: minmax(0, 0.75fr) minmax(300px, 1fr);
   }
 
   .ra-layout.ra-layout-single {
@@ -717,10 +1049,27 @@ fieldset.revision-agent-form:disabled {
     max-width: 880px;
   }
 
-  .ra-zone-material {
+  .ra-layout.ra-layout-balanced {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* Largeurs permutées : le centre prend celle de la colonne de droite, et
+     inversement (cf. demande explicite du user). */
+  .ra-layout.ra-layout-wide-main {
+    grid-template-columns: minmax(300px, 1fr) minmax(0, 0.75fr);
+  }
+
+  /* La colonne de droite (texte et chrono) reste visible pendant qu'on fait
+     défiler (la zone du texte elle-même ne peut pas être collante : son volet
+     masque ce qui déborde). */
+  .ra-layout-side {
     position: sticky;
     top: 88px;
-    max-height: calc(100vh - 112px);
+    align-self: start;
+  }
+
+  .ra-zone-material {
+    max-height: calc(100vh - 180px);
     overflow-y: auto;
   }
 }
@@ -744,6 +1093,25 @@ fieldset.revision-agent-form:disabled {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--textSecondary);
+}
+
+/* Évaluation orale : la phase de réponse est ouverte. */
+.ra-answering {
+  align-self: flex-start;
+  margin: 6px 0 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #1f6f43;
+  background: rgba(31, 111, 67, 0.12);
+  animation: ra-answering-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ra-answering-pulse {
+  50% {
+    opacity: 0.55;
+  }
 }
 
 .ra-instruction-he {
@@ -772,10 +1140,19 @@ fieldset.revision-agent-form:disabled {
 /* Compréhension : faute de langue en rouge (cf. .ra-answer-error), mot faux
    d'après le texte en violet. */
 .ra-answer-error.ra-error-truth,
-.ra-legend-swatch.ra-error-truth {
+.ra-legend-swatch.ra-error-truth,
+.ra-answer-error.ra-error-sense,
+.ra-legend-swatch.ra-error-sense {
   background: rgba(124, 77, 255, 0.16);
   color: #6a3fe0;
   box-shadow: inset 0 -2px 0 #6a3fe0;
+}
+
+/* Mot qui porte les deux fautes : violet (texte), souligné en rouge (langue). */
+.ra-answer-error.ra-error-both {
+  background: rgba(124, 77, 255, 0.16);
+  color: #6a3fe0;
+  box-shadow: inset 0 -3px 0 #d92d2d;
 }
 
 .ra-legend-swatch.ra-error-language {
@@ -823,53 +1200,6 @@ fieldset.revision-agent-form:disabled {
 
 .ra-error-comments mark {
   flex-shrink: 0;
-}
-
-.ra-scores {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed var(--cardBorder);
-}
-
-.ra-score {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: start;
-}
-
-.ra-score-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.ra-score-label {
-  font-weight: 600;
-  color: var(--textPrimary);
-}
-
-.ra-stars {
-  font-size: 1.4em;
-  letter-spacing: 2px;
-  line-height: 1;
-}
-
-.ra-star-on {
-  color: #e0a800;
-}
-
-.ra-star-off {
-  color: var(--cardBorder);
-}
-
-.ra-score-why {
-  margin: 0;
-  font-size: 0.9em;
-  color: var(--textSecondary);
 }
 
 /* Expression libre : une phrase correcte, sous les notes. */
@@ -949,6 +1279,32 @@ fieldset.revision-agent-form:disabled {
   cursor: pointer;
 }
 
+/* Sous la fenêtre « Évaluation » : « Question suivante » et, en compréhension,
+   « Redonner ma réponse », plus discret. */
+.ra-next-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.ra-retry {
+  padding: 10px 18px;
+  border: 1px solid var(--cardBorder);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--textSecondary);
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ra-retry:hover {
+  color: var(--textPrimary);
+  border-color: var(--textSecondary);
+}
+
 /* Sur ordinateur : réglages dans une colonne fixe à gauche (ils restent visibles
    pendant le défilement), séparés par une barre verticale de la séance en
    cours (texte, prise de parole du prof, indice…), cf. demande explicite du
@@ -963,9 +1319,13 @@ fieldset.revision-agent-form:disabled {
 }
 
 @media (min-width: 900px) {
-  /* Lève le plafond de 480px de .app-content (Layout.css), même technique que .curiosite-split. */
+  /* Lève le plafond de 480px de .app-content (Layout.css), même technique que .curiosite-split : la page prend toute
+     la largeur, les réglages calés à gauche avec une marge confortable, la séance occupe le reste (cf. demande
+     explicite du user). */
   .app-content:has(.revision-agent) {
-    max-width: 1440px;
+    max-width: none;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
   .revision-agent {
@@ -989,6 +1349,82 @@ fieldset.revision-agent-form:disabled {
     margin-top: 0;
   }
 
+  /* Pendant la séance, les réglages glissent vers la gauche et disparaissent ;
+     la bande bleue à leur place les réaffiche ou les masque (cf. demande
+     explicite du user). Leur contenu garde sa largeur pendant qu'ils se
+     replient. */
+  .revision-agent-controls {
+    overflow-x: hidden;
+    transition:
+      flex-basis 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      padding-right 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.3s;
+  }
+
+  .revision-agent-controls > * {
+    min-width: 316px;
+  }
+
+  .revision-agent-controls-hidden {
+    flex-basis: 0;
+    padding-right: 0;
+    transform: translateX(-40px);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      flex-basis 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      padding-right 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.3s,
+      visibility 0s 0.45s;
+  }
+
+  .revision-agent-rail {
+    position: sticky;
+    top: 88px;
+    align-self: flex-start;
+    flex: 0 0 13px;
+    height: calc(100vh - 112px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    background: var(--textPrimary);
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+
+  .revision-agent-rail::before,
+  .revision-agent-rail::after {
+    content: "";
+    width: 2px;
+    height: 44px;
+    border-radius: 1px;
+    background: rgba(255, 255, 255, 0.75);
+    transition: height 0.15s;
+  }
+
+  .revision-agent-rail:hover,
+  .revision-agent-rail:focus-visible {
+    filter: brightness(1.35);
+  }
+
+  .revision-agent-rail:hover::before,
+  .revision-agent-rail:hover::after,
+  .revision-agent-rail:focus-visible::before,
+  .revision-agent-rail:focus-visible::after {
+    height: 56px;
+  }
+
+  /* La bande remplace la barre de séparation. */
+  .revision-agent-rail + .revision-agent-session {
+    border-left: none;
+  }
+
   .revision-agent-session {
     flex: 1;
     min-width: 0;
@@ -1004,5 +1440,953 @@ fieldset.revision-agent-form:disabled {
   .revision-agent-session .ra-duo,
   .revision-agent-session .ra-layout {
     max-width: none;
+  }
+}
+
+/* Expression libre : les fenêtres de la question se referment de bas en haut
+   (--close-delay, cf. TaskLayout), avant la question suivante. */
+.ra-volet-closing {
+  animation: ra-volet-close 0.35s ease-in var(--close-delay, 0s) both;
+}
+
+.ra-volet-closing .ra-volet-inner > .ra-zone {
+  animation: none;
+}
+
+@keyframes ra-volet-close {
+  from {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  to {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+/* Indices donnés par le prof, du plus léger au plus fort. */
+.ra-hints {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ra-hints li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ra-hints .ra-hint-he {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--textPrimary);
+}
+
+.ra-hints .ra-hint-fr {
+  color: var(--textSecondary);
+}
+
+/* Déclinaison : sous le mot surligné, ce qu'il doit devenir, en français. */
+.ra-declension-sentence {
+  margin: 4px 0 0;
+  font-size: 1.4em;
+  line-height: 2.2;
+}
+
+.ra-declension-target {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.ra-declension-target mark {
+  padding: 0 4px;
+  border-radius: 4px;
+  background: rgba(255, 196, 0, 0.35);
+  color: inherit;
+}
+
+.ra-declension-replacement {
+  font-size: 0.55em;
+  font-style: italic;
+  font-weight: 800;
+  color: var(--textPrimary);
+}
+
+.ra-declension-instruction {
+  margin: 0;
+  color: var(--textSecondary);
+}
+
+/* Expression libre, à droite : le programme de la séance en tuiles (celle de
+   la question affichée dans la couleur de la fenêtre de la question, avec sa
+   légende), puis le sujet de cette question et ses détails. */
+.ra-program {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.ra-program-tile {
+  min-width: 90px;
+  padding: 4px 12px;
+  text-align: center;
+  /* Le libellé tient sur une ligne : la tuile s'allonge, quitte à passer à la
+     ligne suivante de tuiles. */
+  white-space: nowrap;
+  border: 1px solid var(--cardBorder);
+  border-radius: 8px;
+  background: var(--cardBg, rgba(0, 0, 0, 0.02));
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--textPrimary);
+}
+
+.ra-program-tile-done {
+  font-weight: 500;
+  color: var(--textSecondary);
+}
+
+.ra-program-tile-current,
+.ra-program-swatch {
+  border-color: var(--textPrimary);
+  background: var(--textPrimary);
+  color: #fff;
+}
+
+.ra-program-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: 0.8em;
+  color: var(--textSecondary);
+}
+
+.ra-program-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+/* Pastille d'une tuile du programme, en haut à droite : pleine, du bleu de la
+   police, avec une croix blanche (qui pivote en × quand le cours est déroulé). */
+.ra-program-tile {
+  position: relative;
+}
+
+.ra-program-info {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--textPrimary);
+  cursor: pointer;
+  transition: transform 0.25s, filter 0.15s;
+}
+
+.ra-program-info::before,
+.ra-program-info::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  border-radius: 1px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+
+.ra-program-info::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.ra-program-info:hover,
+.ra-program-info:focus-visible {
+  filter: brightness(1.35);
+}
+
+.ra-program-info-open {
+  transform: rotate(45deg);
+}
+
+/* Rappel du cours : déroulé vers le bas comme un volet qu'on baisse, remonté
+   par la pastille de sa tuile (cf. .ra-fold, le texte de la compréhension). */
+/* Le cours se déroule juste sous la rangée de tuiles. */
+.ra-course-fold {
+  margin: 0;
+  transition:
+    grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    margin 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ra-course-fold:not(.ra-fold-closed) {
+  margin-top: 12px;
+}
+
+.ra-course-text {
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid #fff;
+  border-left: 4px solid var(--textPrimary);
+  border-radius: 6px;
+  background: var(--bg);
+  font-size: 0.9em;
+  line-height: 1.6;
+  color: var(--textPrimary);
+}
+
+.ra-course-text p {
+  margin: 0;
+}
+
+.ra-course-points {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+
+.ra-course-points > li + li {
+  margin-top: 4px;
+}
+
+.ra-course-points strong {
+  font-size: 1.05em;
+}
+
+/* Exemples d'une puce : l'hébreu droit, la traduction en italique. */
+.ra-course-examples {
+  margin: 2px 0 0;
+  padding-left: 16px;
+  list-style: none;
+  color: var(--textSecondary);
+}
+
+.ra-course-examples bdi {
+  font-size: 1.1em;
+  color: var(--textPrimary);
+}
+
+.ra-course-text .ra-course-note {
+  margin-top: 8px;
+  color: var(--textSecondary);
+}
+
+/* Expression libre : la fenêtre de l'exercice est un tableau. Chaque ligne
+   s'y écrit dans son sens de lecture (le français de gauche à droite, l'hébreu
+   de droite à gauche) ; à la réussite, elle s'efface d'un coup de chiffon, dans
+   le même sens. Les marges négatives du découpage laissent voir ce qui déborde
+   de la ligne (le remplaçant sous le mot à décliner). */
+.ra-slate {
+  min-height: 3.2em;
+}
+
+.ra-slate :is(p:not(.ra-answering), label) {
+  animation: ra-write-ltr 0.6s ease-out both;
+}
+
+.ra-slate :is(p:not(.ra-answering), label)[dir="rtl"] {
+  animation-name: ra-write-rtl;
+}
+
+.ra-slate-erased {
+  pointer-events: none;
+}
+
+.ra-slate.ra-slate-erased :is(p, label) {
+  animation: ra-erase-ltr 0.6s ease-in both;
+}
+
+.ra-slate.ra-slate-erased :is(p, label)[dir="rtl"] {
+  animation-name: ra-erase-rtl;
+}
+
+@keyframes ra-write-ltr {
+  from {
+    clip-path: inset(-1.5em 100% -1.5em 0);
+  }
+  to {
+    clip-path: inset(-1.5em 0 -1.5em 0);
+  }
+}
+
+@keyframes ra-write-rtl {
+  from {
+    clip-path: inset(-1.5em 0 -1.5em 100%);
+  }
+  to {
+    clip-path: inset(-1.5em 0 -1.5em 0);
+  }
+}
+
+@keyframes ra-erase-ltr {
+  from {
+    clip-path: inset(-1.5em 0 -1.5em 0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(-1.5em 0 -1.5em 100%);
+    filter: blur(3px);
+    opacity: 0;
+  }
+}
+
+@keyframes ra-erase-rtl {
+  from {
+    clip-path: inset(-1.5em 0 -1.5em 0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(-1.5em 100% -1.5em 0);
+    filter: blur(3px);
+    opacity: 0;
+  }
+}
+
+/* Suivi de la séance : une ligne par exercice, puis ses marques — coche
+   blanche sur pastille bleue (la couleur de la police), croix bleue sans fond. */
+.ra-followup {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9em;
+}
+
+.ra-followup li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ra-followup-label {
+  margin-right: 4px;
+  color: var(--textPrimary);
+}
+
+.ra-burst {
+  position: relative;
+  display: inline-flex;
+  color: var(--textPrimary);
+}
+
+.ra-mark-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.ra-mark-icon path {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ra-followup-ok circle {
+  fill: currentColor;
+}
+
+.ra-followup-ok path {
+  stroke: #fff;
+}
+
+.ra-followup-ko circle {
+  fill: none;
+}
+
+.ra-followup-ko path {
+  stroke: currentColor;
+}
+
+/* Une marque qui apparaît explose : elle enfle puis retombe, une onde de sa
+   couleur s'élargit, huit éclats en jaillissent. */
+.ra-burst .ra-mark-icon {
+  animation: ra-burst-pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.ra-burst::before,
+.ra-burst::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+}
+
+.ra-burst::before {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  animation: ra-burst-ring 0.7s ease-out both;
+}
+
+.ra-burst::after {
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  box-shadow:
+    0 -18px 0 currentColor,
+    13px -13px 0 currentColor,
+    18px 0 0 currentColor,
+    13px 13px 0 currentColor,
+    0 18px 0 currentColor,
+    -13px 13px 0 currentColor,
+    -18px 0 0 currentColor,
+    -13px -13px 0 currentColor;
+  animation: ra-burst-sparks 0.7s ease-out both;
+}
+
+@keyframes ra-burst-pop {
+  0% {
+    transform: scale(0.2);
+  }
+  35% {
+    transform: scale(1.9) rotate(-8deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ra-burst-ring {
+  from {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes ra-burst-sparks {
+  from {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Expression libre : la réponse et l'évaluation dans une seule fenêtre,
+   séparées d'un trait ; les commentaires des fautes en puces. */
+.ra-assessment-rule {
+  margin: 12px 0;
+  border: none;
+  border-top: 1px solid var(--cardBorder);
+}
+
+.ra-assessment .ra-error-comments {
+  padding-left: 1.2em;
+  list-style: disc;
+}
+
+.ra-assessment .ra-error-comments li {
+  display: list-item;
+}
+
+.ra-assessment .ra-error-comments li > span + span {
+  margin-left: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-slate *,
+  .ra-burst .ra-mark-icon,
+  .ra-burst::before,
+  .ra-burst::after {
+    animation: none;
+  }
+}
+
+.ra-followup-dash {
+  color: var(--textSecondary);
+}
+
+/* Fin de la séance : la colonne du centre (conversation, exercice, réponse)
+   glisse vers la gauche et disparaît, une fois le tableau effacé ; puis la
+   colonne de droite (programme, suivi) glisse prendre sa place, pour le bilan. */
+.ra-layout-finishing .ra-layout-main {
+  animation: ra-finish-out 0.6s ease-in 1.5s both;
+  pointer-events: none;
+}
+
+.ra-layout-finished .ra-layout-side {
+  grid-column: 1;
+  animation: ra-finish-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes ra-finish-out {
+  to {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+}
+
+@keyframes ra-finish-in {
+  from {
+    transform: translateX(calc(100% + 16px));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-layout-finishing .ra-layout-main,
+  .ra-layout-finished .ra-layout-side {
+    animation: none;
+  }
+}
+
+/* Expression libre : « Question suivante » à droite, accolée à « Arrêter la
+   séance » (même gabarit), grisée quand elle ne sert pas. */
+.ra-next.ra-next-side {
+  align-self: auto;
+  padding: 10px 14px;
+  border-radius: 8px;
+  min-width: 136px;
+}
+
+.ra-next.ra-next-side:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ra-layout-clock {
+  flex-wrap: wrap;
+}
+
+.ra-layout-clock button {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Réponse de l'élève : une fois écrite, chaque mot fautif est surligné au
+   stabilo, à la main, l'un après l'autre (--stroke : son rang) — un trait
+   coloré, un peu penché, aux bords irréguliers, tiré dans le sens de lecture
+   (de droite à gauche en hébreu). La couleur du mot vire en même temps. */
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter {
+  --hl-fill: rgba(217, 45, 45, 0.24);
+  --hl-line: #d92d2d;
+  --hl-text: #d92d2d;
+  --hl-delay: calc(0.15s + var(--stroke, 0) * 0.45s);
+  position: relative;
+  isolation: isolate;
+  background: none;
+  box-shadow: none;
+  animation: ra-highlight-text 0.4s ease-out var(--hl-delay) both;
+}
+
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter.ra-error-truth,
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter.ra-error-sense {
+  --hl-fill: rgba(124, 77, 255, 0.22);
+  --hl-line: #6a3fe0;
+  --hl-text: #6a3fe0;
+}
+
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter.ra-error-both {
+  --hl-fill: rgba(124, 77, 255, 0.22);
+  --hl-line: #d92d2d;
+  --hl-text: #6a3fe0;
+}
+
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter::before,
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transform-origin: right center;
+  animation: ra-highlight-stroke 0.4s cubic-bezier(0.3, 0.6, 0.4, 1) var(--hl-delay) both;
+}
+
+/* Le trait de stabilo. */
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter::before {
+  inset: 0.08em -0.18em 0.02em -0.12em;
+  background: var(--hl-fill);
+  border-radius: 0.25em 0.6em 0.35em 0.7em / 0.55em 0.3em 0.65em 0.35em;
+  rotate: -1.2deg;
+}
+
+/* Le soulignement, appuyé à la fin du geste. */
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter::after {
+  inset: auto -0.1em -0.02em -0.06em;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--hl-line);
+  rotate: 0.6deg;
+}
+
+@keyframes ra-highlight-stroke {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ra-highlight-text {
+  from {
+    color: var(--textPrimary);
+  }
+  to {
+    color: var(--hl-text);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.ra-answer, .ra-declension-sentence) .ra-highlighter,
+  :is(.ra-answer, .ra-declension-sentence) .ra-highlighter::before,
+  :is(.ra-answer, .ra-declension-sentence) .ra-highlighter::after {
+    animation: none;
+  }
+}
+
+/* Tâche « Question » (cf. demande explicite du user) : la cible (un ou deux
+   morceaux), surlignée à la main comme les fautes de la réponse (cf.
+   .ra-highlighter), juste après que la phrase s'est écrite au tableau, dans la
+   couleur de la bordure de la fenêtre « Question » ; le texte, un peu plus
+   foncé. La pastille de l'indice reprend la couleur du texte. */
+.ra-question-line {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.ra-declension-sentence .ra-question-target.ra-highlighter {
+  --hl-fill: rgba(224, 168, 0, 0.38);
+  --hl-line: #e0a800;
+  --hl-text: #9a6f00;
+  --hl-delay: calc(0.75s + var(--stroke, 0) * 0.45s);
+  font-weight: 700;
+}
+
+/* La pastille de l'indice, à gauche, au bout de la phrase : elle pulse le
+   temps de son info-bulle, puis reste immobile jusqu'au clic. */
+.ra-hint-dot-wrap {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.ra-hint-dot {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #9a6f00;
+  cursor: pointer;
+  animation: ra-hint-dot-in 0.4s ease both;
+}
+
+.ra-hint-dot-pulse {
+  animation:
+    ra-hint-dot-in 0.4s ease both,
+    ra-hint-dot-pulse 1.3s ease-in-out 0.4s infinite;
+}
+
+@keyframes ra-hint-dot-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ra-hint-dot-pulse {
+  0%,
+  100% {
+    background: #9a6f00;
+    box-shadow: 0 0 0 0 rgba(154, 111, 0, 0.55);
+  }
+  50% {
+    background: #e0a800;
+    box-shadow: 0 0 0 8px rgba(154, 111, 0, 0);
+  }
+}
+
+/* Info-bulle, au-dessus de la pastille, vers la droite ; elle apparaît puis
+   s'efface d'elle-même (cf. HINT_TIP_MS dans QuestionBoard.jsx). */
+.ra-hint-tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: -10px;
+  z-index: 5;
+  --hint-bg: #fff;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: var(--hint-bg);
+  color: var(--textPrimary);
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  animation: ra-hint-tip 4s ease both;
+}
+
+.ra-hint-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 12px;
+  border: 7px solid transparent;
+  border-top-color: var(--hint-bg);
+}
+
+@keyframes ra-hint-tip {
+  0% {
+    opacity: 0;
+  }
+  12%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* L'indice une fois demandé : le mot interrogatif, en français. */
+.ra-question-hint {
+  margin: 2px 0 0;
+  color: var(--textSecondary);
+  animation: ra-hint-fade-in 0.6s ease both;
+}
+
+.ra-question-hint strong {
+  color: #9a6f00;
+}
+
+/* Complétion : le tableau en deux puces (début de phrase, consigne), la
+   pastille de l'indice au bout du début ; le second indice prolonge le début,
+   sa partie nouvelle surlignée au stabilo. */
+.ra-completion-items {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ra-completion-items li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ra-completion-items li::before {
+  content: "•";
+  color: var(--textSecondary);
+}
+
+.ra-completion-line .ra-hint-dot-wrap {
+  margin-right: 14px;
+}
+
+.ra-completion-line .ra-hint-tip {
+  direction: ltr;
+}
+
+.ra-completion-prefix {
+  font-size: 1.4em;
+  line-height: 2;
+}
+
+/* La consigne, calée à droite comme le début de phrase hébreu, sans puce. */
+.ra-completion-items .ra-completion-constraint-line {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.ra-completion-items .ra-completion-constraint-line::before {
+  content: none;
+}
+
+/* La consigne, en gras et soulignée, dans le bleu de la parole du prof. */
+.ra-completion-constraint {
+  font-weight: 700;
+  color: var(--textPrimary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Les indices, surlignés comme l'extrait à lire de la lecture (cf.
+   .ra-reading-extract) : de droite à gauche pour l'hébreu, de gauche à droite
+   pour l'action, en français. */
+.ra-completion-mark {
+  padding: 0 2px;
+  border-radius: 4px;
+  color: inherit;
+  font-weight: 600;
+  background:
+    linear-gradient(rgba(224, 168, 0, 0.38), rgba(224, 168, 0, 0.38)) right top / 0% 100% no-repeat,
+    linear-gradient(#e0a800, #e0a800) right bottom / 0% 2px no-repeat;
+  animation: ra-reading-sweep 0.7s cubic-bezier(0.3, 0.6, 0.4, 1) 0.15s forwards;
+}
+
+.ra-completion-mark[lang="fr"] {
+  background-position: left top, left bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-completion-mark {
+    animation: none;
+    background-size: 100% 100%, 100% 2px;
+  }
+}
+
+/* Complétion ratée : sous un second trait, une puce par dimension, son nom
+   suivi de la marque du suivi (cf. .ra-followup-ok / -ko). */
+.ra-completion-dimensions {
+  margin: 0;
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ra-dimension-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 6px;
+  vertical-align: middle;
+  color: var(--textPrimary);
+}
+
+.ra-thumb-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.ra-thumb-icon circle {
+  fill: var(--textPrimary);
+}
+
+.ra-thumb-icon path {
+  fill: #fff;
+}
+
+/* La remarque, un ton plus clair que le nom de la dimension et son pouce. */
+.ra-dimension-text {
+  color: var(--textSecondary);
+}
+
+/* L'élève redonne sa question : la précédente s'efface d'un coup de chiffon,
+   comme au tableau (cf. .ra-slate-erased), avant que la nouvelle s'écrive. */
+.ra-assessment-erasing {
+  pointer-events: none;
+}
+
+.ra-assessment-erasing :is(p, ul, hr) {
+  animation: ra-erase-ltr 0.6s ease-in both;
+}
+
+.ra-assessment-erasing p[dir="rtl"] {
+  animation-name: ra-erase-rtl;
+}
+
+/* Fenêtre « Réponse » en store (cf. Blind dans TaskLayout.jsx) : le contenu se
+   déroule vers le bas et se remonte ; au bas, une bande à poignées, au format
+   de la bande verticale qui masque les réglages, toujours visible. */
+.ra-blind {
+  display: grid;
+  grid-template-rows: 0fr auto;
+  transition: grid-template-rows 0.6s cubic-bezier(0.3, 0.6, 0.4, 1);
+}
+
+.ra-blind-open {
+  grid-template-rows: 1fr auto;
+}
+
+.ra-blind-content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ra-blind-band {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 13px;
+  margin-top: 6px;
+  border-radius: 10px;
+  background: var(--textPrimary);
+}
+
+.ra-blind-open .ra-blind-band {
+  margin-top: 12px;
+}
+
+.ra-blind-band::before,
+.ra-blind-band::after {
+  content: "";
+  width: 44px;
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-blind {
+    transition: none;
+  }
+}
+
+/* Colonne de droite juste de la largeur des boutons du bas, accolée au
+   centre : le suivi prend exactement cette largeur. */
+@media (min-width: 1100px) {
+  /* Le centre garde sa largeur de la disposition équilibrée (la moitié, cf.
+     .ra-layout-balanced) ; la colonne de droite s'y accole, la place libre
+     reste à droite (cf. demande explicite du user). */
+  .ra-layout.ra-layout-compact-side {
+    grid-template-columns: minmax(0, calc(50% - 8px)) max-content;
+    justify-content: start;
+  }
+
+  .ra-layout-compact-side .ra-layout-side > .ra-volet {
+    width: 0;
+    min-width: 100%;
+  }
+
+  .ra-layout-compact-side .ra-layout-clock {
+    flex-wrap: nowrap;
   }
 }

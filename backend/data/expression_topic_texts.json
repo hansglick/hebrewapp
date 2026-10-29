@@ -1,0 +1,702 @@
+{
+  "expression:concept:0.07": {
+    "short": "La préposition de direction ל",
+    "details": "Après un verbe de mouvement (הולך, נוסע, טס, בא…), la destination est introduite par la préposition ל, accolée au nom : הולך לקולנוע (va au cinéma), טס לישראל (prend l'avion pour Israël). Devant un nom défini, ל et l'article ה fusionnent : on n'écrit pas ל + הים mais לים (à la mer), et la voyelle de l'article passe sous le ל.",
+    "course": {
+      "intro": "Tu utilises ל pour indiquer une destination.",
+      "points": [
+        {
+          "term": "ל",
+          "meaning": "à, pour",
+          "rule": "Après un verbe de mouvement (הולך, נוסע, טס, בא…), ל s’accole au nom de la destination.",
+          "examples": [
+            {
+              "he": "הולך לקולנוע",
+              "fr": "va au cinéma"
+            },
+            {
+              "he": "טס לישראל",
+              "fr": "prend l’avion pour Israël"
+            }
+          ]
+        },
+        {
+          "term": "ל + ה",
+          "meaning": "préposition + article défini",
+          "rule": "Devant un nom défini, ל et ה fusionnent : tu n’écris pas ל + הים mais לים ; la voyelle de l’article passe sous le ל.",
+          "examples": [
+            {
+              "he": "לים",
+              "fr": "à la mer"
+            }
+          ]
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.08": {
+    "short": "יש לי et אין לי",
+    "details": "L'hébreu n'a pas de verbe « avoir ». Pour la possession au présent, on dit littéralement « il y a à moi » : יש (il y a) à l'affirmatif, אין (il n'y a pas) au négatif, suivis de la préposition ל déclinée selon le possesseur (לי, לך, לו, לה, לנו, לכם, לכן, להם, להן). יש לי ספר : j'ai un livre ; אין לי ספר : je n'ai pas de livre. Quand le possesseur est nommé, ל s'attache directement au nom : יש לרוני ספר (Roni a un livre).",
+    "course": {
+      "intro": "L’hébreu n’a pas de verbe « avoir » : pour la possession au présent, tu dis littéralement « il y a à moi ».",
+      "points": [
+        {
+          "term": "יש",
+          "meaning": "il y a",
+          "rule": "À l’affirmatif, tu utilises יש suivi de la préposition ל déclinée selon le possesseur.",
+          "examples": [
+            {
+              "he": "יש לי ספר",
+              "fr": "J’ai un livre."
+            }
+          ]
+        },
+        {
+          "term": "אין",
+          "meaning": "il n’y a pas",
+          "rule": "Au négatif, tu utilises אין suivi de la préposition ל déclinée selon le possesseur.",
+          "examples": [
+            {
+              "he": "אין לי ספר",
+              "fr": "Je n’ai pas de livre."
+            }
+          ]
+        },
+        {
+          "term": "possesseur nommé",
+          "meaning": "",
+          "rule": "Quand tu nommes le possesseur, ל s’attache directement à son nom.",
+          "examples": [
+            {
+              "he": "יש לרוני ספר",
+              "fr": "Roni a un livre."
+            }
+          ]
+        }
+      ],
+      "note": "ל se décline selon le possesseur : לי, לך, לו, לה, לנו, לכם, לכן, להם, להן."
+    }
+  },
+  "expression:preposition:ל": {
+    "short": "ל déclinée : לי, לך, לו…",
+    "details": "La préposition ל (à, pour) ne s'emploie pas seule devant un pronom : elle prend un suffixe selon la personne, le genre et le nombre. לי (à moi), לך (à toi, m. / f.), לו (à lui), לה (à elle), לנו (à nous), לכם (à vous, m.), לכן (à vous, f.), להם (à eux), להן (à elles). On la retrouve dans la possession (יש לי), les sensations (קר לי) et après des verbes comme לתת ou לספר.",
+    "course": {
+      "intro": "Devant un pronom, ל (« à, pour ») prend un suffixe selon la personne, le genre et le nombre.",
+      "points": [
+        {
+          "term": "לי",
+          "meaning": "à moi",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "לך",
+          "meaning": "à toi, masculin ou féminin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "לו",
+          "meaning": "à lui",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "לה",
+          "meaning": "à elle",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "לנו",
+          "meaning": "à nous",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "לכם",
+          "meaning": "à vous, masculin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "לכן",
+          "meaning": "à vous, féminin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "להם",
+          "meaning": "à eux",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "להן",
+          "meaning": "à elles",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "On la retrouve dans la possession (יש לי), les sensations (קר לי) et après des verbes comme לתת ou לספר."
+    }
+  },
+  "expression:concept:0.11": {
+    "short": "אחרי, אחרי ש et אחר כך",
+    "details": "Trois façons d'exprimer ce qui vient après. אחרי (après) est suivi d'un nom : אחרי השיעור הוא נח (après le cours, il se repose). אחרי ש (après que) est suivi d'un sujet et d'un verbe conjugué, jamais d'un infinitif : אחרי שהם שותים קפה הם הולכים לטייל. אחר כך (ensuite) relie deux propositions indépendantes : הוא אוכל ארוחת בוקר, אחר כך הוא קורא עיתון.",
+    "course": {
+      "intro": "Trois façons d’exprimer ce qui vient après.",
+      "points": [
+        {
+          "term": "אחרי",
+          "meaning": "après",
+          "rule": "S’emploie devant un nom.",
+          "examples": [
+            {
+              "he": "אחרי השיעור הוא נח",
+              "fr": "Après le cours, il se repose."
+            }
+          ]
+        },
+        {
+          "term": "אחרי ש",
+          "meaning": "après que",
+          "rule": "Est suivi d’un sujet et d’un verbe conjugué, jamais d’un infinitif.",
+          "examples": [
+            {
+              "he": "אחרי שהם שותים קפה הם הולכים לטייל",
+              "fr": "Après avoir bu du café, ils vont se promener."
+            }
+          ]
+        },
+        {
+          "term": "אחר כך",
+          "meaning": "ensuite",
+          "rule": "Relie deux propositions indépendantes.",
+          "examples": [
+            {
+              "he": "הוא אוכל ארוחת בוקר, אחר כך הוא קורא עיתון",
+              "fr": "Il prend son petit-déjeuner, ensuite il lit un journal."
+            }
+          ]
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.14": {
+    "short": "את devant l'objet défini",
+    "details": "Un complément d'objet direct indéfini suit directement le verbe : אני אוכל תפוח (je mange une pomme). Quand il est défini (article ה, nom propre, ou nom suivi d'un possessif), il doit être précédé de la particule את, qui ne se traduit pas : אני אוכל את התפוח (je mange la pomme), היא שומעת את דוד (elle entend David).",
+    "course": {
+      "intro": "Devant un complément d’objet direct, tout dépend s’il est défini ou non.",
+      "points": [
+        {
+          "term": "Objet indéfini",
+          "meaning": "",
+          "rule": "Il suit directement le verbe.",
+          "examples": [
+            {
+              "he": "אני אוכל תפוח",
+              "fr": "Je mange une pomme."
+            }
+          ]
+        },
+        {
+          "term": "את",
+          "meaning": "particule non traduite",
+          "rule": "Place את devant un objet défini : avec l’article ה, un nom propre ou un nom suivi d’un possessif.",
+          "examples": [
+            {
+              "he": "אני אוכל את התפוח",
+              "fr": "Je mange la pomme."
+            },
+            {
+              "he": "היא שומעת את דוד",
+              "fr": "Elle entend David."
+            }
+          ]
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.16": {
+    "short": "Le superlatif avec הכי",
+    "details": "Pour dire « le plus », « la plus », « les plus », on place הכי juste avant l'adjectif (ou le verbe) : היא הכי גדולה בכיתה (c'est la plus grande de la classe), הם הילדים הכי חמודים (ce sont les enfants les plus mignons), אני הכי אוהבת את ירושלים (c'est Jérusalem que j'aime le plus). הכי est invariable : il ne s'accorde ni en genre ni en nombre.",
+    "course": {
+      "intro": "",
+      "points": [
+        {
+          "term": "הכי",
+          "meaning": "le plus, la plus, les plus",
+          "rule": "Place הכי juste avant l’adjectif ou le verbe.",
+          "examples": [
+            {
+              "he": "היא הכי גדולה בכיתה",
+              "fr": "c’est la plus grande de la classe"
+            },
+            {
+              "he": "הם הילדים הכי חמודים",
+              "fr": "ce sont les enfants les plus mignons"
+            },
+            {
+              "he": "אני הכי אוהבת את ירושלים",
+              "fr": "c’est Jérusalem que j’aime le plus"
+            }
+          ]
+        }
+      ],
+      "note": "הכי est invariable : il ne s’accorde ni en genre ni en nombre."
+    }
+  },
+  "expression:concept:0.17": {
+    "short": "צריך et יכול",
+    "details": "צריך exprime l'obligation ou le besoin (devoir, avoir besoin, falloir) ; יכול exprime la capacité ou la possibilité (pouvoir). Tous deux s'accordent en genre et en nombre avec le sujet (צריך, צריכה, צריכים, צריכות ; יכול, יכולה, יכולים, יכולות) et sont le plus souvent suivis d'un infinitif : אתה צריך לנוח, אני לא יכול לבוא. צריך peut aussi être suivi d'un nom (אני צריך זמן) ou, employé seul sans sujet, signifier « il faut » : צריך לשתות.",
+    "course": {
+      "intro": "Deux mots pour dire ce qu’on doit faire et ce qu’on peut faire.",
+      "points": [
+        {
+          "term": "צריך",
+          "meaning": "devoir, avoir besoin, falloir",
+          "rule": "Exprime l’obligation ou le besoin, le plus souvent suivi d’un infinitif.",
+          "examples": [
+            {
+              "he": "אתה צריך לנוח",
+              "fr": "Tu dois te reposer."
+            }
+          ]
+        },
+        {
+          "term": "יכול",
+          "meaning": "pouvoir",
+          "rule": "Exprime la capacité ou la possibilité, généralement suivi d’un infinitif.",
+          "examples": [
+            {
+              "he": "אני לא יכול לבוא",
+              "fr": "Je ne peux pas venir."
+            }
+          ]
+        },
+        {
+          "term": "צריך + nom",
+          "meaning": "avoir besoin de",
+          "rule": "צריך peut aussi être suivi d’un nom.",
+          "examples": [
+            {
+              "he": "אני צריך זמן",
+              "fr": "J’ai besoin de temps."
+            }
+          ]
+        },
+        {
+          "term": "צריך sans sujet",
+          "meaning": "il faut",
+          "rule": "Employé seul, sans sujet, צריך signifie « il faut ».",
+          "examples": [
+            {
+              "he": "צריך לשתות",
+              "fr": "Il faut boire."
+            }
+          ]
+        }
+      ],
+      "note": "Tous deux s’accordent en genre et en nombre avec le sujet : צריך, צריכה, צריכים, צריכות ; יכול, יכולה, יכולים, יכולות."
+    }
+  },
+  "expression:conjugaison:modaux": {
+    "short": "L'accord de צריך / יכול",
+    "details": "Au présent, צריך et יכול ne se conjuguent pas selon la personne mais s'accordent avec le sujet comme des adjectifs, en genre et en nombre : צָרִיךְ, צְרִיכָה, צְרִיכִים, צְרִיכוֹת ; יָכוֹל, יְכוֹלָה, יְכוֹלִים, יְכוֹלוֹת. היא צריכה ללמוד ; התלמידים יכולים לשבת.",
+    "course": {
+      "intro": "Au présent, צריך et יכול s’accordent avec le sujet en genre et en nombre, comme des adjectifs, sans se conjuguer selon la personne.",
+      "points": [
+        {
+          "term": "צָרִיךְ",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "צְרִיכָה",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": [
+            {
+              "he": "היא צריכה ללמוד",
+              "fr": "Elle doit étudier."
+            }
+          ]
+        },
+        {
+          "term": "צְרִיכִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "צְרִיכוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "יָכוֹל",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "יְכוֹלָה",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "יְכוֹלִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": [
+            {
+              "he": "התלמידים יכולים לשבת",
+              "fr": "Les élèves peuvent s’asseoir."
+            }
+          ]
+        },
+        {
+          "term": "יְכוֹלוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.19": {
+    "short": "Les nombres : accord et place",
+    "details": "Les nombres cardinaux ont une forme masculine et une forme féminine, et s'accordent avec le genre du nom compté : שלושה ילדים (masculin), ארבע מיטות (féminin). Le nombre un se place après le nom (עוגה אחת, ספר אחד) ; tous les autres se placent avant (שני ספרים, שתי עוגות).",
+    "course": {
+      "intro": "",
+      "points": [
+        {
+          "term": "accord en genre",
+          "meaning": "",
+          "rule": "Le nombre prend la forme masculine ou féminine selon le genre du nom compté.",
+          "examples": [
+            {
+              "he": "שלושה ילדים",
+              "fr": "trois enfants"
+            },
+            {
+              "he": "ארבע מיטות",
+              "fr": "quatre lits"
+            }
+          ]
+        },
+        {
+          "term": "אחד / אחת",
+          "meaning": "un / une",
+          "rule": "Le nombre un se place après le nom.",
+          "examples": [
+            {
+              "he": "עוגה אחת",
+              "fr": "un gâteau"
+            },
+            {
+              "he": "ספר אחד",
+              "fr": "un livre"
+            }
+          ]
+        },
+        {
+          "term": "autres nombres",
+          "meaning": "",
+          "rule": "Tous les autres nombres se placent avant le nom.",
+          "examples": [
+            {
+              "he": "שני ספרים",
+              "fr": "deux livres"
+            },
+            {
+              "he": "שתי עוגות",
+              "fr": "deux gâteaux"
+            }
+          ]
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:conjugaison:paal-regulier": {
+    "short": "פעל régulier",
+    "details": "Au présent, un verbe פעל régulier suit le modèle קוֹטֵל, avec quatre formes selon le genre et le nombre du sujet (la personne ne change rien) : כּוֹתֵב (m. sg.), כּוֹתֶבֶת (f. sg.), כּוֹתְבִים (m. pl.), כּוֹתְבוֹת (f. pl.). Même modèle pour לומד, עובד, אוכל…",
+    "course": {
+      "intro": "Au présent, un verbe פעל régulier suit le modèle קוֹטֵל : sa forme dépend du genre et du nombre du sujet, pas de la personne.",
+      "points": [
+        {
+          "term": "כּוֹתֵב",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "כּוֹתֶבֶת",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "כּוֹתְבִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "כּוֹתְבוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour לומד, עובד, אוכל…"
+    }
+  },
+  "expression:conjugaison:paal-ayin-vav": {
+    "short": "פעל ו",
+    "details": "Quand la lettre du milieu de la racine est ו (racines ע״ו comme ג־ו־ר), elle disparaît au présent ; le féminin singulier se termine en ‑ָה : גָּר, גָּרָה, גָּרִים, גָּרוֹת. Même modèle pour קם, בא, רץ…",
+    "course": {
+      "intro": "Avec une racine ע״ו comme ג־ו־ר, le ו central disparaît au présent.",
+      "points": [
+        {
+          "term": "גָּר",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "גָּרָה",
+          "meaning": "féminin singulier",
+          "rule": "La forme se termine en ־ָה.",
+          "examples": []
+        },
+        {
+          "term": "גָּרִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "גָּרוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour קם, בא, רץ…"
+    }
+  },
+  "expression:conjugaison:paal-lamed-alef": {
+    "short": "פעל א",
+    "details": "Quand la racine finit par א (racines ל״א), le א reste dans toutes les formes et le féminin singulier se termine en ‑ת sans voyelle ajoutée : קוֹרֵא, קוֹרֵאת, קוֹרְאִים, קוֹרְאוֹת. Même modèle pour יוצא, מוצא…",
+    "course": {
+      "intro": "Quand la racine finit par א (racines ל״א), le א reste dans toutes les formes.",
+      "points": [
+        {
+          "term": "קוֹרֵא",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "קוֹרֵאת",
+          "meaning": "féminin singulier",
+          "rule": "Le féminin singulier se termine en ת, sans voyelle ajoutée.",
+          "examples": []
+        },
+        {
+          "term": "קוֹרְאִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "קוֹרְאוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour יוצא, מוצא…"
+    }
+  },
+  "expression:conjugaison:paal-gutturale": {
+    "short": "פעל ע / ח",
+    "details": "Quand la racine finit par ע ou ח, le féminin singulier se termine en ‑ַעַת / ‑ַחַת (au lieu de ‑ֶלֶת) : נוֹסֵעַ, נוֹסַעַת, נוֹסְעִים, נוֹסְעוֹת. Même modèle pour שומע, יודע, פותח, שוכח…",
+    "course": {
+      "intro": "Quand la racine finit par ע ou ח, seul le féminin singulier change de terminaison.",
+      "points": [
+        {
+          "term": "נוֹסֵעַ",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "נוֹסַעַת",
+          "meaning": "féminin singulier",
+          "rule": "La terminaison est ־ַעַת ou ־ַחַת au lieu de ־ֶלֶת.",
+          "examples": []
+        },
+        {
+          "term": "נוֹסְעִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "נוֹסְעוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour שומע, יודע, פותח, שוכח…"
+    }
+  },
+  "expression:conjugaison:paal-lamed-he": {
+    "short": "פעל ה",
+    "details": "Quand la racine finit par ה (racines ל״ה), le ה disparaît au pluriel ; au féminin singulier il reste, seule la voyelle change : רוֹאֶה, רוֹאָה, רוֹאִים, רוֹאוֹת. Même modèle pour קונה, שותה, עושה…",
+    "course": {
+      "intro": "Quand la racine finit par ה (racines ל״ה), le ה tombe au pluriel.",
+      "points": [
+        {
+          "term": "רוֹאֶה",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "רוֹאָה",
+          "meaning": "féminin singulier",
+          "rule": "Le ה reste ; seule la voyelle change.",
+          "examples": []
+        },
+        {
+          "term": "רוֹאִים",
+          "meaning": "masculin pluriel",
+          "rule": "Le ה disparaît.",
+          "examples": []
+        },
+        {
+          "term": "רוֹאוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "Le ה disparaît.",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour קונה, שותה, עושה…"
+    }
+  },
+  "expression:conjugaison:piel": {
+    "short": "פיעל",
+    "details": "Au présent, le פיעל prend le préfixe מ et suit le modèle מְקַטֵּל : מְדַבֵּר, מְדַבֶּרֶת, מְדַבְּרִים, מְדַבְּרוֹת. Même modèle pour מספר, מבקר, מחפש…",
+    "course": {
+      "intro": "Au présent, le פיעל prend le préfixe מ et suit le modèle מְקַטֵּל.",
+      "points": [
+        {
+          "term": "מְדַבֵּר",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מְדַבֶּרֶת",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מְדַבְּרִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מְדַבְּרוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour מספר, מבקר, מחפש…"
+    }
+  },
+  "expression:conjugaison:hitpael": {
+    "short": "התפעל",
+    "details": "Au présent, le התפעל prend le préfixe מִתְ et suit le modèle מִתְקַטֵּל : מִתְרַחֵץ, מִתְרַחֶצֶת, מִתְרַחֲצִים, מִתְרַחֲצוֹת. Ce binyan exprime souvent une action que l'on fait sur soi-même (se laver, s'habiller) : מתלבש, מתעניין…",
+    "course": {
+      "intro": "Au présent, le התפעל prend le préfixe מִתְ et suit le modèle מִתְקַטֵּל. Il exprime souvent une action que tu fais sur toi-même : se laver, s’habiller.",
+      "points": [
+        {
+          "term": "מִתְרַחֵץ",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מִתְרַחֶצֶת",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מִתְרַחֲצִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מִתְרַחֲצוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Autres exemples : מתלבש (s’habiller), מתעניין (s’intéresser)."
+    }
+  },
+  "expression:conjugaison:hifil": {
+    "short": "הפעיל",
+    "details": "Au présent, le הפעיל prend le préfixe מ et suit le modèle מַקְטִיל, avec un י entre les deux dernières lettres de la racine : מַזְמִין, מַזְמִינָה, מַזְמִינִים, מַזְמִינוֹת. Même modèle pour מתחיל, מסביר…",
+    "course": {
+      "intro": "Au présent, le הפעיל suit le modèle מַקְטִיל : préfixe מ et י entre les deux dernières lettres de la racine.",
+      "points": [
+        {
+          "term": "מַזְמִין",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מַזְמִינָה",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מַזְמִינִים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "מַזְמִינוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour מתחיל, מסביר…"
+    }
+  }
+}

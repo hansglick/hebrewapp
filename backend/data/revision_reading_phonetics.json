@@ -1,0 +1,450 @@
+{
+ "0.01": [
+  {
+   "phonetic": "ani eli mi ata ata roni",
+   "pointed": "אֲנִי אֵלִי, מִי אַתָּה? אַתָּה רוֹנִי?"
+  },
+  {
+   "phonetic": "lo ani lo roni ani itsik",
+   "pointed": "לֹא, אֲנִי לֹא רוֹנִי, אֲנִי אִיצִיק."
+  },
+  {
+   "phonetic": "ze david zot khana hu talmid hi talmida",
+   "pointed": "זֶה דָּוִד, זֹאת חַנָּה. הוּא תַּלְמִיד, הִיא תַּלְמִידָה."
+  },
+  {
+   "phonetic": "ma hem lomdim",
+   "pointed": "מָה הֵם לוֹמְדִים?"
+  },
+  {
+   "phonetic": "hem lomdim ivrit",
+   "pointed": "הֵם לוֹמְדִים עִבְרִית."
+  },
+  {
+   "phonetic": "khana ve-david efo atem lomdim ivrit",
+   "pointed": "חַנָּה וְדָוִד, אֵיפֹה אַתֶּם לוֹמְדִים עִבְרִית?"
+  },
+  {
+   "phonetic": "anakhnu lomdim ivrit be-tel aviv",
+   "pointed": "אֲנַחְנוּ לוֹמְדִים עִבְרִית בְּתֵל אָבִיב."
+  },
+  {
+   "phonetic": "khana efo at gara",
+   "pointed": "חַנָּה, אֵיפֹה אַתְּ גָּרָה?"
+  },
+  {
+   "phonetic": "ani gara be-tel aviv david efo ata gar",
+   "pointed": "אֲנִי גָּרָה בְּתֵל אָבִיב. דָּוִד, אֵיפֹה אַתָּה גָּר?"
+  },
+  {
+   "phonetic": "gam ani gar be-tel aviv",
+   "pointed": "גַּם אֲנִי גָּר בְּתֵל אָבִיב."
+  }
+ ],
+ "0.02": [
+  {
+   "phonetic": "shalom roni ma ata kore",
+   "pointed": "שָׁלוֹם רוֹנִי, מָה אַתָּה קוֹרֵא?"
+  },
+  {
+   "phonetic": "ani kore iton ve-ata david ma ata kotev",
+   "pointed": "אֲנִי קוֹרֵא עִתּוֹן, וְאַתָּה דָּוִד מָה אַתָּה כּוֹתֵב?"
+  },
+  {
+   "phonetic": "ani kotev mikhtav ha-mikhtav le-khana hi gara be-yisrael",
+   "pointed": "אֲנִי כּוֹתֵב מִכְתָּב. הַמִּכְתָּב לְחַנָּה, הִיא גָּרָה בְּיִשְׂרָאֵל."
+  },
+  {
+   "phonetic": "khana mi-yisrael",
+   "pointed": "חַנָּה מִיִּשְׂרָאֵל?"
+  },
+  {
+   "phonetic": "ken hi mi-yisrael ve-ata roni me-eifo ata",
+   "pointed": "כֵּן, הִיא מִיִּשְׂרָאֵל. וְאַתָּה רוֹנִי, מֵאֵיפֹה אַתָּה?"
+  },
+  {
+   "phonetic": "gam ani mi-yisrael",
+   "pointed": "גַּם אֲנִי מִיִּשְׂרָאֵל."
+  },
+  {
+   "phonetic": "roni mi ele",
+   "pointed": "רוֹנִי, מִי אֵלֶּה?"
+  },
+  {
+   "phonetic": "ze shlomo ve-zot yael hem gam garim be-yisrael be-yisrael hem lomdim ivrit hem lomdim ba-kita ba-kita hem yoshvim kotvim ve-korim ha-kita be-tel aviv",
+   "pointed": "זֶה שְׁלֹמֹה וְזֹאת יָעֵל. הֵם גַּם גָּרִים בְּיִשְׂרָאֵל. בְּיִשְׂרָאֵל הֵם לוֹמְדִים עִבְרִית. הֵם לוֹמְדִים בַּכִּתָּה. בַּכִּתָּה הֵם יוֹשְׁבִים, כּוֹתְבִים וְקוֹרְאִים. הַכִּתָּה בְּתֵל אָבִיב."
+  }
+ ],
+ "0.04": [
+  {
+   "phonetic": "shalom shlomo le-an ata tas",
+   "pointed": "שָׁלוֹם שְׁלֹמֹה, לְאָן אַתָּה טָס?"
+  },
+  {
+   "phonetic": "ani tas le-yisrael be-matos ve-ata david le-an ata nosea",
+   "pointed": "אֲנִי טָס לְיִשְׂרָאֵל בְּמָטוֹס וְאַתָּה דָּוִד לְאָן אַתָּה נוֹסֵעַ?"
+  },
+  {
+   "phonetic": "ani nosea be-rakevet le-pariz",
+   "pointed": "אֲנִי נוֹסֵעַ בְּרַכֶּבֶת לְפָּרִיז."
+  },
+  {
+   "phonetic": "im mi ata nosea",
+   "pointed": "עִם מִי אַתָּה נוֹסֵעַ?"
+  },
+  {
+   "phonetic": "ani nosea im khana",
+   "pointed": "אֲנִי נוֹסֵעַ עִם חַנָּה."
+  },
+  {
+   "phonetic": "pariz zot ir gdola ve-yafa",
+   "pointed": "פָּרִיז זֹאת עִיר גְּדוֹלָה וְיָפָה."
+  },
+  {
+   "phonetic": "gam yerushalayim zot ir gdola ve-yafa",
+   "pointed": "גַּם יְרוּשָׁלַיִם זֹאת עִיר גְּדוֹלָה וְיָפָה."
+  },
+  {
+   "phonetic": "shlomo ma ata ose be-yisrael",
+   "pointed": "שְׁלֹמֹה, מָה אַתָּה עוֹשֶׂה בְּיִשְׂרָאֵל?"
+  },
+  {
+   "phonetic": "be-yisrael ani metayel bi-rushalayim u-ve-tel-aviv",
+   "pointed": "בְּיִשְׂרָאֵל אֲנִי מְטַיֵּל בִּירוּשָׁלַיִם וּבְתֵל-אָבִיב."
+  }
+ ],
+ "0.05": [
+  {
+   "phonetic": "shlomo gar be-tel aviv",
+   "pointed": "שְׁלֹמֹה גָּר בְּתֵל אָבִיב."
+  },
+  {
+   "phonetic": "hu lomed ivrit ba-ulpan be-tel aviv",
+   "pointed": "הוּא לוֹמֵד עִבְרִית בָּאוּלְפָּן בְּתֵל אָבִיב."
+  },
+  {
+   "phonetic": "hu gar al yad tel aviv be-dira ktana",
+   "pointed": "הוּא גָּר עַל יַד תֵּל אָבִיב בְּדִירָה קְטַנָּה."
+  },
+  {
+   "phonetic": "ba-dira yesh shulkhan gadol kise u-mita ktana",
+   "pointed": "בַּדִּירָה יֵשׁ שׁוּלְחָן גָּדוֹל כִּיסֵּא וּמִיטָּה קְטַנָּה."
+  },
+  {
+   "phonetic": "ba-dira yesh sfarim aval ein televizya",
+   "pointed": "בַּדִּירָה יֵשׁ סְפָרִים אֲבָל אֵין טֶלֶוִיזְיָה."
+  },
+  {
+   "phonetic": "shlomo lomed ba-dira kore sefer ve-shomea musika",
+   "pointed": "שְׁלֹמֹה לוֹמֵד בַּדִּירָה, קוֹרֵא סֵפֶר וְשׁוֹמֵעַ מוּסִיקָה."
+  },
+  {
+   "phonetic": "me-ha-khalon ba-dira hu roe mekhoniyot otobusim ve-gam gina gdola",
+   "pointed": "מֵהַחַלּוֹן בַּדִּירָה הוּא רוֹאֶה מְכוֹנִיּוֹת, אוֹטוֹבּוּסִים וְגַם גִּינָּה גְּדוֹלָה."
+  },
+  {
+   "phonetic": "be-shabat shlomo lo oved ve-lo lomed hu nakh",
+   "pointed": "בְּשַׁבָּת, שְׁלֹמֹה לֹא עוֹבֵד וְלֹא לוֹמֵד הוּא נָח."
+  }
+ ],
+ "0.07": [
+  {
+   "phonetic": "shlomo lomed ivrit ba-kita bi-rushalayim",
+   "pointed": "שְׁלֹמֹה לוֹמֵד עִבְרִית בַּכִּתָּה בִּירוּשָׁלַיִם."
+  },
+  {
+   "phonetic": "ba-boker hu kam mukdam mitrakhets ve-okhel arukhat boker uga perot ve-shote kafe",
+   "pointed": "בַּבֹּקֶר הוּא קָם מוּקְדָּם, מִתְרַחֵץ וְאוֹכֵל אֲרוּחַת בֹּקֶר עוּגָה, פֵּרוֹת וְשׁוֹתֶה קָפֶה."
+  },
+  {
+   "phonetic": "hu nosea be-otobus la-ulpan",
+   "pointed": "הוּא נוֹסֵעַ בְּאוֹטוֹבּוּס לָאוּלְפָּן."
+  },
+  {
+   "phonetic": "ba-kita yesh harbe talmidim",
+   "pointed": "בַּכִּתָּה יֵשׁ הַרְבֵּה תַּלְמִידִים."
+  },
+  {
+   "phonetic": "khana baa gam lilmod",
+   "pointed": "חַנָּה בָּאָה גַּם לִלְמוֹד."
+  },
+  {
+   "phonetic": "shlomo yoshev al yad khana",
+   "pointed": "שְׁלֹמֹה יוֹשֵׁב עַל יַד חַנָּה."
+  },
+  {
+   "phonetic": "ba-tsohorayim hu holekh leekhol ba-misada arukhat tsohorayim im ha-khaverim ba-kita",
+   "pointed": "בַּצָּהֳרַיִם הוּא הוֹלֵךְ לֶאֱכוֹל בַּמִּסְעָדָה אֲרוּחַת צָהֳרַיִם עִם הַחֲבֵרִים בַּכִּתָּה."
+  },
+  {
+   "phonetic": "hem yoshvim okhlim u-medabrim",
+   "pointed": "הֵם יוֹשְׁבִים, אוֹכְלִים, וּמְדַבְּרִים."
+  },
+  {
+   "phonetic": "ba-erev hu holekh la-kolnoa im khana",
+   "pointed": "בָּעֶרֶב הוּא הוֹלֵךְ לַקּוֹלְנוֹעַ עִם חַנָּה."
+  },
+  {
+   "phonetic": "hem rotsim lirot seret tov ba-kolnoa",
+   "pointed": "הֵם רוֹצִים לִרְאוֹת סֶרֶט טוֹב בַּקּוֹלְנוֹעַ."
+  }
+ ],
+ "0.09": [
+  {
+   "phonetic": "le-david yesh shiur",
+   "pointed": "לְדָוִד יֵשׁ שִׁיעוּר."
+  },
+  {
+   "phonetic": "ba-shiur hu ose harbe dvarim hu lomed likro likhtov ve-gam kamuvan ledaber",
+   "pointed": "בַּשִּׁיעוּר הוּא עוֹשֶׂה הַרְבֵּה דְּבָרִים, הוּא לוֹמֵד לִקְרוֹא לִכְתּוֹב וְגַם כַּמּוּבָן לְדַבֵּר."
+  },
+  {
+   "phonetic": "ba-kita hu mesaper la-talmidim me-eifo hu ba",
+   "pointed": "בַּכִּיתָּה הוּא מְסַפֵּר לַתַּלְמִידִים מֵאֵיפֹה הוּא בָּא."
+  },
+  {
+   "phonetic": "le-david yesh mora tova",
+   "pointed": "לְדָוִד יֵשׁ מוֹרָה טוֹבָה."
+  },
+  {
+   "phonetic": "hu ohev lilmod im ha-mora ve-ha-talmidim",
+   "pointed": "הוּא אוֹהֵב לִלְמוֹד עִם הַמּוֹרָה וְהַתַּלְמִידִים."
+  },
+  {
+   "phonetic": "yesh lo gam khaverim tovim ba-kita",
+   "pointed": "יֵשׁ לוֹ גַּם חֲבֵרִים טוֹבִים בַּכִּיתָּה."
+  },
+  {
+   "phonetic": "ha-mora melamedet tov ve-yesh la harbe harbe savlanut",
+   "pointed": "הַמּוֹרָה מְלַמֶּדֶת טוֹב וְיֵשׁ לָהּ הַרְבֵּה הַרְבֵּה סַבְלָנוּת."
+  },
+  {
+   "phonetic": "be-shabat david lo lomed ein lo shiur yesh lo zman letayel be-merkaz ha-ir",
+   "pointed": "בְּשַׁבָּת דָּוִד לֹא לוֹמֵד, אֵין לוֹ שִׁיעוּר, יֵשׁ לוֹ זְמַן לְטַיֵּל בְּמֶרְכַּז הָעִיר."
+  },
+  {
+   "phonetic": "be-merkaz ha-ir yesh harbe khanuyot ve-harbe harbe mekhoniyot ve-raash",
+   "pointed": "בְּמֶרְכַּז הָעִיר יֵשׁ הַרְבֵּה חֲנוּיּוֹת וְהַרְבֵּה הַרְבֵּה מְכוֹנִיּוֹת וְרַעַשׁ."
+  },
+  {
+   "phonetic": "aval ein harbe misadot",
+   "pointed": "אֲבָל אֵין הַרְבֵּה מִסְעָדוֹת."
+  }
+ ],
+ "0.11": [
+  {
+   "phonetic": "le-david yesh harbe khaverim",
+   "pointed": "לְדָוִד יֵשׁ הַרְבֵּה חֲבֵרִים."
+  },
+  {
+   "phonetic": "ha-khaverim shel david lomdim gam ba-ulpan",
+   "pointed": "הַחֲבֵרִים שֶׁל דָּוִד לוֹמְדִים גַּם בָּאוּלְפָּן."
+  },
+  {
+   "phonetic": "hem roim et david kimat kol yom ba-kita",
+   "pointed": "הֵם רוֹאִים אֶת דָּוִד כִּמְעַט כָּל יוֹם בַּכִּתָּה."
+  },
+  {
+   "phonetic": "ba-kita david lomed poteakh et ha-sefer ve-kore",
+   "pointed": "בַּכִּתָּה דָּוִד לוֹמֵד, פּוֹתֵחַ אֶת הַסֵּפֶר וְקוֹרֵא."
+  },
+  {
+   "phonetic": "akhshav akharei khodesh hu kore yoter tov",
+   "pointed": "עַכְשָׁו, אַחֲרֵי חֹדֶשׁ הוּא קוֹרֵא יוֹתֵר טוֹב."
+  },
+  {
+   "phonetic": "akharei ha-shiur hu ayef tsame ve-raev",
+   "pointed": "אַחֲרֵי הַשִּׁעוּר הוּא עָיֵף צָמֵא וְרָעֵב."
+  },
+  {
+   "phonetic": "akharei ha-shiur hu okhel ba-bayit ve-nakh",
+   "pointed": "אַחֲרֵי הַשִּׁעוּר הוּא אוֹכֵל בַּבַּיִת וְנָח."
+  },
+  {
+   "phonetic": "akhar kakh hu lomed et ha-shiur",
+   "pointed": "אַחַר כָּךְ הוּא לוֹמֵד אֶת הַשִּׁעוּר."
+  },
+  {
+   "phonetic": "hu rotse ve-ohev li-lmod et ha-shiur be-veit kafe im khana",
+   "pointed": "הוּא רוֹצֶה וְאוֹהֵב לִלְמוֹד אֶת הַשִּׁעוּר בְּבֵית קָפֶה עִם חַנָּה."
+  },
+  {
+   "phonetic": "hem shotim kafe ve-okhlim uga teima u-ferot",
+   "pointed": "הֵם שׁוֹתִים קָפֶה וְאוֹכְלִים עוּגָה טְעִימָה וּפֵרוֹת."
+  },
+  {
+   "phonetic": "akharei she-hem lomdim be-yakhad hem holkhim le-tayel be-merkaz ha-ir",
+   "pointed": "אַחֲרֵי שֶׁהֵם לוֹמְדִים בְּיַחַד הֵם הוֹלְכִים לְטַיֵּל בְּמֶרְכַּז הָעִיר."
+  }
+ ],
+ "0.16": [
+  {
+   "phonetic": "shalom korim li khana eikh korim lekha",
+   "pointed": "שָׁלוֹם, קוֹרְאִים לִי חַנָּה, אֵיךְ קוֹרְאִים לְךָ?"
+  },
+  {
+   "phonetic": "korim li david naim meod",
+   "pointed": "קוֹרְאִים לִי דָּוִד, נָעִים מְאוֹד."
+  },
+  {
+   "phonetic": "naim meod david me-eifo ata",
+   "pointed": "נָעִים מְאוֹד דָּוִד. מֵאֵיפֹה אַתָּה?"
+  },
+  {
+   "phonetic": "ani mi-yisrael ve-at khana me-eifo at",
+   "pointed": "אֲנִי מִיִּשְׂרָאֵל וְאַתְּ חַנָּה, מֵאֵיפֹה אַתְּ?"
+  },
+  {
+   "phonetic": "ani mi-tsarfat",
+   "pointed": "אֲנִי מִצָּרְפַת."
+  },
+  {
+   "phonetic": "at ovedet",
+   "pointed": "אַתְּ עוֹבֶדֶת?"
+  },
+  {
+   "phonetic": "ken ani ovedet ve-ata david ata oved",
+   "pointed": "כֵּן, אֲנִי עוֹבֶדֶת וְאַתָּה דָּוִד אַתָּה עוֹבֵד?"
+  },
+  {
+   "phonetic": "ken ani oved",
+   "pointed": "כֵּן, אֲנִי עוֹבֵד."
+  },
+  {
+   "phonetic": "ba-me ata oved",
+   "pointed": "בַּמֶּה אַתָּה עוֹבֵד?"
+  },
+  {
+   "phonetic": "ani rofe ani gar be-tel aviv ve-oved be-kheifa",
+   "pointed": "אֲנִי רוֹפֵא. אֲנִי גָּר בְּתֵל אָבִיב וְעוֹבֵד בְּחֵיפָה."
+  },
+  {
+   "phonetic": "ze rakhok eikh ata nosea le-kheifa ba-rakevet o ba-otobus",
+   "pointed": "זֶה רָחוֹק. אֵיךְ אַתָּה נוֹסֵעַ לְחֵיפָה? בָּרַכֶּבֶת אוֹ בָּאוֹטוֹבּוּס?"
+  },
+  {
+   "phonetic": "yesh li rekhev ani nosea ba-rekhev la-avoda at nesua",
+   "pointed": "יֵשׁ לִי רֶכֶב. אֲנִי נוֹסֵעַ בָּרֶכֶב לָעֲבוֹדָה. אַתְּ נְשׂוּאָה?"
+  },
+  {
+   "phonetic": "ken ani nesua li-shlomo ve-yesh lanu shlosha yeladim ktanim va-khamudim ve-ata david gam ata nasui",
+   "pointed": "כֵּן, אֲנִי נְשׂוּאָה לִשְׁלֹמֹה וְיֵשׁ לָנוּ שְׁלוֹשָׁה יְלָדִים קְטַנִּים וַחֲמוּדִים. וְאַתָּה דָּוִד, גַּם אַתָּה נָשׂוּי?"
+  },
+  {
+   "phonetic": "lo ani lo nasui ani ravak khana yesh lakh mishpakha be-yisrael",
+   "pointed": "לֹא, אֲנִי לֹא נָשׂוּי, אֲנִי רַוָּק. חַנָּה, יֵשׁ לָךְ מִשְׁפָּחָה בְּיִשְׂרָאֵל?"
+  },
+  {
+   "phonetic": "ken yesh li mishpakha gdola she-gara bi-rushalayim",
+   "pointed": "כֵּן, יֵשׁ לִי מִשְׁפָּחָה גְּדוֹלָה שֶׁגָּרָה בִּירוּשָׁלַיִם."
+  },
+  {
+   "phonetic": "matai at baa le-vaker be-yisrael",
+   "pointed": "מָתַי אַתְּ בָּאָה לְבַקֵּר בְּיִשְׂרָאֵל?"
+  },
+  {
+   "phonetic": "ani baa le-vaker be-yisrael be-ogust kshe-yesh li khufsha ani mevakeret et ha-mishpakha bi-rushalayim",
+   "pointed": "אֲנִי בָּאָה לְבַקֵּר בְּיִשְׂרָאֵל בְּאוֹגוּסְט, כְּשֶׁיֵּשׁ לִי חוּפְשָׁה. אֲנִי מְבַקֶּרֶת אֶת הַמִּשְׁפָּחָה בִּירוּשָׁלַיִם."
+  },
+  {
+   "phonetic": "eizo ir at hakhi ohevet be-yisrael",
+   "pointed": "אֵיזוֹ עִיר אַתְּ הֲכִי אוֹהֶבֶת בְּיִשְׂרָאֵל?"
+  },
+  {
+   "phonetic": "ani hakhi ohevet et ha-ir yerushalayim hi yafa u-meyukhedet",
+   "pointed": "אֲנִי הֲכִי אוֹהֶבֶת אֶת הָעִיר יְרוּשָׁלַיִם. הִיא יָפָה וּמְיוּחֶדֶת."
+  },
+  {
+   "phonetic": "gam ani meod ohev et yerushalayim",
+   "pointed": "גַּם אֲנִי מְאוֹד אוֹהֵב אֶת יְרוּשָׁלַיִם."
+  },
+  {
+   "phonetic": "eize sefer ata kore kshe-yesh lekha zman",
+   "pointed": "אֵיזֶה סֵפֶר אַתָּה קוֹרֵא כְּשֶׁיֵּשׁ לְךָ זְמַן?"
+  },
+  {
+   "phonetic": "ani kore et ha-sefer he-khadash shel amos oz hu meod meanyen ani meod ohev et ha-sefer ha-ze",
+   "pointed": "אֲנִי קוֹרֵא אֶת הַסֵּפֶר הֶחָדָשׁ שֶׁל עָמוֹס עוֹז. הוּא מְאוֹד מְעַנְיֵן. אֲנִי מְאוֹד אוֹהֵב אֶת הַסֵּפֶר הַזֶּה."
+  }
+ ],
+ "0.18": [
+  {
+   "phonetic": "david mazmin khaverim le-shabat",
+   "pointed": "דָּוִד מַזְמִין חֲבֵרִים לְשַׁבָּת."
+  },
+  {
+   "phonetic": "hu tsarikh li-knot basar dagim vi-rakot ve-akhar kakh hu tsarikh la-khazor ha-bayta le-sader u-le-vashel",
+   "pointed": "הוּא צָרִיךְ לִקְנוֹת בָּשָׂר, דָּגִים וִירָקוֹת וְאַחַר כָּךְ הוּא צָרִיךְ לַחֲזוֹר הַבַּיְתָה לְסַדֵּר וּלְבַשֵּׁל."
+  },
+  {
+   "phonetic": "david memaher ki en lo harbe zman",
+   "pointed": "דָּוִד מְמַהֵר כִּי אֵין לוֹ הַרְבֵּה זְמַן."
+  },
+  {
+   "phonetic": "hu gam tsarikh li-fgosh et khana be-veit kafe be-merkaz ha-ir",
+   "pointed": "הוּא גַּם צָרִיךְ לִפְגּוֹשׁ אֶת חַנָּה בְּבֵית קָפֶה בְּמֶרְכַּז הָעִיר."
+  },
+  {
+   "phonetic": "hu lo yakhol la-shevet im khana be-veit ha-kafe harbe zman yesh lo harbe dvarim la-asot ve-hu tsarikh le-maher",
+   "pointed": "הוּא לֹא יָכוֹל לָשֶׁבֶת עִם חַנָּה בְּבֵית הַקָּפֶה הַרְבֵּה זְמַן, יֵשׁ לוֹ הַרְבֵּה דְּבָרִים לַעֲשׂוֹת וְהוּא צָרִיךְ לְמַהֵר."
+  },
+  {
+   "phonetic": "ha-khaverim baim la-bayit shel david ba-erev",
+   "pointed": "הַחֲבֵרִים בָּאִים לַבַּיִת שֶׁל דָּוִד בָּעֶרֶב."
+  },
+  {
+   "phonetic": "hem yoshvim okhlim arukha khama shotim mashke kar u-medabrim",
+   "pointed": "הֵם יוֹשְׁבִים, אוֹכְלִים אֲרוּחָה חַמָּה, שׁוֹתִים מַשְׁקֶה קַר וּמְדַבְּרִים."
+  }
+ ],
+ "0.20": [
+  {
+   "phonetic": "shalom eitan kama sfarim yesh lekha",
+   "pointed": "שָׁלוֹם אֵיתָן, כַּמָּה סְפָרִים יֵשׁ לְךָ?"
+  },
+  {
+   "phonetic": "yesh li shnei sfarim",
+   "pointed": "יֵשׁ לִי שְׁנֵי סְפָרִים."
+  },
+  {
+   "phonetic": "ani tsarikh sefer ein li sefer ata yakhol be-vakasha latet li sefer ekhad",
+   "pointed": "אֲנִי צָרִיךְ סֵפֶר. אֵין לִי סֵפֶר, אַתָּה יָכוֹל בְּבַקָּשָׁה לָתֵת לִי סֵפֶר אֶחָד?"
+  },
+  {
+   "phonetic": "ka-muvan david ani yakhol latet lekha sefer ekhad",
+   "pointed": "כַּמּוּבָן דָּוִד, אֲנִי יָכוֹל לָתֵת לְךָ סֵפֶר אֶחָד."
+  },
+  {
+   "phonetic": "toda raba",
+   "pointed": "תּוֹדָה רַבָּה."
+  },
+  {
+   "phonetic": "kama talmidim baim ha-yom la-kita",
+   "pointed": "כַּמָּה תַּלְמִידִים בָּאִים הַיּוֹם לַכִּתָּה?"
+  },
+  {
+   "phonetic": "ha-yom baim la-kita rak khamisha talmidim u-shtei talmidot",
+   "pointed": "הַיּוֹם בָּאִים לַכִּתָּה רַק חֲמִשָּׁה תַּלְמִידִים וּשְׁתֵּי תַּלְמִידוֹת."
+  },
+  {
+   "phonetic": "eifo kulam",
+   "pointed": "אֵיפֹה כֻּלָּם?"
+  },
+  {
+   "phonetic": "shlosha talmidim kholim ve-shalosh talmidot lo yekholot lavo ha-yom",
+   "pointed": "שְׁלֹשָׁה תַּלְמִידִים חוֹלִים וְשָׁלֹשׁ תַּלְמִידוֹת לֹא יְכוֹלוֹת לָבוֹא הַיּוֹם."
+  },
+  {
+   "phonetic": "kama yeladim yesh lekha",
+   "pointed": "כַּמָּה יְלָדִים יֵשׁ לְךָ?"
+  },
+  {
+   "phonetic": "yesh li shlosha banim u-vat akhat kama yeladim yesh lekha",
+   "pointed": "יֵשׁ לִי שְׁלֹשָׁה בָּנִים וּבַת אַחַת. כַּמָּה יְלָדִים יֵשׁ לְךָ?"
+  },
+  {
+   "phonetic": "yesh li shalosh banot u-shnei vanim ve-gam hem lomdim ivrit",
+   "pointed": "יֵשׁ לִי שָׁלֹשׁ בָּנוֹת וּשְׁנֵי בָנִים וְגַם הֵם לוֹמְדִים עִבְרִית."
+  }
+ ]
+}

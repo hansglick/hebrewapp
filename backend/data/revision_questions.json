@@ -26,7 +26,10 @@
     {
      "hint": "où ?",
      "question": "איפה את גרה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   }
@@ -38,12 +41,18 @@
     {
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "חנה ושרה"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה חנה ושרה גרות?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   },
@@ -53,7 +62,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הן לומדות?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     }
    ]
   }
@@ -65,12 +77,18 @@
     {
      "hint": "qui ?",
      "question": "מי לומד עברית?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד וחנה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד וחנה לומדים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     }
    ]
   }
@@ -82,17 +100,26 @@
     {
      "hint": "qui ?",
      "question": "מי לומד עברית בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד וחנה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד וחנה לומדים בתל אביב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה דוד וחנה לומדים עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   }
@@ -104,12 +131,18 @@
     {
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "חנה"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה חנה גרה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   }
@@ -121,12 +154,18 @@
     {
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה דוד גר?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   }
@@ -168,7 +207,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הם לומדים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     }
    ]
   }
@@ -186,12 +228,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אתם לומדים בתל אביב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה אתם לומדים עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   }
@@ -209,7 +257,10 @@
     {
      "hint": "où ?",
      "question": "איפה את גרה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   },
@@ -271,17 +322,26 @@
     {
      "hint": "qui ?",
      "question": "מי כותב מכתב לחנה?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד כותב לחנה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מכתב"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי דוד כותב מכתב?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לחנה"
+     ]
     }
    ]
   }
@@ -293,7 +353,10 @@
     {
      "hint": "où ?",
      "question": "איפה חנה גרה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בישראל"
+     ]
     }
    ]
   }
@@ -305,7 +368,10 @@
     {
      "hint": "où ?",
      "question": "איפה יעל ושלמה גרים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בישראל"
+     ]
     }
    ]
   }
@@ -317,12 +383,18 @@
     {
      "hint": "qui ?",
      "question": "מי לומד עברית?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "יעל ושלמה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יעל ושלמה לומדים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     }
    ]
   }
@@ -376,7 +448,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה כותב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מכתב"
+     ]
     }
    ]
   },
@@ -396,7 +471,10 @@
     {
      "hint": "où ?",
      "question": "איפה הם לומדים עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בישראל"
+     ]
     }
    ]
   },
@@ -406,7 +484,10 @@
     {
      "hint": "où ?",
      "question": "איפה הם לומדים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   },
@@ -434,12 +515,18 @@
     {
      "hint": "quoi ?",
      "question": "מה היא לומדת בכיתה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה היא לומדת עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   }
@@ -451,12 +538,18 @@
     {
      "hint": "quoi ?",
      "question": "מה התלמידים לומדים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "d'où ?",
      "question": "מאיפה התלמידים?",
-     "interrogative": "מאיפה"
+     "interrogative": "מאיפה",
+     "target": [
+      "מתל אביב"
+     ]
     }
    ]
   }
@@ -480,12 +573,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה לומד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "d'où ?",
      "question": "מאיפה אתה?",
-     "interrogative": "מאיפה"
+     "interrogative": "מאיפה",
+     "target": [
+      "מתל אביב"
+     ]
     }
    ]
   }
@@ -503,7 +602,10 @@
     {
      "hint": "où ?",
      "question": "איפה הם גרים ולומדים עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     }
    ]
   }
@@ -563,7 +665,10 @@
     {
      "hint": "où ?",
      "question": "לאן שלמה טס?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לישראל"
+     ]
     }
    ]
   },
@@ -573,7 +678,10 @@
     {
      "hint": "où ?",
      "question": "לאן שלמה טס?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לישראל"
+     ]
     }
    ]
   }
@@ -699,7 +807,10 @@
     {
      "hint": "où ?",
      "question": "איפה אתה לומד?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בבית"
+     ]
     }
    ]
   }
@@ -727,7 +838,11 @@
     {
      "hint": "où ?",
      "question": "איפה הן גרות ואיפה דוד גר?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב",
+      "בירושלים"
+     ]
     }
    ]
   }
@@ -749,12 +864,18 @@
     {
      "hint": "où ?",
      "question": "איפה חנה ושרה גרות?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "חנה ושרה"
+     ]
     }
    ]
   },
@@ -764,7 +885,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הן לומדות?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     }
    ]
   }
@@ -776,12 +900,18 @@
     {
      "hint": "où ?",
      "question": "איפה שלמה גר?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "שלמה"
+     ]
     }
    ]
   }
@@ -799,12 +929,18 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא רואה מהחלון בדירה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מכוניות אוטובוסים וגם גינה גדולה"
+     ]
     },
     {
      "hint": "d'où ?",
      "question": "מאיפה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
-     "interrogative": "מאיפה"
+     "interrogative": "מאיפה",
+     "target": [
+      "מהחלון בדירה"
+     ]
     }
    ]
   }
@@ -834,12 +970,18 @@
     {
      "hint": "où ?",
      "question": "איפה שלמה גר?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "מי גר בתל אביב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "שלמה"
+     ]
     }
    ]
   }
@@ -851,12 +993,18 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא לומד באולפן בתל אביב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה הוא לומד עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "באולפן בתל אביב"
+     ]
     }
    ]
   }
@@ -868,7 +1016,10 @@
     {
      "hint": "où ?",
      "question": "איפה הוא גר?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "על יד תל אביב בדירה קטנה"
+     ]
     }
    ]
   }
@@ -886,12 +1037,18 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא רואה מהחלון בדירה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מכוניות אוטובוסים וגם גינה גדולה"
+     ]
     },
     {
      "hint": "d'où ?",
      "question": "מאיפה הוא רואה מכוניות, אוטובוסים וגם גינה גדולה?",
-     "interrogative": "מאיפה"
+     "interrogative": "מאיפה",
+     "target": [
+      "מהחלון בדירה"
+     ]
     }
    ]
   }
@@ -943,7 +1100,10 @@
     {
      "hint": "d'où ?",
      "question": "מאיפה הוא רואה גינה יפה?",
-     "interrogative": "מאיפה"
+     "interrogative": "מאיפה",
+     "target": [
+      "מהחלון של הדירה"
+     ]
     }
    ]
   }
@@ -961,7 +1121,10 @@
     {
      "hint": "qui ?",
      "question": "מי מתרחצת בערב?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "שרה"
+     ]
     }
    ]
   }
@@ -973,7 +1136,10 @@
     {
      "hint": "où ?",
      "question": "איפה התלמידים מדברים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   }
@@ -991,17 +1157,26 @@
     {
      "hint": "qui ?",
      "question": "מי לומד עברית בכיתה בירושלים?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "שלמה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה שלמה לומד בכיתה בירושלים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה שלמה לומד עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה בירושלים"
+     ]
     }
    ]
   }
@@ -1055,17 +1230,26 @@
     {
      "hint": "qui ?",
      "question": "מי לומד עברית בכיתה בירושלים?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "שלמה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה שלמה לומד בכיתה בירושלים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה שלמה לומד עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה בירושלים"
+     ]
     }
    ]
   }
@@ -1111,12 +1295,18 @@
     {
      "hint": "où ?",
      "question": "לאן הוא הולך בערב עם חנה?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לקולנוע"
+     ]
     },
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא הולך לקולנוע בערב?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם חנה"
+     ]
     }
    ]
   },
@@ -1126,12 +1316,18 @@
     {
      "hint": "où ?",
      "question": "לאן הוא הולך בערב עם חנה?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לקולנוע"
+     ]
     },
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא הולך לקולנוע בערב?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם חנה"
+     ]
     }
    ]
   }
@@ -1143,7 +1339,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הם רוצים לראות בקולנוע?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "סרט טוב"
+     ]
     }
    ]
   }
@@ -1155,7 +1354,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש להם?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "גינה יפה"
+     ]
     }
    ]
   },
@@ -1165,7 +1367,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש להם?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "גינה יפה"
+     ]
     }
    ]
   }
@@ -1177,7 +1382,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לו?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מיטה"
+     ]
     }
    ]
   },
@@ -1187,7 +1395,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לו?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מיטה"
+     ]
     }
    ]
   }
@@ -1227,7 +1438,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אין לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   },
@@ -1237,7 +1451,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אין לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   }
@@ -1249,7 +1466,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   },
@@ -1259,7 +1479,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   }
@@ -1271,12 +1494,18 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לרוני?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי יש ספר?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לרוני"
+     ]
     }
    ]
   }
@@ -1288,12 +1517,18 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לרוני?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי יש ספר?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לרוני"
+     ]
     }
    ]
   }
@@ -1305,12 +1540,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אין לרוני?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי אין ספר?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לרוני"
+     ]
     }
    ]
   }
@@ -1322,12 +1563,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אין לרוני?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי אין ספר?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לרוני"
+     ]
     }
    ]
   }
@@ -1351,12 +1598,18 @@
     {
      "hint": "avec qui ?",
      "question": "עם מי חנה אוהבת ללמוד?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם דוד"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "מי אוהבת ללמוד עם דוד?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "חנה"
+     ]
     }
    ]
   }
@@ -1380,7 +1633,10 @@
     {
      "hint": "quoi ?",
      "question": "מה דוד מספר לתלמידים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מאיפה הוא בא"
+     ]
     }
    ]
   }
@@ -1440,12 +1696,18 @@
     {
      "hint": "à qui ?",
      "question": "למי יש שיעור?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לדוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש לדוד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שיעור"
+     ]
     }
    ]
   }
@@ -1463,7 +1725,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא מספר לתלמידים בכיתה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מאיפה הוא בא"
+     ]
     }
    ]
   }
@@ -1475,7 +1740,10 @@
     {
      "hint": "à qui ?",
      "question": "למי יש מורה טובה?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לדוד"
+     ]
     }
    ]
   }
@@ -1487,7 +1755,10 @@
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא אוהב ללמוד?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם המורה והתלמידים"
+     ]
     }
    ]
   }
@@ -1499,7 +1770,10 @@
     {
      "hint": "où ?",
      "question": "איפה יש לו גם חברים טובים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   },
@@ -1509,7 +1783,10 @@
     {
      "hint": "où ?",
      "question": "איפה יש לו גם חברים טובים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   }
@@ -1547,7 +1824,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הם רוצים לראות?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את הסרט הזה"
+     ]
     }
    ]
   },
@@ -1557,7 +1837,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הם רוצים לראות?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את הסרט הזה"
+     ]
     }
    ]
   }
@@ -1579,7 +1862,10 @@
     {
      "hint": "qui ?",
      "question": "את מי היא שומעת?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את דוד"
+     ]
     }
    ]
   },
@@ -1589,7 +1875,10 @@
     {
      "hint": "qui ?",
      "question": "את מי היא שומעת?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את דוד"
+     ]
     }
    ]
   }
@@ -1611,12 +1900,18 @@
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא רואה את הסרט?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם חנה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה הוא רואה עם חנה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את הסרט"
+     ]
     }
    ]
   },
@@ -1626,12 +1921,18 @@
     {
      "hint": "qui ?",
      "question": "מי רואה סרט?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד רואה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "סרט"
+     ]
     }
    ]
   },
@@ -1641,12 +1942,18 @@
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא רואה את הסרט?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם חנה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה הוא רואה עם חנה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את הסרט"
+     ]
     }
    ]
   }
@@ -1672,7 +1979,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא אוהב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את תל אביב"
+     ]
     }
    ]
   },
@@ -1686,7 +1996,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא אוהב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את תל אביב"
+     ]
     }
    ]
   }
@@ -1728,7 +2041,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה לומד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את השיעור"
+     ]
     }
    ]
   },
@@ -1738,7 +2054,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה לומד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את השיעור"
+     ]
     }
    ]
   }
@@ -1750,7 +2069,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה לומד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שיעור"
+     ]
     }
    ]
   }
@@ -1762,7 +2084,10 @@
     {
      "hint": "quoi ?",
      "question": "מה את כותבת?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את המכתב"
+     ]
     }
    ]
   },
@@ -1772,7 +2097,10 @@
     {
      "hint": "quoi ?",
      "question": "מה את כותבת?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את המכתב"
+     ]
     }
    ]
   }
@@ -1784,7 +2112,10 @@
     {
      "hint": "quoi ?",
      "question": "מה את כותבת?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מכתב"
+     ]
     }
    ]
   }
@@ -1812,7 +2143,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה רוצה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את העוגה הזאת"
+     ]
     }
    ]
   },
@@ -1822,7 +2156,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה רוצה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את העוגה הזאת"
+     ]
     }
    ]
   }
@@ -1834,7 +2171,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה רוצה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עוגה"
+     ]
     }
    ]
   }
@@ -1846,7 +2186,10 @@
     {
      "hint": "qui ?",
      "question": "את מי אתה אוהב?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את חנה"
+     ]
     }
    ]
   },
@@ -1856,7 +2199,10 @@
     {
      "hint": "qui ?",
      "question": "את מי אתה אוהב?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את חנה"
+     ]
     }
    ]
   }
@@ -1888,12 +2234,18 @@
     {
      "hint": "qui ?",
      "question": "מי רואה את חנה כמעט כל יום?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "את מי דוד רואה כמעט כל יום?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את חנה"
+     ]
     }
    ]
   },
@@ -1903,12 +2255,18 @@
     {
      "hint": "qui ?",
      "question": "מי רואה את חנה כמעט כל יום?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "את מי דוד רואה כמעט כל יום?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את חנה"
+     ]
     }
    ]
   }
@@ -1920,7 +2278,10 @@
     {
      "hint": "où ?",
      "question": "איפה הם נחים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בבית"
+     ]
     }
    ]
   }
@@ -1962,7 +2323,10 @@
     {
      "hint": "quoi ?",
      "question": "מה היא רוצה אחרי היום הזה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "לטייל"
+     ]
     }
    ]
   },
@@ -1972,7 +2336,10 @@
     {
      "hint": "quoi ?",
      "question": "מה היא רוצה אחרי היום הזה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "לטייל"
+     ]
     }
    ]
   }
@@ -1984,12 +2351,18 @@
     {
      "hint": "à qui ?",
      "question": "למי יש הרבה חברים?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לדוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש לדוד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "הרבה חברים"
+     ]
     }
    ]
   }
@@ -2007,12 +2380,18 @@
     {
      "hint": "qui ?",
      "question": "את מי הם רואים כמעט כל יום בכיתה?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את דוד"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה הם רואים את דוד כמעט כל יום?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   },
@@ -2022,12 +2401,18 @@
     {
      "hint": "qui ?",
      "question": "את מי הם רואים כמעט כל יום בכיתה?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את דוד"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה הם רואים את דוד כמעט כל יום?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     }
    ]
   }
@@ -2075,7 +2460,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא לומד אחר כך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את השיעור"
+     ]
     }
    ]
   },
@@ -2085,7 +2473,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא לומד אחר כך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את השיעור"
+     ]
     }
    ]
   }
@@ -2097,17 +2488,26 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא רוצה ואוהב ללמוד בבית קפה עם חנה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את השיעור"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה הוא רוצה ואוהב ללמוד את השיעור עם חנה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בבית קפה"
+     ]
     },
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא רוצה ואוהב ללמוד את השיעור בבית קפה?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם חנה"
+     ]
     }
    ]
   },
@@ -2117,17 +2517,26 @@
     {
      "hint": "quoi ?",
      "question": "מה הוא רוצה ואוהב ללמוד בבית קפה עם חנה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את השיעור"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה הוא רוצה ואוהב ללמוד את השיעור עם חנה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בבית קפה"
+     ]
     },
     {
      "hint": "avec qui ?",
      "question": "עם מי הוא רוצה ואוהב ללמוד את השיעור בבית קפה?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם חנה"
+     ]
     }
    ]
   }
@@ -2195,7 +2604,10 @@
     {
      "hint": "quoi ?",
      "question": "מה היא מספרת לתלמידים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "מאיפה היא"
+     ]
     }
    ]
   }
@@ -2207,7 +2619,10 @@
     {
      "hint": "où ?",
      "question": "איפה הם רוצים לאכול?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "במסעדה"
+     ]
     }
    ]
   }
@@ -2235,7 +2650,10 @@
     {
      "hint": "où ?",
      "question": "איפה היא מטיילת?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "במרכז העיר"
+     ]
     }
    ]
   }
@@ -2247,7 +2665,10 @@
     {
      "hint": "qui ?",
      "question": "מי קם ומתרחץ כל בוקר?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     }
    ]
   }
@@ -2259,7 +2680,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתם אוהבים לקרוא בעברית?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עיתון"
+     ]
     }
    ]
   }
@@ -2271,7 +2695,10 @@
     {
      "hint": "vers où ?",
      "question": "לאן היא טסה במטוס?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לישראל"
+     ]
     }
    ]
   },
@@ -2281,7 +2708,10 @@
     {
      "hint": "vers où ?",
      "question": "לאן היא טסה במטוס?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לישראל"
+     ]
     }
    ]
   }
@@ -2293,12 +2723,18 @@
     {
      "hint": "vers où ?",
      "question": "לאן אתה נוסע ברכבת?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לפריז"
+     ]
     },
     {
      "hint": "avec quoi ?",
      "question": "במה אתה נוסע לפריז?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   },
@@ -2308,12 +2744,18 @@
     {
      "hint": "vers où ?",
      "question": "לאן אתה נוסע ברכבת?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לפריז"
+     ]
     },
     {
      "hint": "avec quoi ?",
      "question": "במה אתה נוסע לפריז?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   }
@@ -2337,12 +2779,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אתם לומדים באולפן בתל אביב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה אתם לומדים עברית?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "באולפן בתל אביב"
+     ]
     }
    ]
   }
@@ -2354,7 +2802,10 @@
     {
      "hint": "où ?",
      "question": "איפה הן מטיילות עם חברים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "במרכז העיר"
+     ]
     }
    ]
   }
@@ -2388,7 +2839,10 @@
     {
      "hint": "avec quoi ?",
      "question": "במה אתה רוצה לנסוע לפריז?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   },
@@ -2398,7 +2852,10 @@
     {
      "hint": "avec quoi ?",
      "question": "במה אתה רוצה לנסוע לפריז?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   }
@@ -2462,7 +2919,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אין לה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "סבלנות"
+     ]
     }
    ]
   },
@@ -2472,7 +2932,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אין לה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "סבלנות"
+     ]
     }
    ]
   }
@@ -2484,7 +2947,10 @@
     {
      "hint": "à qui ?",
      "question": "למי אין הרבה זמן אבל יש הרבה סבלנות?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לחנה"
+     ]
     }
    ]
   },
@@ -2494,7 +2960,10 @@
     {
      "hint": "à qui ?",
      "question": "למי אין הרבה זמן אבל יש הרבה סבלנות?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לחנה"
+     ]
     }
    ]
   }
@@ -2536,12 +3005,18 @@
     {
      "hint": "qui ?",
      "question": "את מי אתה רואה במרכז העיר?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את החברים"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה אתה רואה את החברים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "במרכז העיר"
+     ]
     }
    ]
   },
@@ -2551,12 +3026,18 @@
     {
      "hint": "qui ?",
      "question": "את מי אתה רואה במרכז העיר?",
-     "interrogative": "את מי"
+     "interrogative": "את מי",
+     "target": [
+      "את החברים"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה אתה רואה את החברים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "במרכז העיר"
+     ]
     }
    ]
   }
@@ -2568,7 +3049,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה אוהב?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עוגות"
+     ]
     }
    ]
   }
@@ -2580,7 +3064,10 @@
     {
      "hint": "où ?",
      "question": "איפה אתם שומעים את המוזיקה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בחדר"
+     ]
     }
    ]
   },
@@ -2590,7 +3077,10 @@
     {
      "hint": "où ?",
      "question": "איפה אתם שומעים את המוזיקה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בחדר"
+     ]
     }
    ]
   }
@@ -2602,12 +3092,18 @@
     {
      "hint": "quoi ?",
      "question": "מה היא אוכלת בדירה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את העוגה הטעימה"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה היא אוכלת את העוגה הטעימה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בדירה"
+     ]
     }
    ]
   },
@@ -2617,12 +3113,18 @@
     {
      "hint": "quoi ?",
      "question": "מה היא אוכלת בדירה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את העוגה הטעימה"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה היא אוכלת את העוגה הטעימה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בדירה"
+     ]
     }
    ]
   }
@@ -2634,12 +3136,18 @@
     {
      "hint": "où ?",
      "question": "לאן הוא נוסע ברכבת?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לעיר הגדולה"
+     ]
     },
     {
      "hint": "avec quoi ?",
      "question": "במה הוא נוסע לעיר הגדולה?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   },
@@ -2649,12 +3157,18 @@
     {
      "hint": "où ?",
      "question": "לאן הוא נוסע ברכבת?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לעיר הגדולה"
+     ]
     },
     {
      "hint": "avec quoi ?",
      "question": "במה הוא נוסע לעיר הגדולה?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   }
@@ -2666,7 +3180,10 @@
     {
      "hint": "où ?",
      "question": "לאן הן טסות במטוס הגדול והיפה?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לישראל"
+     ]
     }
    ]
   },
@@ -2676,7 +3193,10 @@
     {
      "hint": "où ?",
      "question": "לאן הן טסות במטוס הגדול והיפה?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לישראל"
+     ]
     }
    ]
   }
@@ -2688,7 +3208,10 @@
     {
      "hint": "avec qui ?",
      "question": "עם מי אנחנו נוסעים מוקדם במכונית הגדולה?",
-     "interrogative": "עם מי"
+     "interrogative": "עם מי",
+     "target": [
+      "עם החברים הטובים"
+     ]
     }
    ]
   }
@@ -2700,12 +3223,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אני כותב לתלמידים הטובים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את המכתב"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי אני כותב את המכתב?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לתלמידים הטובים"
+     ]
     }
    ]
   },
@@ -2715,12 +3244,18 @@
     {
      "hint": "quoi ?",
      "question": "מה אני כותב לתלמידים הטובים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "את המכתב"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי אני כותב את המכתב?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לתלמידים הטובים"
+     ]
     }
    ]
   }
@@ -2858,7 +3393,10 @@
     {
      "hint": "combien d'enfants ?",
      "question": "כמה ילדים יש לחנה?",
-     "interrogative": "כמה ילדים"
+     "interrogative": "כמה ילדים",
+     "target": [
+      "שלושה"
+     ]
     }
    ]
   }
@@ -2870,7 +3408,10 @@
     {
      "hint": "où ?",
      "question": "איפה המשפחה של חנה גרה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בירושלים"
+     ]
     }
    ]
   }
@@ -2918,7 +3459,11 @@
     {
      "hint": "où ?",
      "question": "איפה אתה גר ואיפה אתה עובד?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בתל אביב",
+      "בחיפה"
+     ]
     }
    ]
   }
@@ -2940,7 +3485,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "רכב"
+     ]
     }
    ]
   },
@@ -2950,12 +3498,18 @@
     {
      "hint": "comment ?",
      "question": "איך אתה נוסע לעבודה?",
-     "interrogative": "איך"
+     "interrogative": "איך",
+     "target": [
+      "ברכב"
+     ]
     },
     {
      "hint": "où ?",
      "question": "לאן אתה נוסע ברכב?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לעבודה"
+     ]
     }
    ]
   },
@@ -2965,7 +3519,10 @@
     {
      "hint": "quoi ?",
      "question": "מה יש לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "רכב"
+     ]
     }
    ]
   },
@@ -2975,12 +3532,18 @@
     {
      "hint": "comment ?",
      "question": "איך אתה נוסע לעבודה?",
-     "interrogative": "איך"
+     "interrogative": "איך",
+     "target": [
+      "ברכב"
+     ]
     },
     {
      "hint": "où ?",
      "question": "לאן אתה נוסע ברכב?",
-     "interrogative": "לאן"
+     "interrogative": "לאן",
+     "target": [
+      "לעבודה"
+     ]
     }
    ]
   }
@@ -3028,7 +3591,10 @@
     {
      "hint": "quand ?",
      "question": "מתי את באה לבקר בישראל?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "באוגוסט כשיש לי חופשה"
+     ]
     }
    ]
   },
@@ -3038,7 +3604,10 @@
     {
      "hint": "où ?",
      "question": "איפה את מבקרת את המשפחה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בירושלים"
+     ]
     }
    ]
   },
@@ -3048,7 +3617,10 @@
     {
      "hint": "quand ?",
      "question": "מתי את באה לבקר בישראל?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "באוגוסט כשיש לי חופשה"
+     ]
     }
    ]
   },
@@ -3058,7 +3630,10 @@
     {
      "hint": "où ?",
      "question": "איפה את מבקרת את המשפחה?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בירושלים"
+     ]
     }
    ]
   }
@@ -3080,7 +3655,10 @@
     {
      "hint": "quelle ville ?",
      "question": "איזו עיר את הכי אוהבת?",
-     "interrogative": "איזו עיר"
+     "interrogative": "איזו עיר",
+     "target": [
+      "העיר ירושלים"
+     ]
     }
    ]
   },
@@ -3090,7 +3668,10 @@
     {
      "hint": "quelle ville ?",
      "question": "איזו עיר את הכי אוהבת?",
-     "interrogative": "איזו עיר"
+     "interrogative": "איזו עיר",
+     "target": [
+      "העיר ירושלים"
+     ]
     }
    ]
   }
@@ -3122,7 +3703,10 @@
     {
      "hint": "quel livre ?",
      "question": "איזה ספר אתה קורא?",
-     "interrogative": "איזה ספר"
+     "interrogative": "איזה ספר",
+     "target": [
+      "הספר החדש של עמוס עוז"
+     ]
     }
    ]
   },
@@ -3132,7 +3716,10 @@
     {
      "hint": "quel livre ?",
      "question": "איזה ספר אתה מאוד אוהב?",
-     "interrogative": "איזה ספר"
+     "interrogative": "איזה ספר",
+     "target": [
+      "הספר הזה"
+     ]
     }
    ]
   },
@@ -3142,7 +3729,10 @@
     {
      "hint": "quel livre ?",
      "question": "איזה ספר אתה קורא?",
-     "interrogative": "איזה ספר"
+     "interrogative": "איזה ספר",
+     "target": [
+      "הספר החדש של עמוס עוז"
+     ]
     }
    ]
   },
@@ -3152,7 +3742,10 @@
     {
      "hint": "quel livre ?",
      "question": "איזה ספר אתה מאוד אוהב?",
-     "interrogative": "איזה ספר"
+     "interrogative": "איזה ספר",
+     "target": [
+      "הספר הזה"
+     ]
     }
    ]
   }
@@ -3164,7 +3757,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה היא צריכה ללמוד עברית?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "היא רוצה לגור בישראל"
+     ]
     }
    ]
   },
@@ -3174,7 +3770,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה היא צריכה ללמוד עברית?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "היא רוצה לגור בישראל"
+     ]
     }
    ]
   }
@@ -3186,7 +3785,10 @@
     {
      "hint": "quand ?",
      "question": "מתי התלמידים צריכים לקרוא ולכתוב?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "היום"
+     ]
     }
    ]
   },
@@ -3196,7 +3798,10 @@
     {
      "hint": "quand ?",
      "question": "מתי התלמידים צריכים לקרוא ולכתוב?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "היום"
+     ]
     }
    ]
   }
@@ -3244,7 +3849,10 @@
     {
      "hint": "quand ?",
      "question": "מתי הן צריכות לקום מוקדם?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "בבוקר"
+     ]
     }
    ]
   },
@@ -3254,7 +3862,10 @@
     {
      "hint": "quand ?",
      "question": "מתי הן צריכות לקום מוקדם?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "בבוקר"
+     ]
     }
    ]
   }
@@ -3266,7 +3877,10 @@
     {
      "hint": "avec quoi ?",
      "question": "במה אנחנו יכולים לנסוע?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   },
@@ -3276,7 +3890,10 @@
     {
      "hint": "avec quoi ?",
      "question": "במה אנחנו יכולים לנסוע?",
-     "interrogative": "במה"
+     "interrogative": "במה",
+     "target": [
+      "ברכבת"
+     ]
     }
    ]
   }
@@ -3314,7 +3931,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הם צריכים לקנות?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ירקות"
+     ]
     }
    ]
   },
@@ -3324,7 +3944,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הם צריכים לקנות?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ירקות"
+     ]
     }
    ]
   }
@@ -3346,7 +3969,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה אתם ממהרים?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "אין לנו זמן"
+     ]
     }
    ]
   },
@@ -3356,7 +3982,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה אתם ממהרים?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "אין לנו זמן"
+     ]
     }
    ]
   }
@@ -3378,12 +4007,18 @@
     {
      "hint": "qui ?",
      "question": "מי צריך לקנות בשר, דגים וירקות לשבת?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד צריך לקנות לשבת?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "בשר דגים וירקות"
+     ]
     }
    ]
   },
@@ -3393,12 +4028,18 @@
     {
      "hint": "qui ?",
      "question": "מי צריך לקנות בשר, דגים וירקות לשבת?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד צריך לקנות לשבת?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "בשר דגים וירקות"
+     ]
     }
    ]
   }
@@ -3410,7 +4051,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה דוד ממהר?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "כי אין לו הרבה זמן"
+     ]
     }
    ]
   },
@@ -3420,7 +4064,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה דוד ממהר?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "כי אין לו הרבה זמן"
+     ]
     }
    ]
   }
@@ -3500,7 +4147,10 @@
     {
      "hint": "qui ?",
      "question": "מי מזמין חברים לשבת?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     }
    ]
   }
@@ -3522,7 +4172,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה דוד ממהר?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "כי אין לו הרבה זמן"
+     ]
     }
    ]
   },
@@ -3532,7 +4185,10 @@
     {
      "hint": "pourquoi ?",
      "question": "למה דוד ממהר?",
-     "interrogative": "למה"
+     "interrogative": "למה",
+     "target": [
+      "כי אין לו הרבה זמן"
+     ]
     }
    ]
   }
@@ -3628,17 +4284,27 @@
     {
      "hint": "combien de fenêtres et combien de lits ?",
      "question": "כמה חלונות וכמה מיטות יש בדירה?",
-     "interrogative": "כמה חלונות וכמה מיטות"
+     "interrogative": "כמה חלונות וכמה מיטות",
+     "target": [
+      "שבעה",
+      "וארבע"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה יש שבעה חלונות וארבע מיטות?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בדירה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש בדירה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שבעה חלונות וארבע מיטות"
+     ]
     }
    ]
   }
@@ -3650,12 +4316,19 @@
     {
      "hint": "combien de bus et combien de voitures ?",
      "question": "כמה אוטובוסים וכמה מכוניות אתה רואה?",
-     "interrogative": "כמה אוטובוסים וכמה מכוניות"
+     "interrogative": "כמה אוטובוסים וכמה מכוניות",
+     "target": [
+      "שני",
+      "ושלוש עשרה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה אתה רואה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שני אוטובוסים ושלוש עשרה מכוניות"
+     ]
     }
    ]
   },
@@ -3665,12 +4338,19 @@
     {
      "hint": "combien de bus et combien de voitures ?",
      "question": "כמה אוטובוסים וכמה מכוניות אתה רואה?",
-     "interrogative": "כמה אוטובוסים וכמה מכוניות"
+     "interrogative": "כמה אוטובוסים וכמה מכוניות",
+     "target": [
+      "שני",
+      "ושלוש עשרה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה אתה רואה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שני אוטובוסים ושלוש עשרה מכוניות"
+     ]
     }
    ]
   }
@@ -3682,12 +4362,18 @@
     {
      "hint": "combien de télévisions ?",
      "question": "כמה טלוויזיות יש לה?",
-     "interrogative": "כמה טלוויזיות"
+     "interrogative": "כמה טלוויזיות",
+     "target": [
+      "אחת"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש לה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "טלוויזיה אחת"
+     ]
     }
    ]
   },
@@ -3697,12 +4383,18 @@
     {
      "hint": "combien de télévisions ?",
      "question": "כמה טלוויזיות יש לה?",
-     "interrogative": "כמה טלוויזיות"
+     "interrogative": "כמה טלוויזיות",
+     "target": [
+      "אחת"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש לה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "טלוויזיה אחת"
+     ]
     }
    ]
   }
@@ -3714,17 +4406,27 @@
     {
      "hint": "combien de chaises et combien de livres ?",
      "question": "כמה כיסאות וכמה ספרים יש בכיתה?",
-     "interrogative": "כמה כיסאות וכמה ספרים"
+     "interrogative": "כמה כיסאות וכמה ספרים",
+     "target": [
+      "אחד עשר",
+      "וחמישה עשר"
+     ]
     },
     {
      "hint": "où ?",
      "question": "איפה יש אחד עשר כיסאות וחמישה עשר ספרים?",
-     "interrogative": "איפה"
+     "interrogative": "איפה",
+     "target": [
+      "בכיתה"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש בכיתה?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "אחד עשר כיסאות בכיתה וחמישה עשר ספרים"
+     ]
     }
    ]
   }
@@ -3736,7 +4438,11 @@
     {
      "hint": "combien de professeurs et combien de professeures ?",
      "question": "כמה מורים וכמה מורות יש לך?",
-     "interrogative": "כמה מורים וכמה מורות"
+     "interrogative": "כמה מורים וכמה מורות",
+     "target": [
+      "שלושה",
+      "ושלוש"
+     ]
     }
    ]
   },
@@ -3746,7 +4452,11 @@
     {
      "hint": "combien de professeurs et combien de professeures ?",
      "question": "כמה מורים וכמה מורות יש לך?",
-     "interrogative": "כמה מורים וכמה מורות"
+     "interrogative": "כמה מורים וכמה מורות",
+     "target": [
+      "שלושה",
+      "ושלוש"
+     ]
     }
    ]
   }
@@ -3758,17 +4468,26 @@
     {
      "hint": "qui ?",
      "question": "מי נותן לדוד ספר?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "חנה"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי חנה נותנת ספר?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לדוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה חנה נותנת לדוד?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   }
@@ -3780,7 +4499,10 @@
     {
      "hint": "quoi ?",
      "question": "מה הילדים של איתן לומדים?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "עברית"
+     ]
     }
    ]
   }
@@ -3792,7 +4514,10 @@
     {
      "hint": "quand ?",
      "question": "מתי התלמידים לא יכולים לבוא?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "היום"
+     ]
     }
    ]
   },
@@ -3802,7 +4527,10 @@
     {
      "hint": "quand ?",
      "question": "מתי התלמידים לא יכולים לבוא?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "היום"
+     ]
     }
    ]
   }
@@ -3814,12 +4542,18 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים יש לאיתן?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "שני"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי יש שני ספרים?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לאיתן"
+     ]
     }
    ]
   }
@@ -3831,17 +4565,26 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים דוד צריך?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "אחד"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "מי צריך ספר אחד?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד צריך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר אחד"
+     ]
     }
    ]
   },
@@ -3851,17 +4594,26 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים דוד צריך?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "אחד"
+     ]
     },
     {
      "hint": "qui ?",
      "question": "מי צריך ספר אחד?",
-     "interrogative": "מי"
+     "interrogative": "מי",
+     "target": [
+      "דוד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה דוד צריך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר אחד"
+     ]
     }
    ]
   }
@@ -3869,23 +4621,11 @@
  "0.20:5": [
   {
    "text": "כי שלושה תלמידים חולים ושלוש תלמידות לא יכולות לבוא היום",
-   "questions": [
-    {
-     "hint": "pourquoi ?",
-     "question": "למה רק חמישה תלמידים באים לכיתה?",
-     "interrogative": "למה"
-    }
-   ]
+   "questions": []
   },
   {
    "text": "כי שלושה תלמידים חולים ושלוש תלמידות לא יכולות לבוא היום",
-   "questions": [
-    {
-     "hint": "pourquoi ?",
-     "question": "למה רק חמישה תלמידים באים לכיתה?",
-     "interrogative": "למה"
-    }
-   ]
+   "questions": []
   }
  ],
  "0.20:6": [
@@ -3895,12 +4635,18 @@
     {
      "hint": "combien de garçons ?",
      "question": "כמה בנים יש לדוד?",
-     "interrogative": "כמה בנים"
+     "interrogative": "כמה בנים",
+     "target": [
+      "שלושה"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי יש שלושה בנים?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לדוד"
+     ]
     }
    ]
   }
@@ -3912,12 +4658,18 @@
     {
      "hint": "combien de filles ?",
      "question": "כמה בנות יש לאיתן?",
-     "interrogative": "כמה בנות"
+     "interrogative": "כמה בנות",
+     "target": [
+      "שלוש"
+     ]
     },
     {
      "hint": "à qui ?",
      "question": "למי יש שלוש בנות?",
-     "interrogative": "למי"
+     "interrogative": "למי",
+     "target": [
+      "לאיתן"
+     ]
     }
    ]
   }
@@ -3977,12 +4729,18 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים יש לך?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "שני"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שני ספרים"
+     ]
     }
    ]
   },
@@ -3992,12 +4750,18 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים יש לך?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "שני"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה יש לך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "שני ספרים"
+     ]
     }
    ]
   }
@@ -4009,7 +4773,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה צריך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   },
@@ -4023,7 +4790,10 @@
     {
      "hint": "quoi ?",
      "question": "מה אתה צריך?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר"
+     ]
     }
    ]
   },
@@ -4039,12 +4809,18 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים אתה יכול לתת לי?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "אחד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה אתה יכול לתת לי?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר אחד"
+     ]
     }
    ]
   },
@@ -4054,12 +4830,18 @@
     {
      "hint": "combien de livres ?",
      "question": "כמה ספרים אתה יכול לתת לי?",
-     "interrogative": "כמה ספרים"
+     "interrogative": "כמה ספרים",
+     "target": [
+      "אחד"
+     ]
     },
     {
      "hint": "quoi ?",
      "question": "מה אתה יכול לתת לי?",
-     "interrogative": "מה"
+     "interrogative": "מה",
+     "target": [
+      "ספר אחד"
+     ]
     }
    ]
   }
@@ -4081,12 +4863,18 @@
     {
      "hint": "combien d'élèves ?",
      "question": "כמה תלמידים באים היום לכיתה?",
-     "interrogative": "כמה תלמידים"
+     "interrogative": "כמה תלמידים",
+     "target": [
+      "רק חמישה תלמידים ושתי תלמידות"
+     ]
     },
     {
      "hint": "quand ?",
      "question": "מתי באים לכיתה רק חמישה תלמידים ושתי תלמידות?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "היום"
+     ]
     }
    ]
   },
@@ -4096,12 +4884,18 @@
     {
      "hint": "combien d'élèves ?",
      "question": "כמה תלמידים באים היום לכיתה?",
-     "interrogative": "כמה תלמידים"
+     "interrogative": "כמה תלמידים",
+     "target": [
+      "רק חמישה תלמידים ושתי תלמידות"
+     ]
     },
     {
      "hint": "quand ?",
      "question": "מתי באים לכיתה רק חמישה תלמידים ושתי תלמידות?",
-     "interrogative": "מתי"
+     "interrogative": "מתי",
+     "target": [
+      "היום"
+     ]
     }
    ]
   }
@@ -4133,7 +4927,10 @@
     {
      "hint": "combien d'enfants ?",
      "question": "כמה ילדים יש לך?",
-     "interrogative": "כמה ילדים"
+     "interrogative": "כמה ילדים",
+     "target": [
+      "שלושה בנים ובת אחת"
+     ]
     }
    ]
   },
@@ -4147,7 +4944,10 @@
     {
      "hint": "combien d'enfants ?",
      "question": "כמה ילדים יש לך?",
-     "interrogative": "כמה ילדים"
+     "interrogative": "כמה ילדים",
+     "target": [
+      "שלושה בנים ובת אחת"
+     ]
     }
    ]
   },
@@ -4163,7 +4963,10 @@
     {
      "hint": "combien d'enfants ?",
      "question": "כמה ילדים יש לך?",
-     "interrogative": "כמה ילדים"
+     "interrogative": "כמה ילדים",
+     "target": [
+      "שלוש בנות ושני בנים"
+     ]
     }
    ]
   },
@@ -4173,7 +4976,10 @@
     {
      "hint": "combien d'enfants ?",
      "question": "כמה ילדים יש לך?",
-     "interrogative": "כמה ילדים"
+     "interrogative": "כמה ילדים",
+     "target": [
+      "שלוש בנות ושני בנים"
+     ]
     }
    ]
   }

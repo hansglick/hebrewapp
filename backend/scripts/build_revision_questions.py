@@ -19,9 +19,9 @@ from app.config import DATA_DIR, OPENAI_API_KEY
 from app.revision_agent.completion import concept_title
 from app.revision_agent.config import EVALUATOR, LAST_LESSON
 from app.revision_agent.material import vocabulary
-from app.revision_agent.utterances import utterances
 
 OUTPUT = DATA_DIR / "revision_questions.json"
+POOLS = ("revision_concept_pool.json", "revision_svc_pool.json")
 
 # Mots interrogatifs et leçon où ils apparaissent (item_word, et le concept 0.15 pour les autres).
 INTERROGATIVES = [
@@ -98,6 +98,15 @@ def natural(text: str, question: Question) -> bool:
         question.hint = "quoi ?"
     first = text.replace(",", " ").split()[:1]
     return not (question.interrogative.strip() == "מי" and first and first[0] in PRONOUNS)
+
+
+def utterances() -> list[tuple[str, dict]]:
+    """(leçon, énoncé) pour chaque énoncé des deux pools, l'énoncé complété de l'identifiant de sa phrase."""
+    found = []
+    for name in POOLS:
+        pool = json.loads((DATA_DIR / name).read_text(encoding="utf-8"))
+        found += [(phrase_id.split(":")[0], {**u, "id": phrase_id}) for phrase_id, items in pool.items() for u in items]
+    return found
 
 
 async def lesson_questions(client: AsyncOpenAI, code: str, items: list[dict]) -> dict[str, list[dict]]:
