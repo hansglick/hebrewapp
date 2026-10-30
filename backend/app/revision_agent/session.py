@@ -29,6 +29,7 @@ from fastapi import WebSocket, WebSocketDisconnect
 
 from app.revision_agent.config import DEBUG_STUDENT_AUDIO, SAMPLE_RATE
 from app.revision_agent.gemini_live import GeminiLive, LiveEvent
+from app.revision_agent.journal import SKIPPED_BROWSER_MESSAGES, SessionJournal
 from app.revision_agent.translate import french_speech, translate_to_french
 
 log = logging.getLogger("revision_agent.session")
@@ -88,6 +89,10 @@ class TeacherSession:
         # Diagnostic : micro récent, et segment de voix de l'élève en cours (début, dernier instant audible).
         self.mic = bytearray()
         self.voice: tuple[float, float] | None = None
+        self.journal: SessionJournal | None = None  # journal de la séance, branché par le routeur (cf. attach)
+
+    def attach(self, journal: SessionJournal) -> None:
+        self.journal = self.live.journal = journal
 
     # --- envois vers le navigateur ------------------------------------------
 
@@ -97,6 +102,8 @@ class TeacherSession:
                 if isinstance(message, bytes):
                     await self.browser.send_bytes(message)
                 else:
+                    if self.journal and message.get("type") not in SKIPPED_BROWSER_MESSAGES:
+                        self.journal.write("to_browser", message=message)
                     await self.browser.send_json(message)
             except (WebSocketDisconnect, RuntimeError):
                 pass
@@ -134,6 +141,8 @@ class TeacherSession:
                     await self.on_microphone(message["bytes"])
             elif message.get("text"):
                 data = json.loads(message["text"])
+                if self.journal:
+                    self.journal.write("from_browser", message=data)
                 if data.get("type") == "stop":
                     return
                 await self.on_browser_message(data)
@@ -180,29 +189,39 @@ class TeacherSession:
             self.on_agent_text(event.data, now)
         elif event.kind == "user_text":
             log.info("élève : %s", event.data)
+            if self.journal:
+                self.journal.write("student", text=event.data)
             await self.on_user_text(event.data)
         elif event.kind == "turn_complete":
             log.info("fin du tour du prof")
             self.end_turn()
         elif event.kind == "tool_call":
             log.info("fonction %s %s", event.data["name"], event.data["args"])
+            if self.journal:
+                self.journal.write("tool_call", name=event.data["name"], args=event.data["args"])
             if DEBUG_STUDENT_AUDIO and event.data["name"].startswith("evaluer") and self.started_at is not None:
                 self.save_student_audio(event.data["name"])
             await self.on_tool_call(event.data)
         elif event.kind == "interrupted":
             # Gemini a détecté de la parole côté élève pendant que le prof parlait.
             log.info("prof interrompu")
+            if self.journal:
+                self.journal.write("interrupted")
             self.end_turn()
             self.playback_until = self.teacher_until = now
             await self.to_browser({"type": "interrupt"})
         elif event.kind == "started":
             self.started_at = now
+            if self.journal:
+                self.journal.live()
             # Ouvre la connexion de traduction avant la première prise de parole du prof.
             self.background.append(asyncio.create_task(translate_to_french("שָׁלוֹם")))
             await self.to_browser({"type": "status", "state": "live"})
             await self.on_started()
         elif event.kind == "error":
             log.warning("Erreur du modèle live : %s", event.data)
+            if self.journal:
+                self.journal.write("error", text=event.data)
             await self.to_browser({"type": "error", "text": event.data})
 
     async def on_teacher_audio(self, pcm: bytes, now: float) -> None:
@@ -261,6 +280,8 @@ class TeacherSession:
         has_words = any(c.isalnum() for c in hebrew)
         if has_words:
             log.info("prof : %s", hebrew.strip())
+            if self.journal:
+                self.journal.write("teacher", text=hebrew.strip(), shown=turn.shown)
         if not turn.shown:
             return  # rien à traduire ni à afficher
         segment = {"he": hebrew, "fr": None if has_words else ""}  # une simple pause (« ... ») n'a rien à traduire

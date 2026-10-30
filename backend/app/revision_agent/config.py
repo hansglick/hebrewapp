@@ -33,7 +33,7 @@ GEMINI_SILENCE_MS = 1500  # silence avant que la détection de parole de Gemini 
 # Diagnostic des réponses mal entendues (cf. demande explicite du user) : la voix de l'élève est journalisée segment par
 # segment, et les dernières secondes du micro sont enregistrées en WAV à chaque évaluation, dans
 # results/revision_debug/ (hors git). False : ni journal ni enregistrement.
-DEBUG_STUDENT_AUDIO = True
+DEBUG_STUDENT_AUDIO = False
 VOICES = {
     "Achernar", "Achird", "Algenib", "Algieba", "Alnilam", "Aoede", "Autonoe", "Callirrhoe", "Charon", "Despina",
     "Enceladus", "Erinome", "Fenrir", "Gacrux", "Iapetus", "Kore", "Laomedeia", "Leda", "Orus", "Puck",

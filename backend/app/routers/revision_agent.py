@@ -13,6 +13,7 @@ from app.revision_agent.comprehension import ComprehensionSession
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
+from app.revision_agent.journal import SessionJournal
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
 from app.revision_agent.passages import lesson_number
@@ -130,15 +131,23 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
     else:
         return await refuse("Cette tâche n'est pas encore disponible.")
 
+    # Journal de la séance sur le disque persistant : déroulé et durée, par compte (cf. app.revision_agent.journal).
+    journal = SessionJournal(get_user_id(pseudo, pin), pseudo, task, lesson, voice=voice, current=current,
+                             previous=previous, per_reading=per_reading)
+    session.attach(journal)
+    reason = "fin"
     try:
         await session.run()
     except Exception:
+        reason = "erreur"
         log.exception("Séance interrompue")
         try:
             await websocket.send_json({"type": "error", "text": "La connexion avec l’agent a été interrompue."})
             await websocket.send_json({"type": "status", "state": "ended"})
         except Exception:
             pass
+    finally:
+        journal.close(reason, score=getattr(session, "score", None))
     try:
         await websocket.close()
     except RuntimeError:

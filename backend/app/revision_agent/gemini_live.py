@@ -41,6 +41,7 @@ class GeminiLive:
         self.start_message = start_message
         self.tools = tools  # déclarations de fonctions (format functionDeclarations)
         self.ws = None
+        self.journal = None  # journal de la séance (cf. app.revision_agent.journal), branché par le routeur
         self._pending = ""  # début de marqueur de non-parole en attente de sa fin
         self._last_char = ""  # dernier caractère transmis de la transcription du prof
 
@@ -121,10 +122,14 @@ class GeminiLive:
         }}})
 
     async def app_message(self, text: str) -> None:
+        if self.journal:
+            self.journal.write("app_message", text=text)
         await self._say(f"(Message de l'application, pas de l'élève) {text}")
 
     async def note(self, text: str) -> None:
         """Indication ajoutée au contexte du prof, sans qu'il prenne la parole."""
+        if self.journal:
+            self.journal.write("app_note", text=text)
         await self._say(f"(Message de l'application, pas de l'élève) {text}", respond=False)
 
     async def tool_response(self, call_id: str, name: str, response: dict, silent: bool = False,
@@ -133,6 +138,8 @@ class GeminiLive:
         when_idle : il y réagit dès qu'il a fini de parler.
         scheduling se place au niveau de la FunctionResponse : glissé dans son contenu, il n'est pas appliqué (le prof
         reprend alors la parole, et peut même prononcer « silent »)."""
+        if self.journal:
+            self.journal.write("tool_response", name=name, response=response, silent=silent, when_idle=when_idle)
         function_response = {"id": call_id, "name": name, "response": response}
         if silent:
             function_response["scheduling"] = "SILENT"
