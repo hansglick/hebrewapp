@@ -52,6 +52,10 @@ export function ConfigProvider({ children }) {
   // Configuration (pipette ou champ hexadécimal) — tout le reste de la
   // palette V2 est recalculé à partir d'elles à chaque changement.
   const [paletteV2Bases, setPaletteV2Bases] = useState(loadPaletteV2Bases);
+  // Skin imposé par une page (ex. /dev/revision-agent, toujours en "kindle", cf. demande explicite du user) : il
+  // l'emporte, en thème clair, sur le skin et le thème choisis, le temps que la page est affichée, sans jamais être
+  // enregistré (le choix du user est intact en quittant la page). null : aucun.
+  const [forcedSkin, setForcedSkin] = useState(null);
 
   function setPaletteV2Base(key, hex) {
     setPaletteV2Bases((prev) => ({ ...prev, [key]: hex }));
@@ -84,12 +88,14 @@ export function ConfigProvider({ children }) {
   }, [paletteV2Bases]);
 
   useEffect(() => {
+    const mode = forcedSkin ? "light" : themeMode;
+    const activeSkin = forcedSkin ?? skin;
     const theme =
-      themeMode === "light" && skin === "custom"
+      mode === "light" && activeSkin === "custom"
         ? computePaletteV2(paletteV2Bases)
-        : themeMode === "light" && SKIN_PRESETS[skin]
-        ? computePaletteV2(SKIN_PRESETS[skin])
-        : appConfig.theme[themeMode];
+        : mode === "light" && SKIN_PRESETS[activeSkin]
+        ? computePaletteV2(SKIN_PRESETS[activeSkin])
+        : appConfig.theme[mode];
     const root = document.documentElement;
     Object.entries(theme).forEach(([key, value]) => {
       root.style.setProperty(`--${key}`, value);
@@ -99,8 +105,8 @@ export function ConfigProvider({ children }) {
     root.style.setProperty("--font-hebrew-biblical", appConfig.fontFamily.hebrewBiblical);
     root.style.setProperty("--font-size-base", `${appConfig.fontSize[fontScale]}px`);
     root.style.setProperty("--font-size-hebrew-large", `${appConfig.fontSize.hebrewLarge}px`);
-    root.dataset.theme = themeMode;
-  }, [themeMode, fontScale, skin, paletteV2Bases]);
+    root.dataset.theme = mode;
+  }, [themeMode, fontScale, skin, paletteV2Bases, forcedSkin]);
 
   const value = useMemo(
     () => ({
@@ -119,6 +125,7 @@ export function ConfigProvider({ children }) {
       paletteV2Bases,
       setPaletteV2Base,
       resetPaletteV2Bases,
+      setForcedSkin,
     }),
     [themeMode, fontScale, godMode, evalWaitMode, oralBackgroundEval, skin, paletteV2Bases]
   );

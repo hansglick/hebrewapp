@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getChapitres, getLecons } from "../../api/content";
 import { getCompletionLessons, getRevisionTexts } from "../../api/revisionAgent";
+import { useConfig } from "../../config/ConfigContext";
 import CompletionBoard from "./revisionAgent/CompletionBoard";
 import ComprehensionBoard from "./revisionAgent/ComprehensionBoard";
 import LanguageSwitch from "./revisionAgent/LanguageSwitch";
@@ -75,6 +76,12 @@ const LAST_LESSON = 20;
 // tire des phrases dont une partie est surlignée, l'élève pose la question
 // dont c'est la réponse (cf. QuestionBoard). Accessible uniquement via /dev.
 export default function RevisionAgentScreen() {
+  // Toujours le skin « Kindle » sur cette page, quel que soit celui choisi (cf. demande explicite du user).
+  const { setForcedSkin } = useConfig();
+  useEffect(() => {
+    setForcedSkin("kindle");
+    return () => setForcedSkin(null);
+  }, [setForcedSkin]);
   const [lessons, setLessons] = useState([]);
   const [lessonCode, setLessonCode] = useState("");
   const [task, setTask] = useState(TASKS[0].id);
