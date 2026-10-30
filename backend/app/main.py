@@ -4,9 +4,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.config import BACKEND_DIR, DATA_DIR, FRONTEND_DEV_ORIGIN, RESULTS_DIR
+from app.config import BACKEND_DIR, DATA_DIR, FRONTEND_DEV_ORIGIN, JOURNALS_DIR, RESULTS_DIR
 from app.data_loader import DATA_FILES, get_dataset
 from app.database import init_db
+from app.request_journal import RequestJournal
 from app.routers import (
     auth,
     chapters,
@@ -68,11 +69,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# Journal des requêtes : qui fait quoi, et quand (cf. app.request_journal). Ajouté en dernier : il enveloppe tout.
+app.add_middleware(RequestJournal)
 
 # Sur Render, RESULTS_DIR pointe vers le disque persistant monté : au tout
 # premier déploiement (avant que le disque ne soit peuplé), le dossier
 # n'existe pas encore et StaticFiles refuse de démarrer sans lui.
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Les journaux de séance de revision-agent ont d'abord été écrits dans RESULTS_DIR, que /media sert publiquement :
+# déplacés une fois pour toutes dans JOURNALS_DIR (cf. app.config).
+_old_sessions = RESULTS_DIR / "revision_sessions"
+if _old_sessions.exists() and not (JOURNALS_DIR / "revision_sessions").exists():
+    JOURNALS_DIR.mkdir(parents=True, exist_ok=True)
+    shutil.move(str(_old_sessions), str(JOURNALS_DIR / "revision_sessions"))
 
 # Dossiers d'assets versionnés dans git (assez légers pour ça, contrairement
 # au reste de backend/results/, cf. .gitignore — ex: images_concept, logos) :

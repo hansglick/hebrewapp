@@ -9,6 +9,10 @@ DATA_DIR = BACKEND_DIR / "data"
 # système de fichiers du service lui-même est éphémère, remis à zéro à
 # chaque déploiement) ; en local, la valeur par défaut ne change pas.
 RESULTS_DIR = Path(os.environ.get("RESULTS_DIR", str(BACKEND_DIR / "results")))
+# Journaux d'activité (séances de revision-agent, requêtes) : à côté de la base, sur le disque persistant en prod
+# (/var/data/journals), et SURTOUT PAS dans RESULTS_DIR, que /media sert publiquement (cf. app.main) : ils contiennent
+# pseudos et transcriptions.
+JOURNALS_DIR = Path(os.environ.get("DB_PATH", str(BACKEND_DIR / "db.sqlite3"))).parent / "journals"
 PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
 
 load_dotenv(BACKEND_DIR / ".env")

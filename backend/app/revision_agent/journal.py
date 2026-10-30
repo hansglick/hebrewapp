@@ -1,6 +1,6 @@
 """Journal des séances de /dev/revision-agent (cf. demande explicite du user) : un fichier JSON Lines par séance, sur le
-disque persistant (RESULTS_DIR/revision_sessions, /var/data/results sur Render, cf. render.yaml), qui survit aux
-déploiements et ne dépend pas de la durée de conservation des logs de Render.
+disque persistant (JOURNALS_DIR/revision_sessions, /var/data/journals sur Render, hors de ce que /media sert), qui survit
+aux déploiements et ne dépend pas de la durée de conservation des logs de Render.
 
 Chaque ligne : {"t": secondes depuis l'ouverture de la séance, "at": heure ISO, "event": type, ...données}. La première
 ("session_open") décrit la séance (compte, tâche, leçon, cases cochées) ; la dernière ("session_close") donne sa durée.
@@ -20,11 +20,11 @@ import time
 import uuid
 from datetime import datetime, timezone
 
-from app.config import RESULTS_DIR
+from app.config import JOURNALS_DIR
 
 log = logging.getLogger("revision_agent.journal")
 
-JOURNAL_DIR = RESULTS_DIR / "revision_sessions"
+JOURNAL_DIR = JOURNALS_DIR / "revision_sessions"
 SUMMARY = JOURNAL_DIR / "summary.jsonl"
 # Messages au navigateur qui ne vont pas au journal : la parole du prof y est déjà, en entier (cf. teacher).
 SKIPPED_BROWSER_MESSAGES = {"teacher"}

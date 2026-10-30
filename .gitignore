@@ -14,6 +14,8 @@ backend/data/pdfs/
 
 # Runtime user data (SQLite DB) - local state, not source
 backend/**/*.sqlite3
+# Journaux d'activité (séances, requêtes) - cf. app.config.JOURNALS_DIR
+backend/journals/
 
 # Python
 __pycache__/
