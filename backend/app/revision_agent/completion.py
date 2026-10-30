@@ -42,7 +42,7 @@ from fastapi import WebSocket
 from app.config import DATA_DIR
 from app.revision_agent import prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import COMPLETION_MODEL
+from app.revision_agent.config import COMPLETION_MODEL, DEFAULT_LANGUAGES
 from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, french_texts, hebrew_answer, letters
 from app.revision_agent.expression import (ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT,
                                            error_list)
@@ -58,7 +58,6 @@ SENTENCES_PER_ROUND = 6  # comme la question (cf. demande explicite du user)
 CURRENT_LESSON_SENTENCES = 2  # phrases du concept de la leçon en cours quand les leçons antérieures sont aussi cochées
 HESITATION_SECONDS = 5  # silence de l'élève au-delà duquel la pastille de l'indice apparaît
 TEACHER_START_TIMEOUT = 4  # après une réussite, délai laissé au prof pour commencer à féliciter l'élève
-LANGUAGE = "fr"  # mode de langue de départ (cf. demande explicite du user)
 # Libellé court d'un concept sans petit cours (cf. concept_topic).
 SHORT_TITLES = {"0.18": "Sensations : קר לי, חם לי"}
 
@@ -287,7 +286,7 @@ class CompletionSession(TeacherSession):
         self.concepts = concepts  # au programme : tous les concepts retenus par les cases cochées
         tools = [NEXT_SENTENCE_TOOL, COMPLETION_EVALUATION_TOOL, HESITATION_TOOL, RETRY_TOOL, LANGUAGE_TOOL]
         super().__init__(browser, GeminiLive(voice, prompts.completion_instructions(len(self.items)),
-                                             f"{prompts.COMPLETION_START} {prompts.language_mode(LANGUAGE)}",
+                                             f"{prompts.COMPLETION_START} {prompts.language_mode(DEFAULT_LANGUAGES["completion"])}",
                                              tools))
         self.asked = 0  # phrases déjà servies
         # Un essai est attendu (phrase donnée, ou nouvel essai) ; hors de cette phase, c'est la conversation.
@@ -297,7 +296,7 @@ class CompletionSession(TeacherSession):
         self.closing = False
         self.pending: list[dict] | None = None
         self.heard = ""  # transcription de ce que l'élève a dit depuis la phrase donnée
-        self.language = LANGUAGE
+        self.language = DEFAULT_LANGUAGES["completion"]
         self.first_turn_done = False
         self.score = {"completion": {"ok": 0, "ko": 0}}
         self.score_events = 0

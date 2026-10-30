@@ -41,6 +41,16 @@ VOICES = {
     "Zephyr", "Zubenelgenubi",
 }
 
-# Mode de langue du prof au début d'une séance ("he" | "fr") : hébreu, personne n'est censé parler français pendant
-# la séance (cf. demande explicite du user).
-DEFAULT_LANGUAGE = "he"
+# Débit du prof (cf. demande explicite du user) : True, vif et naturel en mode français, lent et clair en mode hébreu
+# (et pour l'hébreu cité en mode français) ; False, retour au débit d'origine, lent et clair partout.
+FAST_FRENCH_SPEECH = True
+
+# Mode de langue du prof au début d'une séance ("he" | "fr"), par tâche (cf. demande explicite du user).
+DEFAULT_LANGUAGES = {
+    "lecture": "he",
+    "comprehension": "he",
+    "expression": "fr",
+    "declinaison": "fr",
+    "completion": "fr",
+    "question": "fr",
+}

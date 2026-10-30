@@ -36,7 +36,7 @@ from fastapi import WebSocket
 
 from app.revision_agent import prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import DEFAULT_LANGUAGE, READING_MODEL, READING_SILENCE_SECONDS
+from app.revision_agent.config import DEFAULT_LANGUAGES, READING_MODEL, READING_SILENCE_SECONDS
 from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, letters
 from app.revision_agent.expression import CLOSING_SECONDS, TEACHER_IDLE_TIMEOUT
 from app.revision_agent.gemini_live import GeminiLive
@@ -183,9 +183,9 @@ class ReadingSession(TeacherSession):
         self.extract: list[int] | None = None
         tools = [TEXT_TOOL, HEARD_TOOL, LANGUAGE_TOOL]
         super().__init__(browser, GeminiLive(voice, prompts.reading_instructions(self.readings),
-                                             f"{prompts.READING_START} {prompts.language_mode(DEFAULT_LANGUAGE)}",
+                                             f"{prompts.READING_START} {prompts.language_mode(DEFAULT_LANGUAGES["lecture"])}",
                                              tools))
-        self.language = DEFAULT_LANGUAGE
+        self.language = DEFAULT_LANGUAGES["lecture"]
         self.shown = False  # le texte est affiché
         self.asked = 0  # extraits déjà surlignés
         # Une lecture est attendue : le prof, une fois sa consigne dite, est coupé ; la voix de l'élève est guettée.

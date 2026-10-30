@@ -164,20 +164,23 @@ export default function CompletionBoard({
               <Prefix prefix={shown.prefix} longer={hint?.prefix} />
               {hint?.offered && !erased && <HintDot key={`${shown.number}-${hint.action ? 2 : 1}`} onClick={onHint} />}
             </li>
+            {/* Premier indice (l'action) : il glisse entre le début de phrase et la contrainte (cf. demande
+                explicite du user). */}
+            {hint?.action && !erased && (
+              <li className="ra-completion-hint-line">
+                <div className="ra-completion-hint-inner">
+                  <p className="ra-question-hint">
+                    Indice : <strong>{hint.action}</strong>
+                  </p>
+                </div>
+              </li>
+            )}
             <li className="ra-completion-constraint-line">
               <strong className="ra-completion-constraint">
                 {shown.constraint.charAt(0).toUpperCase() + shown.constraint.slice(1)}
               </strong>
             </li>
           </ul>
-          {hint?.action && !erased && (
-            <p className="ra-question-hint">
-              Indice :{" "}
-              <mark className="ra-completion-mark" lang="fr">
-                {hint.action}
-              </mark>
-            </p>
-          )}
         </>
       )}
     </div>

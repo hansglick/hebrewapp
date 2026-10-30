@@ -31,7 +31,7 @@ from fastapi import WebSocket
 from app.config import DATA_DIR
 from app.revision_agent import prompts, sentence_declension
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import DEFAULT_LANGUAGE, SHOW_DECLENSION_EXPECTED
+from app.revision_agent.config import DEFAULT_LANGUAGES, SHOW_DECLENSION_EXPECTED
 from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, french_texts, hebrew_answer
 from app.revision_agent.expression import (CLOSING_SECONDS, DECLENSION_EVALUATION_TOOL, RETRY_TOOL,
                                           TEACHER_IDLE_TIMEOUT)
@@ -178,7 +178,7 @@ class DeclensionSession(TeacherSession):
         self.reserve = items[SENTENCES_PER_ROUND:]
         tools = [NEXT_SENTENCE_TOOL, DECLENSION_EVALUATION_TOOL, RETRY_TOOL, LANGUAGE_TOOL]
         super().__init__(browser, GeminiLive(voice, prompts.declension_instructions(len(self.items)),
-                                             f"{prompts.DECLENSION_START} {prompts.language_mode(DEFAULT_LANGUAGE)}",
+                                             f"{prompts.DECLENSION_START} {prompts.language_mode(DEFAULT_LANGUAGES["declinaison"])}",
                                              tools))
         self.asked = 0  # phrases déjà servies
         # Déclinaison de chaque phrase, préparée d'avance (la suivante pendant qu'on fait celle-ci).
@@ -191,7 +191,7 @@ class DeclensionSession(TeacherSession):
         self.closing = False
         self.pending: dict | None = None
         self.heard = ""  # transcription de ce que l'élève a dit depuis la phrase donnée
-        self.language = DEFAULT_LANGUAGE
+        self.language = DEFAULT_LANGUAGES["declinaison"]
         self.first_turn_done = False
         self.score = {"declension": {"ok": 0, "ko": 0}}
         self.score_events = 0

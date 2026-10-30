@@ -49,7 +49,7 @@ from fastapi import WebSocket
 
 from app.data_loader import get_dataset
 from app.revision_agent import prompts
-from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGE
+from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGES
 from app.revision_agent.evaluation import (QUESTION_FALLBACK_SECONDS, align_error_words, french_texts,
                                            hebrew_answer)
 from app.revision_agent.gemini_live import GeminiLive
@@ -219,7 +219,7 @@ class ComprehensionSession(TeacherSession):
         instructions = prompts.comprehension_instructions(self.phrases, oral, self.auto_retry)
         tools = ([TEXT_TOOL, NEXT_QUESTION_TOOL, evaluation_tool(self.auto_retry), LANGUAGE_TOOL]
                  + ([RETRY_TOOL] if oral else []))
-        start = f"{prompts.COMPREHENSION_START} {prompts.language_mode(DEFAULT_LANGUAGE)}"
+        start = f"{prompts.COMPREHENSION_START} {prompts.language_mode(DEFAULT_LANGUAGES["comprehension"])}"
         super().__init__(browser, GeminiLive(voice, instructions, start, tools))
         self.text_shown = False
         self.highlighted: list[int] = []
@@ -233,7 +233,7 @@ class ComprehensionSession(TeacherSession):
         # Phase de réponse : une question est posée (ou l'élève retente) et n'a pas encore été évaluée. En évaluation
         # orale, hors de cette phase, ce que dit l'élève est de la conversation et n'est jamais évalué.
         self.answering = False
-        self.language = DEFAULT_LANGUAGE  # mode de langue du prof (cf. config)
+        self.language = DEFAULT_LANGUAGES["comprehension"]  # mode de langue du prof (cf. config)
         self.first_turn_done = False  # la bulle du mode de langue attend la fin de sa première prise de parole
         # Les fenêtres de la question se ferment (cf. close_exercise) : la question suivante attend la fin.
         self.closing = False

@@ -2236,6 +2236,37 @@
   content: none;
 }
 
+/* Premier indice, calé à droite, sans puce : la ligne s'ouvre entre le début
+   de phrase et la contrainte, qui descend, pendant que l'indice glisse du haut
+   (cf. .ra-volet). */
+.ra-completion-items .ra-completion-hint-line {
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-items: end;
+  animation: ra-volet-open 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.ra-completion-items .ra-completion-hint-line::before {
+  content: none;
+}
+
+.ra-completion-hint-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ra-completion-hint-inner .ra-question-hint {
+  margin: 0;
+  animation: ra-volet-slide 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-completion-items .ra-completion-hint-line,
+  .ra-completion-hint-inner .ra-question-hint {
+    animation: none;
+  }
+}
+
 /* La consigne, en gras et soulignée, dans le bleu de la parole du prof. */
 .ra-completion-constraint {
   font-weight: 700;

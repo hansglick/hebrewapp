@@ -32,7 +32,7 @@ from fastapi import WebSocket
 
 from app.revision_agent import prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import DEFAULT_LANGUAGE, QUESTION_MODEL
+from app.revision_agent.config import DEFAULT_LANGUAGES, QUESTION_MODEL
 from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, french_texts, hebrew_answer
 from app.revision_agent.expression import (ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT,
                                            error_list)
@@ -207,7 +207,7 @@ class QuestionSession(TeacherSession):
         self.items = items[:SENTENCES_PER_ROUND]
         tools = [NEXT_SENTENCE_TOOL, QUESTION_EVALUATION_TOOL, HESITATION_TOOL, RETRY_TOOL, LANGUAGE_TOOL]
         super().__init__(browser, GeminiLive(voice, prompts.question_instructions(len(self.items)),
-                                             f"{prompts.QUESTION_START} {prompts.language_mode(DEFAULT_LANGUAGE)}",
+                                             f"{prompts.QUESTION_START} {prompts.language_mode(DEFAULT_LANGUAGES["question"])}",
                                              tools))
         self.asked = 0  # phrases déjà servies
         # Un essai est attendu (phrase donnée, ou nouvel essai) ; hors de cette phase, c'est la conversation.
@@ -217,7 +217,7 @@ class QuestionSession(TeacherSession):
         self.closing = False
         self.pending: list[dict] | None = None
         self.heard = ""  # transcription de ce que l'élève a dit depuis la phrase donnée
-        self.language = DEFAULT_LANGUAGE
+        self.language = DEFAULT_LANGUAGES["question"]
         self.first_turn_done = False
         self.score = {"question": {"ok": 0, "ko": 0}}
         self.score_events = 0

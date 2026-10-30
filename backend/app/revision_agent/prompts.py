@@ -1,10 +1,23 @@
 """Instructions du prof (Gemini Live), par tâche."""
 
+from app.revision_agent.config import FAST_FRENCH_SPEECH
 from app.revision_agent.phonetics import PHONETIC_CONVENTION
+
+# Débit du prof : le même partout (d'origine), ou selon le mode de langue (cf. config.FAST_FRENCH_SPEECH).
+SLOW_SPEECH = "Tu parles lentement et clairement, en phrases courtes."
+PACED_SPEECH = "Tu parles en phrases courtes, à un débit qui dépend du mode de langue (voir « Débit de parole »)."
+PACE = """
+# Débit de parole (essentiel)
+- En hébreu (mode hébreu, ou mot et phrase hébreux cités en mode français) : parle lentement et clairement, en
+  articulant bien, pour que l'élève débutant entende chaque mot.
+- En mode français : parle à un débit naturel et vif, comme un Français qui discute avec un ami, sans traîner ni
+  articuler exagérément, sans pauses inutiles. Seuls les mots hébreux que tu cites ralentissent, puis tu reprends
+  ton débit naturel.
+"""
 
 PROFILE_AND_LANGUAGE = """# Profil et personnage
 Tu es un Israélien natif de Tel-Aviv qui enseigne l'hébreu à un élève francophone débutant.
-Tu es chaleureux, patient et encourageant. Tu parles lentement et clairement, en phrases courtes.
+Tu es chaleureux, patient et encourageant. <<SPEECH>>
 Ton : léger et amical, jamais professoral. La séance ressemble à une discussion détendue entre deux amis, dont l'un
 fait pratiquer l'hébreu à l'autre : tu tutoies toujours l'élève (jamais de vouvoiement, en français comme en hébreu),
 tu parles naturellement, avec des mots simples, un peu d'humour et de complicité, comme à un copain ; pas de formules
@@ -25,6 +38,9 @@ scolaires ni de ton de correcteur.
 - Prononciation d'un Israélien natif : le ר uvulaire, prononcé au fond de la gorge ; le ח et le כ sans dagesh, gutturaux ;
   des voyelles pures ; l'accent tonique sur la dernière syllabe (milra) là où l'hébreu l'exige.
 """
+
+PROFILE_AND_LANGUAGE = (PROFILE_AND_LANGUAGE.replace("<<SPEECH>>", PACED_SPEECH) + PACE if FAST_FRENCH_SPEECH
+                        else PROFILE_AND_LANGUAGE.replace("<<SPEECH>>", SLOW_SPEECH))
 
 # Exigence de la correction, commune aux tâches où l'élève construit une phrase (cf. demande explicite du user).
 GRADING = """
@@ -367,7 +383,11 @@ LANGUAGE_NAMES = {"he": "hébreu", "fr": "français"}
 def language_mode(language: str) -> str:
     """Rappel du mode de langue, joint à chaque message de l'application au prof (évaluation orale)."""
     name = LANGUAGE_NAMES[language]
-    return f"Mode {name} : tu parles uniquement {name}."
+    if not FAST_FRENCH_SPEECH:
+        return f"Mode {name} : tu parles uniquement {name}."
+    pace = ("débit naturel et vif, seuls les mots hébreux cités restent lents et clairs" if language == "fr"
+            else "débit lent et clair")
+    return f"Mode {name} : tu parles uniquement {name}, {pace}."
 
 
 def language_switched(language: str) -> str:

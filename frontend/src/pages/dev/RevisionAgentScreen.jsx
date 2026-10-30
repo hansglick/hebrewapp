@@ -30,6 +30,8 @@ const QUESTIONLESS_LESSONS = ["0.15"];
 // Leçons dont le texte n'a pas de questions de compréhension.
 const TEXT_WITHOUT_QUESTIONS = ["0.11"];
 const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une leçon qui a un texte
+// Tâches grisées dans le menu pour le moment (cf. demande explicite du user).
+const DISABLED_TASKS = ["mot"];
 // « Lecture » en premier (cf. demande explicite du user).
 const TASKS = [
   { id: "lecture", label: "Lecture" },
@@ -171,6 +173,7 @@ export default function RevisionAgentScreen() {
     !((currentLesson && completionsOf(lessonCode).current) || (previousLessons && completionsOf(lessonCode).previous));
   const taskAvailable = (id) =>
     LIVE_TASKS.includes(id) &&
+    !DISABLED_TASKS.includes(id) &&
     !needsText(id) &&
     !needsQuestions(id) &&
     !needsPhrases(id) &&
@@ -239,7 +242,11 @@ export default function RevisionAgentScreen() {
               Tâche
               <select value={task} onChange={(e) => setTask(e.target.value)}>
                 {TASKS.map((t) => (
-                  <option key={t.id} value={t.id} disabled={needsText(t.id) || needsQuestions(t.id)}>
+                  <option
+                    key={t.id}
+                    value={t.id}
+                    disabled={DISABLED_TASKS.includes(t.id) || needsText(t.id) || needsQuestions(t.id)}
+                  >
                     {t.label}
                     {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
                     {needsQuestions(t.id) ? " (pas de questions sur ce texte)" : ""}

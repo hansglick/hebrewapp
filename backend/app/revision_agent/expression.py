@@ -46,7 +46,7 @@ from app.config import DATA_DIR
 
 from app.revision_agent import prompts, sentence_declension
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import DEFAULT_LANGUAGE, SHOW_DECLENSION_EXPECTED
+from app.revision_agent.config import DEFAULT_LANGUAGES, SHOW_DECLENSION_EXPECTED
 from app.revision_agent.evaluation import (QUESTION_FALLBACK_SECONDS, align_error_words, french_texts,
                                            hebrew_answer)
 from app.revision_agent.gemini_live import GeminiLive
@@ -227,7 +227,7 @@ class ExpressionSession(TeacherSession):
         self.questions = draw_questions(lesson)
         tools = [NEXT_QUESTION_TOOL, HINT_TOOL, EVALUATION_TOOL, DECLENSION_EVALUATION_TOOL, RETRY_TOOL, LANGUAGE_TOOL]
         super().__init__(browser, GeminiLive(voice, prompts.expression_instructions(),
-                                                  f"{prompts.EXPRESSION_START} {prompts.language_mode(DEFAULT_LANGUAGE)}", tools))
+                                                  f"{prompts.EXPRESSION_START} {prompts.language_mode(DEFAULT_LANGUAGES["expression"])}", tools))
         self.asked = 0  # questions déjà servies
         self.stage = "question"  # "question" | "declension" : ce que l'élève est en train de faire
         # Un essai est attendu (question posée, déclinaison donnée, ou nouvel essai) et sera évalué ; hors de cette
@@ -244,7 +244,7 @@ class ExpressionSession(TeacherSession):
         self.closing = False
         self.question_due = False
         self.heard = ""  # transcription de ce que l'élève a dit depuis le dernier exercice
-        self.language = DEFAULT_LANGUAGE  # mode de langue du prof (cf. config)
+        self.language = DEFAULT_LANGUAGES["expression"]  # mode de langue du prof (cf. config)
         self.first_turn_done = False
         # Bilan de la séance : essais réussis et ratés, en expression et en déclinaison.
         self.score = {kind: {"ok": 0, "ko": 0} for kind in ("expression", "declension")}
