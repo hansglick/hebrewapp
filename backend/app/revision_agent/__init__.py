@@ -1,4 +1,4 @@
-"""Agent de révision (/dev/revision-agent) : un prof Gemini Live 3.8 fait réviser une leçon (0.01 → 0.20) à
+"""Agent de révision (/dev/revision-agent) : un prof Gemini Live 3.8 fait réviser une leçon (0.01 → 0.30) à
 l'étudiant, tâche par tâche (lecture, compréhension de texte, expression libre, déclinaison, question…). Le verbatim de l'élève
 vient toujours de Gemini Live ; des modèles rapides (Gemini Flash) complètent l'évaluation au besoin."""
 

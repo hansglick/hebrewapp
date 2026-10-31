@@ -698,5 +698,327 @@
       ],
       "note": "Même modèle pour מתחיל, מסביר…"
     }
+  },
+  "expression:concept:0.23": {
+    "short": "L'âge : בן / בת + nombre",
+    "details": "Pour dire l'âge, on emploie בן (pour un garçon, un homme), בת (pour une fille, une femme), בני (pour un groupe masculin ou mixte) ou בנות (pour un groupe féminin), suivi du nombre d'années : אני בן חמש עשרה (j'ai quinze ans), היא בת עשרים ואחת (elle a vingt et un ans). Le nombre est toujours au féminin, car on compte des années (שנה est féminin), même pour un garçon. Pour demander l'âge : בן כמה אתה? (quel âge as-tu ?, à un garçon), בת כמה את? (à une fille).",
+    "course": {
+      "intro": "Pour dire l’âge, utilise la forme adaptée suivie du nombre d’années.",
+      "points": [
+        {
+          "term": "בן",
+          "meaning": "pour un garçon ou un homme",
+          "rule": "",
+          "examples": [
+            {
+              "he": "אני בן חמש עשרה",
+              "fr": "J’ai quinze ans."
+            }
+          ]
+        },
+        {
+          "term": "בת",
+          "meaning": "pour une fille ou une femme",
+          "rule": "",
+          "examples": [
+            {
+              "he": "היא בת עשרים ואחת",
+              "fr": "Elle a vingt et un ans."
+            }
+          ]
+        },
+        {
+          "term": "בני",
+          "meaning": "pour un groupe masculin ou mixte",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "בנות",
+          "meaning": "pour un groupe féminin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "Nombre au féminin",
+          "meaning": "",
+          "rule": "Le nombre est toujours au féminin, même pour un garçon, car tu comptes des années : שנה (« année ») est féminin.",
+          "examples": []
+        },
+        {
+          "term": "בן כמה אתה?",
+          "meaning": "Quel âge as-tu ?",
+          "rule": "À un garçon.",
+          "examples": []
+        },
+        {
+          "term": "בת כמה את?",
+          "meaning": "Quel âge as-tu ?",
+          "rule": "À une fille.",
+          "examples": []
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.26": {
+    "short": "L'appartenance avec של",
+    "details": "L'appartenance s'exprime avec של (de) : הספר של דוד (le livre de David). Pour dire mon, ton, son…, של prend un suffixe selon le possesseur, jamais selon l'objet possédé : הספר שלי (mon livre), הבת שלו (sa fille, à lui), הילדים שלה (ses enfants, à elle). L'objet possédé prend l'article ה : הספר שלי, littéralement « le livre de moi ».",
+    "course": {
+      "intro": "",
+      "points": [
+        {
+          "term": "של",
+          "meaning": "de",
+          "rule": "Utilise של pour exprimer l’appartenance.",
+          "examples": [
+            {
+              "he": "הספר של דוד",
+              "fr": "le livre de David"
+            }
+          ]
+        },
+        {
+          "term": "של + suffixe",
+          "meaning": "mon, ton, son…",
+          "rule": "Ajoute à של un suffixe selon le possesseur, jamais selon l’objet possédé.",
+          "examples": [
+            {
+              "he": "הספר שלי",
+              "fr": "mon livre"
+            },
+            {
+              "he": "הבת שלו",
+              "fr": "sa fille, à lui"
+            },
+            {
+              "he": "הילדים שלה",
+              "fr": "ses enfants, à elle"
+            }
+          ]
+        },
+        {
+          "term": "objet possédé",
+          "meaning": "",
+          "rule": "L’objet possédé prend l’article ה.",
+          "examples": [
+            {
+              "he": "הספר שלי",
+              "fr": "mon livre, littéralement « le livre de moi »"
+            }
+          ]
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:preposition:של": {
+    "short": "של déclinée : שלי, שלך, שלו…",
+    "details": "La préposition של (de, à) ne s'emploie pas seule devant un pronom : elle prend un suffixe selon le possesseur. שלי (à moi), שלך (à toi, m. / f.), שלו (à lui), שלה (à elle), שלנו (à nous), שלכם (à vous, m.), שלכן (à vous, f.), שלהם (à eux), שלהן (à elles). Elle suit le nom possédé, avec son article : הספר שלי (mon livre).",
+    "course": {
+      "intro": "של prend un suffixe selon le possesseur.",
+      "points": [
+        {
+          "term": "של",
+          "meaning": "de, à",
+          "rule": "Devant un pronom, elle ne s’emploie pas seule.",
+          "examples": []
+        },
+        {
+          "term": "שלי",
+          "meaning": "à moi",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלך",
+          "meaning": "à toi, masculin ou féminin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלו",
+          "meaning": "à lui",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלה",
+          "meaning": "à elle",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלנו",
+          "meaning": "à nous",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלכם",
+          "meaning": "à vous, masculin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלכן",
+          "meaning": "à vous, féminin",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלהם",
+          "meaning": "à eux",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "שלהן",
+          "meaning": "à elles",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "Place après le nom",
+          "meaning": "",
+          "rule": "Place של déclinée après le nom possédé, avec son article : הספר שלי (« mon livre »).",
+          "examples": []
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.28": {
+    "short": "כל : tous ou chaque",
+    "details": "Suivi d'un nom défini (avec l'article ה), כל signifie tout, toute, tous, toutes : כל התלמידים נחמדים (tous les élèves sont sympas). Suivi d'un nom au singulier sans article, il signifie chaque : כל פעם (chaque fois), בכל כיתה (dans chaque classe).",
+    "course": {
+      "intro": "",
+      "points": [
+        {
+          "term": "כל",
+          "meaning": "tout, toute, tous, toutes",
+          "rule": "Suivi d’un nom défini avec l’article ה : כל התלמידים נחמדים (« tous les élèves sont sympas »).",
+          "examples": []
+        },
+        {
+          "term": "כל",
+          "meaning": "chaque",
+          "rule": "Suivi d’un nom au singulier sans article : כל פעם (« chaque fois »), בכל כיתה (« dans chaque classe »).",
+          "examples": []
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.29": {
+    "short": "L'état construit (סמיכות)",
+    "details": "L'état construit accole deux noms : le second précise le premier. בית ספר (une école : maison + livre), ארוחת בוקר (un petit-déjeuner). Le premier nom peut changer de forme : au féminin singulier, ה devient ת (ארוחה → ארוחת) ; au masculin pluriel, ים devient י (ספרים → ספרי ילדים, des livres d'enfants). Pour rendre l'ensemble défini, l'article ה se met seulement sur le second nom : בית הספר (l'école). Le genre et le nombre de l'ensemble sont ceux du premier nom.",
+    "course": {
+      "intro": "L’état construit accole deux noms : le second précise le premier.",
+      "points": [
+        {
+          "term": "בית ספר",
+          "meaning": "une école",
+          "rule": "Littéralement : maison + livre.",
+          "examples": []
+        },
+        {
+          "term": "ארוחת בוקר",
+          "meaning": "un petit-déjeuner",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "ה → ת",
+          "meaning": "féminin singulier",
+          "rule": "Le premier nom peut changer de forme : ארוחה → ארוחת.",
+          "examples": []
+        },
+        {
+          "term": "ים → י",
+          "meaning": "masculin pluriel",
+          "rule": "Le premier nom change de terminaison : ספרים → ספרי ילדים (« des livres d’enfants »).",
+          "examples": []
+        },
+        {
+          "term": "בית הספר",
+          "meaning": "l’école",
+          "rule": "Pour rendre l’ensemble défini, place l’article ה seulement sur le second nom.",
+          "examples": []
+        },
+        {
+          "term": "Genre et nombre",
+          "meaning": "",
+          "rule": "Le genre et le nombre de l’ensemble sont ceux du premier nom.",
+          "examples": []
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:concept:0.30": {
+    "short": "כדי + infinitif : pour",
+    "details": "Pour dire le but d'une action, on emploie כדי (pour, afin de), toujours suivi d'un verbe à l'infinitif : הוא בא כדי לפגוש את שרה (il vient pour rencontrer Sarah), הוא נוסע באוטובוס כדי לחזור הביתה (il prend l'autobus pour rentrer à la maison). כדי ne s'emploie jamais devant un nom.",
+    "course": {
+      "intro": "Pour exprimer le but d’une action, tu emploies כדי.",
+      "points": [
+        {
+          "term": "כדי",
+          "meaning": "pour, afin de",
+          "rule": "כדי est toujours suivi d’un verbe à l’infinitif.",
+          "examples": [
+            {
+              "he": "הוא בא כדי לפגוש את שרה",
+              "fr": "Il vient pour rencontrer Sarah."
+            },
+            {
+              "he": "הוא נוסע באוטובוס כדי לחזור הביתה",
+              "fr": "Il prend l’autobus pour rentrer à la maison."
+            }
+          ]
+        },
+        {
+          "term": "Devant un nom",
+          "meaning": "",
+          "rule": "כדי ne s’emploie jamais devant un nom.",
+          "examples": []
+        }
+      ],
+      "note": ""
+    }
+  },
+  "expression:conjugaison:nifal": {
+    "short": "נפעל",
+    "details": "Au présent, le נפעל prend le préfixe נ et suit le modèle נִקְטָל : נִפְגָּשׁ, נִפְגֶּשֶׁת, נִפְגָּשִׁים, נִפְגָּשׁוֹת. Même modèle pour נכנס, נמצא…",
+    "course": {
+      "intro": "Au présent, le נפעל prend le préfixe נ et suit le modèle נִקְטָל.",
+      "points": [
+        {
+          "term": "נִפְגָּשׁ",
+          "meaning": "masculin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "נִפְגֶּשֶׁת",
+          "meaning": "féminin singulier",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "נִפְגָּשִׁים",
+          "meaning": "masculin pluriel",
+          "rule": "",
+          "examples": []
+        },
+        {
+          "term": "נִפְגָּשׁוֹת",
+          "meaning": "féminin pluriel",
+          "rule": "",
+          "examples": []
+        }
+      ],
+      "note": "Même modèle pour נכנס, נמצא…"
+    }
   }
 }

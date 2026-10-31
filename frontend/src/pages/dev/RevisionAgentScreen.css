@@ -1305,6 +1305,234 @@
   border-color: var(--textSecondary);
 }
 
+/* Antisèche à la demande (cf. TaskLayout, materialOpen) : sur ordinateur, la
+   colonne du centre ne change pas (display: contents). */
+.ra-main-fold {
+  display: contents;
+}
+
+/* Sur mobile (cf. demande explicite du user) : les réglages seuls, puis, la
+   conversation lancée, ils glissent vers la gauche et disparaissent ; la
+   séance n'a qu'une colonne. L'antisèche, ouverte par l'ampoule, pousse les
+   fenêtres du centre vers le haut et prend leur place ; elle défile avec la
+   page, et un glissement vers le bas la referme (cf. TaskLayout). Page sans
+   Gemini Live : la séance tient dans la hauteur de l'écran (cf.
+   .ra-main-fold-screen), en 14 px, l'hébreu en 16 px. */
+@media (max-width: 899px) {
+  .revision-agent-controls {
+    max-height: 2000px;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.35s,
+      max-height 0s;
+  }
+
+  .revision-agent-controls-hidden {
+    max-height: 0;
+    overflow: hidden;
+    transform: translateX(-110%);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      transform 0.45s cubic-bezier(0.4, 0, 1, 1),
+      opacity 0.35s,
+      max-height 0s 0.45s,
+      visibility 0s 0.45s;
+  }
+
+  /* La séance ne commence qu'une fois les réglages partis. */
+  .revision-agent:has(.revision-agent-controls-hidden) .revision-agent-session {
+    margin-top: -16px;
+  }
+
+  .ra-main-fold {
+    display: grid;
+    grid-template-rows: 1fr;
+    min-width: 0;
+    transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  /* overflow : le repli ; la marge laisse voir le liseré des fenêtres (cf. .ra-zone-composer). */
+  .ra-main-fold > .ra-layout-main {
+    min-height: 0;
+    margin: -2px;
+    padding: 2px;
+    overflow: hidden;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.35s;
+  }
+
+  .ra-main-fold-closed {
+    grid-template-rows: 0fr;
+  }
+
+  .ra-main-fold-closed > .ra-layout-main {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+
+  /* Fermée, l'antisèche ne laisse pas d'écart sous les fenêtres. */
+  .ra-layout:has(.ra-main-fold-closed) {
+    row-gap: 0;
+  }
+
+  /* L'ampoule, la piste et la corbeille sur une seule ligne : la piste prend la place qui reste. */
+  .ra-composer-actions {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .ra-composer-actions .ra-slider-row {
+    flex: 1;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .ra-composer-actions .ra-slider {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  /* Au repos, le loquet est à gauche : le texte n'a besoin de place que de ce côté. */
+  .ra-composer-actions .ra-slider-inside {
+    padding: 0 10px 0 56px;
+  }
+
+  .ra-composer-actions .ra-slider-label-more {
+    display: none;
+  }
+
+  /* Antisèche ouverte : le glissement vers le bas qui la referme (cf. TaskLayout) ne recharge pas la page. */
+  html:has(.ra-sheet-fold:not(.ra-fold-closed)) {
+    overscroll-behavior-y: contain;
+  }
+
+  /* Pas de bulle d'explication du mode de langue (cf. LanguageSwitch, demande explicite du user). */
+  .ra-language-hint {
+    display: none;
+  }
+
+  /* Police de la séance : le français en 14 px, l'hébreu en 16 px (cf. demande explicite du user). */
+  .revision-agent-session {
+    font-size: 14px;
+  }
+
+  .revision-agent-session :is([lang="he"], [dir="rtl"]):not(.ra-translate-toggle *),
+  .revision-agent-session .ra-speech-he.ra-speech-translation {
+    font-size: 16px;
+  }
+
+  .revision-agent-session .ra-speech-fr,
+  .revision-agent-session .ra-speech-texts .ra-speech-spoken-fr,
+  .revision-agent-session .ra-bill {
+    font-size: 14px;
+  }
+
+  /* Fenêtres plus serrées, pour tenir dans l'écran. */
+  .revision-agent-session .ra-layout,
+  .revision-agent-session .ra-layout-main {
+    gap: 10px;
+  }
+
+  .revision-agent-session .ra-zone {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  /* « Question suivante », « Arrêter la séance » et le chrono sur une seule ligne. */
+  .revision-agent-session .ra-layout-clock {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .revision-agent-session .ra-layout-clock :is(button, .ra-clock) {
+    min-width: 0;
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  /* Les fenêtres du centre à la hauteur de l'écran sous leur bord haut (--ra-screen-height, cf. TaskLayout) : la
+     conversation prend la place qui reste, sa réplique y défile toute seule (flex-basis 0 : sa
+     longueur ne compte pas dans la hauteur). Si les autres fenêtres ne tiennent plus (une évaluation longue), la
+     page défile. */
+  .ra-main-fold-screen > .ra-layout-main {
+    min-height: var(--ra-screen-height, auto);
+  }
+
+  .ra-main-fold-screen > .ra-layout-main > * {
+    flex: none;
+  }
+
+  .ra-main-fold-screen > .ra-layout-main > .ra-zone-conversation {
+    flex: 1 1 0;
+    min-height: 96px;
+    overflow: hidden;
+  }
+
+  /* La réplique défile seule dans la conversation, comme un prompteur (cf. TeacherSpeech), sur toute la largeur et
+     toute la hauteur : le mode de langue et le bouton « אA » passent en haut à droite, sur la ligne de l'intitulé
+     (placés par rapport à la fenêtre, ils ne défilent pas avec elle). Le doigt ne la fait pas défiler (overflow
+     hidden : seule l'écriture la fait remonter). */
+  .ra-main-fold-screen .ra-zone-conversation > .ra-speech {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    scroll-behavior: smooth;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-speech.ra-speech-plain {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-speech-plain > .ra-speech-texts {
+    grid-column: 1;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-speech-translation-block {
+    display: contents;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-speech-translation-block > .ra-translate-toggle {
+    top: 9px;
+    right: 12px;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-speech-mode {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    left: auto;
+    z-index: 2;
+    transform: none;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-speech-mode-straddle {
+    right: 48px;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-language-mode {
+    width: auto;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-language-pill {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ra-main-fold-screen .ra-zone-conversation .ra-language-active {
+    width: 26px;
+    height: 26px;
+    border-width: 2px;
+  }
+
+  /* L'antisèche ouverte, la colonne se replie entièrement. */
+  .ra-main-fold-screen.ra-main-fold-closed > .ra-layout-main {
+    min-height: 0;
+  }
+}
+
 /* Sur ordinateur : réglages dans une colonne fixe à gauche (ils restent visibles
    pendant le défilement), séparés par une barre verticale de la séance en
    cours (texte, prise de parole du prof, indice…), cf. demande explicite du
@@ -1762,6 +1990,80 @@
   }
 }
 
+/* Facture de la séance (cf. Bill) : trois colonnes (intitulé, tokens,
+   prix), partagées par toutes les lignes (subgrid) ; un bloc par modèle,
+   séparé du suivant par un trait pointillé, son nom en gras, puis l'entrée,
+   la sortie et leur somme sous un petit filet de la colonne des prix ; le
+   total en gras sous un filet plein. Chaque ligne se déroule de gauche à
+   droite, l'une après l'autre (--bill-delay). */
+.ra-bill {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 6px 16px;
+  font-size: 0.9em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ra-bill-block,
+.ra-bill-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: 6px;
+}
+
+.ra-bill-block {
+  padding-top: 8px;
+  border-top: 1px dashed var(--cardBorder);
+}
+
+.ra-bill-row {
+  color: var(--textSecondary);
+  clip-path: inset(0 100% 0 0);
+  animation: ra-bill-stream 0.45s ease-out var(--bill-delay, 0ms) forwards;
+}
+
+@keyframes ra-bill-stream {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.ra-bill-tokens,
+.ra-bill-price {
+  text-align: right;
+}
+
+.ra-bill-cached {
+  font-size: 0.9em;
+}
+
+.ra-bill-model > span {
+  grid-column: 1 / -1;
+  font-weight: 600;
+  color: var(--textPrimary);
+}
+
+.ra-bill-sum .ra-bill-price {
+  padding-top: 4px;
+  border-top: 1px solid var(--textSecondary);
+  color: var(--textPrimary);
+}
+
+.ra-bill-total {
+  padding-top: 8px;
+  border-top: 1px solid var(--cardBorder);
+  font-weight: 600;
+  color: var(--textPrimary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-bill-row {
+    clip-path: none;
+    animation: none;
+  }
+}
+
 /* Suivi de la séance : une ligne par exercice, puis ses marques — coche
    blanche sur pastille bleue (la couleur de la police), croix bleue sans fond. */
 .ra-followup {
@@ -1958,9 +2260,91 @@
   }
 }
 
+/* La connexion s'éteint (cf. TaskLayout, la facture arrive) : chaque fenêtre
+   quitte l'écran vers le haut, celles du haut d'abord ; puis la facture,
+   seule, au centre. */
+.ra-layout-leaving {
+  pointer-events: none;
+}
+
+.ra-layout.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > * {
+  animation: ra-leave-up 0.55s cubic-bezier(0.5, 0, 0.75, 0) var(--leave-delay, 0s) both;
+}
+
+.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > :nth-child(2) {
+  --leave-delay: 0.06s;
+}
+
+.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > :nth-child(3) {
+  --leave-delay: 0.12s;
+}
+
+.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > :nth-child(4) {
+  --leave-delay: 0.18s;
+}
+
+.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > :nth-child(5) {
+  --leave-delay: 0.24s;
+}
+
+.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > :nth-child(n + 6) {
+  --leave-delay: 0.3s;
+}
+
+@keyframes ra-leave-up {
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+.ra-layout.ra-layout-billing {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* La facture s'en va (10 s après, ou par sa croix, cf. RevisionAgentScreen)
+   comme les autres fenêtres, vers le haut ; les réglages reprennent sa place. */
+.ra-bill-leaving .ra-zone-bill {
+  animation: ra-leave-up 0.5s cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+
+.ra-bill-close {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ra-bill-close svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--textSecondary);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.ra-bill-close:hover,
+.ra-bill-close:focus-visible {
+  background: color-mix(in srgb, var(--textPrimary) 10%, transparent);
+}
+
+.ra-bill-close:hover svg,
+.ra-bill-close:focus-visible svg {
+  stroke: var(--textPrimary);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ra-layout-finishing .ra-layout-main,
-  .ra-layout-finished .ra-layout-side {
+  .ra-layout-finished .ra-layout-side,
+  .ra-layout.ra-layout-leaving :is(.ra-layout-main, .ra-layout-side) > * {
     animation: none;
   }
 }
@@ -2420,4 +2804,624 @@
   .ra-layout-compact-side .ra-layout-clock {
     flex-wrap: nowrap;
   }
+}
+
+/* Page sans Gemini Live (cf. StudentAnswer) : la réponse de l'élève sous
+   l'exercice — sa dernière réponse (enregistrée : sa transcription et ▶ pour la
+   réécouter), la piste d'enregistrement (cf. .ra-slider) et, à droite,
+   l'interrupteur « Répondre par écrit », qui affiche le champ (toute la
+   largeur) et « Envoyer ». */
+.ra-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* La dernière réponse de l'élève et ce qu'en fait le prof (cf. StudentAnswer) :
+   la réponse, ▶ à sa droite pour la réécouter ; dessous, sous un trait, le
+   commentaire de chaque faute. */
+.ra-exchange {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ra-exchange-said {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.ra-exchange-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ra-exchange-text > p {
+  margin: 0;
+}
+
+.ra-exchange-perfect {
+  margin: 0;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--validationPleine);
+}
+
+/* La fenêtre de la réponse prend la couleur de ce qu'en fait le prof (cf.
+   StudentAnswer) : ocre pour l'évaluation, bleu pour la conversation ; le
+   trait au-dessus de la piste et l'ampoule la suivent (--mode-color), dans le
+   bleu des tuiles tant que la bordure est neutre. */
+.ra-zone-composer {
+  --mode-color: var(--textPrimary);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.ra-zone-composer:has(.ra-composer-evaluation) {
+  --mode-color: #b5502e;
+  border-color: var(--mode-color);
+  box-shadow: 0 0 0 1px var(--mode-color);
+}
+
+.ra-zone-composer:has(.ra-composer-conversation) {
+  --mode-color: #3f6fa8;
+  border-color: var(--mode-color);
+  box-shadow: 0 0 0 1px var(--mode-color);
+}
+
+/* Intitulé qui change comme un tableau de gare (cf. FlapLabel), dans la
+   police des autres intitulés (.ra-label) : chaque lettre bascule sur son axe
+   horizontal à chaque changement. */
+.ra-flap {
+  display: inline-flex;
+  white-space: pre;
+}
+
+.ra-flap-cell {
+  display: inline-block;
+  perspective: 80px;
+}
+
+.ra-flap-letter {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  animation: ra-flap-flip 55ms ease-out;
+}
+
+@keyframes ra-flap-flip {
+  from {
+    transform: rotateX(-90deg);
+    opacity: 0.4;
+  }
+  to {
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-flap-letter {
+    animation: none;
+  }
+}
+
+.ra-composer-send {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.ra-composer-send:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ra-composer .hebrew-input {
+  max-width: none;
+  background: transparent;
+}
+
+.ra-composer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+/* À la première réponse, la fenêtre s'agrandit vers le bas (cf. .ra-fold) :
+   la réponse, puis un trait tracé de gauche à droite, au-dessus de la piste. */
+.ra-exchange-fold {
+  transition: grid-template-rows 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Le trait : moitié de la largeur, centré, de la couleur de la bordure ;
+   autant d'espace au-dessus que dessous (28 px : sous lui, 20 px de marge et
+   les 8 px d'écart jusqu'à la piste). */
+.ra-exchange-rule {
+  width: 50%;
+  height: 1px;
+  margin: 28px auto 20px;
+  border: none;
+  background: var(--mode-color, var(--textPrimary));
+  transition: background-color 0.5s ease;
+  transform-origin: left center;
+  animation: ra-rule-draw 0.6s ease-out 0.2s both;
+}
+
+@keyframes ra-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Réponse sans faute qui s'en va (cf. StudentAnswer, FADE_STEPS) : elle
+   s'efface comme au tableau (cf. .ra-slate-erased), dans son sens de lecture ;
+   puis le trait se retire vers la gauche. */
+.ra-exchange-erased {
+  pointer-events: none;
+}
+
+.ra-exchange-erased :is(p, .ra-composer-play) {
+  animation: ra-erase-ltr 0.6s ease-in both;
+}
+
+.ra-exchange-erased p[dir="rtl"] {
+  animation-name: ra-erase-rtl;
+}
+
+.ra-exchange-rule.ra-exchange-rule-out {
+  animation: ra-rule-out 0.4s ease-in both;
+}
+
+@keyframes ra-rule-out {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* Réponse sans faute (cf. Answer, perfect) : un soulignement vert se trace
+   dans le sens de lecture, puis une coche blanche sur fond vert apparaît à
+   la fin de la phrase, en explosant comme une marque du suivi (.ra-burst). */
+.ra-answer-perfect {
+  padding-bottom: 3px;
+  background: linear-gradient(#2f8a4e, #2f8a4e) no-repeat right bottom / 0% 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: ra-underline 0.6s ease-out forwards;
+}
+
+[dir="ltr"] > .ra-answer-perfect {
+  background-position: left bottom;
+}
+
+@keyframes ra-underline {
+  to {
+    background-size: 100% 3px;
+  }
+}
+
+.ra-perfect-mark {
+  margin-inline-start: 10px;
+  vertical-align: middle;
+  color: #2f8a4e;
+}
+
+/* Ampoule de l'antisèche (cf. ExpressionBoard, Lamp) : du bleu des tuiles,
+   sur fond blanc cerclé de ce bleu ; à chaque question, elle pulse légèrement
+   une seconde ; toutes les 30 s, des rayons jaillissent autour d'elle. */
+.ra-lamp {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--mode-color, var(--textPrimary));
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  animation: ra-lamp-pulse 1s ease-in-out;
+  transition: border-color 0.5s ease, background-color 0.15s;
+}
+
+.ra-lamp svg:not(.ra-lamp-rays) {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--mode-color, var(--textPrimary));
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Les rayons, autour du bouton : à la fin de chaque période de 30 s, ils
+   s'allument en s'écartant, puis s'éteignent, trois fois de suite. */
+.ra-lamp svg.ra-lamp-rays {
+  position: absolute;
+  inset: -14px;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+  stroke: var(--mode-color, var(--textPrimary));
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: ra-lamp-rays 30s linear infinite;
+}
+
+/* Trois rayonnements consécutifs (de 1,1 s chacun) à la fin de chaque
+   période. */
+@keyframes ra-lamp-rays {
+  0%,
+  89%,
+  92.61%,
+  96.31% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  90.2%,
+  93.8%,
+  97.5% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  92.6%,
+  96.3%,
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+.ra-lamp:hover,
+.ra-lamp:focus-visible {
+  background: color-mix(in srgb, var(--mode-color, var(--textPrimary)) 8%, #fff);
+}
+
+@keyframes ra-lamp-pulse {
+  0%,
+  50%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mode-color, var(--textPrimary)) 35%, transparent);
+  }
+  25%,
+  75% {
+    transform: scale(1.07);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--mode-color, var(--textPrimary)) 0%, transparent);
+  }
+}
+
+/* Antisèche à la demande : déroulée vers le bas comme un volet qu'on tire,
+   remontée de même ; fermée, elle ne laisse pas d'espace dans la colonne. */
+.ra-sheet-fold {
+  transition:
+    grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    margin 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ra-sheet-fold.ra-fold-closed {
+  margin-bottom: -12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-exchange-rule,
+  .ra-answer-perfect,
+  .ra-lamp,
+  .ra-lamp svg.ra-lamp-rays {
+    animation: none;
+  }
+
+  .ra-answer-perfect {
+    background-size: 100% 3px;
+  }
+}
+
+.ra-composer-writing {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  color: var(--textSecondary);
+}
+
+.ra-composer-send-text {
+  align-self: flex-end;
+}
+
+/* Réponse à voix haute (cf. RecordSlider) : une piste à pousser comme pour
+   déverrouiller un téléphone, en rouge ocre (cf. demande explicite du user) ;
+   le loquet glisse vers la droite, devient un avion en papier qui s'envole à
+   travers les nuages à l'envoi ; la corbeille, à droite, n'est active que
+   pendant l'enregistrement. */
+.ra-slider-row {
+  --ochre: #b5502e;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ra-slider {
+  position: relative;
+  width: 280px;
+  max-width: 100%;
+  height: 56px;
+  border-radius: 28px;
+  background: color-mix(in srgb, var(--ochre) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ochre) 35%, transparent);
+  touch-action: none;
+  user-select: none;
+}
+
+.ra-slider-disabled {
+  opacity: 0.45;
+}
+
+.ra-slider-inside {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 64px 0 64px;
+}
+
+.ra-slider-recording .ra-slider-inside {
+  padding: 0 64px 0 20px;
+}
+
+.ra-slider-label {
+  width: 100%;
+  text-align: center;
+  font-size: 0.9em;
+  color: var(--ochre);
+  white-space: nowrap;
+}
+
+.ra-slider-chevrons {
+  display: inline-block;
+  letter-spacing: -2px;
+  animation: ra-chevrons 1.6s ease-in-out infinite;
+}
+
+@keyframes ra-chevrons {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(5px);
+    opacity: 1;
+  }
+}
+
+.ra-slider-live {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.ra-slider-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9em;
+  color: var(--ochre);
+}
+
+.ra-slider-knob {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ochre);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(181, 80, 46, 0.35);
+  cursor: grab;
+  transition:
+    left 0.3s ease,
+    transform 0.3s ease;
+  z-index: 1;
+}
+
+/* Pendant qu'on le pousse, le loquet suit le doigt, sans retard. */
+.ra-slider-knob-drag {
+  cursor: grabbing;
+  transition: none;
+}
+
+.ra-slider-knob-end {
+  left: calc(100% - 48px - 4px);
+  cursor: pointer;
+}
+
+.ra-slider-knob:disabled {
+  cursor: not-allowed;
+}
+
+.ra-slider-knob svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ra-slider-recording .ra-slider-knob .ra-plane {
+  animation: ra-plane-ready 1.4s ease-in-out infinite;
+}
+
+/* L'avion prêt à partir : il se balance doucement. */
+@keyframes ra-plane-ready {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(1px, -2px) rotate(-6deg);
+  }
+}
+
+/* L'envoi : l'avion recule un peu, puis file en haut à droite et disparaît. */
+.ra-plane-flight {
+  animation: ra-plane-flight 1.3s cubic-bezier(0.5, 0, 0.6, 1) forwards;
+}
+
+@keyframes ra-plane-flight {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-6px, 4px) rotate(8deg) scale(1);
+  }
+  60% {
+    transform: translate(60px, -40px) rotate(-12deg) scale(0.85);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(150px, -110px) rotate(-20deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Pendant le vol, des nuages défilent dans la piste, de droite à gauche. */
+.ra-slider-sky {
+  position: absolute;
+  inset: 0;
+}
+
+.ra-cloud {
+  position: absolute;
+  left: 100%;
+  fill: color-mix(in srgb, var(--ochre) 30%, white);
+  animation: ra-cloud 1.3s linear forwards;
+}
+
+.ra-cloud-1 {
+  top: 8px;
+  width: 38px;
+}
+
+.ra-cloud-2 {
+  top: 26px;
+  width: 28px;
+  animation-delay: 0.2s;
+}
+
+.ra-cloud-3 {
+  top: 12px;
+  width: 22px;
+  animation-delay: 0.45s;
+}
+
+@keyframes ra-cloud {
+  to {
+    transform: translateX(-340px);
+  }
+}
+
+.ra-slider-trash {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--ochre);
+  background: transparent;
+  color: var(--ochre);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.ra-slider-trash:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--ochre) 12%, transparent);
+}
+
+.ra-slider-trash:disabled {
+  border-color: var(--cardBorder);
+  color: var(--textSecondary);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ra-slider-trash svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Onde sonore pendant l'enregistrement : des barres ocre qui montent et
+   descendent, décalées, réparties sur toute la longueur de la piste. */
+.ra-wave {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.ra-wave span {
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+  background: #b5502e;
+  transform: scaleY(0.25);
+  animation: ra-wave 0.9s ease-in-out infinite;
+  animation-delay: var(--wave-delay);
+}
+
+@keyframes ra-wave {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.ra-composer-play {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--cardBorder);
+  background: transparent;
+  color: var(--textPrimary);
+  cursor: pointer;
+  font-size: 0.8em;
 }

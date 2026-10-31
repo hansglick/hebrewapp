@@ -59,10 +59,15 @@ log = logging.getLogger("revision_agent.expression")
 QUESTIONS_PER_ROUND = 3  # pour découvrir la tâche, comme la compréhension (cf. demande explicite du user)
 CLOSING_SECONDS = 1.2  # fermeture des fenêtres de la question, de bas en haut (cf. .ra-closing)
 TEACHER_IDLE_TIMEOUT = 10  # la déclinaison attend au plus ce délai que le prof ait fini de féliciter l'élève
+# Fin de la séance (cf. demande explicite du user) : elle se ferme d'elle-même ce délai après l'au revoir du prof (texte
+# affiché, audio joué), ou au plus tard FINISH_TIMEOUT après la dernière évaluation, s'il ne dit rien.
+FINISH_GRACE_SECONDS = 1.5
+FINISH_TIMEOUT = 45
 # Ordre de priorité des sujets au tirage : les concepts, sinon les conjugaisons, puis le ל décliné.
 TOPIC_GROUPS = ("expression:concept:", "expression:conjugaison:", "expression:preposition:")
-# Sujets dont la déclinaison porte de préférence sur une préposition déclinée (possession, ressenti, ל décliné).
-PREPOSITION_TOPICS = ("expression:concept:0.08", "expression:concept:0.18", "expression:preposition:")
+# Sujets dont la déclinaison porte de préférence sur une préposition déclinée (possession, ressenti, appartenance…).
+PREPOSITION_TOPICS = ("expression:concept:0.08", "expression:concept:0.18", "expression:concept:0.26",
+                      "expression:preposition:")
 
 NEXT_QUESTION_TOOL = {
     "name": "question_suivante",
@@ -246,6 +251,9 @@ class ExpressionSession(TeacherSession):
         self.heard = ""  # transcription de ce que l'élève a dit depuis le dernier exercice
         self.language = DEFAULT_LANGUAGES["expression"]  # mode de langue du prof (cf. config)
         self.first_turn_done = False
+        self.done_at = 0.0  # fin de la dernière question
+        self.done_turn = 0  # dernière prise de parole du prof avant son au revoir
+        self.quiet_since = 0.0  # le prof s'est tu après son au revoir
         # Bilan de la séance : essais réussis et ratés, en expression et en déclinaison.
         self.score = {kind: {"ok": 0, "ko": 0} for kind in ("expression", "declension")}
         self.score_events = 0
@@ -280,13 +288,28 @@ class ExpressionSession(TeacherSession):
 
     async def tick(self, now: float) -> None:
         if (not self.first_turn_done and self.turn.segments and not self.turn.open
-                and 0 < self.playback_until <= now):
+                and (not self.live.speaks or 0 < self.playback_until <= now)):
             self.first_turn_done = True
             await self.to_browser({"type": "first_turn_done"})
+        if self.done_at and not self.finished.is_set():
+            self.check_finished(now)
         if (self.pending_question and not self.closing
                 and now - self.question_served_at > QUESTION_FALLBACK_SECONDS):
             log.info("le prof tarde à poser la question : affichage spontané")
             await self.show_question()
+
+    def check_finished(self, now: float) -> None:
+        """Ferme la séance quand le prof a fini son au revoir : prise de parole close, audio produit et joué."""
+        quiet = (self.turn.id > self.done_turn and not self.turn.open and not self.live.to_say
+                 and self.playback_until <= now)
+        if not quiet:
+            self.quiet_since = 0.0
+        elif not self.quiet_since:
+            self.quiet_since = now
+        if ((self.quiet_since and now - self.quiet_since >= FINISH_GRACE_SECONDS)
+                or now - self.done_at >= FINISH_TIMEOUT):
+            log.info("fin de la séance : fermeture automatique")
+            self.finished.set()
 
     async def on_hidden_turn_started(self) -> None:
         # La question s'affiche quand le prof commence à la poser, une fois les fenêtres précédentes fermées.
@@ -336,6 +359,7 @@ class ExpressionSession(TeacherSession):
             # Une déclinaison ne s'évalue qu'une fois affichée (pas pendant sa préparation).
             if (self.stage != expected_stage or not self.current
                     or (expected_stage == "declension" and self.declension is None)):
+                await self.exchange(None)
                 await respond({"resultat": self.in_mode(prompts.NOT_RETRYING)})
                 return
             if not self.answering:
@@ -343,6 +367,7 @@ class ExpressionSession(TeacherSession):
                 verdict = args.get("nouvel_essai")
                 log.info("évaluation pendant la conversation : %s", verdict)
                 if verdict != "oui":
+                    await self.exchange(None)
                     await respond({"resultat": self.in_mode(prompts.ASK_IF_RETRY if verdict == "incertain"
                                                             else prompts.NOT_RETRYING)})
                     return
@@ -365,6 +390,7 @@ class ExpressionSession(TeacherSession):
     async def evaluate_answer(self, args: dict, respond) -> None:
         evaluation = await self.evaluation(args, {"fautes_langue": "language", "fautes_sens": "sense"})
         succeeded = perfect(evaluation)
+        await self.exchange(evaluation)
         # La réponse et l'évaluation ne s'affichent que si elle est fausse (cf. demande explicite du user) ; réussie,
         # la question s'efface à l'écran (cf. l'événement du bilan).
         if not succeeded:
@@ -372,24 +398,34 @@ class ExpressionSession(TeacherSession):
         await self.record("expression", succeeded)
         await self.set_answering(False)
         if succeeded:
-            # Réponse parfaite : la déclinaison se prépare pendant que le prof félicite l'élève.
+            # Réponse parfaite : la déclinaison se prépare (1 à 2 s), puis arrive au prof avec le résultat.
             self.stage = "declension"
             self.evaluated = False
-            self.declension_task = asyncio.create_task(self.start_declension(evaluation["answer"]))
+            self.declension_task = asyncio.create_task(self.start_declension(evaluation["answer"], respond))
             self.background.append(self.declension_task)
-            await respond({"resultat": self.in_mode(prompts.PERFECT_ANSWER)}, when_idle=True)
         else:
             await respond({"resultat": self.in_mode(prompts.EVALUATION_SHOWN_EXPRESSION)}, when_idle=True)
+
+    async def exchange(self, evaluation: dict | None) -> None:
+        """Mode texte : l'évaluation de la réponse de l'élève, réussie ou non, dans la fenêtre de sa réponse ; None :
+        l'évaluation demandée par le prof n'a pas lieu (pas d'exercice en cours, pas un nouvel essai) : il converse."""
+        if self.exchange_evaluated:
+            self.exchange_evaluated = False
+            await self.to_browser({"type": "exchange", "kind": "evaluation", "evaluation": evaluation} if evaluation
+                                  else {"type": "exchange", "kind": "conversation"})
 
     async def evaluate_declension(self, args: dict, respond) -> None:
         evaluation = await self.evaluation(args, {"fautes_langue": "language"})
         succeeded = perfect(evaluation)
+        await self.exchange(evaluation)
         if not succeeded:
             await self.to_browser({"type": "declension_evaluation", "evaluation": evaluation})
         await self.record("declension", succeeded)
         await self.set_answering(False)
-        await respond({"resultat": self.in_mode(prompts.DECLENSION_SUCCESS if succeeded else prompts.DECLENSION_FAILED)},
-                      when_idle=True)
+        if succeeded:
+            await respond(await self.with_next_question(prompts.DECLENSION_SUCCESS), when_idle=True)
+        else:
+            await respond({"resultat": self.in_mode(prompts.DECLENSION_FAILED)}, when_idle=True)
 
     async def evaluation(self, args: dict, error_kinds: dict[str, str]) -> dict:
         """Évaluation à afficher : réponse en hébreu, commentaires des fautes en français (cf. comprehension.py)."""
@@ -402,33 +438,52 @@ class ExpressionSession(TeacherSession):
         answer = align_error_words(hebrew_answer(args.get("reponse_eleve"), self.heard), errors)
         return {"answer": answer, "errors": errors}
 
-    async def start_declension(self, sentence: str) -> None:
-        """Prépare la déclinaison de la phrase réussie, puis l'affiche et la confie au prof dès qu'il a fini de
-        féliciter l'élève."""
-        declension = await sentence_declension.prepare(sentence, self.current["preferred"])
-        deadline = time.monotonic() + TEACHER_IDLE_TIMEOUT
-        while (self.turn.open or self.playback_until > time.monotonic()) and time.monotonic() < deadline:
-            await asyncio.sleep(0.1)
+    async def start_declension(self, sentence: str, respond) -> None:
+        """Prépare la déclinaison de la phrase réussie, l'affiche dès que le prof se tait, et la lui confie avec le
+        résultat de l'évaluation : il félicite l'élève et donne la consigne dans la même prise de parole. Sans
+        déclinaison possible, c'est la question suivante qui accompagne le résultat."""
+        try:
+            declension = await sentence_declension.prepare(sentence, self.current["preferred"])
+            deadline = time.monotonic() + TEACHER_IDLE_TIMEOUT
+            while (self.turn.open or self.playback_until > time.monotonic()) and time.monotonic() < deadline:
+                await asyncio.sleep(0.1)
+        except asyncio.CancelledError:
+            # Passée avec le bouton « Question suivante » : la fonction du prof reçoit quand même sa réponse.
+            await respond({"resultat": "Déclinaison passée."}, silent=True)
+            raise
         if declension is None:
-            await self.live.app_message(self.in_mode(prompts.NO_DECLENSION))
+            await respond(await self.with_next_question(prompts.NO_DECLENSION), when_idle=True)
             return
         self.declension = declension
         self.heard = ""
         await self.to_browser({"type": "declension", "declension": declension.message(SHOW_DECLENSION_EXPECTED)})
         await self.set_answering(True)
-        await self.live.app_message(self.in_mode(prompts.declension_given(
-            declension.sentence, declension.word, declension.replacement, declension.expected)))
+        given = prompts.declension_given(declension.sentence, declension.word, declension.replacement,
+                                         declension.expected)
+        await respond({"resultat": self.in_mode(f"{prompts.PERFECT_ANSWER} {given}")}, when_idle=True)
+
+    async def with_next_question(self, result: str) -> dict:
+        """Le résultat d'une évaluation réussie, avec la question suivante, déjà servie : le prof félicite l'élève et
+        la pose dans la même prise de parole (une relecture de son contexte de moins, cf. demande explicite du user)."""
+        question = await self.next_question()
+        if question is None:
+            return {"resultat": self.in_mode(f"{result} {prompts.NO_MORE_QUESTIONS_ORAL}")}
+        return {"resultat": self.in_mode(result), "question": question["hebrew"], "traduction": question["french"],
+                "reponse_possible": question["answer"], "consigne": prompts.NEXT_QUESTION_GIVEN}
 
     # --- enchaînement ---------------------------------------------------------
 
     async def next_question(self) -> dict | None:
         """Ferme les fenêtres de la question en cours, puis sert la suivante (None s'il n'y en a plus)."""
-        if self.declension_task and not self.declension_task.done():
+        # Une déclinaison en préparation est abandonnée (sauf si c'est elle qui sert la question, faute de déclinaison).
+        if (self.declension_task and not self.declension_task.done()
+                and self.declension_task is not asyncio.current_task()):
             self.declension_task.cancel()
         if self.asked >= len(self.questions):
             # Fin de la séance : la dernière question reste à l'écran.
             await self.set_answering(False)
             await self.to_browser({"type": "phase", "phase": "done"})
+            self.done_at, self.done_turn = time.monotonic(), self.turn.id
             return None
         if self.asked:
             await self.close_windows()
@@ -446,7 +501,7 @@ class ExpressionSession(TeacherSession):
         self.question_served_at = time.monotonic()
         # La question ne s'affiche que dans sa fenêtre : la prise de parole qui la pose n'est pas affichée.
         self.end_turn()
-        self.hidden_turn = True
+        self.hidden_turn, self.hidden_text = True, question["hebrew"]
         await self.set_answering(True)
         return question
 

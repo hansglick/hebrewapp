@@ -3381,5 +3381,4018 @@
     }
    ]
   }
+ ],
+ "0.21:0": [
+  {
+   "text": "אחרי השיעור אני נח ואוכל ארוחת צהריים.",
+   "concepts": [
+    {
+     "concept": "0.11",
+     "concept_definition": "Les expressions de succession temporelle אחר כך, אחרי et אחרי ש",
+     "concept_word": [
+      "אחרי"
+     ],
+     "truncated_one": "",
+     "truncated_two": "אחרי",
+     "concept_tip": "Pour exprimer la succession temporelle, אחרי précède un nom, אחרי ש une proposition à verbe conjugué, et אחר כך signifie « ensuite ».",
+     "translation_tip": "… après le cours, je me repose et je prends le repas de midi."
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת צהריים"
+     ],
+     "truncated_one": "אחרי השיעור אני נח ואוכל ",
+     "truncated_two": "אחרי השיעור אני נח ואוכל ארוחת צהריים",
+     "concept_tip": "L’état construit relie deux noms ; le premier peut changer de forme, notamment avec une terminaison ת au lieu de ה au féminin singulier.",
+     "translation_tip": "… le repas de midi.",
+     "constraint": "ajoute un groupe nominal à l'état construit indéfini"
+    }
+   ]
+  }
+ ],
+ "0.21:5": [
+  {
+   "text": "יש לנו שלוש בנות וחמישה בנים, כולם כמעט נשואים.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שלוש",
+      "וחמישה"
+     ],
+     "truncated_one": "יש לנו ",
+     "truncated_two": "יש לנו שלוש",
+     "concept_tip": "Les nombres cardinaux s’accordent avec le genre du nom compté et se placent avant lui, sauf אחד et אחת, qui se placent après.",
+     "translation_tip": "… trois filles et cinq garçons, presque tous mariés.",
+     "constraint": "ajoute des nombres avant des noms féminins puis masculins"
+    },
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "כולם"
+     ],
+     "truncated_one": "יש לנו שלוש בנות וחמישה בנים, ",
+     "truncated_two": "יש לנו שלוש בנות וחמישה בנים, כולם",
+     "concept_tip": "כל exprime la totalité ; muni d’un suffixe pronominal, il signifie « tous » ou « toutes » en renvoyant au groupe concerné.",
+     "translation_tip": "… presque tous sont mariés.",
+     "constraint": "reprends le groupe avec כל décliné au masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.21:7": [
+  {
+   "text": "יש לך ארבעה ילדים אבל אתה רווק, נכון?",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "ארבעה"
+     ],
+     "truncated_one": "יש לך ",
+     "truncated_two": "יש לך ארבעה",
+     "concept_tip": "Les nombres cardinaux s’accordent avec le genre du nom compté et se placent avant lui, sauf אחד et אחת, qui se placent après.",
+     "translation_tip": "… quatre enfants, mais tu es célibataire, n’est-ce pas ?",
+     "constraint": "ajoute un nombre accordé avant un nom masculin"
+    }
+   ]
+  }
+ ],
+ "0.21:8": [
+  {
+   "text": "איך אני יכול לבוא?",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכול"
+     ],
+     "truncated_one": "איך אני ",
+     "truncated_two": "איך אני יכול",
+     "concept_tip": "יכול exprime la capacité ou la possibilité et צריך la nécessité ; ils s’accordent avec le sujet et peuvent être suivis d’un infinitif.",
+     "translation_tip": "… peux venir ?",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.21:9": [
+  {
+   "text": "איזו מסעדה אתה הכי אוהב?",
+   "concepts": [
+    {
+     "concept": "0.16",
+     "concept_definition": "Le superlatif en hébreu avec le mot הכי",
+     "concept_word": [
+      "הכי אוהב"
+     ],
+     "truncated_one": "איזו מסעדה אתה ",
+     "truncated_two": "איזו מסעדה אתה הכי אוהב",
+     "concept_tip": "הכי est invariable et se place devant un adjectif ou un participe pour exprimer le degré le plus élevé.",
+     "translation_tip": "… aimes le plus ?",
+     "constraint": "demande ce qu'il préfère avec הכי"
+    }
+   ]
+  }
+ ],
+ "0.22:1": [
+  {
+   "text": "יש לי זמן הערב אני יכול לראות חברים.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכול"
+     ],
+     "truncated_one": "יש לי זמן הערב אני ",
+     "truncated_two": "יש לי זמן הערב אני יכול",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… peux voir des amis.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.22:2": [
+  {
+   "text": "היא לא יכולה לבוא היום, היא חולה.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכולה"
+     ],
+     "truncated_one": "היא לא ",
+     "truncated_two": "היא לא יכולה",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… peut venir aujourd’hui, elle est malade.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.22:3": [
+  {
+   "text": "איתן צריך להזמין חברים לשבת אבל הוא לא רוצה לבשל.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריך"
+     ],
+     "truncated_one": "איתן ",
+     "truncated_two": "איתן צריך",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… doit inviter des amis pour le shabbat, mais il ne veut pas cuisiner.",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.22:4": [
+  {
+   "text": "חנה צריכה למהר לקנות דגים, ירקות, בשר ומשקאות.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריכה"
+     ],
+     "truncated_one": "חנה ",
+     "truncated_two": "חנה צריכה",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… doit se dépêcher d’acheter du poisson, des légumes, de la viande et des boissons.",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.22:5": [
+  {
+   "text": "צריך לבשל!",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריך"
+     ],
+     "truncated_one": "",
+     "truncated_two": "צריך",
+     "concept_tip": "Les mots צריך et יכול expriment la nécessité et la possibilité ; צריך peut aussi s’employer sans sujet au sens de « il faut ».",
+     "translation_tip": "… Il faut cuisiner !"
+    }
+   ]
+  },
+  {
+   "text": "אני מזמין עשרה חברים, אני ממהר, אין לי הרבה זמן, אני צריך לעשות מלא דברים.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרה"
+     ],
+     "truncated_one": "אני מזמין ",
+     "truncated_two": "אני מזמין עשרה",
+     "concept_tip": "Un nombre cardinal s’accorde en genre avec le nom qu’il quantifie et le précède, sauf « un », qui se place après le nom.",
+     "translation_tip": "… dix amis, je me dépêche, je n’ai pas beaucoup de temps, je dois faire plein de choses.",
+     "constraint": "ajoute un nombre accordé avant un nom masculin"
+    },
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריך"
+     ],
+     "truncated_one": "אני מזמין עשרה חברים, אני ממהר, אין לי הרבה זמן, אני ",
+     "truncated_two": "אני מזמין עשרה חברים, אני ממהר, אין לי הרבה זמן, אני צריך",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… dois faire plein de choses.",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.22:6": [
+  {
+   "text": "בדירה שלי, יש לי רק שולחן אחד אבל יש לי ארבעה כיסאות ושתי מיטות כמובן!",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלי"
+     ],
+     "truncated_one": "בדירה ",
+     "truncated_two": "בדירה שלי",
+     "concept_tip": "La possession s’exprime avec של, décliné selon le possesseur, et le nom de l’objet possédé doit être défini.",
+     "translation_tip": "… à moi, je n’ai qu’une table, mais j’ai quatre chaises et deux lits, bien sûr !",
+     "constraint": "utilise של décliné : première personne du singulier"
+    },
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "אחד",
+      "ארבעה",
+      "ושתי"
+     ],
+     "truncated_one": "בדירה שלי, יש לי רק שולחן ",
+     "truncated_two": "בדירה שלי, יש לי רק שולחן אחד",
+     "concept_tip": "Un nombre cardinal s’accorde en genre avec le nom qu’il quantifie et le précède, sauf « un », qui se place après le nom.",
+     "translation_tip": "… une seule, mais j’ai quatre chaises et deux lits, bien sûr !",
+     "constraint": "ajoute le nombre après le nom, accordé au masculin"
+    }
+   ]
+  }
+ ],
+ "0.22:7": [
+  {
+   "text": "לשלמה יש שישה בנים ובת אחת, אבל אין לו סבלנות.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שישה",
+      "אחת"
+     ],
+     "truncated_one": "לשלמה יש ",
+     "truncated_two": "לשלמה יש שישה",
+     "concept_tip": "Un nombre cardinal s’accorde en genre avec le nom qu’il quantifie et le précède, sauf « un », qui se place après le nom.",
+     "translation_tip": "… six fils et une fille, mais il n’a pas de patience.",
+     "constraint": "accorde les nombres, placés avant puis après leurs noms"
+    }
+   ]
+  }
+ ],
+ "0.22:8": [
+  {
+   "text": "דוד וחנה רוצים לראות טלוויזיה אבל הם לא יכולים לעשות רעש.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכולים"
+     ],
+     "truncated_one": "דוד וחנה רוצים לראות טלוויזיה אבל הם לא ",
+     "truncated_two": "דוד וחנה רוצים לראות טלוויזיה אבל הם לא יכולים",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… peuvent faire du bruit.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.22:9": [
+  {
+   "text": "הן צריכות לחזור הביתה, לסדר ולבשל ארוחה חמה.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריכות"
+     ],
+     "truncated_one": "הן ",
+     "truncated_two": "הן צריכות",
+     "concept_tip": "Les mots צריך et יכול expriment respectivement la nécessité et la possibilité et s’accordent en genre et en nombre avec le sujet.",
+     "translation_tip": "… doivent rentrer à la maison, ranger et préparer un repas chaud.",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.23:0": [
+  {
+   "text": "אני בת שלושים וחמש והוא בן ארבעים ושמונה",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שלושים וחמש",
+      "ארבעים ושמונה"
+     ],
+     "truncated_one": "אני בת ",
+     "truncated_two": "אני בת שלושים וחמש",
+     "concept_tip": "Les nombres cardinaux s'accordent avec le nom compté ; pour l'âge, ils sont au féminin, car on compte des années.",
+     "translation_tip": "… trente-cinq ans et il a quarante-huit ans.",
+     "constraint": "exprime un âge avec un nombre au féminin"
+    },
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בת שלושים וחמש",
+      "בן ארבעים ושמונה"
+     ],
+     "truncated_one": "אני ",
+     "truncated_two": "אני בת שלושים וחמש",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן au masculin ou בת au féminin, suivis d'un nombre au féminin.",
+     "translation_tip": "… ai trente-cinq ans et il a quarante-huit ans.",
+     "constraint": "exprime l'âge au féminin puis masculin, avec nombres au féminin"
+    }
+   ]
+  }
+ ],
+ "0.23:1": [
+  {
+   "text": "יש עשרים ואחד תלמידים ועשרים ושלוש תלמידות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרים ואחד",
+      "ועשרים ושלוש"
+     ],
+     "truncated_one": "יש ",
+     "truncated_two": "יש עשרים ואחד",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il quantifie ; les nombres autres que un se placent avant ce nom.",
+     "translation_tip": "… vingt et un élèves garçons et vingt-trois élèves filles.",
+     "constraint": "accorde des nombres composés avant des noms masculins et féminins"
+    }
+   ]
+  }
+ ],
+ "0.23:2": [
+  {
+   "text": "שלמה בן שישים ושתיים וחנה בת שישים ואחת",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שישים ושתיים",
+      "שישים ואחת"
+     ],
+     "truncated_one": "שלמה בן ",
+     "truncated_two": "שלמה בן שישים ושתיים",
+     "concept_tip": "Les nombres cardinaux s'accordent avec le nom compté ; pour l'âge, ils sont au féminin, car on compte des années.",
+     "translation_tip": "… soixante-deux ans et Hanna a soixante et un ans.",
+     "constraint": "exprime un âge avec un nombre composé au féminin"
+    },
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בן שישים ושתיים",
+      "בת שישים ואחת"
+     ],
+     "truncated_one": "שלמה ",
+     "truncated_two": "שלמה בן שישים ושתיים",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן au masculin ou בת au féminin, suivis d'un nombre au féminin.",
+     "translation_tip": "… a soixante-deux ans et Hanna a soixante et un ans.",
+     "constraint": "exprime l'âge au masculin puis féminin, avec nombres au féminin"
+    }
+   ]
+  }
+ ],
+ "0.23:3": [
+  {
+   "text": "יש לנו מאה ספרים!",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "מאה"
+     ],
+     "truncated_one": "יש לנו ",
+     "truncated_two": "יש לנו מאה",
+     "concept_tip": "Les nombres cardinaux précèdent généralement le nom compté ; מאה, qui signifie cent, garde la même forme quel que soit le genre de ce nom.",
+     "translation_tip": "… cent livres !",
+     "constraint": "place un nombre cardinal avant un nom"
+    }
+   ]
+  }
+ ],
+ "0.23:4": [
+  {
+   "text": "אני קונה עשרים ושניים פירות לשבת.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרים ושניים"
+     ],
+     "truncated_one": "אני קונה ",
+     "truncated_two": "אני קונה עשרים ושניים",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il quantifie ; les nombres autres que un se placent avant ce nom.",
+     "translation_tip": "… vingt-deux fruits pour le shabbat.",
+     "constraint": "place un nombre composé au masculin avant un nom"
+    }
+   ]
+  }
+ ],
+ "0.24:5": [
+  {
+   "text": "בן כמה סבא שלמה?",
+   "concepts": [
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בן כמה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בן כמה",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן, בת, בני ou בנות selon la personne, avec un nombre au féminin ; pour demander l'âge, on remplace le nombre par כמה.",
+     "translation_tip": "… Quel âge a grand-père Shlomo ?"
+    }
+   ]
+  }
+ ],
+ "0.24:8": [
+  {
+   "text": "לתומר ועדן יש שלושה ילדים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שלושה"
+     ],
+     "truncated_one": "לתומר ועדן יש ",
+     "truncated_two": "לתומר ועדן יש שלושה",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; il précède ce nom, sauf אחד et אחת, qui le suivent.",
+     "translation_tip": "… trois enfants",
+     "constraint": "ajoute un nombre accordé avant un nom masculin"
+    }
+   ]
+  }
+ ],
+ "0.24:9": [
+  {
+   "text": "סבא שלמה בן שבעים ושתיים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שבעים ושתיים"
+     ],
+     "truncated_one": "סבא שלמה בן ",
+     "truncated_two": "סבא שלמה בן שבעים ושתיים",
+     "concept_tip": "Les nombres cardinaux ont des formes masculines et féminines ; pour compter des années, notamment dans l'expression de l'âge, on utilise le féminin.",
+     "translation_tip": "… soixante-douze ans",
+     "constraint": "exprime un âge avec un nombre composé au féminin"
+    },
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בן שבעים ושתיים"
+     ],
+     "truncated_one": "סבא שלמה ",
+     "truncated_two": "סבא שלמה בן שבעים ושתיים",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן, בת, בני ou בנות selon le genre et le nombre des personnes, suivi d'un nombre au féminin.",
+     "translation_tip": "… a soixante-douze ans",
+     "constraint": "exprime l'âge au masculin avec un nombre au féminin"
+    }
+   ]
+  }
+ ],
+ "0.24:10": [
+  {
+   "text": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "שוק מחנה יהודה"
+     ],
+     "truncated_one": "תומר ועדן גרים בירושלים על יד ",
+     "truncated_two": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה",
+     "concept_tip": "L'état construit relie directement deux noms ; le second détermine si l'ensemble est défini, notamment lorsqu'il s'agit d'un nom propre.",
+     "translation_tip": "… du marché de Mahane Yehuda.",
+     "constraint": "relie un nom à un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.24:12": [
+  {
+   "text": "לתומר ועדן יש שלושה ילדים.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שלושה"
+     ],
+     "truncated_one": "לתומר ועדן יש ",
+     "truncated_two": "לתומר ועדן יש שלושה",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; il précède ce nom, sauf אחד et אחת, qui le suivent.",
+     "translation_tip": "… trois enfants.",
+     "constraint": "ajoute un nombre accordé avant un nom masculin"
+    }
+   ]
+  }
+ ],
+ "0.24:13": [
+  {
+   "text": "שי, בן 36 (שלושים ושש) דוד בן 32 (שלושים ושתיים) ונועה הכי קטנה בת 23 (עשרים ושלוש).",
+   "concepts": [
+    {
+     "concept": "0.16",
+     "concept_definition": "Le superlatif en hébreu avec le mot הכי",
+     "concept_word": [
+      "הכי קטנה"
+     ],
+     "truncated_one": "שי, בן 36 (שלושים ושש) דוד בן 32 (שלושים ושתיים) ונועה ",
+     "truncated_two": "שי, בן 36 (שלושים ושש) דוד בן 32 (שלושים ושתיים) ונועה הכי קטנה",
+     "concept_tip": "Le superlatif se forme avec הכי, invariable, placé devant un adjectif qui s'accorde avec le nom ou la personne qualifiée.",
+     "translation_tip": "… est la plus jeune, elle a 23 ans (vingt-trois ans).",
+     "constraint": "ajoute un adjectif au superlatif avec הכי"
+    },
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "36 (שלושים ושש)",
+      "32 (שלושים ושתיים)",
+      "23 (עשרים ושלוש)"
+     ],
+     "truncated_one": "שי, בן ",
+     "truncated_two": "שי, בן 36 (שלושים ושש)",
+     "concept_tip": "Les nombres cardinaux ont des formes masculines et féminines ; pour compter des années, notamment dans l'expression de l'âge, on utilise le féminin.",
+     "translation_tip": "… 36 ans (trente-six ans), David a 32 ans (trente-deux ans) et Noa, la plus jeune, a 23 ans (vingt-trois ans).",
+     "constraint": "exprime un âge avec un nombre composé au féminin"
+    },
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בן 36 (שלושים ושש)",
+      "בן 32 (שלושים ושתיים)",
+      "בת 23 (עשרים ושלוש)"
+     ],
+     "truncated_one": "שי, ",
+     "truncated_two": "שי, בן 36 (שלושים ושש)",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן, בת, בני ou בנות selon le genre et le nombre des personnes, suivi d'un nombre au féminin.",
+     "translation_tip": "… a 36 ans (trente-six ans), David a 32 ans (trente-deux ans) et Noa, la plus jeune, a 23 ans (vingt-trois ans).",
+     "constraint": "exprime l'âge au masculin puis féminin, avec nombres au féminin"
+    }
+   ]
+  }
+ ],
+ "0.24:14": [
+  {
+   "text": "הילדים של תומר ועדן באים לבקר בשבת וגם הסבא והסבתא באים.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של"
+     ],
+     "truncated_one": "הילדים ",
+     "truncated_two": "הילדים של",
+     "concept_tip": "La préposition של introduit le possesseur ; ses formes déclinées expriment les possessifs et s'accordent avec le possesseur, non avec l'objet possédé.",
+     "translation_tip": "… de Tomer et Eden viennent leur rendre visite le samedi, et le grand-père et la grand-mère viennent aussi.",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    }
+   ]
+  }
+ ],
+ "0.24:15": [
+  {
+   "text": "סבא שלמה בן 72 (שבעים ושתיים) וסבתא חנה בת 68 (שישים ושמונה).",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "72 (שבעים ושתיים)",
+      "68 (שישים ושמונה)"
+     ],
+     "truncated_one": "סבא שלמה בן ",
+     "truncated_two": "סבא שלמה בן 72 (שבעים ושתיים)",
+     "concept_tip": "Les nombres cardinaux ont des formes masculines et féminines ; pour compter des années, notamment dans l'expression de l'âge, on utilise le féminin.",
+     "translation_tip": "… 72 ans (soixante-douze ans) et grand-mère Hanna a 68 ans (soixante-huit ans).",
+     "constraint": "exprime des âges avec des nombres composés au féminin"
+    },
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בן 72 (שבעים ושתיים)",
+      "בת 68 (שישים ושמונה)"
+     ],
+     "truncated_one": "סבא שלמה ",
+     "truncated_two": "סבא שלמה בן 72 (שבעים ושתיים)",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן, בת, בני ou בנות selon le genre et le nombre des personnes, suivi d'un nombre au féminin.",
+     "translation_tip": "… a 72 ans (soixante-douze ans) et grand-mère Hanna a 68 ans (soixante-huit ans).",
+     "constraint": "exprime l'âge au masculin puis féminin, avec nombres au féminin"
+    }
+   ]
+  }
+ ],
+ "0.24:16": [
+  {
+   "text": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "שוק מחנה יהודה"
+     ],
+     "truncated_one": "תומר ועדן גרים בירושלים על יד ",
+     "truncated_two": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה",
+     "concept_tip": "L'état construit relie directement deux noms ; le second détermine si l'ensemble est défini, notamment lorsqu'il s'agit d'un nom propre.",
+     "translation_tip": "… du marché de Mahane Yehuda.",
+     "constraint": "relie un nom à un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.24:17": [
+  {
+   "text": "ביום שישי לפני שבת הם הולכים לשוק לעשות קניות.",
+   "concepts": [
+    {
+     "concept": "0.31",
+     "concept_definition": "Les adjectifs numéraux ordinaux et leur accord en genre et en nombre",
+     "concept_word": [
+      "שישי"
+     ],
+     "truncated_one": "ביום ",
+     "truncated_two": "ביום שישי",
+     "concept_tip": "Un nombre ordinal se place après le nom qu'il qualifie et s'accorde avec lui en genre, en nombre et en détermination.",
+     "translation_tip": "… sixième, c'est-à-dire le vendredi, avant le shabbat, ils vont au marché faire des courses.",
+     "constraint": "ajoute un adjectif numéral ordinal au masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.24:18": [
+  {
+   "text": "הם צריכים לקנות פירות וירקות.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריכים"
+     ],
+     "truncated_one": "הם ",
+     "truncated_two": "הם צריכים",
+     "concept_tip": "צריך exprime le besoin ou l'obligation et יכול la possibilité ; ces mots s'accordent avec le sujet et peuvent être suivis d'un infinitif.",
+     "translation_tip": "… doivent acheter des fruits et des légumes.",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.24:19": [
+  {
+   "text": "בשוק הם שואלים את המוכר: כמה עולה שני קילו עגבניות?",
+   "concepts": [
+    {
+     "concept": "0.14",
+     "concept_definition": "La particule את devant un complément d'objet direct défini",
+     "concept_word": [
+      "את"
+     ],
+     "truncated_one": "בשוק הם שואלים ",
+     "truncated_two": "בשוק הם שואלים את",
+     "concept_tip": "Quand le complément d'objet direct est défini, on le fait précéder de la particule את.",
+     "translation_tip": "… au vendeur : combien coûtent deux kilos de tomates ?",
+     "constraint": "introduis un complément d'objet direct défini avec את"
+    },
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שני"
+     ],
+     "truncated_one": "בשוק הם שואלים את המוכר: כמה עולה ",
+     "truncated_two": "בשוק הם שואלים את המוכר: כמה עולה שני",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; devant un nom masculin, deux prend la forme שני.",
+     "translation_tip": "… deux kilos de tomates ?",
+     "constraint": "utilise un nombre masculin construit devant une unité"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "קילו עגבניות"
+     ],
+     "truncated_one": "בשוק הם שואלים את המוכר: כמה עולה שני ",
+     "truncated_two": "בשוק הם שואלים את המוכר: כמה עולה שני קילו עגבניות",
+     "concept_tip": "L'état construit juxtapose deux noms sans préposition intermédiaire, notamment pour relier une unité de mesure au produit mesuré.",
+     "translation_tip": "… kilos de tomates ?",
+     "constraint": "relie une unité de mesure à un nom"
+    }
+   ]
+  }
+ ],
+ "0.24:20": [
+  {
+   "text": "שנים עשר שקלים.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שנים עשר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שנים עשר",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; il précède ce nom, sauf אחד et אחת, qui le suivent.",
+     "translation_tip": "… Douze shekels."
+    }
+   ]
+  }
+ ],
+ "0.24:21": [
+  {
+   "text": "וכמה זה שני קילו תפוחים?",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שני"
+     ],
+     "truncated_one": "וכמה זה ",
+     "truncated_two": "וכמה זה שני",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; devant un nom masculin, deux prend la forme שני.",
+     "translation_tip": "… deux kilos de pommes ?",
+     "constraint": "utilise un nombre masculin construit devant une unité"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "קילו תפוחים"
+     ],
+     "truncated_one": "וכמה זה שני ",
+     "truncated_two": "וכמה זה שני קילו תפוחים",
+     "concept_tip": "L'état construit juxtapose deux noms sans préposition intermédiaire, notamment pour relier une unité de mesure au produit mesuré.",
+     "translation_tip": "… kilos de pommes ?",
+     "constraint": "relie une unité de mesure à un nom"
+    }
+   ]
+  }
+ ],
+ "0.24:22": [
+  {
+   "text": "ארבעה עשר ש\"ח.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "ארבעה עשר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארבעה עשר",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; il précède ce nom, sauf אחד et אחת, qui le suivent.",
+     "translation_tip": "… Quatorze shekels."
+    }
+   ]
+  }
+ ],
+ "0.24:23": [
+  {
+   "text": "הם מבקשים מהמוכר גם אבטיח, בננות, מלפפונים, פלפל ותפוחי אדמה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "תפוחי אדמה"
+     ],
+     "truncated_one": "הם מבקשים מהמוכר גם אבטיח, בננות, מלפפונים, פלפל ו",
+     "truncated_two": "הם מבקשים מהמוכר גם אבטיח, בננות, מלפפונים, פלפל ותפוחי אדמה",
+     "concept_tip": "L'état construit relie directement deux noms pour former une expression ; au masculin pluriel, la terminaison ים du premier nom devient généralement י.",
+     "translation_tip": "… des pommes de terre.",
+     "constraint": "ajoute un nom composé à l'état construit pluriel"
+    }
+   ]
+  }
+ ],
+ "0.24:24": [
+  {
+   "text": "הם צריכים לשלם והם שואלים כמה סך הכול?",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריכים"
+     ],
+     "truncated_one": "הם ",
+     "truncated_two": "הם צריכים",
+     "concept_tip": "צריך exprime le besoin ou l'obligation et יכול la possibilité ; ces mots s'accordent avec le sujet et peuvent être suivis d'un infinitif.",
+     "translation_tip": "… doivent payer et ils demandent : combien cela fait-il en tout ?",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "סך הכול"
+     ],
+     "truncated_one": "הם צריכים לשלם והם שואלים כמה ",
+     "truncated_two": "הם צריכים לשלם והם שואלים כמה סך הכול",
+     "concept_tip": "L'état construit relie directement deux noms ; lorsqu'il porte un article, celui-ci se place sur le second élément et définit l'ensemble.",
+     "translation_tip": "… au total ?",
+     "constraint": "ajoute une expression figée à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.24:25": [
+  {
+   "text": "תשעים ושניים ₪.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "תשעים ושניים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "תשעים ושניים",
+     "concept_tip": "Un nombre cardinal s'accorde en genre avec le nom qu'il compte ; il précède ce nom, sauf אחד et אחת, qui le suivent.",
+     "translation_tip": "… Quatre-vingt-douze shekels."
+    }
+   ]
+  }
+ ],
+ "0.24:27": [
+  {
+   "text": "עכשיו הם צריכים לחזור הביתה לסדר, לנקות וגם כמובן לבשל.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריכים"
+     ],
+     "truncated_one": "עכשיו הם ",
+     "truncated_two": "עכשיו הם צריכים",
+     "concept_tip": "צריך exprime le besoin ou l'obligation et יכול la possibilité ; ces mots s'accordent avec le sujet et peuvent être suivis d'un infinitif.",
+     "translation_tip": "… doivent rentrer à la maison pour ranger, nettoyer et, bien sûr, cuisiner.",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.25:0": [
+  {
+   "text": "אני בן עשרים ושמונה אבל היא בת עשרים וחמש.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרים ושמונה",
+      "עשרים וחמש"
+     ],
+     "truncated_one": "אני בן ",
+     "truncated_two": "אני בן עשרים ושמונה",
+     "concept_tip": "Les nombres cardinaux varient selon le genre du nom compté ; pour compter les années d'âge, on emploie le féminin.",
+     "translation_tip": "… vingt-huit ans, mais elle a vingt-cinq ans.",
+     "constraint": "exprime des âges avec des nombres composés au féminin"
+    },
+    {
+     "concept": "0.23",
+     "concept_definition": "L'expression de l'âge en hébreu avec les mots בן, בת, בני, בנות et les nombres au féminin",
+     "concept_word": [
+      "בן עשרים ושמונה",
+      "בת עשרים וחמש"
+     ],
+     "truncated_one": "אני ",
+     "truncated_two": "אני בן עשרים ושמונה",
+     "concept_tip": "Pour exprimer l'âge, on emploie בן au masculin ou בת au féminin, suivis d'un nombre au féminin.",
+     "translation_tip": "… ai vingt-huit ans, mais elle a vingt-cinq ans.",
+     "constraint": "exprime l'âge au masculin puis féminin, avec nombres au féminin"
+    }
+   ]
+  }
+ ],
+ "0.25:1": [
+  {
+   "text": "המספר הוא אפס חמש ארבע ארבע אפס שש שלוש שתיים שתיים חמש.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "אפס",
+      "חמש",
+      "ארבע",
+      "ארבע",
+      "אפס",
+      "שש",
+      "שלוש",
+      "שתיים",
+      "שתיים",
+      "חמש"
+     ],
+     "truncated_one": "המספר הוא ",
+     "truncated_two": "המספר הוא אפס",
+     "concept_tip": "Pour énoncer une suite de chiffres sans nom compté, on utilise les formes féminines des nombres.",
+     "translation_tip": "… zéro cinq quatre quatre zéro six trois deux deux cinq.",
+     "constraint": "énonce une suite de chiffres avec leurs formes féminines"
+    }
+   ]
+  }
+ ],
+ "0.25:2": [
+  {
+   "text": "חמישה תלמידים לא יכולים לבוא היום לכיתה.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמישה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חמישה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… cinq élèves ne peuvent pas venir en classe aujourd'hui."
+    },
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכולים"
+     ],
+     "truncated_one": "חמישה תלמידים לא ",
+     "truncated_two": "חמישה תלמידים לא יכולים",
+     "concept_tip": "יכול exprime la possibilité ou la capacité, s'accorde avec le sujet et est généralement suivi d'un infinitif.",
+     "translation_tip": "… peuvent venir en classe aujourd'hui.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.25:3": [
+  {
+   "text": "בגינה יש חמש עשרה ילדות וארבעה עשר ילדים.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמש עשרה",
+      "וארבעה עשר"
+     ],
+     "truncated_one": "בגינה יש ",
+     "truncated_two": "בגינה יש חמש עשרה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… quinze filles et quatorze garçons.",
+     "constraint": "accorde des nombres composés avant des noms féminins puis masculins"
+    }
+   ]
+  },
+  {
+   "text": "בסך הכל יש עשרים ותשעה תלמידים.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בסך הכל"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בסך הכל",
+     "concept_tip": "L'état construit relie directement deux noms ; lorsque le groupe est défini par un article, celui-ci apparaît seulement sur le second nom.",
+     "translation_tip": "… au total, il y a vingt-neuf élèves."
+    },
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרים ותשעה"
+     ],
+     "truncated_one": "בסך הכל יש ",
+     "truncated_two": "בסך הכל יש עשרים ותשעה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… vingt-neuf élèves.",
+     "constraint": "place un nombre composé au masculin avant un nom"
+    }
+   ]
+  }
+ ],
+ "0.25:4": [
+  {
+   "text": "יש לי רק חמישים ושניים שקלים אבל אני יכול לקנות ירקות ודג.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמישים ושניים"
+     ],
+     "truncated_one": "יש לי רק ",
+     "truncated_two": "יש לי רק חמישים ושניים",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… cinquante-deux shekels, mais je peux acheter des légumes et un poisson.",
+     "constraint": "place un nombre composé au masculin avant un nom"
+    },
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכול"
+     ],
+     "truncated_one": "יש לי רק חמישים ושניים שקלים אבל אני ",
+     "truncated_two": "יש לי רק חמישים ושניים שקלים אבל אני יכול",
+     "concept_tip": "יכול exprime la possibilité ou la capacité, s'accorde avec le sujet et est généralement suivi d'un infinitif.",
+     "translation_tip": "… peux acheter des légumes et un poisson.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.25:5": [
+  {
+   "text": "בשוק, סבתא קונה הרבה פירות ושלושה קילו עגבניות.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "ושלושה"
+     ],
+     "truncated_one": "בשוק, סבתא קונה הרבה פירות ",
+     "truncated_two": "בשוק, סבתא קונה הרבה פירות ושלושה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… et trois kilos de tomates.",
+     "constraint": "poursuis avec un nombre masculin placé avant un nom"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "קילו עגבניות"
+     ],
+     "truncated_one": "בשוק, סבתא קונה הרבה פירות ושלושה ",
+     "truncated_two": "בשוק, סבתא קונה הרבה פירות ושלושה קילו עגבניות",
+     "concept_tip": "Une unité de mesure peut être directement suivie du nom de ce qui est mesuré, sans préposition entre les deux noms.",
+     "translation_tip": "… kilos de tomates.",
+     "constraint": "relie une unité de mesure à un nom"
+    }
+   ]
+  }
+ ],
+ "0.25:6": [
+  {
+   "text": "האבטיח עולה רק חמישה שקלים.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמישה"
+     ],
+     "truncated_one": "האבטיח עולה רק ",
+     "truncated_two": "האבטיח עולה רק חמישה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… cinq shekels.",
+     "constraint": "exprime un prix, nombre masculin avant le nom"
+    }
+   ]
+  }
+ ],
+ "0.25:7": [
+  {
+   "text": "הם צריכים לשלם שבעים ושישה שקלים בסך הכל, נכון?",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "צריכים"
+     ],
+     "truncated_one": "הם ",
+     "truncated_two": "הם צריכים",
+     "concept_tip": "צריך exprime la nécessité ou l'obligation et s'accorde avec le sujet ; il peut être suivi d'un infinitif.",
+     "translation_tip": "… doivent payer soixante-seize shekels au total, n'est-ce pas ?",
+     "constraint": "utilise le modal צריך accordé au sujet, puis un infinitif"
+    },
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שבעים ושישה"
+     ],
+     "truncated_one": "הם צריכים לשלם ",
+     "truncated_two": "הם צריכים לשלם שבעים ושישה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… soixante-seize shekels au total, n'est-ce pas ?",
+     "constraint": "exprime un montant avec un nombre composé au masculin"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בסך הכל"
+     ],
+     "truncated_one": "הם צריכים לשלם שבעים ושישה שקלים ",
+     "truncated_two": "הם צריכים לשלם שבעים ושישה שקלים בסך הכל",
+     "concept_tip": "L'état construit relie directement deux noms ; lorsque le groupe est défini par un article, celui-ci apparaît seulement sur le second nom.",
+     "translation_tip": "… au total, n'est-ce pas ?",
+     "constraint": "ajoute une expression à l'état construit précédée de ב"
+    }
+   ]
+  }
+ ],
+ "0.25:8": [
+  {
+   "text": "הם תשעים וכולם מבקשים לשתות ולאכול.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "תשעים"
+     ],
+     "truncated_one": "הם ",
+     "truncated_two": "הם תשעים",
+     "concept_tip": "Les nombres cardinaux servent à indiquer une quantité ; les dizaines entières ont la même forme au masculin et au féminin.",
+     "translation_tip": "… sont quatre-vingt-dix et tous demandent à boire et à manger.",
+     "constraint": "utilise un nombre de dizaines, sans variation de genre"
+    },
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "וכולם"
+     ],
+     "truncated_one": "הם תשעים ",
+     "truncated_two": "הם תשעים וכולם",
+     "concept_tip": "כל peut recevoir un suffixe pronominal pour désigner la totalité des personnes ou des choses concernées.",
+     "translation_tip": "… et tous demandent à boire et à manger.",
+     "constraint": "reprends le groupe avec כל décliné au masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.25:9": [
+  {
+   "text": "הם לא יכולים לשלם, אין להם מזומן.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכולים"
+     ],
+     "truncated_one": "הם לא ",
+     "truncated_two": "הם לא יכולים",
+     "concept_tip": "יכול exprime la possibilité ou la capacité, s'accorde avec le sujet et est généralement suivi d'un infinitif.",
+     "translation_tip": "… peuvent payer, ils n'ont pas d'argent liquide.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    }
+   ]
+  }
+ ],
+ "0.25:10": [
+  {
+   "text": "עשרים וחמש מיטות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרים וחמש"
+     ],
+     "truncated_one": "",
+     "truncated_two": "עשרים וחמש",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… vingt-cinq lits"
+    }
+   ]
+  }
+ ],
+ "0.25:11": [
+  {
+   "text": "שמונה עשרה משפחות קטנות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שמונה עשרה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שמונה עשרה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… dix-huit petites familles"
+    }
+   ]
+  }
+ ],
+ "0.25:12": [
+  {
+   "text": "עשרה בנים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "עשרה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… dix garçons"
+    }
+   ]
+  }
+ ],
+ "0.25:13": [
+  {
+   "text": "חמישים ושישה רופאים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמישים ושישה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חמישים ושישה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… cinquante-six médecins"
+    }
+   ]
+  }
+ ],
+ "0.25:14": [
+  {
+   "text": "מכתב אחד",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "אחד"
+     ],
+     "truncated_one": "מכתב ",
+     "truncated_two": "מכתב אחד",
+     "concept_tip": "Le nombre un se place après le nom et s'accorde avec lui : אחד au masculin et אחת au féminin.",
+     "translation_tip": "… une seule",
+     "constraint": "ajoute le nombre après le nom, accordé au masculin"
+    }
+   ]
+  }
+ ],
+ "0.25:15": [
+  {
+   "text": "שבעים ושישה משקאות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שבעים ושישה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שבעים ושישה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… soixante-seize boissons"
+    }
+   ]
+  }
+ ],
+ "0.25:16": [
+  {
+   "text": "שבעה עיתונים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שבעה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שבעה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… sept journaux"
+    }
+   ]
+  }
+ ],
+ "0.25:17": [
+  {
+   "text": "שישים וארבעה ירקות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שישים וארבעה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שישים וארבעה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… soixante-quatre légumes"
+    }
+   ]
+  }
+ ],
+ "0.25:18": [
+  {
+   "text": "שלוש ערים גדולות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שלוש"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שלוש",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… trois grandes villes"
+    }
+   ]
+  }
+ ],
+ "0.25:19": [
+  {
+   "text": "שמונים ושתיים בננות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שמונים ושתיים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שמונים ושתיים",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… quatre-vingt-deux bananes"
+    }
+   ]
+  }
+ ],
+ "0.25:20": [
+  {
+   "text": "שתים עשרה רכבות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שתים עשרה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שתים עשרה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… douze trains"
+    }
+   ]
+  }
+ ],
+ "0.25:21": [
+  {
+   "text": "שלושים ואחת עגבניות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שלושים ואחת"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שלושים ואחת",
+     "concept_tip": "Dans un nombre composé supérieur à un, le nombre précède le nom et l'unité s'accorde avec le genre du nom compté.",
+     "translation_tip": "… trente et une tomates"
+    }
+   ]
+  }
+ ],
+ "0.25:22": [
+  {
+   "text": "שני מטוסים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שני"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שני",
+     "concept_tip": "Devant un nom, le nombre deux prend la forme שני au masculin et שתי au féminin.",
+     "translation_tip": "… deux avions"
+    }
+   ]
+  }
+ ],
+ "0.25:23": [
+  {
+   "text": "תשעים ותשעה תפוחי אדמה",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "תשעים ותשעה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "תשעים ותשעה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… quatre-vingt-dix-neuf pommes de terre"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "תפוחי אדמה"
+     ],
+     "truncated_one": "תשעים ותשעה ",
+     "truncated_two": "תשעים ותשעה תפוחי אדמה",
+     "concept_tip": "Dans un état construit, deux noms se suivent directement et la terminaison ים du premier nom au masculin pluriel devient י.",
+     "translation_tip": "… pommes de terre",
+     "constraint": "ajoute un nom composé à l'état construit pluriel"
+    }
+   ]
+  }
+ ],
+ "0.25:24": [
+  {
+   "text": "גינה אחת",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "אחת"
+     ],
+     "truncated_one": "גינה ",
+     "truncated_two": "גינה אחת",
+     "concept_tip": "Le nombre un se place après le nom et s'accorde avec lui : אחד au masculin et אחת au féminin.",
+     "translation_tip": "… un seul",
+     "constraint": "ajoute le nombre après le nom, accordé au féminin"
+    }
+   ]
+  }
+ ],
+ "0.25:25": [
+  {
+   "text": "שמונה עשר פלפלים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שמונה עשר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שמונה עשר",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… dix-huit poivrons"
+    }
+   ]
+  }
+ ],
+ "0.25:26": [
+  {
+   "text": "תשעה חלונות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "תשעה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "תשעה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… neuf fenêtres"
+    }
+   ]
+  }
+ ],
+ "0.25:27": [
+  {
+   "text": "ארבעים ושבעה מוכרים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "ארבעים ושבעה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארבעים ושבעה",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… quarante-sept vendeurs"
+    }
+   ]
+  }
+ ],
+ "0.25:28": [
+  {
+   "text": "שישה עשר כיסאות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "שישה עשר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שישה עשר",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… seize chaises"
+    }
+   ]
+  }
+ ],
+ "0.25:29": [
+  {
+   "text": "אפס חולים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "אפס"
+     ],
+     "truncated_one": "",
+     "truncated_two": "אפס",
+     "concept_tip": "Le nombre zéro est invariable et se place avant le nom dont il indique la quantité.",
+     "translation_tip": "… zéro malade"
+    }
+   ]
+  }
+ ],
+ "0.25:30": [
+  {
+   "text": "אחד עשר פירות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "אחד עשר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "אחד עשר",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… onze fruits"
+    }
+   ]
+  }
+ ],
+ "0.25:31": [
+  {
+   "text": "חמישה עשר ספרים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמישה עשר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חמישה עשר",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… quinze livres"
+    }
+   ]
+  }
+ ],
+ "0.25:32": [
+  {
+   "text": "עשרים ושניים רכבים",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "עשרים ושניים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "עשרים ושניים",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… vingt-deux véhicules"
+    }
+   ]
+  }
+ ],
+ "0.25:33": [
+  {
+   "text": "חמישים ושתיים עוגות",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "חמישים ושתיים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חמישים ושתיים",
+     "concept_tip": "Un nombre cardinal s'accorde avec le genre du nom compté et se place avant lui, sauf le nombre un, qui se place après.",
+     "translation_tip": "… cinquante-deux gâteaux"
+    }
+   ]
+  }
+ ],
+ "0.26:0": [
+  {
+   "text": "חנה, המשפחה שלך גרה בצרפת?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלך"
+     ],
+     "truncated_one": "חנה, המשפחה ",
+     "truncated_two": "חנה, המשפחה שלך",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… ta famille habite en France ?",
+     "constraint": "utilise של décliné : deuxième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.26:1": [
+  {
+   "text": "דניאל ושרה, איפה המכונית שלכם?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלכם"
+     ],
+     "truncated_one": "דניאל ושרה, איפה המכונית ",
+     "truncated_two": "דניאל ושרה, איפה המכונית שלכם",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à vous ?",
+     "constraint": "utilise של décliné : deuxième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.26:2": [
+  {
+   "text": "דינה, אני חולה, איפה הרופא שלי?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלי"
+     ],
+     "truncated_one": "דינה, אני חולה, איפה הרופא ",
+     "truncated_two": "דינה, אני חולה, איפה הרופא שלי",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à moi ?",
+     "constraint": "utilise של décliné : première personne du singulier"
+    }
+   ]
+  }
+ ],
+ "0.26:3": [
+  {
+   "text": "בדירה של דוד יש שולחן.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של"
+     ],
+     "truncated_one": "בדירה ",
+     "truncated_two": "בדירה של",
+     "concept_tip": "La préposition של introduit le possesseur après le nom de ce qui est possédé.",
+     "translation_tip": "… de David, il y a une table.",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    }
+   ]
+  },
+  {
+   "text": "השולחן שלו גדול?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "השולחן ",
+     "truncated_two": "השולחן שלו",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à lui est grande ?",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.26:4": [
+  {
+   "text": "גם הפירות שלו טעימים?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "גם הפירות ",
+     "truncated_two": "גם הפירות שלו",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à lui sont savoureux ?",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.26:5": [
+  {
+   "text": "הם משלמים על השתייה שלהם ואני משלם על השתייה שלי.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם",
+      "שלי"
+     ],
+     "truncated_one": "הם משלמים על השתייה ",
+     "truncated_two": "הם משלמים על השתייה שלהם",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à eux et moi, je paie ma boisson.",
+     "constraint": "décline של : troisième personne masculine plurielle, puis première singulière"
+    }
+   ]
+  }
+ ],
+ "0.26:6": [
+  {
+   "text": "לדוד יש דירה בישראל, הדירה שלו בירושלים.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "לדוד יש דירה בישראל, הדירה ",
+     "truncated_two": "לדוד יש דירה בישראל, הדירה שלו",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à lui est à Jérusalem.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.26:7": [
+  {
+   "text": "הילדים של חנה ודוד גרים בישראל.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של"
+     ],
+     "truncated_one": "הילדים ",
+     "truncated_two": "הילדים של",
+     "concept_tip": "La préposition של introduit le possesseur après le nom de ce qui est possédé.",
+     "translation_tip": "… de Hanna et David habitent en Israël.",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    }
+   ]
+  },
+  {
+   "text": "הילדים שלהם גרים בתל אביב.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הילדים ",
+     "truncated_two": "הילדים שלהם",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à eux habitent à Tel-Aviv.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "תל אביב"
+     ],
+     "truncated_one": "הילדים שלהם גרים ב",
+     "truncated_two": "הילדים שלהם גרים בתל אביב",
+     "concept_tip": "L'état construit juxtapose deux noms pour former une unité de sens, notamment dans certains noms de lieux.",
+     "translation_tip": "… Tel-Aviv.",
+     "constraint": "ajoute un nom propre formé de deux noms construits"
+    }
+   ]
+  }
+ ],
+ "0.26:8": [
+  {
+   "text": "לרותי ואתי יש ילדים, הילדים שלהן גדולים.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהן"
+     ],
+     "truncated_one": "לרותי ואתי יש ילדים, הילדים ",
+     "truncated_two": "לרותי ואתי יש ילדים, הילדים שלהן",
+     "concept_tip": "L'appartenance s'exprime avec של, qui se décline selon le possesseur et non selon l'objet possédé.",
+     "translation_tip": "… à elles sont grands.",
+     "constraint": "utilise של décliné : troisième personne, féminin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:0": [
+  {
+   "text": "ענת גרה בתל אביב ולומדת עברית באולפן.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב"
+     ],
+     "truncated_one": "ענת גרה ",
+     "truncated_two": "ענת גרה בתל אביב",
+     "concept_tip": "L’état construit associe deux noms pour former une unité de sens ; cette structure se rencontre aussi dans les noms de lieux.",
+     "translation_tip": "… à Tel-Aviv et étudie l’hébreu à l’oulpan.",
+     "constraint": "utilise ב devant un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.27:1": [
+  {
+   "text": "התלמידים מהכיתה של ענת הם מצרפת, אנגליה, ארצות הברית ורוסיה.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של ענת"
+     ],
+     "truncated_one": "התלמידים מהכיתה ",
+     "truncated_two": "התלמידים מהכיתה של ענת",
+     "concept_tip": "La préposition של introduit le possesseur ; elle porte un suffixe personnel pour exprimer mon, ton, son, notre ou leur.",
+     "translation_tip": "… d’Anat viennent de France, d’Angleterre, des États-Unis et de Russie.",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארצות הברית"
+     ],
+     "truncated_one": "התלמידים מהכיתה של ענת הם מצרפת, אנגליה, ",
+     "truncated_two": "התלמידים מהכיתה של ענת הם מצרפת, אנגליה, ארצות הברית",
+     "concept_tip": "Dans un état construit, deux noms sont liés et l’article défini se place sur le second nom, non sur le premier.",
+     "translation_tip": "… des États-Unis et de Russie.",
+     "constraint": "ajoute un nom propre à l'état construit pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:2": [
+  {
+   "text": "למורה שלהם קוראים שחר.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "למורה ",
+     "truncated_two": "למורה שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à eux, on donne le nom de Shahar.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:4": [
+  {
+   "text": "הספר שלהם בבית.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הספר ",
+     "truncated_two": "הספר שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur ; le nom désignant l’objet possédé porte normalement l’article défini.",
+     "translation_tip": "… à eux est à la maison.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:6": [
+  {
+   "text": "מאיפה התלמידים מהכיתה של ענת?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של ענת"
+     ],
+     "truncated_one": "מאיפה התלמידים מהכיתה ",
+     "truncated_two": "מאיפה התלמידים מהכיתה של ענת",
+     "concept_tip": "La préposition של introduit le possesseur ; elle porte un suffixe personnel pour exprimer mon, ton, son, notre ou leur.",
+     "translation_tip": "… d’Anat ?",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    }
+   ]
+  }
+ ],
+ "0.27:7": [
+  {
+   "text": "איך קוראים למורה שלהם?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "איך קוראים למורה ",
+     "truncated_two": "איך קוראים למורה שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à eux ?",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:9": [
+  {
+   "text": "לדן ושי אין ספר, איפה הספר שלהם?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "לדן ושי אין ספר, איפה הספר ",
+     "truncated_two": "לדן ושי אין ספר, איפה הספר שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur ; le nom désignant l’objet possédé porte normalement l’article défini.",
+     "translation_tip": "… à eux ?",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:10": [
+  {
+   "text": "ענת גרה בתל אביב ולומדת עברית באולפן.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב"
+     ],
+     "truncated_one": "ענת גרה ",
+     "truncated_two": "ענת גרה בתל אביב",
+     "concept_tip": "L’état construit associe deux noms pour former une unité de sens ; cette structure se rencontre aussi dans les noms de lieux.",
+     "translation_tip": "… à Tel-Aviv et étudie l’hébreu à l’oulpan.",
+     "constraint": "utilise ב devant un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.27:12": [
+  {
+   "text": "החברים שלה גם לומדים באולפן.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "החברים ",
+     "truncated_two": "החברים שלה",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à elle étudient aussi à l’oulpan.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.27:13": [
+  {
+   "text": "בכיתה שלהם יש תלמידים מהרבה מדינות; צרפת, אנגליה, ארצות הברית ורוסיה.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "בכיתה ",
+     "truncated_two": "בכיתה שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… qui est la leur, il y a des élèves de nombreux pays : France, Angleterre, États-Unis et Russie.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארצות הברית"
+     ],
+     "truncated_one": "בכיתה שלהם יש תלמידים מהרבה מדינות; צרפת, אנגליה, ",
+     "truncated_two": "בכיתה שלהם יש תלמידים מהרבה מדינות; צרפת, אנגליה, ארצות הברית",
+     "concept_tip": "Dans un état construit, deux noms sont liés et l’article défini se place sur le second nom, non sur le premier.",
+     "translation_tip": "… États-Unis et Russie.",
+     "constraint": "ajoute un nom propre à l'état construit pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:14": [
+  {
+   "text": "המורה שלהם ישראלי וקוראים לו שחר.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "המורה ",
+     "truncated_two": "המורה שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à eux est israélien et s’appelle Shahar.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:17": [
+  {
+   "text": "הספר שלהם בבית.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הספר ",
+     "truncated_two": "הספר שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur ; le nom désignant l’objet possédé porte normalement l’article défini.",
+     "translation_tip": "… à eux est à la maison.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:18": [
+  {
+   "text": "\"איפה הספר שלכם?\"",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלכם"
+     ],
+     "truncated_one": "\"איפה הספר ",
+     "truncated_two": "\"איפה הספר שלכם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à vous ? »",
+     "constraint": "utilise של décliné : deuxième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:19": [
+  {
+   "text": "\"הספר שלנו בבית\".",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלנו"
+     ],
+     "truncated_one": "\"הספר ",
+     "truncated_two": "\"הספר שלנו",
+     "concept_tip": "La préposition של se décline selon le possesseur ; le nom désignant l’objet possédé porte normalement l’article défini.",
+     "translation_tip": "… à nous est à la maison ».",
+     "constraint": "utilise של décliné : première personne du pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:20": [
+  {
+   "text": "המורה שואל \"למה הספר שלכם בבית?\"",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלכם"
+     ],
+     "truncated_one": "המורה שואל \"למה הספר ",
+     "truncated_two": "המורה שואל \"למה הספר שלכם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à vous est à la maison ? »",
+     "constraint": "utilise של décliné : deuxième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:21": [
+  {
+   "text": "הם מבקשים מהמורה שלהם לתת להם ספר.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הם מבקשים מהמורה ",
+     "truncated_two": "הם מבקשים מהמורה שלהם",
+     "concept_tip": "La préposition של se décline selon le possesseur, et non selon le genre ou le nombre de l’objet possédé.",
+     "translation_tip": "… à eux de leur donner un livre.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.27:22": [
+  {
+   "text": "המורה נותן להם את הספר שלו.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "המורה נותן להם את הספר ",
+     "truncated_two": "המורה נותן להם את הספר שלו",
+     "concept_tip": "La préposition של se décline selon le possesseur ; le nom désignant l’objet possédé porte normalement l’article défini.",
+     "translation_tip": "… à lui.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.27:23": [
+  {
+   "text": "עכשיו כולם יכולים לקרוא בספר.",
+   "concepts": [
+    {
+     "concept": "0.17",
+     "concept_definition": "L'utilisation des verbes modaux צריך (devoir, falloir, avoir besoin) et יכול (pouvoir)",
+     "concept_word": [
+      "יכולים"
+     ],
+     "truncated_one": "עכשיו כולם ",
+     "truncated_two": "עכשיו כולם יכולים",
+     "concept_tip": "Le modal יכול exprime la capacité ou la possibilité, s’accorde avec le sujet et est suivi d’un infinitif.",
+     "translation_tip": "… peuvent lire dans le livre.",
+     "constraint": "utilise le modal יכול accordé au sujet, puis un infinitif"
+    },
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "כולם"
+     ],
+     "truncated_one": "עכשיו ",
+     "truncated_two": "עכשיו כולם",
+     "concept_tip": "Le mot כל exprime la totalité ; muni d’un suffixe pronominal, il peut signifier tous ou toutes sans être suivi d’un nom.",
+     "translation_tip": "… tous peuvent lire dans le livre.",
+     "constraint": "emploie כל décliné au masculin pluriel comme sujet"
+    }
+   ]
+  }
+ ],
+ "0.28:0": [
+  {
+   "text": "ההורים שלי מגלים מקומות חדשים.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלי"
+     ],
+     "truncated_one": "ההורים ",
+     "truncated_two": "ההורים שלי",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à moi découvrent de nouveaux endroits.",
+     "constraint": "utilise של décliné : première personne du singulier"
+    }
+   ]
+  }
+ ],
+ "0.28:2": [
+  {
+   "text": "הם מבלים עם החברים שלהם.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הם מבלים עם החברים ",
+     "truncated_two": "הם מבלים עם החברים שלהם",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à eux.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.28:3": [
+  {
+   "text": "אתם נמצאים בתל אביב?",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב"
+     ],
+     "truncated_one": "אתם נמצאים ",
+     "truncated_two": "אתם נמצאים בתל אביב",
+     "concept_tip": "L’état construit associe deux noms, y compris dans certains noms de lieux ; le second nom détermine le caractère défini de l’ensemble.",
+     "translation_tip": "… à Tel-Aviv ?",
+     "constraint": "utilise ב devant un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.28:6": [
+  {
+   "text": "ההורים של דוד גרים בדירה בתל אביב.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של דוד"
+     ],
+     "truncated_one": "ההורים ",
+     "truncated_two": "ההורים של דוד",
+     "concept_tip": "La préposition של introduit le possesseur après le nom de ce qui est possédé.",
+     "translation_tip": "… de David habitent dans un appartement à Tel-Aviv.",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב"
+     ],
+     "truncated_one": "ההורים של דוד גרים בדירה ",
+     "truncated_two": "ההורים של דוד גרים בדירה בתל אביב",
+     "concept_tip": "L’état construit associe deux noms, y compris dans certains noms de lieux ; le second nom détermine le caractère défini de l’ensemble.",
+     "translation_tip": "… à Tel-Aviv.",
+     "constraint": "utilise ב devant un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.28:7": [
+  {
+   "text": "הדירה שלהם נמצאת על יד הים.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הדירה ",
+     "truncated_two": "הדירה שלהם",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à eux se trouve près de la mer.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.28:9": [
+  {
+   "text": "בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם מקומות חדשים.",
+   "concepts": [
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "כל פעם"
+     ],
+     "truncated_one": "בירושלים הוא אוהב לטייל בעיר ולגלות ",
+     "truncated_two": "בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם",
+     "concept_tip": "כל suivi d’un nom singulier sans article signifie « chaque », tandis que devant un nom défini il exprime la totalité.",
+     "translation_tip": "… chaque fois de nouveaux endroits.",
+     "constraint": "exprime une répétition avec כל devant un nom temporel"
+    }
+   ]
+  }
+ ],
+ "0.28:10": [
+  {
+   "text": "בתל אביב הוא אוהב לבלות עם החברים שלו עד מאוחר וללכת לחוף הים ולהשתזף.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "בתל אביב הוא אוהב לבלות עם החברים ",
+     "truncated_two": "בתל אביב הוא אוהב לבלות עם החברים שלו",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à lui jusqu’à tard, aller à la plage et bronzer.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב",
+      "לחוף הים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בתל אביב",
+     "concept_tip": "L’état construit associe deux noms ; le second détermine le caractère défini de l’ensemble, et lui seul peut porter l’article défini.",
+     "translation_tip": "… à Tel-Aviv, il aime passer du temps avec ses amis jusqu’à tard, aller à la plage et bronzer."
+    }
+   ]
+  }
+ ],
+ "0.28:11": [
+  {
+   "text": "איפה ההורים של דוד גרים?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של דוד"
+     ],
+     "truncated_one": "איפה ההורים ",
+     "truncated_two": "איפה ההורים של דוד",
+     "concept_tip": "La préposition של introduit le possesseur après le nom de ce qui est possédé.",
+     "translation_tip": "… de David habitent-ils ?",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    }
+   ]
+  }
+ ],
+ "0.28:12": [
+  {
+   "text": "איפה הדירה שלהם נמצאת?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "איפה הדירה ",
+     "truncated_two": "איפה הדירה שלהם",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à eux se trouve-t-il ?",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.28:15": [
+  {
+   "text": "מה דוד אוהב לעשות בתל אביב?",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב"
+     ],
+     "truncated_one": "מה דוד אוהב לעשות ",
+     "truncated_two": "מה דוד אוהב לעשות בתל אביב",
+     "concept_tip": "L’état construit associe deux noms, y compris dans certains noms de lieux ; le second nom détermine le caractère défini de l’ensemble.",
+     "translation_tip": "… à Tel-Aviv ?",
+     "constraint": "utilise ב devant un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.28:17": [
+  {
+   "text": "ההורים שלו גרים בדירה בתל אביב.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "ההורים ",
+     "truncated_two": "ההורים שלו",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à lui habitent dans un appartement à Tel-Aviv.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב"
+     ],
+     "truncated_one": "ההורים שלו גרים בדירה ",
+     "truncated_two": "ההורים שלו גרים בדירה בתל אביב",
+     "concept_tip": "L’état construit associe deux noms, y compris dans certains noms de lieux ; le second nom détermine le caractère défini de l’ensemble.",
+     "translation_tip": "… à Tel-Aviv.",
+     "constraint": "utilise ב devant un nom propre à l'état construit"
+    }
+   ]
+  }
+ ],
+ "0.28:18": [
+  {
+   "text": "הדירה שלהם נמצאת על יד הים.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "הדירה ",
+     "truncated_two": "הדירה שלהם",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à eux se trouve près de la mer.",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.28:22": [
+  {
+   "text": "כשהוא בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם מקומות חדשים.",
+   "concepts": [
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "כל פעם"
+     ],
+     "truncated_one": "כשהוא בירושלים הוא אוהב לטייל בעיר ולגלות ",
+     "truncated_two": "כשהוא בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם",
+     "concept_tip": "כל suivi d’un nom singulier sans article signifie « chaque », tandis que devant un nom défini il exprime la totalité.",
+     "translation_tip": "… chaque fois de nouveaux endroits.",
+     "constraint": "exprime une répétition avec כל devant un nom temporel"
+    }
+   ]
+  }
+ ],
+ "0.28:23": [
+  {
+   "text": "בתל אביב הוא אוהב לבלות עם החברים שלו עד מאוחר וללכת לחוף הים ולהשתזף.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "בתל אביב הוא אוהב לבלות עם החברים ",
+     "truncated_two": "בתל אביב הוא אוהב לבלות עם החברים שלו",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à lui jusqu’à tard, aller à la plage et bronzer.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    },
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתל אביב",
+      "לחוף הים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בתל אביב",
+     "concept_tip": "L’état construit associe deux noms ; le second détermine le caractère défini de l’ensemble, et lui seul peut porter l’article défini.",
+     "translation_tip": "… à Tel-Aviv, il aime passer du temps avec ses amis jusqu’à tard, aller à la plage et bronzer."
+    }
+   ]
+  }
+ ],
+ "0.28:24": [
+  {
+   "text": "בכל ביקור בארץ דוד מתרגש ותמיד קשה לו לחזור לפריז הביתה.",
+   "concepts": [
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "בכל ביקור"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בכל ביקור",
+     "concept_tip": "כל suivi d’un nom singulier sans article signifie « chaque » et peut être précédé d’une préposition attachée.",
+     "translation_tip": "… à chaque visite en Israël, David est ému et il lui est toujours difficile de rentrer chez lui à Paris."
+    }
+   ]
+  }
+ ],
+ "0.28:25": [
+  {
+   "text": "יום אחד הוא מקווה גם לעלות לישראל ולהיות שם עם המשפחה והחברים שלו.",
+   "concepts": [
+    {
+     "concept": "0.19",
+     "concept_definition": "L'accord en genre des nombres cardinaux et leur placement par rapport au nom",
+     "concept_word": [
+      "יום אחד"
+     ],
+     "truncated_one": "",
+     "truncated_two": "יום אחד",
+     "concept_tip": "Le nombre « un » s’accorde en genre avec le nom et se place après lui, contrairement aux autres nombres cardinaux.",
+     "translation_tip": "… un jour, il espère aussi immigrer en Israël et y être avec sa famille et ses amis."
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "יום אחד הוא מקווה גם לעלות לישראל ולהיות שם עם המשפחה והחברים ",
+     "truncated_two": "יום אחד הוא מקווה גם לעלות לישראל ולהיות שם עם המשפחה והחברים שלו",
+     "concept_tip": "La préposition של exprime l’appartenance et se décline selon le possesseur, indépendamment du genre et du nombre de l’objet possédé.",
+     "translation_tip": "… à lui.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.29:0": [
+  {
+   "text": "חופשת הקיץ",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "חופשת הקיץ"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חופשת הקיץ",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… les vacances d’été"
+    }
+   ]
+  }
+ ],
+ "0.29:1": [
+  {
+   "text": "בתי חולים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בתי חולים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בתי חולים",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des hôpitaux"
+    }
+   ]
+  }
+ ],
+ "0.29:2": [
+  {
+   "text": "שיעורי בית",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "שיעורי בית"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שיעורי בית",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des devoirs à la maison"
+    }
+   ]
+  }
+ ],
+ "0.29:3": [
+  {
+   "text": "ארוחת הערב",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת הערב"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארוחת הערב",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… le repas du soir"
+    }
+   ]
+  }
+ ],
+ "0.29:4": [
+  {
+   "text": "סרטי קולנוע",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "סרטי קולנוע"
+     ],
+     "truncated_one": "",
+     "truncated_two": "סרטי קולנוע",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des films de cinéma"
+    }
+   ]
+  }
+ ],
+ "0.29:5": [
+  {
+   "text": "חלונות הדירה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "חלונות הדירה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חלונות הדירה",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… les fenêtres de l’appartement"
+    }
+   ]
+  }
+ ],
+ "0.29:6": [
+  {
+   "text": "משפחת כהן חמודה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "משפחת כהן"
+     ],
+     "truncated_one": "",
+     "truncated_two": "משפחת כהן",
+     "concept_tip": "L’état construit relie deux noms ; un nom propre en seconde position suffit à définir l’ensemble.",
+     "translation_tip": "… la famille Cohen est sympathique"
+    }
+   ]
+  }
+ ],
+ "0.29:7": [
+  {
+   "text": "ארוחת צהריים קרה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת צהריים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארוחת צהריים",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… un déjeuner froid"
+    }
+   ]
+  }
+ ],
+ "0.29:8": [
+  {
+   "text": "רופאי משפחה חדשים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "רופאי משפחה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "רופאי משפחה",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… de nouveaux médecins de famille"
+    }
+   ]
+  }
+ ],
+ "0.29:9": [
+  {
+   "text": "מטוסי ישראל גדולים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "מטוסי ישראל"
+     ],
+     "truncated_one": "",
+     "truncated_two": "מטוסי ישראל",
+     "concept_tip": "L’état construit relie deux noms ; un nom propre en seconde position suffit à définir l’ensemble.",
+     "translation_tip": "… les avions d’Israël sont grands"
+    }
+   ]
+  }
+ ],
+ "0.29:10": [
+  {
+   "text": "ארוחת שבת טעימה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת שבת"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארוחת שבת",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… un délicieux repas de shabbat"
+    }
+   ]
+  }
+ ],
+ "0.29:11": [
+  {
+   "text": "שיעורי בית מעניינים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "שיעורי בית"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שיעורי בית",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… des devoirs intéressants"
+    }
+   ]
+  }
+ ],
+ "0.29:12": [
+  {
+   "text": "ראש השנה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ראש השנה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ראש השנה",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… le Nouvel An juif"
+    }
+   ]
+  }
+ ],
+ "0.29:13": [
+  {
+   "text": "ברכת המזון",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ברכת המזון"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ברכת המזון",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… la bénédiction après le repas"
+    }
+   ]
+  }
+ ],
+ "0.29:14": [
+  {
+   "text": "בית הכנסת",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בית הכנסת"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בית הכנסת",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… la synagogue"
+    }
+   ]
+  }
+ ],
+ "0.29:15": [
+  {
+   "text": "יום העצמאות",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "יום העצמאות"
+     ],
+     "truncated_one": "",
+     "truncated_two": "יום העצמאות",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… le jour de l’Indépendance"
+    }
+   ]
+  }
+ ],
+ "0.29:16": [
+  {
+   "text": "ארץ ישראל",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארץ ישראל"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארץ ישראל",
+     "concept_tip": "L’état construit relie deux noms ; un nom propre en seconde position suffit à définir l’ensemble.",
+     "translation_tip": "… la terre d’Israël"
+    }
+   ]
+  }
+ ],
+ "0.29:17": [
+  {
+   "text": "נטילת ידיים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "נטילת ידיים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "נטילת ידיים",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… le lavage rituel des mains"
+    },
+    {
+     "concept": "0.32",
+     "concept_definition": "La forme duelle exprimant la paire ou le double avec le suffixe איים",
+     "concept_word": [
+      "ידיים"
+     ],
+     "truncated_one": "נטילת ",
+     "truncated_two": "נטילת ידיים",
+     "concept_tip": "Certains noms, notamment des parties du corps et des unités de temps, prennent une forme duelle en ‎־יים pour désigner une paire ou deux unités.",
+     "translation_tip": "… des mains",
+     "constraint": "ajoute un nom à la forme duelle"
+    }
+   ]
+  }
+ ],
+ "0.29:18": [
+  {
+   "text": "תל אביב",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "תל אביב"
+     ],
+     "truncated_one": "",
+     "truncated_two": "תל אביב",
+     "concept_tip": "L’état construit relie deux noms et peut aussi entrer dans la formation d’un nom de lieu.",
+     "translation_tip": "… Tel-Aviv"
+    }
+   ]
+  }
+ ],
+ "0.29:19": [
+  {
+   "text": "ספר תורה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ספר תורה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ספר תורה",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… un rouleau de la Torah"
+    }
+   ]
+  }
+ ],
+ "0.29:20": [
+  {
+   "text": "גן ילדים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "גן ילדים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "גן ילדים",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… un jardin d’enfants"
+    }
+   ]
+  }
+ ],
+ "0.29:21": [
+  {
+   "text": "בית קפה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בית קפה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בית קפה",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… un café"
+    }
+   ]
+  }
+ ],
+ "0.29:22": [
+  {
+   "text": "מרכז העיר",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "מרכז העיר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "מרכז העיר",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… le centre de la ville"
+    }
+   ]
+  }
+ ],
+ "0.29:23": [
+  {
+   "text": "ארוחת בוקר",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת בוקר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארוחת בוקר",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… un petit-déjeuner"
+    }
+   ]
+  }
+ ],
+ "0.29:24": [
+  {
+   "text": "ריבת חלב",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ריבת חלב"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ריבת חלב",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… de la confiture de lait"
+    }
+   ]
+  }
+ ],
+ "0.29:25": [
+  {
+   "text": "עוגת שוקולד",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "עוגת שוקולד"
+     ],
+     "truncated_one": "",
+     "truncated_two": "עוגת שוקולד",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… un gâteau au chocolat"
+    }
+   ]
+  }
+ ],
+ "0.29:26": [
+  {
+   "text": "תפוחי אדמה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "תפוחי אדמה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "תפוחי אדמה",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des pommes de terre"
+    }
+   ]
+  }
+ ],
+ "0.29:27": [
+  {
+   "text": "ספרי ילדים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ספרי ילדים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ספרי ילדים",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des livres pour enfants"
+    }
+   ]
+  }
+ ],
+ "0.29:28": [
+  {
+   "text": "בני ישראל",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בני ישראל"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בני ישראל",
+     "concept_tip": "L’état construit relie deux noms ; un nom propre en seconde position suffit à définir l’ensemble.",
+     "translation_tip": "… les enfants d’Israël"
+    }
+   ]
+  }
+ ],
+ "0.29:29": [
+  {
+   "text": "עוגות שוקולד",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "עוגות שוקולד"
+     ],
+     "truncated_one": "",
+     "truncated_two": "עוגות שוקולד",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des gâteaux au chocolat"
+    }
+   ]
+  }
+ ],
+ "0.29:30": [
+  {
+   "text": "מיטות ילדים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "מיטות ילדים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "מיטות ילדים",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… des lits pour enfants"
+    }
+   ]
+  }
+ ],
+ "0.29:31": [
+  {
+   "text": "ארצות הברית",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארצות הברית"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארצות הברית",
+     "concept_tip": "L’état construit relie deux noms ; seul le second reçoit éventuellement l’article défini, et le premier peut changer de forme.",
+     "translation_tip": "… les États-Unis"
+    }
+   ]
+  }
+ ],
+ "0.29:32": [
+  {
+   "text": "ארוחת בוקר טעימה",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת בוקר"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ארוחת בוקר",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… un délicieux petit-déjeuner"
+    }
+   ]
+  }
+ ],
+ "0.29:33": [
+  {
+   "text": "בית קפה מיוחד",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בית קפה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בית קפה",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… un café original"
+    }
+   ]
+  }
+ ],
+ "0.29:34": [
+  {
+   "text": "שיעורי בית קשים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "שיעורי בית"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שיעורי בית",
+     "concept_tip": "L’état construit relie deux noms ; le genre et le nombre de l’ensemble dépendent du premier nom.",
+     "translation_tip": "… des devoirs difficiles"
+    }
+   ]
+  }
+ ],
+ "0.30:0": [
+  {
+   "text": "תומר פוגש את עדן במשרד שלה.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "תומר פוגש את עדן במשרד ",
+     "truncated_two": "תומר פוגש את עדן במשרד שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:1": [
+  {
+   "text": "בבוקר אני מתרחצת ואוכלת ארוחת בוקר.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת בוקר"
+     ],
+     "truncated_one": "בבוקר אני מתרחצת ואוכלת ",
+     "truncated_two": "בבוקר אני מתרחצת ואוכלת ארוחת בוקר",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… un petit-déjeuner.",
+     "constraint": "ajoute un groupe nominal à l'état construit indéfini"
+    }
+   ]
+  }
+ ],
+ "0.30:2": [
+  {
+   "text": "חנה ואני נפגשים כל יום.",
+   "concepts": [
+    {
+     "concept": "0.28",
+     "concept_definition": "L'utilisation du mot כל pour exprimer tous, toutes ou chaque",
+     "concept_word": [
+      "כל"
+     ],
+     "truncated_one": "חנה ואני נפגשים ",
+     "truncated_two": "חנה ואני נפגשים כל",
+     "concept_tip": "כל devant un nom singulier sans article signifie « chaque » ; devant un nom défini, il exprime la totalité.",
+     "translation_tip": "… chaque jour.",
+     "constraint": "exprime une fréquence avec כל devant un nom temporel"
+    }
+   ]
+  }
+ ],
+ "0.30:3": [
+  {
+   "text": "היא נכנסת לבית קפה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "לבית קפה"
+     ],
+     "truncated_one": "היא נכנסת ",
+     "truncated_two": "היא נכנסת לבית קפה",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… dans un café.",
+     "constraint": "utilise ל suivi d'un état construit indéfini"
+    }
+   ]
+  }
+ ],
+ "0.30:5": [
+  {
+   "text": "פרוסות לחם",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "פרוסות לחם"
+     ],
+     "truncated_one": "",
+     "truncated_two": "פרוסות לחם",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… des tranches de pain"
+    }
+   ]
+  }
+ ],
+ "0.30:6": [
+  {
+   "text": "מיץ התפוזים שלו",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "מיץ התפוזים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "מיץ התפוזים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… son jus d'orange"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "מיץ התפוזים ",
+     "truncated_two": "מיץ התפוזים שלו",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à lui",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:7": [
+  {
+   "text": "ריבת השזיפים של אמא שלי",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ריבת השזיפים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "ריבת השזיפים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… la confiture de prunes de ma mère"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של",
+      "שלי"
+     ],
+     "truncated_one": "ריבת השזיפים ",
+     "truncated_two": "ריבת השזיפים של",
+     "concept_tip": "של introduit le possesseur et peut porter un suffixe personnel ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… de ma mère",
+     "constraint": "utilise של puis של décliné : première personne du singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:8": [
+  {
+   "text": "שירי ילדים יפים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "שירי ילדים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "שירי ילדים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… de belles chansons pour enfants"
+    }
+   ]
+  }
+ ],
+ "0.30:9": [
+  {
+   "text": "נהגי האוטובוס",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "נהגי האוטובוס"
+     ],
+     "truncated_one": "",
+     "truncated_two": "נהגי האוטובוס",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… les chauffeurs de l'autobus"
+    }
+   ]
+  }
+ ],
+ "0.30:10": [
+  {
+   "text": "עוגת השוקולד שלהם",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "עוגת השוקולד"
+     ],
+     "truncated_one": "",
+     "truncated_two": "עוגת השוקולד",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… leur gâteau au chocolat"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלהם"
+     ],
+     "truncated_one": "עוגת השוקולד ",
+     "truncated_two": "עוגת השוקולד שלהם",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à eux",
+     "constraint": "utilise של décliné : troisième personne, masculin pluriel"
+    }
+   ]
+  }
+ ],
+ "0.30:11": [
+  {
+   "text": "חדרי הילדים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "חדרי הילדים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חדרי הילדים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… les chambres des enfants"
+    }
+   ]
+  }
+ ],
+ "0.30:12": [
+  {
+   "text": "בית הכנסת של תל אביב",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בית הכנסת",
+      "תל אביב"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בית הכנסת",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… la synagogue de Tel-Aviv"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "של"
+     ],
+     "truncated_one": "בית הכנסת ",
+     "truncated_two": "בית הכנסת של",
+     "concept_tip": "של introduit le possesseur ou une relation d'appartenance après un groupe nominal défini.",
+     "translation_tip": "… de Tel-Aviv",
+     "constraint": "exprime l'appartenance avec של suivi d'un nom"
+    }
+   ]
+  }
+ ],
+ "0.30:13": [
+  {
+   "text": "חביתת הירק הטובה שלי",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "חביתת הירק"
+     ],
+     "truncated_one": "",
+     "truncated_two": "חביתת הירק",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… ma bonne omelette aux herbes"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלי"
+     ],
+     "truncated_one": "חביתת הירק הטובה ",
+     "truncated_two": "חביתת הירק הטובה שלי",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à moi",
+     "constraint": "utilise של décliné : première personne du singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:14": [
+  {
+   "text": "תפוחי האדמה הקטנים",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "תפוחי האדמה"
+     ],
+     "truncated_one": "",
+     "truncated_two": "תפוחי האדמה",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… les petites pommes de terre"
+    }
+   ]
+  }
+ ],
+ "0.30:15": [
+  {
+   "text": "חנה מעירה את הבן הקטן שלה בבוקר.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "חנה מעירה את הבן הקטן ",
+     "truncated_two": "חנה מעירה את הבן הקטן שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle, le matin.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:16": [
+  {
+   "text": "חנה צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה.",
+   "concepts": [
+    {
+     "concept": "0.30",
+     "concept_definition": "L'utilisation du mot כדי (pour, afin de) devant un verbe à l'infinitif",
+     "concept_word": [
+      "כדי"
+     ],
+     "truncated_one": "חנה צריכה להזדרז ",
+     "truncated_two": "חנה צריכה להזדרז כדי",
+     "concept_tip": "כדי suivi d'un infinitif exprime le but, comme « pour » ou « afin de » en français.",
+     "translation_tip": "… pour arriver au travail à l'heure et rencontrer son responsable.",
+     "constraint": "exprime un but avec כדי suivi d'un infinitif"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "חנה צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל ",
+     "truncated_two": "חנה צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:17": [
+  {
+   "text": "חנה והמנהל שלה צריכים להיפגש במשרד שלו.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה",
+      "שלו"
+     ],
+     "truncated_one": "חנה והמנהל ",
+     "truncated_two": "חנה והמנהל שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle doivent se retrouver dans son bureau à lui.",
+     "constraint": "décline של : troisième personne, féminin singulier puis masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:18": [
+  {
+   "text": "חנה אוכלת ארוחת צהריים בבית קפה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת צהריים",
+      "בבית קפה"
+     ],
+     "truncated_one": "חנה אוכלת ",
+     "truncated_two": "חנה אוכלת ארוחת צהריים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… un déjeuner dans un café.",
+     "constraint": "utilise deux groupes de noms à l'état construit indéfini"
+    },
+    {
+     "concept": "0.32",
+     "concept_definition": "La forme duelle exprimant la paire ou le double avec le suffixe איים",
+     "concept_word": [
+      "צהריים"
+     ],
+     "truncated_one": "חנה אוכלת ארוחת ",
+     "truncated_two": "חנה אוכלת ארוחת צהריים",
+     "concept_tip": "Certains noms, notamment de temps, ont une forme duelle en ־יים, parfois figée sans désigner deux unités.",
+     "translation_tip": "… de midi dans un café.",
+     "constraint": "ajoute un nom à la forme duelle"
+    }
+   ]
+  }
+ ],
+ "0.30:19": [
+  {
+   "text": "כשהיא חוזרת הביתה בערב, חנה נכנסת לחדר הילדים ושרה לבן שלה שיר ילדים.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "לחדר הילדים",
+      "שיר ילדים"
+     ],
+     "truncated_one": "כשהיא חוזרת הביתה בערב, חנה נכנסת ",
+     "truncated_two": "כשהיא חוזרת הביתה בערב, חנה נכנסת לחדר הילדים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… dans la chambre des enfants et chante à son fils une chanson pour enfants.",
+     "constraint": "utilise deux états construits, défini après ל puis indéfini"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "כשהיא חוזרת הביתה בערב, חנה נכנסת לחדר הילדים ושרה לבן ",
+     "truncated_two": "כשהיא חוזרת הביתה בערב, חנה נכנסת לחדר הילדים ושרה לבן שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle une chanson pour enfants.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:22": [
+  {
+   "text": "איפה חנה והמנהל שלה צריכים להיפגש?",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "איפה חנה והמנהל ",
+     "truncated_two": "איפה חנה והמנהל שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle doivent-ils se retrouver ?",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:23": [
+  {
+   "text": "איפה חנה אוכלת ארוחת צהריים?",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת צהריים"
+     ],
+     "truncated_one": "איפה חנה אוכלת ",
+     "truncated_two": "איפה חנה אוכלת ארוחת צהריים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… le repas de midi ?",
+     "constraint": "ajoute un groupe nominal à l'état construit indéfini"
+    },
+    {
+     "concept": "0.32",
+     "concept_definition": "La forme duelle exprimant la paire ou le double avec le suffixe איים",
+     "concept_word": [
+      "צהריים"
+     ],
+     "truncated_one": "איפה חנה אוכלת ארוחת ",
+     "truncated_two": "איפה חנה אוכלת ארוחת צהריים",
+     "concept_tip": "Certains noms, notamment de temps, ont une forme duelle en ־יים, parfois figée sans désigner deux unités.",
+     "translation_tip": "… de midi ?",
+     "constraint": "ajoute un nom à la forme duelle"
+    }
+   ]
+  }
+ ],
+ "0.30:26": [
+  {
+   "text": "היא מתרחצת ומעירה את הבן הקטן שלה.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "היא מתרחצת ומעירה את הבן הקטן ",
+     "truncated_two": "היא מתרחצת ומעירה את הבן הקטן שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:28": [
+  {
+   "text": "אחר כך הם אוכלים ארוחת בוקר טובה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת בוקר"
+     ],
+     "truncated_one": "אחר כך הם אוכלים ",
+     "truncated_two": "אחר כך הם אוכלים ארוחת בוקר",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… un bon petit-déjeuner.",
+     "constraint": "ajoute un groupe nominal à l'état construit indéfini"
+    }
+   ]
+  }
+ ],
+ "0.30:29": [
+  {
+   "text": "בארוחת הבוקר יש עוגת שוקולד קטנה, מיץ תפוזים, פרוסת לחם עם ריבת שזיפים וחביתת ירק.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בארוחת הבוקר",
+      "עוגת שוקולד",
+      "מיץ תפוזים",
+      "פרוסת לחם",
+      "ריבת שזיפים",
+      "וחביתת ירק"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בארוחת הבוקר",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… au petit-déjeuner, il y a un petit gâteau au chocolat, du jus d'orange, une tranche de pain avec de la confiture de prunes et une omelette aux herbes."
+    }
+   ]
+  }
+ ],
+ "0.30:30": [
+  {
+   "text": "היא צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה.",
+   "concepts": [
+    {
+     "concept": "0.30",
+     "concept_definition": "L'utilisation du mot כדי (pour, afin de) devant un verbe à l'infinitif",
+     "concept_word": [
+      "כדי"
+     ],
+     "truncated_one": "היא צריכה להזדרז ",
+     "truncated_two": "היא צריכה להזדרז כדי",
+     "concept_tip": "כדי suivi d'un infinitif exprime le but, comme « pour » ou « afin de » en français.",
+     "translation_tip": "… pour arriver au travail à l'heure et rencontrer son responsable.",
+     "constraint": "exprime un but avec כדי suivi d'un infinitif"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "היא צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל ",
+     "truncated_two": "היא צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:31": [
+  {
+   "text": "הם צריכים להיפגש במשרד שלו.",
+   "concepts": [
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלו"
+     ],
+     "truncated_one": "הם צריכים להיפגש במשרד ",
+     "truncated_two": "הם צריכים להיפגש במשרד שלו",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à lui.",
+     "constraint": "utilise של décliné : troisième personne, masculin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:32": [
+  {
+   "text": "היא נוסעת לעבודה באוטובוס, משלמת לנהג האוטובוס ויושבת.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "לנהג האוטובוס"
+     ],
+     "truncated_one": "היא נוסעת לעבודה באוטובוס, משלמת ",
+     "truncated_two": "היא נוסעת לעבודה באוטובוס, משלמת לנהג האוטובוס",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… le chauffeur de l'autobus et s'assied.",
+     "constraint": "utilise ל suivi d'un état construit défini"
+    }
+   ]
+  }
+ ],
+ "0.30:33": [
+  {
+   "text": "באחת היא הולכת לאכול ארוחת צהריים עם חברים בבית קפה.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "ארוחת צהריים",
+      "בבית קפה"
+     ],
+     "truncated_one": "באחת היא הולכת לאכול ",
+     "truncated_two": "באחת היא הולכת לאכול ארוחת צהריים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… le repas de midi avec des amis dans un café.",
+     "constraint": "utilise deux groupes de noms à l'état construit indéfini"
+    },
+    {
+     "concept": "0.32",
+     "concept_definition": "La forme duelle exprimant la paire ou le double avec le suffixe איים",
+     "concept_word": [
+      "צהריים"
+     ],
+     "truncated_one": "באחת היא הולכת לאכול ארוחת ",
+     "truncated_two": "באחת היא הולכת לאכול ארוחת צהריים",
+     "concept_tip": "Certains noms, notamment de temps, ont une forme duelle en ־יים, parfois figée sans désigner deux unités.",
+     "translation_tip": "… de midi avec des amis dans un café.",
+     "constraint": "ajoute un nom à la forme duelle"
+    }
+   ]
+  }
+ ],
+ "0.30:34": [
+  {
+   "text": "בארוחת הצהריים היא מספרת לחברים שלה על הפגישה עם המנהל.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "בארוחת הצהריים"
+     ],
+     "truncated_one": "",
+     "truncated_two": "בארוחת הצהריים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… au déjeuner, elle parle à ses amis de la réunion avec le responsable."
+    },
+    {
+     "concept": "0.32",
+     "concept_definition": "La forme duelle exprimant la paire ou le double avec le suffixe איים",
+     "concept_word": [
+      "הצהריים"
+     ],
+     "truncated_one": "בארוחת ",
+     "truncated_two": "בארוחת הצהריים",
+     "concept_tip": "Certains noms, notamment de temps, ont une forme duelle en ־יים, parfois figée sans désigner deux unités.",
+     "translation_tip": "… de midi, elle parle à ses amis de la réunion avec le responsable.",
+     "constraint": "ajoute un nom défini à la forme duelle"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "בארוחת הצהריים היא מספרת לחברים ",
+     "truncated_two": "בארוחת הצהריים היא מספרת לחברים שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle de la réunion avec le responsable.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
+ ],
+ "0.30:35": [
+  {
+   "text": "בערב היא חוזרת הביתה נכנסת לחדר הילדים ושרה לבן שלה שיר ילדים שהוא אוהב.",
+   "concepts": [
+    {
+     "concept": "0.29",
+     "concept_definition": "L'état construit (סמיכות) qui permet de lier deux noms pour exprimer l'appartenance ou créer un nouveau mot",
+     "concept_word": [
+      "לחדר הילדים",
+      "שיר ילדים"
+     ],
+     "truncated_one": "בערב היא חוזרת הביתה נכנסת ",
+     "truncated_two": "בערב היא חוזרת הביתה נכנסת לחדר הילדים",
+     "concept_tip": "L'état construit relie deux noms ; le premier peut changer de forme et le second détermine si l'ensemble est défini.",
+     "translation_tip": "… dans la chambre des enfants et chante à son fils une chanson pour enfants qu'il aime.",
+     "constraint": "utilise deux états construits, défini après ל puis indéfini"
+    },
+    {
+     "concept": "0.26",
+     "concept_definition": "L'expression de l'appartenance et la déclinaison de la préposition של",
+     "concept_word": [
+      "שלה"
+     ],
+     "truncated_one": "בערב היא חוזרת הביתה נכנסת לחדר הילדים ושרה לבן ",
+     "truncated_two": "בערב היא חוזרת הביתה נכנסת לחדר הילדים ושרה לבן שלה",
+     "concept_tip": "של se décline selon le possesseur ; le nom de l'objet possédé est défini.",
+     "translation_tip": "… à elle une chanson pour enfants qu'il aime.",
+     "constraint": "utilise של décliné : troisième personne, féminin singulier"
+    }
+   ]
+  }
  ]
 }

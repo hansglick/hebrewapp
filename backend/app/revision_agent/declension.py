@@ -36,7 +36,7 @@ from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, fren
 from app.revision_agent.expression import (CLOSING_SECONDS, DECLENSION_EVALUATION_TOOL, RETRY_TOOL,
                                           TEACHER_IDLE_TIMEOUT)
 from app.revision_agent.gemini_live import GeminiLive
-from app.revision_agent.passages import lesson_number
+from app.revision_agent.passages import is_previous, lesson_number
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.utterances import sentence_key, word_span
 
@@ -156,7 +156,7 @@ def draw_items(lesson: str, current: bool, previous: bool) -> list[Item]:
     level = lesson_number(lesson)
     seen: set[tuple[str, ...]] = set()
     mine = rotate(lesson, lambda item: lesson_number(item.lesson) == level, seen) if current else []
-    older = rotate(lesson, lambda item: lesson_number(item.lesson) < level, seen) if previous else []
+    older = rotate(lesson, lambda item: is_previous(lesson_number(item.lesson), level), seen) if previous else []
     if not (mine and older):
         return mine or older
     count = min(CURRENT_LESSON_SENTENCES, len(mine))

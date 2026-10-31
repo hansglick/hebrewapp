@@ -5,8 +5,8 @@ et le texte avec tous ses nikkoud. Le nom du personnage en tête d'une réplique
 Sol (raisonnement medium), un appel par leçon ; on vérifie qu'il y a autant de mots latins que de mots hébreux.
 Écrit dans data/revision_reading_phonetics.json : {leçon: [{"phonetic", "pointed"}, …]}, une entrée par réplique.
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_reading_phonetics [leçon ...]
-Sans argument, tous les textes du périmètre ; avec des codes (« 0.05 »), seulement ceux-là (les autres sont gardés).
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_reading_phonetics 0.21-0.30
+Seulement les textes des leçons données (cf. scripts.revision_scope) : les autres sont gardés.
 """
 
 import asyncio
@@ -20,9 +20,9 @@ from pydantic import BaseModel
 from app.config import OPENAI_API_KEY
 from app.data_loader import get_dataset
 from app.revision_agent.config import EVALUATOR
-from app.revision_agent.passages import lessons_with_text
 from app.revision_agent.phonetics import PHONETIC_CONVENTION, READING_PHONETICS
 from app.revision_agent.reading import spoken
+from scripts.revision_scope import parse_lessons
 
 PROMPT = f"""Tu es professeur d'hébreu. Pour chaque phrase numérotée d'un texte de manuel pour débutants, donne :
 - pointed : la phrase avec tous ses nikkoud, telle qu'elle se lit dans ce contexte ;
@@ -76,7 +76,7 @@ async def lesson_phonetics(client: AsyncOpenAI, code: str, phrases: list[str]) -
 
 async def main(codes: list[str]) -> None:
     texts = get_dataset("text")
-    lessons = [code for code in lessons_with_text() if not codes or code in codes]
+    lessons = [code for code in parse_lessons(codes) if (texts.get(code) or {}).get("phrases")]
     client = AsyncOpenAI(api_key=OPENAI_API_KEY)
     results = await asyncio.gather(*(
         lesson_phonetics(client, code, [spoken(p["hebrew"]) for p in texts[code]["phrases"]]) for code in lessons))

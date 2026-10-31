@@ -67,7 +67,9 @@ def exercises_for(lesson: str, u: dict, max_level: int) -> list[Exercise]:
     """Un exercice par mot ou verbe du vocabulaire (de niveau ≤ max_level) présent dans l'énoncé, avec un indice tiré
     au hasard entre l'action de la phrase et l'un de ses concepts (cf. demande explicite du user)."""
     hints = [("action", u["action"]["fr"])] if u["action"]["fr"] else []
-    hints += [("concept", title) for c in u["concepts"] if (title := concept_title(c["id"]))]
+    # Seulement les concepts déjà vus : une phrase peut être rattachée à ceux des dix leçons suivantes.
+    hints += [("concept", title) for c in u["concepts"]
+              if (lesson_number(c["id"]) or 0) <= max_level and (title := concept_title(c["id"]))]
     if not hints:
         return []
     found = []

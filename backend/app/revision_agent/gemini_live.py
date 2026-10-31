@@ -3,13 +3,14 @@
 import base64
 import json
 import re
+from collections import Counter
 from dataclasses import dataclass
 from typing import Any, AsyncIterator, Literal
 
 import websockets
 
 from app.config import GEMINI_API_KEY
-from app.revision_agent.config import GEMINI_SILENCE_MS, LIVE_MODEL, SAMPLE_RATE
+from app.revision_agent.config import GEMINI_SILENCE_MS, LIVE_MODEL, LIVE_PRICES, SAMPLE_RATE
 
 URL = "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent"
 NON_SPEECH = re.compile(r"<[^<>]*>|\{[^{}]*\}")
@@ -35,6 +36,9 @@ class LiveEvent:
 
 
 class GeminiLive:
+    speaks = True  # le prof parle : sa prise de parole dure le temps de la lecture audio côté navigateur
+    to_say = 0  # prises de parole dont l'audio reste à produire (cf. TextTeacher) : en Live, il suit le texte
+
     def __init__(self, voice: str, instructions: str, start_message: str, tools: list[dict]):
         self.voice = voice
         self.instructions = instructions
@@ -44,6 +48,8 @@ class GeminiLive:
         self.journal = None  # journal de la séance (cf. app.revision_agent.journal), branché par le routeur
         self._pending = ""  # début de marqueur de non-parole en attente de sa fin
         self._last_char = ""  # dernier caractère transmis de la transcription du prof
+        # Tokens consommés depuis le début de la séance, par sens (« input », « output ») et par modalité.
+        self.usage = {"input": Counter(), "output": Counter()}
 
     async def connect(self) -> None:
         self.ws = await websockets.connect(f"{URL}?key={GEMINI_API_KEY}", max_size=None)
@@ -76,6 +82,8 @@ class GeminiLive:
     async def events(self) -> AsyncIterator[LiveEvent]:
         async for raw in self.ws:
             message = json.loads(raw)
+            if usage := message.get("usageMetadata"):
+                self.count_usage(usage)
             if "setupComplete" in message:
                 await self._say(self.start_message)
                 yield LiveEvent("started")
@@ -99,6 +107,28 @@ class GeminiLive:
 
             if "error" in message:
                 yield LiveEvent("error", message["error"].get("message", "Erreur de l’agent"))
+
+    def count_usage(self, usage: dict) -> None:
+        """Ajoute les tokens d'une génération : Gemini Live les donne génération par génération (vérifié : ils ne se
+        cumulent pas), chacune comptant tout le contexte en entrée. Ce que le détail par modalité ne couvre pas, et la
+        réflexion, comptent comme du texte."""
+        for side, total, details in (("input", "promptTokenCount", "promptTokensDetails"),
+                                     ("output", "responseTokenCount", "responseTokensDetails")):
+            counts = Counter({d.get("modality", "TEXT"): d.get("tokenCount", 0) for d in usage.get(details) or []})
+            counts["TEXT"] += max(0, usage.get(total, 0) - sum(counts.values()))
+            self.usage[side] += counts
+        self.usage["input"]["TEXT"] += usage.get("toolUsePromptTokenCount", 0)
+        self.usage["output"]["TEXT"] += usage.get("thoughtsTokenCount", 0)
+
+    def bill(self) -> dict:
+        """Tokens consommés en entrée et en sortie, et leur prix en dollars (cf. config.LIVE_PRICES)."""
+        result = {"model": LIVE_MODEL}
+        for side, counts in self.usage.items():
+            prices = LIVE_PRICES[side]
+            result[f"{side}_tokens"] = sum(counts.values())
+            cost = sum(n * prices.get(modality, prices["TEXT"]) for modality, n in counts.items())
+            result[f"{side}_cost"] = cost / 1e6
+        return result
 
     def _clean_transcript(self, fragment: str) -> str:
         """Retire les marqueurs de non-parole (« <no speech> », « {pause} »), qui peuvent arriver en plusieurs fragments."""

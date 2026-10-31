@@ -6,7 +6,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { graphemes, withoutNikkud } from "./hebrew";
+import { CheckIcon } from "./Followup";
 import { SPEECH_STEP_MS } from "./TeacherSpeech";
+
+// Réponse parfaite : le soulignement vert se trace, puis la coche apparaît (cf. .ra-answer-perfect).
+const UNDERLINE_MS = 650;
+
+// Plus de lettres hébraïques que latines.
+const hebrewText = (text) =>
+  (text.match(/[א-ת]/g) ?? []).length >= (text.match(/[a-zA-ZÀ-ÿ]/g) ?? []).length;
 
 // Compare les mots sans ponctuation ni voyelles (nikud).
 const normalize = (word) => word.replace(/[֑-ׇ]/g, "").replace(/[^א-ת]/g, "");
@@ -37,31 +45,78 @@ function ErrorWord({ kinds, stroke, children }) {
   );
 }
 
-// Type(s) de faute de chaque mot de la réponse. Une faute peut porter sur
+// Préposition, article ou conjonction accolés au mot (ב, ל, מ, כ, ה, ו, ש) :
+// jusqu'à trois lettres devant lui.
+const PREFIX = /^[בלמכהוש]{0,3}$/;
+
+// Lettres à sauter au début du mot de la réponse (key) pour y trouver le mot
+// fautif (part), une fois leurs prépositions accolées mises de côté (même
+// mot, au moins deux lettres) : seule celle de la réponse est sautée, quand
+// le mot fautif n'en a pas (« בבית » pour la faute « בית ») ; le mot entier
+// (0) quand c'est le même mot, ou quand la faute porte sur la préposition
+// (« בבית » pour « לבית ») ; -1, ce n'est pas ce mot.
+function prefixed(key, part) {
+  if (key === part) return 0;
+  for (let k = 0; k <= 3; k += 1) {
+    for (let m = 0; m <= 3; m += 1) {
+      const stem = key.slice(k);
+      if (stem.length >= 2 && stem === part.slice(m) && PREFIX.test(key.slice(0, k)) && PREFIX.test(part.slice(0, m))) {
+        return m === 0 ? k : 0;
+      }
+    }
+  }
+  return -1;
+}
+
+// Type(s) de faute de chaque mot de la réponse (kinds) et lettres de son
+// début laissées hors du surlignage (skips). Une faute peut porter sur
 // plusieurs mots (« מיץ תפוזים ») : on cherche la suite de mots dans la
 // réponse, sinon chacun de ses mots séparément. Un même mot fautif plusieurs
 // fois (« דוד » mal lu trois fois) : chaque faute prend l'occurrence suivante,
-// pas encore surlignée.
+// pas encore surlignée. Une préposition accolée au mot dans la réponse
+// (« בבית » pour la faute « בית ») n'empêche pas de le trouver : seul le mot
+// est surligné, sans elle (cf. demande explicite du user).
 function errorKinds(words, errors) {
   const keys = words.map(normalize);
   const kinds = words.map(() => new Set());
+  const skips = words.map(() => null);
+  const mark = (i, kind, skip) => {
+    kinds[i].add(kind);
+    skips[i] = skips[i] === null ? skip : Math.min(skips[i], skip);
+  };
   errors.forEach((error) => {
     const parts = error.word.split(/\s+/).map(normalize).filter(Boolean);
     if (parts.length === 0) return;
-    const matches = (i) => parts.every((part, j) => keys[i + j] === part);
+    // Seul le premier mot de la suite peut porter une préposition accolée.
+    const matches = (i) =>
+      parts.every((part, j) => (j ? keys[i + j] === part : prefixed(keys[i], part) >= 0));
     const free = (i) => parts.every((_, j) => !kinds[i + j].has(error.kind));
-    const first = keys.findIndex((_, i) => matches(i));
-    const unclaimed = keys.findIndex((_, i) => matches(i) && free(i));
-    const start = unclaimed >= 0 ? unclaimed : first;
+    // Le mot tel quel d'abord, avant un mot qui ne fait que s'y terminer (« ים » avant « מים »).
+    const exact = (i) => matches(i) && keys[i] === parts[0];
+    const found = [(i) => exact(i) && free(i), (i) => matches(i) && free(i), exact, matches]
+      .map((test) => keys.findIndex((_, i) => test(i)))
+      .find((i) => i >= 0);
+    const start = found ?? -1;
     keys.forEach((key, i) => {
-      const inSequence =
-        start >= 0
-          ? i >= start && i < start + parts.length
-          : parts.includes(key);
-      if (inSequence) kinds[i].add(error.kind);
+      if (start >= 0) {
+        if (i >= start && i < start + parts.length) mark(i, error.kind, i === start ? prefixed(key, parts[0]) : 0);
+        return;
+      }
+      const skip = Math.max(...parts.map((part) => prefixed(key, part)));
+      if (skip >= 0) mark(i, error.kind, skip);
     });
   });
-  return kinds.map((set) => [...set]);
+  return { kinds: kinds.map((set) => [...set]), skips: skips.map((skip) => skip ?? 0) };
+}
+
+// Position, dans les caractères du mot, de la fin de ses skip premières
+// lettres hébraïques (0 : rien à sauter).
+function prefixEnd(chars, skip) {
+  let letters = 0;
+  for (let i = 0; skip && i < chars.length; i += 1) {
+    if (/[א-ת]/.test(chars[i]) && ++letters === skip) return i + 1;
+  }
+  return 0;
 }
 
 // Réponse de l'élève, telle que le prof l'a entendue, les mots fautifs
@@ -70,18 +125,22 @@ function errorKinds(words, errors) {
 // caractère par caractère, comme la parole du prof (cf. TeacherSpeech), puis
 // ses mots fautifs sont surlignés au stabilo, l'un après l'autre (cf.
 // demande explicite du user).
-export function Answer({ evaluation, legend = true }) {
+// perfect : réponse sans faute, soulignée en vert dans son sens de lecture,
+// puis cochée à sa fin, comme une marque du suivi (cf. demande explicite du
+// user).
+export function Answer({ evaluation, legend = true, perfect = false }) {
   if (!evaluation.answer) return <p className="muted">(pas de réponse)</p>;
   return (
     <StreamedAnswer
       key={evaluation.answer}
       evaluation={evaluation}
       legend={legend}
+      perfect={perfect}
     />
   );
 }
 
-function StreamedAnswer({ evaluation, legend }) {
+function StreamedAnswer({ evaluation, legend, perfect }) {
   const words = useMemo(
     () =>
       withoutNikkud(evaluation.answer)
@@ -97,6 +156,14 @@ function StreamedAnswer({ evaluation, legend }) {
   const total = starts[words.length - 1] + words[words.length - 1].length;
   const [shown, setShown] = useState(0);
   const done = shown >= total;
+  const [marked, setMarked] = useState(false);
+  useEffect(() => {
+    if (!done || !perfect) return undefined;
+    const timer = setTimeout(() => setMarked(true), UNDERLINE_MS);
+    return () => clearTimeout(timer);
+  }, [done, perfect]);
+  // Une réponse en français (mode texte, cf. StudentAnswer) s'écrit de gauche à droite.
+  const dir = hebrewText(evaluation.answer) ? "rtl" : "ltr";
 
   useEffect(() => {
     if (done) return undefined;
@@ -104,7 +171,7 @@ function StreamedAnswer({ evaluation, legend }) {
     return () => clearTimeout(timer);
   }, [shown, done]);
 
-  const kinds = errorKinds(
+  const { kinds, skips } = errorKinds(
     words.map((chars) => chars.join("")),
     evaluation.errors,
   );
@@ -114,7 +181,8 @@ function StreamedAnswer({ evaluation, legend }) {
   let strokes = 0;
   return (
     <>
-      <p className="ra-answer" dir="rtl" lang="he">
+      <p className="ra-answer" dir={dir} lang={dir === "rtl" ? "he" : "fr"}>
+        <span className={done && perfect ? "ra-answer-perfect" : undefined}>
         {words.map((chars, i) => {
           if (shown < starts[i]) return null;
           // Lecture : retour à la ligne entre deux phrases, comme dans le texte.
@@ -124,16 +192,25 @@ function StreamedAnswer({ evaluation, legend }) {
             <span key={i}>
               {i > 0 && " "}
               {done && kinds[i].length > 0 ? (
-                <ErrorWord kinds={kinds[i]} stroke={strokes++}>
-                  {word}
-                </ErrorWord>
+                <>
+                  {chars.slice(0, prefixEnd(chars, skips[i])).join("")}
+                  <ErrorWord kinds={kinds[i]} stroke={strokes++}>
+                    {chars.slice(prefixEnd(chars, skips[i])).join("")}
+                  </ErrorWord>
+                </>
               ) : (
                 word
               )}
             </span>
           );
         })}
+        </span>
         {!done && <span className="ra-caret" aria-hidden="true" />}
+        {marked && perfect && (
+          <span className="ra-burst ra-followup-ok ra-perfect-mark" title="Aucune faute">
+            <CheckIcon />
+          </span>
+        )}
       </p>
       {done && legend && present.length > 0 && (
         <p className="ra-error-legend">

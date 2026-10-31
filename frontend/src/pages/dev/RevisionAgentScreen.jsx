@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getChapitres, getLecons } from "../../api/content";
 import { getCompletionLessons, getRevisionTexts } from "../../api/revisionAgent";
 import { useConfig } from "../../config/ConfigContext";
+import { BillCloseContext, BillContext } from "./revisionAgent/billContext";
 import CompletionBoard from "./revisionAgent/CompletionBoard";
 import ComprehensionBoard from "./revisionAgent/ComprehensionBoard";
 import LanguageSwitch from "./revisionAgent/LanguageSwitch";
@@ -11,6 +12,7 @@ import QuestionBoard from "./revisionAgent/QuestionBoard";
 import ReadingBoard from "./revisionAgent/ReadingBoard";
 import WordBoard from "./revisionAgent/WordBoard";
 import SessionClock from "./revisionAgent/SessionClock";
+import StudentAnswer from "./revisionAgent/StudentAnswer";
 import { useRevisionSession } from "./revisionAgent/useRevisionSession";
 import "../screens.css";
 import "./RevisionAgentScreen.css";
@@ -20,6 +22,10 @@ import "./RevisionAgentScreen.css";
 const LANGUAGE_HINT_DELAY_MS = 300;
 const LANGUAGE_HINT_FADE_MS = 1000;
 const LANGUAGE_HINT_SHOWN_MS = 4000;
+// La facture reste affichée 10 s une fois déroulée (départ des fenêtres et déroulé compris), puis quitte l'écran en
+// BILL_LEAVE_MS (cf. .ra-bill-leaving).
+const BILL_SHOWN_MS = 1000 + 500 + 10000;
+const BILL_LEAVE_MS = 500;
 
 // Tâches que l'agent fera réviser à l'étudiant (cf. demande explicite du
 // user) — toutes sont branchées.
@@ -47,13 +53,18 @@ const TASKS = [
 // Lecture : répliques à lire par tour, au plus (cf. passages.MAX_PHRASES_PER_READING).
 const MAX_PER_READING = 3;
 
+// Mode texte : le modèle du prof, le plus rapide (cf. config.TEXT_TEACHER_MODELS), et celui de sa voix, le plus
+// économique (cf. config.TTS_MODELS) ; fixés, sans menu pour les choisir (cf. demande explicite du user).
+const TEACHER_MODEL = "gemini-3.5-flash-lite";
+const TTS_MODEL = "gemini-3.8-flash-lite-tts";
+
 // Voix du prof, fixée (cf. demande explicite du user) : une des voix prédéfinies de Gemini Live.
 const VOICE = "Enceladus";
 
-// Périmètre de l'agent : les 20 premières leçons, 0.01 → 0.20 (cf. demande
+// Périmètre de l'agent : les 30 premières leçons, 0.01 → 0.30 (cf. demande
 // explicite du user).
 const LESSON_CHAPTER = "0";
-const LAST_LESSON = 20;
+const LAST_LESSON = 30;
 
 // Agent conversationnel (Gemini Live 3.8, gemini-3.8-live) qui fait réviser
 // une leçon à l'étudiant (cf. app.revision_agent). Tâche « Lecture » : le
@@ -75,7 +86,12 @@ const LAST_LESSON = 20;
 // phrase avec ce mot en suivant l'indice. Tâche « Question » : l'application
 // tire des phrases dont une partie est surlignée, l'élève pose la question
 // dont c'est la réponse (cf. QuestionBoard). Accessible uniquement via /dev.
-export default function RevisionAgentScreen() {
+// textMode : la page sans Gemini Live (/dev/revision-agent-texte, cf. demande
+// explicite du user), l'expression libre seule : le prof est un modèle texte
+// (cf. app.revision_agent.text_teacher) dont chaque prise de parole est dite
+// par un modèle TTS ; l'élève répond à voix haute, transcrit, ou par écrit en
+// cas de souci (cf. StudentAnswer).
+export default function RevisionAgentScreen({ textMode = false }) {
   // Toujours le skin « Kindle » sur cette page, quel que soit celui choisi (cf. demande explicite du user).
   const { setForcedSkin } = useConfig();
   useEffect(() => {
@@ -84,7 +100,8 @@ export default function RevisionAgentScreen() {
   }, [setForcedSkin]);
   const [lessons, setLessons] = useState([]);
   const [lessonCode, setLessonCode] = useState("");
-  const [task, setTask] = useState(TASKS[0].id);
+  const tasks = textMode ? TASKS.filter((t) => t.id === "expression") : TASKS;
+  const [task, setTask] = useState(tasks[0].id);
   const [currentLesson, setCurrentLesson] = useState(true);
   const [previousLessons, setPreviousLessons] = useState(false);
   // Lecture : affiche la phonétique de chaque lecture (contrôle, cf. ReadingBoard).
@@ -108,7 +125,24 @@ export default function RevisionAgentScreen() {
   // Pendant la séance, les réglages sont masqués (la bande bleue les réaffiche) pour laisser la place à la séance.
   const [showControls, setShowControls] = useState(true);
   const live = session.status === "live";
-  const controlsHidden = live && !showControls;
+  // La facture (cf. TaskLayout) : affichée seule à la fin de la connexion, elle s'en va au bout de BILL_SHOWN_MS ou
+  // par sa croix, et les réglages reprennent sa place (cf. demande explicite du user). null, « leaving » (elle quitte
+  // l'écran, cf. .ra-bill-leaving), « closed ».
+  const [billPhase, setBillPhase] = useState(null);
+  const billTimer = useRef(null);
+  const closeBill = useCallback(() => {
+    setBillPhase((phase) => phase ?? "leaving");
+    clearTimeout(billTimer.current);
+    billTimer.current = setTimeout(() => setBillPhase("closed"), BILL_LEAVE_MS);
+  }, []);
+  useEffect(() => {
+    if (!session.bill) return undefined;
+    const timer = setTimeout(closeBill, BILL_SHOWN_MS);
+    return () => clearTimeout(timer);
+  }, [session.bill, closeBill]);
+  useEffect(() => () => clearTimeout(billTimer.current), []);
+  const billOpen = Boolean(session.bill) && billPhase !== "closed";
+  const controlsHidden = (live && !showControls) || billOpen;
   // Compréhension, expression libre, déclinaison et question : pendant la séance, le bouton « Arrêter » et le chrono
   // s'affichent dans la séance, en bas à droite, et non dans les réglages (cf. demande explicite du user).
   const clockInSession = ["lecture", "comprehension", "expression", "declinaison", "question", "completion"].includes(
@@ -196,6 +230,8 @@ export default function RevisionAgentScreen() {
     else {
       setSessionTask(task);
       setSessionRun((run) => run + 1);
+      clearTimeout(billTimer.current);
+      setBillPhase(null);
       setShowControls(false);
       session.start({
         lesson: lessonCode,
@@ -204,6 +240,9 @@ export default function RevisionAgentScreen() {
         current: lessonOnly || currentLesson,
         previous: !lessonOnly && previousLessons,
         perReading,
+        mode: textMode ? "texte" : "voix",
+        teacherModel: textMode ? TEACHER_MODEL : undefined,
+        ttsModel: textMode ? TTS_MODEL : undefined,
       });
     }
   };
@@ -248,7 +287,7 @@ export default function RevisionAgentScreen() {
             <label className="revision-agent-field">
               Tâche
               <select value={task} onChange={(e) => setTask(e.target.value)}>
-                {TASKS.map((t) => (
+                {tasks.map((t) => (
                   <option
                     key={t.id}
                     value={t.id}
@@ -369,145 +408,165 @@ export default function RevisionAgentScreen() {
           title={controlsHidden ? "Afficher les réglages" : "Masquer les réglages"}
         />
       )}
-      <div className="revision-agent-session">
-        {sessionTask === "comprehension" ? (
-          <ComprehensionBoard
-            key={sessionRun}
-            teacher={session.teacher}
-            text={session.text}
-            highlight={session.highlight}
-            excerpts={session.excerpts}
-            question={session.question}
-            evaluation={session.evaluation}
-            done={session.phase === "done"}
-            notice={session.notice}
-            paused={session.paused}
-            answering={session.answering}
-            languageSwitch={
-              session.language && (
-                <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
-              )
-            }
-            closing={session.closing}
-            score={session.score}
-            onNext={session.next}
-            clock={sessionControls || null}
-          />
-        ) : sessionTask === "expression" ? (
-          <ExpressionBoard
-            key={sessionRun}
-            teacher={session.teacher}
-            topics={session.topics}
-            question={session.question}
-            hints={session.hints}
-            evaluation={session.evaluation}
-            declension={session.declension}
-            declensionEvaluation={session.declensionEvaluation}
-            closing={session.closing}
-            score={session.score}
-            done={session.phase === "done"}
-            notice={session.notice}
-            answering={session.answering}
-            languageSwitch={
-              session.language && (
-                <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
-              )
-            }
-            onNext={session.next}
-            clock={sessionControls || null}
-          />
-        ) : sessionTask === "question" ? (
-          <QuestionBoard
-            key={sessionRun}
-            teacher={session.teacher}
-            exercise={session.exercise}
-            evaluation={session.evaluation}
-            hint={session.hint}
-            answerFrame={session.answerFrame}
-            closing={session.closing}
-            score={session.score}
-            done={session.phase === "done"}
-            notice={session.notice}
-            languageSwitch={
-              session.language && (
-                <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
-              )
-            }
-            onHint={session.requestHint}
-            onNext={session.next}
-            clock={sessionControls || null}
-          />
-        ) : sessionTask === "mot" ? (
-          <WordBoard
-            teacher={session.teacher}
-            exercise={session.exercise}
-            answer={session.answer}
-            solution={session.solution}
-            notice={session.notice}
-          />
-        ) : sessionTask === "completion" ? (
-          <CompletionBoard
-            key={sessionRun}
-            teacher={session.teacher}
-            topics={session.topics}
-            exercise={session.exercise}
-            evaluation={session.evaluation}
-            hint={session.hint}
-            answerFrame={session.answerFrame}
-            closing={session.closing}
-            score={session.score}
-            done={session.phase === "done"}
-            notice={session.notice}
-            languageSwitch={
-              session.language && (
-                <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
-              )
-            }
-            onHint={session.requestHint}
-            onNext={session.next}
-            clock={sessionControls || null}
-          />
-        ) : sessionTask === "declinaison" ? (
-          <DeclensionBoard
-            key={sessionRun}
-            teacher={session.teacher}
-            topics={session.topics}
-            declension={session.declension}
-            evaluation={session.declensionEvaluation}
-            closing={session.closing}
-            score={session.score}
-            done={session.phase === "done"}
-            notice={session.notice}
-            languageSwitch={
-              session.language && (
-                <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
-              )
-            }
-            onNext={session.next}
-            clock={sessionControls || null}
-          />
-        ) : (
-          <ReadingBoard
-            key={sessionRun}
-            teacher={session.teacher}
-            text={session.text}
-            extract={session.extract}
-            control={session.readingControl}
-            showPhonetic={showPhonetic}
-            onListen={session.listen}
-            evaluation={session.evaluation}
-            closing={session.closing}
-            done={session.phase === "done"}
-            notice={session.notice}
-            languageSwitch={
-              session.language && (
-                <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
-              )
-            }
-            onNext={session.next}
-            clock={sessionControls || null}
-          />
-        )}
+      <div className={`revision-agent-session ${billPhase === "leaving" ? "ra-bill-leaving" : ""}`}>
+        <BillContext.Provider value={session.bill}>
+        <BillCloseContext.Provider value={closeBill}>
+          {billPhase === "closed" ? null : sessionTask === "comprehension" ? (
+            <ComprehensionBoard
+              key={sessionRun}
+              teacher={session.teacher}
+              text={session.text}
+              highlight={session.highlight}
+              excerpts={session.excerpts}
+              question={session.question}
+              evaluation={session.evaluation}
+              done={session.phase === "done"}
+              notice={session.notice}
+              paused={session.paused}
+              answering={session.answering}
+              languageSwitch={
+                session.language && (
+                  <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
+                )
+              }
+              closing={session.closing}
+              score={session.score}
+              onNext={session.next}
+              clock={sessionControls || null}
+            />
+          ) : sessionTask === "expression" ? (
+            <ExpressionBoard
+              key={sessionRun}
+              teacher={session.teacher}
+              topics={session.topics}
+              question={session.question}
+              hints={session.hints}
+              evaluation={session.evaluation}
+              declension={session.declension}
+              declensionEvaluation={session.declensionEvaluation}
+              closing={session.closing}
+              score={session.score}
+              done={session.phase === "done"}
+              notice={session.notice}
+              answering={session.answering}
+              languageSwitch={
+                session.language && (
+                  <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
+                )
+              }
+              onNext={session.next}
+              clock={sessionControls || null}
+              keepOnDone={textMode}
+              // La réponse reste à l'écran jusqu'à la fin de la connexion, puis s'en va avec les autres fenêtres.
+              composer={
+                textMode &&
+                (live || session.bill) &&
+                ((lamp) => (
+                  <StudentAnswer
+                    onSend={session.sendText}
+                    onSendAudio={session.sendAudio}
+                    transcript={session.transcript}
+                    exchange={session.exchange}
+                    disabled={!live || session.phase === "done"}
+                    lamp={lamp}
+                  />
+                ))
+              }
+            />
+          ) : sessionTask === "question" ? (
+            <QuestionBoard
+              key={sessionRun}
+              teacher={session.teacher}
+              exercise={session.exercise}
+              evaluation={session.evaluation}
+              hint={session.hint}
+              answerFrame={session.answerFrame}
+              closing={session.closing}
+              score={session.score}
+              done={session.phase === "done"}
+              notice={session.notice}
+              languageSwitch={
+                session.language && (
+                  <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
+                )
+              }
+              onHint={session.requestHint}
+              onNext={session.next}
+              clock={sessionControls || null}
+            />
+          ) : sessionTask === "mot" ? (
+            <WordBoard
+              teacher={session.teacher}
+              exercise={session.exercise}
+              answer={session.answer}
+              solution={session.solution}
+              notice={session.notice}
+            />
+          ) : sessionTask === "completion" ? (
+            <CompletionBoard
+              key={sessionRun}
+              teacher={session.teacher}
+              topics={session.topics}
+              exercise={session.exercise}
+              evaluation={session.evaluation}
+              hint={session.hint}
+              answerFrame={session.answerFrame}
+              closing={session.closing}
+              score={session.score}
+              done={session.phase === "done"}
+              notice={session.notice}
+              languageSwitch={
+                session.language && (
+                  <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
+                )
+              }
+              onHint={session.requestHint}
+              onNext={session.next}
+              clock={sessionControls || null}
+            />
+          ) : sessionTask === "declinaison" ? (
+            <DeclensionBoard
+              key={sessionRun}
+              teacher={session.teacher}
+              topics={session.topics}
+              declension={session.declension}
+              evaluation={session.declensionEvaluation}
+              closing={session.closing}
+              score={session.score}
+              done={session.phase === "done"}
+              notice={session.notice}
+              languageSwitch={
+                session.language && (
+                  <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
+                )
+              }
+              onNext={session.next}
+              clock={sessionControls || null}
+            />
+          ) : (
+            <ReadingBoard
+              key={sessionRun}
+              teacher={session.teacher}
+              text={session.text}
+              extract={session.extract}
+              control={session.readingControl}
+              showPhonetic={showPhonetic}
+              onListen={session.listen}
+              evaluation={session.evaluation}
+              closing={session.closing}
+              done={session.phase === "done"}
+              notice={session.notice}
+              languageSwitch={
+                session.language && (
+                  <LanguageSwitch language={session.language} onChange={session.switchLanguage} hint={languageHint} />
+                )
+              }
+              onNext={session.next}
+              clock={sessionControls || null}
+            />
+          )}
+        </BillCloseContext.Provider>
+        </BillContext.Provider>
       </div>
     </section>
   );

@@ -4,20 +4,23 @@ au plus une question dont l'énoncé est la réponse naturelle, en interrogeant 
 אילו, accordé en genre et en nombre. Le niveau de l'énoncé n'est pas pris en compte.
 
 Les questions sont ajoutées à celles de l'énoncé, au même format ({"hint", "question", "interrogative"}) ; relancer
-le script remplace les questions d'accord déjà ajoutées.
+le script remplace les questions d'accord déjà ajoutées des leçons données, les autres leçons restent telles quelles
+(cf. scripts.revision_scope).
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_agreement_questions
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_agreement_questions 0.21-0.30
 """
 
 import asyncio
 import json
 import re
+import sys
 
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
 from app.config import DATA_DIR, OPENAI_API_KEY
 from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import parse_lessons
 
 QUESTIONS = DATA_DIR / "revision_questions.json"
 AGREEMENT = re.compile(r"(?<![א-ת])(?:[בלמ]?)(?:איזה|איזו|אילו)(?![א-ת])")
@@ -80,16 +83,19 @@ async def lesson_questions(client: AsyncOpenAI, code: str, items: list[dict]) ->
     return result
 
 
-async def main() -> None:
+async def main(args: list[str]) -> None:
+    codes = parse_lessons(args)
     data = json.loads(QUESTIONS.read_text(encoding="utf-8"))
     by_lesson: dict[str, list[dict]] = {}
     for phrase_id, entries in data.items():
+        if phrase_id.split(":")[0] not in codes:
+            continue  # les autres leçons restent telles quelles
         for entry in entries:
             entry["questions"] = [q for q in entry["questions"] if not AGREEMENT.search(q["interrogative"])]
             if "?" not in entry["text"]:
                 by_lesson.setdefault(phrase_id.split(":")[0], []).append(entry)
     client = AsyncOpenAI(api_key=OPENAI_API_KEY)
-    codes = sorted(by_lesson)
+    codes = [code for code in codes if code in by_lesson]
     results = await asyncio.gather(*(lesson_questions(client, code, by_lesson[code]) for code in codes))
     for code, questions in zip(codes, results):
         for entry, q in zip(by_lesson[code], questions):
@@ -100,4 +106,4 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main(sys.argv[1:]))

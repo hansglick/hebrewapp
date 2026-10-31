@@ -73,6 +73,12 @@ const PREVIEWS = [
       "Un professeur IA fait réviser une leçon à l'étudiant : choix de la leçon, de la voix du prof, de la tâche et du contenu révisé (leçon en cours / leçons antérieures).",
   },
   {
+    to: "/dev/revision-agent-texte",
+    label: "Agent de révision — sans Gemini Live",
+    description:
+      "L'expression libre sans Gemini Live : le prof écrit (modèle texte) et parle (TTS), l'élève répond à voix haute (transcription) ou par écrit.",
+  },
+  {
     to: "/dev/topic-prototype",
     label: "Prototype sujets",
     description:

@@ -7,14 +7,15 @@ du niveau de la phrase ni de celui du concept (cf. demande explicite du user), e
 - concept_tip : la règle du concept, résumée en une phrase ; translation_tip : la traduction de la partie manquante.
 Résultat : {identifiant de phrase: [{"text", "concepts": [...]}]}, seulement pour les énoncés qui ont au moins un concept.
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_concept_pool [--out fichier] [leçon ...]
-Sans leçon, toutes ; sans --out, data/revision_concept_pool.json.
+Au-delà de 0.20 (cf. scripts.revision_scope) : seulement les concepts choisis par le user, et pour un énoncé de la leçon
+L, seulement ceux des leçons L-10 → L+10. Les leçons données remplacent les leurs dans le fichier, les autres restent.
+
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_concept_pool 0.21-0.30
 """
 
 import asyncio
 import json
 import sys
-from pathlib import Path
 
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
@@ -22,9 +23,14 @@ from pydantic import BaseModel, Field
 from app.config import DATA_DIR, OPENAI_API_KEY
 from app.data_loader import get_dataset
 from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import LINK_WINDOW, base_lesson, merge_phrases, parse_lessons, window
 
 OUTPUT = DATA_DIR / "revision_concept_pool.json"
 KEPT_CONCEPTS = {f"0.{n:02d}" for n in (7, 8, 11, 14, 16, 17, 18, 19)}
+# Leçons 0.21 → 0.48, choisis par le user (cf. demande explicite du user) : certains restreints, d'autres scindés en
+# deux concepts (« 0.33a », « 0.33b »), tous deux dans RESTRICTED.
+KEPT_CONCEPTS |= {f"0.{n}" for n in (23, 26, 28, 29, 30, 31, 32, 36, 37, 38, 39, 41, 43, 44, 48)}
+KEPT_CONCEPTS |= {f"0.{n}{part}" for n in (33, 40, 42) for part in "ab"}
 
 # Concepts restreints à une partie de leur leçon (cf. demande explicite du user).
 RESTRICTED = {
@@ -43,6 +49,36 @@ RESTRICTED = {
              "présente : concept_word vaut « את », seul, sans le complément qui suit. Ne la confonds pas avec le "
              "pronom personnel את (« tu » au féminin, sujet du verbe : « את פוגשת את חנה » → seul le second את "
              "est la particule). Ne retiens pas un complément indéfini sans את."),
+    "0.33a": ("Les pronoms indéfinis משהו et מישהו",
+              "משהו (quelque chose) et מישהו / מישהי (quelqu'un, au masculin ou au féminin) désignent une chose ou une "
+              "personne indéterminée. concept_word : le pronom, tel qu'il est écrit. Ne retiens pas להגיד ni לומר."),
+    "0.33b": ("La possibilité avec אפשר et אי אפשר",
+              "אפשר (il est possible, on peut) et אי אפשר (il est impossible, on ne peut pas) sont invariables et suivis "
+              "d'un verbe à l'infinitif : ils expriment la capacité, la permission ou l'interdiction. concept_word : "
+              "« אפשר » ou « אי אפשר »."),
+    "0.37": ("La déclinaison de שלום pour demander des nouvelles",
+             "Pour demander comment va quelqu'un, on emploie מה suivi de שלום portant un suffixe pronominal accordé avec "
+             "la personne : מה שלומך, מה שלומו, מה שלומה, מה שלומכם… concept_word : la forme déclinée de שלום. "
+             "Ne retiens pas שלום seul (salutation), ni la conjugaison des verbes au présent."),
+    "0.40a": ("La déclinaison de la préposition מ",
+              "La préposition מ (de, depuis, que) se décline avec les pronoms personnels : ממני, ממך, ממנו, ממנה, "
+              "מאיתנו, מכם, מהם… pour la provenance, la comparaison (גדול ממני) ou l'objet d'une demande (לבקש ממנו). "
+              "concept_word : la forme déclinée. Ne retiens pas מ devant un nom (מישראל), qui n'est pas déclinée."),
+    "0.40b": ("La distinction entre לשאול et לבקש",
+              "Deux verbes traduisent « demander » : לשאול pour poser une question ou demander une information, לבקש "
+              "pour demander une faveur, une action ou un objet (la personne sollicitée introduite par מ). "
+              "concept_word : la forme de לשאול ou de לבקש, telle qu'elle est écrite."),
+    "0.42a": ("Les adverbes עוד, עדיין et תמיד",
+              "עוד et עדיין (encore, toujours) expriment une action qui perdure ; עוד exprime aussi l'ajout (encore un, "
+              "une quantité de plus) ; תמיד (toujours) exprime une habitude ou une vérité générale. concept_word : "
+              "l'adverbe. Ne retiens pas כדאי."),
+    "0.42b": ("L'expression כדאי suivie d'un infinitif",
+              "כדאי (ça vaut la peine, il vaut mieux), invariable, suivi d'un verbe à l'infinitif, conseille de faire "
+              "quelque chose ; לא כדאי le déconseille. concept_word : « כדאי »."),
+    "0.48": ("La double négation : jamais, rien",
+             "Pour dire « jamais » ou « rien », l'hébreu combine une négation (לא, אין) avec אף פעם (jamais), שום דבר "
+             "(rien) ou כלום (rien) : אני אף פעם לא…, אין לי כלום, לא ראיתי שום דבר. concept_word : le mot de la "
+             "double négation et la négation qui l'accompagne. Ne retiens pas la conjugaison au passé."),
 }
 
 PROMPT = """Tu es professeur d'hébreu et linguiste spécialiste de la grammaire de l'hébreu israélien moderne.
@@ -93,8 +129,8 @@ class LessonHits(BaseModel):
 def concept_catalog() -> dict[str, tuple[str, str]]:
     """identifiant → (définition courte, explication donnée à Sol)."""
     concepts = get_dataset("concept")
-    return {code: RESTRICTED.get(code, (concepts[code]["concept"].rstrip("."), concepts[code]["explication"]))
-            for code in sorted(KEPT_CONCEPTS)}
+    return {code: RESTRICTED[code] if code in RESTRICTED
+            else (concepts[code]["concept"].rstrip("."), concepts[code]["explication"]) for code in sorted(KEPT_CONCEPTS)}
 
 
 def check(text: str, hit: ConceptHit) -> list[str]:
@@ -138,24 +174,23 @@ async def lesson_hits(client: AsyncOpenAI, code: str, items: list[tuple[str, str
     return result
 
 
+def lesson_catalog(code: str) -> dict[str, tuple[str, str]]:
+    """Les concepts retenus des leçons L-10 → L+10 (cf. scripts.revision_scope)."""
+    near = window(code, LINK_WINDOW, LINK_WINDOW)
+    return {k: v for k, v in concept_catalog().items() if base_lesson(k) in near}
+
+
 async def main(args: list[str]) -> None:
-    output = OUTPUT
-    if "--out" in args:
-        i = args.index("--out")
-        output, args = Path(args[i + 1]), args[:i] + args[i + 2:]
+    codes = parse_lessons(args)
     with open(DATA_DIR / "revision_phrase_analysis.json", encoding="utf-8") as f:
         analysis = json.load(f)
     by_lesson: dict[str, list[tuple[str, str]]] = {}
     for phrase_id, items in analysis.items():
         by_lesson.setdefault(phrase_id.split(":")[0], []).extend((phrase_id, u["text"]) for u in items)
-    codes = args or sorted(by_lesson)
-    catalog = concept_catalog()
     client = AsyncOpenAI(api_key=OPENAI_API_KEY)
-    results = await asyncio.gather(*(lesson_hits(client, code, by_lesson[code], catalog) for code in codes))
-    pool = {phrase_id: items for result in results for phrase_id, items in result.items()}
-    pool = dict(sorted(pool.items(), key=lambda kv: (kv[0].split(":")[0], int(kv[0].split(":")[1]))))
-    output.write_text(json.dumps(pool, ensure_ascii=False, indent=4), encoding="utf-8")
-    print(f"→ {output}")
+    results = await asyncio.gather(*(lesson_hits(client, code, by_lesson[code], lesson_catalog(code))
+                                     for code in codes))
+    merge_phrases(OUTPUT, {phrase_id: items for result in results for phrase_id, items in result.items()}, codes, 1)
 
 
 if __name__ == "__main__":

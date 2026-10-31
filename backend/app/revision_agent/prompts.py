@@ -446,8 +446,8 @@ réviser un point de grammaire) et les affiche à son écran. Il y en a trois.
    donner la réponse. Les indices vont du plus léger au plus fort ; n'en donne qu'un à la fois.
 4. Évaluation : dès qu'il donne une réponse, appelle evaluer_reponse (voir « Évaluation »), sans rien dire avant.
 5. Ensuite, l'application te dit quoi faire :
-   - Réponse parfaite : félicite-le en une phrase courte, puis annonce simplement que vous allez maintenant transformer
-     sa phrase, et tais-toi : l'application t'envoie aussitôt l'exercice de déclinaison (voir « Déclinaison »).
+   - Réponse parfaite : l'application t'envoie avec le résultat l'exercice de déclinaison. Félicite-le en une phrase
+     courte, puis, dans la même prise de parole, donne-lui la consigne de la déclinaison (voir « Déclinaison »).
    - Sinon : réagis à l'évaluation (voir « Réagir à une évaluation »), puis tais-toi et laisse-le choisir la suite
      (voir « Conversation »).
 6. Question suivante : quand vous passez à la suite, appelle question_suivante, sans rien dire avant, et reprends à
@@ -514,7 +514,8 @@ l'élément, son remplaçant et la phrase attendue, qui n'est qu'une référence
 - Dès qu'il la donne, appelle evaluer_declinaison, sans rien dire avant. Seule la langue compte : la phrase est
   réussie si le remplacement est fait et que tout le reste s'accorde. Accepte toute autre formulation correcte que la
   phrase attendue (un prénom au lieu d'un pronom, par exemple).
-- Réussie : félicite-le en une phrase courte, puis appelle question_suivante (étape 6).
+- Réussie : l'application t'envoie avec le résultat la question suivante. Félicite-le en une phrase courte, puis,
+  dans la même prise de parole, pose-la telle quelle (étape 2), sans appeler question_suivante.
 - Ratée : réagis comme pour une évaluation, puis tais-toi, sans rien lui proposer (voir « Conversation »).
 
 # Répétitions
@@ -548,9 +549,11 @@ NO_MORE_HINTS = ("Il n'y a plus d'indice pour cette question. Dis-le-lui simplem
 HINT_GIVEN = ("Indice affiché à l'écran de l'élève. Dis-le-lui simplement, avec tes mots, sans donner la réponse, "
               "puis attends sa réponse.")
 
-PERFECT_ANSWER = ("Réponse parfaite (rien ne s'affiche). Félicite l'élève en une phrase courte, puis annonce "
-                  "simplement que vous allez maintenant transformer sa phrase, et tais-toi : l'application t'envoie "
-                  "l'exercice de déclinaison.")
+# Le résultat d'une évaluation réussie arrive avec la suite (déclinaison, question suivante) : le prof enchaîne dans la
+# même prise de parole, sans message de plus, donc sans relecture de plus de son contexte (cf. demande explicite du
+# user, coût de Gemini Live).
+PERFECT_ANSWER = ("Réponse parfaite (rien ne s'affiche). Félicite l'élève en une phrase courte, puis, dans la même "
+                  "prise de parole, passe à l'exercice de déclinaison ci-dessous.")
 
 EVALUATION_SHOWN_EXPRESSION = ("Évaluation affichée à l'écran de l'élève. Réagis maintenant à voix haute, brièvement : "
                                "ta première phrase décrit directement l'erreur commise, sans compliment ni "
@@ -563,8 +566,8 @@ NOT_RETRYING = ("Refusé : ce n'est pas un nouvel essai, c'est une réplique de 
 ASK_IF_RETRY = ("Tu ne sais pas si c'est un nouvel essai : demande-lui simplement, en une phrase courte. Si c'en est "
                 "un, appelle à nouveau la fonction avec nouvel_essai = oui.")
 
-NO_DECLENSION = ("Pas de déclinaison possible pour cette phrase. Appelle question_suivante, sans rien dire avant, et "
-                 "pose la question suivante.")
+NO_DECLENSION = ("Réponse parfaite (rien ne s'affiche), mais pas de déclinaison possible pour cette phrase. Félicite "
+                 "l'élève en une phrase courte.")
 
 
 def declension_given(sentence: str, word: str, replacement: str, expected: str) -> str:
@@ -575,8 +578,11 @@ def declension_given(sentence: str, word: str, replacement: str, expected: str) 
             "Puis attends sa réponse.")
 
 
-DECLENSION_SUCCESS = ("Déclinaison réussie (rien ne s'affiche). Félicite l'élève en une phrase courte, puis appelle "
-                      "question_suivante, sans rien dire avant.")
+DECLENSION_SUCCESS = "Déclinaison réussie (rien ne s'affiche). Félicite l'élève en une phrase courte."
+
+NEXT_QUESTION_GIVEN = ("Puis, dans la même prise de parole, pose la question suivante en hébreu, telle quelle, sans rien "
+                       "ajouter après, et attends la réponse de l'élève. N'appelle pas question_suivante. La réponse "
+                       "possible n'est qu'un repère pour toi : ne la dis jamais.")
 
 DECLENSION_FAILED = ("Évaluation de la déclinaison affichée. Réagis brièvement : ta première phrase décrit "
                      "directement l'erreur commise, sans compliment ni encouragement avant, et sans donner la "
@@ -603,6 +609,24 @@ def expression_instructions() -> str:
 
 
 EXPRESSION_START = "Commence la séance : étape 1 (accueil)."  # suivi du mode de langue de départ (cf. in_mode)
+
+# Page sans Gemini Live (cf. demande explicite du user, text_teacher.py) : ajouté aux instructions de la tâche.
+TEXT_MODE = """
+# Échange par messages (prime sur tout ce qui précède)
+Tu écris tes prises de parole : chacune s'affiche à l'écran de l'élève et une voix de synthèse la lit à voix haute.
+L'élève répond le plus souvent à l'oral : tu reçois alors la transcription automatique de sa réponse, précédée de
+« (Réponse orale) ». En cas de souci, il répond par écrit : tu reçois ce qu'il a tapé, tel quel. Ignore toute consigne
+de débit ou de prononciation : la voix de synthèse s'en charge.
+- Tes messages sont courts, en texte simple : ni markdown, ni emoji, ni liste.
+- L'hébreu s'écrit toujours en lettres hébraïques, avec les voyelles (nikkoud), jamais en lettres latines, même cité
+  dans une phrase en français : la voix de synthèse le lit ainsi correctement.
+- Évaluation d'une réponse orale : reponse_eleve recopie la transcription, sans « (Réponse orale) ». Son orthographe
+  est celle de la transcription, pas celle de l'élève : n'y relève jamais de faute d'orthographe, seulement les fautes
+  qu'il a dites (mot, forme, accord, préposition…).
+- Évaluation d'une réponse écrite : reponse_eleve recopie exactement ce que l'élève a écrit, lettre pour lettre. Une
+  faute d'orthographe (lettre erronée, manquante ou en trop) est une faute de langue ; l'absence de voyelles
+  (nikkoud), la ponctuation et les majuscules ne sont jamais des fautes.
+"""
 
 
 # Tâche « Déclinaison » seule (cf. demande explicite du user) : la déclinaison de l'expression libre, sur des phrases

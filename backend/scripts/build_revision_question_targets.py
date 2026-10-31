@@ -11,8 +11,8 @@ question à la 2e (« tu », « vous ») ; un manquement est seulement signalé.
 La cible est écrite dans revision_questions.json (la source, cf. build_revision_questions.py) et dans
 revision_course.json (cf. build_revision_course.py, qui la recopie).
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_question_targets [leçon ...]
-Sans argument, toutes les questions ; avec des codes (« 0.01 »), seulement celles de ces leçons.
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_question_targets 0.21-0.30
+Seulement les questions des leçons données (cf. scripts.revision_scope).
 """
 
 import asyncio
@@ -25,6 +25,7 @@ from pydantic import BaseModel, Field
 
 from app.config import DATA_DIR, OPENAI_API_KEY
 from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import parse_lessons
 
 COURSE = DATA_DIR / "revision_course.json"
 QUESTIONS = DATA_DIR / "revision_questions.json"
@@ -108,7 +109,8 @@ async def lesson_targets(client: AsyncOpenAI, code: str, items: list[tuple[str, 
     return found
 
 
-async def main(codes: list[str]) -> None:
+async def main(args: list[str]) -> None:
+    codes = parse_lessons(args)
     course = json.loads(COURSE.read_text(encoding="utf-8"))
     by_lesson: dict[str, list[tuple[str, dict, dict]]] = {}
     for phrase_id, p in course["phrases"].items():

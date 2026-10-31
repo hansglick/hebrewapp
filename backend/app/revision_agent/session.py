@@ -3,18 +3,28 @@
 Le prof ne parle qu'hébreu : chacune de ses prises de parole est transcrite par Gemini Live, traduite phrase par
 phrase (translate.py) puis affichée — seule la dernière reste à l'écran. Ce que dit l'élève n'est jamais affiché.
 
-Navigateur → backend : trames binaires = micro, PCM16 mono 24 kHz ; JSON {"type": "stop"}.
+Navigateur → backend : trames binaires = micro, PCM16 mono 24 kHz ; JSON {"type": "stop"},
+  {"type": "student_text", "text": str} (mode texte : la réponse écrite de l'élève, cf. text_teacher.py),
+  {"type": "student_audio", "audio": str} (mode texte : sa réponse enregistrée, WAV en base64, cf. transcribe.py).
 Backend → navigateur : trames binaires = voix du prof, PCM16 mono 24 kHz ; JSON :
   {"type": "status", "state": "live" | "ended"}
+  {"type": "bill", "bill": {"seconds", "models": [{"model", "input_tokens", "output_tokens", "input_cost",
+                                                   "output_cost"}]}}   (fin de séance)
   {"type": "teacher", "id": int, "seq": int, "hebrew": str, "french": str}
         (prise de parole du prof, complétée sur place tant que id ne change pas ; seq ordonne les envois)
   {"type": "interrupt"}                                 (jeter l'audio du prof en attente)
   {"type": "error", "text": str}
+  {"type": "transcript", "text": str}                   (mode texte : la transcription de la réponse enregistrée)
+  {"type": "exchange", "kind": "evaluation" | "conversation", "evaluation"?: {"answer", "errors"}}
+                                                        (mode texte : ce que le prof fait de la dernière réponse de
+                                                         l'élève : il l'évalue (l'évaluation suit, une fois jugée), ou
+                                                         lui répond sans l'évaluer)
   + les messages propres à chaque tâche (cf. reading.py, comprehension.py).
 """
 
 import array
 import asyncio
+import base64
 import json
 import logging
 import math
@@ -30,7 +40,8 @@ from fastapi import WebSocket, WebSocketDisconnect
 from app.revision_agent.config import DEBUG_STUDENT_AUDIO, SAMPLE_RATE
 from app.revision_agent.gemini_live import GeminiLive, LiveEvent
 from app.revision_agent.journal import SKIPPED_BROWSER_MESSAGES, SessionJournal
-from app.revision_agent.translate import french_speech, translate_to_french
+from app.revision_agent.transcribe import transcribe
+from app.revision_agent.translate import FLASH_USAGE, flash_bill, french_speech, translate_to_french
 
 log = logging.getLogger("revision_agent.session")
 
@@ -40,7 +51,10 @@ TEACHER_RMS = 150  # le flux audio du prof peut être continu : en dessous, c'es
 UTTERANCE_GAP_SECONDS = 0.4  # pause de transcription après laquelle le texte reçu est traduit et affiché
 TURN_GAP_SECONDS = 2.0  # sans fin de tour signalée : pause qui clôt la prise de parole
 SENTENCE_END = re.compile(r"[.!?]")
+SENTENCE = re.compile(r"[^.!?]*[.!?]+|[^.!?]+$")
+NIKKUD = re.compile("[֑-ׇ]")
 HEBREW_LETTER = re.compile(r"[א-ת]")
+HEBREW_WORD = re.compile(r"[א-ת]+")
 LATIN_LETTER = re.compile(r"[A-Za-zÀ-ÿ]")
 # Diagnostic de la voix de l'élève (cf. config.DEBUG_STUDENT_AUDIO).
 STUDENT_RMS = 300  # au-dessus : l'élève parle
@@ -59,6 +73,14 @@ class TeacherTurn:
     published: int = 0  # nombre de segments déjà affichés
     open: bool = True
     shown: bool = True  # faux : prononcée mais jamais affichée (ex. question d'exercice, déjà affichée à part)
+    hidden: str = ""  # masquée parce qu'elle pose cette question : seules les phrases qui la répètent sont masquées
+
+
+def repeats(sentence: str, question: str) -> bool:
+    """La phrase reprend la question : plus de la moitié de ses mots hébreux (sans voyelles) en viennent."""
+    words = HEBREW_WORD.findall(NIKKUD.sub("", sentence))
+    asked = set(HEBREW_WORD.findall(NIKKUD.sub("", question)))
+    return bool(words) and sum(word in asked for word in words) * 2 > len(words)
 
 
 def rms(pcm: bytes) -> float:
@@ -85,7 +107,12 @@ class TeacherSession:
         self.turn_text_at = 0.0
         self.teacher_seq = 0
         self.hidden_turn = False  # la prochaine prise de parole du prof ne sera pas affichée
+        self.hidden_text = ""  # … sauf ce qui ne répète pas ce texte (la question posée, cf. TeacherTurn.hidden)
         self.background: list[asyncio.Task] = []  # tâches propres à la séance, annulées à la fin
+        self.finished = asyncio.Event()  # la tâche est terminée : la séance se ferme d'elle-même
+        # Mode texte : la dernière réponse de l'élève attend que le prof l'évalue ou lui réponde (cf. « exchange »).
+        self.exchange_open = False
+        self.exchange_evaluated = False  # le prof l'évalue : l'évaluation suivra
         # Diagnostic : micro récent, et segment de voix de l'élève en cours (début, dernier instant audible).
         self.mic = bytearray()
         self.voice: tuple[float, float] | None = None
@@ -111,9 +138,12 @@ class TeacherSession:
     # --- cycle de vie -------------------------------------------------------
 
     async def run(self) -> None:
+        # Tokens des modèles Flash de la séance (traduction, jugements), comptés pour la facture.
+        flash_usage = {}
+        FLASH_USAGE.set(flash_usage)
         await self.live.connect()
         tasks = [asyncio.create_task(self.pump_browser()), asyncio.create_task(self.watch()),
-                 asyncio.create_task(self.pump_live())]
+                 asyncio.create_task(self.pump_live()), asyncio.create_task(self.finished.wait())]
         try:
             done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
             for task in done:
@@ -127,6 +157,12 @@ class TeacherSession:
                 await self.live.close()
             except Exception:
                 log.exception("Fermeture de la session live")
+        # Facture de la séance (cf. demande explicite du user) : tokens et prix de chaque modèle (le prof, puis les
+        # modèles Flash), durée de la conversation.
+        bill = {"models": [self.live.bill(), *flash_bill(flash_usage)],
+                "seconds": round(time.monotonic() - self.started_at) if self.started_at else 0}
+        log.info("facture : %s", bill)
+        await self.to_browser({"type": "bill", "bill": bill})
         await self.to_browser({"type": "status", "state": "ended"})
 
     # --- navigateur → prof --------------------------------------------------
@@ -145,12 +181,42 @@ class TeacherSession:
                     self.journal.write("from_browser", message=data)
                 if data.get("type") == "stop":
                     return
+                if data.get("type") == "student_text":
+                    # Mode texte (cf. text_teacher.py) : la réponse écrite de l'élève, traitée comme sa transcription.
+                    await self.on_student_text(str(data.get("text") or "").strip())
+                    continue
+                if data.get("type") == "student_audio":
+                    # Mode texte : la réponse enregistrée, transcrite puis traitée comme une réponse écrite.
+                    self.background.append(asyncio.create_task(self.on_student_audio(str(data.get("audio") or ""))))
+                    continue
                 await self.on_browser_message(data)
 
     async def on_microphone(self, pcm: bytes) -> None:
         if DEBUG_STUDENT_AUDIO:
             self.track_voice(pcm)
         await self.live.send_audio(pcm)
+
+    async def on_student_text(self, text: str, spoken: bool = False) -> None:
+        if text and self.started_at is not None:
+            await self.on_event(LiveEvent("user_text", f"{text} "))
+            self.exchange_open, self.exchange_evaluated = True, False
+            await self.live.student_text(text, spoken)
+
+    async def on_student_audio(self, audio: str) -> None:
+        """La transcription s'affiche telle quelle (vide : rien entendu), puis part au prof (cf. transcribe.py) ; rien
+        entendu, le prof demande à l'élève de recommencer."""
+        try:
+            text = await transcribe(base64.b64decode(audio))
+        except Exception:
+            log.exception("Transcription impossible")
+            text = ""
+        log.info("transcription : %s", text)
+        await self.to_browser({"type": "transcript", "text": text})
+        if text:
+            await self.on_student_text(text, spoken=True)
+        elif self.started_at is not None:
+            await self.live.app_message("L'application n'a rien entendu dans la réponse enregistrée de l'élève : "
+                                        "demande-lui en quelques mots de recommencer.")
 
     def track_voice(self, pcm: bytes) -> None:
         """Diagnostic : garde les dernières secondes du micro et journalise chaque segment de voix de l'élève."""
@@ -195,10 +261,17 @@ class TeacherSession:
         elif event.kind == "turn_complete":
             log.info("fin du tour du prof")
             self.end_turn()
+            if self.exchange_open:
+                # Le prof a répondu sans évaluer : l'élève lui parlait (question, remarque…).
+                self.exchange_open = False
+                await self.to_browser({"type": "exchange", "kind": "conversation"})
         elif event.kind == "tool_call":
             log.info("fonction %s %s", event.data["name"], event.data["args"])
             if self.journal:
                 self.journal.write("tool_call", name=event.data["name"], args=event.data["args"])
+            if self.exchange_open and event.data["name"].startswith("evaluer"):
+                self.exchange_open, self.exchange_evaluated = False, True
+                await self.to_browser({"type": "exchange", "kind": "evaluation"})
             if DEBUG_STUDENT_AUDIO and event.data["name"].startswith("evaluer") and self.started_at is not None:
                 self.save_student_audio(event.data["name"])
             await self.on_tool_call(event.data)
@@ -232,8 +305,9 @@ class TeacherSession:
 
     def on_agent_text(self, text: str, now: float) -> None:
         if not self.turn.open:
-            self.turn = TeacherTurn(id=self.turn.id + 1, shown=not self.hidden_turn)
-            self.hidden_turn = False
+            self.turn = TeacherTurn(id=self.turn.id + 1, shown=not self.hidden_turn,
+                                    hidden=self.hidden_text if self.hidden_turn else "")
+            self.hidden_turn, self.hidden_text = False, ""
             if not self.turn.shown:
                 self.background.append(asyncio.create_task(self.on_hidden_turn_started()))
         turn = self.turn
@@ -283,7 +357,13 @@ class TeacherSession:
             if self.journal:
                 self.journal.write("teacher", text=hebrew.strip(), shown=turn.shown)
         if not turn.shown:
-            return  # rien à traduire ni à afficher
+            # Masquée parce qu'elle pose la question : ce qu'elle dit d'autre (« Bravo ! » quand la question suivante
+            # accompagne le résultat…) s'affiche quand même ; sinon, rien à traduire ni à afficher.
+            hebrew = "".join(part for part in SENTENCE.findall(hebrew)
+                             if turn.hidden and not repeats(part, turn.hidden))
+            if not hebrew.strip():
+                return
+            has_words = any(c.isalnum() for c in hebrew)
         segment = {"he": hebrew, "fr": None if has_words else ""}  # une simple pause (« ... ») n'a rien à traduire
         turn.segments.append(segment)
         if has_words:

@@ -11261,5 +11261,5252 @@
                 "לי"
             ]
         }
+    ],
+    "0.21:0": [
+        {
+            "text": "אחרי השיעור אני נח ואוכל ארוחת צהריים.",
+            "concepts": [
+                {
+                    "id": "0.11",
+                    "words": [
+                        "אחרי השיעור"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת צהריים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se reposer et manger quelque chose",
+                "he": "לנוח ולאכול משהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [
+                "אחרי"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:1": [
+        {
+            "text": "באיזו עיר אתם מבקרים בישראל?",
+            "concepts": [],
+            "action": {
+                "fr": "visiter un endroit",
+                "he": "לבקר במקום כלשהו"
+            },
+            "subject": {
+                "fr": "vous",
+                "he": "אתם"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:2": [
+        {
+            "text": "כמה תלמידים בכיתה לומדים עברית?",
+            "concepts": [],
+            "action": {
+                "fr": "apprendre quelque chose",
+                "he": "ללמוד משהו"
+            },
+            "subject": {
+                "fr": "combien d'élèves",
+                "he": "כמה תלמידים"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:3": [
+        {
+            "text": "אני נשואה ואתה, אתה נשוי?",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:4": [
+        {
+            "text": "אתה נוסע ברכב לעבודה?",
+            "concepts": [],
+            "action": {
+                "fr": "se rendre quelque part",
+                "he": "לנסוע למקום כלשהו"
+            },
+            "subject": {
+                "fr": "tu",
+                "he": "אתה"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:5": [
+        {
+            "text": "יש לנו שלוש בנות וחמישה בנים, כולם כמעט נשואים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שלוש בנות",
+                        "וחמישה בנים"
+                    ]
+                },
+                {
+                    "id": "0.28",
+                    "words": [
+                        "כולם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לנו"
+            ]
+        }
+    ],
+    "0.21:6": [
+        {
+            "text": "אני לומד עברית כשיש לי זמן.",
+            "concepts": [],
+            "action": {
+                "fr": "apprendre quelque chose",
+                "he": "ללמוד משהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לי"
+            ]
+        },
+        {
+            "text": "זה מאוד מעניין.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "cela",
+                "he": "זה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:7": [
+        {
+            "text": "יש לך ארבעה ילדים אבל אתה רווק, נכון?",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "ארבעה ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לך"
+            ]
+        }
+    ],
+    "0.21:8": [
+        {
+            "text": "איך אני יכול לבוא?",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "יכול לבוא"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "pouvoir venir",
+                "he": "יכול לבוא"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "אתה גר רחוק?",
+            "concepts": [],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "tu",
+                "he": "אתה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "אני לוקח אוטובוס או רכבת?",
+            "concepts": [],
+            "action": {
+                "fr": "prendre quelque chose",
+                "he": "לקחת משהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.21:9": [
+        {
+            "text": "איזו מסעדה אתה הכי אוהב?",
+            "concepts": [
+                {
+                    "id": "0.16",
+                    "words": [
+                        "הכי אוהב"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aimer quelque chose",
+                "he": "לאהוב משהו"
+            },
+            "subject": {
+                "fr": "tu",
+                "he": "אתה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.22:0": [
+        {
+            "text": "אני קורא ספר ואחר כך אני מתקשר אליו.",
+            "concepts": [],
+            "action": {
+                "fr": "lire quelque chose",
+                "he": "לקרוא משהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "אליו"
+            ]
+        }
+    ],
+    "0.22:1": [
+        {
+            "text": "יש לי זמן הערב אני יכול לראות חברים.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "יכול לראות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "pouvoir voir quelqu'un",
+                "he": "יכול לראות מישהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לי"
+            ]
+        }
+    ],
+    "0.22:2": [
+        {
+            "text": "היא לא יכולה לבוא היום, היא חולה.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "לא יכולה לבוא"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "ne pas pouvoir venir",
+                "he": "לא יכולה לבוא"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.22:3": [
+        {
+            "text": "איתן צריך להזמין חברים לשבת אבל הוא לא רוצה לבשל.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריך להזמין"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir inviter quelqu'un",
+                "he": "צריך להזמין מישהו"
+            },
+            "subject": {
+                "fr": "Eitan",
+                "he": "איתן"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.22:4": [
+        {
+            "text": "חנה צריכה למהר לקנות דגים, ירקות, בשר ומשקאות.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריכה למהר"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir se dépêcher d'acheter quelque chose",
+                "he": "צריכה למהר לקנות משהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.22:5": [
+        {
+            "text": "צריך לבשל!",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריך לבשל"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "falloir cuisiner",
+                "he": "צריך לבשל"
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "אני מזמין עשרה חברים, אני ממהר, אין לי הרבה זמן, אני צריך לעשות מלא דברים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרה חברים"
+                    ]
+                },
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריך לעשות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "inviter quelqu'un",
+                "he": "להזמין מישהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לי"
+            ]
+        }
+    ],
+    "0.22:6": [
+        {
+            "text": "בדירה שלי, יש לי רק שולחן אחד אבל יש לי ארבעה כיסאות ושתי מיטות כמובן!",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שולחן אחד",
+                        "ארבעה כיסאות",
+                        "ושתי מיטות"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "בדירה שלי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לי"
+            ]
+        }
+    ],
+    "0.22:7": [
+        {
+            "text": "לשלמה יש שישה בנים ובת אחת, אבל אין לו סבלנות.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שישה בנים",
+                        "ובת אחת"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לו"
+            ]
+        }
+    ],
+    "0.22:8": [
+        {
+            "text": "דוד וחנה רוצים לראות טלוויזיה אבל הם לא יכולים לעשות רעש.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "לא יכולים לעשות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "vouloir regarder quelque chose",
+                "he": "רוצים לראות משהו"
+            },
+            "subject": {
+                "fr": "David et Hanna",
+                "he": "דוד וחנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.22:9": [
+        {
+            "text": "הן צריכות לחזור הביתה, לסדר ולבשל ארוחה חמה.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריכות לחזור"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir rentrer quelque part",
+                "he": "צריכות לחזור למקום כלשהו"
+            },
+            "subject": {
+                "fr": "elles",
+                "he": "הן"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.23:0": [
+        {
+            "text": "אני בת שלושים וחמש והוא בן ארבעים ושמונה",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בת שלושים וחמש",
+                        "בן ארבעים ושמונה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.23:1": [
+        {
+            "text": "יש עשרים ואחד תלמידים ועשרים ושלוש תלמידות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרים ואחד תלמידים",
+                        "ועשרים ושלוש תלמידות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.23:2": [
+        {
+            "text": "שלמה בן שישים ושתיים וחנה בת שישים ואחת",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בן שישים ושתיים",
+                        "בת שישים ואחת"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "Salomon",
+                "he": "שלמה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.23:3": [
+        {
+            "text": "יש לנו מאה ספרים!",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "מאה ספרים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לנו"
+            ]
+        }
+    ],
+    "0.23:4": [
+        {
+            "text": "אני קונה עשרים ושניים פירות לשבת.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרים ושניים פירות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "acheter quelque chose pour quelque chose",
+                "he": "לקנות משהו למשהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:0": [
+        {
+            "text": "הם שואלים כמה זה עולה.",
+            "concepts": [],
+            "action": {
+                "fr": "demander quelque chose",
+                "he": "לשאול משהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:1": [
+        {
+            "text": "סבא קונה פירות בשוק.",
+            "concepts": [],
+            "action": {
+                "fr": "acheter quelque chose quelque part",
+                "he": "לקנות משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "grand-père",
+                "he": "סבא"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:2": [
+        {
+            "text": "סבתא משלמת במזומן.",
+            "concepts": [],
+            "action": {
+                "fr": "payer en espèces",
+                "he": "לשלם במזומן"
+            },
+            "subject": {
+                "fr": "grand-mère",
+                "he": "סבתא"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:3": [
+        {
+            "text": "אתם מוכרים עגבניות.",
+            "concepts": [],
+            "action": {
+                "fr": "vendre quelque chose",
+                "he": "למכור משהו"
+            },
+            "subject": {
+                "fr": "vous",
+                "he": "אתם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:4": [
+        {
+            "text": "כמה ילדים יש לתומר ועדן?",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:5": [
+        {
+            "text": "בן כמה סבא שלמה?",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בן כמה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "grand-père Shlomo",
+                "he": "סבא שלמה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:6": [
+        {
+            "text": "איפה גרים תומר ועדן?",
+            "concepts": [],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Tomer et Eden",
+                "he": "תומר ועדן"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:7": [
+        {
+            "text": "איך תומר ועדן משלמים?",
+            "concepts": [],
+            "action": {
+                "fr": "payer",
+                "he": "לשלם"
+            },
+            "subject": {
+                "fr": "Tomer et Eden",
+                "he": "תומר ועדן"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:8": [
+        {
+            "text": "לתומר ועדן יש שלושה ילדים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שלושה ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:9": [
+        {
+            "text": "סבא שלמה בן שבעים ושתיים",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בן שבעים ושתיים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "grand-père Shlomo",
+                "he": "סבא שלמה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:10": [
+        {
+            "text": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "שוק מחנה יהודה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Tomer et Eden",
+                "he": "תומר ועדן"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:11": [
+        {
+            "text": "תומר ועדן משלמים במזומן.",
+            "concepts": [],
+            "action": {
+                "fr": "payer en espèces",
+                "he": "לשלם במזומן"
+            },
+            "subject": {
+                "fr": "Tomer et Eden",
+                "he": "תומר ועדן"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:12": [
+        {
+            "text": "לתומר ועדן יש שלושה ילדים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שלושה ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:13": [
+        {
+            "text": "שי, בן 36 (שלושים ושש) דוד בן 32 (שלושים ושתיים) ונועה הכי קטנה בת 23 (עשרים ושלוש).",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בן 36 (שלושים ושש)",
+                        "בן 32 (שלושים ושתיים)",
+                        "בת 23 (עשרים ושלוש)"
+                    ]
+                },
+                {
+                    "id": "0.16",
+                    "words": [
+                        "הכי קטנה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "Shay",
+                "he": "שי"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:14": [
+        {
+            "text": "הילדים של תומר ועדן באים לבקר בשבת וגם הסבא והסבתא באים.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הילדים של תומר ועדן"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "venir rendre visite à quelqu'un",
+                "he": "לבוא לבקר מישהו"
+            },
+            "subject": {
+                "fr": "les enfants de Tomer et Eden",
+                "he": "הילדים של תומר ועדן"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:15": [
+        {
+            "text": "סבא שלמה בן 72 (שבעים ושתיים) וסבתא חנה בת 68 (שישים ושמונה).",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בן 72 (שבעים ושתיים)",
+                        "בת 68 (שישים ושמונה)"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "grand-père Shlomo",
+                "he": "סבא שלמה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:16": [
+        {
+            "text": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "שוק מחנה יהודה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Tomer et Eden",
+                "he": "תומר ועדן"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:17": [
+        {
+            "text": "ביום שישי לפני שבת הם הולכים לשוק לעשות קניות.",
+            "concepts": [
+                {
+                    "id": "0.31",
+                    "words": [
+                        "ביום שישי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aller quelque part pour faire des courses",
+                "he": "ללכת למקום כלשהו לעשות קניות"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:18": [
+        {
+            "text": "הם צריכים לקנות פירות וירקות.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריכים לקנות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir acheter quelque chose",
+                "he": "צריכים לקנות משהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:19": [
+        {
+            "text": "בשוק הם שואלים את המוכר: כמה עולה שני קילו עגבניות?",
+            "concepts": [
+                {
+                    "id": "0.14",
+                    "words": [
+                        "את"
+                    ]
+                },
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שני קילו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "demander quelque chose à quelqu'un",
+                "he": "לשאול מישהו משהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "את"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:20": [
+        {
+            "text": "שנים עשר שקלים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שנים עשר שקלים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:21": [
+        {
+            "text": "וכמה זה שני קילו תפוחים?",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שני קילו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "cela",
+                "he": "זה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:22": [
+        {
+            "text": "ארבעה עשר ש\"ח.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "ארבעה עשר ש\"ח"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:23": [
+        {
+            "text": "הם מבקשים מהמוכר גם אבטיח, בננות, מלפפונים, פלפל ותפוחי אדמה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "תפוחי אדמה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "demander quelque chose à quelqu'un",
+                "he": "לבקש משהו ממישהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "מ"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:24": [
+        {
+            "text": "הם צריכים לשלם והם שואלים כמה סך הכול?",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריכים לשלם"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "סך הכול"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir payer",
+                "he": "צריכים לשלם"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:25": [
+        {
+            "text": "תשעים ושניים ₪.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "תשעים ושניים ₪"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:26": [
+        {
+            "text": "הם מבקשים לשלם במזומן.",
+            "concepts": [],
+            "action": {
+                "fr": "demander à payer en espèces",
+                "he": "לבקש לשלם במזומן"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.24:27": [
+        {
+            "text": "עכשיו הם צריכים לחזור הביתה לסדר, לנקות וגם כמובן לבשל.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריכים לחזור"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir rentrer quelque part",
+                "he": "צריכים לחזור למקום כלשהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:0": [
+        {
+            "text": "אני בן עשרים ושמונה אבל היא בת עשרים וחמש.",
+            "concepts": [
+                {
+                    "id": "0.23",
+                    "words": [
+                        "בן עשרים ושמונה",
+                        "בת עשרים וחמש"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:1": [
+        {
+            "text": "המספר הוא אפס חמש ארבע ארבע אפס שש שלוש שתיים שתיים חמש.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "אפס חמש ארבע ארבע אפס שש שלוש שתיים שתיים חמש"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "le numéro",
+                "he": "המספר"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:2": [
+        {
+            "text": "חמישה תלמידים לא יכולים לבוא היום לכיתה.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמישה תלמידים"
+                    ]
+                },
+                {
+                    "id": "0.17",
+                    "words": [
+                        "לא יכולים לבוא"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "pouvoir venir quelque part",
+                "he": "יכול לבוא למקום כלשהו"
+            },
+            "subject": {
+                "fr": "cinq élèves",
+                "he": "חמישה תלמידים"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:3": [
+        {
+            "text": "בגינה יש חמש עשרה ילדות וארבעה עשר ילדים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמש עשרה ילדות",
+                        "וארבעה עשר ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "בסך הכל יש עשרים ותשעה תלמידים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרים ותשעה תלמידים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:4": [
+        {
+            "text": "יש לי רק חמישים ושניים שקלים אבל אני יכול לקנות ירקות ודג.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמישים ושניים שקלים"
+                    ]
+                },
+                {
+                    "id": "0.17",
+                    "words": [
+                        "יכול לקנות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "pouvoir acheter quelque chose",
+                "he": "יכול לקנות משהו"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לי"
+            ]
+        }
+    ],
+    "0.25:5": [
+        {
+            "text": "בשוק, סבתא קונה הרבה פירות ושלושה קילו עגבניות.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "ושלושה קילו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "acheter quelque chose",
+                "he": "לקנות משהו"
+            },
+            "subject": {
+                "fr": "grand-mère",
+                "he": "סבתא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:6": [
+        {
+            "text": "האבטיח עולה רק חמישה שקלים.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמישה שקלים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "coûter quelque chose",
+                "he": "לעלות משהו"
+            },
+            "subject": {
+                "fr": "la pastèque",
+                "he": "האבטיח"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "זה לא הרבה!",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "ce",
+                "he": "זה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:7": [
+        {
+            "text": "הם צריכים לשלם שבעים ושישה שקלים בסך הכל, נכון?",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "צריכים לשלם"
+                    ]
+                },
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שבעים ושישה שקלים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir payer quelque chose",
+                "he": "צריך לשלם משהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:8": [
+        {
+            "text": "הם תשעים וכולם מבקשים לשתות ולאכול.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "תשעים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "demander à boire et à manger",
+                "he": "לבקש לשתות ולאכול"
+            },
+            "subject": {
+                "fr": "tous",
+                "he": "וכולם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:9": [
+        {
+            "text": "הם לא יכולים לשלם, אין להם מזומן.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "לא יכולים לשלם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "pouvoir payer",
+                "he": "יכול לשלם"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "להם"
+            ]
+        }
+    ],
+    "0.25:10": [
+        {
+            "text": "עשרים וחמש מיטות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרים וחמש מיטות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:11": [
+        {
+            "text": "שמונה עשרה משפחות קטנות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שמונה עשרה משפחות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:12": [
+        {
+            "text": "עשרה בנים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרה בנים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:13": [
+        {
+            "text": "חמישים ושישה רופאים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמישים ושישה רופאים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:14": [
+        {
+            "text": "מכתב אחד",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "מכתב אחד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:15": [
+        {
+            "text": "שבעים ושישה משקאות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שבעים ושישה משקאות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:16": [
+        {
+            "text": "שבעה עיתונים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שבעה עיתונים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:17": [
+        {
+            "text": "שישים וארבעה ירקות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שישים וארבעה ירקות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:18": [
+        {
+            "text": "שלוש ערים גדולות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שלוש ערים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:19": [
+        {
+            "text": "שמונים ושתיים בננות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שמונים ושתיים בננות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:20": [
+        {
+            "text": "שתים עשרה רכבות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שתים עשרה רכבות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:21": [
+        {
+            "text": "שלושים ואחת עגבניות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שלושים ואחת עגבניות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:22": [
+        {
+            "text": "שני מטוסים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שני מטוסים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:23": [
+        {
+            "text": "תשעים ותשעה תפוחי אדמה",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "תשעים ותשעה תפוחי אדמה"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "תפוחי אדמה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:24": [
+        {
+            "text": "גינה אחת",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "גינה אחת"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:25": [
+        {
+            "text": "שמונה עשר פלפלים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שמונה עשר פלפלים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:26": [
+        {
+            "text": "תשעה חלונות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "תשעה חלונות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:27": [
+        {
+            "text": "ארבעים ושבעה מוכרים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "ארבעים ושבעה מוכרים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:28": [
+        {
+            "text": "שישה עשר כיסאות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "שישה עשר כיסאות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:29": [
+        {
+            "text": "אפס חולים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "אפס חולים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:30": [
+        {
+            "text": "אחד עשר פירות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "אחד עשר פירות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:31": [
+        {
+            "text": "חמישה עשר ספרים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמישה עשר ספרים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:32": [
+        {
+            "text": "עשרים ושניים רכבים",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "עשרים ושניים רכבים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.25:33": [
+        {
+            "text": "חמישים ושתיים עוגות",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "חמישים ושתיים עוגות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.26:0": [
+        {
+            "text": "חנה, המשפחה שלך גרה בצרפת?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "המשפחה שלך"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "ta famille",
+                "he": "המשפחה שלך"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": [
+                "שלך"
+            ]
+        }
+    ],
+    "0.26:1": [
+        {
+            "text": "דניאל ושרה, איפה המכונית שלכם?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "המכונית שלכם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "votre voiture",
+                "he": "המכונית שלכם"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלכם"
+            ]
+        }
+    ],
+    "0.26:2": [
+        {
+            "text": "דינה, אני חולה, איפה הרופא שלי?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הרופא שלי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלי"
+            ]
+        }
+    ],
+    "0.26:3": [
+        {
+            "text": "בדירה של דוד יש שולחן.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "בדירה של דוד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "השולחן שלו גדול?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "השולחן שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "sa table",
+                "he": "השולחן שלו"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלו"
+            ]
+        }
+    ],
+    "0.26:4": [
+        {
+            "text": "למוכר הזה יש ירקות טעימים.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        },
+        {
+            "text": "גם הפירות שלו טעימים?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הפירות שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "ses fruits",
+                "he": "הפירות שלו"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלו"
+            ]
+        }
+    ],
+    "0.26:5": [
+        {
+            "text": "הם משלמים על השתייה שלהם ואני משלם על השתייה שלי.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "השתייה שלהם",
+                        "השתייה שלי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "payer quelque chose",
+                "he": "לשלם על משהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "על"
+            ],
+            "object_pronoun": [
+                "שלהם",
+                "שלי"
+            ]
+        }
+    ],
+    "0.26:6": [
+        {
+            "text": "לדוד יש דירה בישראל, הדירה שלו בירושלים.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הדירה שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלו"
+            ]
+        }
+    ],
+    "0.26:7": [
+        {
+            "text": "הילדים של חנה ודוד גרים בישראל.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הילדים של חנה ודוד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "les enfants de Hanna et David",
+                "he": "הילדים של חנה ודוד"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        },
+        {
+            "text": "הילדים שלהם גרים בתל אביב.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הילדים שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "leurs enfants",
+                "he": "הילדים שלהם"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.26:8": [
+        {
+            "text": "לרותי ואתי יש ילדים, הילדים שלהן גדולים.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הילדים שלהן"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלהן"
+            ]
+        }
+    ],
+    "0.27:0": [
+        {
+            "text": "ענת גרה בתל אביב ולומדת עברית באולפן.",
+            "concepts": [],
+            "action": {
+                "fr": "habiter quelque part et étudier quelque chose quelque part",
+                "he": "לגור במקום כלשהו וללמוד משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Anat",
+                "he": "ענת"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:1": [
+        {
+            "text": "התלמידים מהכיתה של ענת הם מצרפת, אנגליה, ארצות הברית ורוסיה.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הכיתה של ענת"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארצות הברית"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "les élèves de la classe d'Anat",
+                "he": "התלמידים מהכיתה של ענת"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:2": [
+        {
+            "text": "למורה שלהם קוראים שחר.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "למורה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "appeler quelqu'un par un nom",
+                "he": "לקרוא למישהו בשם כלשהו"
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.27:3": [
+        {
+            "text": "לדן ושי אין ספר בכיתה.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:4": [
+        {
+            "text": "הספר שלהם בבית.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "leur livre",
+                "he": "הספר שלהם"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.27:5": [
+        {
+            "text": "איפה ענת גרה ומה היא לומדת?",
+            "concepts": [],
+            "action": {
+                "fr": "habiter quelque part et étudier quelque chose",
+                "he": "לגור במקום כלשהו וללמוד משהו"
+            },
+            "subject": {
+                "fr": "Anat",
+                "he": "ענת"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:6": [
+        {
+            "text": "מאיפה התלמידים מהכיתה של ענת?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הכיתה של ענת"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "les élèves de la classe d'Anat",
+                "he": "התלמידים מהכיתה של ענת"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:7": [
+        {
+            "text": "איך קוראים למורה שלהם?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "למורה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "appeler quelqu'un par un nom",
+                "he": "לקרוא למישהו בשם כלשהו"
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.27:8": [
+        {
+            "text": "למי אין ספר בכיתה?",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:9": [
+        {
+            "text": "לדן ושי אין ספר, איפה הספר שלהם?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "leur livre",
+                "he": "הספר שלהם"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.27:10": [
+        {
+            "text": "ענת גרה בתל אביב ולומדת עברית באולפן.",
+            "concepts": [],
+            "action": {
+                "fr": "habiter quelque part et étudier quelque chose quelque part",
+                "he": "לגור במקום כלשהו וללמוד משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Anat",
+                "he": "ענת"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:11": [
+        {
+            "text": "יש לה הרבה חברים.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לה"
+            ]
+        }
+    ],
+    "0.27:12": [
+        {
+            "text": "החברים שלה גם לומדים באולפן.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "החברים שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "étudier quelque part",
+                "he": "ללמוד במקום כלשהו"
+            },
+            "subject": {
+                "fr": "ses amis",
+                "he": "החברים שלה"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.27:13": [
+        {
+            "text": "בכיתה שלהם יש תלמידים מהרבה מדינות; צרפת, אנגליה, ארצות הברית ורוסיה.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "בכיתה שלהם"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארצות הברית"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.27:14": [
+        {
+            "text": "המורה שלהם ישראלי וקוראים לו שחר.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "המורה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "appeler quelqu'un par un nom",
+                "he": "לקרוא למישהו בשם כלשהו"
+            },
+            "subject": {
+                "fr": "leur professeur",
+                "he": "המורה שלהם"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": [
+                "לו"
+            ]
+        }
+    ],
+    "0.27:15": [
+        {
+            "text": "שחר, המורה מבקש מהתלמידים לקרוא בספר.",
+            "concepts": [],
+            "action": {
+                "fr": "demander à quelqu'un de lire quelque chose",
+                "he": "לבקש ממישהו לקרוא במשהו"
+            },
+            "subject": {
+                "fr": "le professeur",
+                "he": "המורה"
+            },
+            "preposition": [
+                "מ"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:16": [
+        {
+            "text": "לדן ושי בכיתה אין ספר.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.27:17": [
+        {
+            "text": "הספר שלהם בבית.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "leur livre",
+                "he": "הספר שלהם"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.27:18": [
+        {
+            "text": "\"איפה הספר שלכם?\"",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלכם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "votre livre",
+                "he": "הספר שלכם"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלכם"
+            ]
+        }
+    ],
+    "0.27:19": [
+        {
+            "text": "\"הספר שלנו בבית\".",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלנו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "notre livre",
+                "he": "הספר שלנו"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלנו"
+            ]
+        }
+    ],
+    "0.27:20": [
+        {
+            "text": "המורה שואל \"למה הספר שלכם בבית?\"",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלכם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "demander quelque chose",
+                "he": "לשאול משהו"
+            },
+            "subject": {
+                "fr": "le professeur",
+                "he": "המורה"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלכם"
+            ]
+        }
+    ],
+    "0.27:21": [
+        {
+            "text": "הם מבקשים מהמורה שלהם לתת להם ספר.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "מהמורה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "demander à quelqu'un de donner quelque chose à quelqu'un",
+                "he": "לבקש ממישהו לתת משהו למישהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "מ"
+            ],
+            "object_pronoun": [
+                "להם"
+            ]
+        }
+    ],
+    "0.27:22": [
+        {
+            "text": "המורה נותן להם את הספר שלו.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הספר שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "donner quelque chose à quelqu'un",
+                "he": "לתת משהו למישהו"
+            },
+            "subject": {
+                "fr": "le professeur",
+                "he": "המורה"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": [
+                "להם"
+            ]
+        }
+    ],
+    "0.27:23": [
+        {
+            "text": "עכשיו כולם יכולים לקרוא בספר.",
+            "concepts": [
+                {
+                    "id": "0.17",
+                    "words": [
+                        "יכולים לקרוא"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "pouvoir lire quelque chose",
+                "he": "יכול לקרוא במשהו"
+            },
+            "subject": {
+                "fr": "tout le monde",
+                "he": "כולם"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:0": [
+        {
+            "text": "ההורים שלי מגלים מקומות חדשים.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "ההורים שלי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "découvrir quelque chose",
+                "he": "לגלות משהו"
+            },
+            "subject": {
+                "fr": "mes parents",
+                "he": "ההורים שלי"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:1": [
+        {
+            "text": "חנה מקווה לבקר בישראל.",
+            "concepts": [],
+            "action": {
+                "fr": "espérer visiter un endroit",
+                "he": "לקוות לבקר במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:2": [
+        {
+            "text": "הם מבלים עם החברים שלהם.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "החברים שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "passer du temps avec quelqu'un",
+                "he": "לבלות עם מישהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "עם"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:3": [
+        {
+            "text": "אתם נמצאים בתל אביב?",
+            "concepts": [],
+            "action": {
+                "fr": "se trouver quelque part",
+                "he": "להימצא במקום כלשהו"
+            },
+            "subject": {
+                "fr": "vous",
+                "he": "אתם"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:4": [
+        {
+            "text": "הן מתרגלות לחום בארץ.",
+            "concepts": [],
+            "action": {
+                "fr": "s'habituer à quelque chose",
+                "he": "להתרגל למשהו"
+            },
+            "subject": {
+                "fr": "elles",
+                "he": "הן"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:5": [
+        {
+            "text": "דוד ושרה מאוד מתרגשים לנסוע לארץ.",
+            "concepts": [],
+            "action": {
+                "fr": "s'enthousiasmer à l'idée d'aller quelque part",
+                "he": "להתרגש לנסוע למקום כלשהו"
+            },
+            "subject": {
+                "fr": "David et Sarah",
+                "he": "דוד ושרה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:6": [
+        {
+            "text": "ההורים של דוד גרים בדירה בתל אביב.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "ההורים של דוד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "les parents de David",
+                "he": "ההורים של דוד"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:7": [
+        {
+            "text": "הדירה שלהם נמצאת על יד הים.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הדירה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se trouver à côté de quelque chose",
+                "he": "להימצא על יד משהו"
+            },
+            "subject": {
+                "fr": "leur appartement",
+                "he": "הדירה שלהם"
+            },
+            "preposition": [
+                "על יד"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:8": [
+        {
+            "text": "בקיץ קשה לו כי חם והוא לא מתרגל לחום וללחות.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לו"
+            ]
+        }
+    ],
+    "0.28:9": [
+        {
+            "text": "בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם מקומות חדשים.",
+            "concepts": [
+                {
+                    "id": "0.28",
+                    "words": [
+                        "כל פעם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aimer se promener quelque part et découvrir quelque chose",
+                "he": "לאהוב לטייל במקום כלשהו ולגלות משהו"
+            },
+            "subject": {
+                "fr": "il",
+                "he": "הוא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:10": [
+        {
+            "text": "בתל אביב הוא אוהב לבלות עם החברים שלו עד מאוחר וללכת לחוף הים ולהשתזף.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "החברים שלו"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "לחוף הים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aimer passer du temps avec quelqu'un, aller quelque part et prendre le soleil",
+                "he": "לאהוב לבלות עם מישהו וללכת למקום כלשהו ולהשתזף"
+            },
+            "subject": {
+                "fr": "il",
+                "he": "הוא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:11": [
+        {
+            "text": "איפה ההורים של דוד גרים?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "ההורים של דוד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "les parents de David",
+                "he": "ההורים של דוד"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:12": [
+        {
+            "text": "איפה הדירה שלהם נמצאת?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הדירה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se trouver quelque part",
+                "he": "להימצא במקום כלשהו"
+            },
+            "subject": {
+                "fr": "leur appartement",
+                "he": "הדירה שלהם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:13": [
+        {
+            "text": "למה קשה לדוד בקיץ?",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:14": [
+        {
+            "text": "מה דוד אוהב לעשות בירושלים?",
+            "concepts": [],
+            "action": {
+                "fr": "aimer faire quelque chose quelque part",
+                "he": "לאהוב לעשות משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "David",
+                "he": "דוד"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:15": [
+        {
+            "text": "מה דוד אוהב לעשות בתל אביב?",
+            "concepts": [],
+            "action": {
+                "fr": "aimer faire quelque chose quelque part",
+                "he": "לאהוב לעשות משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "David",
+                "he": "דוד"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:16": [
+        {
+            "text": "לדוד יש משפחה בישראל.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:17": [
+        {
+            "text": "ההורים שלו גרים בדירה בתל אביב.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "ההורים שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "habiter quelque part",
+                "he": "לגור במקום כלשהו"
+            },
+            "subject": {
+                "fr": "ses parents",
+                "he": "ההורים שלו"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:18": [
+        {
+            "text": "הדירה שלהם נמצאת על יד הים.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הדירה שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se trouver à côté de quelque chose",
+                "he": "להימצא על יד משהו"
+            },
+            "subject": {
+                "fr": "leur appartement",
+                "he": "הדירה שלהם"
+            },
+            "preposition": [
+                "על יד"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:19": [
+        {
+            "text": "יש לו גם דוד ודודה שגרים בירושלים ויש להם ילדים גדולים.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לו",
+                "להם"
+            ]
+        }
+    ],
+    "0.28:20": [
+        {
+            "text": "דוד רגיל לבקר את המשפחה כמה פעמים בשנה.",
+            "concepts": [],
+            "action": {
+                "fr": "avoir l'habitude de rendre visite à quelqu'un",
+                "he": "להיות רגיל לבקר מישהו"
+            },
+            "subject": {
+                "fr": "David",
+                "he": "דוד"
+            },
+            "preposition": [
+                "את"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:21": [
+        {
+            "text": "בקיץ קשה לו כי חם והוא לא מתרגל לחום וללחות.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לו"
+            ]
+        }
+    ],
+    "0.28:22": [
+        {
+            "text": "כשהוא בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם מקומות חדשים.",
+            "concepts": [
+                {
+                    "id": "0.28",
+                    "words": [
+                        "כל פעם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aimer se promener quelque part et découvrir quelque chose",
+                "he": "לאהוב לטייל במקום כלשהו ולגלות משהו"
+            },
+            "subject": {
+                "fr": "il",
+                "he": "הוא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:23": [
+        {
+            "text": "בתל אביב הוא אוהב לבלות עם החברים שלו עד מאוחר וללכת לחוף הים ולהשתזף.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "החברים שלו"
+                    ]
+                },
+                {
+                    "id": "0.29",
+                    "words": [
+                        "לחוף הים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aimer passer du temps avec quelqu'un, aller quelque part et prendre le soleil",
+                "he": "לאהוב לבלות עם מישהו וללכת למקום כלשהו ולהשתזף"
+            },
+            "subject": {
+                "fr": "il",
+                "he": "הוא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.28:24": [
+        {
+            "text": "בכל ביקור בארץ דוד מתרגש ותמיד קשה לו לחזור לפריז הביתה.",
+            "concepts": [
+                {
+                    "id": "0.28",
+                    "words": [
+                        "בכל ביקור"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "s'émouvoir",
+                "he": "להתרגש"
+            },
+            "subject": {
+                "fr": "David",
+                "he": "דוד"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לו"
+            ]
+        }
+    ],
+    "0.28:25": [
+        {
+            "text": "יום אחד הוא מקווה גם לעלות לישראל ולהיות שם עם המשפחה והחברים שלו.",
+            "concepts": [
+                {
+                    "id": "0.19",
+                    "words": [
+                        "יום אחד"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "המשפחה והחברים שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "espérer immigrer quelque part et y être avec quelqu'un",
+                "he": "לקוות לעלות למקום כלשהו ולהיות במקום כלשהו עם מישהו"
+            },
+            "subject": {
+                "fr": "il",
+                "he": "הוא"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:0": [
+        {
+            "text": "חופשת הקיץ",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "חופשת הקיץ"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:1": [
+        {
+            "text": "בתי חולים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בתי חולים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:2": [
+        {
+            "text": "שיעורי בית",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "שיעורי בית"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:3": [
+        {
+            "text": "ארוחת הערב",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת הערב"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:4": [
+        {
+            "text": "סרטי קולנוע",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "סרטי קולנוע"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:5": [
+        {
+            "text": "חלונות הדירה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "חלונות הדירה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:6": [
+        {
+            "text": "משפחת כהן חמודה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "משפחת כהן חמודה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "la famille Cohen",
+                "he": "משפחת כהן"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:7": [
+        {
+            "text": "ארוחת צהריים קרה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת צהריים קרה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:8": [
+        {
+            "text": "רופאי משפחה חדשים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "רופאי משפחה חדשים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:9": [
+        {
+            "text": "מטוסי ישראל גדולים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "מטוסי ישראל גדולים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "les avions d’Israël",
+                "he": "מטוסי ישראל"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:10": [
+        {
+            "text": "ארוחת שבת טעימה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת שבת טעימה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:11": [
+        {
+            "text": "שיעורי בית מעניינים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "שיעורי בית מעניינים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:12": [
+        {
+            "text": "ראש השנה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ראש השנה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:13": [
+        {
+            "text": "ברכת המזון",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ברכת המזון"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:14": [
+        {
+            "text": "בית הכנסת",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בית הכנסת"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:15": [
+        {
+            "text": "יום העצמאות",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "יום העצמאות"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:16": [
+        {
+            "text": "ארץ ישראל",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארץ ישראל"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:17": [
+        {
+            "text": "נטילת ידיים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "נטילת ידיים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:18": [
+        {
+            "text": "תל אביב",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "תל אביב"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:19": [
+        {
+            "text": "ספר תורה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ספר תורה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:20": [
+        {
+            "text": "גן ילדים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "גן ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:21": [
+        {
+            "text": "בית קפה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בית קפה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:22": [
+        {
+            "text": "מרכז העיר",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "מרכז העיר"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:23": [
+        {
+            "text": "ארוחת בוקר",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת בוקר"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:24": [
+        {
+            "text": "ריבת חלב",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ריבת חלב"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:25": [
+        {
+            "text": "עוגת שוקולד",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "עוגת שוקולד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:26": [
+        {
+            "text": "תפוחי אדמה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "תפוחי אדמה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:27": [
+        {
+            "text": "ספרי ילדים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ספרי ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:28": [
+        {
+            "text": "בני ישראל",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בני ישראל"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:29": [
+        {
+            "text": "עוגות שוקולד",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "עוגות שוקולד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:30": [
+        {
+            "text": "מיטות ילדים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "מיטות ילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:31": [
+        {
+            "text": "ארצות הברית",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארצות הברית"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:32": [
+        {
+            "text": "ארוחת בוקר טעימה",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת בוקר טעימה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:33": [
+        {
+            "text": "בית קפה מיוחד",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בית קפה מיוחד"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.29:34": [
+        {
+            "text": "שיעורי בית קשים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "שיעורי בית קשים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:0": [
+        {
+            "text": "תומר פוגש את עדן במשרד שלה.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "במשרד שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "rencontrer quelqu'un quelque part",
+                "he": "לפגוש מישהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Tomer",
+                "he": "תומר"
+            },
+            "preposition": [
+                "את"
+            ],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:1": [
+        {
+            "text": "בבוקר אני מתרחצת ואוכלת ארוחת בוקר.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת בוקר"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se laver",
+                "he": "להתרחץ"
+            },
+            "subject": {
+                "fr": "je",
+                "he": "אני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:2": [
+        {
+            "text": "חנה ואני נפגשים כל יום.",
+            "concepts": [
+                {
+                    "id": "0.28",
+                    "words": [
+                        "כל יום"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se retrouver",
+                "he": "להיפגש"
+            },
+            "subject": {
+                "fr": "Hanna et moi",
+                "he": "חנה ואני"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:3": [
+        {
+            "text": "היא נכנסת לבית קפה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "לבית קפה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "entrer quelque part",
+                "he": "להיכנס למקום כלשהו"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:4": [
+        {
+            "text": "שרה ודנה מגיעות לעבודה מוקדם.",
+            "concepts": [],
+            "action": {
+                "fr": "arriver quelque part",
+                "he": "להגיע למקום כלשהו"
+            },
+            "subject": {
+                "fr": "Sarah et Dana",
+                "he": "שרה ודנה"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:5": [
+        {
+            "text": "פרוסות לחם",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "פרוסות לחם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:6": [
+        {
+            "text": "מיץ התפוזים שלו",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "מיץ התפוזים"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "מיץ התפוזים שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלו"
+            ]
+        }
+    ],
+    "0.30:7": [
+        {
+            "text": "ריבת השזיפים של אמא שלי",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ריבת השזיפים"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "ריבת השזיפים של אמא שלי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלי"
+            ]
+        }
+    ],
+    "0.30:8": [
+        {
+            "text": "שירי ילדים יפים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "שירי ילדים יפים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:9": [
+        {
+            "text": "נהגי האוטובוס",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "נהגי האוטובוס"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:10": [
+        {
+            "text": "עוגת השוקולד שלהם",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "עוגת השוקולד"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "עוגת השוקולד שלהם"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלהם"
+            ]
+        }
+    ],
+    "0.30:11": [
+        {
+            "text": "חדרי הילדים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "חדרי הילדים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:12": [
+        {
+            "text": "בית הכנסת של תל אביב",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בית הכנסת"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "בית הכנסת של תל אביב"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:13": [
+        {
+            "text": "חביתת הירק הטובה שלי",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "חביתת הירק הטובה"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "חביתת הירק הטובה שלי"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלי"
+            ]
+        }
+    ],
+    "0.30:14": [
+        {
+            "text": "תפוחי האדמה הקטנים",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "תפוחי האדמה הקטנים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:15": [
+        {
+            "text": "חנה מעירה את הבן הקטן שלה בבוקר.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הבן הקטן שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "réveiller quelqu'un",
+                "he": "להעיר מישהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [
+                "את"
+            ],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:16": [
+        {
+            "text": "חנה צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה.",
+            "concepts": [
+                {
+                    "id": "0.30",
+                    "words": [
+                        "כדי להגיע"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "המנהל שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir se dépêcher",
+                "he": "צריך להזדרז"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:17": [
+        {
+            "text": "חנה והמנהל שלה צריכים להיפגש במשרד שלו.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "והמנהל שלה",
+                        "במשרד שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir se retrouver quelque part",
+                "he": "צריך להיפגש במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Hanna et son directeur",
+                "he": "חנה והמנהל שלה"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": [
+                "שלו"
+            ]
+        }
+    ],
+    "0.30:18": [
+        {
+            "text": "חנה אוכלת ארוחת צהריים בבית קפה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת צהריים",
+                        "בבית קפה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "manger quelque chose quelque part",
+                "he": "לאכול משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:19": [
+        {
+            "text": "כשהיא חוזרת הביתה בערב, חנה נכנסת לחדר הילדים ושרה לבן שלה שיר ילדים.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "לחדר הילדים",
+                        "שיר ילדים"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "לבן שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "entrer quelque part",
+                "he": "להיכנס למקום כלשהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:20": [
+        {
+            "text": "את מי חנה מעירה בבוקר?",
+            "concepts": [],
+            "action": {
+                "fr": "réveiller quelqu'un",
+                "he": "להעיר מישהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [
+                "את"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:21": [
+        {
+            "text": "למה חנה צריכה להזדרז?",
+            "concepts": [],
+            "action": {
+                "fr": "devoir se dépêcher",
+                "he": "צריך להזדרז"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:22": [
+        {
+            "text": "איפה חנה והמנהל שלה צריכים להיפגש?",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "והמנהל שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir se retrouver quelque part",
+                "he": "צריך להיפגש במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Hanna et son directeur",
+                "he": "חנה והמנהל שלה"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:23": [
+        {
+            "text": "איפה חנה אוכלת ארוחת צהריים?",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת צהריים"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "manger quelque chose quelque part",
+                "he": "לאכול משהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:24": [
+        {
+            "text": "מה חנה עושה כשהיא חוזרת הביתה בערב?",
+            "concepts": [],
+            "action": {
+                "fr": "faire quelque chose",
+                "he": "לעשות משהו"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:25": [
+        {
+            "text": "בבוקר חנה קמה מוקדם.",
+            "concepts": [],
+            "action": {
+                "fr": "se lever",
+                "he": "לקום"
+            },
+            "subject": {
+                "fr": "Hanna",
+                "he": "חנה"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:26": [
+        {
+            "text": "היא מתרחצת ומעירה את הבן הקטן שלה.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "הבן הקטן שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se laver",
+                "he": "להתרחץ"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:27": [
+        {
+            "text": "קשה לו להתעורר, הוא עייף.",
+            "concepts": [],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "לו"
+            ]
+        }
+    ],
+    "0.30:28": [
+        {
+            "text": "אחר כך הם אוכלים ארוחת בוקר טובה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת בוקר טובה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "manger quelque chose",
+                "he": "לאכול משהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:29": [
+        {
+            "text": "בארוחת הבוקר יש עוגת שוקולד קטנה, מיץ תפוזים, פרוסת לחם עם ריבת שזיפים וחביתת ירק.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בארוחת הבוקר",
+                        "עוגת שוקולד קטנה",
+                        "מיץ תפוזים",
+                        "פרוסת לחם",
+                        "ריבת שזיפים",
+                        "וחביתת ירק"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "",
+                "he": ""
+            },
+            "subject": {
+                "fr": "",
+                "he": ""
+            },
+            "preposition": [],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:30": [
+        {
+            "text": "היא צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה.",
+            "concepts": [
+                {
+                    "id": "0.30",
+                    "words": [
+                        "כדי להגיע"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "המנהל שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir se dépêcher",
+                "he": "צריך להזדרז"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:31": [
+        {
+            "text": "הם צריכים להיפגש במשרד שלו.",
+            "concepts": [
+                {
+                    "id": "0.26",
+                    "words": [
+                        "במשרד שלו"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "devoir se retrouver quelque part",
+                "he": "צריך להיפגש במקום כלשהו"
+            },
+            "subject": {
+                "fr": "ils",
+                "he": "הם"
+            },
+            "preposition": [
+                "ב"
+            ],
+            "object_pronoun": [
+                "שלו"
+            ]
+        }
+    ],
+    "0.30:32": [
+        {
+            "text": "היא נוסעת לעבודה באוטובוס, משלמת לנהג האוטובוס ויושבת.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "לנהג האוטובוס"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "se rendre quelque part en bus",
+                "he": "לנסוע למקום כלשהו באוטובוס"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:33": [
+        {
+            "text": "באחת היא הולכת לאכול ארוחת צהריים עם חברים בבית קפה.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "ארוחת צהריים",
+                        "בבית קפה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "aller manger quelque chose avec quelqu'un quelque part",
+                "he": "ללכת לאכול משהו עם מישהו במקום כלשהו"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [
+                "עם"
+            ],
+            "object_pronoun": []
+        }
+    ],
+    "0.30:34": [
+        {
+            "text": "בארוחת הצהריים היא מספרת לחברים שלה על הפגישה עם המנהל.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "בארוחת הצהריים"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "לחברים שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "raconter quelque chose à quelqu'un",
+                "he": "לספר משהו למישהו"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [
+                "ל"
+            ],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
+    ],
+    "0.30:35": [
+        {
+            "text": "בערב היא חוזרת הביתה נכנסת לחדר הילדים ושרה לבן שלה שיר ילדים שהוא אוהב.",
+            "concepts": [
+                {
+                    "id": "0.29",
+                    "words": [
+                        "לחדר הילדים",
+                        "שיר ילדים"
+                    ]
+                },
+                {
+                    "id": "0.26",
+                    "words": [
+                        "לבן שלה"
+                    ]
+                }
+            ],
+            "action": {
+                "fr": "rentrer quelque part",
+                "he": "לחזור למקום כלשהו"
+            },
+            "subject": {
+                "fr": "elle",
+                "he": "היא"
+            },
+            "preposition": [],
+            "object_pronoun": [
+                "שלה"
+            ]
+        }
     ]
 }

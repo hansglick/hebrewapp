@@ -5,7 +5,8 @@ from fastapi import APIRouter, HTTPException, WebSocket
 from app.auth import get_user_id
 from app.config import GEMINI_API_KEY
 from app.data_loader import get_dataset
-from app.revision_agent.config import LAST_LESSON, LESSON_CHAPTER, VOICES
+from app.revision_agent.config import (LAST_LESSON, LESSON_CHAPTER, TEXT_TEACHER_MODEL, TEXT_TEACHER_MODELS, TTS_MODELS,
+                                      VOICES)
 from app.revision_agent.passages import lessons_with_text
 from app.revision_agent.completion import CompletionSession, availability, qualified_concepts
 from app.revision_agent.completion import draw_items as completion_items
@@ -16,6 +17,7 @@ from app.revision_agent.expression import ExpressionSession
 from app.revision_agent.journal import SessionJournal
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
+from app.revision_agent.text_teacher import TextTeacher
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.question import QuestionSession
 from app.revision_agent.question import draw_items as question_items
@@ -30,7 +32,7 @@ log = logging.getLogger("revision_agent")
 
 @router.get("/texts")
 def texts():
-    """Leçons du périmètre (0.01 → 0.20) qui ont un texte : les seules où « Lecture » et « Compréhension » sont proposées."""
+    """Leçons du périmètre (0.01 → 0.30) qui ont un texte : les seules où « Lecture » et « Compréhension » sont proposées."""
     return lessons_with_text()
 
 
@@ -59,7 +61,9 @@ def topics(task: str, lesson: str):
 
 @router.websocket("/ws")
 async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson: str, voice: str, task: str,
-                            current: bool = True, previous: bool = False, per_reading: int = 1):
+                            current: bool = True, previous: bool = False, per_reading: int = 1,
+                            mode: str = "voix", teacher_model: str = TEXT_TEACHER_MODEL,
+                            tts_model: str | None = None):
     await websocket.accept()
 
     async def refuse(text: str, code: int = 1008) -> None:
@@ -72,6 +76,10 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         return await refuse("Identité inconnue")
     if voice not in VOICES:
         return await refuse("Voix inconnue.")
+    if mode == "texte" and teacher_model not in TEXT_TEACHER_MODELS:
+        return await refuse("Modèle du prof inconnu.")
+    if tts_model is not None and tts_model not in TTS_MODELS:
+        return await refuse("Modèle de voix inconnu.")
     if task == "lecture":
         # Toujours le texte de la leçon choisie, quelles que soient les cases cochées (cf. demande explicite du user).
         if lesson not in lessons_with_text():
@@ -98,6 +106,10 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
         session = ExpressionSession(websocket, voice, lesson)
+        if mode == "texte":
+            # Page « mode texte » : le prof écrit, l'élève aussi, sans Gemini Live (cf. text_teacher.py) ; avec
+            # tts_model, le prof dit aussi chaque prise de parole (cf. tts.py).
+            session.live = TextTeacher.replacing(session.live, teacher_model, tts_model)
     elif task == "declinaison":
         # Phrases tirées dans les sujets de déclinaison du niveau, les leçons cochées d'abord (cf. declension.draw_items).
         items = declension_items(lesson, current, previous)

@@ -2,18 +2,19 @@
 accords, prépositions déclinées). Parmi les 427 énoncés de revision_phrase_analysis.json (questions comprises, le pool 1
 peut les contenir aussi), Sol garde ceux qui ont au moins un sujet, un verbe conjugué et un complément, ou au moins une
 préposition déclinée, et relève tout ce qui peut être décliné autrement (cf. demande explicite du user) :
-- subjects : chaque sujet explicite, avec sa personne, son genre, son nombre et les verbes qui s'accordent avec lui ;
+- subjects : chaque sujet explicite, avec sa personne, son genre, son nombre et les verbes qui s'accordent avec lui,
+  chacun avec son temps (au-delà de 0.20 : les leçons 0.01 → 0.20 n'ont que du présent, sans ce champ) ;
 - declined_prepositions : les prépositions déclinées (מילות יחס נטויות : לי, אותו, איתי, שלי…), avec leur préposition
   de base, leur personne, leur genre et leur nombre.
-Résultat : data/revision_svc_pool.json, {identifiant de phrase: [{"text", "subjects", "declined_prepositions"}]}.
+Résultat : data/revision_svc_pool.json, {identifiant de phrase: [{"text", "subjects", "declined_prepositions"}]} ;
+les leçons données remplacent les leurs (cf. scripts.revision_scope), les autres restent.
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_svc_pool [--out fichier] [leçon ...]
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_svc_pool 0.21-0.30
 """
 
 import asyncio
 import json
 import sys
-from pathlib import Path
 from typing import Literal
 
 from openai import AsyncOpenAI
@@ -21,6 +22,7 @@ from pydantic import BaseModel, Field
 
 from app.config import DATA_DIR, OPENAI_API_KEY
 from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import merge_phrases, parse_lessons
 
 OUTPUT = DATA_DIR / "revision_svc_pool.json"
 
@@ -47,7 +49,9 @@ Pour chaque énoncé numéroté :
    - verbs : tous les verbes conjugués qui s'accordent avec ce sujet, dans l'ordre de l'énoncé, y compris les verbes
      coordonnés qui le partagent (« הם יושבים, כותבים וקוראים » → les trois) :
      - he : recopié exactement tel qu'il est écrit (avec un modal צריך / יכול / רוצה, le modal) ;
-     - infinitive : son infinitif, sans nikkoud ; vide pour צריך et יכול, qui n'en ont pas.
+     - infinitive : son infinitif, sans nikkoud ; vide pour צריך et יכול, qui n'en ont pas ;
+     - tense : son temps, « present », « past », « future » ou « imperative » (צריך / יכול au présent : « present » ;
+       au passé avec היה, « past »).
 3. declined_prepositions : toutes les prépositions déclinées (מילות יחס נטויות) de l'énoncé, dans l'ordre :
    une préposition, ou la particule את, qui porte un suffixe pronominal marquant la personne, le genre et le nombre
    (לי, לך, לו, לה, לנו, לכם, להם, אותי, אותו, איתי, שלי, ממני, עליו, אצלה…), quel que soit son rôle dans la phrase :
@@ -67,6 +71,7 @@ Number = Literal["sg", "pl"]
 class Verb(BaseModel):
     he: str = Field(description="Le verbe conjugué accordé avec le sujet, tel qu'écrit")
     infinitive: str = Field(description="Son infinitif, vide pour צריך et יכול")
+    tense: Literal["present", "past", "future", "imperative"]
 
 
 class Subject(BaseModel):
@@ -139,22 +144,15 @@ async def lesson_pool(client: AsyncOpenAI, code: str, items: list[tuple[str, str
 
 
 async def main(args: list[str]) -> None:
-    output = OUTPUT
-    if "--out" in args:
-        i = args.index("--out")
-        output, args = Path(args[i + 1]), args[:i] + args[i + 2:]
+    codes = parse_lessons(args)
     with open(DATA_DIR / "revision_phrase_analysis.json", encoding="utf-8") as f:
         analysis = json.load(f)
     by_lesson: dict[str, list[tuple[str, str]]] = {}
     for phrase_id, items in analysis.items():
         by_lesson.setdefault(phrase_id.split(":")[0], []).extend((phrase_id, u["text"]) for u in items)
-    codes = args or sorted(by_lesson)
     client = AsyncOpenAI(api_key=OPENAI_API_KEY)
     results = await asyncio.gather(*(lesson_pool(client, code, by_lesson[code]) for code in codes))
-    pool = {phrase_id: items for result in results for phrase_id, items in result.items()}
-    pool = dict(sorted(pool.items(), key=lambda kv: (kv[0].split(":")[0], int(kv[0].split(":")[1]))))
-    output.write_text(json.dumps(pool, ensure_ascii=False, indent=4), encoding="utf-8")
-    print(f"→ {output}")
+    merge_phrases(OUTPUT, {phrase_id: items for result in results for phrase_id, items in result.items()}, codes, 4)
 
 
 if __name__ == "__main__":

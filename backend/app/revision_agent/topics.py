@@ -10,7 +10,7 @@ import json
 from functools import cache
 
 from app.config import DATA_DIR
-from app.revision_agent.passages import lesson_number
+from app.revision_agent.passages import is_previous, lesson_number
 
 # Tâche du menu → types de sujets du catalogue (la tâche « Mot » n'a pas de sujets).
 TASK_TYPES = {
@@ -51,12 +51,16 @@ def catalogue() -> list[dict]:
 
 
 def topics_for(task: str, lesson: str) -> list[dict]:
-    """Sujets qualifiés de la tâche au niveau `lesson` : introduits au plus tard à ce niveau, avec leurs seuls
-    exercices de niveau inférieur ou égal (au moins un)."""
+    """Sujets qualifiés de la tâche au niveau `lesson` : introduits au plus tard à ce niveau (un concept, seulement
+    s'il est de ce niveau ou des leçons antérieures, cf. passages.is_previous), avec leurs seuls exercices de niveau
+    inférieur ou égal (au moins un)."""
     level = lesson_number(lesson)
     result = []
     for topic in catalogue():
-        if topic["type"] not in TASK_TYPES.get(task, ()) or lesson_number(topic["introduced_in"]) > level:
+        introduced = lesson_number(topic["introduced_in"])
+        if topic["type"] not in TASK_TYPES.get(task, ()) or introduced > level:
+            continue
+        if "concept:" in topic["id"] and not (introduced == level or is_previous(introduced, level)):
             continue
         exercises = [e for e in topic["exercises"] if lesson_number(e["lesson"]) <= level]
         if exercises:

@@ -1,4 +1,5 @@
-"""Rassemble en un seul fichier toutes les données des phrases du cours (leçons 0.01 → 0.20) dont se sert l'agent
+"""Rassemble en un seul fichier toutes les données des phrases du cours (leçons 0.01 → COURSE_LAST, cf.
+scripts.revision_scope) dont se sert l'agent
 LiveCoach de /dev/revision-agent (cf. demande explicite du user). Le texte des leçons, pour la compréhension, reste
 dans item_text.json.
 
@@ -22,7 +23,7 @@ Résultat : data/revision_course.json,
         "he", "fr", "is_question", "action": {"fr", "he"},
         "concepts": [{"id", "definition", "words", "truncated_one", "truncated_two", "concept_tip", "translation_tip",
                       "constraint"}],   (constraint : cf. build_revision_completion_constraints.py)
-        "subjects": [{"he", "fr", "person", "gender", "number", "verbs": [{"he", "infinitive"}]}],
+        "subjects": [{"he", "fr", "person", "gender", "number", "verbs": [{"he", "infinitive", "tense"}]}],
         "declined_prepositions": [{"he", "base", "person", "gender", "number"}],
         "vocabulary": [{"key", "kind": "mot" | "verbe", "surface"}],
         "questions": [{"he", "fr", "hint", "interrogative", "category": "simple" | "preposition" | "accord"}]}]}}}
@@ -39,7 +40,8 @@ from pydantic import BaseModel
 
 from app.config import DATA_DIR, OPENAI_API_KEY
 from app.data_loader import get_dataset
-from app.revision_agent.config import EVALUATOR, LAST_LESSON, LESSON_CHAPTER
+from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import in_course, phrase_key
 
 OUTPUT = DATA_DIR / "revision_course.json"
 
@@ -129,8 +131,7 @@ async def question_translations(client: AsyncOpenAI, questions: list[tuple[str, 
 
 
 def in_scope(phrase_id: str) -> bool:
-    chapter, _, number = phrase_id.split(":")[0].partition(".")
-    return chapter == LESSON_CHAPTER and int(number) <= LAST_LESSON
+    return in_course(phrase_id.split(":")[0])
 
 
 async def main() -> None:
@@ -217,7 +218,7 @@ async def main() -> None:
                 for q in u["questions"]:
                     q["fr"] = q["fr"] or question_fr.get(q["he"], "")
 
-    ordered = dict(sorted(phrases.items(), key=lambda kv: (kv[0].split(":")[0], int(kv[0].split(":")[1]))))
+    ordered = dict(sorted(phrases.items(), key=lambda kv: phrase_key(kv[0])))
     OUTPUT.write_text(json.dumps({"phrases": ordered}, ensure_ascii=False, indent=1), encoding="utf-8")
 
     utterances = [u for p in ordered.values() for u in p["utterances"]]

@@ -1,6 +1,35 @@
 """Modèles et réglages de l'agent de révision (cf. demande explicite du user)."""
 
 LIVE_MODEL = "gemini-3.8-live"  # le prof
+# Tarif de LIVE_MODEL (ai.google.dev/gemini-api/docs/pricing, niveau payant), en dollars par million de tokens, par
+# modalité ; la réflexion du modèle est facturée comme la sortie texte. Sert à la facture de fin de séance.
+LIVE_PRICES = {"input": {"TEXT": 0.75, "AUDIO": 3.00, "IMAGE": 1.00, "VIDEO": 1.00},
+               "output": {"TEXT": 4.50, "AUDIO": 12.00}}
+# Tarif des modèles Flash appelés pendant la séance (traduction, jugements), en dollars par million de tokens :
+# (entrée, sortie réflexion comprise). gemini-3.5-flash-lite : page des tarifs ; gemini-3.5-flash n'y figure plus,
+# tarif relevé sur les comparateurs de prix (à vérifier).
+# gemini-3.5-transcribe (page des tarifs) : entrée audio, sortie texte.
+# Modèles TTS (page des tarifs) : entrée texte, sortie audio ; ceux en 3.8 au tarif valable jusqu'à fin 2026, doublé
+# ensuite.
+FLASH_PRICES = {"gemini-3.5-flash-lite": (0.30, 2.50), "gemini-3.5-flash": (1.50, 9.00),
+                "gemini-3.5-transcribe": (2.00, 12.00), "gemini-3.8-flash-tts": (0.50, 9.00),
+                "gemini-3.8-flash-lite-tts": (0.50, 6.00), "gemini-3.1-flash-tts-preview": (1.00, 20.00)}
+# Page « mode texte » (cf. demande explicite du user) : le prof est ce modèle texte, sans voix, appelé à chaque prise
+# de parole (cf. text_teacher.py), choisi sur la page parmi ceux-ci (cf. demande explicite du user). Tarif en dollars
+# par million de tokens, entrée lue en cache à part : page des tarifs, sauf gemini-3.5-flash, absent de la page
+# (comparateurs de prix, cache supposé à 10 %, à vérifier) ; gemini-3.8-flash au tarif de lancement, valable jusqu'à
+# fin 2026, doublé ensuite. Par défaut gemini-3.5-flash-lite : gemini-3.8-flash met 4 à 13 s par prise de parole.
+TEXT_TEACHER_MODELS = {
+    "gemini-3.8-flash": {"input": 0.75, "cached": 0.075, "output": 3.75},
+    "gemini-3.5-flash": {"input": 1.50, "cached": 0.15, "output": 9.00},
+    "gemini-3.5-flash-lite": {"input": 0.30, "cached": 0.03, "output": 2.50},
+}
+TEXT_TEACHER_MODEL = "gemini-3.5-flash-lite"
+# Mode texte : la réponse que l'élève enregistre (au lieu de l'écrire) est transcrite par ce modèle (cf. transcribe.py).
+TRANSCRIBE_MODEL = "gemini-3.5-transcribe"
+# Mode texte : la voix du prof, choisie sur la page parmi ces modèles TTS (cf. tts.py, demande explicite du user).
+# Premier morceau d'audio en 2 à 3 s pour chacun (mesuré).
+TTS_MODELS = ["gemini-3.8-flash-lite-tts", "gemini-3.8-flash-tts", "gemini-3.1-flash-tts-preview"]
 TRANSLATION_MODEL = "gemini-3.5-flash-lite"  # traduction en français de ce que dit le prof (qui ne parle qu'hébreu)
 # Ce que le prof dit en français (évaluation orale) : mots hébreux transcrits en lettres latines réécrits en hébreu, et
 # traduction en hébreu ; le modèle « lite » s'y trompe (mots arabes, coquilles).
@@ -23,9 +52,12 @@ READING_MODEL = "gemini-3.5-flash"  # tâche « Lecture » : la transcription de
 # (cf. demande explicite du user), puis retirée à sa demande : False, jamais envoyée, pas de case.
 SHOW_DECLENSION_EXPECTED = False
 
-# Périmètre : les 20 premières leçons.
+# Périmètre : les 30 premières leçons.
 LESSON_CHAPTER = "0"
-LAST_LESSON = 20
+LAST_LESSON = 30
+# « Leçons antérieures » au niveau N : seulement les leçons N-20 → N-1, et leurs concepts (cf. demande explicite du
+# user) ; jusqu'au niveau 20, toutes les leçons antérieures.
+REVISION_SPAN = 20
 
 SAMPLE_RATE = 24000  # audio échangé avec le navigateur : PCM16 mono 24 kHz, dans les deux sens
 READING_SILENCE_SECONDS = 3  # silence de l'élève qui marque la fin de sa lecture (cf. demande explicite du user)

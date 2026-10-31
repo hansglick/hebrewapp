@@ -47,7 +47,7 @@ from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, fren
 from app.revision_agent.expression import (ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT,
                                            error_list)
 from app.revision_agent.gemini_live import GeminiLive
-from app.revision_agent.passages import lesson_number
+from app.revision_agent.passages import is_previous, lesson_number
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.translate import translate
 from app.revision_agent.utterances import lesson_utterances, sentence_key
@@ -146,13 +146,14 @@ class Item:
 
 
 def items_for(lesson: str, u: dict, level: int) -> list[Item]:
-    """Un exercice par concept de l'énoncé déjà vu au niveau level, s'il a une contrainte et un début à afficher
-    (concept en tout début de phrase : écarté, cf. demande explicite du user)."""
+    """Un exercice par concept de l'énoncé vu au niveau level ou dans les leçons antérieures (cf. passages.is_previous),
+    s'il a une contrainte et un début à afficher (concept en tout début de phrase : écarté, cf. demande explicite du
+    user)."""
     items = []
     for c in u["concepts"]:
         concept = lesson_number(c["id"])
         prefix = (c.get("truncated_one") or "").strip()
-        if concept is not None and concept <= level and c.get("constraint") and HEBREW_LETTER.search(prefix):
+        if concept is not None and (concept == level or is_previous(concept, level)) and c.get("constraint") and HEBREW_LETTER.search(prefix):
             items.append(Item(lesson, c["id"], u["text"], prefix, (c.get("truncated_two") or "").strip(),
                               c["constraint"], (u.get("action") or {}).get("fr", ""), c["definition"]))
     return items
@@ -178,6 +179,11 @@ def rotate(items: list[Item], seen: set[tuple[str, ...]]) -> list[Item]:
     return drawn
 
 
+def own(item: Item, lesson: str) -> bool:
+    """Le concept de l'exercice est celui de la leçon (« 0.33 », ou l'une de ses parties « 0.33a », « 0.33b »)."""
+    return lesson_number(item.concept) == lesson_number(lesson)
+
+
 def candidates(lesson: str) -> list[Item]:
     """Tous les exercices possibles au niveau lesson : phrases des leçons déjà vues, concepts déjà vus."""
     level = lesson_number(lesson)
@@ -192,8 +198,8 @@ def draw_items(lesson: str, current: bool, previous: bool) -> list[Item]:
     leçon en cours (cf. question.draw_items)."""
     seen: set[tuple[str, ...]] = set()
     items = candidates(lesson)
-    mine = rotate([i for i in items if i.concept == lesson], seen) if current else []
-    older = rotate([i for i in items if i.concept != lesson], seen) if previous else []
+    mine = rotate([i for i in items if own(i, lesson)], seen) if current else []
+    older = rotate([i for i in items if not own(i, lesson)], seen) if previous else []
     if not (mine and older):
         return mine or older
     count = max(min(CURRENT_LESSON_SENTENCES, len(mine)), SENTENCES_PER_ROUND - len(older))
@@ -205,7 +211,7 @@ def draw_items(lesson: str, current: bool, previous: bool) -> list[Item]:
 def qualified_concepts(lesson: str, current: bool, previous: bool) -> list[str]:
     """Les concepts retenus par les cases cochées (ceux qui ont au moins un exercice), dans l'ordre des leçons."""
     concepts = {i.concept for i in candidates(lesson)
-                if (current and i.concept == lesson) or (previous and i.concept != lesson)}
+                if (current and own(i, lesson)) or (previous and not own(i, lesson))}
     return sorted(concepts, key=lesson_number)
 
 
@@ -233,7 +239,7 @@ def concept_topic(concept: str) -> dict:
 def availability(lesson: str) -> dict[str, int]:
     """Nombre d'exercices de chaque case au niveau lesson (cf. routers.revision_agent, /completion)."""
     items = candidates(lesson)
-    return {"current": sum(i.concept == lesson for i in items), "previous": sum(i.concept != lesson for i in items)}
+    return {"current": sum(own(i, lesson) for i in items), "previous": sum(not own(i, lesson) for i in items)}
 
 
 def complete(answer: str, prefix: str) -> str:

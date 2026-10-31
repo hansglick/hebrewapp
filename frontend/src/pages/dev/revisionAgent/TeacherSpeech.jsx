@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { graphemes, withoutNikkud } from "./hebrew";
 import LanguageSwitch from "./LanguageSwitch";
 
@@ -33,8 +33,17 @@ export const SPEECH_STEP_MS = 35;
 // petit bouton discret en haut à droite de cet espace (cf. demande explicite du
 // user). mode : le mode de langue qu'on peut changer (évaluation orale) ; sans
 // lui, le logo montre seulement la langue que le prof a parlée.
+// Sur mobile (cf. demande explicite du user) : la réplique n'est que dans une langue, celle parlée, et le bouton
+// « אA » la remplace par sa traduction, puis la remet ; elle s'écrit plus lentement, au pas de la voix, et défile
+// toute seule comme un prompteur : la dernière ligne écrite reste en bas de la fenêtre, les précédentes remontent
+// et sortent par le haut ; le mode de langue et le bouton « אA » passent sur la ligne de l'intitulé (cf.
+// .ra-main-fold-screen). Le doigt ne la fait pas défiler : les lignes sorties par le haut ne reviennent pas.
+const MOBILE = "(max-width: 899px)";
+const MOBILE_STEP_MS = 70;
+
 export default function TeacherSpeech({ line, mode = null }) {
-  const [translated, setTranslated] = useState(true);
+  const [mobile] = useState(() => window.matchMedia(MOBILE).matches);
+  const [translated, setTranslated] = useState(!mobile);
   const hebrew = useMemo(
     () => graphemes(withoutNikkud(line.hebrew)),
     [line.hebrew],
@@ -55,10 +64,17 @@ export default function TeacherSpeech({ line, mode = null }) {
             fr: fr + Math.max(0, french.length - fr) / steps,
           };
         }),
-      SPEECH_STEP_MS,
+      mobile ? MOBILE_STEP_MS : SPEECH_STEP_MS,
     );
     return () => clearTimeout(timer);
-  }, [shown, done, hebrew.length, french.length]);
+  }, [shown, done, hebrew.length, french.length, mobile]);
+
+  // Prompteur (mobile) : la réplique suit toujours l'écriture.
+  const boxRef = useRef(null);
+  useEffect(() => {
+    const box = boxRef.current;
+    if (mobile && box) box.scrollTop = box.scrollHeight;
+  }, [mobile, shown, translated]);
 
   const part = (chars, n) => chars.slice(0, Math.ceil(n)).join("");
   const caret = !done && <span className="ra-caret" aria-hidden="true" />;
@@ -94,14 +110,21 @@ export default function TeacherSpeech({ line, mode = null }) {
   const logo = mode ?? <LanguageSwitch language={spokenFrench ? "fr" : "he"} />;
 
   const canTranslate = translation.length > 0 && original.length > 0;
-  const originalText = spokenFrench ? frenchText(false) : hebrewText(false);
+  // Sur mobile, la traduction prend la place de l'original, écrite comme lui.
+  const swapped = mobile && translated && canTranslate;
+  const originalText = spokenFrench === swapped ? hebrewText(false) : frenchText(false);
   const translationText =
+    !mobile &&
     translated &&
     translation.length > 0 &&
     (spokenFrench ? hebrewText(true) : frenchText(true));
 
   return (
-    <div className="ra-speech ra-speech-plain" aria-live="polite">
+    <div
+      ref={boxRef}
+      className="ra-speech ra-speech-plain"
+      aria-live="polite"
+    >
       {!canTranslate && <div className="ra-speech-mode">{logo}</div>}
       <div className="ra-speech-texts">
         {originalText}

@@ -55,3 +55,34 @@ export class AudioLink {
     await this.ctx.close();
   }
 }
+
+// Mode texte : la réponse enregistrée de l'élève, en WAV (PCM16 mono 24 kHz),
+// envoyée au serveur pour transcription et rejouable telle quelle.
+export class Recorder {
+  async start() {
+    this.chunks = [];
+    this.link = new AudioLink();
+    await this.link.startMicrophone((pcm) => this.chunks.push(pcm));
+  }
+
+  async stop() {
+    await this.link.close();
+    const size = this.chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
+    const header = new DataView(new ArrayBuffer(44));
+    const text = (offset, value) => [...value].forEach((c, i) => header.setUint8(offset + i, c.charCodeAt(0)));
+    text(0, "RIFF");
+    header.setUint32(4, 36 + size, true);
+    text(8, "WAVE");
+    text(12, "fmt ");
+    header.setUint32(16, 16, true);
+    header.setUint16(20, 1, true); // PCM
+    header.setUint16(22, 1, true); // mono
+    header.setUint32(24, SAMPLE_RATE, true);
+    header.setUint32(28, SAMPLE_RATE * 2, true);
+    header.setUint16(32, 2, true);
+    header.setUint16(34, 16, true);
+    text(36, "data");
+    header.setUint32(40, size, true);
+    return new Blob([header, ...this.chunks], { type: "audio/wav" });
+  }
+}

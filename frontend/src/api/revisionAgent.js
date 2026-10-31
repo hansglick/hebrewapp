@@ -18,7 +18,21 @@ export const getRevisionTopics = (task, lesson) =>
 // Même technique que api/conversationChallenger.js (un WebSocket natif ne
 // permet pas d'en-têtes personnalisés) — l'identité passe donc en query
 // string, cf. app.routers.revision_agent qui la lit côté backend.
-export function revisionAgentWebSocketUrl({ lesson, voice, task, current, previous, oral = false, perReading = 1 }) {
+// mode : "voix" (Gemini Live) ou "texte" (le prof écrit, l'élève aussi, cf. app.revision_agent.text_teacher) ;
+// teacherModel : en mode texte, le modèle du prof (cf. config.TEXT_TEACHER_MODELS) ; ttsModel : celui de sa voix
+// (cf. config.TTS_MODELS).
+export function revisionAgentWebSocketUrl({
+  lesson,
+  voice,
+  task,
+  current,
+  previous,
+  oral = false,
+  perReading = 1,
+  mode = "voix",
+  teacherModel,
+  ttsModel,
+}) {
   const wsBase = API_URL.replace(/^http/, "ws");
   const identity = getIdentity();
   const params = new URLSearchParams({
@@ -31,6 +45,9 @@ export function revisionAgentWebSocketUrl({ lesson, voice, task, current, previo
     previous: String(previous),
     oral: String(oral),
     per_reading: String(perReading),
+    mode,
+    ...(teacherModel ? { teacher_model: teacherModel } : {}),
+    ...(ttsModel ? { tts_model: ttsModel } : {}),
   });
   return `${wsBase}/api/revision-agent/ws?${params}`;
 }

@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import AnswerCard from "./AnswerCard";
+import Bill from "./Bill";
+import { BillContext } from "./billContext";
 import highlighted from "./highlighted";
 import TeacherSpeech from "./TeacherSpeech";
 
@@ -6,8 +9,9 @@ import TeacherSpeech from "./TeacherSpeech";
 // du prof, le mot (ou le verbe) à employer avec sa traduction et l'indice
 // (action ou concept) ; au moment de la correction, sa phrase telle que le
 // prof l'a comprise (mots fautifs en rouge, réussi / échec) puis, toujours,
-// la phrase d'origine, mot surligné.
+// la phrase d'origine, mot surligné ; à la fin, la facture de la séance.
 export default function WordBoard({ teacher, exercise, answer, solution, notice }) {
+  const bill = useContext(BillContext);
   if (!teacher && !exercise && !answer && !notice) return null;
 
   return (
@@ -42,6 +46,14 @@ export default function WordBoard({ teacher, exercise, answer, solution, notice 
           <p className="ra-answer" dir="rtl" lang="he">
             {highlighted(solution.sentence, solution.spans)}
           </p>
+        </div>
+      )}
+      {bill && (
+        <div className="ra-panel">
+          <div className="ra-panel-head">
+            <span className="ra-label">Facture</span>
+          </div>
+          <Bill bill={bill} />
         </div>
       )}
     </div>

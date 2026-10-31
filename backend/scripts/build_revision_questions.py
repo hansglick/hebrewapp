@@ -1,11 +1,12 @@
 """Prépare la tâche « Question » de /dev/revision-agent : pour chaque affirmation des leçons 0.01 → 0.20
 (revision_phrase_analysis.json), Sol imagine des questions plausibles qui ont cette phrase pour réponse, chacune avec
-son indice (le groupe interrogatif en français). Les questions n'emploient que la matière (mots, verbes, concepts,
-mots interrogatifs) des leçons ≤ celle de la phrase. Résultat : data/revision_questions.json,
-{identifiant de phrase: [{"text": énoncé, "questions": [{"hint", "question", "interrogative"}]}]}.
+son indice (le groupe interrogatif en français). Leçons 0.01 → 0.20 : les questions n'employaient que la matière
+(mots, verbes, concepts) des leçons ≤ celle de la phrase ; au-delà (cf. demande explicite du user), la question
+reprend simplement le vocabulaire de la phrase, avec n'importe quel mot interrogatif courant.
+Résultat : data/revision_questions.json, {identifiant de phrase: [{"text": énoncé, "questions": [{"hint", "question",
+"interrogative"}]}]} ; les leçons données remplacent les leurs, les autres restent.
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_questions [leçon ...]
-Sans argument, toutes les leçons ; avec des codes (« 0.01 »), seulement celles-là, fusionnées dans le fichier existant.
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_questions 0.21-0.30
 """
 
 import asyncio
@@ -16,14 +17,14 @@ from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
 from app.config import DATA_DIR, OPENAI_API_KEY
-from app.revision_agent.completion import concept_title
-from app.revision_agent.config import EVALUATOR, LAST_LESSON
-from app.revision_agent.material import vocabulary
+from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import merge_phrases, parse_lessons
 
 OUTPUT = DATA_DIR / "revision_questions.json"
 POOLS = ("revision_concept_pool.json", "revision_svc_pool.json")
 
-# Mots interrogatifs et leçon où ils apparaissent (item_word, et le concept 0.15 pour les autres).
+# Mots interrogatifs courants : tous vus à la leçon 0.15 (item_word, et le concept 0.15 pour les autres), donc tous
+# permis au-delà de 0.20 (cf. demande explicite du user).
 INTERROGATIVES = [
     (1, "מה", "quoi ? / que ?"),
     (1, "מי", "qui ?"),
@@ -34,7 +35,7 @@ INTERROGATIVES = [
     (15, "מתי", "quand ?"),
     (15, "כמה", "combien ?"),
     (15, "איך", "comment ?"),
-    (15, "איזה / איזו", "quel ? / quelle ?"),
+    (15, "איזה / איזו / אילו", "quel ? / quelle ? / quels ?"),
 ]
 
 PRONOUNS = {"אני", "אתה", "את", "הוא", "היא", "אנחנו", "אתם", "אתן", "הם", "הן"}
@@ -57,23 +58,19 @@ aucune question naturelle ne mène à la phrase, n'en propose aucune (liste vide
   « אני באה לבקר בישראל באוגוסט » → « מתי את באה לבקר בישראל? ».
 - La question commence par un mot interrogatif de la liste autorisée, éventuellement précédé d'une préposition
   (ex. עם מי, של מי, למי, במה) ; jamais de question fermée (oui / non).
-- La question n'emploie que des mots, des verbes conjugués et des tournures du vocabulaire et des concepts fournis,
-  plus les pronoms personnels et les prénoms de la phrase. Elle est grammaticalement correcte, sans nikkoud,
-  et se termine par « ? ». Adapte la personne si besoin (la phrase dit « je », la question dit « tu »).
+- La question reprend le vocabulaire de la phrase (mots, verbes, prénoms) ; elle n'ajoute que le mot interrogatif
+  et, si besoin, les pronoms, prépositions et mots grammaticaux qui la rendent correcte. Elle est grammaticalement
+  correcte, sans nikkoud, et se termine par « ? ». Adapte la personne si besoin (la phrase dit « je », la question
+  dit « tu »).
 - L'indice est le groupe interrogatif traduit en français, court, en minuscules, terminé par « ? »
   (ex. « où ? », « avec qui ? », « quoi ? », « d'où ? », « à qui ? »). מה seul se traduit toujours « quoi ? »
   (jamais « qu'est-ce que ? » ni « que ? ») ; avec une préposition : « avec quoi ? » (במה), « sur quoi ? » (על מה)…
 - Aucune question (liste vide) pour une phrase qui est déjà une question, une salutation, une exclamation,
-  un titre, une phrase trop courte, ou dont toute question semblerait artificielle.
+  un titre, un simple groupe nominal sans verbe ni prédicat (« משפחת כהן », « בית הספר של דוד »), une phrase trop
+  courte, ou dont toute question semblerait artificielle.
 
 Mots interrogatifs autorisés :
-{interrogatives}
-
-Concepts étudiés :
-{concepts}
-
-Vocabulaire (mots puis verbes à l'infinitif) :
-{vocabulary}"""
+{interrogatives}"""
 
 
 class Question(BaseModel):
@@ -101,21 +98,21 @@ def natural(text: str, question: Question) -> bool:
 
 
 def utterances() -> list[tuple[str, dict]]:
-    """(leçon, énoncé) pour chaque énoncé des deux pools, l'énoncé complété de l'identifiant de sa phrase."""
-    found = []
+    """(leçon, énoncé) pour chaque énoncé des deux pools, une seule fois, l'énoncé complété de l'identifiant de sa
+    phrase."""
+    found, seen = [], set()
     for name in POOLS:
         pool = json.loads((DATA_DIR / name).read_text(encoding="utf-8"))
-        found += [(phrase_id.split(":")[0], {**u, "id": phrase_id}) for phrase_id, items in pool.items() for u in items]
+        for phrase_id, items in pool.items():
+            for u in items:
+                if (phrase_id, u["text"]) not in seen:
+                    seen.add((phrase_id, u["text"]))
+                    found.append((phrase_id.split(":")[0], {**u, "id": phrase_id}))
     return found
 
 
 async def lesson_questions(client: AsyncOpenAI, code: str, items: list[dict]) -> dict[str, list[dict]]:
-    level = int(code.split(".")[1])
-    prompt = PROMPT.format(
-        interrogatives="\n".join(f"- {he} : {fr}" for n, he, fr in INTERROGATIVES if n <= level),
-        concepts="\n".join(f"- {title}" for n in range(1, level + 1) if (title := concept_title(f"0.{n:02d}"))),
-        vocabulary="\n".join(f"- {w['hebrew']} : {w['french']}" for w in vocabulary(code, True, True)),
-    )
+    prompt = PROMPT.format(interrogatives="\n".join(f"- {he} : {fr}" for _, he, fr in INTERROGATIVES))
     response = await client.responses.parse(
         model=EVALUATOR["model"],
         reasoning={"effort": EVALUATOR["effort"]},
@@ -136,20 +133,15 @@ async def lesson_questions(client: AsyncOpenAI, code: str, items: list[dict]) ->
     return result
 
 
-async def main(codes: list[str]) -> None:
+async def main(args: list[str]) -> None:
+    codes = parse_lessons(args)
     by_lesson: dict[str, list[dict]] = {}
     for code, u in utterances():
         by_lesson.setdefault(code, []).append(u)
-    codes = codes or [f"0.{n:02d}" for n in range(1, LAST_LESSON + 1) if f"0.{n:02d}" in by_lesson]
     client = AsyncOpenAI(api_key=OPENAI_API_KEY)
-    results = await asyncio.gather(*(lesson_questions(client, code, by_lesson[code]) for code in codes))
-
-    data = json.loads(OUTPUT.read_text(encoding="utf-8")) if OUTPUT.exists() and sys.argv[1:] else {}
-    for result in results:
-        data.update(result)
-    data = dict(sorted(data.items(), key=lambda kv: (kv[0].split(":")[0], int(kv[0].split(":")[1]))))
-    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"→ {OUTPUT}")
+    results = await asyncio.gather(*(lesson_questions(client, code, by_lesson[code]) for code in codes
+                                     if code in by_lesson))
+    merge_phrases(OUTPUT, {phrase_id: items for result in results for phrase_id, items in result.items()}, codes, 1)
 
 
 if __name__ == "__main__":

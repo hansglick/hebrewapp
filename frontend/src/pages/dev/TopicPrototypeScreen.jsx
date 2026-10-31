@@ -7,9 +7,9 @@ import "./TopicPrototypeScreen.css";
 
 // Prototype sans agent (cf. demande explicite du user) : l'app tire au hasard les sujets qualifiés de la tâche au
 // niveau choisi, chacun une seule fois, et affiche leurs exercices un à un ; l'étudiant passe à l'exercice suivant
-// d'un clic. Même périmètre que LiveCoach (leçons 0.01 → 0.20), toutes les tâches sauf « Mot ».
+// d'un clic. Même périmètre que LiveCoach (leçons 0.01 → 0.30), toutes les tâches sauf « Mot ».
 const LESSON_CHAPTER = "0";
-const LAST_LESSON = 20;
+const LAST_LESSON = 30;
 const TASKS = [
   { id: "lecture", label: "Lecture" },
   { id: "comprehension", label: "Compréhension de texte" },

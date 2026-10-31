@@ -5403,5 +5403,1511 @@
    "kind": "mot",
    "surface": "ספרים"
   }
+ ],
+ "0.21:0": [
+  {
+   "key": "אחרי",
+   "kind": "mot",
+   "surface": "אחרי"
+  },
+  {
+   "key": "ארוחה",
+   "kind": "mot",
+   "surface": "ארוחת"
+  },
+  {
+   "key": "לאכול",
+   "kind": "verbe",
+   "surface": "ואוכל"
+  }
+ ],
+ "0.21:3": [
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשואה"
+  },
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשוי"
+  }
+ ],
+ "0.21:4": [
+  {
+   "key": "רכב",
+   "kind": "mot",
+   "surface": "ברכב"
+  },
+  {
+   "key": "לנסוע",
+   "kind": "verbe",
+   "surface": "נוסע"
+  }
+ ],
+ "0.21:5": [
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בנות"
+  },
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  },
+  {
+   "key": "כולם",
+   "kind": "mot",
+   "surface": "כולם"
+  },
+  {
+   "key": "כמעט",
+   "kind": "mot",
+   "surface": "כמעט"
+  },
+  {
+   "key": "נשוי",
+   "kind": "mot",
+   "surface": "נשואים"
+  }
+ ],
+ "0.21:6": [
+  {
+   "key": "מעניין",
+   "kind": "mot",
+   "surface": "מעניין"
+  }
+ ],
+ "0.21:7": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  },
+  {
+   "key": "רווק",
+   "kind": "mot",
+   "surface": "רווק"
+  }
+ ],
+ "0.21:8": [
+  {
+   "key": "רחוק",
+   "kind": "mot",
+   "surface": "רחוק"
+  }
+ ],
+ "0.21:9": [
+  {
+   "key": "הכי",
+   "kind": "mot",
+   "surface": "הכי"
+  }
+ ],
+ "0.22:0": [
+  {
+   "key": "לקרוא",
+   "kind": "verbe",
+   "surface": "קורא"
+  }
+ ],
+ "0.22:2": [
+  {
+   "key": "חולה",
+   "kind": "mot",
+   "surface": "חולה"
+  }
+ ],
+ "0.22:3": [
+  {
+   "key": "להזמין",
+   "kind": "verbe",
+   "surface": "להזמין"
+  },
+  {
+   "key": "לבשל",
+   "kind": "verbe",
+   "surface": "לבשל"
+  }
+ ],
+ "0.22:4": [
+  {
+   "key": "דג",
+   "kind": "mot",
+   "surface": "דגים"
+  },
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "ירקות"
+  },
+  {
+   "key": "בשר",
+   "kind": "mot",
+   "surface": "בשר"
+  },
+  {
+   "key": "משקה",
+   "kind": "mot",
+   "surface": "ומשקאות"
+  },
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "למהר"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  }
+ ],
+ "0.22:5": [
+  {
+   "key": "לבשל",
+   "kind": "verbe",
+   "surface": "לבשל"
+  },
+  {
+   "key": "להזמין",
+   "kind": "verbe",
+   "surface": "מזמין"
+  },
+  {
+   "key": "למהר",
+   "kind": "verbe",
+   "surface": "ממהר"
+  }
+ ],
+ "0.22:6": [
+  {
+   "key": "רק",
+   "kind": "mot",
+   "surface": "רק"
+  }
+ ],
+ "0.22:7": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  },
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "ובת"
+  }
+ ],
+ "0.22:9": [
+  {
+   "key": "ארוחה",
+   "kind": "mot",
+   "surface": "ארוחה"
+  },
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חמה"
+  },
+  {
+   "key": "לבשל",
+   "kind": "verbe",
+   "surface": "ולבשל"
+  }
+ ],
+ "0.23:0": [
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בת"
+  },
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בן"
+  }
+ ],
+ "0.23:2": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בן"
+  },
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בת"
+  }
+ ],
+ "0.23:4": [
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "קונה"
+  }
+ ],
+ "0.24:0": [
+  {
+   "key": "לעלות",
+   "kind": "verbe",
+   "surface": "עולה"
+  }
+ ],
+ "0.24:1": [
+  {
+   "key": "סבא",
+   "kind": "mot",
+   "surface": "סבא"
+  },
+  {
+   "key": "שוק",
+   "kind": "mot",
+   "surface": "בשוק"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "קונה"
+  }
+ ],
+ "0.24:2": [
+  {
+   "key": "סבתא",
+   "kind": "mot",
+   "surface": "סבתא"
+  },
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "משלמת"
+  }
+ ],
+ "0.24:3": [
+  {
+   "key": "עגבניה",
+   "kind": "mot",
+   "surface": "עגבניות"
+  },
+  {
+   "key": "למכור",
+   "kind": "verbe",
+   "surface": "מוכרים"
+  }
+ ],
+ "0.24:4": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.24:5": [
+  {
+   "key": "סבא",
+   "kind": "mot",
+   "surface": "סבא"
+  }
+ ],
+ "0.24:7": [
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "משלמים"
+  }
+ ],
+ "0.24:8": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.24:9": [
+  {
+   "key": "סבא",
+   "kind": "mot",
+   "surface": "סבא"
+  }
+ ],
+ "0.24:10": [
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "שוק",
+   "kind": "mot",
+   "surface": "שוק"
+  }
+ ],
+ "0.24:11": [
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "משלמים"
+  }
+ ],
+ "0.24:12": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.24:13": [
+  {
+   "key": "הכי",
+   "kind": "mot",
+   "surface": "הכי"
+  }
+ ],
+ "0.24:14": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "הילדים"
+  },
+  {
+   "key": "סבא",
+   "kind": "mot",
+   "surface": "הסבא"
+  },
+  {
+   "key": "סבתא",
+   "kind": "mot",
+   "surface": "והסבתא"
+  }
+ ],
+ "0.24:15": [
+  {
+   "key": "סבא",
+   "kind": "mot",
+   "surface": "סבא"
+  },
+  {
+   "key": "סבתא",
+   "kind": "mot",
+   "surface": "וסבתא"
+  }
+ ],
+ "0.24:16": [
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "שוק",
+   "kind": "mot",
+   "surface": "שוק"
+  }
+ ],
+ "0.24:17": [
+  {
+   "key": "שוק",
+   "kind": "mot",
+   "surface": "לשוק"
+  },
+  {
+   "key": "קניות",
+   "kind": "mot",
+   "surface": "קניות"
+  }
+ ],
+ "0.24:18": [
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "וירקות"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  }
+ ],
+ "0.24:19": [
+  {
+   "key": "שוק",
+   "kind": "mot",
+   "surface": "בשוק"
+  },
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "המוכר"
+  },
+  {
+   "key": "עגבניה",
+   "kind": "mot",
+   "surface": "עגבניות"
+  },
+  {
+   "key": "לעלות",
+   "kind": "verbe",
+   "surface": "עולה"
+  }
+ ],
+ "0.24:20": [
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "והמוכר"
+  },
+  {
+   "key": "לענות",
+   "kind": "verbe",
+   "surface": "עונה"
+  }
+ ],
+ "0.24:22": [
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "המוכר"
+  },
+  {
+   "key": "לענות",
+   "kind": "verbe",
+   "surface": "עונה"
+  }
+ ],
+ "0.24:23": [
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "מהמוכר"
+  },
+  {
+   "key": "לבקש",
+   "kind": "verbe",
+   "surface": "מבקשים"
+  }
+ ],
+ "0.24:24": [
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "לשלם"
+  }
+ ],
+ "0.24:25": [
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "המוכר"
+  },
+  {
+   "key": "לענות",
+   "kind": "verbe",
+   "surface": "עונה"
+  }
+ ],
+ "0.24:26": [
+  {
+   "key": "לבקש",
+   "kind": "verbe",
+   "surface": "מבקשים"
+  },
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "לשלם"
+  }
+ ],
+ "0.24:27": [
+  {
+   "key": "לנקות",
+   "kind": "verbe",
+   "surface": "לנקות"
+  },
+  {
+   "key": "לבשל",
+   "kind": "verbe",
+   "surface": "לבשל"
+  }
+ ],
+ "0.25:0": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בן"
+  },
+  {
+   "key": "בת",
+   "kind": "mot",
+   "surface": "בת"
+  }
+ ],
+ "0.25:3": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדות"
+  },
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  }
+ ],
+ "0.25:4": [
+  {
+   "key": "רק",
+   "kind": "mot",
+   "surface": "רק"
+  },
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "ירקות"
+  },
+  {
+   "key": "דג",
+   "kind": "mot",
+   "surface": "ודג"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "לקנות"
+  }
+ ],
+ "0.25:5": [
+  {
+   "key": "שוק",
+   "kind": "mot",
+   "surface": "בשוק"
+  },
+  {
+   "key": "סבתא",
+   "kind": "mot",
+   "surface": "סבתא"
+  },
+  {
+   "key": "עגבניה",
+   "kind": "mot",
+   "surface": "עגבניות"
+  },
+  {
+   "key": "לקנות",
+   "kind": "verbe",
+   "surface": "קונה"
+  }
+ ],
+ "0.25:6": [
+  {
+   "key": "רק",
+   "kind": "mot",
+   "surface": "רק"
+  },
+  {
+   "key": "לעלות",
+   "kind": "verbe",
+   "surface": "עולה"
+  }
+ ],
+ "0.25:7": [
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "לשלם"
+  }
+ ],
+ "0.25:8": [
+  {
+   "key": "כולם",
+   "kind": "mot",
+   "surface": "וכולם"
+  },
+  {
+   "key": "לבקש",
+   "kind": "verbe",
+   "surface": "מבקשים"
+  }
+ ],
+ "0.25:9": [
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "לשלם"
+  }
+ ],
+ "0.25:11": [
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "משפחות"
+  }
+ ],
+ "0.25:12": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בנים"
+  }
+ ],
+ "0.25:13": [
+  {
+   "key": "רופא",
+   "kind": "mot",
+   "surface": "רופאים"
+  }
+ ],
+ "0.25:15": [
+  {
+   "key": "משקה",
+   "kind": "mot",
+   "surface": "משקאות"
+  }
+ ],
+ "0.25:17": [
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "ירקות"
+  }
+ ],
+ "0.25:21": [
+  {
+   "key": "עגבניה",
+   "kind": "mot",
+   "surface": "עגבניות"
+  }
+ ],
+ "0.25:27": [
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "מוכרים"
+  }
+ ],
+ "0.25:29": [
+  {
+   "key": "חולה",
+   "kind": "mot",
+   "surface": "חולים"
+  }
+ ],
+ "0.25:32": [
+  {
+   "key": "רכב",
+   "kind": "mot",
+   "surface": "רכבים"
+  }
+ ],
+ "0.26:0": [
+  {
+   "key": "משפחה",
+   "kind": "mot",
+   "surface": "המשפחה"
+  },
+  {
+   "key": "צרפת",
+   "kind": "mot",
+   "surface": "בצרפת"
+  }
+ ],
+ "0.26:2": [
+  {
+   "key": "חולה",
+   "kind": "mot",
+   "surface": "חולה"
+  },
+  {
+   "key": "רופא",
+   "kind": "mot",
+   "surface": "הרופא"
+  }
+ ],
+ "0.26:4": [
+  {
+   "key": "מוכר",
+   "kind": "mot",
+   "surface": "למוכר"
+  },
+  {
+   "key": "ירק",
+   "kind": "mot",
+   "surface": "ירקות"
+  }
+ ],
+ "0.26:5": [
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "משלמים"
+  },
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "משלם"
+  }
+ ],
+ "0.26:7": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "הילדים"
+  },
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "הילדים"
+  }
+ ],
+ "0.26:8": [
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "ילדים"
+  },
+  {
+   "key": "ילד",
+   "kind": "mot",
+   "surface": "הילדים"
+  }
+ ],
+ "0.27:1": [
+  {
+   "key": "צרפת",
+   "kind": "mot",
+   "surface": "מצרפת"
+  },
+  {
+   "key": "אנגליה",
+   "kind": "mot",
+   "surface": "אנגליה"
+  },
+  {
+   "key": "רוסיה",
+   "kind": "mot",
+   "surface": "ורוסיה"
+  }
+ ],
+ "0.27:13": [
+  {
+   "key": "מדינה",
+   "kind": "mot",
+   "surface": "מדינות"
+  },
+  {
+   "key": "צרפת",
+   "kind": "mot",
+   "surface": "צרפת"
+  },
+  {
+   "key": "אנגליה",
+   "kind": "mot",
+   "surface": "אנגליה"
+  },
+  {
+   "key": "רוסיה",
+   "kind": "mot",
+   "surface": "ורוסיה"
+  }
+ ],
+ "0.27:14": [
+  {
+   "key": "ישראלי",
+   "kind": "mot",
+   "surface": "ישראלי"
+  }
+ ],
+ "0.27:15": [
+  {
+   "key": "לבקש",
+   "kind": "verbe",
+   "surface": "מבקש"
+  }
+ ],
+ "0.27:19": [
+  {
+   "key": "לענות",
+   "kind": "verbe",
+   "surface": "עונים"
+  }
+ ],
+ "0.27:21": [
+  {
+   "key": "לבקש",
+   "kind": "verbe",
+   "surface": "מבקשים"
+  },
+  {
+   "key": "לתת",
+   "kind": "verbe",
+   "surface": "לתת"
+  }
+ ],
+ "0.27:22": [
+  {
+   "key": "לתת",
+   "kind": "verbe",
+   "surface": "נותן"
+  }
+ ],
+ "0.27:23": [
+  {
+   "key": "כולם",
+   "kind": "mot",
+   "surface": "כולם"
+  }
+ ],
+ "0.28:0": [
+  {
+   "key": "הורה",
+   "kind": "mot",
+   "surface": "ההורים"
+  },
+  {
+   "key": "מקום",
+   "kind": "mot",
+   "surface": "מקומות"
+  },
+  {
+   "key": "חדש",
+   "kind": "mot",
+   "surface": "חדשים"
+  }
+ ],
+ "0.28:2": [
+  {
+   "key": "לבלות",
+   "kind": "verbe",
+   "surface": "מבלים"
+  }
+ ],
+ "0.28:3": [
+  {
+   "key": "להמצא",
+   "kind": "verbe",
+   "surface": "נמצאים"
+  }
+ ],
+ "0.28:4": [
+  {
+   "key": "להתרגל",
+   "kind": "verbe",
+   "surface": "מתרגלות"
+  }
+ ],
+ "0.28:5": [
+  {
+   "key": "להתרגש",
+   "kind": "verbe",
+   "surface": "מתרגשים"
+  }
+ ],
+ "0.28:6": [
+  {
+   "key": "הורה",
+   "kind": "mot",
+   "surface": "ההורים"
+  }
+ ],
+ "0.28:7": [
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "יד",
+   "kind": "mot",
+   "surface": "יד"
+  },
+  {
+   "key": "ים",
+   "kind": "mot",
+   "surface": "הים"
+  },
+  {
+   "key": "להמצא",
+   "kind": "verbe",
+   "surface": "נמצאת"
+  }
+ ],
+ "0.28:8": [
+  {
+   "key": "קיץ",
+   "kind": "mot",
+   "surface": "בקיץ"
+  },
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חם"
+  },
+  {
+   "key": "לחות",
+   "kind": "mot",
+   "surface": "וללחות"
+  },
+  {
+   "key": "להתרגל",
+   "kind": "verbe",
+   "surface": "מתרגל"
+  }
+ ],
+ "0.28:9": [
+  {
+   "key": "פעם",
+   "kind": "mot",
+   "surface": "פעם"
+  },
+  {
+   "key": "מקום",
+   "kind": "mot",
+   "surface": "מקומות"
+  },
+  {
+   "key": "חדש",
+   "kind": "mot",
+   "surface": "חדשים"
+  }
+ ],
+ "0.28:10": [
+  {
+   "key": "עד",
+   "kind": "mot",
+   "surface": "עד"
+  },
+  {
+   "key": "חוף",
+   "kind": "mot",
+   "surface": "לחוף"
+  },
+  {
+   "key": "ים",
+   "kind": "mot",
+   "surface": "הים"
+  },
+  {
+   "key": "לבלות",
+   "kind": "verbe",
+   "surface": "לבלות"
+  },
+  {
+   "key": "להשתזף",
+   "kind": "verbe",
+   "surface": "ולהשתזף"
+  }
+ ],
+ "0.28:11": [
+  {
+   "key": "הורה",
+   "kind": "mot",
+   "surface": "ההורים"
+  }
+ ],
+ "0.28:12": [
+  {
+   "key": "להמצא",
+   "kind": "verbe",
+   "surface": "נמצאת"
+  }
+ ],
+ "0.28:13": [
+  {
+   "key": "קיץ",
+   "kind": "mot",
+   "surface": "בקיץ"
+  }
+ ],
+ "0.28:17": [
+  {
+   "key": "הורה",
+   "kind": "mot",
+   "surface": "ההורים"
+  }
+ ],
+ "0.28:18": [
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "יד",
+   "kind": "mot",
+   "surface": "יד"
+  },
+  {
+   "key": "ים",
+   "kind": "mot",
+   "surface": "הים"
+  },
+  {
+   "key": "להמצא",
+   "kind": "verbe",
+   "surface": "נמצאת"
+  }
+ ],
+ "0.28:19": [
+  {
+   "key": "דוד",
+   "kind": "mot",
+   "surface": "דוד"
+  },
+  {
+   "key": "דוד",
+   "kind": "mot",
+   "surface": "ודודה"
+  }
+ ],
+ "0.28:20": [
+  {
+   "key": "רגיל",
+   "kind": "mot",
+   "surface": "רגיל"
+  },
+  {
+   "key": "פעם",
+   "kind": "mot",
+   "surface": "פעמים"
+  }
+ ],
+ "0.28:21": [
+  {
+   "key": "קיץ",
+   "kind": "mot",
+   "surface": "בקיץ"
+  },
+  {
+   "key": "חם",
+   "kind": "mot",
+   "surface": "חם"
+  },
+  {
+   "key": "לחות",
+   "kind": "mot",
+   "surface": "וללחות"
+  },
+  {
+   "key": "להתרגל",
+   "kind": "verbe",
+   "surface": "מתרגל"
+  }
+ ],
+ "0.28:22": [
+  {
+   "key": "פעם",
+   "kind": "mot",
+   "surface": "פעם"
+  },
+  {
+   "key": "מקום",
+   "kind": "mot",
+   "surface": "מקומות"
+  },
+  {
+   "key": "חדש",
+   "kind": "mot",
+   "surface": "חדשים"
+  }
+ ],
+ "0.28:23": [
+  {
+   "key": "עד",
+   "kind": "mot",
+   "surface": "עד"
+  },
+  {
+   "key": "חוף",
+   "kind": "mot",
+   "surface": "לחוף"
+  },
+  {
+   "key": "ים",
+   "kind": "mot",
+   "surface": "הים"
+  },
+  {
+   "key": "לבלות",
+   "kind": "verbe",
+   "surface": "לבלות"
+  },
+  {
+   "key": "להשתזף",
+   "kind": "verbe",
+   "surface": "ולהשתזף"
+  }
+ ],
+ "0.28:24": [
+  {
+   "key": "ביקור",
+   "kind": "mot",
+   "surface": "ביקור"
+  },
+  {
+   "key": "להתרגש",
+   "kind": "verbe",
+   "surface": "מתרגש"
+  }
+ ],
+ "0.28:25": [
+  {
+   "key": "לעלות",
+   "kind": "verbe",
+   "surface": "לעלות"
+  },
+  {
+   "key": "להיות",
+   "kind": "verbe",
+   "surface": "ולהיות"
+  }
+ ],
+ "0.29:0": [
+  {
+   "key": "קיץ",
+   "kind": "mot",
+   "surface": "הקיץ"
+  }
+ ],
+ "0.29:1": [
+  {
+   "key": "חולה",
+   "kind": "mot",
+   "surface": "חולים"
+  }
+ ],
+ "0.29:8": [
+  {
+   "key": "חדש",
+   "kind": "mot",
+   "surface": "חדשים"
+  }
+ ],
+ "0.29:17": [
+  {
+   "key": "יד",
+   "kind": "mot",
+   "surface": "ידיים"
+  }
+ ],
+ "0.29:24": [
+  {
+   "key": "ריבה",
+   "kind": "mot",
+   "surface": "ריבת"
+  }
+ ],
+ "0.29:28": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "בני"
+  }
+ ],
+ "0.30:0": [
+  {
+   "key": "לפגוש",
+   "kind": "verbe",
+   "surface": "פוגש"
+  }
+ ],
+ "0.30:2": [
+  {
+   "key": "להיפגש",
+   "kind": "verbe",
+   "surface": "נפגשים"
+  }
+ ],
+ "0.30:5": [
+  {
+   "key": "פרוסה",
+   "kind": "mot",
+   "surface": "פרוסות"
+  },
+  {
+   "key": "לחם",
+   "kind": "mot",
+   "surface": "לחם"
+  }
+ ],
+ "0.30:6": [
+  {
+   "key": "מיץ",
+   "kind": "mot",
+   "surface": "מיץ"
+  },
+  {
+   "key": "תפוז",
+   "kind": "mot",
+   "surface": "התפוזים"
+  }
+ ],
+ "0.30:7": [
+  {
+   "key": "ריבה",
+   "kind": "mot",
+   "surface": "ריבת"
+  },
+  {
+   "key": "שזיף",
+   "kind": "mot",
+   "surface": "השזיפים"
+  }
+ ],
+ "0.30:8": [
+  {
+   "key": "שיר",
+   "kind": "mot",
+   "surface": "שירי"
+  }
+ ],
+ "0.30:9": [
+  {
+   "key": "נהג",
+   "kind": "mot",
+   "surface": "נהגי"
+  }
+ ],
+ "0.30:11": [
+  {
+   "key": "חדר",
+   "kind": "mot",
+   "surface": "חדרי"
+  }
+ ],
+ "0.30:13": [
+  {
+   "key": "חביתה",
+   "kind": "mot",
+   "surface": "חביתת"
+  }
+ ],
+ "0.30:15": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "הבן"
+  },
+  {
+   "key": "להעיר",
+   "kind": "verbe",
+   "surface": "מעירה"
+  }
+ ],
+ "0.30:16": [
+  {
+   "key": "מנהל",
+   "kind": "mot",
+   "surface": "המנהל"
+  },
+  {
+   "key": "להזדרז",
+   "kind": "verbe",
+   "surface": "להזדרז"
+  },
+  {
+   "key": "לפגוש",
+   "kind": "verbe",
+   "surface": "ולפגוש"
+  }
+ ],
+ "0.30:17": [
+  {
+   "key": "מנהל",
+   "kind": "mot",
+   "surface": "והמנהל"
+  },
+  {
+   "key": "להיפגש",
+   "kind": "verbe",
+   "surface": "להיפגש"
+  }
+ ],
+ "0.30:19": [
+  {
+   "key": "חדר",
+   "kind": "mot",
+   "surface": "לחדר"
+  },
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "לבן"
+  },
+  {
+   "key": "שיר",
+   "kind": "mot",
+   "surface": "שיר"
+  },
+  {
+   "key": "לשיר",
+   "kind": "verbe",
+   "surface": "ושרה"
+  }
+ ],
+ "0.30:20": [
+  {
+   "key": "להעיר",
+   "kind": "verbe",
+   "surface": "מעירה"
+  }
+ ],
+ "0.30:21": [
+  {
+   "key": "להזדרז",
+   "kind": "verbe",
+   "surface": "להזדרז"
+  }
+ ],
+ "0.30:22": [
+  {
+   "key": "מנהל",
+   "kind": "mot",
+   "surface": "והמנהל"
+  },
+  {
+   "key": "להיפגש",
+   "kind": "verbe",
+   "surface": "להיפגש"
+  }
+ ],
+ "0.30:26": [
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "הבן"
+  },
+  {
+   "key": "להעיר",
+   "kind": "verbe",
+   "surface": "ומעירה"
+  }
+ ],
+ "0.30:27": [
+  {
+   "key": "להתעורר",
+   "kind": "verbe",
+   "surface": "להתעורר"
+  }
+ ],
+ "0.30:29": [
+  {
+   "key": "מיץ",
+   "kind": "mot",
+   "surface": "מיץ"
+  },
+  {
+   "key": "תפוז",
+   "kind": "mot",
+   "surface": "תפוזים"
+  },
+  {
+   "key": "פרוסה",
+   "kind": "mot",
+   "surface": "פרוסת"
+  },
+  {
+   "key": "לחם",
+   "kind": "mot",
+   "surface": "לחם"
+  },
+  {
+   "key": "ריבה",
+   "kind": "mot",
+   "surface": "ריבת"
+  },
+  {
+   "key": "שזיף",
+   "kind": "mot",
+   "surface": "שזיפים"
+  },
+  {
+   "key": "חביתה",
+   "kind": "mot",
+   "surface": "וחביתת"
+  }
+ ],
+ "0.30:30": [
+  {
+   "key": "מנהל",
+   "kind": "mot",
+   "surface": "המנהל"
+  },
+  {
+   "key": "להזדרז",
+   "kind": "verbe",
+   "surface": "להזדרז"
+  },
+  {
+   "key": "לפגוש",
+   "kind": "verbe",
+   "surface": "ולפגוש"
+  }
+ ],
+ "0.30:31": [
+  {
+   "key": "להיפגש",
+   "kind": "verbe",
+   "surface": "להיפגש"
+  }
+ ],
+ "0.30:32": [
+  {
+   "key": "נהג",
+   "kind": "mot",
+   "surface": "לנהג"
+  },
+  {
+   "key": "לשלם",
+   "kind": "verbe",
+   "surface": "משלמת"
+  }
+ ],
+ "0.30:34": [
+  {
+   "key": "על",
+   "kind": "mot",
+   "surface": "על"
+  },
+  {
+   "key": "פגישה",
+   "kind": "mot",
+   "surface": "הפגישה"
+  },
+  {
+   "key": "מנהל",
+   "kind": "mot",
+   "surface": "המנהל"
+  }
+ ],
+ "0.30:35": [
+  {
+   "key": "חדר",
+   "kind": "mot",
+   "surface": "לחדר"
+  },
+  {
+   "key": "בן",
+   "kind": "mot",
+   "surface": "לבן"
+  },
+  {
+   "key": "שיר",
+   "kind": "mot",
+   "surface": "שיר"
+  },
+  {
+   "key": "לשיר",
+   "kind": "verbe",
+   "surface": "ושרה"
+  }
  ]
 }

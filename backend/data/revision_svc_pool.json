@@ -7309,5 +7309,3231 @@
                 }
             ]
         }
+    ],
+    "0.21:0": [
+        {
+            "text": "אחרי השיעור אני נח ואוכל ארוחת צהריים.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נח",
+                            "infinitive": "לנוח",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "אוכל",
+                            "infinitive": "לאכול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.21:1": [
+        {
+            "text": "באיזו עיר אתם מבקרים בישראל?",
+            "subjects": [
+                {
+                    "he": "אתם",
+                    "fr": "vous",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מבקרים",
+                            "infinitive": "לבקר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.21:2": [
+        {
+            "text": "כמה תלמידים בכיתה לומדים עברית?",
+            "subjects": [
+                {
+                    "he": "כמה תלמידים",
+                    "fr": "combien d'élèves",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "לומדים",
+                            "infinitive": "ללמוד",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.21:4": [
+        {
+            "text": "אתה נוסע ברכב לעבודה?",
+            "subjects": [
+                {
+                    "he": "אתה",
+                    "fr": "tu",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נוסע",
+                            "infinitive": "לנסוע",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.21:5": [
+        {
+            "text": "יש לנו שלוש בנות וחמישה בנים, כולם כמעט נשואים.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "לנו",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.21:6": [
+        {
+            "text": "אני לומד עברית כשיש לי זמן.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "לומד",
+                            "infinitive": "ללמוד",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לי",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.21:7": [
+        {
+            "text": "יש לך ארבעה ילדים אבל אתה רווק, נכון?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "לך",
+                    "base": "ל",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.21:8": [
+        {
+            "text": "איך אני יכול לבוא?",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "יכול",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        },
+        {
+            "text": "אתה גר רחוק?",
+            "subjects": [
+                {
+                    "he": "אתה",
+                    "fr": "tu",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "גר",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        },
+        {
+            "text": "אני לוקח אוטובוס או רכבת?",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "לוקח",
+                            "infinitive": "לקחת",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.21:9": [
+        {
+            "text": "איזו מסעדה אתה הכי אוהב?",
+            "subjects": [
+                {
+                    "he": "אתה",
+                    "fr": "tu",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.22:0": [
+        {
+            "text": "אני קורא ספר ואחר כך אני מתקשר אליו.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "קורא",
+                            "infinitive": "לקרוא",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מתקשר",
+                            "infinitive": "להתקשר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "אליו",
+                    "base": "אל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.22:1": [
+        {
+            "text": "יש לי זמן הערב אני יכול לראות חברים.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "יכול",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לי",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.22:2": [
+        {
+            "text": "היא לא יכולה לבוא היום, היא חולה.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "יכולה",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.22:3": [
+        {
+            "text": "איתן צריך להזמין חברים לשבת אבל הוא לא רוצה לבשל.",
+            "subjects": [
+                {
+                    "he": "איתן",
+                    "fr": "Eitan",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "צריך",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "רוצה",
+                            "infinitive": "לרצות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.22:4": [
+        {
+            "text": "חנה צריכה למהר לקנות דגים, ירקות, בשר ומשקאות.",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "צריכה",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.22:5": [
+        {
+            "text": "אני מזמין עשרה חברים, אני ממהר, אין לי הרבה זמן, אני צריך לעשות מלא דברים.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מזמין",
+                            "infinitive": "להזמין",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "ממהר",
+                            "infinitive": "למהר",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "צריך",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לי",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.22:6": [
+        {
+            "text": "בדירה שלי, יש לי רק שולחן אחד אבל יש לי ארבעה כיסאות ושתי מיטות כמובן!",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלי",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                },
+                {
+                    "he": "לי",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                },
+                {
+                    "he": "לי",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.22:7": [
+        {
+            "text": "לשלמה יש שישה בנים ובת אחת, אבל אין לו סבלנות.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.22:8": [
+        {
+            "text": "דוד וחנה רוצים לראות טלוויזיה אבל הם לא יכולים לעשות רעש.",
+            "subjects": [
+                {
+                    "he": "דוד וחנה",
+                    "fr": "David et Hanna",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "רוצים",
+                            "infinitive": "לרצות",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "יכולים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.22:9": [
+        {
+            "text": "הן צריכות לחזור הביתה, לסדר ולבשל ארוחה חמה.",
+            "subjects": [
+                {
+                    "he": "הן",
+                    "fr": "elles",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכות",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.23:3": [
+        {
+            "text": "יש לנו מאה ספרים!",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "לנו",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.23:4": [
+        {
+            "text": "אני קונה עשרים ושניים פירות לשבת.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "קונה",
+                            "infinitive": "לקנות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:0": [
+        {
+            "text": "הם שואלים כמה זה עולה.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "שואלים",
+                            "infinitive": "לשאול",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "זה",
+                    "fr": "cela",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "עולה",
+                            "infinitive": "לעלות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:1": [
+        {
+            "text": "סבא קונה פירות בשוק.",
+            "subjects": [
+                {
+                    "he": "סבא",
+                    "fr": "grand-père",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "קונה",
+                            "infinitive": "לקנות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:2": [
+        {
+            "text": "סבתא משלמת במזומן.",
+            "subjects": [
+                {
+                    "he": "סבתא",
+                    "fr": "grand-mère",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "משלמת",
+                            "infinitive": "לשלם",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:3": [
+        {
+            "text": "אתם מוכרים עגבניות.",
+            "subjects": [
+                {
+                    "he": "אתם",
+                    "fr": "vous",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מוכרים",
+                            "infinitive": "למכור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:6": [
+        {
+            "text": "איפה גרים תומר ועדן?",
+            "subjects": [
+                {
+                    "he": "תומר ועדן",
+                    "fr": "Tomer et Eden",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:7": [
+        {
+            "text": "איך תומר ועדן משלמים?",
+            "subjects": [
+                {
+                    "he": "תומר ועדן",
+                    "fr": "Tomer et Eden",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "משלמים",
+                            "infinitive": "לשלם",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:10": [
+        {
+            "text": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה.",
+            "subjects": [
+                {
+                    "he": "תומר ועדן",
+                    "fr": "Tomer et Eden",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:11": [
+        {
+            "text": "תומר ועדן משלמים במזומן.",
+            "subjects": [
+                {
+                    "he": "תומר ועדן",
+                    "fr": "Tomer et Eden",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "משלמים",
+                            "infinitive": "לשלם",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:14": [
+        {
+            "text": "הילדים של תומר ועדן באים לבקר בשבת וגם הסבא והסבתא באים.",
+            "subjects": [
+                {
+                    "he": "הילדים של תומר ועדן",
+                    "fr": "les enfants de Tomer et Eden",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "באים",
+                            "infinitive": "לבוא",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "הסבא והסבתא",
+                    "fr": "le grand-père et la grand-mère",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "באים",
+                            "infinitive": "לבוא",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:16": [
+        {
+            "text": "תומר ועדן גרים בירושלים על יד שוק מחנה יהודה.",
+            "subjects": [
+                {
+                    "he": "תומר ועדן",
+                    "fr": "Tomer et Eden",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:17": [
+        {
+            "text": "ביום שישי לפני שבת הם הולכים לשוק לעשות קניות.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "הולכים",
+                            "infinitive": "ללכת",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:18": [
+        {
+            "text": "הם צריכים לקנות פירות וירקות.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:19": [
+        {
+            "text": "בשוק הם שואלים את המוכר: כמה עולה שני קילו עגבניות?",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "שואלים",
+                            "infinitive": "לשאול",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "שני קילו עגבניות",
+                    "fr": "deux kilos de tomates",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "עולה",
+                            "infinitive": "לעלות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:23": [
+        {
+            "text": "הם מבקשים מהמוכר גם אבטיח, בננות, מלפפונים, פלפל ותפוחי אדמה.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מבקשים",
+                            "infinitive": "לבקש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:24": [
+        {
+            "text": "הם צריכים לשלם והם שואלים כמה סך הכול?",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "שואלים",
+                            "infinitive": "לשאול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:26": [
+        {
+            "text": "הם מבקשים לשלם במזומן.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מבקשים",
+                            "infinitive": "לבקש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.24:27": [
+        {
+            "text": "עכשיו הם צריכים לחזור הביתה לסדר, לנקות וגם כמובן לבשל.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.25:2": [
+        {
+            "text": "חמישה תלמידים לא יכולים לבוא היום לכיתה.",
+            "subjects": [
+                {
+                    "he": "חמישה תלמידים",
+                    "fr": "cinq élèves",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "יכולים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.25:4": [
+        {
+            "text": "יש לי רק חמישים ושניים שקלים אבל אני יכול לקנות ירקות ודג.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "יכול",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לי",
+                    "base": "ל",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.25:5": [
+        {
+            "text": "בשוק, סבתא קונה הרבה פירות ושלושה קילו עגבניות.",
+            "subjects": [
+                {
+                    "he": "סבתא",
+                    "fr": "grand-mère",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "קונה",
+                            "infinitive": "לקנות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.25:6": [
+        {
+            "text": "האבטיח עולה רק חמישה שקלים.",
+            "subjects": [
+                {
+                    "he": "האבטיח",
+                    "fr": "la pastèque",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "עולה",
+                            "infinitive": "לעלות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.25:7": [
+        {
+            "text": "הם צריכים לשלם שבעים ושישה שקלים בסך הכל, נכון?",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.25:8": [
+        {
+            "text": "הם תשעים וכולם מבקשים לשתות ולאכול.",
+            "subjects": [
+                {
+                    "he": "וכולם",
+                    "fr": "et tous",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מבקשים",
+                            "infinitive": "לבקש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.25:9": [
+        {
+            "text": "הם לא יכולים לשלם, אין להם מזומן.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "יכולים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "להם",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.26:0": [
+        {
+            "text": "חנה, המשפחה שלך גרה בצרפת?",
+            "subjects": [
+                {
+                    "he": "המשפחה",
+                    "fr": "la famille",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "גרה",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלך",
+                    "base": "של",
+                    "person": 2,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.26:1": [
+        {
+            "text": "דניאל ושרה, איפה המכונית שלכם?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלכם",
+                    "base": "של",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.26:2": [
+        {
+            "text": "דינה, אני חולה, איפה הרופא שלי?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלי",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.26:3": [
+        {
+            "text": "השולחן שלו גדול?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.26:4": [
+        {
+            "text": "גם הפירות שלו טעימים?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.26:5": [
+        {
+            "text": "הם משלמים על השתייה שלהם ואני משלם על השתייה שלי.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "משלמים",
+                            "infinitive": "לשלם",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "משלם",
+                            "infinitive": "לשלם",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                },
+                {
+                    "he": "שלי",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.26:6": [
+        {
+            "text": "לדוד יש דירה בישראל, הדירה שלו בירושלים.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.26:7": [
+        {
+            "text": "הילדים של חנה ודוד גרים בישראל.",
+            "subjects": [
+                {
+                    "he": "הילדים",
+                    "fr": "les enfants",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        },
+        {
+            "text": "הילדים שלהם גרים בתל אביב.",
+            "subjects": [
+                {
+                    "he": "הילדים",
+                    "fr": "les enfants",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.26:8": [
+        {
+            "text": "לרותי ואתי יש ילדים, הילדים שלהן גדולים.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהן",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:0": [
+        {
+            "text": "ענת גרה בתל אביב ולומדת עברית באולפן.",
+            "subjects": [
+                {
+                    "he": "ענת",
+                    "fr": "Anat",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "גרה",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "לומדת",
+                            "infinitive": "ללמוד",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.27:2": [
+        {
+            "text": "למורה שלהם קוראים שחר.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:4": [
+        {
+            "text": "הספר שלהם בבית.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:5": [
+        {
+            "text": "איפה ענת גרה ומה היא לומדת?",
+            "subjects": [
+                {
+                    "he": "ענת",
+                    "fr": "Anat",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "גרה",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "לומדת",
+                            "infinitive": "ללמוד",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.27:7": [
+        {
+            "text": "איך קוראים למורה שלהם?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:9": [
+        {
+            "text": "לדן ושי אין ספר, איפה הספר שלהם?",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:10": [
+        {
+            "text": "ענת גרה בתל אביב ולומדת עברית באולפן.",
+            "subjects": [
+                {
+                    "he": "ענת",
+                    "fr": "Anat",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "גרה",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "לומדת",
+                            "infinitive": "ללמוד",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.27:11": [
+        {
+            "text": "יש לה הרבה חברים.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "לה",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.27:12": [
+        {
+            "text": "החברים שלה גם לומדים באולפן.",
+            "subjects": [
+                {
+                    "he": "החברים שלה",
+                    "fr": "ses amis",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "לומדים",
+                            "infinitive": "ללמוד",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.27:13": [
+        {
+            "text": "בכיתה שלהם יש תלמידים מהרבה מדינות; צרפת, אנגליה, ארצות הברית ורוסיה.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:14": [
+        {
+            "text": "המורה שלהם ישראלי וקוראים לו שחר.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                },
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.27:15": [
+        {
+            "text": "שחר, המורה מבקש מהתלמידים לקרוא בספר.",
+            "subjects": [
+                {
+                    "he": "המורה",
+                    "fr": "le professeur",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מבקש",
+                            "infinitive": "לבקש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.27:17": [
+        {
+            "text": "הספר שלהם בבית.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:18": [
+        {
+            "text": "\"איפה הספר שלכם?\"",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלכם",
+                    "base": "של",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:19": [
+        {
+            "text": "\"הספר שלנו בבית\".",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלנו",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:20": [
+        {
+            "text": "המורה שואל \"למה הספר שלכם בבית?\"",
+            "subjects": [
+                {
+                    "he": "המורה",
+                    "fr": "le professeur",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "שואל",
+                            "infinitive": "לשאול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלכם",
+                    "base": "של",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:21": [
+        {
+            "text": "הם מבקשים מהמורה שלהם לתת להם ספר.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מבקשים",
+                            "infinitive": "לבקש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                },
+                {
+                    "he": "להם",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.27:22": [
+        {
+            "text": "המורה נותן להם את הספר שלו.",
+            "subjects": [
+                {
+                    "he": "המורה",
+                    "fr": "le professeur",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נותן",
+                            "infinitive": "לתת",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "להם",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                },
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.27:23": [
+        {
+            "text": "עכשיו כולם יכולים לקרוא בספר.",
+            "subjects": [
+                {
+                    "he": "כולם",
+                    "fr": "tous",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "יכולים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:0": [
+        {
+            "text": "ההורים שלי מגלים מקומות חדשים.",
+            "subjects": [
+                {
+                    "he": "ההורים שלי",
+                    "fr": "mes parents",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מגלים",
+                            "infinitive": "לגלות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלי",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:1": [
+        {
+            "text": "חנה מקווה לבקר בישראל.",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מקווה",
+                            "infinitive": "לקוות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:2": [
+        {
+            "text": "הם מבלים עם החברים שלהם.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מבלים",
+                            "infinitive": "לבלות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.28:3": [
+        {
+            "text": "אתם נמצאים בתל אביב?",
+            "subjects": [
+                {
+                    "he": "אתם",
+                    "fr": "vous",
+                    "person": 2,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "נמצאים",
+                            "infinitive": "להימצא",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:4": [
+        {
+            "text": "הן מתרגלות לחום בארץ.",
+            "subjects": [
+                {
+                    "he": "הן",
+                    "fr": "elles",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מתרגלות",
+                            "infinitive": "להתרגל",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:5": [
+        {
+            "text": "דוד ושרה מאוד מתרגשים לנסוע לארץ.",
+            "subjects": [
+                {
+                    "he": "דוד ושרה",
+                    "fr": "David et Sarah",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מתרגשים",
+                            "infinitive": "להתרגש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:6": [
+        {
+            "text": "ההורים של דוד גרים בדירה בתל אביב.",
+            "subjects": [
+                {
+                    "he": "ההורים של דוד",
+                    "fr": "les parents de David",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:7": [
+        {
+            "text": "הדירה שלהם נמצאת על יד הים.",
+            "subjects": [
+                {
+                    "he": "הדירה שלהם",
+                    "fr": "leur appartement",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נמצאת",
+                            "infinitive": "להימצא",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.28:8": [
+        {
+            "text": "בקיץ קשה לו כי חם והוא לא מתרגל לחום וללחות.",
+            "subjects": [
+                {
+                    "he": "והוא",
+                    "fr": "et il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מתרגל",
+                            "infinitive": "להתרגל",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:9": [
+        {
+            "text": "בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם מקומות חדשים.",
+            "subjects": [
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:10": [
+        {
+            "text": "בתל אביב הוא אוהב לבלות עם החברים שלו עד מאוחר וללכת לחוף הים ולהשתזף.",
+            "subjects": [
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:11": [
+        {
+            "text": "איפה ההורים של דוד גרים?",
+            "subjects": [
+                {
+                    "he": "ההורים של דוד",
+                    "fr": "les parents de David",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:12": [
+        {
+            "text": "איפה הדירה שלהם נמצאת?",
+            "subjects": [
+                {
+                    "he": "הדירה שלהם",
+                    "fr": "leur appartement",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נמצאת",
+                            "infinitive": "להימצא",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.28:14": [
+        {
+            "text": "מה דוד אוהב לעשות בירושלים?",
+            "subjects": [
+                {
+                    "he": "דוד",
+                    "fr": "David",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:15": [
+        {
+            "text": "מה דוד אוהב לעשות בתל אביב?",
+            "subjects": [
+                {
+                    "he": "דוד",
+                    "fr": "David",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:17": [
+        {
+            "text": "ההורים שלו גרים בדירה בתל אביב.",
+            "subjects": [
+                {
+                    "he": "ההורים שלו",
+                    "fr": "ses parents",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "גרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:18": [
+        {
+            "text": "הדירה שלהם נמצאת על יד הים.",
+            "subjects": [
+                {
+                    "he": "הדירה שלהם",
+                    "fr": "leur appartement",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נמצאת",
+                            "infinitive": "להימצא",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.28:19": [
+        {
+            "text": "יש לו גם דוד ודודה שגרים בירושלים ויש להם ילדים גדולים.",
+            "subjects": [
+                {
+                    "he": "דוד ודודה",
+                    "fr": "un oncle et une tante",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "שגרים",
+                            "infinitive": "לגור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                },
+                {
+                    "he": "להם",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.28:21": [
+        {
+            "text": "בקיץ קשה לו כי חם והוא לא מתרגל לחום וללחות.",
+            "subjects": [
+                {
+                    "he": "והוא",
+                    "fr": "et il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מתרגל",
+                            "infinitive": "להתרגל",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:22": [
+        {
+            "text": "כשהוא בירושלים הוא אוהב לטייל בעיר ולגלות כל פעם מקומות חדשים.",
+            "subjects": [
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.28:23": [
+        {
+            "text": "בתל אביב הוא אוהב לבלות עם החברים שלו עד מאוחר וללכת לחוף הים ולהשתזף.",
+            "subjects": [
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:24": [
+        {
+            "text": "בכל ביקור בארץ דוד מתרגש ותמיד קשה לו לחזור לפריז הביתה.",
+            "subjects": [
+                {
+                    "he": "דוד",
+                    "fr": "David",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מתרגש",
+                            "infinitive": "להתרגש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.28:25": [
+        {
+            "text": "יום אחד הוא מקווה גם לעלות לישראל ולהיות שם עם המשפחה והחברים שלו.",
+            "subjects": [
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מקווה",
+                            "infinitive": "לקוות",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:0": [
+        {
+            "text": "תומר פוגש את עדן במשרד שלה.",
+            "subjects": [
+                {
+                    "he": "תומר",
+                    "fr": "Tomer",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "פוגש",
+                            "infinitive": "לפגוש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:1": [
+        {
+            "text": "בבוקר אני מתרחצת ואוכלת ארוחת בוקר.",
+            "subjects": [
+                {
+                    "he": "אני",
+                    "fr": "je",
+                    "person": 1,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מתרחצת",
+                            "infinitive": "להתרחץ",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "ואוכלת",
+                            "infinitive": "לאכול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:2": [
+        {
+            "text": "חנה ואני נפגשים כל יום.",
+            "subjects": [
+                {
+                    "he": "חנה ואני",
+                    "fr": "Hanna et moi",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "נפגשים",
+                            "infinitive": "להיפגש",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:3": [
+        {
+            "text": "היא נכנסת לבית קפה.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נכנסת",
+                            "infinitive": "להיכנס",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:4": [
+        {
+            "text": "שרה ודנה מגיעות לעבודה מוקדם.",
+            "subjects": [
+                {
+                    "he": "שרה ודנה",
+                    "fr": "Sarah et Dana",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "מגיעות",
+                            "infinitive": "להגיע",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:6": [
+        {
+            "text": "מיץ התפוזים שלו",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:7": [
+        {
+            "text": "ריבת השזיפים של אמא שלי",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלי",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:10": [
+        {
+            "text": "עוגת השוקולד שלהם",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלהם",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl"
+                }
+            ]
+        }
+    ],
+    "0.30:13": [
+        {
+            "text": "חביתת הירק הטובה שלי",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "שלי",
+                    "base": "של",
+                    "person": 1,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:15": [
+        {
+            "text": "חנה מעירה את הבן הקטן שלה בבוקר.",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מעירה",
+                            "infinitive": "להעיר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:16": [
+        {
+            "text": "חנה צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה.",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "צריכה",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:17": [
+        {
+            "text": "חנה והמנהל שלה צריכים להיפגש במשרד שלו.",
+            "subjects": [
+                {
+                    "he": "חנה והמנהל שלה",
+                    "fr": "Hanna et son directeur",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                },
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:18": [
+        {
+            "text": "חנה אוכלת ארוחת צהריים בבית קפה.",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוכלת",
+                            "infinitive": "לאכול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:19": [
+        {
+            "text": "כשהיא חוזרת הביתה בערב, חנה נכנסת לחדר הילדים ושרה לבן שלה שיר ילדים.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "חוזרת",
+                            "infinitive": "לחזור",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נכנסת",
+                            "infinitive": "להיכנס",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "ושרה",
+                            "infinitive": "לשיר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:20": [
+        {
+            "text": "את מי חנה מעירה בבוקר?",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מעירה",
+                            "infinitive": "להעיר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:21": [
+        {
+            "text": "למה חנה צריכה להזדרז?",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "צריכה",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:22": [
+        {
+            "text": "איפה חנה והמנהל שלה צריכים להיפגש?",
+            "subjects": [
+                {
+                    "he": "חנה והמנהל שלה",
+                    "fr": "Hanna et son directeur",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:23": [
+        {
+            "text": "איפה חנה אוכלת ארוחת צהריים?",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוכלת",
+                            "infinitive": "לאכול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:24": [
+        {
+            "text": "מה חנה עושה כשהיא חוזרת הביתה בערב?",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "עושה",
+                            "infinitive": "לעשות",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "חוזרת",
+                            "infinitive": "לחזור",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:25": [
+        {
+            "text": "בבוקר חנה קמה מוקדם.",
+            "subjects": [
+                {
+                    "he": "חנה",
+                    "fr": "Hanna",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "קמה",
+                            "infinitive": "לקום",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:26": [
+        {
+            "text": "היא מתרחצת ומעירה את הבן הקטן שלה.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מתרחצת",
+                            "infinitive": "להתרחץ",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "ומעירה",
+                            "infinitive": "להעיר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:27": [
+        {
+            "text": "קשה לו להתעורר, הוא עייף.",
+            "subjects": [],
+            "declined_prepositions": [
+                {
+                    "he": "לו",
+                    "base": "ל",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:28": [
+        {
+            "text": "אחר כך הם אוכלים ארוחת בוקר טובה.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "אוכלים",
+                            "infinitive": "לאכול",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:30": [
+        {
+            "text": "היא צריכה להזדרז כדי להגיע לעבודה בזמן ולפגוש את המנהל שלה.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "צריכה",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:31": [
+        {
+            "text": "הם צריכים להיפגש במשרד שלו.",
+            "subjects": [
+                {
+                    "he": "הם",
+                    "fr": "ils",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "pl",
+                    "verbs": [
+                        {
+                            "he": "צריכים",
+                            "infinitive": "",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלו",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:32": [
+        {
+            "text": "היא נוסעת לעבודה באוטובוס, משלמת לנהג האוטובוס ויושבת.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "נוסעת",
+                            "infinitive": "לנסוע",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "משלמת",
+                            "infinitive": "לשלם",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "ויושבת",
+                            "infinitive": "לשבת",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:33": [
+        {
+            "text": "באחת היא הולכת לאכול ארוחת צהריים עם חברים בבית קפה.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "הולכת",
+                            "infinitive": "ללכת",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": []
+        }
+    ],
+    "0.30:34": [
+        {
+            "text": "בארוחת הצהריים היא מספרת לחברים שלה על הפגישה עם המנהל.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "מספרת",
+                            "infinitive": "לספר",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
+    ],
+    "0.30:35": [
+        {
+            "text": "בערב היא חוזרת הביתה נכנסת לחדר הילדים ושרה לבן שלה שיר ילדים שהוא אוהב.",
+            "subjects": [
+                {
+                    "he": "היא",
+                    "fr": "elle",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "חוזרת",
+                            "infinitive": "לחזור",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "נכנסת",
+                            "infinitive": "להיכנס",
+                            "tense": "present"
+                        },
+                        {
+                            "he": "ושרה",
+                            "infinitive": "לשיר",
+                            "tense": "present"
+                        }
+                    ]
+                },
+                {
+                    "he": "הוא",
+                    "fr": "il",
+                    "person": 3,
+                    "gender": "m",
+                    "number": "sg",
+                    "verbs": [
+                        {
+                            "he": "אוהב",
+                            "infinitive": "לאהוב",
+                            "tense": "present"
+                        }
+                    ]
+                }
+            ],
+            "declined_prepositions": [
+                {
+                    "he": "שלה",
+                    "base": "של",
+                    "person": 3,
+                    "gender": "f",
+                    "number": "sg"
+                }
+            ]
+        }
     ]
 }

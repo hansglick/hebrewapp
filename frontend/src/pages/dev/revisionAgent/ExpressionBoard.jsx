@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Answer, Evaluation } from "./Assessment";
 import DeclensionSentence from "./DeclensionSentence";
 import Followup from "./Followup";
@@ -16,6 +16,46 @@ const DECLENSION_INSTRUCTIONS = {
 };
 
 const EXERCISE_NAMES = { expression: "Expression libre", declension: "Déclinaison" };
+
+// Antisèche à la demande (page sans Gemini Live, cf. Lamp) : elle reste ouverte
+// ce délai après le dernier geste (ouverture, tuile touchée), puis le cours se
+// remonte, et l'antisèche elle-même FOLD_UP_MS plus tard (cf. .ra-fold).
+const SHEET_MS = 30000;
+const FOLD_UP_MS = 450;
+
+// Ampoule de l'antisèche, à gauche de la piste d'enregistrement (cf.
+// StudentAnswer) : du bleu des tuiles sur fond blanc ; remontée à chaque
+// question (key), elle pulse légèrement une seconde ; toutes les 30 s, des
+// rayons en jaillissent (cf. .ra-lamp-rays).
+const RAYS = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4);
+
+function Lamp({ open, onClick }) {
+  return (
+    <button
+      type="button"
+      className={`ra-lamp ${open ? "ra-lamp-open" : ""}`}
+      onClick={onClick}
+      aria-expanded={open}
+      aria-label={open ? "Fermer l’antisèche" : "Ouvrir l’antisèche"}
+      title="Antisèche"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9.2 17.5h5.6M10 20.5h4M12 3.5a5.8 5.8 0 0 0-3.4 10.5c.7.5 1 1.2 1 2v1.5h4.8V16c0-.8.3-1.5 1-2A5.8 5.8 0 0 0 12 3.5z" />
+      </svg>
+      <svg viewBox="-34 -34 68 68" className="ra-lamp-rays" aria-hidden="true">
+        {RAYS.map((angle, i) => (
+          <line
+            key={i}
+            x1={25 * Math.cos(angle)}
+            y1={25 * Math.sin(angle)}
+            x2={31 * Math.cos(angle)}
+            y2={31 * Math.sin(angle)}
+          />
+        ))}
+      </svg>
+    </button>
+  );
+}
 
 // Tâche « Expression libre », dans le gabarit commun (cf. TaskLayout) :
 // conversation avec le prof, question servie par l'application, indices que
@@ -38,6 +78,14 @@ const EXERCISE_NAMES = { expression: "Expression libre", declension: "Déclinais
 // l'exercice suivant s'y écrit (dans le sens de lecture de chaque ligne). La réponse et l'évaluation ne
 // s'affichent que pour un essai raté ; elles se referment, comme l'indice, au
 // passage à la déclinaison ou à la question suivante.
+// composer(lamp) : sans Gemini Live, la réponse de l'élève (enregistrée ou
+// écrite), sous les fenêtres de l'exercice, avec son évaluation (cf.
+// StudentAnswer) : la fenêtre de l'évaluation n'a alors plus lieu d'être.
+// L'antisèche n'y est plus affichée d'office : l'ampoule (lamp), à côté de la
+// piste d'enregistrement, la déroule, avec le cours du sujet de la question ;
+// elle se remonte d'elle-même SHEET_MS après le dernier geste. keepOnDone :
+// toutes les fenêtres restent à l'écran après la dernière question (pendant
+// l'au revoir du prof), jusqu'à la fin de la connexion (cf. TaskLayout).
 export default function ExpressionBoard({
   teacher,
   topics,
@@ -54,20 +102,45 @@ export default function ExpressionBoard({
   onNext,
   score,
   clock,
+  composer,
+  keepOnDone = false,
 }) {
   // Cours déroulé sous la rangée de tuiles (index dans le programme), un seul à
   // la fois : celui du sujet de la question, tant que l'élève n'en a pas choisi
   // un autre (ou fermé) pour cette question ; aucun entre deux questions.
   const [chosenCourse, setChosenCourse] = useState({ question: null, index: null });
   const asked = question && !done ? question.number : null;
+  // Antisèche à la demande (cf. Lamp) : aucun cours ne s'y ouvre de lui-même.
+  const onDemand = Boolean(composer);
   const openCourse =
     chosenCourse.question === asked
       ? chosenCourse.index
-      : asked !== null && topics?.current >= 0
+      : !onDemand && asked !== null && topics?.current >= 0
         ? topics.current
         : null;
-  const toggleCourse = (i) =>
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [touched, setTouched] = useState(0); // chaque geste dans l'antisèche relance son délai
+  const foldRef = useRef(null);
+  const closeSheet = useCallback(() => {
+    setChosenCourse((chosen) => ({ ...chosen, index: null }));
+    foldRef.current = setTimeout(() => setSheetOpen(false), FOLD_UP_MS);
+  }, []);
+  useEffect(() => {
+    if (!sheetOpen) return undefined;
+    const timer = setTimeout(closeSheet, SHEET_MS);
+    return () => clearTimeout(timer);
+  }, [sheetOpen, touched, closeSheet]);
+  useEffect(() => () => clearTimeout(foldRef.current), []);
+  const openSheet = () => {
+    clearTimeout(foldRef.current);
+    setChosenCourse({ question: asked, index: asked !== null && topics?.current >= 0 ? topics.current : null });
+    setSheetOpen(true);
+    setTouched((n) => n + 1);
+  };
+  const toggleCourse = (i) => {
     setChosenCourse({ question: asked, index: openCourse === i ? null : i });
+    setTouched((n) => n + 1);
+  };
 
   // La déclinaison ne s'affiche qu'une fois les fenêtres de la question fermées.
   const [foldedFor, setFoldedFor] = useState(null);
@@ -203,8 +276,8 @@ export default function ExpressionBoard({
     </>
   );
 
-  // Programme de la séance : le sujet de la question en bleu, une fois la
-  // question à l'écran.
+  // Programme de la séance, intitulé « Antisèche » (cf. demande explicite du
+  // user) : le sujet de la question en bleu, une fois la question à l'écran.
   const material = (
     <Program
       topics={topics}
@@ -223,15 +296,23 @@ export default function ExpressionBoard({
       exerciseKey={`board-${boardFor}`}
       exerciseLabel={shownDeclension ? "Déclinaison" : "Expression libre"}
       exercisePersistent
-      answer={assessment || null}
+      answer={(!composer && assessment) || null}
       extra={extra || []}
       closing={closing || folding}
       clock={controls || null}
       material={material}
-      materialLabel="Programme"
+      materialLabel="Antisèche"
       followup={topics && <Followup history={score?.history ?? []} names={EXERCISE_NAMES} />}
       followupLabel="Suivi"
-      finished={done}
+      finished={done && !keepOnDone}
+      composer={
+        composer &&
+        composer(
+          <Lamp key={asked ?? "none"} open={sheetOpen} onClick={sheetOpen ? closeSheet : openSheet} />,
+        )
+      }
+      materialOpen={onDemand ? sheetOpen : undefined}
+      onMaterialClose={closeSheet}
       balanced
     />
   );

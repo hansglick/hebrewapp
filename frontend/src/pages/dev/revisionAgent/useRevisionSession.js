@@ -23,6 +23,13 @@ import { AudioLink } from "./audio";
 // paused : après un échec en déclinaison ou une évaluation (compréhension,
 // expression libre),
 // l'exercice suivant attend next().
+// Page sans Gemini Live (params.mode === "texte") : pas de micro en continu (la
+// voix du prof, avec params.ttsModel, est jouée comme en Live) ; l'élève
+// enregistre ses réponses (sendAudio) ou les écrit (sendText), et transcript
+// donne la transcription de la dernière réponse enregistrée ({seq, text}) ;
+// exchange, ce que le prof fait de la dernière réponse envoyée : {kind:
+// "evaluation", evaluation (null tant qu'elle n'est pas jugée)} ou {kind:
+// "conversation"} (null en attendant).
 export function useRevisionSession() {
   const [status, setStatus] = useState("idle");
   const [phase, setPhase] = useState(null);
@@ -61,6 +68,10 @@ export function useRevisionSession() {
   const [hint, setHint] = useState(null);
   // Tâche « Question » : l'élève a pris la parole une première fois (la fenêtre « Réponse » apparaît).
   const [answerFrame, setAnswerFrame] = useState(false);
+  // Facture de la séance (tokens et prix de chaque modèle, durée), envoyée à la fin de la conversation (cf. Bill).
+  const [bill, setBill] = useState(null);
+  const [transcript, setTranscript] = useState(null);
+  const [exchange, setExchange] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -112,10 +123,16 @@ export function useRevisionSession() {
       setScore(null);
       setHint(null);
       setAnswerFrame(false);
+      setBill(null);
+      setTranscript(null);
+      setExchange(null);
       setStatus("connecting");
 
-      const audio = new AudioLink();
+      const textMode = params.mode === "texte";
+      const audio = textMode && !params.ttsModel ? null : new AudioLink();
       audioRef.current = audio;
+      // Le contexte audio se débloque pendant le clic qui lance la séance (sans micro, rien d'autre ne le fait).
+      if (textMode) audio?.ctx.resume();
       const ws = new WebSocket(revisionAgentWebSocketUrl(params));
       ws.binaryType = "arraybuffer";
       wsRef.current = ws;
@@ -212,6 +229,15 @@ export function useRevisionSession() {
           case "interrupt":
             audioRef.current?.flush();
             break;
+          case "bill":
+            setBill(msg.bill);
+            break;
+          case "transcript":
+            setTranscript((previous) => ({ seq: (previous?.seq ?? 0) + 1, text: msg.text }));
+            break;
+          case "exchange":
+            setExchange({ kind: msg.kind, evaluation: msg.evaluation ?? null });
+            break;
           case "error":
             setNotice(msg.text);
             break;
@@ -229,6 +255,7 @@ export function useRevisionSession() {
         setLanguage(null);
       };
 
+      if (textMode) return;
       try {
         await audio.startMicrophone((pcm) => {
           if (ws.readyState === WebSocket.OPEN) ws.send(pcm);
@@ -251,6 +278,22 @@ export function useRevisionSession() {
   const next = useCallback(() => {
     const ws = wsRef.current;
     if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: "next" }));
+  }, []);
+
+  // Mode texte : la réponse écrite de l'élève.
+  const sendText = useCallback((text) => {
+    const ws = wsRef.current;
+    if (ws?.readyState !== WebSocket.OPEN) return;
+    setExchange(null);
+    ws.send(JSON.stringify({ type: "student_text", text }));
+  }, []);
+
+  // Mode texte : la réponse enregistrée de l'élève (WAV en base64), transcrite par le serveur.
+  const sendAudio = useCallback((audio) => {
+    const ws = wsRef.current;
+    if (ws?.readyState !== WebSocket.OPEN) return;
+    setExchange(null);
+    ws.send(JSON.stringify({ type: "student_audio", audio }));
   }, []);
 
   // Lecture : le prof lit l'extrait (le haut-parleur) ; nombre de phrases par lecture.
@@ -285,7 +328,7 @@ export function useRevisionSession() {
 
   return {
     status, phase, seconds, teacher, extract, readingControl, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
-    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame,
-    start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading,
+    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, exchange,
+    start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading, sendText, sendAudio,
   };
 }

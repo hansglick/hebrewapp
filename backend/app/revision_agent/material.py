@@ -1,7 +1,7 @@
 """Matière du prof pour l'expression libre : les mots et verbes des leçons révisées (item_word, item_verbe)."""
 
 from app.data_loader import get_dataset
-from app.revision_agent.passages import lesson_number
+from app.revision_agent.passages import is_previous, lesson_number
 
 
 def vocabulary(lesson: str, current: bool, previous: bool) -> list[dict]:
@@ -13,7 +13,7 @@ def vocabulary(lesson: str, current: bool, previous: bool) -> list[dict]:
 
     def kept(item: dict) -> int | None:
         number = lesson_number(f"{item.get('chapter')}.{item.get('lesson')}")
-        if number is not None and ((current and number == selected) or (previous and number < selected)):
+        if number is not None and ((current and number == selected) or (previous and is_previous(number, selected))):
             return number
         return None
 

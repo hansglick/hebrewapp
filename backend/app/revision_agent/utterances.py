@@ -1,6 +1,6 @@
-"""Phrases d'exercice des leçons 0.01 → 0.20 (déclinaison, complétion, mot, question), découpées en énoncés. Toutes
-leurs données sont dans un seul fichier, revision_course.json (scripts/build_revision_course.py, cf. demande explicite
-du user), dont le format est décrit dans ce script.
+"""Phrases d'exercice des leçons 0.01 → LAST_LESSON (déclinaison, complétion, mot, question), découpées en énoncés.
+Toutes leurs données sont dans un seul fichier, revision_course.json (scripts/build_revision_course.py, cf. demande
+explicite du user), dont le format est décrit dans ce script.
 
 Chaque énoncé y garde ses champs (« he », « fr », « concepts », « subjects », « declined_prepositions »,
 « vocabulary », « questions »…), plus « id » (l'identifiant de sa phrase, « leçon:index ») et « text » (= « he »).
@@ -11,7 +11,7 @@ import re
 from functools import lru_cache
 
 from app.config import DATA_DIR
-from app.revision_agent.passages import lesson_number
+from app.revision_agent.passages import is_previous, lesson_number
 
 
 @lru_cache(maxsize=1)
@@ -24,12 +24,12 @@ def utterances() -> list[tuple[str, dict]]:
 
 
 def lesson_utterances(lesson: str, current: bool, previous: bool) -> list[tuple[str, dict]]:
-    """Énoncés de la leçon choisie et/ou des leçons antérieures, selon les cases cochées."""
+    """Énoncés de la leçon choisie et/ou des leçons antérieures (cf. passages.is_previous), selon les cases cochées."""
     selected = lesson_number(lesson)
     if selected is None:
         return []
     return [(code, u) for code, u in utterances()
-            if (n := lesson_number(code)) is not None and ((current and n == selected) or (previous and n < selected))]
+            if (n := lesson_number(code)) is not None and ((current and n == selected) or (previous and is_previous(n, selected)))]
 
 
 # Mots qui ne font pas d'une phrase un autre exercice : « יש לרוני ספר », « אין לרוני ספר », « לרוני יש ספר »… sont

@@ -155,6 +155,7 @@ function App() {
         <Route path="dev/phrase-curation" element={<PhraseCurationScreen />} />
         <Route path="dev/palette-accueil" element={<PaletteAccueilCalibrationScreen />} />
         <Route path="dev/revision-agent" element={<RevisionAgentScreen />} />
+        <Route path="dev/revision-agent-texte" element={<RevisionAgentScreen key="texte" textMode />} />
         <Route path="dev/topic-prototype" element={<TopicPrototypeScreen />} />
         <Route path="examen" element={<ExamenChoiceScreen />} />
         <Route path="examen/sauter" element={<ExamenSauterScreen />} />

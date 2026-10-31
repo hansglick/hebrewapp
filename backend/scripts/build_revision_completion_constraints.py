@@ -8,8 +8,9 @@ servent à la complétion : les autres n'ont pas de contrainte.
 La contrainte est écrite dans revision_concept_pool.json (la source, cf. build_revision_concept_pool.py) et dans
 revision_course.json (cf. build_revision_course.py, qui la recopie).
 
-Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_completion_constraints [concept ...]
-Sans argument, tous les concepts ; avec des codes (« 0.08 »), seulement ceux-là (les autres sont gardés).
+Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_completion_constraints 0.21-0.30
+Seulement les énoncés des leçons données, regroupés par concept (cf. scripts.revision_scope) : ceux des autres
+leçons gardent leur contrainte.
 """
 
 import asyncio
@@ -22,6 +23,7 @@ from pydantic import BaseModel
 
 from app.config import DATA_DIR, OPENAI_API_KEY
 from app.revision_agent.config import EVALUATOR
+from scripts.revision_scope import parse_lessons
 
 COURSE = DATA_DIR / "revision_course.json"
 POOL = DATA_DIR / "revision_concept_pool.json"
@@ -97,14 +99,15 @@ async def concept_constraints(client: AsyncOpenAI, code: str, definition: str,
     return found
 
 
-async def main(codes: list[str]) -> None:
+async def main(args: list[str]) -> None:
+    lessons = parse_lessons(args)
     course = json.loads(COURSE.read_text(encoding="utf-8"))
     by_concept: dict[str, list[tuple[str, dict, dict]]] = {}
     definitions: dict[str, str] = {}
     for phrase_id, p in course["phrases"].items():
         for u in p["utterances"]:
             for c in u["concepts"]:
-                if (not codes or c["id"] in codes) and hebrew(c.get("truncated_one")):
+                if p["lesson"] in lessons and hebrew(c.get("truncated_one")):
                     by_concept.setdefault(c["id"], []).append((phrase_id, u, c))
                     definitions[c["id"]] = c["definition"]
 
