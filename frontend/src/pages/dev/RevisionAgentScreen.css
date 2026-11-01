@@ -1317,7 +1317,7 @@
    fenêtres du centre vers le haut et prend leur place ; elle défile avec la
    page, et un glissement vers le bas la referme (cf. TaskLayout). Page sans
    Gemini Live : la séance tient dans la hauteur de l'écran (cf.
-   .ra-main-fold-screen), en 14 px, l'hébreu en 16 px. */
+   .ra-main-fold-screen). */
 @media (max-width: 899px) {
   .revision-agent-controls {
     max-height: 2000px;
@@ -1414,22 +1414,6 @@
     display: none;
   }
 
-  /* Police de la séance : le français en 14 px, l'hébreu en 16 px (cf. demande explicite du user). */
-  .revision-agent-session {
-    font-size: 14px;
-  }
-
-  .revision-agent-session :is([lang="he"], [dir="rtl"]):not(.ra-translate-toggle *),
-  .revision-agent-session .ra-speech-he.ra-speech-translation {
-    font-size: 16px;
-  }
-
-  .revision-agent-session .ra-speech-fr,
-  .revision-agent-session .ra-speech-texts .ra-speech-spoken-fr,
-  .revision-agent-session .ra-bill {
-    font-size: 14px;
-  }
-
   /* Fenêtres plus serrées, pour tenir dans l'écran. */
   .revision-agent-session .ra-layout,
   .revision-agent-session .ra-layout-main {
@@ -1439,18 +1423,6 @@
   .revision-agent-session .ra-zone {
     gap: 8px;
     padding: 10px 12px;
-  }
-
-  /* « Question suivante », « Arrêter la séance » et le chrono sur une seule ligne. */
-  .revision-agent-session .ra-layout-clock {
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-
-  .revision-agent-session .ra-layout-clock :is(button, .ra-clock) {
-    min-width: 0;
-    padding: 9px 10px;
-    font-size: 13px;
   }
 
   /* Les fenêtres du centre à la hauteur de l'écran sous leur bord haut (--ra-screen-height, cf. TaskLayout) : la
