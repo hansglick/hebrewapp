@@ -35,6 +35,8 @@ export default function DeclensionBoard({
   onNext,
   score,
   clock,
+  composer,
+  keepOnDone = false,
 }) {
   // Dernière phrase donnée : elle reste au tableau, effacée, entre deux phrases.
   const [lastDeclension, setLastDeclension] = useState(null);
@@ -145,6 +147,9 @@ export default function DeclensionBoard({
 
   return (
     <TaskLayout
+      // Sans Gemini Live : la réponse enregistrée de l'élève (cf. StudentAnswer), et les fenêtres qui restent à la fin
+      // de la séance, jusqu'à la fin de la connexion (keepOnDone).
+      composer={composer && composer(null)}
       conversation={conversation || null}
       exercise={exercise || null}
       exerciseKey="board"
@@ -157,7 +162,7 @@ export default function DeclensionBoard({
       materialLabel="Programme"
       followup={topics && <Followup history={score?.history ?? []} names={EXERCISE_NAMES} />}
       followupLabel="Suivi"
-      finished={done}
+      finished={done && !keepOnDone}
       balanced
     />
   );

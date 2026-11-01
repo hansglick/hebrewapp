@@ -34,12 +34,11 @@ export const SPEECH_STEP_MS = 35;
 // user). mode : le mode de langue qu'on peut changer (évaluation orale) ; sans
 // lui, le logo montre seulement la langue que le prof a parlée.
 // Sur mobile (cf. demande explicite du user) : la réplique n'est que dans une langue, celle parlée, et le bouton
-// « אA » la remplace par sa traduction, puis la remet ; elle s'écrit plus lentement, au pas de la voix, et défile
+// « אA » la remplace par sa traduction, puis la remet ; elle s'écrit à la même vitesse que sur ordinateur, et défile
 // toute seule comme un prompteur : la dernière ligne écrite reste en bas de la fenêtre, les précédentes remontent
 // et sortent par le haut ; le mode de langue et le bouton « אA » passent sur la ligne de l'intitulé (cf.
 // .ra-main-fold-screen). Le doigt ne la fait pas défiler : les lignes sorties par le haut ne reviennent pas.
 const MOBILE = "(max-width: 899px)";
-const MOBILE_STEP_MS = 70;
 
 export default function TeacherSpeech({ line, mode = null }) {
   const [mobile] = useState(() => window.matchMedia(MOBILE).matches);
@@ -64,10 +63,10 @@ export default function TeacherSpeech({ line, mode = null }) {
             fr: fr + Math.max(0, french.length - fr) / steps,
           };
         }),
-      mobile ? MOBILE_STEP_MS : SPEECH_STEP_MS,
+      SPEECH_STEP_MS,
     );
     return () => clearTimeout(timer);
-  }, [shown, done, hebrew.length, french.length, mobile]);
+  }, [shown, done, hebrew.length, french.length]);
 
   // Prompteur (mobile) : la réplique suit toujours l'écriture.
   const boxRef = useRef(null);

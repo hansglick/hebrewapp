@@ -25,6 +25,10 @@ import "../../../components/ConfigModal.css";
 // remonte à sa place (cf. FADE_STEPS).
 // La réponse écrite (interrupteur « Répondre par écrit », champ HebrewInput)
 // est retirée pour le moment (cf. demande explicite du user) : WRITTEN.
+// taskEvaluation : les autres tâches que l'expression libre gardent leur propre
+// fenêtre d'évaluation (cf. RevisionAgentScreen) ; celle-ci ne montre alors que
+// ce que l'élève a dit, sous l'intitulé « Ta réponse », et se referme quand
+// l'évaluation de cette réponse arrive (une autre que celle d'avant l'envoi).
 
 const WRITTEN = false;
 
@@ -54,7 +58,7 @@ const base64 = (blob) =>
     reader.readAsDataURL(blob);
   });
 
-export default function StudentAnswer({ onSend, onSendAudio, transcript, exchange, disabled, lamp }) {
+export default function StudentAnswer({ onSend, onSendAudio, transcript, exchange, disabled, lamp, taskEvaluation }) {
   // Dernière réponse envoyée : {id, kind: "text", text} ou {id, kind: "audio", url, afterSeq} (sa transcription est
   // la première arrivée après afterSeq).
   const [sent, setSent] = useState(null);
@@ -66,7 +70,7 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
 
   const replaceSent = (message) => {
     if (sent?.kind === "audio") URL.revokeObjectURL(sent.url);
-    setSent({ ...message, id: (sent?.id ?? 0) + 1 });
+    setSent({ ...message, id: (sent?.id ?? 0) + 1, before: taskEvaluation });
   };
 
   const startRecording = async () => {
@@ -111,7 +115,10 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
 
   const heard = sent?.kind === "audio" && transcript && transcript.seq > sent.afterSeq ? transcript.text : null;
   const said = sent?.kind === "text" ? sent.text : heard;
-  const evaluation = exchange?.kind === "evaluation" ? exchange.evaluation : null;
+  const ownEvaluation = taskEvaluation !== undefined;
+  const evaluated = ownEvaluation && Boolean(sent) && Boolean(taskEvaluation) && taskEvaluation !== sent.before;
+  const exchanged = ownEvaluation ? null : exchange;
+  const evaluation = exchanged?.kind === "evaluation" ? exchanged.evaluation : null;
   const perfect = Boolean(evaluation) && evaluation.errors.length === 0;
 
   // Étape de la disparition d'une réponse sans faute ({id, stage}, id : la réponse concernée).
@@ -131,13 +138,15 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
 
   return (
     // La bordure de la fenêtre prend la couleur du mode (cf. .ra-zone-composer:has(.ra-composer-evaluation)).
-    <div className={`ra-composer ${shown && exchange ? `ra-composer-${exchange.kind}` : ""}`} onKeyDown={onKeyDown}>
+    <div className={`ra-composer ${shown && exchanged ? `ra-composer-${exchanged.kind}` : ""}`} onKeyDown={onKeyDown}>
       <div className="ra-panel-head">
-        <FlapLabel text={(shown && LABELS[exchange?.kind]) || "Ta réponse"} />
+        <FlapLabel text={(shown && LABELS[exchanged?.kind]) || "Ta réponse"} />
       </div>
       {/* La fenêtre s'agrandit vers le bas à la première réponse, et se referme après une réponse sans faute (cf.
           .ra-fold). */}
-      <div className={`ra-fold ra-exchange-fold ${shown && stage !== "folding" ? "" : "ra-fold-closed"}`}>
+      <div
+        className={`ra-fold ra-exchange-fold ${shown && stage !== "folding" && !evaluated ? "" : "ra-fold-closed"}`}
+      >
         <div className="ra-fold-inner">
           {shown && (
             <div className={`ra-exchange ${stage ? "ra-exchange-erased" : ""}`}>
@@ -168,7 +177,7 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
                   )}
                 </div>
               </div>
-              {exchange?.kind === "evaluation" &&
+              {exchanged?.kind === "evaluation" &&
                 (!evaluation ? (
                   <p className="muted">Le prof évalue ta réponse…</p>
                 ) : (

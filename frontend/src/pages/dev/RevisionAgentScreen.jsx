@@ -53,10 +53,21 @@ const TASKS = [
 // Lecture : répliques à lire par tour, au plus (cf. passages.MAX_PHRASES_PER_READING).
 const MAX_PER_READING = 3;
 
-// Mode texte : le modèle du prof, le plus rapide (cf. config.TEXT_TEACHER_MODELS), et celui de sa voix, le plus
-// économique (cf. config.TTS_MODELS) ; fixés, sans menu pour les choisir (cf. demande explicite du user).
-const TEACHER_MODEL = "gemini-3.5-flash-lite";
-const TTS_MODEL = "gemini-3.8-flash-lite-tts";
+// Mode texte : modèles possibles du prof (cf. config.TEXT_TEACHER_MODELS), le
+// plus rapide par défaut (cf. demande explicite du user).
+const TEACHER_MODELS = [
+  { id: "gemini-3.5-flash-lite", label: "Gemini 3.5 Flash-Lite" },
+  { id: "gemini-3.5-flash", label: "Gemini 3.5 Flash" },
+  { id: "gemini-3.8-flash", label: "Gemini 3.8 Flash" },
+];
+
+// Mode texte : modèles de la voix du prof (cf. config.TTS_MODELS), le plus
+// économique par défaut (cf. demande explicite du user).
+const TTS_MODELS = [
+  { id: "gemini-3.8-flash-lite-tts", label: "Gemini 3.8 Flash-Lite TTS" },
+  { id: "gemini-3.8-flash-tts", label: "Gemini 3.8 Flash TTS" },
+  { id: "gemini-3.1-flash-tts-preview", label: "Gemini 3.1 Flash TTS (preview)" },
+];
 
 // Voix du prof, fixée (cf. demande explicite du user) : une des voix prédéfinies de Gemini Live.
 const VOICE = "Enceladus";
@@ -87,10 +98,10 @@ const LAST_LESSON = 30;
 // tire des phrases dont une partie est surlignée, l'élève pose la question
 // dont c'est la réponse (cf. QuestionBoard). Accessible uniquement via /dev.
 // textMode : la page sans Gemini Live (/dev/revision-agent-texte, cf. demande
-// explicite du user), l'expression libre seule : le prof est un modèle texte
-// (cf. app.revision_agent.text_teacher) dont chaque prise de parole est dite
-// par un modèle TTS ; l'élève répond à voix haute, transcrit, ou par écrit en
-// cas de souci (cf. StudentAnswer).
+// explicite du user), toutes les tâches, l'expression libre par défaut : le
+// prof est un modèle texte (cf. app.revision_agent.text_teacher) dont chaque
+// prise de parole est dite par un modèle TTS ; l'élève répond à voix haute,
+// transcrit, ou par écrit en cas de souci (cf. StudentAnswer).
 export default function RevisionAgentScreen({ textMode = false }) {
   // Toujours le skin « Kindle » sur cette page, quel que soit celui choisi (cf. demande explicite du user).
   const { setForcedSkin } = useConfig();
@@ -100,8 +111,10 @@ export default function RevisionAgentScreen({ textMode = false }) {
   }, [setForcedSkin]);
   const [lessons, setLessons] = useState([]);
   const [lessonCode, setLessonCode] = useState("");
-  const tasks = textMode ? TASKS.filter((t) => t.id === "expression") : TASKS;
-  const [task, setTask] = useState(tasks[0].id);
+  const tasks = TASKS;
+  const [task, setTask] = useState(textMode ? "expression" : tasks[0].id);
+  const [teacherModel, setTeacherModel] = useState(TEACHER_MODELS[0].id);
+  const [ttsModel, setTtsModel] = useState(TTS_MODELS[0].id);
   const [currentLesson, setCurrentLesson] = useState(true);
   const [previousLessons, setPreviousLessons] = useState(false);
   // Lecture : affiche la phonétique de chaque lecture (contrôle, cf. ReadingBoard).
@@ -241,8 +254,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
         previous: !lessonOnly && previousLessons,
         perReading,
         mode: textMode ? "texte" : "voix",
-        teacherModel: textMode ? TEACHER_MODEL : undefined,
-        ttsModel: textMode ? TTS_MODEL : undefined,
+        teacherModel: textMode ? teacherModel : undefined,
+        ttsModel: textMode ? ttsModel : undefined,
       });
     }
   };
@@ -255,6 +268,24 @@ export default function RevisionAgentScreen({ textMode = false }) {
       {clock}
     </>
   );
+
+  // Sans Gemini Live, toutes les tâches : la réponse enregistrée de l'élève (cf. StudentAnswer), qui reste à l'écran
+  // jusqu'à la fin de la connexion, puis s'en va avec les autres fenêtres. taskEvaluation : l'évaluation qu'affiche la
+  // tâche elle-même (toutes sauf l'expression libre, dont la fenêtre de la réponse montre l'évaluation).
+  const composer = (taskEvaluation) =>
+    textMode &&
+    (live || session.bill) &&
+    ((lamp) => (
+      <StudentAnswer
+        onSend={session.sendText}
+        onSendAudio={session.sendAudio}
+        transcript={session.transcript}
+        exchange={session.exchange}
+        disabled={!live || session.phase === "done"}
+        lamp={lamp}
+        taskEvaluation={taskEvaluation}
+      />
+    ));
 
   return (
     <section className="screen revision-agent">
@@ -300,6 +331,31 @@ export default function RevisionAgentScreen({ textMode = false }) {
                 ))}
               </select>
             </label>
+
+            {textMode && (
+              <label className="revision-agent-field">
+                Modèle du prof
+                <select value={teacherModel} onChange={(e) => setTeacherModel(e.target.value)}>
+                  {TEACHER_MODELS.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {textMode && (
+              <label className="revision-agent-field">
+                Voix du prof
+                <select value={ttsModel} onChange={(e) => setTtsModel(e.target.value)}>
+                  {TTS_MODELS.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
 
             {/* Lecture : toujours le texte de la leçon choisie, rien à choisir (cf. demande explicite du user). */}
             {!lessonOnly && (
@@ -433,6 +489,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
               score={session.score}
               onNext={session.next}
               clock={sessionControls || null}
+              composer={composer(session.evaluation)}
             />
           ) : sessionTask === "expression" ? (
             <ExpressionBoard
@@ -457,21 +514,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
               onNext={session.next}
               clock={sessionControls || null}
               keepOnDone={textMode}
-              // La réponse reste à l'écran jusqu'à la fin de la connexion, puis s'en va avec les autres fenêtres.
-              composer={
-                textMode &&
-                (live || session.bill) &&
-                ((lamp) => (
-                  <StudentAnswer
-                    onSend={session.sendText}
-                    onSendAudio={session.sendAudio}
-                    transcript={session.transcript}
-                    exchange={session.exchange}
-                    disabled={!live || session.phase === "done"}
-                    lamp={lamp}
-                  />
-                ))
-              }
+              composer={composer()}
             />
           ) : sessionTask === "question" ? (
             <QuestionBoard
@@ -493,6 +536,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
               onHint={session.requestHint}
               onNext={session.next}
               clock={sessionControls || null}
+              keepOnDone={textMode}
+              composer={composer(session.evaluation)}
             />
           ) : sessionTask === "mot" ? (
             <WordBoard
@@ -501,6 +546,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
               answer={session.answer}
               solution={session.solution}
               notice={session.notice}
+              composer={composer(session.answer)}
             />
           ) : sessionTask === "completion" ? (
             <CompletionBoard
@@ -523,6 +569,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
               onHint={session.requestHint}
               onNext={session.next}
               clock={sessionControls || null}
+              keepOnDone={textMode}
+              composer={composer(session.evaluation)}
             />
           ) : sessionTask === "declinaison" ? (
             <DeclensionBoard
@@ -542,6 +590,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
               }
               onNext={session.next}
               clock={sessionControls || null}
+              keepOnDone={textMode}
+              composer={composer(session.declensionEvaluation)}
             />
           ) : (
             <ReadingBoard
@@ -563,6 +613,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
               }
               onNext={session.next}
               clock={sessionControls || null}
+              composer={composer(session.evaluation)}
             />
           )}
         </BillCloseContext.Provider>

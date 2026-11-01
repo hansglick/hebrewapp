@@ -43,6 +43,7 @@ from app.revision_agent.gemini_live import GeminiLive
 from app.revision_agent.passages import EXTRACTS_PER_SESSION, MAX_PHRASES_PER_READING, sample_reading
 from app.revision_agent.phonetics import PHONETIC_CONVENTION, reference
 from app.revision_agent.session import TeacherSession, rms
+from app.revision_agent.text_teacher import TextTeacher
 from app.revision_agent.translate import translate
 
 log = logging.getLogger("revision_agent.reading")
@@ -239,6 +240,21 @@ class ReadingSession(TeacherSession):
                 self.last_voice = now
         await super().on_microphone(pcm)
 
+    async def on_student_text(self, text: str, spoken: bool = False) -> None:
+        # Sans Gemini Live (cf. text_teacher.py), la lecture enregistrée arrive d'un bloc, transcrite : elle est
+        # comparée tout de suite, sans passer par le prof, qui reçoit ensuite l'évaluation (cf. evaluate), comme en Live.
+        if not isinstance(self.live, TextTeacher) or not self.reading or self.evaluating:
+            await super().on_student_text(text, spoken)
+            return
+        if not text or self.started_at is None:
+            return
+        log.info("lecture enregistrée : %s", text)
+        if self.journal:
+            self.journal.write("student", text=text)
+        self.heard, self.heard_at = text, 0.0
+        self.voice_started = self.collecting = self.evaluating = True
+        self.background.append(asyncio.create_task(self.evaluate()))
+
     async def on_user_text(self, text: str) -> None:
         # Recueillie jusqu’au départ de la comparaison : elle arrive souvent après le silence qui clôt la lecture.
         if self.collecting:
@@ -388,7 +404,9 @@ class ReadingSession(TeacherSession):
         while ((not HEBREW_LETTER.search(self.heard) or time.monotonic() - self.heard_at < TRANSCRIPT_SETTLED_SECONDS)
                and time.monotonic() < started + TRANSCRIPT_GRACE_SECONDS):
             await asyncio.sleep(0.1)
-        while not self.phonetic and time.monotonic() < started + PHONETIC_GRACE_SECONDS:
+        # Sans Gemini Live, le prof n'entend pas la lecture : pas de transcription phonétique à attendre.
+        while (not self.phonetic and not isinstance(self.live, TextTeacher)
+               and time.monotonic() < started + PHONETIC_GRACE_SECONDS):
             await asyncio.sleep(0.1)
         self.collecting = False
         heard = self.heard.strip()

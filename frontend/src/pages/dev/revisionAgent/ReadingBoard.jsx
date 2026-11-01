@@ -89,6 +89,7 @@ export default function ReadingBoard({
   onNext,
   onListen,
   clock,
+  composer,
 }) {
   const phraseRefs = useRef([]);
 
@@ -216,6 +217,8 @@ export default function ReadingBoard({
 
   return (
     <TaskLayout
+      // Sans Gemini Live : la réponse enregistrée de l'élève (cf. StudentAnswer).
+      composer={composer && composer(null)}
       conversation={conversation || null}
       exerciseKey="board"
       answer={assessment || null}

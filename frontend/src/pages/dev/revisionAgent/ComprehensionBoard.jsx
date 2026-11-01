@@ -64,6 +64,7 @@ export default function ComprehensionBoard({
   score,
   onNext,
   clock,
+  composer,
 }) {
   const phraseRefs = useRef([]);
   // Surlignage en cours au moment où le texte a été réduit : une nouvelle solution surlignée le rouvre.
@@ -217,6 +218,8 @@ export default function ComprehensionBoard({
 
   return (
     <TaskLayout
+      // Sans Gemini Live : la réponse enregistrée de l'élève (cf. StudentAnswer).
+      composer={composer && composer(null)}
       conversation={conversation || null}
       exercise={exercise || null}
       exerciseKey="board"

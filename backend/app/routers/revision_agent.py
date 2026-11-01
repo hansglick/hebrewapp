@@ -106,10 +106,6 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         if not GEMINI_API_KEY:
             return await refuse("Clé API manquante côté serveur.", 1011)
         session = ExpressionSession(websocket, voice, lesson)
-        if mode == "texte":
-            # Page « mode texte » : le prof écrit, l'élève aussi, sans Gemini Live (cf. text_teacher.py) ; avec
-            # tts_model, le prof dit aussi chaque prise de parole (cf. tts.py).
-            session.live = TextTeacher.replacing(session.live, teacher_model, tts_model)
     elif task == "declinaison":
         # Phrases tirées dans les sujets de déclinaison du niveau, les leçons cochées d'abord (cf. declension.draw_items).
         items = declension_items(lesson, current, previous)
@@ -142,6 +138,11 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         session = QuestionSession(websocket, voice, lesson, items)
     else:
         return await refuse("Cette tâche n'est pas encore disponible.")
+    if mode == "texte":
+        # Page « mode texte », toutes les tâches (cf. demande explicite du user) : le prof écrit, sans Gemini Live (cf.
+        # text_teacher.py), et l'élève enregistre ses réponses ; avec tts_model, le prof dit aussi chaque prise de
+        # parole (cf. tts.py).
+        session.live = TextTeacher.replacing(session.live, teacher_model, tts_model)
 
     # Journal de la séance sur le disque persistant : déroulé et durée, par compte (cf. app.revision_agent.journal).
     journal = SessionJournal(get_user_id(pseudo, pin), pseudo, task, lesson, voice=voice, current=current,

@@ -89,6 +89,8 @@ export default function CompletionBoard({
   onHint,
   onNext,
   clock,
+  composer,
+  keepOnDone = false,
 }) {
   // Dernière phrase donnée : elle reste au tableau, effacée, entre deux phrases.
   const [lastExercise, setLastExercise] = useState(null);
@@ -216,6 +218,9 @@ export default function CompletionBoard({
 
   return (
     <TaskLayout
+      // Sans Gemini Live : la réponse enregistrée de l'élève (cf. StudentAnswer), et les fenêtres qui restent à la fin
+      // de la séance, jusqu'à la fin de la connexion (keepOnDone).
+      composer={composer && composer(null)}
       conversation={conversation || null}
       exercise={board || null}
       exerciseKey="board"
@@ -239,7 +244,7 @@ export default function CompletionBoard({
       followup={topics && <Followup history={score?.history ?? []} names={EXERCISE_NAMES} />}
       followupLabel="Suivi"
       wideMain
-      finished={done}
+      finished={done && !keepOnDone}
     />
   );
 }

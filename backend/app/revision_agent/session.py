@@ -50,6 +50,11 @@ TEACHER_RMS = 150  # le flux audio du prof peut être continu : en dessous, c'es
 # La transcription d'une prise de parole arrive bien avant la fin de l'audio : on la traduit dès qu'elle marque une pause.
 UTTERANCE_GAP_SECONDS = 0.4  # pause de transcription après laquelle le texte reçu est traduit et affiché
 TURN_GAP_SECONDS = 2.0  # sans fin de tour signalée : pause qui clôt la prise de parole
+# Fin de la séance, toutes tâches (cf. demande explicite du user) : la tâche terminée (« phase » « done »), la connexion
+# se ferme d'elle-même ce délai après l'au revoir du prof (texte affiché, audio joué), ou au plus tard FINISH_TIMEOUT
+# après la fin de la tâche, s'il ne dit rien.
+FINISH_GRACE_SECONDS = 1.5
+FINISH_TIMEOUT = 45
 SENTENCE_END = re.compile(r"[.!?]")
 SENTENCE = re.compile(r"[^.!?]*[.!?]+|[^.!?]+$")
 NIKKUD = re.compile("[֑-ׇ]")
@@ -109,7 +114,10 @@ class TeacherSession:
         self.hidden_turn = False  # la prochaine prise de parole du prof ne sera pas affichée
         self.hidden_text = ""  # … sauf ce qui ne répète pas ce texte (la question posée, cf. TeacherTurn.hidden)
         self.background: list[asyncio.Task] = []  # tâches propres à la séance, annulées à la fin
-        self.finished = asyncio.Event()  # la tâche est terminée : la séance se ferme d'elle-même
+        self.session_over = asyncio.Event()  # la tâche est terminée : la séance se ferme d'elle-même
+        self.done_at = 0.0  # fin de la tâche (cf. check_finished)
+        self.done_turn = 0  # dernière prise de parole du prof avant son au revoir
+        self.quiet_since = 0.0  # le prof s'est tu après son au revoir
         # Mode texte : la dernière réponse de l'élève attend que le prof l'évalue ou lui réponde (cf. « exchange »).
         self.exchange_open = False
         self.exchange_evaluated = False  # le prof l'évalue : l'évaluation suivra
@@ -124,6 +132,10 @@ class TeacherSession:
     # --- envois vers le navigateur ------------------------------------------
 
     async def to_browser(self, message: dict | bytes) -> None:
+        if isinstance(message, dict) and message.get("type") == "phase" and message.get("phase") == "done":
+            # La tâche est terminée : le prof dit au revoir, puis la séance se ferme (cf. check_finished).
+            self.done_at = self.done_at or time.monotonic()
+            self.done_turn = self.done_turn or self.turn.id
         async with self.browser_lock:
             try:
                 if isinstance(message, bytes):
@@ -143,7 +155,7 @@ class TeacherSession:
         FLASH_USAGE.set(flash_usage)
         await self.live.connect()
         tasks = [asyncio.create_task(self.pump_browser()), asyncio.create_task(self.watch()),
-                 asyncio.create_task(self.pump_live()), asyncio.create_task(self.finished.wait())]
+                 asyncio.create_task(self.pump_live()), asyncio.create_task(self.session_over.wait())]
         try:
             done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
             for task in done:
@@ -430,3 +442,18 @@ class TeacherSession:
                 if now - self.turn_text_at >= TURN_GAP_SECONDS:
                     self.end_turn()
             await self.tick(now)
+            if self.done_at and not self.session_over.is_set():
+                self.check_finished(now)
+
+    def check_finished(self, now: float) -> None:
+        """Ferme la séance quand le prof a fini son au revoir : prise de parole close, audio produit et joué."""
+        quiet = (self.turn.id > self.done_turn and not self.turn.open and not self.live.to_say
+                 and self.playback_until <= now)
+        if not quiet:
+            self.quiet_since = 0.0
+        elif not self.quiet_since:
+            self.quiet_since = now
+        if ((self.quiet_since and now - self.quiet_since >= FINISH_GRACE_SECONDS)
+                or now - self.done_at >= FINISH_TIMEOUT):
+            log.info("fin de la séance : fermeture automatique")
+            self.session_over.set()

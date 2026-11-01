@@ -10,7 +10,8 @@ import TeacherSpeech from "./TeacherSpeech";
 // (action ou concept) ; au moment de la correction, sa phrase telle que le
 // prof l'a comprise (mots fautifs en rouge, réussi / échec) puis, toujours,
 // la phrase d'origine, mot surligné ; à la fin, la facture de la séance.
-export default function WordBoard({ teacher, exercise, answer, solution, notice }) {
+// composer : sans Gemini Live, la réponse enregistrée de l'élève (cf. StudentAnswer), sous le mot à employer.
+export default function WordBoard({ teacher, exercise, answer, solution, notice, composer }) {
   const bill = useContext(BillContext);
   if (!teacher && !exercise && !answer && !notice) return null;
 
@@ -34,6 +35,12 @@ export default function WordBoard({ teacher, exercise, answer, solution, notice 
             <dd>{exercise.hint.text}</dd>
           </dl>
         </div>
+      )}
+
+      {composer && (
+        <section className="card ra-zone ra-zone-composer" aria-label="Ta réponse">
+          {composer(null)}
+        </section>
       )}
 
       {answer && <AnswerCard answer={answer} />}

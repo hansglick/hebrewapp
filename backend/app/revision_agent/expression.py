@@ -59,10 +59,6 @@ log = logging.getLogger("revision_agent.expression")
 QUESTIONS_PER_ROUND = 3  # pour découvrir la tâche, comme la compréhension (cf. demande explicite du user)
 CLOSING_SECONDS = 1.2  # fermeture des fenêtres de la question, de bas en haut (cf. .ra-closing)
 TEACHER_IDLE_TIMEOUT = 10  # la déclinaison attend au plus ce délai que le prof ait fini de féliciter l'élève
-# Fin de la séance (cf. demande explicite du user) : elle se ferme d'elle-même ce délai après l'au revoir du prof (texte
-# affiché, audio joué), ou au plus tard FINISH_TIMEOUT après la dernière évaluation, s'il ne dit rien.
-FINISH_GRACE_SECONDS = 1.5
-FINISH_TIMEOUT = 45
 # Ordre de priorité des sujets au tirage : les concepts, sinon les conjugaisons, puis le ל décliné.
 TOPIC_GROUPS = ("expression:concept:", "expression:conjugaison:", "expression:preposition:")
 # Sujets dont la déclinaison porte de préférence sur une préposition déclinée (possession, ressenti, appartenance…).
@@ -251,9 +247,6 @@ class ExpressionSession(TeacherSession):
         self.heard = ""  # transcription de ce que l'élève a dit depuis le dernier exercice
         self.language = DEFAULT_LANGUAGES["expression"]  # mode de langue du prof (cf. config)
         self.first_turn_done = False
-        self.done_at = 0.0  # fin de la dernière question
-        self.done_turn = 0  # dernière prise de parole du prof avant son au revoir
-        self.quiet_since = 0.0  # le prof s'est tu après son au revoir
         # Bilan de la séance : essais réussis et ratés, en expression et en déclinaison.
         self.score = {kind: {"ok": 0, "ko": 0} for kind in ("expression", "declension")}
         self.score_events = 0
@@ -291,25 +284,10 @@ class ExpressionSession(TeacherSession):
                 and (not self.live.speaks or 0 < self.playback_until <= now)):
             self.first_turn_done = True
             await self.to_browser({"type": "first_turn_done"})
-        if self.done_at and not self.finished.is_set():
-            self.check_finished(now)
         if (self.pending_question and not self.closing
                 and now - self.question_served_at > QUESTION_FALLBACK_SECONDS):
             log.info("le prof tarde à poser la question : affichage spontané")
             await self.show_question()
-
-    def check_finished(self, now: float) -> None:
-        """Ferme la séance quand le prof a fini son au revoir : prise de parole close, audio produit et joué."""
-        quiet = (self.turn.id > self.done_turn and not self.turn.open and not self.live.to_say
-                 and self.playback_until <= now)
-        if not quiet:
-            self.quiet_since = 0.0
-        elif not self.quiet_since:
-            self.quiet_since = now
-        if ((self.quiet_since and now - self.quiet_since >= FINISH_GRACE_SECONDS)
-                or now - self.done_at >= FINISH_TIMEOUT):
-            log.info("fin de la séance : fermeture automatique")
-            self.finished.set()
 
     async def on_hidden_turn_started(self) -> None:
         # La question s'affiche quand le prof commence à la poser, une fois les fenêtres précédentes fermées.
@@ -482,8 +460,7 @@ class ExpressionSession(TeacherSession):
         if self.asked >= len(self.questions):
             # Fin de la séance : la dernière question reste à l'écran.
             await self.set_answering(False)
-            await self.to_browser({"type": "phase", "phase": "done"})
-            self.done_at, self.done_turn = time.monotonic(), self.turn.id
+            await self.to_browser({"type": "phase", "phase": "done"})  # le prof dit au revoir (cf. check_finished)
             return None
         if self.asked:
             await self.close_windows()

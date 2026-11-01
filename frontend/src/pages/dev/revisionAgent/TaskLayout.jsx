@@ -22,7 +22,9 @@
 // et un glissement du doigt vers le bas, une fois en haut de la page
 // (onMaterialClose), la referme et les fait redescendre. Avec composer, sur
 // mobile, les fenêtres du centre tiennent dans la hauteur de l'écran (cf.
-// .ra-main-fold-screen) : la conversation prend la place qui reste. wideMain : les
+// .ra-main-fold-screen) : la conversation prend la place qui reste ; pas
+// quand la matière est toujours affichée (le texte de la lecture…), qui
+// tomberait sinon sous l'écran. wideMain : les
 // largeurs des deux colonnes permutées, le centre le plus large (cf.
 // CompletionBoard). compactSide : la
 // colonne de droite prend juste la largeur des boutons du bas, accolée au
@@ -143,7 +145,8 @@ export default function TaskLayout({
   const bill = useContext(BillContext);
   const closeBill = useContext(BillCloseContext);
   const foldRef = useRef(null);
-  useScreenHeight(foldRef, Boolean(composer));
+  const fitScreen = Boolean(composer) && !(material && materialOpen === undefined);
+  useScreenHeight(foldRef, fitScreen);
   // Antisèche ouverte, sur mobile : un glissement vers le bas quand la page est déjà en haut la referme (cf. demande
   // explicite du user) ; plus bas, le doigt fait simplement remonter l'antisèche.
   const swipe = useRef(null);
@@ -257,7 +260,7 @@ export default function TaskLayout({
         // sur ordinateur : display: contents).
         <div
           ref={foldRef}
-          className={`ra-main-fold ${composer ? "ra-main-fold-screen" : ""} ${
+          className={`ra-main-fold ${fitScreen ? "ra-main-fold-screen" : ""} ${
             composer && materialOpen ? "ra-main-fold-closed" : ""
           }`}
         >
