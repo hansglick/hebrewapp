@@ -148,8 +148,9 @@ export function useRevisionSession() {
       const textMode = params.mode === "texte";
       const audio = textMode && !params.ttsModel ? null : new AudioLink();
       audioRef.current = audio;
-      // Le contexte audio se débloque pendant le clic qui lance la séance (sans micro, rien d'autre ne le fait).
-      if (textMode) audio?.ctx.resume();
+      // Le contexte audio se débloque pendant le clic qui lance la séance (sans micro, rien d'autre ne le fait) ; sur
+      // iPhone, la page passe aussi en lecture : le mode silencieux ne coupe pas le prof (cf. AudioLink.unlock).
+      if (textMode) audio?.unlock();
       const ws = new WebSocket(revisionAgentWebSocketUrl(params));
       ws.binaryType = "arraybuffer";
       wsRef.current = ws;

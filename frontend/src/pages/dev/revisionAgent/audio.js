@@ -1,6 +1,17 @@
 // Micro → PCM16 24 kHz, et lecture en file de la voix du prof (PCM16 24 kHz).
 export const SAMPLE_RATE = 24000;
 
+// iPhone : l'audio Web (la voix du prof) est coupé quand le téléphone est en silencieux, sauf si la page se déclare
+// en lecture, comme une vidéo (navigator.audioSession, iOS 16.4 et plus ; rien ailleurs). Le micro demande
+// « play-and-record » le temps d'un enregistrement (cf. Recorder), puis la page revient en lecture.
+export function setAudioSession(type) {
+  try {
+    if (navigator.audioSession) navigator.audioSession.type = type;
+  } catch {
+    // navigateur qui refuse ce type : il garde le sien
+  }
+}
+
 export class AudioLink {
   constructor() {
     // Le navigateur rééchantillonne le micro au sampleRate du contexte.
@@ -8,6 +19,17 @@ export class AudioLink {
     this.stream = null;
     this.nextPlayTime = 0;
     this.sources = new Set();
+  }
+
+  // À appeler pendant le clic qui lance la séance : la page passe en lecture (cf. setAudioSession), le contexte audio
+  // se débloque, et un son vide est joué tout de suite, ce que certaines versions d'iOS exigent pendant le geste.
+  unlock() {
+    setAudioSession("playback");
+    this.ctx.resume();
+    const silence = this.ctx.createBufferSource();
+    silence.buffer = this.ctx.createBuffer(1, 1, SAMPLE_RATE);
+    silence.connect(this.ctx.destination);
+    silence.start(0);
   }
 
   async startMicrophone(onChunk) {
@@ -83,6 +105,8 @@ export class Recorder {
     this.chunks = [];
     this.onLevel = onLevel;
     this.onChunk = onChunk;
+    // iPhone : la page déclarée en lecture (cf. AudioLink.unlock) ne pourrait pas enregistrer.
+    setAudioSession("play-and-record");
     this.link = new AudioLink();
     try {
       await this.link.startMicrophone((pcm) => this.capture(pcm));
@@ -122,10 +146,12 @@ export class Recorder {
     return new Blob([header, ...chunks], { type: "audio/wav" });
   }
 
-  // Le micro se ferme : le témoin du téléphone s'éteint.
+  // Le micro se ferme : le témoin du téléphone s'éteint, et la page revient en lecture (cf. setAudioSession).
   close() {
     const link = this.link;
     this.chunks = this.onLevel = this.onChunk = this.link = null;
-    link?.close().catch(() => {});
+    Promise.resolve(link?.close())
+      .catch(() => {})
+      .finally(() => setAudioSession("playback"));
   }
 }
