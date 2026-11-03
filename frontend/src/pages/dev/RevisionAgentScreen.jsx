@@ -79,10 +79,15 @@ const TTS_MODELS = [
 // « Double route voyelle » : le modèle de la transcription phonétique de la réponse enregistrée (cf.
 // config.PHONETIC_MODELS) et celui du juge de la prononciation, qui compare la phonétique au mot transcrit ou au texte
 // lu (cf. config.PRONUNCIATION_MODELS), choisis ensemble (cf. demande explicite du user) : rapide, ou précis, par
-// défaut.
+// défaut. « woT » (lecture seulement) : sans Gemini Transcribe, la lecture jugée sur sa seule phonétique (cf.
+// reading.skipped_words), pour comparer les deux architectures.
 const MODEL_CONFIGS = [
   { id: "fast", label: "FAST", phonetic: "gemini-3.5-flash", pronunciation: "gemini-3.5-flash-lite" },
   { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
+  { id: "fast_wot", label: "FAST woT", phonetic: "gemini-3.5-flash", pronunciation: "gemini-3.5-flash-lite",
+    wot: true },
+  { id: "precise_wot", label: "SHARP woT", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash",
+    wot: true },
 ];
 
 // Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
@@ -290,6 +295,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
         ttsModel: textMode ? ttsModel : undefined,
         phoneticModel: textMode && vowelRoute ? models.phonetic : undefined,
         pronunciationModel: textMode && vowelRoute ? models.pronunciation : undefined,
+        transcribe: !(textMode && vowelRoute && task === "lecture" && models.wot),
       });
     }
   };
@@ -416,10 +422,12 @@ export default function RevisionAgentScreen({ textMode = false }) {
                   <div className="revision-agent-field" role="radiogroup" aria-label="Modèles de la prononciation">
                     Modèles de la prononciation
                     <div className="revision-agent-scope">
-                      {MODEL_CONFIGS.map((config) => (
+                      {MODEL_CONFIGS.filter((config) => !config.wot || task === "lecture").map((config) => (
                         <label
                           key={config.id}
-                          title={`Phonétique : ${config.phonetic} · juge : ${config.pronunciation}`}
+                          title={`Phonétique : ${config.phonetic} · juge : ${config.pronunciation}${
+                            config.wot ? " · sans Gemini Transcribe" : ""
+                          }`}
                         >
                           <input
                             type="radio"

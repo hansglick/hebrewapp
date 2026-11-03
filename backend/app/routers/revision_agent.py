@@ -32,7 +32,9 @@ router = APIRouter(prefix="/api/revision-agent", tags=["revision-agent"])
 log = logging.getLogger("revision_agent")
 
 # Les tâches et leur schéma (cf. revision_agent.schema), None tant qu'il n'est pas décrit.
-SCHEMAS = {"lecture": ("Lecture", reading_schema), "comprehension": ("Compréhension", None),
+SCHEMAS = {"lecture": ("Lecture", reading_schema),
+           "lecture_wot": ("Lecture, sans Transcribe (woT)", lambda: reading_schema(transcribed=False)),
+           "comprehension": ("Compréhension", None),
            "expression": ("Expression libre", None), "declinaison": ("Déclinaison", None),
            "completion": ("Complétion", None), "mot": ("Mot", None), "question": ("Question", None)}
 
@@ -86,7 +88,7 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
                             current: bool = True, previous: bool = False, per_reading: int = 1,
                             mode: str = "voix", teacher_model: str = TEXT_TEACHER_MODEL,
                             tts_model: str | None = None, phonetic_model: str | None = None,
-                            pronunciation_model: str | None = None):
+                            pronunciation_model: str | None = None, transcribe: bool = True):
     await websocket.accept()
 
     async def refuse(text: str, code: int = 1008) -> None:
@@ -176,6 +178,9 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Sa prononciation est alors jugée à part, par ce modèle, en même temps que le reste (cf.
         # judges.mispronounced).
         session.pronunciation_model = pronunciation_model or PRONUNCIATION_MODELS[0]
+        # Lecture, configurations « woT » (cf. demande explicite du user) : sans transcription hébraïque, jugée sur sa
+        # seule phonétique ; il en faut donc une.
+        session.transcribe_audio = transcribe or task != "lecture" or session.phonetic_model is None
         # L'accueil enregistré de la tâche, dans le mode de langue de départ, joué tout de suite (cf. intros.py).
         if welcome := intro(task, getattr(session, "language", None), tts_model, voice):
             session.live.intro = welcome

@@ -120,6 +120,10 @@ class TeacherSession:
         self.known_translations: dict[str, dict] = {}
         self.audio_phonetic = ""
         self.pronunciation_model: str | None = None  # double route voyelle : le juge de la prononciation
+        # Lecture, configurations « woT » (cf. demande explicite du user) : la réponse enregistrée n'est pas transcrite
+        # en hébreu (Gemini Transcribe), seulement en phonétique ; elle est jugée sur sa seule phonétique (cf.
+        # reading.skipped_words).
+        self.transcribe_audio = True
         self.pronunciation: asyncio.Task | None = None  # mots mal prononcés de la dernière réponse orale
         self.turn_text_at = 0.0
         self.teacher_seq = 0
@@ -280,8 +284,10 @@ class TeacherSession:
         # Double route voyelle : la transcription phonétique part en même temps que la transcription hébraïque.
         phonetic = (asyncio.create_task(heard_phonetic(wav, self.phonetic_model)) if self.phonetic_wanted()
                     else None)
+        text = ""
         try:
-            text = await transcribe(wav)
+            if self.transcribe_audio:
+                text = await transcribe(wav)
             if text:
                 text = await respelled(await in_hebrew_letters(text), self.spelling_context(), self.spelling_label())
         except Exception:
@@ -292,7 +298,7 @@ class TeacherSession:
                  f" · {self.audio_phonetic}" if phonetic else "")
         # Double route voyelle : la prononciation entendue s'affiche sous la transcription si l'élève coche « Phonétique ».
         await self.to_browser({"type": "transcript", "text": text, "phonetic": self.audio_phonetic})
-        if text:
+        if text or (not self.transcribe_audio and self.audio_phonetic):
             await self.on_student_text(text, spoken=True)
         elif self.started_at is not None:
             await self.live.app_message("L'application n'a rien entendu dans la réponse enregistrée de l'élève : "
