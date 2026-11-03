@@ -5,8 +5,8 @@ from fastapi import APIRouter, HTTPException, WebSocket
 from app.auth import get_user_id
 from app.config import GEMINI_API_KEY
 from app.data_loader import get_dataset
-from app.revision_agent.config import (LAST_LESSON, LESSON_CHAPTER, TEXT_TEACHER_MODEL, TEXT_TEACHER_MODELS, TTS_MODELS,
-                                      VOICES)
+from app.revision_agent.config import (LAST_LESSON, LESSON_CHAPTER, PHONETIC_MODELS, PRONUNCIATION_MODELS,
+                                      TEXT_TEACHER_MODEL, TEXT_TEACHER_MODELS, TTS_MODELS, VOICES, VOWEL_ROUTE_TASKS)
 from app.revision_agent.passages import lessons_with_text
 from app.revision_agent.completion import CompletionSession, availability, qualified_concepts
 from app.revision_agent.completion import draw_items as completion_items
@@ -14,9 +14,11 @@ from app.revision_agent.comprehension import ComprehensionSession
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
+from app.revision_agent.intros import intro
 from app.revision_agent.journal import SessionJournal
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
+from app.revision_agent.reading import schema as reading_schema
 from app.revision_agent.text_teacher import TextTeacher
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.question import QuestionSession
@@ -28,6 +30,11 @@ from app.revision_agent.word import exercises_for as word_exercises
 
 router = APIRouter(prefix="/api/revision-agent", tags=["revision-agent"])
 log = logging.getLogger("revision_agent")
+
+# Les tâches et leur schéma (cf. revision_agent.schema), None tant qu'il n'est pas décrit.
+SCHEMAS = {"lecture": ("Lecture", reading_schema), "comprehension": ("Compréhension", None),
+           "expression": ("Expression libre", None), "declinaison": ("Déclinaison", None),
+           "completion": ("Complétion", None), "mot": ("Mot", None), "question": ("Question", None)}
 
 
 @router.get("/texts")
@@ -51,6 +58,21 @@ def completion_lessons():
     return {code: availability(code) for code in codes}
 
 
+@router.get("/schema")
+def schemas():
+    """Les tâches, et si leur schéma est décrit."""
+    return [{"task": task, "label": label, "ready": build is not None} for task, (label, build) in SCHEMAS.items()]
+
+
+@router.get("/schema/{task}")
+def schema(task: str):
+    """Le schéma d'une tâche : ses étapes, leurs modèles et ce qu'ils reçoivent, lus dans le code à chaque appel."""
+    label, build = SCHEMAS.get(task, (None, None))
+    if build is None:
+        raise HTTPException(status_code=404, detail="Pas encore de schéma pour cette tâche.")
+    return build()
+
+
 @router.get("/topics")
 def topics(task: str, lesson: str):
     """Sujets qualifiés d'une tâche au niveau `lesson`, avec leurs exercices (prototype sans agent)."""
@@ -63,7 +85,8 @@ def topics(task: str, lesson: str):
 async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson: str, voice: str, task: str,
                             current: bool = True, previous: bool = False, per_reading: int = 1,
                             mode: str = "voix", teacher_model: str = TEXT_TEACHER_MODEL,
-                            tts_model: str | None = None):
+                            tts_model: str | None = None, phonetic_model: str | None = None,
+                            pronunciation_model: str | None = None):
     await websocket.accept()
 
     async def refuse(text: str, code: int = 1008) -> None:
@@ -80,6 +103,10 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         return await refuse("Modèle du prof inconnu.")
     if tts_model is not None and tts_model not in TTS_MODELS:
         return await refuse("Modèle de voix inconnu.")
+    if phonetic_model is not None and phonetic_model not in PHONETIC_MODELS:
+        return await refuse("Modèle de la phonétique inconnu.")
+    if pronunciation_model is not None and pronunciation_model not in PRONUNCIATION_MODELS:
+        return await refuse("Modèle de la prononciation inconnu.")
     if task == "lecture":
         # Toujours le texte de la leçon choisie, quelles que soient les cases cochées (cf. demande explicite du user).
         if lesson not in lessons_with_text():
@@ -143,6 +170,16 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # text_teacher.py), et l'élève enregistre ses réponses ; avec tts_model, le prof dit aussi chaque prise de
         # parole (cf. tts.py).
         session.live = TextTeacher.replacing(session.live, teacher_model, tts_model)
+        # Case « Double route voyelle » cochée : la réponse enregistrée est aussi transcrite en lettres latines,
+        # voyelles comprises, par ce modèle (cf. transcribe.heard_phonetic).
+        session.phonetic_model = phonetic_model if task in VOWEL_ROUTE_TASKS else None
+        # Sa prononciation est alors jugée à part, par ce modèle, en même temps que le reste (cf.
+        # judges.mispronounced).
+        session.pronunciation_model = pronunciation_model or PRONUNCIATION_MODELS[0]
+        # L'accueil enregistré de la tâche, dans le mode de langue de départ, joué tout de suite (cf. intros.py).
+        if welcome := intro(task, getattr(session, "language", None), tts_model, voice):
+            session.live.intro = welcome
+            session.known_translations[welcome["text"]] = welcome
 
     # Journal de la séance sur le disque persistant : déroulé et durée, par compte (cf. app.revision_agent.journal).
     journal = SessionJournal(get_user_id(pseudo, pin), pseudo, task, lesson, voice=voice, current=current,

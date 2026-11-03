@@ -2,8 +2,8 @@
 SENTENCES_PER_ROUND débuts de phrase, chacun avec un concept des leçons cochées, et écrit au tableau le début de la
 phrase et sa contrainte, en style télégraphique (« utilise la préposition de direction ל », cf.
 scripts/build_revision_completion_constraints.py). L'élève complète la phrase à voix haute, librement : toute suite
-plausible qui respecte la contrainte est juste. Le prof relève les fautes de langue, un modèle rapide
-(COMPLETION_MODEL) juge la contrainte et la plausibilité. Réussie, l'application enchaîne d'elle-même ; ratée, le
+plausible qui respecte la contrainte est juste. Le prof relève les fautes de langue, un modèle rapide juge la
+contrainte et la plausibilité (cf. judges.judge_sentence). Réussie, l'application enchaîne d'elle-même ; ratée, le
 prof commente et l'élève retente de vive voix ou passe avec « Complétion suivante ». La phrase d'origine ne s'affiche
 jamais.
 
@@ -42,14 +42,13 @@ from fastapi import WebSocket
 from app.config import DATA_DIR
 from app.revision_agent import prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import COMPLETION_MODEL, DEFAULT_LANGUAGES
-from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, french_texts, hebrew_answer, letters
-from app.revision_agent.expression import (ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT,
-                                           error_list)
+from app.revision_agent.config import DEFAULT_LANGUAGES
+from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, hebrew_answer, letters
+from app.revision_agent.expression import ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT
 from app.revision_agent.gemini_live import GeminiLive
+from app.revision_agent.judges import error_list, judge_sentence, no_fault, plausibility, sense_errors, teacher_errors
 from app.revision_agent.passages import is_previous, lesson_number
 from app.revision_agent.session import TeacherSession
-from app.revision_agent.translate import translate
 from app.revision_agent.utterances import lesson_utterances, sentence_key
 
 log = logging.getLogger("revision_agent.completion")
@@ -92,44 +91,18 @@ HESITATION_TOOL = {
     "description": "L'élève dit qu'il ne sait pas, qu'il ne trouve pas, ou demande de l'aide pour la phrase en cours.",
 }
 
-# Jugement de la contrainte et de la plausibilité par le modèle rapide (cf. demande explicite du user).
-COMPLETION_PROMPT = """Tu es professeur d'hébreu. Exercice de complétion pour débutants : l'élève voit le début d'une
-phrase hébraïque et une contrainte de grammaire, et complète la phrase à voix haute, librement. Tu reçois le début,
-la contrainte, le concept de grammaire qu'elle fait pratiquer, l'action de la phrase d'origine (une simple
-référence : l'élève n'est pas tenu de la suivre) et la phrase de l'élève (transcrite de l'oral, éventuellement avec
-des fautes de langue : ne les juge pas, un autre s'en charge).
-Juge deux choses :
-- contrainte : la suite de l'élève emploie bien l'outil de grammaire demandé, de la façon demandée (« exprime une
-  absence avec אין + ל » : une possession avec יש est fausse ; « utilise la préposition de direction ל » : une
-  destination sans ל, ou avec ב, est fausse). Une forme mal accordée ou mal déclinée de cet outil reste une faute de
-  langue, pas un manquement à la contrainte.
-- plausibilité : la phrase entière, début compris, a un sens et pourrait se dire dans la vie courante (« דוד נוסע
-  לשולחן » ne l'est pas). Toute suite sensée est juste, même très différente de l'action, même très simple, même
-  avec des mots plus avancés que le niveau.
-Pour chacune, un texte en français, en quelques mots, factuel, qui décrit la phrase de l'élève sur ce point
-(« tu emploies bien ל devant la destination », « la phrase n'a pas de sens : on ne voyage pas vers une table »).
-Pour chaque problème, le mot de la phrase de l'élève qui le porte, recopié exactement (vide si aucun mot précis), et
-un commentaire en français, en quelques mots. Ni les textes ni les commentaires ne donnent JAMAIS la solution : ni
-la bonne forme, ni une suite possible.
-Tout mot hébreu cité s'écrit en écriture hébraïque."""
-
-COMPLETION_SCHEMA = {
-    "type": "OBJECT",
-    "properties": {
-        "contrainte_respectee": {"type": "BOOLEAN"},
-        "texte_contrainte": {"type": "STRING"},
-        "plausible": {"type": "BOOLEAN"},
-        "texte_plausibilite": {"type": "STRING"},
-        "problemes": {
-            "type": "ARRAY",
-            "items": {
-                "type": "OBJECT",
-                "properties": {"mot": {"type": "STRING"}, "commentaire": {"type": "STRING"}},
-                "required": ["mot", "commentaire"],
-            },
-        },
-    },
-    "required": ["contrainte_respectee", "texte_contrainte", "plausible", "texte_plausibilite", "problemes"],
+# Contrainte et plausibilité, jugées à part (cf. judges.judge_sentence, demande explicite du user).
+COMPLETION_EXERCISE = ("Exercice de complétion pour débutants : l'élève voit le début d'une phrase hébraïque (debut) et "
+                       "une contrainte de grammaire (contrainte, qui fait pratiquer concept), et complète la phrase à "
+                       "voix haute, librement. action_reference est l'action de la phrase d'origine, une simple "
+                       "référence : l'élève n'est pas tenu de la suivre.")
+COMPLETION_CRITERIA = {
+    "contrainte": "la suite de l'élève emploie bien l'outil de grammaire demandé, de la façon demandée (« exprime une "
+                  "absence avec אין + ל » : une possession avec יש est fausse ; « utilise la préposition de direction "
+                  "ל » : une destination sans ל, ou avec ב, est fausse). Une forme mal accordée ou mal déclinée de cet "
+                  "outil reste une faute de langue, pas un manquement à la contrainte.",
+    "plausibilite": plausibility(" entière, début compris", "« דוד נוסע לשולחן » ne l'est pas. Une suite très "
+                                                             "différente de l'action de référence est juste."),
 }
 
 
@@ -253,17 +226,10 @@ def complete(answer: str, prefix: str) -> str:
 
 
 async def judge_completion(item: Item, sentence: str) -> dict:
-    """Contrainte et plausibilité de la phrase de l'élève, jugées par le modèle rapide."""
-    request = json.dumps({"debut": item.prefix, "contrainte": item.constraint, "concept": item.definition,
-                          "action_reference": item.action, "phrase_eleve": sentence}, ensure_ascii=False)
-    try:
-        result = json.loads(await translate(request, COMPLETION_PROMPT, COMPLETION_SCHEMA, COMPLETION_MODEL))
-    except Exception:
-        log.exception("Jugement de la complétion impossible : %s", sentence)
-        return {"contrainte_respectee": True, "texte_contrainte": "", "plausible": True, "texte_plausibilite": "",
-                "problemes": []}
-    log.info("complétion jugée : %s", result)
-    return result
+    """Contrainte et plausibilité de la phrase de l'élève (cf. judges.judge_sentence)."""
+    return await judge_sentence(COMPLETION_EXERCISE, {"debut": item.prefix, "contrainte": item.constraint,
+                                                      "concept": item.definition, "action_reference": item.action},
+                                sentence, COMPLETION_CRITERIA)
 
 
 def bullet(text) -> str:
@@ -272,13 +238,14 @@ def bullet(text) -> str:
     return text[:1].lower() + text[1:]
 
 
-def dimensions(constraint_ok: bool, plausible: bool, judged: dict, language: list[dict]) -> list[dict]:
+def dimensions(judged: dict, language: list[dict]) -> list[dict]:
     """Les trois puces de l'évaluation (cf. demande explicite du user) : contrainte, plausibilité, grammaire."""
     faults = len(language)
+    constraint_ok, plausible = judged["contrainte"]["ok"], judged["plausibilite"]["ok"]
     return [
-        {"name": "Contrainte", "ok": constraint_ok, "text": bullet(judged.get("texte_contrainte"))
+        {"name": "Contrainte", "ok": constraint_ok, "text": bullet(judged["contrainte"]["texte"])
          or ("contrainte respectée" if constraint_ok else "contrainte non respectée")},
-        {"name": "Plausibilité", "ok": plausible, "text": bullet(judged.get("texte_plausibilite"))
+        {"name": "Plausibilité", "ok": plausible, "text": bullet(judged["plausibilite"]["texte"])
          or ("phrase plausible" if plausible else "phrase peu plausible")},
         {"name": "Grammaire", "ok": not faults, "text": "pas de faute de grammaire" if not faults else
          f"{faults} faute{'s' if faults > 1 else ''} de langue, surlignée{'s' if faults > 1 else ''} dans ta phrase"},
@@ -456,28 +423,16 @@ class CompletionSession(TeacherSession):
         d'elle-même (cf. advance) ; ratée, la pastille offre l'indice suivant."""
         item = self.current
         answer = complete(hebrew_answer(args.get("reponse_eleve"), self.heard), item.prefix)
-        language = [{"word": str(f.get("mot") or "").strip(), "kind": "language",
-                     "comment": str(f.get("commentaire") or "").strip()}
-                    for f in args.get("fautes_langue") or [] if isinstance(f, dict)]
-        language = [e for e in language if e["word"] or e["comment"]]
-        texts, judged = await asyncio.gather(french_texts([e["comment"] for e in language]),
-                                             judge_completion(item, answer))
-        for error, text in zip(language, texts):
-            error["comment"] = text
-        constraint_ok, plausible = bool(judged.get("contrainte_respectee")), bool(judged.get("plausible"))
-        sense = []
-        if not (constraint_ok and plausible):
-            sense = [{"word": str(p.get("mot") or "").strip(), "kind": "sense",
-                      "comment": str(p.get("commentaire") or "").strip()}
-                     for p in judged.get("problemes") or [] if isinstance(p, dict)]
-            sense = [p for p in sense if p["comment"]] or [
-                {"word": "", "kind": "sense", "comment": "ta phrase ne respecte pas la consigne"}]
-        errors = sense + language
+        language, judged, pronunciation = await asyncio.gather(
+            teacher_errors(args, {"fautes_langue": "language"}), judge_completion(item, answer),
+            self.pronunciation_errors())
+        errors = sense_errors(judged, "ta phrase ne respecte pas la consigne") + language + pronunciation
+        await self.tell_judged(errors)
         self.evaluated = True
         await self.to_browser({"type": "evaluation", "evaluation": {
             "answer": align_error_words(answer, errors), "errors": errors,
-            "dimensions": dimensions(constraint_ok, plausible, judged, language)}})
-        succeeded = not errors
+            "dimensions": dimensions(judged, language)}})
+        succeeded = no_fault(errors)
         await self.record(succeeded)
         await self.set_answering(False)
         if succeeded:

@@ -25,6 +25,7 @@ const ERROR_KINDS = {
   truth: "faux d'après le texte",
   sense: "incohérent ou hors de propos", // expression libre (plausibilité)
   reading: "erreur de lecture", // lecture à voix haute
+  pronunciation: "faute de prononciation", // double route voyelle
 };
 
 // kinds : le ou les types de faute du mot ; un mot qui porte les deux est
@@ -127,8 +128,20 @@ function prefixEnd(chars, skip) {
 // demande explicite du user).
 // perfect : réponse sans faute, soulignée en vert dans son sens de lecture,
 // puis cochée à sa fin, comme une marque du suivi (cf. demande explicite du
-// user).
-export function Answer({ evaluation, legend = true, perfect = false }) {
+// user). below : affiché sous la réponse, au-dessus de la légende.
+// La lecture, qui s'écrit pendant qu'on l'évalue (cf. StudentAnswer) :
+// delayMs, elle commence à s'écrire après ce temps-là ; ses mots fautifs se
+// surlignent une fois qu'elle est écrite, au plus tôt (cf. demande explicite
+// du user) ; waiting, écrite, le curseur clignote encore, tant que son
+// évaluation n'est pas arrivée.
+export function Answer({
+  evaluation,
+  legend = true,
+  perfect = false,
+  below = null,
+  delayMs = 0,
+  waiting = false,
+}) {
   if (!evaluation.answer) return <p className="muted">(pas de réponse)</p>;
   return (
     <StreamedAnswer
@@ -136,11 +149,14 @@ export function Answer({ evaluation, legend = true, perfect = false }) {
       evaluation={evaluation}
       legend={legend}
       perfect={perfect}
+      below={below}
+      delayMs={delayMs}
+      waiting={waiting}
     />
   );
 }
 
-function StreamedAnswer({ evaluation, legend, perfect }) {
+function StreamedAnswer({ evaluation, legend, perfect, below, delayMs, waiting }) {
   const words = useMemo(
     () =>
       withoutNikkud(evaluation.answer)
@@ -167,9 +183,9 @@ function StreamedAnswer({ evaluation, legend, perfect }) {
 
   useEffect(() => {
     if (done) return undefined;
-    const timer = setTimeout(() => setShown((n) => n + 1), SPEECH_STEP_MS);
+    const timer = setTimeout(() => setShown((n) => n + 1), shown ? SPEECH_STEP_MS : delayMs + SPEECH_STEP_MS);
     return () => clearTimeout(timer);
-  }, [shown, done]);
+  }, [shown, done, delayMs]);
 
   const { kinds, skips } = errorKinds(
     words.map((chars) => chars.join("")),
@@ -205,13 +221,14 @@ function StreamedAnswer({ evaluation, legend, perfect }) {
           );
         })}
         </span>
-        {!done && <span className="ra-caret" aria-hidden="true" />}
+        {(!done || waiting) && <span className="ra-caret" aria-hidden="true" />}
         {marked && perfect && (
           <span className="ra-burst ra-followup-ok ra-perfect-mark" title="Aucune faute">
             <CheckIcon />
           </span>
         )}
       </p>
+      {below}
       {done && legend && present.length > 0 && (
         <p className="ra-error-legend">
           {present.map((kind) => (

@@ -50,9 +50,9 @@ from fastapi import WebSocket
 from app.data_loader import get_dataset
 from app.revision_agent import prompts
 from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGES
-from app.revision_agent.evaluation import (QUESTION_FALLBACK_SECONDS, align_error_words, french_texts,
-                                           hebrew_answer)
+from app.revision_agent.evaluation import QUESTION_FALLBACK_SECONDS, align_error_words, hebrew_answer
 from app.revision_agent.gemini_live import GeminiLive
+from app.revision_agent.judges import error_list, no_fault, teacher_errors
 from app.revision_agent.session import TeacherSession
 
 log = logging.getLogger("revision_agent.comprehension")
@@ -67,23 +67,10 @@ ERROR_KINDS = {"fautes_langue": "language", "fautes_texte": "truth"}
 
 
 
-def error_list(description: str, comment: str) -> dict:
-    return {
-        "type": "ARRAY",
-        "description": description,
-        "items": {
-            "type": "OBJECT",
-            "properties": {
-                "mot": {"type": "STRING",
-                        "description": "Le mot fautif, recopié exactement tel qu'il est écrit dans reponse_eleve"},
-                "commentaire": {"type": "STRING",
-                                "description": "En français (jamais en hébreu, sauf la forme correcte et les mots ou "
-                                               "lettres hébreux cités, toujours en caractères hébreux, jamais en "
-                                               f"lettres latines), en une phrase courte : {comment}"},
-            },
-            "required": ["mot", "commentaire"],
-        },
-    }
+def comment_rule(comment: str) -> str:
+    """Le commentaire d'une faute, en compréhension : il peut citer la forme correcte (cf. judges.error_list)."""
+    return ("En français (jamais en hébreu, sauf la forme correcte et les mots ou lettres hébreux cités, toujours en "
+            f"caractères hébreux, jamais en lettres latines), en une phrase courte : {comment}")
 
 
 TEXT_TOOL = {
@@ -140,13 +127,13 @@ EVALUATION_TOOL = {
             "fautes_langue": error_list(
                 "Premier temps : chaque faute de langue de la réponse, dans l'ordre, en la jugeant comme si elle était "
                 "vraie ([] s'il n'y en a pas)",
-                "la nature de la faute et la forme correcte"),
+                comment_rule("la nature de la faute et la forme correcte")),
             "fautes_texte": error_list(
                 "Second temps : chaque mot de la réponse qui dit une chose fausse d'après le texte, dans l'ordre, "
                 "même s'il figure déjà dans fautes_langue ([] s'il n'y en a pas)",
-                "réfute seulement ce que la réponse affirme à tort, sans jamais dire ce que dit le texte à la "
-                "place, ni en hébreu ni en français (« le texte ne dit pas que Roni lit la Torah », jamais « le texte "
-                "dit que Roni lit un journal, pas la Torah »)"),
+                comment_rule("réfute seulement ce que la réponse affirme à tort, sans jamais dire ce que dit le texte "
+                             "à la place, ni en hébreu ni en français (« le texte ne dit pas que Roni lit la Torah », "
+                             "jamais « le texte dit que Roni lit un journal, pas la Torah »)")),
             "phrases_solution": {
                 "type": "ARRAY", "items": {"type": "INTEGER"},
                 "description": "Numéros des phrases du texte qui contiennent la solution (tels qu'ils figurent dans "
@@ -330,6 +317,9 @@ class ComprehensionSession(TeacherSession):
                 # affichée, d'après le prof (nouvel essai d'office) ; sinon, c'est une réplique.
                 verdict = (call.get("args") or {}).get("reponse_a_la_question") if self.auto_retry else None
                 log.info("évaluation pendant la conversation : %s", verdict or "refusée")
+                if verdict != "oui":
+                    # Pas une réponse (ou pas sûr) : la fenêtre de la réponse repasse en conversation.
+                    await self.exchange(None)
                 if verdict == "incertain":
                     await self.live.tool_response(call["id"], call["name"],
                                                   {"resultat": self.in_mode(prompts.ASK_IF_ANSWER)})
@@ -414,16 +404,17 @@ class ComprehensionSession(TeacherSession):
 
     async def evaluate(self, args: dict) -> bool:
         """Affiche l'évaluation ; vrai si la réponse est juste (aucune faute)."""
-        errors = [{"word": str(f.get("mot") or "").strip(), "kind": kind, "comment": str(f.get("commentaire") or "").strip()}
-                  for field, kind in ERROR_KINDS.items() for f in args.get(field) or [] if isinstance(f, dict)]
-        errors = [e for e in errors if e["word"] or e["comment"]]
+        # Langue et vérité, du prof ; double route voyelle, la prononciation, jugée à part (cf. judges.py).
+        teacher, pronunciation = await asyncio.gather(teacher_errors(args, ERROR_KINDS), self.pronunciation_errors())
+        errors = teacher + pronunciation
+        await self.tell_judged(errors)
         # Chaque mot fautif écrit comme dans son commentaire (homophones, cf. evaluation.align_error_words).
         answer = align_error_words(hebrew_answer(args.get("reponse_eleve"), self.heard), errors)
-        # Les commentaires s'adressent à un francophone : toujours en français, l'hébreu qu'ils citent en caractères
-        # hébreux (cf. evaluation.french_texts).
-        for error, comment in zip(errors, await french_texts([e["comment"] for e in errors])):
-            error["comment"] = comment
-        await self.to_browser({"type": "evaluation", "evaluation": {"answer": answer, "errors": errors}})
+        evaluation = {"answer": answer, "errors": errors}
+        # Mode texte, comme en expression libre (cf. demande explicite du user) : l'évaluation s'affiche dans la fenêtre
+        # de la réponse, fautes surlignées ou, juste, soulignée en vert, cochée, puis effacée (cf. StudentAnswer).
+        await self.exchange(evaluation)
+        await self.to_browser({"type": "evaluation", "evaluation": evaluation})
         numbers = args.get("phrases_solution") or []
         excerpts = find_excerpts(self.phrases, args.get("extraits_solution") or [])
         # Les phrases sont numérotées à partir de 1 dans les instructions du prof ; celles des extraits trouvés sont
@@ -433,8 +424,8 @@ class ComprehensionSession(TeacherSession):
                                     | {span[0] for span in excerpts}), excerpts)
         self.paused = True
         await self.to_browser({"type": "pause", "paused": True})
-        await self.record(not errors)
-        return not errors
+        await self.record(no_fault(errors))
+        return no_fault(errors)
 
     async def close_exercise(self) -> None:
         """Les fenêtres sous la question se ferment de bas en haut, puis l'exercice s'efface (cf. demande explicite du

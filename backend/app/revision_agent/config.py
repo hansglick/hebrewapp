@@ -8,10 +8,12 @@ LIVE_PRICES = {"input": {"TEXT": 0.75, "AUDIO": 3.00, "IMAGE": 1.00, "VIDEO": 1.
 # Tarif des modèles Flash appelés pendant la séance (traduction, jugements), en dollars par million de tokens :
 # (entrée, sortie réflexion comprise). gemini-3.5-flash-lite : page des tarifs ; gemini-3.5-flash n'y figure plus,
 # tarif relevé sur les comparateurs de prix (à vérifier).
-# gemini-3.5-transcribe (page des tarifs) : entrée audio, sortie texte.
+# gemini-3.5-transcribe (page des tarifs) : entrée audio, sortie texte. gemini-3.8-flash au tarif de lancement (cf.
+# TEXT_TEACHER_MODELS) ; appelés sur l'audio (cf. PHONETIC_MODELS), les Flash sont comptés au tarif de l'entrée texte
+# (à vérifier).
 # Modèles TTS (page des tarifs) : entrée texte, sortie audio ; ceux en 3.8 au tarif valable jusqu'à fin 2026, doublé
 # ensuite.
-FLASH_PRICES = {"gemini-3.5-flash-lite": (0.30, 2.50), "gemini-3.5-flash": (1.50, 9.00),
+FLASH_PRICES = {"gemini-3.5-flash-lite": (0.30, 2.50), "gemini-3.5-flash": (1.50, 9.00), "gemini-3.8-flash": (0.75, 3.75),
                 "gemini-3.5-transcribe": (2.00, 12.00), "gemini-3.8-flash-tts": (0.50, 9.00),
                 "gemini-3.8-flash-lite-tts": (0.50, 6.00), "gemini-3.1-flash-tts-preview": (1.00, 20.00)}
 # Page « mode texte » (cf. demande explicite du user) : le prof est ce modèle texte, sans voix, appelé à chaque prise
@@ -27,6 +29,18 @@ TEXT_TEACHER_MODELS = {
 TEXT_TEACHER_MODEL = "gemini-3.5-flash-lite"
 # Mode texte : la réponse que l'élève enregistre (au lieu de l'écrire) est transcrite par ce modèle (cf. transcribe.py).
 TRANSCRIBE_MODEL = "gemini-3.5-transcribe"
+# Mode texte, case « Double route voyelle » (cf. demande explicite du user) : la réponse enregistrée est aussi transcrite
+# en lettres latines, voyelles comprises, par l'un de ces modèles, choisi sur la page, en même temps que la
+# transcription hébraïque (cf. transcribe.heard_phonetic) ; pour ces tâches seulement. Le premier, celui par défaut :
+# gemini-3.8-flash (cf. demande explicite du user).
+PHONETIC_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash"]
+VOWEL_ROUTE_TASKS = ["lecture", "expression", "comprehension"]
+# Double route voyelle, les trois tâches : la prononciation jugée à part, en comparant la prononciation entendue au mot
+# transcrit ou au texte lu (cf. judges.mispronounced), par l'un de ces modèles, choisi sur la page (cf. demande
+# explicite du user) ; Flash par défaut (cf. demande explicite du user : le plus juste au banc d'essai).
+PRONUNCIATION_MODELS = ["gemini-3.5-flash", "gemini-3.5-flash-lite"]
+# Orthographe de la transcription relue d'après le contexte, prononciation inchangée (cf. transcribe.respelled).
+SPELLING_MODEL = "gemini-3.5-flash-lite"
 # Mode texte : la voix du prof, choisie sur la page parmi ces modèles TTS (cf. tts.py, demande explicite du user).
 # Premier morceau d'audio en 2 à 3 s pour chacun (mesuré).
 TTS_MODELS = ["gemini-3.8-flash-lite-tts", "gemini-3.8-flash-tts", "gemini-3.1-flash-tts-preview"]
@@ -45,8 +59,8 @@ AUTO_RETRY = True
 # écrit la phrase attendue (1 à 2 s, pendant que le prof félicite l'élève). gemini-3.8-flash : même qualité sur nos
 # tests, mais deux fois plus lent.
 DECLENSION_MODEL = "gemini-3.5-flash"
-QUESTION_MODEL = "gemini-3.5-flash"  # tâche « Question » : la question de l'élève vise-t-elle la cible ?
-COMPLETION_MODEL = "gemini-3.5-flash"  # tâche « Complétion » : la phrase respecte-t-elle la contrainte, a-t-elle un sens ?
+# Contrainte et plausibilité de la phrase de l'élève (complétion, question, expression libre), cf. judges.judge_sentence.
+JUDGE_MODEL = "gemini-3.5-flash"
 READING_MODEL = "gemini-3.5-flash"  # tâche « Lecture » : la transcription de la lecture comparée au texte
 # La phrase que ce modèle attend est envoyée à la fenêtre « Déclinaison », qui l'affiche si l'élève coche la case
 # (cf. demande explicite du user), puis retirée à sa demande : False, jamais envoyée, pas de case.

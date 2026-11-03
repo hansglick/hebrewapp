@@ -3,7 +3,9 @@ import HebrewInput from "../../../components/HebrewInput";
 import { Answer, Evaluation } from "./Assessment";
 import { Recorder } from "./audio";
 import FlapLabel from "./FlapLabel";
+import { graphemes, withoutNikkud } from "./hebrew";
 import RecordSlider from "./RecordSlider";
+import { SPEECH_STEP_MS } from "./TeacherSpeech";
 import "../../../components/ConfigModal.css";
 
 // Page sans Gemini Live (cf. demande explicite du user) : la réponse de
@@ -25,6 +27,10 @@ import "../../../components/ConfigModal.css";
 // remonte à sa place (cf. FADE_STEPS).
 // La réponse écrite (interrupteur « Répondre par écrit », champ HebrewInput)
 // est retirée pour le moment (cf. demande explicite du user) : WRITTEN.
+// Le crayon, à côté de la réponse affichée, permet de corriger à la main sa
+// transcription (un mot bien prononcé mais mal orthographié…) : un champ
+// texte la remplace, prérempli, et « Envoyer » renvoie la réponse corrigée au
+// prof, qui l'évalue à nouveau (cf. demande explicite du user).
 // taskEvaluation : les autres tâches que l'expression libre gardent leur propre
 // fenêtre d'évaluation (cf. RevisionAgentScreen) ; celle-ci ne montre alors que
 // ce que l'élève a dit, sous l'intitulé « Ta réponse », et se referme quand
@@ -39,6 +45,10 @@ const finalized = (text) => text.replace(/[כמנפצ](?=[\s.,!?;:]|$)/g, (lette
 
 const LABELS = { evaluation: "Évaluation", conversation: "Conversation" };
 
+// Lecture : le texte lu commence à s'écrire ce temps-là après l'envoi, à la vitesse habituelle (cf. Answer), pour que
+// ses mots fautifs se surlignent peu après qu'il est écrit (cf. demande explicite du user).
+const READING_DELAY_MS = 1000;
+
 // Après une réponse sans faute : soulignement et coche (cf. Answer), 4 s
 // d'affichage, puis chaque étape après la précédente — l'effacement (cf.
 // .ra-exchange-erased), le retrait du trait, la fenêtre qui se referme (cf.
@@ -50,6 +60,16 @@ const FADE_STEPS = [
   ["gone", 500],
 ];
 
+// Le trait au-dessus de la piste : droit, ses deux bouts arqués vers le bas, comme des cornes à l'envers (cf. demande
+// explicite du user) ; épaisseur fixe, quelle que soit sa largeur.
+function RuleShape({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M1 9C1 4.5 3 2 8 2H92C97 2 99 4.5 99 9" vectorEffect="non-scaling-stroke" />
+    </svg>
+  );
+}
+
 const base64 = (blob) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -58,7 +78,17 @@ const base64 = (blob) =>
     reader.readAsDataURL(blob);
   });
 
-export default function StudentAnswer({ onSend, onSendAudio, transcript, exchange, disabled, lamp, taskEvaluation }) {
+export default function StudentAnswer({
+  onSend,
+  onSendAudio,
+  transcript,
+  exchange,
+  disabled,
+  lamp,
+  taskEvaluation,
+  showPhonetic = false,
+  readingText = null,
+}) {
   // Dernière réponse envoyée : {id, kind: "text", text} ou {id, kind: "audio", url, afterSeq} (sa transcription est
   // la première arrivée après afterSeq).
   const [sent, setSent] = useState(null);
@@ -68,10 +98,13 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
   const [text, setText] = useState("");
   const recorderRef = useRef(null);
 
+  // reading : en lecture, le texte lu, retenu à l'envoi (l'extrait suivant se surligne dès la lecture réussie).
   const replaceSent = (message) => {
-    if (sent?.kind === "audio") URL.revokeObjectURL(sent.url);
-    setSent({ ...message, id: (sent?.id ?? 0) + 1, before: taskEvaluation });
+    if (sent?.url && sent.url !== message.url) URL.revokeObjectURL(sent.url);
+    setSent({ reading: readingText, ...message, id: (sent?.id ?? 0) + 1, before: taskEvaluation });
   };
+  // Correction à la main de la réponse affichée : {id : la réponse corrigée, draft : le texte du champ}.
+  const [editing, setEditing] = useState(null);
 
   const startRecording = async () => {
     setMicError(null);
@@ -112,9 +145,25 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
       sendText();
     }
   };
+  // La réponse corrigée remplace l'affichée (son enregistrement reste à réécouter).
+  const sendCorrection = () => {
+    const message = editing?.draft.trim();
+    setEditing(null);
+    if (!message || disabled || message === said) return;
+    onSend(message, true);
+    replaceSent({ kind: "text", text: message, url: sent?.url, reading: sent?.reading });
+  };
 
   const heard = sent?.kind === "audio" && transcript && transcript.seq > sent.afterSeq ? transcript.text : null;
   const said = sent?.kind === "text" ? sent.text : heard;
+  // En lecture, le texte lu s'écrit dès l'envoi, sans attendre la transcription ; ses mots mal lus se surlignent à
+  // l'arrivée de l'évaluation, sans qu'il se réécrive (cf. demande explicite du user). Rien entendu : « (rien
+  // entendu) », comme ailleurs.
+  const reading = Boolean(sent?.reading) && said !== "";
+  const answer = reading ? sent.reading : said;
+  // Double route voyelle, case « Phonétique » : la prononciation entendue de la réponse enregistrée, sous sa
+  // transcription ; pas pour une réponse corrigée à la main.
+  const phonetic = showPhonetic && heard ? transcript.phonetic : null;
   const ownEvaluation = taskEvaluation !== undefined;
   const evaluated = ownEvaluation && Boolean(sent) && Boolean(taskEvaluation) && taskEvaluation !== sent.before;
   const exchanged = ownEvaluation ? null : exchange;
@@ -135,6 +184,13 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
   }, [perfect, sentId]);
   const stage = fade && fade.id === sentId ? fade.stage : null;
   const shown = stage === "gone" ? null : sent;
+  const correcting = editing && editing.id === sent?.id;
+  const canCorrect = Boolean(said) && !disabled && !stage && !correcting;
+  // Un chiffre dans la transcription : une fois la réponse écrite (cf. Answer, un caractère par SPEECH_STEP_MS), le
+  // crayon explose deux fois, comme la coche du suivi, l'élève peut l'écrire en lettres à la main (cf. demande
+  // explicite du user, .ra-composer-correct-digits) ; key : il réexplose à chaque nouvelle transcription.
+  const digits = /\d/.test(said ?? "");
+  const writtenMs = digits ? graphemes(withoutNikkud(said)).length * SPEECH_STEP_MS : 0;
 
   return (
     // La bordure de la fenêtre prend la couleur du mode (cf. .ra-zone-composer:has(.ra-composer-evaluation)).
@@ -151,26 +207,73 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
           {shown && (
             <div className={`ra-exchange ${stage ? "ra-exchange-erased" : ""}`}>
               <div className="ra-exchange-said">
-                {sent.kind === "audio" && (
-                  <button
-                    type="button"
-                    className="ra-composer-play"
-                    onClick={() => new Audio(sent.url).play()}
-                    aria-label="Réécouter ma réponse"
-                    title="Réécouter ma réponse"
-                  >
-                    ▶
-                  </button>
+                {/* Le crayon, juste sous le bouton de réécoute (cf. demande explicite du user). */}
+                {(sent.url || canCorrect) && (
+                  <div className="ra-exchange-buttons">
+                    {sent.url && (
+                      <button
+                        type="button"
+                        className="ra-composer-play"
+                        onClick={() => new Audio(sent.url).play()}
+                        aria-label="Réécouter ma réponse"
+                        title="Réécouter ma réponse"
+                      >
+                        ▶
+                      </button>
+                    )}
+                    {canCorrect && (
+                      <button
+                        key={said}
+                        type="button"
+                        className={`ra-composer-play ra-composer-correct ${digits ? "ra-composer-correct-digits" : ""}`}
+                        style={digits ? { "--burst-delay": `${writtenMs}ms` } : undefined}
+                        onClick={() => setEditing({ id: sent.id, draft: said })}
+                        aria-label="Corriger ma réponse à la main"
+                        title="Corriger ma réponse à la main"
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 )}
                 <div className="ra-exchange-text">
-                  {said === null ? (
+                  {correcting ? (
+                    <div className="ra-exchange-edit">
+                      <input
+                        type="text"
+                        dir="auto"
+                        lang="he"
+                        value={editing.draft}
+                        onChange={(e) => setEditing({ ...editing, draft: e.target.value })}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") sendCorrection();
+                          if (e.key === "Escape") setEditing(null);
+                        }}
+                        aria-label="Ma réponse corrigée"
+                        autoFocus
+                      />
+                      <button
+                        type="button"
+                        className="ra-composer-send"
+                        onClick={sendCorrection}
+                        disabled={!editing.draft.trim()}
+                      >
+                        Envoyer
+                      </button>
+                    </div>
+                  ) : answer === null ? (
                     <p className="muted">Transcription…</p>
-                  ) : said ? (
+                  ) : answer ? (
                     // Les fautes se surlignent une fois la réponse écrite (cf. Answer).
                     <Answer
                       key={sent.id}
-                      evaluation={{ answer: said, errors: evaluation?.errors ?? [] }}
+                      evaluation={{ answer, errors: evaluation?.errors ?? [] }}
+                      delayMs={reading ? READING_DELAY_MS : 0}
+                      waiting={reading && !evaluation}
                       perfect={perfect}
+                      below={phonetic && <p className="ra-exchange-phonetic">{phonetic}</p>}
                     />
                   ) : (
                     <p className="muted">(rien entendu)</p>
@@ -191,11 +294,17 @@ export default function StudentAnswer({ onSend, onSendAudio, transcript, exchang
             </div>
           )}
           {/* Trait tracé de gauche à droite au-dessus de la piste, à chaque réponse envoyée. */}
+          {/* Le mode change (« Évaluation », « Conversation ») : sa couleur balaie le trait de gauche à droite, par-dessus
+              l'ancienne (key : le balayage, rejoué à chaque changement, cf. .ra-exchange-rule-sweep). */}
           {shown && (
-            <hr
+            <div
               key={shown.id}
               className={`ra-exchange-rule ${stage && stage !== "erasing" ? "ra-exchange-rule-out" : ""}`}
-            />
+              role="separator"
+            >
+              <RuleShape className="ra-exchange-rule-base" />
+              <RuleShape key={exchanged?.kind ?? "none"} className="ra-exchange-rule-sweep" />
+            </div>
           )}
         </div>
       </div>

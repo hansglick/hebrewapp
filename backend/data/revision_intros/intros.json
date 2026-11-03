@@ -1,0 +1,98 @@
+{
+  "lecture": {
+    "he": {
+      "text": "שָׁלוֹם! מַה שְׁלוֹמְךָ? הַיּוֹם נִקְרָא בְּיַחַד טֶקְסְט קָצָר, לְאַט לְאַט. אַתָּה מוּכָן?",
+      "french": "Bonjour ! Comment ça va ? Aujourd'hui, on va lire ensemble un texte court, tout doucement. Tu es prêt ?",
+      "hebrew": "שָׁלוֹם! מַה שְׁלוֹמְךָ? הַיּוֹם נִקְרָא בְּיַחַד טֶקְסְט קָצָר, לְאַט לְאַט. אַתָּה מוּכָן?",
+      "spoken": "he",
+      "audio": "lecture-he.wav"
+    },
+    "fr": {
+      "text": "Salut ! Ça va ? Aujourd'hui, tu vas me lire un petit texte à voix haute, tranquillement, morceau par morceau. Tu es prêt ?",
+      "french": "Salut ! Ça va ? Aujourd'hui, tu vas me lire un petit texte à voix haute, tranquillement, morceau par morceau. Tu es prêt ?",
+      "hebrew": "היי ! מה שלומך ? היום, אתה תקרא לי טקסט קטן בקול רם, בנחת, חלק אחר חלק. אתה מוכן ?",
+      "spoken": "fr",
+      "audio": "lecture-fr.wav"
+    }
+  },
+  "comprehension": {
+    "he": {
+      "text": "שָׁלוֹם! מָה נִשְׁמַע? אֲנִי נוֹתֵן לְךָ טֶקְסְט קָצָר לִקְרוֹא, וְאַחַר כָּךְ אֶשְׁאַל אוֹתְךָ שְׁאֵלוֹת. אַתָּה מוּכָן?",
+      "french": "Salut ! Comment ça va ? Je te donne un texte court à lire, et ensuite je te poserai des questions. Tu es prêt ?",
+      "hebrew": "שָׁלוֹם! מָה נִשְׁמַע? אֲנִי נוֹתֵן לְךָ טֶקְסְט קָצָר לִקְרוֹא, וְאַחַר כָּךְ אֶשְׁאַל אוֹתְךָ שְׁאֵלוֹת. אַתָּה מוּכָן?",
+      "spoken": "he",
+      "audio": "comprehension-he.wav"
+    },
+    "fr": {
+      "text": "Salut ! Bien en forme ? Je vais te donner un petit texte à lire, et ensuite je te poserai quelques questions dessus pour tester ta compréhension. On y va ?",
+      "french": "Salut ! Bien en forme ? Je vais te donner un petit texte à lire, et ensuite je te poserai quelques questions dessus pour tester ta compréhension. On y va ?",
+      "hebrew": "היי! בכושר טוב? אני אתן לך טקסט קטן לקרוא, ואחר כך אני אשאל אותך כמה שאלות עליו כדי לבדוק את ההבנה שלך. הולכים על זה?",
+      "spoken": "fr",
+      "audio": "comprehension-fr.wav"
+    }
+  },
+  "expression": {
+    "he": {
+      "text": "שָׁלוֹם! מָה נִשְׁמַע? אֲנִי שׁוֹאֵל אוֹתְךָ שְׁאֵלוֹת, וְאַתָּה עוֹנֶה מָה שֶׁבָּא לְךָ, הָעִקָּר בְּעִבְרִית טוֹבָה. אַתָּה מוּכָן?",
+      "french": "Salut ! Comment ça va ? Je te pose des questions, et tu réponds ce que tu veux, l'essentiel c'est que ce soit en bon hébreu. Tu es prêt ?",
+      "hebrew": "שָׁלוֹם! מָה נִשְׁמַע? אֲנִי שׁוֹאֵל אוֹתְךָ שְׁאֵלוֹת, וְאַתָּה עוֹנֶה מָה שֶׁבָּא לְךָ, הָעִקָּר בְּעִבְרִית טוֹבָה. אַתָּה מוּכָן?",
+      "spoken": "he",
+      "audio": "expression-he.wav"
+    },
+    "fr": {
+      "text": "Salut ! Bien dormi ? Je te pose des questions, tu me réponds ce qui te passe par la tête, tant que ton hébreu est bon : c'est de l'expression libre ! Tu es prêt ?",
+      "french": "Salut ! Bien dormi ? Je te pose des questions, tu me réponds ce qui te passe par la tête, tant que ton hébreu est bon : c'est de l'expression libre ! Tu es prêt ?",
+      "hebrew": "היי ! ישנת טוב ? אני שואל אותך שאלות, אתה עונה לי מה שעולה לך לראש, כל עוד העברית שלך טובה : זה ביטוי חופשי ! אתה מוכן ?",
+      "spoken": "fr",
+      "audio": "expression-fr.wav"
+    }
+  },
+  "declinaison": {
+    "he": {
+      "text": "שָׁלוֹם! מַה נִּשְׁמַע? הַיּוֹם אֲנַחְנוּ מְשַׁנִּים מִשְׁפָּטִים: אַתָּה מַחְלִיף אֶת הַמִּלָּה הַמְסֻמֶּנֶת וּמַתְאִים אֶת כָּל הַשְּׁאָר. מוּכָן?",
+      "french": "Bonjour ! Comment ça va ? Aujourd'hui, nous transformons des phrases : tu remplaces le mot souligné et tu accordes tout le reste. Prêt ?",
+      "hebrew": "שָׁלוֹם! מַה נִּשְׁמַע? הַיּוֹם אֲנַחְנוּ מְשַׁנִּים מִשְׁפָּטִים: אַתָּה מַחְלִיף אֶת הַמִּלָּה הַמְסֻמֶּנֶת וּמַתְאִים אֶת כָּל הַשְּׁאָר. מוּכָן?",
+      "spoken": "he",
+      "audio": "declinaison-he.wav"
+    },
+    "fr": {
+      "text": "Salut ! Prêt pour un peu d'hébreu ? Aujourd'hui tu transformes des phrases : tu remplaces le mot surligné et tu accordes tout le reste. On y va ?",
+      "french": "Salut ! Prêt pour un peu d'hébreu ? Aujourd'hui tu transformes des phrases : tu remplaces le mot surligné et tu accordes tout le reste. On y va ?",
+      "hebrew": "היי! מוכן לקצת עברית? היום אתה משנה משפטים: אתה מחליף את המילה המודגשת ומטה את כל השאר. הולכים על זה?",
+      "spoken": "fr",
+      "audio": "declinaison-fr.wav"
+    }
+  },
+  "completion": {
+    "he": {
+      "text": "שָׁלוֹם! מָה נִשְׁמַע? הַיּוֹם אֲנִי נוֹתֵן לְךָ הַתְחָלָה שֶׁל מִשְׁפָּט, וְאַתָּה מַשְׁלִים אוֹתוֹ אֵיךְ שֶׁאַתָּה רוֹצֶה, לְפִי הַהוֹרָאָה. אַתָּה מוּכָן?",
+      "french": "Salut ! Comment ça va ? Aujourd'hui, je te donne un début de phrase, et tu la complètes comme tu veux, selon la consigne. Tu es prêt ?",
+      "hebrew": "שָׁלוֹם! מָה נִשְׁמַע? הַיּוֹם אֲנִי נוֹתֵן לְךָ הַתְחָלָה שֶׁל מִשְׁפָּט, וְאַתָּה מַשְׁלִים אוֹתוֹ אֵיךְ שֶׁאַתָּה רוֹצֶה, לְפִי הַהוֹרָאָה. אַתָּה מוּכָן?",
+      "spoken": "he",
+      "audio": "completion-he.wav"
+    },
+    "fr": {
+      "text": "Salut ! La forme ? Aujourd'hui, je te donne des débuts de phrase, et tu les termines comme tu veux en suivant la consigne. Tu es prêt ?",
+      "french": "Salut ! La forme ? Aujourd'hui, je te donne des débuts de phrase, et tu les termines comme tu veux en suivant la consigne. Tu es prêt ?",
+      "hebrew": "היי ! מה המצב ? היום, אני נותן לך התחלות של משפטים, ואתה מסים אותם איך שבא לך לפי ההוראה. אתה מוכן ?",
+      "spoken": "fr",
+      "audio": "completion-fr.wav"
+    }
+  },
+  "question": {
+    "he": {
+      "text": "שָׁלוֹם! מָה נִשְׁמַע? הַיּוֹם אֲנַחְנוּ מִתְאַמְּנִים עַל שְׁאֵלוֹת. אַתָּה מוֹצֵא אֶת הַשְּׁאֵלָה שֶׁהַתְּשׁוּבָה שֶׁלָּהּ הִיא הַמִּילִּים הַמְּסוּמָּנוֹת. אַתָּה מוּכָן?",
+      "french": "Salut ! Comment ça va ? Aujourd'hui, on s'entraîne sur les questions. Tu trouves la question dont la réponse est les mots surlignés. Tu es prêt ?",
+      "hebrew": "שָׁלוֹם! מָה נִשְׁמַע? הַיּוֹם אֲנַחְנוּ מִתְאַמְּנִים עַל שְׁאֵלוֹת. אַתָּה מוֹצֵא אֶת הַשְּׁאֵלָה שֶׁהַתְּשׁוּבָה שֶׁלָּהּ הִיא הַמִּילִּים הַמְּסוּמָּנוֹת. אַתָּה מוּכָן?",
+      "spoken": "he",
+      "audio": "question-he.wav"
+    },
+    "fr": {
+      "text": "Salut ! Bienvenue dans cette séance d'entraînement. Aujourd'hui, on va s'entraîner à poser des questions : sur chaque phrase à l'écran, tu auras une partie surlignée, et tu devras trouver la question en hébreu qui correspond à cette réponse. Tu es prêt ?",
+      "french": "Salut ! Bienvenue dans cette séance d'entraînement. Aujourd'hui, on va s'entraîner à poser des questions : sur chaque phrase à l'écran, tu auras une partie surlignée, et tu devras trouver la question en hébreu qui correspond à cette réponse. Tu es prêt ?",
+      "hebrew": "היי! ברוך הבא לאימון הזה. היום, אנחנו נתאמן על לשאול שאלות: בכל משפט על המסך, תהיה לך חלק מודגש, ואתה תצטרך למצוא את השאלה בעברית שתואמת לתשובה הזו. אתה מוכן?",
+      "spoken": "fr",
+      "audio": "question-fr.wav"
+    }
+  }
+}

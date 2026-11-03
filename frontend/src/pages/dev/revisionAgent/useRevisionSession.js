@@ -26,10 +26,20 @@ import { AudioLink } from "./audio";
 // Page sans Gemini Live (params.mode === "texte") : pas de micro en continu (la
 // voix du prof, avec params.ttsModel, est jouée comme en Live) ; l'élève
 // enregistre ses réponses (sendAudio) ou les écrit (sendText), et transcript
-// donne la transcription de la dernière réponse enregistrée ({seq, text}) ;
+// donne la transcription de la dernière réponse enregistrée ({seq, text, phonetic}, phonetic : sa prononciation
+// entendue, double route voyelle) ;
 // exchange, ce que le prof fait de la dernière réponse envoyée : {kind:
 // "evaluation", evaluation (null tant qu'elle n'est pas jugée)} ou {kind:
 // "conversation"} (null en attendant).
+
+// Les remarques (kind « note » : le ו « ve » / « u », pas une faute importante)
+// ne s'affichent pas : l'évaluation reste légère (cf. demande explicite du
+// user) ; le prof peut en parler.
+function withoutNotes(evaluation) {
+  if (!evaluation?.errors) return evaluation;
+  return { ...evaluation, errors: evaluation.errors.filter((error) => error.kind !== "note") };
+}
+
 export function useRevisionSession() {
   const [status, setStatus] = useState("idle");
   const [phase, setPhase] = useState(null);
@@ -39,7 +49,6 @@ export function useRevisionSession() {
   // Lecture : l'extrait surligné dans le texte, et le contrôle de la dernière lecture (ses deux verbatims, la
   // prononciation attendue).
   const [extract, setExtract] = useState(null);
-  const [readingControl, setReadingControl] = useState(null);
   const [text, setText] = useState(null);
   const [highlight, setHighlight] = useState([]);
   const [excerpts, setExcerpts] = useState([]);
@@ -101,7 +110,6 @@ export function useRevisionSession() {
       setPhase(null);
       setTeacher(null);
       setExtract(null);
-      setReadingControl(null);
       setText(null);
       setHighlight([]);
       setExcerpts([]);
@@ -159,9 +167,6 @@ export function useRevisionSession() {
           case "extract":
             setExtract(msg.extract);
             break;
-          case "reading_control":
-            setReadingControl(msg.control);
-            break;
           case "text":
             setText({ lesson: msg.lesson, title: msg.title, phrases: msg.phrases });
             break;
@@ -193,7 +198,7 @@ export function useRevisionSession() {
             setDeclension(msg.declension);
             break;
           case "declension_evaluation":
-            setDeclensionEvaluation(msg.evaluation);
+            setDeclensionEvaluation(withoutNotes(msg.evaluation));
             break;
           case "score":
             setScore((previous) => ({
@@ -212,7 +217,7 @@ export function useRevisionSession() {
             setClosing(true);
             break;
           case "evaluation":
-            setEvaluation(msg.evaluation);
+            setEvaluation(withoutNotes(msg.evaluation));
             break;
           case "pause":
             setPaused(msg.paused);
@@ -233,10 +238,14 @@ export function useRevisionSession() {
             setBill(msg.bill);
             break;
           case "transcript":
-            setTranscript((previous) => ({ seq: (previous?.seq ?? 0) + 1, text: msg.text }));
+            setTranscript((previous) => ({
+              seq: (previous?.seq ?? 0) + 1,
+              text: msg.text,
+              phonetic: msg.phonetic ?? "",
+            }));
             break;
           case "exchange":
-            setExchange({ kind: msg.kind, evaluation: msg.evaluation ?? null });
+            setExchange({ kind: msg.kind, evaluation: withoutNotes(msg.evaluation ?? null) });
             break;
           case "error":
             setNotice(msg.text);
@@ -280,12 +289,13 @@ export function useRevisionSession() {
     if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: "next" }));
   }, []);
 
-  // Mode texte : la réponse écrite de l'élève.
-  const sendText = useCallback((text) => {
+  // Mode texte : la réponse écrite de l'élève ; corrected : la transcription de sa dernière réponse orale, corrigée
+  // à la main (cf. StudentAnswer).
+  const sendText = useCallback((text, corrected = false) => {
     const ws = wsRef.current;
     if (ws?.readyState !== WebSocket.OPEN) return;
     setExchange(null);
-    ws.send(JSON.stringify({ type: "student_text", text }));
+    ws.send(JSON.stringify({ type: "student_text", text, corrected }));
   }, []);
 
   // Mode texte : la réponse enregistrée de l'élève (WAV en base64), transcrite par le serveur.
@@ -327,7 +337,7 @@ export function useRevisionSession() {
   }, []);
 
   return {
-    status, phase, seconds, teacher, extract, readingControl, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
+    status, phase, seconds, teacher, extract, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
     question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, exchange,
     start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading, sendText, sendAudio,
   };

@@ -14,7 +14,8 @@ Backend → navigateur : trames binaires = voix du prof, PCM16 mono 24 kHz ; JSO
         (prise de parole du prof, complétée sur place tant que id ne change pas ; seq ordonne les envois)
   {"type": "interrupt"}                                 (jeter l'audio du prof en attente)
   {"type": "error", "text": str}
-  {"type": "transcript", "text": str}                   (mode texte : la transcription de la réponse enregistrée)
+  {"type": "transcript", "text": str, "phonetic": str}   (mode texte : la transcription de la réponse enregistrée, et
+                                                         sa prononciation entendue, double route voyelle)
   {"type": "exchange", "kind": "evaluation" | "conversation", "evaluation"?: {"answer", "errors"}}
                                                         (mode texte : ce que le prof fait de la dernière réponse de
                                                          l'élève : il l'évalue (l'évaluation suit, une fois jugée), ou
@@ -40,7 +41,8 @@ from fastapi import WebSocket, WebSocketDisconnect
 from app.revision_agent.config import DEBUG_STUDENT_AUDIO, SAMPLE_RATE
 from app.revision_agent.gemini_live import GeminiLive, LiveEvent
 from app.revision_agent.journal import SKIPPED_BROWSER_MESSAGES, SessionJournal
-from app.revision_agent.transcribe import transcribe
+from app.revision_agent.judges import faults, judged_note, mispronounced
+from app.revision_agent.transcribe import TEACHER_CONTEXT, heard_phonetic, in_hebrew_letters, respelled, transcribe
 from app.revision_agent.translate import FLASH_USAGE, flash_bill, french_speech, translate_to_french
 
 log = logging.getLogger("revision_agent.session")
@@ -109,6 +111,16 @@ class TeacherSession:
         self.teacher_until = 0.0
         # Prise de parole du prof en cours, traduite et affichée phrase par phrase.
         self.turn = TeacherTurn(id=0, open=False)
+        self.recent_said: list[str] = []  # dernières prises de parole du prof, contexte de la transcription
+        # Mode texte, « double route voyelle » (cf. reading.py) : modèle de la transcription phonétique de la réponse
+        # enregistrée, et sa dernière transcription.
+        self.phonetic_model: str | None = None
+        # Traductions déjà faites (l'accueil enregistré, cf. intros.py) : {prise de parole: {"french", "hebrew",
+        # "spoken"}}, affichées sans attendre la traduction.
+        self.known_translations: dict[str, dict] = {}
+        self.audio_phonetic = ""
+        self.pronunciation_model: str | None = None  # double route voyelle : le juge de la prononciation
+        self.pronunciation: asyncio.Task | None = None  # mots mal prononcés de la dernière réponse orale
         self.turn_text_at = 0.0
         self.teacher_seq = 0
         self.hidden_turn = False  # la prochaine prise de parole du prof ne sera pas affichée
@@ -194,8 +206,10 @@ class TeacherSession:
                 if data.get("type") == "stop":
                     return
                 if data.get("type") == "student_text":
-                    # Mode texte (cf. text_teacher.py) : la réponse écrite de l'élève, traitée comme sa transcription.
-                    await self.on_student_text(str(data.get("text") or "").strip())
+                    # Mode texte (cf. text_teacher.py) : la réponse écrite de l'élève, traitée comme sa transcription ;
+                    # corrected : la transcription de sa dernière réponse orale, corrigée à la main (cf. StudentAnswer).
+                    corrected = bool(data.get("corrected"))
+                    await self.on_student_text(str(data.get("text") or "").strip(), corrected, corrected)
                     continue
                 if data.get("type") == "student_audio":
                     # Mode texte : la réponse enregistrée, transcrite puis traitée comme une réponse écrite.
@@ -208,22 +222,76 @@ class TeacherSession:
             self.track_voice(pcm)
         await self.live.send_audio(pcm)
 
-    async def on_student_text(self, text: str, spoken: bool = False) -> None:
+    async def exchange(self, evaluation: dict | None) -> None:
+        """Mode texte : l'évaluation de la réponse de l'élève, réussie ou non, dans la fenêtre de sa réponse (expression
+        libre, compréhension, cf. StudentAnswer) ; None : l'évaluation demandée par le prof n'a pas lieu (pas
+        d'exercice en cours, pas une réponse à la question) : il converse."""
+        if self.exchange_evaluated:
+            self.exchange_evaluated = False
+            await self.to_browser({"type": "exchange", "kind": "evaluation", "evaluation": evaluation} if evaluation
+                                  else {"type": "exchange", "kind": "conversation"})
+
+    async def on_student_text(self, text: str, spoken: bool = False, corrected: bool = False) -> None:
         if text and self.started_at is not None:
             await self.on_event(LiveEvent("user_text", f"{text} "))
             self.exchange_open, self.exchange_evaluated = True, False
-            await self.live.student_text(text, spoken)
+            # Double route voyelle : la prononciation entendue, pas pour une réponse corrigée à la main.
+            phonetic = self.audio_phonetic if spoken and not corrected else ""
+            self.audio_phonetic = ""
+            # Ses fautes de prononciation sont relevées à part, pendant que le prof l'évalue (cf. pronunciation_errors).
+            self.pronunciation = (asyncio.create_task(mispronounced(text, phonetic, self.pronunciation_model))
+                                  if phonetic and self.pronunciation_model else None)
+            await self.live.student_text(text, spoken, corrected, phonetic)
+
+    async def pronunciation_errors(self) -> list[dict]:
+        """Double route voyelle : les fautes de prononciation de la réponse évaluée (cf. judges.mispronounced), et la
+        forme courante de l'hébreu parlé (cf. judges.VERDICT), une simple remarque, comme en lecture (cf. demande
+        explicite du user) ; aucune sans double route."""
+        task, self.pronunciation = self.pronunciation, None
+        found = await task if task else []
+        return (faults([f for f in found if not f["remarque"]], "pronunciation")
+                + faults([f for f in found if f["remarque"]], "note"))
+
+    async def tell_judged(self, errors: list[dict]) -> None:
+        """Les fautes relevées par un juge à part (sens, prononciation), signalées au prof pour qu'il puisse en parler
+        (cf. judges.judged_note)."""
+        if note := judged_note(errors):
+            await self.live.note(note)
+
+    def phonetic_wanted(self) -> bool:
+        """La réponse enregistrée est aussi transcrite en lettres latines, pour le prof (expression libre,
+        compréhension) ; en lecture, pour la comparaison (cf. ReadingSession)."""
+        return self.phonetic_model is not None
+
+    def spelling_context(self) -> str:
+        """Ce que le prof vient de dire : le contexte qui aide à orthographier la réponse transcrite (cf.
+        transcribe.respelled)."""
+        return " … ".join(self.recent_said[-2:] + ([self.turn.text] if self.turn.open else [])).strip()
+
+    def spelling_label(self) -> str:
+        """Ce qu'est ce contexte, pour le modèle qui relit (cf. transcribe.spelling_request)."""
+        return TEACHER_CONTEXT
 
     async def on_student_audio(self, audio: str) -> None:
         """La transcription s'affiche telle quelle (vide : rien entendu), puis part au prof (cf. transcribe.py) ; rien
         entendu, le prof demande à l'élève de recommencer."""
+        wav = base64.b64decode(audio)
+        started = time.monotonic()
+        # Double route voyelle : la transcription phonétique part en même temps que la transcription hébraïque.
+        phonetic = (asyncio.create_task(heard_phonetic(wav, self.phonetic_model)) if self.phonetic_wanted()
+                    else None)
         try:
-            text = await transcribe(base64.b64decode(audio))
+            text = await transcribe(wav)
+            if text:
+                text = await respelled(await in_hebrew_letters(text), self.spelling_context(), self.spelling_label())
         except Exception:
             log.exception("Transcription impossible")
             text = ""
-        log.info("transcription : %s", text)
-        await self.to_browser({"type": "transcript", "text": text})
+        self.audio_phonetic = await phonetic if phonetic else ""
+        log.info("transcription en %.1f s : %s%s", time.monotonic() - started, text,
+                 f" · {self.audio_phonetic}" if phonetic else "")
+        # Double route voyelle : la prononciation entendue s'affiche sous la transcription si l'élève coche « Phonétique ».
+        await self.to_browser({"type": "transcript", "text": text, "phonetic": self.audio_phonetic})
         if text:
             await self.on_student_text(text, spoken=True)
         elif self.started_at is not None:
@@ -384,9 +452,17 @@ class TeacherSession:
     def end_turn(self) -> None:
         if self.turn.open and self.turn.cut < len(self.turn.text):
             self.queue_segment()
+        if self.turn.open and self.turn.text.strip():
+            self.recent_said = [*self.recent_said[-1:], self.turn.text.strip()]
         self.turn.open = False
 
     async def translate_segment(self, turn: TeacherTurn, segment: dict) -> None:
+        if known := self.known_translations.get(segment["he"].strip()):
+            if known["spoken"] == "fr":
+                segment["spoken_french"], segment["he_translation"] = True, known["hebrew"]
+            segment["fr"] = known["french"]
+            await self.publish_turn(turn)
+            return
         # Le prof parle parfois français (évaluation orale) : la phrase s'affiche telle quelle, ses mots hébreux
         # réécrits en hébreu, et traduite en hébreu.
         if len(LATIN_LETTER.findall(segment["he"])) >= len(HEBREW_LETTER.findall(segment["he"])):

@@ -42,19 +42,34 @@ scolaires ni de ton de correcteur.
 PROFILE_AND_LANGUAGE = (PROFILE_AND_LANGUAGE.replace("<<SPEECH>>", PACED_SPEECH) + PACE if FAST_FRENCH_SPEECH
                         else PROFILE_AND_LANGUAGE.replace("<<SPEECH>>", SLOW_SPEECH))
 
+# Grammaire : les mêmes règles pour toutes les tâches où le prof relève les fautes de langue (cf. judges.py, demande
+# explicite du user) ; chaque tâche n'y ajoute que ce qui lui est propre.
+LANGUAGE_FAULTS = """Sont des fautes de langue : un accord manquant ou erroné (sujet et verbe, nom et adjectif, nom et
+démonstratif, nombre et nom…), un verbe mal conjugué ou à une forme inadéquate (mauvaise personne, mauvais genre ou
+nombre, infinitif à la place du présent, temps qui ne convient pas), un mot erroné ou inexistant, un article, une
+préposition ou une particule manquant, en trop ou erroné (ה, את, ל, ב, של…), une préposition qui ne convient pas au
+verbe (avec un verbe de mouvement, ל ou אל pour la destination, ב pour le lieu où l'on est), un pronom erroné, un
+ordre des mots ou une structure de phrase incorrects. Relis chaque mot, y compris ses préfixes (ה, ו, ב, ל, מ, ש). Un
+mot juste prononcé avec un accent de débutant n'est pas une faute."""
+# La réponse orale, recopiée dans reponse_eleve.
+ORAL_ANSWER = """reponse_eleve est toujours écrite en hébreu, jamais en lettres latines, même si l'élève a un fort
+accent. À l'oral, des lettres se confondent (ת et ט, ס et ש, כ et ח, ק et כ, א et ע) : écris chaque mot avec
+l'orthographe du mot que l'élève a visiblement voulu dire (« tassim » de לטוס s'écrit טסים, jamais תשים) ; garde les
+fautes de forme qu'il a vraiment prononcées, mais n'invente jamais de faute d'orthographe, qui ne s'entend pas."""
+# Le commentaire d'une faute : jamais la solution (cf. demande explicite du user ; la compréhension a le sien).
+FAULT_COMMENTS = """Chaque faute : le mot fautif, recopié exactement tel qu'il figure dans reponse_eleve, même
+orthographe comprise (il est surligné à l'écran), et un commentaire en français, en quelques mots, factuel, sur
+l'origine de l'erreur (« ce n'est pas le pronom demandé », « mauvaise conjugaison », « il manque la préposition ») : il
+ne donne JAMAIS la forme correcte ni la solution. Ces commentaires s'affichent à l'écran, tu ne les lis jamais."""
+
 # Exigence de la correction, commune aux tâches où l'élève construit une phrase (cf. demande explicite du user).
 GRADING = """
 # Exigence de la correction (essentiel)
 Tu es bienveillant dans le ton, mais exigeant dans le verdict : une phrase qui contient une faute de grammaire ou de
 conjugaison est un échec, même si on comprend ce que l'élève veut dire et même si le reste est juste.
-Sont notamment des fautes :
-- un verbe mal conjugué ou à une forme inadéquate : mauvaise personne, mauvais genre ou nombre, infinitif à la place
-  du présent, temps qui ne convient pas ;
-- un accord manquant : sujet et verbe, nom et adjectif, nom et démonstratif, nombre et nom ;
-- un article, une préposition ou une particule manquant, en trop ou erroné (ה, את, ל, ב, של…) ;
-- un pronom erroné, un ordre des mots incorrect.
+""" + LANGUAGE_FAULTS + """
 Dans ce cas, reussi est faux et les mots qui portent ces fautes vont dans mots_fautifs. Juge la phrase telle que tu l'as
-entendue, sans la corriger dans ta tête ; mais un mot juste simplement prononcé avec un accent de débutant n'est pas une faute.
+entendue, sans la corriger dans ta tête.
 """
 
 # Tâche « Lecture » (cf. demande explicite du user) : le prof ne voit pas le texte ; l'application surligne les extraits,
@@ -127,8 +142,12 @@ def reading_instructions(count: int) -> str:
 
 READING_START = "Commence la séance : étape 1 (accueil)."  # suivi du mode de langue de départ (cf. in_mode)
 
-READING_TEXT_SHOWN = ("Le texte est affiché à l'écran de l'élève, le premier extrait surligné. Dis-lui en une phrase "
-                      "courte de lire à voix haute les phrases surlignées, puis tais-toi pendant qu'il lit.")
+# La phrase à dire est donnée : Flash-Lite, en mode texte, butait sur « surlignées » en hébreu et ajoutait une
+# didascalie (« [silence, l'élève va lire] »), 10 fois sur 10 (vérifié).
+READING_TEXT_SHOWN = ("Le texte est affiché à l'écran de l'élève, le premier extrait surligné. Dis-lui seulement, dans la "
+                      "langue du mode, de lire à voix haute les phrases surlignées (mode français : « Lis à voix haute "
+                      "les phrases surlignées. » ; mode hébreu : « קְרָא בְּקוֹל רָם אֶת הַמִּשְׁפָּטִים "
+                      "הַמְּסֻמָּנִים. »), puis tais-toi : il va lire.")
 
 HEARD_NOTED = "Noté. Ne dis rien : attends le résultat de l'application."
 
@@ -154,7 +173,8 @@ def reading_errors(errors: list[dict]) -> str:
         if e["type"] == "remplace":
             lines.append(f"« {e['word']} » lu à la place de « {e['expected']} »")
         elif e["type"] == "deforme":
-            lines.append(f"« {e['expected']} » mal prononcé (entendu « {e['word']} »)")
+            # Le son entendu, celui que l'élève a prononcé, pas le mot que la transcription en a fait.
+            lines.append(f"« {e['expected']} » mal prononcé (entendu « {e.get('sound') or e['word']} »)")
         else:
             lines.append(f"« {e['word'] or e['expected']} » {kinds.get(e['type'], '')}")
         lines[-1] += f" : {e['comment']}"
@@ -174,7 +194,7 @@ def reading_retry(expected: list[str], heard: str, errors: list[dict]) -> str:
 
 
 def reading_done(expected: list[str]) -> str:
-    return (f"Lecture réussie. Dis un seul mot pour le féliciter, puis lis toi-même "
+    return (f"Lecture réussie. Dis un seul mot pour le féliciter. Puis lis toi-même "
             f"l'extrait : « {' '.join(expected)} ». Puis tais-toi : l'application surligne l'extrait suivant.")
 
 
@@ -226,19 +246,11 @@ n'a aucune faute :
 Un même mot peut porter les deux fautes, et figure alors dans les deux listes : « דוד טס בחיפה » quand le texte dit
 « דוד טס לתל אביב » → בחיפה dans fautes_langue (avec un verbe de mouvement, la destination prend ל, pas ב) et dans
 fautes_texte (le texte dit Tel-Aviv).
-- fautes_langue : la qualité de l'hébreu, que la réponse soit juste ou non. Sont des fautes : un accord manquant ou
-  erroné (sujet et verbe, nom et adjectif, nombre et nom…), un verbe mal conjugué ou à une forme inadéquate, un mot
-  erroné ou inexistant (vocabulaire), un article, une préposition ou une particule manquant, en trop ou erroné, un ordre
-  des mots ou une structure de phrase incorrects. Un mot juste prononcé avec un accent de débutant n'est pas une faute.
-  Une préposition qui ne convient pas au verbe est une faute (avec un verbe de mouvement, ל ou אל pour la destination,
-  ב pour le lieu où l'on est).
+- fautes_langue : la qualité de l'hébreu, que la réponse soit juste ou non. """ + LANGUAGE_FAULTS + """
   Une réponse courte (« בְּתֵל אָבִיב ») n'est pas une faute si elle répond correctement à la question.
 - fautes_texte : la véracité de la réponse par rapport au texte, quelle que soit la qualité de l'hébreu : ce qu'elle
   dit de faux, ou d'incomplet au point de ne pas répondre à la question.
-reponse_eleve est toujours écrite en hébreu, jamais en lettres latines, même si l'élève a un fort accent. À l'oral,
-des lettres se confondent (ת et ט, ס et ש, כ et ח, ק et כ, א et ע) : écris chaque mot avec l'orthographe du mot que
-l'élève a visiblement voulu dire (« tassim » de לטוס s'écrit טסים, jamais תשים) ; garde les fautes de forme qu'il a
-vraiment prononcées, mais n'invente jamais de faute d'orthographe, qui ne s'entend pas.
+""" + ORAL_ANSWER + """
 Dans fautes_langue, le commentaire dit la nature de la faute et la forme correcte. Dans fautes_texte, il réfute
 seulement ce que la réponse affirme à tort, sans jamais donner la bonne réponse, ni en hébreu ni en français (cf.
 demande explicite du user) : « le texte ne dit pas que Roni lit la Torah », jamais « le texte dit que Roni lit un
@@ -454,24 +466,12 @@ réviser un point de grammaire) et les affiche à son écran. Il y en a trois.
    l'étape 2. Quand elle t'indique qu'il n'y a plus de question, félicite-le en une phrase courte et dis-lui au revoir.
 
 # Évaluation
-Tu évalues la réponse telle que tu l'as entendue, sans la corriger dans ta tête, en relevant deux sortes de fautes
-(pas de note) ; la réponse est parfaite si elle n'en a aucune :
-1. La langue (fautes_langue) : la qualité de l'hébreu. Sont des fautes : un accord manquant ou erroné
-   (sujet et verbe, nom et adjectif, nombre et nom…), un verbe mal conjugué ou à une forme inadéquate, un mot erroné ou
-   inexistant, un article, une préposition ou une particule manquant, en trop ou erroné (ה, את, ל, ב, של…), un
-   pronom erroné, un ordre des mots incorrect ; une préposition qui ne convient pas au verbe (avec un verbe de
-   mouvement, ל pour la destination, ב pour le lieu où l'on est). Relis chaque mot, y compris ses préfixes. Un mot
-   juste prononcé avec un accent de débutant n'est pas une faute.
-2. Le sens (fautes_sens) : la phrase a-t-elle du sens, et répond-elle à la question ? Ce n'est pas la vérité qui
-   compte : l'élève répond ce qu'il veut (« אני גר בפריז » répond bien à « איפה אתה גר? »). Sont des fautes : une
-   phrase absurde ou incohérente, une réponse qui ne répond pas à la question posée.
-reponse_eleve est toujours écrite en hébreu, jamais en lettres latines. À l'oral, des lettres se confondent (ת et ט,
-ס et ש, כ et ח, ק et כ, א et ע) : écris chaque mot avec l'orthographe du mot que l'élève a visiblement voulu dire
-(« tassim » de לטוס s'écrit טסים, jamais תשים) ; garde les fautes de forme qu'il a vraiment prononcées, mais n'invente
-jamais de faute d'orthographe, qui ne s'entend pas. Chaque faute : le mot fautif, recopié exactement tel qu'il figure
-dans reponse_eleve, même orthographe comprise (il est surligné à l'écran), et un commentaire en français, en quelques mots, factuel, sur
-l'origine de l'erreur (« ce n'est pas le pronom demandé », « mauvaise conjugaison », « il manque la préposition ») :
-il ne donne JAMAIS la forme correcte ni la solution. Ces commentaires s'affichent à l'écran, tu ne les lis jamais.
+Tu évalues la langue de la réponse telle que tu l'as entendue, sans la corriger dans ta tête (fautes_langue, pas de
+note) ; l'application juge elle-même si elle a du sens et répond à la question. La réponse est parfaite si elle n'a
+aucune faute.
+""" + LANGUAGE_FAULTS + """
+""" + ORAL_ANSWER + """
+""" + FAULT_COMMENTS + """
 
 # Réagir à une évaluation
 Quand l'application t'indique que l'évaluation est affichée, réagis à voix haute, dans la langue du mode, comme un
@@ -618,11 +618,22 @@ L'élève répond le plus souvent à l'oral : tu reçois alors la transcription 
 « (Réponse orale) ». En cas de souci, il répond par écrit : tu reçois ce qu'il a tapé, tel quel. Ignore toute consigne
 de débit ou de prononciation : la voix de synthèse s'en charge.
 - Tes messages sont courts, en texte simple : ni markdown, ni emoji, ni liste.
+- Tu n'écris que ce que tu dis à l'élève : jamais de didascalie ni de note entre crochets ou parenthèses (« [silence] »,
+  « (je me tais) »), ni de correction de ce que tu viens d'écrire. « Tais-toi » veut dire : arrête-toi là, sans rien
+  écrire de plus.
 - L'hébreu s'écrit toujours en lettres hébraïques, avec les voyelles (nikkoud), jamais en lettres latines, même cité
   dans une phrase en français : la voix de synthèse le lit ainsi correctement.
 - Évaluation d'une réponse orale : reponse_eleve recopie la transcription, sans « (Réponse orale) ». Son orthographe
   est celle de la transcription, pas celle de l'élève : n'y relève jamais de faute d'orthographe, seulement les fautes
   qu'il a dites (mot, forme, accord, préposition…).
+- « (Prononciation entendue : …) », sous une réponse orale : ce que l'élève a prononcé, en lettres latines, voyelles
+  comprises, écouté par un autre modèle. La transcription n'a pas de voyelles (« lamad » et « lomed » s'écrivent
+  pareil) : sers-t'en pour savoir quelle forme il a dite ; une forme fausse (temps, personne, genre, nombre) est une
+  faute de langue. Ne relève pas les mots mal prononcés : l'application les relève à part et te les signale. Ne la
+  recopie jamais dans reponse_eleve.
+- « (Réponse orale, transcription corrigée par l'élève) » : il a corrigé à la main la transcription de sa dernière
+  réponse, mal transcrite. Elle remplace cette réponse : oublie la précédente et ce que tu en as dit, et évalue
+  celle-ci comme une réponse orale, sans t'excuser ni commenter la correction.
 - Évaluation d'une réponse écrite : reponse_eleve recopie exactement ce que l'élève a écrit, lettre pour lettre. Une
   faute d'orthographe (lettre erronée, manquante ou en trop) est une faute de langue ; l'absence de voyelles
   (nikkoud), la ponctuation et les majuscules ne sont jamais des fautes.
@@ -683,16 +694,11 @@ phrases : l'application les tire (chacune fait réviser un point de grammaire) e
 
 # Évaluation
 Tu évalues la phrase telle que tu l'as entendue, sans la corriger dans ta tête ; elle est réussie si elle n'a aucune
-faute (pas de note). Sont des fautes : le remplacement non fait ou erroné (ce n'est pas la personne demandée), un
-accord oublié ou erroné (verbe, adjectif, possessif), un verbe mal conjugué, et toute autre faute de langue. Un mot
-juste prononcé avec un accent de débutant n'est pas une faute.
-reponse_eleve est toujours écrite en hébreu, jamais en lettres latines. À l'oral, des lettres se confondent (ת et ט,
-ס et ש, כ et ח, ק et כ, א et ע) : écris chaque mot avec l'orthographe du mot que l'élève a visiblement voulu dire ;
-garde les fautes de forme qu'il a vraiment prononcées, mais n'invente jamais de faute d'orthographe, qui ne s'entend
-pas. Chaque faute : le mot fautif, recopié exactement tel qu'il figure dans reponse_eleve (il est surligné à l'écran),
-et un commentaire en français, en quelques mots, factuel, sur l'origine de l'erreur (« ce n'est pas le pronom
-demandé », « le verbe ne s'accorde pas avec le nouveau sujet ») : il ne donne JAMAIS la forme correcte ni la solution.
-Ces commentaires s'affichent à l'écran, tu ne les lis jamais.
+faute (pas de note). Le remplacement non fait ou erroné (ce n'est pas la personne demandée) est une faute, comme un
+accord oublié ou erroné après le remplacement (verbe, adjectif, possessif).
+""" + LANGUAGE_FAULTS + """
+""" + ORAL_ANSWER + """
+""" + FAULT_COMMENTS + """
 
 # Réagir à une évaluation
 Quand l'application t'indique que l'évaluation est affichée, réagis à voix haute, dans la langue du mode, comme un
@@ -875,16 +881,11 @@ l'application les tire et les affiche. Il y en a <<COUNT>>.
 Il peut y avoir un indice à son écran : ne parle jamais d'indice, ni de ce qui s'affiche à part sa phrase.
 
 # Évaluation
-Tu évalues la question telle que tu l'as entendue, sans la corriger dans ta tête. reponse_eleve est toujours écrite
-en hébreu, jamais en lettres latines, et se termine par « ? ». À l'oral, des lettres se confondent (ת et ט, ס et ש,
-כ et ח, ק et כ, א et ע) : écris chaque mot avec l'orthographe du mot que l'élève a visiblement voulu dire ; garde les
-fautes de forme qu'il a vraiment prononcées, mais n'invente jamais de faute d'orthographe, qui ne s'entend pas.
-Sont des fautes de langue : un verbe mal conjugué ou qui ne s'accorde pas avec son sujet, un accord oublié, une
-préposition manquante ou fausse, un mot mal dit. Ne relève pas le choix du mot interrogatif ni de la personne : ce
-n'est pas une faute de langue. Un mot juste prononcé avec un accent de débutant n'est pas une faute. Chaque faute :
-le mot fautif, recopié exactement tel qu'il figure dans reponse_eleve (il est surligné à l'écran), et un commentaire
-en français, en quelques mots, factuel, sur l'origine de l'erreur : il ne donne JAMAIS la forme correcte ni la
-solution. Ces commentaires s'affichent à l'écran, tu ne les lis jamais.
+Tu évalues la question telle que tu l'as entendue, sans la corriger dans ta tête.
+""" + ORAL_ANSWER + """ Elle se termine par « ? ».
+""" + LANGUAGE_FAULTS + """ Ne relève pas le choix du mot interrogatif ni de la
+personne : l'application juge elle-même si la question vise bien l'information surlignée.
+""" + FAULT_COMMENTS + """
 
 # Réagir à une évaluation
 Quand l'application t'indique que l'évaluation est affichée, réagis à voix haute, dans la langue du mode, comme un
@@ -1017,17 +1018,11 @@ Il peut y avoir des indices à son écran : ne parle jamais d'indice, ni de ce q
 et la consigne.
 
 # Évaluation
-Tu évalues la phrase telle que tu l'as entendue, sans la corriger dans ta tête. reponse_eleve est toujours écrite
-en hébreu, jamais en lettres latines. À l'oral, des lettres se confondent (ת et ט, ס et ש, כ et ח, ק et כ, א et ע) :
-écris chaque mot avec l'orthographe du mot que l'élève a visiblement voulu dire ; garde les fautes de forme qu'il a
-vraiment prononcées, mais n'invente jamais de faute d'orthographe, qui ne s'entend pas.
-Sont des fautes de langue : un verbe mal conjugué ou qui ne s'accorde pas avec son sujet, un accord oublié (nom et
-adjectif, nombre et nom), un article, une préposition ou une particule manquant, en trop ou erroné, un pronom
-erroné, un ordre des mots incorrect, un mot mal dit. Ne relève pas le respect de la contrainte ni le sens de la
-phrase : l'application les juge. Un mot juste prononcé avec un accent de débutant n'est pas une faute. Chaque faute :
-le mot fautif, recopié exactement tel qu'il figure dans reponse_eleve (il est surligné à l'écran), et un commentaire
-en français, en quelques mots, factuel, sur l'origine de l'erreur : il ne donne JAMAIS la forme correcte ni la
-solution. Ces commentaires s'affichent à l'écran, tu ne les lis jamais.
+Tu évalues la phrase telle que tu l'as entendue, sans la corriger dans ta tête.
+""" + ORAL_ANSWER + """
+""" + LANGUAGE_FAULTS + """ Ne relève pas le respect de la contrainte ni le sens de
+la phrase : l'application les juge.
+""" + FAULT_COMMENTS + """
 
 # Réagir à une évaluation
 Quand l'application t'indique que l'évaluation est affichée, réagis à voix haute, dans la langue du mode, comme un

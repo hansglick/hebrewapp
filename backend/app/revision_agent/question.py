@@ -2,7 +2,7 @@
 SENTENCES_PER_ROUND phrases des leçons cochées et les écrit au tableau, chacune avec sa cible surlignée (les mots qui
 portent l'information demandée, cf. scripts/build_revision_question_targets.py) ; l'élève pose à voix haute la
 question qui a cette phrase pour réponse, et dont la réponse est justement la cible. Le prof relève les fautes de
-langue, un modèle rapide (QUESTION_MODEL) juge si la question vise bien la cible et s'adresse à l'élève (« je » →
+langue, un modèle rapide (cf. judges.judge_sentence) juge si la question vise bien la cible et s'adresse à l'élève (« je » →
 « tu », « nous » → « vous »). Réussie, l'application enchaîne d'elle-même ; ratée, le prof commente et l'élève
 retente de vive voix ou passe avec « Question suivante ».
 
@@ -22,7 +22,6 @@ Navigateur → backend : {"type": "next"}, {"type": "hint"}, {"type": "language"
 """
 
 import asyncio
-import json
 import logging
 import random
 import time
@@ -32,14 +31,13 @@ from fastapi import WebSocket
 
 from app.revision_agent import prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import DEFAULT_LANGUAGES, QUESTION_MODEL
-from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, french_texts, hebrew_answer
-from app.revision_agent.expression import (ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT,
-                                           error_list)
+from app.revision_agent.config import DEFAULT_LANGUAGES
+from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, hebrew_answer
+from app.revision_agent.expression import ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT
 from app.revision_agent.gemini_live import GeminiLive
+from app.revision_agent.judges import error_list, judge_sentence, no_fault, sense_errors, teacher_errors
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.session import TeacherSession
-from app.revision_agent.translate import translate
 from app.revision_agent.utterances import lesson_utterances, sentence_key, word_span
 
 log = logging.getLogger("revision_agent.question")
@@ -81,40 +79,22 @@ HESITATION_TOOL = {
     "description": "L'élève dit qu'il ne sait pas, qu'il ne trouve pas, ou demande de l'aide pour la phrase en cours.",
 }
 
-# Jugement de la visée par le modèle rapide (cf. demande explicite du user).
-TARGET_PROMPT = """Tu es professeur d'hébreu. Exercice : l'élève voit une phrase hébraïque dont une partie, la
-cible, est surlignée ; il doit poser à voix haute la question dont la réponse est justement la cible, la phrase en
-étant la réponse naturelle. Tu reçois la phrase, la cible, la ou les questions attendues et la question de l'élève
-(transcrite de l'oral, éventuellement avec des fautes de langue : ne les juge pas, un autre s'en charge).
-Dis si la question de l'élève vise bien la cible :
-- Sa réponse doit être exactement l'information de la cible : un autre mot interrogatif qui demande autre chose
-  (« qui ? » au lieu de « où ? ») ou une question sur une autre partie de la phrase est faux.
-- Toute formulation qui demande la même information est juste, même différente des questions attendues
-  (« איפה את גרה? », « באיזו עיר את גרה? », « את גרה איפה? »), même avec des mots plus avancés.
-- La question s'adresse à la personne qui a dit la phrase : une phrase à la 1re personne (אני, אנחנו, לי, שלי…)
-  appelle une question à la 2e (« tu », « vous » : את / אתה, אתם / אתן, לך…), et inversement. Garder « je » ou
-  « nous » est faux. Le genre suit celui de la phrase quand il s'entend, sinon les deux genres sont justes.
-- Une question fermée (oui / non) ou une simple répétition de la phrase est fausse.
-Si c'est faux, donne chaque problème : le mot de la question de l'élève qui le porte, recopié exactement (vide si
-aucun mot précis), et un commentaire en français, en quelques mots, factuel, qui ne donne JAMAIS la question
-attendue, ni le bon mot interrogatif, ni la bonne forme (« ta question porte sur la personne, pas sur
-l'information surlignée », « tu dois t'adresser à lui : pas « je » mais la 2e personne »)."""
-
-TARGET_SCHEMA = {
-    "type": "OBJECT",
-    "properties": {
-        "vise_la_cible": {"type": "BOOLEAN"},
-        "problemes": {
-            "type": "ARRAY",
-            "items": {
-                "type": "OBJECT",
-                "properties": {"mot": {"type": "STRING"}, "commentaire": {"type": "STRING"}},
-                "required": ["mot", "commentaire"],
-            },
-        },
-    },
-    "required": ["vise_la_cible", "problemes"],
-}
+# La visée de la question : sa contrainte, jugée à part (cf. judges.judge_sentence, demande explicite du user).
+TARGET_EXERCISE = ("Exercice : l'élève voit une phrase hébraïque (phrase) dont une partie, la cible, est surlignée ; il "
+                   "doit poser à voix haute la question dont la réponse est justement la cible, la phrase en étant la "
+                   "réponse naturelle (questions_attendues : la ou les questions attendues). Sa phrase est sa "
+                   "question.")
+TARGET = {"contrainte": """la question de l'élève vise bien la cible :
+  - sa réponse doit être exactement l'information de la cible : un autre mot interrogatif qui demande autre chose
+    (« qui ? » au lieu de « où ? ») ou une question sur une autre partie de la phrase est faux ;
+  - toute formulation qui demande la même information est juste, même différente des questions attendues
+    (« איפה את גרה? », « באיזו עיר את גרה? », « את גרה איפה? »), même avec des mots plus avancés ;
+  - la question s'adresse à la personne qui a dit la phrase : une phrase à la 1re personne (אני, אנחנו, לי, שלי…)
+    appelle une question à la 2e (« tu », « vous » : את / אתה, אתם / אתן, לך…), et inversement. Garder « je » ou
+    « nous » est faux. Le genre suit celui de la phrase quand il s'entend, sinon les deux genres sont justes ;
+  - une question fermée (oui / non) ou une simple répétition de la phrase est fausse.
+  Les commentaires ne donnent JAMAIS la question attendue, ni le bon mot interrogatif (« ta question porte sur la
+  personne, pas sur l'information surlignée », « tu dois t'adresser à lui : pas « je » mais la 2e personne »)."""}
 
 
 @dataclass
@@ -183,22 +163,10 @@ def draw_items(lesson: str, current: bool, previous: bool) -> list[Item]:
 
 
 async def judge_target(item: Item, question: str) -> list[dict]:
-    """Problèmes de visée de la question de l'élève ([] si elle vise bien la cible)."""
-    request = json.dumps({"phrase": item.sentence, "cible": " … ".join(item.target),
-                          "questions_attendues": item.questions, "question_eleve": question}, ensure_ascii=False)
-    try:
-        result = json.loads(await translate(request, TARGET_PROMPT, TARGET_SCHEMA, QUESTION_MODEL))
-    except Exception:
-        log.exception("Jugement de la visée impossible : %s", question)
-        return []
-    log.info("visée : %s", result)
-    if result.get("vise_la_cible"):
-        return []
-    problems = [{"word": str(p.get("mot") or "").strip(), "kind": "sense",
-                 "comment": str(p.get("commentaire") or "").strip()}
-                for p in result.get("problemes") or [] if isinstance(p, dict)]
-    return [p for p in problems if p["comment"]] or [
-        {"word": "", "kind": "sense", "comment": "ta question ne demande pas l'information surlignée"}]
+    """Problèmes de visée de la question de l'élève ([] si elle vise bien la cible, cf. judges.judge_sentence)."""
+    judged = await judge_sentence(TARGET_EXERCISE, {"phrase": item.sentence, "cible": " … ".join(item.target),
+                                                    "questions_attendues": item.questions}, question, TARGET)
+    return sense_errors(judged, "ta question ne demande pas l'information surlignée")
 
 
 class QuestionSession(TeacherSession):
@@ -340,18 +308,14 @@ class QuestionSession(TeacherSession):
         les cas. Réussie, l'application enchaîne d'elle-même (cf. advance)."""
         item = self.current
         answer = hebrew_answer(args.get("reponse_eleve"), self.heard)
-        language = [{"word": str(f.get("mot") or "").strip(), "kind": "language",
-                     "comment": str(f.get("commentaire") or "").strip()}
-                    for f in args.get("fautes_langue") or [] if isinstance(f, dict)]
-        language = [e for e in language if e["word"] or e["comment"]]
-        texts, aim = await asyncio.gather(french_texts([e["comment"] for e in language]), judge_target(item, answer))
-        for error, text in zip(language, texts):
-            error["comment"] = text
-        errors = aim + language
+        language, aim, pronunciation = await asyncio.gather(
+            teacher_errors(args, {"fautes_langue": "language"}), judge_target(item, answer), self.pronunciation_errors())
+        errors = aim + language + pronunciation
+        await self.tell_judged(errors)
         self.evaluated = True
         await self.to_browser({"type": "evaluation", "evaluation": {
             "answer": align_error_words(answer, errors), "errors": errors}})
-        succeeded = not errors
+        succeeded = no_fault(errors)
         await self.record(succeeded)
         await self.set_answering(False)
         if not succeeded and not self.failed:

@@ -1,0 +1,384 @@
+/* Schéma d'une tâche de l'agent de révision (cf. RevisionAgentSchemaScreen.jsx) : un flux vertical d'étapes, en
+   colonnes là où elles tournent en parallèle (une seule colonne sur téléphone) ; un clic sur un modèle ouvre, sur la
+   droite, ce qu'il reçoit. Mêmes variables de couleur que le reste de l'app (clair/sombre). */
+.ras-page {
+  --ras-model: #3b6fe0;
+  --ras-code: #a07a1c;
+  --ras-bad: #c0392b;
+  --ras-good: #1f8a50;
+  width: 100%;
+  max-width: 880px;
+  margin: 24px auto 48px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: start;
+  color: var(--textPrimary);
+}
+
+.ras-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ras-header h1 {
+  margin: 0;
+  font-size: 1.6em;
+}
+
+.ras-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--textSecondary);
+}
+
+.ras-picker select {
+  background: var(--bg);
+  color: var(--textPrimary);
+  border: 1px solid var(--cardBorder);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 1.1em;
+}
+
+.ras-lede,
+.ras-error {
+  margin: 0;
+  color: var(--textSecondary);
+  max-width: 68ch;
+}
+
+.ras-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 0.82em;
+  color: var(--textSecondary);
+}
+
+.ras-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ras-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 2px solid var(--ras-model);
+  background: color-mix(in srgb, var(--ras-model) 12%, transparent);
+}
+
+.ras-swatch.ras-code {
+  border-color: var(--ras-code);
+  border-style: dashed;
+  background: color-mix(in srgb, var(--ras-code) 12%, transparent);
+}
+
+.ras-flow {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.ras-row {
+  display: grid;
+  gap: 14px;
+  align-items: start;
+}
+
+.ras-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ras-arrows {
+  display: grid;
+  height: 34px;
+  justify-items: center;
+}
+
+.ras-arrows svg {
+  width: 18px;
+  height: 34px;
+  overflow: visible;
+}
+
+.ras-arrows path {
+  stroke: var(--textSecondary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.ras-arrows .ras-arrow-tip {
+  fill: var(--textSecondary);
+  stroke: none;
+}
+
+@media (max-width: 640px) {
+  .ras-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ras-arrows {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ras-arrows svg + svg {
+    display: none;
+  }
+}
+
+.ras-box {
+  background: var(--cardBg);
+  border: 2px solid var(--cardBorder);
+  border-radius: 10px;
+  padding: 14px 16px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: start;
+  font: inherit;
+  color: var(--textPrimary);
+}
+
+.ras-box.ras-small {
+  padding: 10px 14px;
+  border-width: 1.5px;
+}
+
+.ras-box.ras-model {
+  border-color: var(--ras-model);
+}
+
+.ras-box.ras-code {
+  border-color: var(--ras-code);
+  border-style: dashed;
+  background: color-mix(in srgb, var(--ras-code) 10%, var(--cardBg));
+}
+
+.ras-box.ras-bad {
+  border-color: var(--ras-bad);
+  background: color-mix(in srgb, var(--ras-bad) 9%, var(--cardBg));
+}
+
+.ras-box.ras-good {
+  border-color: var(--ras-good);
+  background: color-mix(in srgb, var(--ras-good) 9%, var(--cardBg));
+}
+
+button.ras-box {
+  cursor: pointer;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+button.ras-box:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--ras-model) 22%, transparent);
+  transform: translateY(-1px);
+}
+
+button.ras-box:focus-visible,
+.ras-close:focus-visible {
+  outline: 3px solid var(--ras-model);
+  outline-offset: 2px;
+}
+
+.ras-box ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ras-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ras-role {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--textSecondary);
+}
+
+.ras-see {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: var(--ras-model);
+  white-space: nowrap;
+}
+
+.ras-tag {
+  align-self: flex-start;
+  font: 500 0.78em/1 ui-monospace, Consolas, monospace;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--ras-model) 12%, transparent);
+  color: var(--ras-model);
+}
+
+.ras-tag small {
+  font: inherit;
+  opacity: 0.75;
+}
+
+.ras-tag.ras-tag-code {
+  background: transparent;
+  color: var(--ras-code);
+  border: 1px dashed var(--ras-code);
+}
+
+.ras-title {
+  font-size: 1.02em;
+}
+
+.ras-hint,
+.ras-when {
+  font-size: 0.85em;
+  color: var(--textSecondary);
+}
+
+.ras-when {
+  font-style: italic;
+}
+
+.ras-notes {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--cardBorder);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.92em;
+  color: var(--textSecondary);
+  max-width: 72ch;
+}
+
+.ras-notes p {
+  margin: 0;
+}
+
+/* Le panneau des prompts, sur la droite, par-dessus la page. */
+.ras-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(18, 22, 30, 0.45);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ras-panel {
+  width: min(760px, 100%);
+  height: 100%;
+  background: var(--cardBg);
+  color: var(--textPrimary);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.25);
+}
+
+.ras-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid var(--cardBorder);
+  text-align: start;
+}
+
+.ras-panel-head h2 {
+  margin: 0 0 6px;
+  font-size: 1.2em;
+}
+
+.ras-panel-head p {
+  margin: 0;
+  font-size: 0.82em;
+  color: var(--textSecondary);
+}
+
+.ras-close {
+  flex: none;
+  border: 1px solid var(--cardBorder);
+  background: transparent;
+  color: var(--textPrimary);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ras-panel-body {
+  overflow: auto;
+  padding: 16px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ras-part {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ras-part-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.ras-part-label span {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--textSecondary);
+}
+
+.ras-copy {
+  border: none;
+  background: none;
+  color: var(--ras-model);
+  font: inherit;
+  font-size: 0.8em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ras-part pre {
+  margin: 0;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--cardBorder);
+  border-radius: 8px;
+  font: 0.8em/1.55 ui-monospace, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  unicode-bidi: plaintext;
+  text-align: start;
+}

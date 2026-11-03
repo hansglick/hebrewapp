@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Answer, Evaluation } from "./Assessment";
 import TaskLayout from "./TaskLayout";
 import TeacherSpeech from "./TeacherSpeech";
+import { SPEAKER } from "./readingText";
 
-// Nom du personnage qui prend la parole, en tête d'une réplique de dialogue
-// (« דוד: שלום רוני… ») : l'élève ne le lit pas (cf. ComprehensionBoard).
-const SPEAKER = /^[^:.?!,]{1,20}:\s*/;
 // Effacement de la lecture précédente quand l'élève relit (cf. .ra-assessment-erasing).
 const ERASE_MS = 700;
 // Espace laissé au-dessus de l'extrait à lire, en haut de la fenêtre du texte.
@@ -71,21 +69,16 @@ function Phrase({ phrase, stroke, onListen }) {
 // accolée à « Arrêter la séance ». Pas de suivi, pas de traduction. Le
 // nombre de phrases par lecture se règle dans les paramètres (cf.
 // RevisionAgentScreen). L'extrait à lire remonte en haut
-// du texte, à hauteur de la conversation (cf. demande explicite du user). Contrôle (cf. demande explicite du user) : si la case
-// « Phonétique » des paramètres est cochée (showPhonetic), une fenêtre montre,
-// pour chaque lecture, réussie ou non, la transcription hébraïque, la
-// transcription phonétique du prof et la prononciation attendue.
+// du texte, à hauteur de la conversation (cf. demande explicite du user).
 export default function ReadingBoard({
   teacher,
   text,
   extract,
-  control,
   evaluation,
   closing,
   done,
   notice,
   languageSwitch,
-  showPhonetic,
   onNext,
   onListen,
   clock,
@@ -161,25 +154,6 @@ export default function ReadingBoard({
     </div>
   );
 
-  // La lecture de l'extrait en cours seulement : elle s'en va avec lui.
-  const controlled = showPhonetic && control && extract && control.number === extract.number;
-  const phonetic = controlled && (
-    <dl className="ra-phonetic">
-      <dt>Hébreu</dt>
-      <dd dir="rtl" lang="he">
-        {control.heard || "—"}
-      </dd>
-      <dt>Lecture</dt>
-      <dd dir="rtl" lang="he">
-        {control.reading || "—"}
-      </dd>
-      <dt>Entendu</dt>
-      <dd>{control.heard_phonetic || "(pas de transcription phonétique)"}</dd>
-      <dt>Attendu</dt>
-      <dd>{control.expected_phonetic || "—"}</dd>
-    </dl>
-  );
-
   const canGoOn = !done && !closing && Boolean(extract);
   const controls = clock && (
     <>
@@ -221,13 +195,9 @@ export default function ReadingBoard({
       composer={composer && composer(null)}
       conversation={conversation || null}
       exerciseKey="board"
-      answer={assessment || null}
+      // Sans Gemini Live, l'évaluation s'affiche dans la fenêtre de la réponse (cf. StudentAnswer).
+      answer={(!composer && assessment) || null}
       answerLabel="Lecture"
-      extra={
-        phonetic
-          ? [{ key: `phonetic-${control.number}`, label: "Phonétique (contrôle)", className: "ra-zone-phonetic", content: phonetic }]
-          : []
-      }
       closing={closing}
       clock={controls || null}
       material={material || null}

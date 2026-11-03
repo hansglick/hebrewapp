@@ -13,6 +13,7 @@ Même interface que GeminiLive (les tâches n'utilisent que self.live) et mêmes
 
 import asyncio
 import logging
+import re
 from collections import Counter
 from typing import AsyncIterator
 
@@ -28,6 +29,10 @@ log = logging.getLogger("revision_agent.text_teacher")
 
 APP_PREFIX = "(Message de l'application, pas de l'élève) "
 EMPTY_RETRIES = 2  # nouvelles demandes au prof après une prise de parole vide
+INTRO_CHUNK_BYTES = 9600  # accueil enregistré : envoyé au navigateur par morceaux de 0,2 s (PCM16 24 kHz)
+# Flash-Lite écrit parfois une ligne parasite, un seul mot latin collé, en minuscules et sans ponctuation, avant sa
+# réplique (« opaquetext », vérifié) : jamais une vraie réplique, elle est retirée avant d'être affichée et dite.
+STRAY_LINE = re.compile(r"^[ \t]*[a-z_]+[ \t]*(\r?\n|$)", re.MULTILINE)
 
 
 class TextTeacher:
@@ -58,6 +63,8 @@ class TextTeacher:
         self.worker: asyncio.Task | None = None
         self.calls = 0
         self.usage = Counter()  # tokens de la séance : « input » (cache compris), « cached », « output »
+        # L'accueil enregistré de la tâche (cf. intros.py), joué au lancement à la place de la première prise de parole.
+        self.intro: dict | None = None
 
     @classmethod
     def replacing(cls, live, model: str, tts_model: str | None = None) -> "TextTeacher":
@@ -76,10 +83,13 @@ class TextTeacher:
 
     async def events(self) -> AsyncIterator[LiveEvent]:
         yield LiveEvent("started")
-        self._add(types.Part(text=self.start_message), respond=True)
         self.worker = asyncio.create_task(self._work())
         if self.speaks:
             self.speaker = asyncio.create_task(self._speak())
+        if self.intro:
+            await self._play_intro()
+        else:
+            self._add(types.Part(text=self.start_message), respond=True)
         while True:
             yield await self.queue.get()
 
@@ -122,6 +132,10 @@ class TextTeacher:
         else:
             await self.queue.put(LiveEvent("turn_complete"))
             return
+        for part in content.parts:
+            if part.text and not part.thought and STRAY_LINE.search(part.text):
+                log.warning("ligne parasite retirée : %r", part.text)
+                part.text = STRAY_LINE.sub("", part.text).strip()
         self.history.append(content)
         if self.speaks and (said := " ".join(p.text.strip() for p in content.parts if p.text and not p.thought)):
             self.to_say += 1
@@ -135,6 +149,23 @@ class TextTeacher:
                 self.awaiting.add(call.id)
                 await self.queue.put(LiveEvent("tool_call", {"id": call.id, "name": call.name,
                                                              "args": dict(call.args or {})}))
+        await self.queue.put(LiveEvent("turn_complete"))
+
+    async def _play_intro(self) -> None:
+        """L'accueil enregistré, comme si le prof venait de l'écrire en réponse au message de départ : son texte, puis
+        sa voix enregistrée (dite à la volée, enregistrée avec un autre modèle de voix)."""
+        text = self.intro["text"]
+        log.info("accueil enregistré%s", "" if self.intro["pcm"] else ", voix dite à la volée")
+        self.history += [types.Content(role="user", parts=[types.Part(text=self.start_message)]),
+                         types.Content(role="model", parts=[types.Part(text=text)])]
+        await self.queue.put(LiveEvent("agent_text", text))
+        if self.speaks and self.intro["pcm"]:
+            pcm = self.intro["pcm"]
+            for start in range(0, len(pcm), INTRO_CHUNK_BYTES):
+                await self.queue.put(LiveEvent("audio", pcm[start:start + INTRO_CHUNK_BYTES]))
+        elif self.speaks:
+            self.to_say += 1
+            self.speech.put_nowait(text)
         await self.queue.put(LiveEvent("turn_complete"))
 
     async def _speak(self) -> None:
@@ -164,9 +195,14 @@ class TextTeacher:
                 "input_cost": (fresh * prices["input"] + self.usage["cached"] * prices["cached"]) / 1e6,
                 "output_tokens": self.usage["output"], "output_cost": self.usage["output"] * prices["output"] / 1e6}
 
-    async def student_text(self, text: str, spoken: bool = False) -> None:
-        """La réponse de l'élève, écrite, ou spoken : la transcription de sa réponse orale (cf. prompts.TEXT_MODE)."""
-        self._add(types.Part(text=f"(Réponse orale) {text}" if spoken else text), respond=True)
+    async def student_text(self, text: str, spoken: bool = False, corrected: bool = False, phonetic: str = "") -> None:
+        """La réponse de l'élève, écrite, ou spoken : la transcription de sa réponse orale ; corrected : cette
+        transcription corrigée à la main par l'élève ; phonetic : sa prononciation entendue, voyelles comprises (double
+        route voyelle, cf. prompts.TEXT_MODE)."""
+        prefix = ("(Réponse orale, transcription corrigée par l'élève) " if corrected
+                  else "(Réponse orale) " if spoken else "")
+        heard = f"\n(Prononciation entendue : {phonetic})" if phonetic else ""
+        self._add(types.Part(text=prefix + text + heard), respond=True)
 
     async def send_audio(self, pcm: bytes) -> None:
         pass  # pas de micro en mode texte

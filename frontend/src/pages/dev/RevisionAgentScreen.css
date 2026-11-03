@@ -654,44 +654,6 @@
   }
 }
 
-/* Lecture, contrôle : la case « Phonétique », en tête du texte, et la fenêtre
-   des deux verbatims et de la prononciation attendue. */
-.ra-phonetic {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 6px 14px;
-  margin: 0;
-  font-size: 0.95em;
-}
-
-.ra-phonetic dt {
-  font-size: 0.8em;
-  font-weight: 600;
-  color: var(--textSecondary);
-}
-
-.ra-phonetic dd {
-  margin: 0;
-  font-family: ui-monospace, "JetBrains Mono", monospace;
-  color: var(--textPrimary);
-}
-
-.ra-phonetic dd[lang="he"] {
-  font-family: inherit;
-  font-size: 1.1em;
-  text-align: start;
-}
-
-/* Lecture, dans le bloc des paramètres, hors du formulaire (il se grise
-   pendant la séance) : répliques par lecture et case « Phonétique ». */
-.revision-agent-reading {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 12px 14px;
-  font-size: 0.9em;
-}
-
 .revision-agent-per-reading {
   flex-direction: row;
   align-items: center;
@@ -699,7 +661,9 @@
   gap: 12px;
 }
 
-.revision-agent-phonetic {
+/* Mode texte, Lecture : la case « Double route voyelle », puis le menu de son
+   modèle quand elle est cochée. */
+.revision-agent-vowel-route {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1148,6 +1112,14 @@
   box-shadow: inset 0 -2px 0 #6a3fe0;
 }
 
+/* Double route voyelle : un mot mal prononcé, en orange. */
+.ra-answer-error.ra-error-pronunciation,
+.ra-legend-swatch.ra-error-pronunciation {
+  background: rgba(194, 101, 10, 0.16);
+  color: #b45309;
+  box-shadow: inset 0 -2px 0 #b45309;
+}
+
 /* Mot qui porte les deux fautes : violet (texte), souligné en rouge (langue). */
 .ra-answer-error.ra-error-both {
   background: rgba(124, 77, 255, 0.16);
@@ -1155,7 +1127,9 @@
   box-shadow: inset 0 -3px 0 #d92d2d;
 }
 
-.ra-legend-swatch.ra-error-language {
+/* Faute de langue, et erreur de lecture (mot remplacé, sauté : cf. reading.py), en rouge comme leur surlignage. */
+.ra-legend-swatch.ra-error-language,
+.ra-legend-swatch.ra-error-reading {
   background: rgba(217, 45, 45, 0.18);
   box-shadow: inset 0 -2px 0 #d92d2d;
 }
@@ -1393,15 +1367,6 @@
     flex: 1;
     width: auto;
     min-width: 0;
-  }
-
-  /* Au repos, le loquet est à gauche : le texte n'a besoin de place que de ce côté. */
-  .ra-composer-actions .ra-slider-inside {
-    padding: 0 10px 0 56px;
-  }
-
-  .ra-composer-actions .ra-slider-label-more {
-    display: none;
   }
 
   /* Antisèche ouverte : le glissement vers le bas qui la referme (cf. TaskLayout) ne recharge pas la page. */
@@ -2367,6 +2332,12 @@
   --hl-text: #6a3fe0;
 }
 
+:is(.ra-answer, .ra-declension-sentence) .ra-highlighter.ra-error-pronunciation {
+  --hl-fill: rgba(194, 101, 10, 0.22);
+  --hl-line: #b45309;
+  --hl-text: #b45309;
+}
+
 :is(.ra-answer, .ra-declension-sentence) .ra-highlighter.ra-error-both {
   --hl-fill: rgba(124, 77, 255, 0.22);
   --hl-line: #d92d2d;
@@ -2804,6 +2775,15 @@
   align-items: baseline;
 }
 
+/* Le bouton de réécoute, et le crayon juste en dessous. */
+.ra-exchange-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+}
+
 .ra-exchange-text {
   flex: 1;
   min-width: 0;
@@ -2913,23 +2893,58 @@
 /* Le trait : moitié de la largeur, centré, de la couleur de la bordure ;
    autant d'espace au-dessus que dessous (28 px : sous lui, 20 px de marge et
    les 8 px d'écart jusqu'à la piste). */
+/* Le trait, épais, de la couleur du mode, ses bouts arqués vers le bas (cf. StudentAnswer, RuleShape, et demande
+   explicite du user). Le mode change : sa couleur balaie le trait de gauche à droite (.ra-exchange-rule-sweep, rejoué
+   à chaque changement), par-dessus l'ancienne, que le trait garde le temps du balayage (--rule-old, déclarée pour que
+   sa transition, retardée, la change d'un coup à la fin). Le trait se trace, se retire et se balaie par un cache
+   (clip-path), qui ne déforme pas ses bouts. */
+@property --rule-old {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+
+/* Pour le moment, de la couleur de la bordure de la piste (.ra-slider), quel que soit le mode (cf. demande explicite
+   du user) : --rule-color ; pour que le trait reprenne la couleur du mode, var(--mode-color, var(--textPrimary)). */
 .ra-exchange-rule {
-  width: 50%;
-  height: 1px;
-  margin: 28px auto 20px;
-  border: none;
-  background: var(--mode-color, var(--textPrimary));
-  transition: background-color 0.5s ease;
-  transform-origin: left center;
+  --rule-color: color-mix(in srgb, #b5502e 35%, transparent);
+  --rule-old: var(--rule-color);
+  position: relative;
+  width: 25%;
+  height: 10px;
+  margin: 27px auto 12px;
+  transition: --rule-old 0s linear 0.5s;
   animation: ra-rule-draw 0.6s ease-out 0.2s both;
 }
 
+.ra-exchange-rule svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke-width: 2.1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ra-exchange-rule-base {
+  stroke: var(--rule-old);
+}
+
+.ra-exchange-rule-sweep {
+  stroke: var(--rule-color);
+  animation: ra-rule-draw 0.5s ease-in-out both;
+}
+
+/* Le cache déborde de quelques pixels : l'épaisseur du trait et ses bouts arrondis. */
 @keyframes ra-rule-draw {
   from {
-    transform: scaleX(0);
+    clip-path: inset(-4px 100% -4px -4px);
   }
   to {
-    transform: scaleX(1);
+    clip-path: inset(-4px -4px -4px -4px);
   }
 }
 
@@ -2954,10 +2969,10 @@
 
 @keyframes ra-rule-out {
   from {
-    transform: scaleX(1);
+    clip-path: inset(-4px -4px -4px -4px);
   }
   to {
-    transform: scaleX(0);
+    clip-path: inset(-4px 100% -4px -4px);
   }
 }
 
@@ -3091,6 +3106,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ra-exchange-rule,
+  .ra-exchange-rule-sweep,
   .ra-answer-perfect,
   .ra-lamp,
   .ra-lamp svg.ra-lamp-rays {
@@ -3118,7 +3134,7 @@
 /* Réponse à voix haute (cf. RecordSlider) : une piste à pousser comme pour
    déverrouiller un téléphone, en rouge ocre (cf. demande explicite du user) ;
    le loquet glisse vers la droite, devient un avion en papier qui s'envole à
-   travers les nuages à l'envoi ; la corbeille, à droite, n'est active que
+   l'envoi, des traits de vitesse filant dans la piste ; la corbeille, à droite, n'est active que
    pendant l'enregistrement. */
 .ra-slider-row {
   --ochre: #b5502e;
@@ -3127,9 +3143,11 @@
   gap: 12px;
 }
 
+/* Les trois quarts de sa largeur d'origine (cf. demande explicite du user) : « Glisse ››› », sans « pour répondre »
+   (cf. .ra-slider-label-more). */
 .ra-slider {
   position: relative;
-  width: 280px;
+  width: 210px;
   max-width: 100%;
   height: 56px;
   border-radius: 28px;
@@ -3157,12 +3175,22 @@
   padding: 0 64px 0 20px;
 }
 
+/* Piste de la réponse, étroite (cf. .ra-slider) : comme sur mobile, au repos, le loquet est à gauche, le texte n'a
+   besoin de place que de ce côté ; pendant l'enregistrement, l'onde garde la sienne (cf. .ra-slider-recording). */
+.ra-composer-actions .ra-slider:not(.ra-slider-recording) .ra-slider-inside {
+  padding: 0 10px 0 56px;
+}
+
 .ra-slider-label {
   width: 100%;
   text-align: center;
   font-size: 0.9em;
   color: var(--ochre);
   white-space: nowrap;
+}
+
+.ra-composer-actions .ra-slider-label-more {
+  display: none;
 }
 
 .ra-slider-chevrons {
@@ -3281,39 +3309,86 @@
   }
 }
 
-/* Pendant le vol, des nuages défilent dans la piste, de droite à gauche. */
+/* L'avion en vol : blanc tant qu'il est sur la pastille, rouge ocre dès qu'il
+   en sort (cf. demande explicite du user). Deux avions au même vol, l'un coupé
+   au cercle de la pastille, l'autre masqué par ce même cercle ; le second,
+   centré lui aussi sur la pastille, s'étend assez loin pour tout le vol. */
+.ra-plane-inside,
+.ra-plane-outside {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ra-plane-inside {
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.ra-plane-outside {
+  inset: -200px;
+  color: var(--ochre);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 24px, #000 24.5px);
+  mask-image: radial-gradient(circle at center, transparent 24px, #000 24.5px);
+}
+
+/* Pendant le vol, des traits de vitesse filent dans la piste, de droite à
+   gauche (cf. demande explicite du user). */
 .ra-slider-sky {
   position: absolute;
   inset: 0;
 }
 
-.ra-cloud {
+.ra-streak {
   position: absolute;
   left: 100%;
-  fill: color-mix(in srgb, var(--ochre) 30%, white);
-  animation: ra-cloud 1.3s linear forwards;
+  height: 2px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--ochre) 45%, transparent);
+  animation: ra-streak 0.5s linear 2 backwards;
 }
 
-.ra-cloud-1 {
-  top: 8px;
-  width: 38px;
-}
-
-.ra-cloud-2 {
-  top: 26px;
-  width: 28px;
-  animation-delay: 0.2s;
-}
-
-.ra-cloud-3 {
+.ra-streak-1 {
   top: 12px;
-  width: 22px;
-  animation-delay: 0.45s;
+  width: 44px;
 }
 
-@keyframes ra-cloud {
+.ra-streak-2 {
+  top: 34px;
+  width: 30px;
+  animation-delay: 0.12s;
+}
+
+.ra-streak-3 {
+  top: 22px;
+  width: 56px;
+  animation-delay: 0.22s;
+}
+
+.ra-streak-4 {
+  top: 42px;
+  width: 38px;
+  animation-delay: 0.32s;
+}
+
+.ra-streak-5 {
+  top: 16px;
+  width: 26px;
+  animation-delay: 0.42s;
+}
+
+.ra-streak-6 {
+  top: 29px;
+  width: 48px;
+  animation-delay: 0.08s;
+}
+
+@keyframes ra-streak {
   to {
-    transform: translateX(-340px);
+    transform: translateX(-360px);
   }
 }
 
@@ -3396,4 +3471,144 @@
   color: var(--textPrimary);
   cursor: pointer;
   font-size: 0.8em;
+}
+
+/* Correction à la main de la réponse affichée (cf. StudentAnswer) : le
+   crayon, à côté du bouton de réécoute, puis le champ prérempli qui prend la
+   place de la réponse, et son bouton « Envoyer ». */
+.ra-composer-correct {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  padding: 3px 7px;
+}
+
+/* Un chiffre dans la transcription : une fois la réponse écrite
+   (--burst-delay), le crayon explose comme la coche d'une bonne réponse dans
+   le suivi (cf. .ra-burst, mêmes animations), deux fois en 2 s ; l'onde et les
+   éclats restent invisibles jusque-là. */
+.ra-composer-correct-digits {
+  position: relative;
+}
+
+.ra-composer-correct-digits svg {
+  animation: ra-burst-pop 1s cubic-bezier(0.3, 1.6, 0.5, 1) var(--burst-delay, 0s) 2 forwards;
+}
+
+.ra-composer-correct-digits::before,
+.ra-composer-correct-digits::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ra-composer-correct-digits::before {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  animation: ra-burst-ring 1s ease-out var(--burst-delay, 0s) 2 forwards;
+}
+
+.ra-composer-correct-digits::after {
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  box-shadow:
+    0 -18px 0 currentColor,
+    13px -13px 0 currentColor,
+    18px 0 0 currentColor,
+    13px 13px 0 currentColor,
+    0 18px 0 currentColor,
+    -13px 13px 0 currentColor,
+    -18px 0 0 currentColor,
+    -13px -13px 0 currentColor;
+  animation: ra-burst-sparks 1s ease-out var(--burst-delay, 0s) 2 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-composer-correct-digits svg,
+  .ra-composer-correct-digits::before,
+  .ra-composer-correct-digits::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .ra-composer-correct-digits svg {
+    opacity: 1;
+  }
+}
+
+.ra-composer-correct svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Case « Phonétique » : la prononciation entendue, sous la phrase hébraïque (alignée à sa droite), en plus petit. */
+/* La phonétique se dévoile d'un balayage de gauche à droite, à son arrivée, sous un cache au bord adouci (cf.
+   demande explicite du user) : le masque, 2,5 fois plus large que la ligne, opaque sur ses 40 % de gauche, glisse
+   de sa droite à sa gauche. La ligne épouse son texte, pour que le balayage parte de son premier mot ; elle reste
+   calée à droite (plus précis que .ra-exchange-text > p, qui annulerait sa marge). */
+.ra-exchange-text .ra-exchange-phonetic {
+  width: fit-content;
+  max-width: 100%;
+  margin: 2px 0 0 auto;
+  text-align: right;
+  font-size: 0.8em;
+  font-style: italic;
+  color: var(--textSecondary);
+  -webkit-mask-image: linear-gradient(to right, #000 40%, transparent 60%);
+  mask-image: linear-gradient(to right, #000 40%, transparent 60%);
+  -webkit-mask-size: 250% 100%;
+  mask-size: 250% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ra-phonetic-reveal 0.4s ease-out both;
+}
+
+@keyframes ra-phonetic-reveal {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-exchange-phonetic {
+    animation: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.ra-exchange-edit {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ra-exchange-edit input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--cardBorder);
+  border-radius: 8px;
+  background: var(--cardBg);
+  color: var(--textPrimary);
+  font: inherit;
+  font-size: 1.1em;
 }

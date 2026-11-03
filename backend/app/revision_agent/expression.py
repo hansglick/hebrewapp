@@ -6,8 +6,9 @@ hébreu (cf. demande explicite du user). C'est une conversation menée par le pr
 Pour chaque question :
 - indices : quand l'élève bloque, ou après une réponse fausse, le prof lui en propose un ; s'il accepte, l'application
   dévoile le suivant (verbe, mot, règle, sens de la réponse, début de la réponse…), affiché et dit par le prof ;
-- évaluation : les fautes de langue et de sens (pas la vérité), chacune commentée sans donner la solution ; pas de
-  note (cf. demande explicite du user) : la réponse est réussie si elle n'a aucune faute ;
+- évaluation : les fautes de langue, relevées par le prof, et de sens (pas la vérité), jugé à part (cf.
+  judges.judge_sentence), chacune commentée sans donner la solution ; pas de note (cf. demande explicite du user) : la
+  réponse est réussie si elle n'a aucune faute ;
 - réponse parfaite : l'élève décline sa phrase (un seul élément, cf. sentence_declension.py), évaluée sur la langue
   seule ; réussie, ou s'il passe, les fenêtres se ferment de bas en haut et la question suivante arrive.
 Le tirage couvre d'abord les concepts accessibles au niveau, sinon les conjugaisons, puis le ל décliné ; à droite
@@ -47,9 +48,9 @@ from app.config import DATA_DIR
 from app.revision_agent import prompts, sentence_declension
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
 from app.revision_agent.config import DEFAULT_LANGUAGES, SHOW_DECLENSION_EXPECTED
-from app.revision_agent.evaluation import (QUESTION_FALLBACK_SECONDS, align_error_words, french_texts,
-                                           hebrew_answer)
+from app.revision_agent.evaluation import QUESTION_FALLBACK_SECONDS, align_error_words, hebrew_answer
 from app.revision_agent.gemini_live import GeminiLive
+from app.revision_agent.judges import error_list, judge_sentence, no_fault, plausibility, sense_errors, teacher_errors
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.topics import topics_for
@@ -100,42 +101,26 @@ ANSWER = {
                    "prononcées, mais n'invente jamais de faute d'orthographe, qui ne s'entend pas à l'oral.",
 }
 
-def error_list(description: str) -> dict:
-    """Fautes relevées : le mot fautif (surligné à l'écran) et l'origine de l'erreur, sans jamais la solution (cf.
-    demande explicite du user)."""
-    return {
-        "type": "ARRAY",
-        "description": description,
-        "items": {
-            "type": "OBJECT",
-            "properties": {
-                "mot": {"type": "STRING",
-                        "description": "Le mot fautif, recopié exactement tel qu'il est écrit dans reponse_eleve"},
-                "commentaire": {"type": "STRING",
-                                "description": "En français, en quelques mots, factuellement : l'origine de l'erreur "
-                                               "(« ce n'est pas le pronom demandé », « mauvaise conjugaison », « il "
-                                               "manque la préposition »). Ne donne JAMAIS la forme correcte ni la "
-                                               "solution, ni en hébreu ni en français"},
-            },
-            "required": ["mot", "commentaire"],
-        },
-    }
+# Le sens de la réponse, jugé à part (cf. judges.judge_sentence, demande explicite du user).
+SENSE_EXERCISE = ("Exercice d'expression libre pour débutants : tu as posé une question à l'élève, qui y répond à voix "
+                  "haute par une phrase, librement.")
+SENSE = {"plausibilite": plausibility(extra="Elle doit aussi répondre à la question posée (« אני גר בפריז » répond bien "
+                                            "à « איפה אתה גר? ») : une phrase absurde ou incohérente, ou une réponse "
+                                            "qui ne répond pas à la question, est fausse.")}
 
 
 EVALUATION_TOOL = {
     "name": "evaluer_reponse",
     "description": "Affiche à l'écran de l'élève l'évaluation de sa réponse à la question : sa réponse, ses fautes "
-                   "surlignées et commentées (langue, sens).",
+                   "de langue surlignées et commentées (l'application juge elle-même le sens).",
     "parameters": {
         "type": "OBJECT",
         "properties": {
             "nouvel_essai": RETRY_VERDICT,
             "reponse_eleve": ANSWER,
             "fautes_langue": error_list("Chaque faute de langue de la réponse, dans l'ordre ([] s'il n'y en a pas)"),
-            "fautes_sens": error_list("Chaque mot qui rend la phrase incohérente ou hors de propos par rapport à la "
-                                      "question ([] s'il n'y en a pas)"),
         },
-        "required": ["nouvel_essai", "reponse_eleve", "fautes_langue", "fautes_sens"],
+        "required": ["nouvel_essai", "reponse_eleve", "fautes_langue"],
     },
     "behavior": "NON_BLOCKING",
 }
@@ -219,7 +204,7 @@ def draw_questions(lesson: str, count: int = QUESTIONS_PER_ROUND) -> list[dict]:
 
 
 def perfect(evaluation: dict) -> bool:
-    return not evaluation["errors"]
+    return no_fault(evaluation["errors"])
 
 
 class ExpressionSession(TeacherSession):
@@ -366,7 +351,7 @@ class ExpressionSession(TeacherSession):
             await super().on_tool_call(call)
 
     async def evaluate_answer(self, args: dict, respond) -> None:
-        evaluation = await self.evaluation(args, {"fautes_langue": "language", "fautes_sens": "sense"})
+        evaluation = await self.evaluation(args, sense=True)
         succeeded = perfect(evaluation)
         await self.exchange(evaluation)
         # La réponse et l'évaluation ne s'affichent que si elle est fausse (cf. demande explicite du user) ; réussie,
@@ -384,16 +369,8 @@ class ExpressionSession(TeacherSession):
         else:
             await respond({"resultat": self.in_mode(prompts.EVALUATION_SHOWN_EXPRESSION)}, when_idle=True)
 
-    async def exchange(self, evaluation: dict | None) -> None:
-        """Mode texte : l'évaluation de la réponse de l'élève, réussie ou non, dans la fenêtre de sa réponse ; None :
-        l'évaluation demandée par le prof n'a pas lieu (pas d'exercice en cours, pas un nouvel essai) : il converse."""
-        if self.exchange_evaluated:
-            self.exchange_evaluated = False
-            await self.to_browser({"type": "exchange", "kind": "evaluation", "evaluation": evaluation} if evaluation
-                                  else {"type": "exchange", "kind": "conversation"})
-
     async def evaluate_declension(self, args: dict, respond) -> None:
-        evaluation = await self.evaluation(args, {"fautes_langue": "language"})
+        evaluation = await self.evaluation(args)
         succeeded = perfect(evaluation)
         await self.exchange(evaluation)
         if not succeeded:
@@ -405,16 +382,21 @@ class ExpressionSession(TeacherSession):
         else:
             await respond({"resultat": self.in_mode(prompts.DECLENSION_FAILED)}, when_idle=True)
 
-    async def evaluation(self, args: dict, error_kinds: dict[str, str]) -> dict:
-        """Évaluation à afficher : réponse en hébreu, commentaires des fautes en français (cf. comprehension.py)."""
-        errors = [{"word": str(f.get("mot") or "").strip(), "kind": kind, "comment": str(f.get("commentaire") or "").strip()}
-                  for field, kind in error_kinds.items() for f in args.get(field) or [] if isinstance(f, dict)]
-        errors = [e for e in errors if e["word"] or e["comment"]]
-        for error, text in zip(errors, await french_texts([e["comment"] for e in errors])):
-            error["comment"] = text
+    async def evaluation(self, args: dict, sense: bool = False) -> dict:
+        """Évaluation à afficher : réponse en hébreu, commentaires des fautes en français (cf. judges.py). Les fautes
+        de langue du prof ; sense : le sens de la réponse à la question, jugé à part ; double route voyelle, la
+        prononciation, jugée à part (cf. demande explicite du user)."""
+        answer = hebrew_answer(args.get("reponse_eleve"), self.heard)
+        no_judgment = asyncio.sleep(0, {"problemes": []})
+        language, judged, pronunciation = await asyncio.gather(
+            teacher_errors(args, {"fautes_langue": "language"}),
+            judge_sentence(SENSE_EXERCISE, {"question": self.current["hebrew"]}, answer, SENSE) if sense
+            else no_judgment,
+            self.pronunciation_errors())
+        errors = language + sense_errors(judged, "ta réponse ne répond pas à la question") + pronunciation
+        await self.tell_judged(errors)
         self.evaluated = True
-        answer = align_error_words(hebrew_answer(args.get("reponse_eleve"), self.heard), errors)
-        return {"answer": answer, "errors": errors}
+        return {"answer": align_error_words(answer, errors), "errors": errors}
 
     async def start_declension(self, sentence: str, respond) -> None:
         """Prépare la déclinaison de la phrase réussie, l'affiche dès que le prof se tait, et la lui confie avec le

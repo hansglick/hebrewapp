@@ -32,10 +32,11 @@ from app.config import DATA_DIR
 from app.revision_agent import prompts, sentence_declension
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
 from app.revision_agent.config import DEFAULT_LANGUAGES, SHOW_DECLENSION_EXPECTED
-from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, french_texts, hebrew_answer
+from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, hebrew_answer
 from app.revision_agent.expression import (CLOSING_SECONDS, DECLENSION_EVALUATION_TOOL, RETRY_TOOL,
                                           TEACHER_IDLE_TIMEOUT)
 from app.revision_agent.gemini_live import GeminiLive
+from app.revision_agent.judges import teacher_errors
 from app.revision_agent.passages import is_previous, lesson_number
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.utterances import sentence_key, word_span
@@ -346,12 +347,7 @@ class DeclensionSession(TeacherSession):
     async def evaluate(self, args: dict, respond) -> None:
         """Évaluation de la phrase déclinée (cf. expression.py), affichée qu'elle soit réussie ou non (cf. demande
         explicite du user) ; réussie, le prof enchaîne de lui-même sur la phrase suivante."""
-        errors = [{"word": str(f.get("mot") or "").strip(), "kind": "language",
-                   "comment": str(f.get("commentaire") or "").strip()}
-                  for f in args.get("fautes_langue") or [] if isinstance(f, dict)]
-        errors = [e for e in errors if e["word"] or e["comment"]]
-        for error, text in zip(errors, await french_texts([e["comment"] for e in errors])):
-            error["comment"] = text
+        errors = await teacher_errors(args, {"fautes_langue": "language"})
         self.evaluated = True
         answer = align_error_words(hebrew_answer(args.get("reponse_eleve"), self.heard), errors)
         await self.to_browser({"type": "declension_evaluation", "evaluation": {"answer": answer, "errors": errors}})

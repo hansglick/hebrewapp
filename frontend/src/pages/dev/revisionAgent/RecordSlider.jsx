@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 // explicite du user) : on pousse le loquet (micro) jusqu'au bout de la piste,
 // ce qui lance l'enregistrement ; il devient alors un avion en papier, et la
 // piste montre une onde et la durée. Un clic sur l'avion arrête et envoie :
-// il s'envole à travers les nuages, puis le loquet revient au départ. À
+// il s'envole, des traits de vitesse filant dans la piste, puis le loquet revient au départ. À
 // droite, la corbeille, grisée hors enregistrement, l'arrête et l'annule.
 // Lâché avant le bout, le loquet revient au départ.
 
@@ -36,14 +36,6 @@ function TrashIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M4 6.5h16M9.5 6.5V4.5h5v2M6.5 6.5l1 13.5h9l1-13.5M10 10v6.5M14 10v6.5" fill="none" />
-    </svg>
-  );
-}
-
-function Cloud({ className }) {
-  return (
-    <svg viewBox="0 0 40 20" className={className} aria-hidden="true">
-      <path d="M8 18a6 6 0 0 1 1-11.9A8 8 0 0 1 24 5a6.5 6.5 0 0 1 9 6.2A4 4 0 0 1 32 18z" />
     </svg>
   );
 }
@@ -132,9 +124,9 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
           )}
           {flying && (
             <span className="ra-slider-sky" aria-hidden="true">
-              <Cloud className="ra-cloud ra-cloud-1" />
-              <Cloud className="ra-cloud ra-cloud-2" />
-              <Cloud className="ra-cloud ra-cloud-3" />
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <span key={n} className={`ra-streak ra-streak-${n}`} />
+              ))}
             </span>
           )}
         </div>
@@ -153,7 +145,15 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
           title={recording ? "Envoyer ma réponse" : undefined}
         >
           {flying ? (
-            <PlaneIcon className="ra-plane-flight" />
+            // Blanc dans la pastille, ocre hors d'elle (cf. demande explicite du user) : deux avions au même vol.
+            <>
+              <span className="ra-plane-inside">
+                <PlaneIcon className="ra-plane-flight" />
+              </span>
+              <span className="ra-plane-outside">
+                <PlaneIcon className="ra-plane-flight" />
+              </span>
+            </>
           ) : recording ? (
             <PlaneIcon className="ra-plane" />
           ) : (

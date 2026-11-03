@@ -79,6 +79,12 @@ const PREVIEWS = [
       "L'expression libre sans Gemini Live : le prof écrit (modèle texte) et parle (TTS), l'élève répond à voix haute (transcription) ou par écrit.",
   },
   {
+    to: "/dev/revision-agent-schema",
+    label: "Agent de révision — schémas des tâches",
+    description:
+      "Le flux de chaque tâche, de la voix de l'élève au verdict : modèles, rôles, et leurs prompts lus dans le code.",
+  },
+  {
     to: "/dev/topic-prototype",
     label: "Prototype sujets",
     description:

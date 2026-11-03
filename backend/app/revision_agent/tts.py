@@ -23,14 +23,20 @@ STYLED_MODELS = {"gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"}
 _client: genai.Client | None = None
 
 
-async def speak(text: str, model: str, voice: str) -> AsyncIterator[bytes]:
-    global _client
-    _client = _client or genai.Client(api_key=GEMINI_API_KEY)
+def speech_input(text: str, model: str) -> list[dict]:
+    """Ce que reçoit le modèle de voix : la prise de parole, et le ton du prof s'il l'accepte (cf. speak, et le schéma
+    de chaque tâche)."""
     content = {"type": "text", "text": text}
     if model in STYLED_MODELS:
         content["annotations"] = [{"type": "speech_metadata", "style": STYLE}]
+    return [{"type": "user_input", "content": [content]}]
+
+
+async def speak(text: str, model: str, voice: str) -> AsyncIterator[bytes]:
+    global _client
+    _client = _client or genai.Client(api_key=GEMINI_API_KEY)
     stream = await _client.aio.interactions.create(
-        model=model, input=[{"type": "user_input", "content": [content]}], response_format={"type": "audio"},
+        model=model, input=speech_input(text, model), response_format={"type": "audio"},
         generation_config={"speech_config": [{"voice": voice}]}, stream=True)
     async for event in stream:
         if event.event_type == "step.delta" and event.delta.type == "audio":

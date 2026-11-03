@@ -10,6 +10,7 @@ import DeclensionBoard from "./revisionAgent/DeclensionBoard";
 import ExpressionBoard from "./revisionAgent/ExpressionBoard";
 import QuestionBoard from "./revisionAgent/QuestionBoard";
 import ReadingBoard from "./revisionAgent/ReadingBoard";
+import { extractText } from "./revisionAgent/readingText";
 import WordBoard from "./revisionAgent/WordBoard";
 import SessionClock from "./revisionAgent/SessionClock";
 import StudentAnswer from "./revisionAgent/StudentAnswer";
@@ -37,8 +38,10 @@ const QUESTIONLESS_LESSONS = ["0.15"];
 // Leçons dont le texte n'a pas de questions de compréhension.
 const TEXT_WITHOUT_QUESTIONS = ["0.11"];
 const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une leçon qui a un texte
-// Tâches grisées dans le menu pour le moment (cf. demande explicite du user).
-const DISABLED_TASKS = ["mot"];
+// Seule tâche accessible pour le moment, et celle par défaut : les autres sont grisées dans le menu (cf. demande
+// explicite du user ; pour les rouvrir, les ajouter ici).
+const ENABLED_TASKS = ["lecture"];
+const DEFAULT_TASK = "lecture";
 // « Lecture » en premier (cf. demande explicite du user).
 const TASKS = [
   { id: "lecture", label: "Lecture" },
@@ -52,6 +55,10 @@ const TASKS = [
 
 // Lecture : répliques à lire par tour, au plus (cf. passages.MAX_PHRASES_PER_READING).
 const MAX_PER_READING = 3;
+
+// Mode texte : les menus du modèle du prof et de sa voix, masqués pour le moment (cf. demande explicite du user) : le
+// premier de chaque liste, fixé (gemini-3.5-flash-lite, gemini-3.8-flash-lite-tts). true : les menus reviennent.
+const MODEL_MENUS = false;
 
 // Mode texte : modèles possibles du prof (cf. config.TEXT_TEACHER_MODELS), le
 // plus rapide par défaut (cf. demande explicite du user).
@@ -68,6 +75,23 @@ const TTS_MODELS = [
   { id: "gemini-3.8-flash-tts", label: "Gemini 3.8 Flash TTS" },
   { id: "gemini-3.1-flash-tts-preview", label: "Gemini 3.1 Flash TTS (preview)" },
 ];
+
+// « Double route voyelle » : le modèle de la transcription phonétique de la réponse enregistrée (cf.
+// config.PHONETIC_MODELS) et celui du juge de la prononciation, qui compare la phonétique au mot transcrit ou au texte
+// lu (cf. config.PRONUNCIATION_MODELS), choisis ensemble (cf. demande explicite du user) : rapide, ou précis, par
+// défaut.
+const MODEL_CONFIGS = [
+  { id: "fast", label: "FAST", phonetic: "gemini-3.5-flash", pronunciation: "gemini-3.5-flash-lite" },
+  { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
+];
+
+// Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
+// (cf. demande explicite du user) ; les retirer d'ici pour qu'elles reviennent.
+const HIDDEN_VOWEL_BOXES = ["lecture"];
+
+// Tâches où la case « Double route voyelle » s'affiche (cf. config.VOWEL_ROUTE_TASKS), et si elle est cochée par
+// défaut : toujours (cf. demande explicite du user).
+const VOWEL_ROUTE_DEFAULTS = { lecture: true, expression: true, comprehension: true };
 
 // Voix du prof, fixée (cf. demande explicite du user) : une des voix prédéfinies de Gemini Live.
 const VOICE = "Enceladus";
@@ -98,7 +122,7 @@ const LAST_LESSON = 30;
 // tire des phrases dont une partie est surlignée, l'élève pose la question
 // dont c'est la réponse (cf. QuestionBoard). Accessible uniquement via /dev.
 // textMode : la page sans Gemini Live (/dev/revision-agent-texte, cf. demande
-// explicite du user), toutes les tâches, l'expression libre par défaut : le
+// explicite du user), toutes les tâches, la lecture par défaut (cf. DEFAULT_TASK) : le
 // prof est un modèle texte (cf. app.revision_agent.text_teacher) dont chaque
 // prise de parole est dite par un modèle TTS ; l'élève répond à voix haute,
 // transcrit, ou par écrit en cas de souci (cf. StudentAnswer).
@@ -112,13 +136,21 @@ export default function RevisionAgentScreen({ textMode = false }) {
   const [lessons, setLessons] = useState([]);
   const [lessonCode, setLessonCode] = useState("");
   const tasks = TASKS;
-  const [task, setTask] = useState(textMode ? "expression" : tasks[0].id);
+  const [task, setTask] = useState(DEFAULT_TASK);
   const [teacherModel, setTeacherModel] = useState(TEACHER_MODELS[0].id);
   const [ttsModel, setTtsModel] = useState(TTS_MODELS[0].id);
   const [currentLesson, setCurrentLesson] = useState(true);
   const [previousLessons, setPreviousLessons] = useState(false);
-  // Lecture : affiche la phonétique de chaque lecture (contrôle, cf. ReadingBoard).
-  const [showPhonetic, setShowPhonetic] = useState(false);
+  // Mode texte, lecture, expression libre et compréhension : la réponse enregistrée est aussi transcrite en lettres
+  // latines, voyelles comprises, par phoneticModel (cf. transcribe.heard_phonetic), seulement si la case de la tâche
+  // est cochée, ce qu'elle est par défaut (cf. demande explicite du user).
+  const [vowelRoutes, setVowelRoutes] = useState(VOWEL_ROUTE_DEFAULTS);
+  const vowelRoute = vowelRoutes[task] ?? false;
+  // Double route voyelle : la prononciation entendue s'affiche sous la réponse de l'élève (cf. StudentAnswer, demande
+  // explicite du user) ; case cochée par défaut.
+  const [showPhonetic, setShowPhonetic] = useState(true);
+  const [modelConfig, setModelConfig] = useState("precise");
+  const models = MODEL_CONFIGS.find((config) => config.id === modelConfig);
   // Lecture : nombre de répliques à lire par tour (cf. passages.MAX_PHRASES_PER_READING), réglable pendant la séance.
   const [perReading, setPerReading] = useState(1);
   const changePerReading = (count) => {
@@ -227,7 +259,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
     !((currentLesson && completionsOf(lessonCode).current) || (previousLessons && completionsOf(lessonCode).previous));
   const taskAvailable = (id) =>
     LIVE_TASKS.includes(id) &&
-    !DISABLED_TASKS.includes(id) &&
+    ENABLED_TASKS.includes(id) &&
     !needsText(id) &&
     !needsQuestions(id) &&
     !needsPhrases(id) &&
@@ -256,6 +288,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
         mode: textMode ? "texte" : "voix",
         teacherModel: textMode ? teacherModel : undefined,
         ttsModel: textMode ? ttsModel : undefined,
+        phoneticModel: textMode && vowelRoute ? models.phonetic : undefined,
+        pronunciationModel: textMode && vowelRoute ? models.pronunciation : undefined,
       });
     }
   };
@@ -271,8 +305,9 @@ export default function RevisionAgentScreen({ textMode = false }) {
 
   // Sans Gemini Live, toutes les tâches : la réponse enregistrée de l'élève (cf. StudentAnswer), qui reste à l'écran
   // jusqu'à la fin de la connexion, puis s'en va avec les autres fenêtres. taskEvaluation : l'évaluation qu'affiche la
-  // tâche elle-même (toutes sauf l'expression libre, dont la fenêtre de la réponse montre l'évaluation).
-  const composer = (taskEvaluation) =>
+  // tâche elle-même (toutes sauf l'expression libre, la compréhension et la lecture, dont la fenêtre de la réponse
+  // montre l'évaluation). readingText : en lecture, le texte à lire, affiché à la place de la transcription.
+  const composer = (taskEvaluation, readingText) =>
     textMode &&
     (live || session.bill) &&
     ((lamp) => (
@@ -284,6 +319,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
         disabled={!live || session.phase === "done"}
         lamp={lamp}
         taskEvaluation={taskEvaluation}
+        showPhonetic={showPhonetic}
+        readingText={readingText}
       />
     ));
 
@@ -322,7 +359,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
                   <option
                     key={t.id}
                     value={t.id}
-                    disabled={DISABLED_TASKS.includes(t.id) || needsText(t.id) || needsQuestions(t.id)}
+                    disabled={!ENABLED_TASKS.includes(t.id) || needsText(t.id) || needsQuestions(t.id)}
                   >
                     {t.label}
                     {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
@@ -332,7 +369,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
               </select>
             </label>
 
-            {textMode && (
+            {textMode && MODEL_MENUS && (
               <label className="revision-agent-field">
                 Modèle du prof
                 <select value={teacherModel} onChange={(e) => setTeacherModel(e.target.value)}>
@@ -344,7 +381,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
                 </select>
               </label>
             )}
-            {textMode && (
+            {textMode && MODEL_MENUS && (
               <label className="revision-agent-field">
                 Voix du prof
                 <select value={ttsModel} onChange={(e) => setTtsModel(e.target.value)}>
@@ -355,6 +392,48 @@ export default function RevisionAgentScreen({ textMode = false }) {
                   ))}
                 </select>
               </label>
+            )}
+            {/* Choisis au lancement : le formulaire se grise pendant la séance. */}
+            {textMode && task in VOWEL_ROUTE_DEFAULTS && (
+              <div className="revision-agent-field">
+                {!HIDDEN_VOWEL_BOXES.includes(task) && (
+                  <label className="revision-agent-vowel-route">
+                    <input
+                      type="checkbox"
+                      checked={vowelRoute}
+                      onChange={(e) => setVowelRoutes((routes) => ({ ...routes, [task]: e.target.checked }))}
+                    />
+                    Double route voyelle
+                  </label>
+                )}
+                {vowelRoute && !HIDDEN_VOWEL_BOXES.includes(task) && (
+                  <label className="revision-agent-vowel-route">
+                    <input type="checkbox" checked={showPhonetic} onChange={(e) => setShowPhonetic(e.target.checked)} />
+                    Phonétique
+                  </label>
+                )}
+                {vowelRoute && (
+                  <div className="revision-agent-field" role="radiogroup" aria-label="Modèles de la prononciation">
+                    Modèles de la prononciation
+                    <div className="revision-agent-scope">
+                      {MODEL_CONFIGS.map((config) => (
+                        <label
+                          key={config.id}
+                          title={`Phonétique : ${config.phonetic} · juge : ${config.pronunciation}`}
+                        >
+                          <input
+                            type="radio"
+                            name="revision-agent-model-config"
+                            checked={modelConfig === config.id}
+                            onChange={() => setModelConfig(config.id)}
+                          />
+                          {config.label}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
             {/* Lecture : toujours le texte de la leçon choisie, rien à choisir (cf. demande explicite du user). */}
@@ -429,16 +508,6 @@ export default function RevisionAgentScreen({ textMode = false }) {
           )}
         </div>
 
-        {/* Hors du formulaire, qui se grise pendant la séance : la case reste utilisable. */}
-        {task === "lecture" && (
-          <div className="card revision-agent-reading">
-            <label className="revision-agent-phonetic">
-              <input type="checkbox" checked={showPhonetic} onChange={(e) => setShowPhonetic(e.target.checked)} />
-              Afficher la phonétique (contrôle)
-            </label>
-          </div>
-        )}
-
         <div className={`revision-agent-actions ${active && !clockInSession ? "revision-agent-actions-live" : ""}`}>
           {!(active && clockInSession) && (
             <button
@@ -489,7 +558,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
               score={session.score}
               onNext={session.next}
               clock={sessionControls || null}
-              composer={composer(session.evaluation)}
+              composer={composer()}
             />
           ) : sessionTask === "expression" ? (
             <ExpressionBoard
@@ -599,8 +668,6 @@ export default function RevisionAgentScreen({ textMode = false }) {
               teacher={session.teacher}
               text={session.text}
               extract={session.extract}
-              control={session.readingControl}
-              showPhonetic={showPhonetic}
               onListen={session.listen}
               evaluation={session.evaluation}
               closing={session.closing}
@@ -613,7 +680,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
               }
               onNext={session.next}
               clock={sessionControls || null}
-              composer={composer(session.evaluation)}
+              // Comme en expression libre, la fenêtre de la réponse montre l'évaluation de la lecture (cf. reading.py).
+              composer={composer(undefined, extractText(session.text, session.extract))}
             />
           )}
         </BillCloseContext.Provider>

@@ -11,6 +11,11 @@ export const getRevisionVocabulary = () => apiFetch("/api/revision-agent/vocabul
 // concepts des leçons antérieures).
 export const getCompletionLessons = () => apiFetch("/api/revision-agent/completion");
 
+// Les tâches et si leur schéma est décrit ; le schéma d'une tâche, lu dans le code du backend (cf.
+// app.revision_agent.schema).
+export const getSchemaTasks = () => apiFetch("/api/revision-agent/schema");
+export const getSchema = (task) => apiFetch(`/api/revision-agent/schema/${encodeURIComponent(task)}`);
+
 // Sujets qualifiés d'une tâche au niveau `lesson`, avec leurs exercices (prototype sans agent).
 export const getRevisionTopics = (task, lesson) =>
   apiFetch(`/api/revision-agent/topics?${new URLSearchParams({ task, lesson })}`);
@@ -32,6 +37,8 @@ export function revisionAgentWebSocketUrl({
   mode = "voix",
   teacherModel,
   ttsModel,
+  phoneticModel,
+  pronunciationModel,
 }) {
   const wsBase = API_URL.replace(/^http/, "ws");
   const identity = getIdentity();
@@ -48,6 +55,8 @@ export function revisionAgentWebSocketUrl({
     mode,
     ...(teacherModel ? { teacher_model: teacherModel } : {}),
     ...(ttsModel ? { tts_model: ttsModel } : {}),
+    ...(phoneticModel ? { phonetic_model: phoneticModel } : {}),
+    ...(pronunciationModel ? { pronunciation_model: pronunciationModel } : {}),
   });
   return `${wsBase}/api/revision-agent/ws?${params}`;
 }
