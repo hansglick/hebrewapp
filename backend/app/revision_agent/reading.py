@@ -201,68 +201,9 @@ async def compare_reading(expected: list[str], expected_phonetic: str, heard: st
     return reading, errors
 
 
-# Configurations « woT » (sans Gemini Transcribe, cf. demande explicite du user) : le juge des mots ne reçoit que la
-# phonétique entendue, et ne relève que les mots sautés et ajoutés ; un mot dit à la place d'un autre est une faute de
-# prononciation, relevée par le juge de prononciation (cf. ReadingSession.with_pronunciation).
-SKIPPED_PROMPT = """Un élève a lu à voix haute un texte en hébreu. Tu reçois, en JSON :
-- texte : la ou les phrases qu'il devait lire ;
-- prononciation_attendue : leur prononciation correcte, en lettres latines (convention ci-dessous) ;
-- prononciation_entendue : ce qu'il a lu, transcrit son par son en lettres latines par quelqu'un qui ne connaît pas
-  le texte.
-Ton seul rôle : dire s'il a lu tous les mots du texte, et rien de plus. Aligne la prononciation entendue sur la
-prononciation attendue, mot par mot, et relève seulement :
-- saute : un mot du texte dont on ne retrouve rien dans la prononciation entendue ;
-- ajoute : un mot entendu qui ne correspond à aucun mot du texte.
-Ne juge jamais la prononciation, jugée à part : un mot du texte qu'on retrouve dans ce qui a été entendu, même mal
-prononcé, déformé ou dit comme un autre mot (une autre voyelle, une consonne, une syllabe en trop ou en moins, un
-préfixe ou un h perdu), n'est ni sauté ni ajouté. Le découpage peut différer : deux mots collés (« betelaviv » pour
-« be-tel aviv »), un mot coupé en deux, un préfixe rattaché au mot voisin, un tiret en plus ou en moins ne sont pas
-une erreur. Ne relève pas non plus une hésitation (« eh », « euh »), un mot répété ou repris, ni la ponctuation, ni le
-nom du personnage en tête d'une réplique (« דוד: »), qu'il le lise ou non. Dans le doute, ne relève rien.
-Pour chaque erreur : type ; mot, le mot du texte en écriture hébraïque tel qu'il est écrit dans texte pour un mot
-sauté, le son entendu tel qu'il figure dans prononciation_entendue pour un mot ajouté ; un commentaire en français,
-très court, à l'élève, qu'on tutoie (« tu as sauté le mot … », « tu as ajouté « … », qui n'est pas dans le texte »).
-Aucune erreur : liste vide.
-
-""" + PHONETIC_CONVENTION
-SKIPPED_SCHEMA = {
-    "type": "OBJECT",
-    "properties": {"erreurs": {"type": "ARRAY", "items": {
-        "type": "OBJECT",
-        "properties": {"type": {"type": "STRING", "enum": ["saute", "ajoute"]}, "mot": {"type": "STRING"},
-                       "commentaire": {"type": "STRING"}},
-        "required": ["type", "mot", "commentaire"]}}},
-    "required": ["erreurs"],
-}
-
-
-def skipped_request(expected: list[str], expected_phonetic: str, phonetic: str) -> str:
-    """Le message du juge des mots sans transcription hébraïque (cf. skipped_words, et schema_without_transcribe)."""
-    return json.dumps({"texte": expected, "prononciation_attendue": expected_phonetic,
-                       "prononciation_entendue": phonetic}, ensure_ascii=False)
-
-
-async def skipped_words(expected: list[str], expected_phonetic: str, phonetic: str) -> list[dict]:
-    """Les mots sautés et ajoutés, d'après la seule phonétique ({word, kind, comment, expected, sound, type}, cf.
-    compare_reading) : un mot sauté, le mot du texte (expected) ; un mot ajouté, le son entendu (word, sound)."""
-    result = json.loads(await translate(skipped_request(expected, expected_phonetic, phonetic), SKIPPED_PROMPT,
-                                        SKIPPED_SCHEMA, READING_MODEL) or "{}")
-    log.info("mots sautés ou ajoutés : %s", result)
-    errors = []
-    for e in result.get("erreurs") or []:
-        word, comment = str(e.get("mot") or "").strip(), str(e.get("commentaire") or "").strip()
-        if not word or not comment or e.get("type") not in ("saute", "ajoute"):
-            continue
-        skipped = e["type"] == "saute"
-        errors.append({"word": "" if skipped else word, "kind": "reading", "comment": comment,
-                       "expected": word if skipped else "", "sound": "" if skipped else word, "type": e["type"]})
-    return errors
-
-
-def schema(transcribed: bool = True) -> dict:
+def schema() -> dict:
     """Le schéma de la tâche (cf. schema.py), sur un exemple : une phrase lue « shlosha » et « ivrat », et
-    transcrite « אברית », relu « עברית » ; transcribed=False : les configurations « woT », sans transcription
-    hébraïque (cf. skipped_words)."""
+    transcrite « אברית », relu « עברית »."""
     text = "יש לי שלוש בנות ושני בנים וגם הם לומדים עברית."
     expected_phonetic = "yesh li shalosh banot u-shnei vanim ve-gam hem lomdim ivrit"
     raw = "יש לי שלושה בנות ושני בנים וגם הם לומדים אברית."
@@ -289,56 +230,30 @@ def schema(transcribed: bool = True) -> dict:
     def in_mode(message: str) -> str:
         return f"{message} {prompts.language_mode(DEFAULT_LANGUAGES['lecture'])}"
 
-    if transcribed:
-        heard_row = transcription(raw, heard, phonetic, text, TEXT_CONTEXT)
-        words_judge = step("model", "3a · Juge des mots", model=READING_MODEL, model_note="fixe",
-                           source="reading.compare_reading",
-                           text="A-t-il lu les bons mots ? Compare le texte attendu aux deux transcriptions.",
-                           items=("mot sauté", "mot ajouté", "mot remplacé par un autre"),
-                           hint="Ne juge pas les sons (consigne WORDS_ONLY).", system=words_system,
-                           message=words_message, output=as_json({"lecture": [reading], "erreurs": []}))
-        precedence = ("un mot relevé par les deux juges : le juge de prononciation l'emporte sur « remplacé » (il dit "
-                      "ce qui a été prononcé, « u », pas ce que la transcription en a fait, « hi ») ; un mot sauté "
-                      "reste sauté")
-        heard_by_teacher = reading
-    else:
-        # La seule transcription phonétique : la colonne 2b du schéma avec transcription.
-        heard_row = [[{**transcription(raw, heard, phonetic, text, TEXT_CONTEXT)[1][0],
-                       "role": "2 · Transcription phonétique"}]]
-        words_judge = step("model", "3a · Juge des mots", model=READING_MODEL, model_note="fixe",
-                           source="reading.skipped_words",
-                           text="A-t-il lu tous les mots, et rien de plus ? Aligne la phonétique entendue sur la "
-                                "prononciation de référence.",
-                           items=("mot sauté", "mot ajouté"),
-                           hint="Sans la transcription hébraïque. Un mot dit à la place d'un autre est une faute de "
-                                "prononciation (3b).", system=SKIPPED_PROMPT,
-                           message=skipped_request([text], expected_phonetic, phonetic),
-                           output=as_json({"erreurs": []}))
-        precedence = ("un mot jugé par le juge de prononciation a été entendu : il n'est pas « sauté », et le son "
-                      "qu'il a reçu n'est pas un mot « ajouté » (« ve-lekhem » dit pour « u-ferot » : une faute, pas "
-                      "deux)")
-        heard_by_teacher = phonetic
-
     return {
-        "title": "Lecture" if transcribed else "Lecture, sans Transcribe (woT)",
-        "intro": ("De la voix de l'élève au verdict, en mode texte, avec les modèles par défaut. Deux juges "
-                  "travaillent en parallèle ; le verdict est tranché par le code de l'application, le prof ne fait "
-                  "que le dire."
-                  + ("" if transcribed else " Configurations FAST woT et SHARP woT : la lecture n'est pas transcrite "
-                                            "en hébreu, les deux juges ne reçoivent que sa phonétique.")),
+        "title": "Lecture",
+        "intro": "De la voix de l'élève au verdict, en mode texte, avec les modèles par défaut. Deux juges travaillent "
+                 "en parallèle ; le verdict est tranché par le code de l'application, le prof ne fait que le dire.",
         "flow": [
             *([[[recorded]]] if (recorded := welcome("lecture", DEFAULT_LANGUAGES["lecture"])) else []),
             [[step("student", "1 · L'élève", title="Lit à voix haute les phrases surlignées",
                    hint=f"{READING_SILENCE_SECONDS} secondes de silence marquent la fin de sa lecture.")]],
-            heard_row,
-            [[words_judge],
+            transcription(raw, heard, phonetic, text, TEXT_CONTEXT),
+            [[step("model", "3a · Juge des mots", model=READING_MODEL, model_note="fixe",
+                   source="reading.compare_reading",
+                   text="A-t-il lu les bons mots ? Compare le texte attendu aux deux transcriptions.",
+                   items=("mot sauté", "mot ajouté", "mot remplacé par un autre"),
+                   hint="Ne juge pas les sons (consigne WORDS_ONLY).", system=words_system, message=words_message,
+                   output=as_json({"lecture": [reading], "erreurs": []}))],
              [pronunciation_judge("3b · Juge de prononciation", text, phonetic, words, expected_phonetic,
                                   "Les mots lus sont-ils bien prononcés ? Compare, mot par mot, la phonétique "
                                   "entendue à la prononciation de référence (préparée à l'avance, cf. "
                                   "phonetics.py).")]],
             [[step("code", "4 · Agrégateur", source="reading.py · evaluate()",
                    title="Réunit les fautes des deux juges et tranche",
-                   items=(precedence,
+                   items=("un mot relevé par les deux juges : le juge de prononciation l'emporte sur « remplacé » (il "
+                          "dit ce qui a été prononcé, « u », pas ce que la transcription en a fait, « hi ») ; un mot "
+                          "sauté reste sauté",
                           "les remarques vertes sont écartées : ni affichées, ni dites au prof, sans effet sur le "
                           "verdict",
                           "au moins une faute → ratée ; aucune → réussie"))]],
@@ -346,7 +261,7 @@ def schema(transcribed: bool = True) -> dict:
                    text="Écran : le texte à lire, mots mal lus ou sautés surlignés et commentés, sa phonétique "
                         "dessous. Prof : explique l'erreur, puis "
                         "demande de relire.", hint="Retour à l'étape 1.",
-                   message=app_message(in_mode(prompts.reading_retry([text], heard_by_teacher, errors))),
+                   message=app_message(in_mode(prompts.reading_retry([text], reading, errors))),
                    output=retry_reply)],
              [step("good", "5b · Lecture réussie", source="prompts.reading_done",
                    text="Écran : la phrase soulignée en vert, puis cochée. Prof : un mot pour féliciter, puis relit "
@@ -362,11 +277,8 @@ def schema(transcribed: bool = True) -> dict:
             *teacher_voice(retry_reply, "Tu as dit « shlosha », on dit שָׁלוֹשׁ. Relis les phrases.",
                            "Tu as dit shlosha, on dit shalosh.",
                            {"francais": "Tu as dit שלושה, on dit שלוש.", "hebreu": "אמרת שלושה, אומרים שלוש."}),
-            ("Exception : sans transcription phonétique (par exemple si l'élève a corrigé sa transcription à la "
-             "main), le juge de prononciation ne tourne pas ; le juge des mots juge alors tout, sons compris."
-             if transcribed else
-             "Sans transcription phonétique (le modèle n'a rien rendu), l'application n'a rien entendu : le prof "
-             "demande à l'élève de recommencer."),
+            "Exception : sans transcription phonétique (par exemple si l'élève a corrigé sa transcription à la main), "
+            "le juge de prononciation ne tourne pas ; le juge des mots juge alors tout, sons compris.",
             f"Les messages affichés sont ceux d'un exemple : la phrase « {text} », lue « shlosha » et « ivrat ». Les "
             "instructions système sont celles du code actuel.",
         ],
@@ -451,9 +363,9 @@ class ReadingSession(TeacherSession):
         if not isinstance(self.live, TextTeacher) or not self.reading or self.evaluating:
             await super().on_student_text(text, spoken, corrected)
             return
-        if (not text and not self.audio_phonetic) or self.started_at is None:
+        if not text or self.started_at is None:
             return
-        log.info("lecture enregistrée : %s", text or f"(sans transcription hébraïque) {self.audio_phonetic}")
+        log.info("lecture enregistrée : %s", text)
         if self.journal:
             self.journal.write("student", text=text)
         self.heard, self.heard_at = text, 0.0
@@ -619,9 +531,7 @@ class ReadingSession(TeacherSession):
         """La transcription de la lecture est comparée aux phrases attendues ; l'évaluation s'affiche, puis le prof
         la reçoit et y réagit à l'oral."""
         started = time.monotonic()
-        # « woT » : pas de transcription hébraïque à attendre.
-        while (self.transcribe_audio
-               and (not HEBREW_LETTER.search(self.heard) or time.monotonic() - self.heard_at < TRANSCRIPT_SETTLED_SECONDS)
+        while ((not HEBREW_LETTER.search(self.heard) or time.monotonic() - self.heard_at < TRANSCRIPT_SETTLED_SECONDS)
                and time.monotonic() < started + TRANSCRIPT_GRACE_SECONDS):
             await asyncio.sleep(0.1)
         # Sans Gemini Live, le prof n'entend pas la lecture : la transcription phonétique, s'il y en a une (double route
@@ -647,15 +557,8 @@ class ReadingSession(TeacherSession):
         checking, self.pronunciation = self.pronunciation, None
         try:
             # Les répliques entières : le modèle ignore le nom du personnage, que l'élève le lise ou non.
-            if self.transcribe_audio:
-                reading, errors = await compare_reading([self.phrases[i] for i in self.current],
-                                                        self.expected_phonetic(), heard, phonetic,
-                                                        sounds=checking is None)
-            else:
-                # « woT » : ni transcription hébraïque, ni lecture reconstituée ; le prof reçoit la phonétique.
-                reading = phonetic
-                errors = await skipped_words([self.phrases[i] for i in self.current], self.expected_phonetic(),
-                                             phonetic)
+            reading, errors = await compare_reading([self.phrases[i] for i in self.current], self.expected_phonetic(),
+                                                    heard, phonetic, sounds=checking is None)
             if checking:
                 errors = self.with_pronunciation(await checking, errors)
         except Exception:
@@ -704,12 +607,7 @@ class ReadingSession(TeacherSession):
         prononciation l'emporte sur un mot « remplacé » : il dit ce qui a été prononcé (« u »), la comparaison ce que
         la transcription en a fait (« היא », cf. demande explicite du user) ; un mot sauté reste sauté."""
         judged = {letters(f["mot"]) for f in faults}
-        said = {re.sub(r"[^a-z]", "", f["entendu"].lower()) for f in faults} - {""}
-        # « woT » : un mot jugé a été entendu, il n'est pas sauté ; et le son qu'il a reçu n'est pas un mot ajouté
-        # (« ve-lekhem » dit pour « u-ferot » : une faute, pas deux).
-        errors = [e for e in errors
-                  if not (e["type"] in ("remplace", "saute") and letters(e["expected"]) in judged)
-                  and not (e["type"] == "ajoute" and re.sub(r"[^a-z]", "", e["sound"].lower()) in said)]
+        errors = [e for e in errors if not (e["type"] == "remplace" and letters(e["expected"]) in judged)]
         taken = {letters(e["expected"]) for e in errors} | {letters(e["word"]) for e in errors}
         return errors + [{"word": f["mot"], "kind": "note" if f["remarque"] else "pronunciation",
                           "comment": f["commentaire"], "expected": f["mot"], "sound": f["entendu"],

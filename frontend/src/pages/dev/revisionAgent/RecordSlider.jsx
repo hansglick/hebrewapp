@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 // droite, la corbeille, grisée hors enregistrement, l'arrête et l'annule.
 // Lâché avant le bout, le loquet revient au départ.
 // Le micro met parfois du temps à s'ouvrir, sur mobile : tant qu'il ne capte
-// rien, la piste attend (« micro… ») ; l'onde et la durée ne partent qu'au
+// rien, la piste attend (« patientez… ») ; l'onde et la durée ne partent qu'au
 // premier son capté, et l'onde suit alors la voix (levels, les volumes captés,
 // cf. demande explicite du user).
 
@@ -123,7 +123,7 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
           {(armed || (recording && !live)) && (
             <span className="ra-slider-waiting" role="status">
               <span className="ra-slider-dot" aria-hidden="true" />
-              micro…
+              patientez…
             </span>
           )}
           {live && (

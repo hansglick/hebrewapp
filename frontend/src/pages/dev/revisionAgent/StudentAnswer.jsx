@@ -180,12 +180,11 @@ export default function StudentAnswer({
   // En lecture, le texte lu s'écrit dès l'envoi, sans attendre la transcription ; ses mots mal lus se surlignent à
   // l'arrivée de l'évaluation, sans qu'il se réécrive (cf. demande explicite du user). Rien entendu : « (rien
   // entendu) », comme ailleurs.
-  const reading = Boolean(sent?.reading) && (said !== "" || Boolean(heard !== null && transcript.phonetic));
+  const reading = Boolean(sent?.reading) && said !== "";
   const answer = reading ? sent.reading : said;
   // Double route voyelle, case « Phonétique » : la prononciation entendue de la réponse enregistrée, sous sa
   // transcription ; pas pour une réponse corrigée à la main.
-  // Lecture « woT » : sans transcription hébraïque (heard vide), la phonétique seule.
-  const phonetic = showPhonetic && heard !== null ? transcript.phonetic || null : null;
+  const phonetic = showPhonetic && heard ? transcript.phonetic : null;
   const ownEvaluation = taskEvaluation !== undefined;
   const evaluated = ownEvaluation && Boolean(sent) && Boolean(taskEvaluation) && taskEvaluation !== sent.before;
   const exchanged = ownEvaluation ? null : exchange;
