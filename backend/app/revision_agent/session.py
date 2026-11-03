@@ -42,6 +42,7 @@ from app.revision_agent.config import DEBUG_STUDENT_AUDIO, SAMPLE_RATE
 from app.revision_agent.gemini_live import GeminiLive, LiveEvent
 from app.revision_agent.journal import SKIPPED_BROWSER_MESSAGES, SessionJournal
 from app.revision_agent.judges import faults, judged_note, mispronounced
+from app.revision_agent.live_transcribe import LiveTranscriber
 from app.revision_agent.transcribe import TEACHER_CONTEXT, heard_phonetic, in_hebrew_letters, respelled, transcribe
 from app.revision_agent.translate import FLASH_USAGE, flash_bill, french_speech, translate_to_french
 
@@ -119,6 +120,12 @@ class TeacherSession:
         # "spoken"}}, affichées sans attendre la traduction.
         self.known_translations: dict[str, dict] = {}
         self.audio_phonetic = ""
+        # Lecture avec le tri (cf. routeur) : la réponse enregistrée, transcrite pendant que l'élève parle (cf.
+        # live_transcribe.py) ; transcriber, celle de l'enregistrement en cours.
+        self.live_transcription = False
+        self.transcriber: LiveTranscriber | None = None
+        # Ce qu'est la dernière réponse enregistrée, décidé sur sa transcription en direct (cf. heard_live).
+        self.audio_intent: bool | None = None
         self.pronunciation_model: str | None = None  # double route voyelle : le juge de la prononciation
         self.pronunciation: asyncio.Task | None = None  # mots mal prononcés de la dernière réponse orale
         self.turn_text_at = 0.0
@@ -174,6 +181,8 @@ class TeacherSession:
                 if task.exception():
                     log.error("Tâche de séance en échec", exc_info=task.exception())
         finally:
+            if self.transcriber:
+                self.transcriber.cancel()
             for task in tasks + self.background:
                 if not task.done():
                     task.cancel()
@@ -211,6 +220,16 @@ class TeacherSession:
                     corrected = bool(data.get("corrected"))
                     await self.on_student_text(str(data.get("text") or "").strip(), corrected, corrected)
                     continue
+                if data.get("type") in ("audio_start", "audio_cancel"):
+                    # L'élève commence (ou abandonne) un enregistrement : ses blocs arrivent ensuite, en binaire.
+                    if self.transcriber:
+                        self.transcriber.cancel()
+                    self.transcriber = None
+                    if data["type"] == "audio_start" and self.live_transcription:
+                        async def show(text: str) -> None:
+                            await self.to_browser({"type": "live_transcript", "text": text})
+                        self.transcriber = LiveTranscriber(show)
+                    continue
                 if data.get("type") == "student_audio":
                     # Mode texte : la réponse enregistrée, transcrite puis traitée comme une réponse écrite.
                     self.background.append(asyncio.create_task(self.on_student_audio(str(data.get("audio") or ""))))
@@ -218,6 +237,9 @@ class TeacherSession:
                 await self.on_browser_message(data)
 
     async def on_microphone(self, pcm: bytes) -> None:
+        if self.transcriber:
+            self.transcriber.feed(pcm)
+            return
         if DEBUG_STUDENT_AUDIO:
             self.track_voice(pcm)
         await self.live.send_audio(pcm)
@@ -291,6 +313,10 @@ class TeacherSession:
         # Double route voyelle : la transcription phonétique part en même temps que la transcription hébraïque.
         phonetic = (asyncio.create_task(heard_phonetic(wav, self.phonetic_model)) if self.phonetic_wanted()
                     else None)
+        transcriber, self.transcriber = self.transcriber, None
+        if transcriber:
+            await self.heard_live(wav, transcriber, phonetic, started)
+            return
         try:
             text = await transcribe(wav)
             if text:
@@ -306,6 +332,46 @@ class TeacherSession:
         if text:
             await self.tell_intent(text)
         await self.to_browser({"type": "transcript", "text": text, "phonetic": self.audio_phonetic})
+        if text:
+            await self.on_student_text(text, spoken=True)
+        elif self.started_at is not None:
+            await self.live.app_message("L'application n'a rien entendu dans la réponse enregistrée de l'élève : "
+                                        "demande-lui en quelques mots de recommencer.")
+
+    async def heard_live(self, wav: bytes, transcriber: LiveTranscriber, phonetic: asyncio.Task | None,
+                         started: float) -> None:
+        """La réponse transcrite en direct (cf. live_transcribe.py) : sa transcription, telle quelle, et ce qu'elle
+        est (lecture ou question au prof, cf. tell_intent) partent tout de suite au navigateur, sans attendre ni sa
+        relecture ni la phonétique ; la phonétique suit, à son arrivée ; puis la réponse relue est traitée comme
+        d'habitude (cf. on_student_text)."""
+        text = await transcriber.finish()
+        if not text:
+            # Repli : la transcription d'un bloc, après coup.
+            try:
+                text = await transcribe(wav)
+            except Exception:
+                log.exception("Transcription impossible")
+        text = await in_hebrew_letters(text) if text else ""
+        log.info("transcription en direct, finie %.1f s après l'envoi : %s", time.monotonic() - started, text)
+        if text:
+            await self.tell_intent(text)
+            self.audio_intent = self.reading_intent(text)
+        await self.to_browser({"type": "transcript", "text": text, "phonetic": ""})
+
+        async def spelled() -> str:
+            try:
+                return await respelled(text, self.spelling_context(), self.spelling_label())
+            except Exception:
+                log.exception("Relecture impossible")
+                return text
+
+        spelling = asyncio.create_task(spelled()) if text else None
+        self.audio_phonetic = await phonetic if phonetic else ""
+        if self.audio_phonetic:
+            await self.to_browser({"type": "phonetic", "phonetic": self.audio_phonetic})
+        text = await spelling if spelling else ""
+        log.info("relue en %.1f s : %s%s", time.monotonic() - started, text,
+                 f" · {self.audio_phonetic}" if phonetic else "")
         if text:
             await self.on_student_text(text, spoken=True)
         elif self.started_at is not None:

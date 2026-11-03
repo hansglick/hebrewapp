@@ -83,6 +83,7 @@ export class Recorder {
     this.recent = []; // les derniers blocs, hors enregistrement
     this.chunks = null; // les blocs de l'enregistrement en cours
     this.onLevel = null;
+    this.onChunk = null;
   }
 
   async open() {
@@ -104,19 +105,23 @@ export class Recorder {
     }
     this.chunks.push(pcm);
     this.onLevel?.(level(pcm));
+    this.onChunk?.(pcm);
   }
 
-  async start(onLevel) {
+  // onChunk : chaque bloc de l'enregistrement, le pré-enregistrement d'abord (transcription en direct).
+  async start(onLevel, onChunk = null) {
     await this.open();
     this.chunks = this.recent;
     this.recent = [];
     this.onLevel = onLevel;
+    this.onChunk = onChunk;
+    this.chunks.forEach((pcm) => onChunk?.(pcm));
   }
 
   // Fin de l'enregistrement, le micro reste ouvert.
   stop() {
     const chunks = this.chunks ?? [];
-    this.chunks = this.onLevel = null;
+    this.chunks = this.onLevel = this.onChunk = null;
     const size = chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
     const header = new DataView(new ArrayBuffer(44));
     const text = (offset, value) => [...value].forEach((c, i) => header.setUint8(offset + i, c.charCodeAt(0)));
@@ -139,7 +144,7 @@ export class Recorder {
   // Le micro se ferme : le témoin du téléphone s'éteint.
   async close() {
     const link = this.link;
-    this.chunks = this.onLevel = this.link = this.opening = null;
+    this.chunks = this.onLevel = this.onChunk = this.link = this.opening = null;
     this.recent = [];
     await link?.close();
   }

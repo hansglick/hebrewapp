@@ -79,10 +79,18 @@ const TTS_MODELS = [
 // « Double route voyelle » : le modèle de la transcription phonétique de la réponse enregistrée (cf.
 // config.PHONETIC_MODELS) et celui du juge de la prononciation, qui compare la phonétique au mot transcrit ou au texte
 // lu (cf. config.PRONUNCIATION_MODELS), choisis ensemble (cf. demande explicite du user) : rapide, ou précis, par
-// défaut.
+// défaut. « wo assistance » (lecture seulement) : sans le tri lecture / question au prof (cf. reading.to_teacher),
+// tout envoi est une lecture, sa phrase cible affichée (cf. demande explicite du user).
 const MODEL_CONFIGS = [
   { id: "fast", label: "FAST", phonetic: "gemini-3.5-flash", pronunciation: "gemini-3.5-flash-lite" },
   { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
+  {
+    id: "precise_wo_assistance",
+    label: "SHARP wo assistance",
+    phonetic: "gemini-3.8-flash",
+    pronunciation: "gemini-3.5-flash",
+    noTriage: true,
+  },
 ];
 
 // Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
@@ -290,6 +298,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
         ttsModel: textMode ? ttsModel : undefined,
         phoneticModel: textMode && vowelRoute ? models.phonetic : undefined,
         pronunciationModel: textMode && vowelRoute ? models.pronunciation : undefined,
+        triage: !(textMode && vowelRoute && task === "lecture" && models.noTriage),
       });
     }
   };
@@ -322,6 +331,12 @@ export default function RevisionAgentScreen({ textMode = false }) {
         taskEvaluation={taskEvaluation}
         showPhonetic={showPhonetic}
         readingText={readingText}
+        readingDelay={Boolean(models.noTriage)}
+        liveTranscription={task === "lecture" && vowelRoute && !models.noTriage}
+        liveText={session.liveText}
+        onAudioStart={session.startAudio}
+        onAudioChunk={session.sendAudioChunk}
+        onAudioCancel={session.cancelAudio}
       />
     ));
 
@@ -417,10 +432,12 @@ export default function RevisionAgentScreen({ textMode = false }) {
                   <div className="revision-agent-field" role="radiogroup" aria-label="Modèles de la prononciation">
                     Modèles de la prononciation
                     <div className="revision-agent-scope">
-                      {MODEL_CONFIGS.map((config) => (
+                      {MODEL_CONFIGS.filter((config) => !config.noTriage || task === "lecture").map((config) => (
                         <label
                           key={config.id}
-                          title={`Phonétique : ${config.phonetic} · juge : ${config.pronunciation}`}
+                          title={`Phonétique : ${config.phonetic} · juge : ${config.pronunciation}${
+                            config.noTriage ? " · sans tri lecture / question" : ""
+                          }`}
                         >
                           <input
                             type="radio"

@@ -341,6 +341,7 @@ class ReadingSession(TeacherSession):
         self.reading = False
         self.requested_at = 0.0  # moment où la lecture a été demandée
         self.teacher_muted = False
+        self.reading_triage = True  # le tri lecture / question au prof (cf. to_teacher, reading_intent)
         self.voice_started = False  # l'élève a commencé à lire
         self.last_voice = 0.0
         self.heard = ""  # transcription de la lecture en cours
@@ -406,7 +407,11 @@ class ReadingSession(TeacherSession):
         # Une réponse écrite ou corrigée : StudentAnswer apprend ici ce qu'elle est (cf. on_student_audio).
         if not spoken or corrected:
             await self.tell_intent(text)
-        if not self.reading_intent(text):
+        # Une réponse enregistrée, transcrite en direct : ce qu'elle est a été décidé sur cette transcription-là, et
+        # déjà affiché (cf. TeacherSession.heard_live).
+        reading = self.audio_intent if self.audio_intent is not None and spoken and not corrected else None
+        self.audio_intent = None
+        if not (self.reading_intent(text) if reading is None else reading):
             # Une phrase adressée au prof (cf. to_teacher) : il y répond, en conversation, et la lecture reste
             # attendue ; sa prononciation n'est pas jugée.
             log.info("pas une lecture, pour le prof (mots hors du texte : %s) : %s",
@@ -433,7 +438,7 @@ class ReadingSession(TeacherSession):
     def reading_intent(self, text: str) -> bool | None:
         if not isinstance(self.live, TextTeacher) or not self.reading or self.evaluating:
             return None
-        return not to_teacher(text, self.expected())
+        return not self.reading_triage or not to_teacher(text, self.expected())
 
     async def on_user_text(self, text: str) -> None:
         # Recueillie jusqu’au départ de la comparaison : elle arrive souvent après le silence qui clôt la lecture.

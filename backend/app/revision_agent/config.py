@@ -29,6 +29,8 @@ TEXT_TEACHER_MODELS = {
 TEXT_TEACHER_MODEL = "gemini-3.5-flash-lite"
 # Mode texte : la réponse que l'élève enregistre (au lieu de l'écrire) est transcrite par ce modèle (cf. transcribe.py).
 TRANSCRIBE_MODEL = "gemini-3.5-transcribe"
+# Lecture avec le tri lecture / question (FAST, SHARP) : transcrite pendant que l'élève parle (cf. live_transcribe.py).
+LIVE_TRANSCRIBE_MODEL = "gemini-3.5-transcribe-live"
 # Mode texte, case « Double route voyelle » (cf. demande explicite du user) : la réponse enregistrée est aussi transcrite
 # en lettres latines, voyelles comprises, par l'un de ces modèles, choisi sur la page, en même temps que la
 # transcription hébraïque (cf. transcribe.heard_phonetic) ; pour ces tâches seulement. Le premier, celui par défaut :

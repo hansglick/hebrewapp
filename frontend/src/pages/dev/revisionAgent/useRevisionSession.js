@@ -83,6 +83,8 @@ export function useRevisionSession() {
   // Lecture : la dernière réponse est-elle une lecture ({seq, reading}), ou une phrase pour le prof (cf. reading.py,
   // to_teacher) ; envoyé avant sa transcription.
   const [intent, setIntent] = useState(null);
+  // Lecture avec le tri : la transcription en direct de l'enregistrement en cours (cf. live_transcribe.py).
+  const [liveText, setLiveText] = useState("");
   const [exchange, setExchange] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
@@ -137,6 +139,7 @@ export function useRevisionSession() {
       setBill(null);
       setTranscript(null);
       setIntent(null);
+      setLiveText("");
       setExchange(null);
       setStatus("connecting");
 
@@ -241,6 +244,13 @@ export function useRevisionSession() {
           case "bill":
             setBill(msg.bill);
             break;
+          case "live_transcript":
+            setLiveText(msg.text ?? "");
+            break;
+          // Transcription en direct : la phonétique suit la transcription, à son arrivée.
+          case "phonetic":
+            setTranscript((previous) => previous && { ...previous, phonetic: msg.phonetic ?? "" });
+            break;
           case "intent":
             setIntent((previous) => ({ seq: (previous?.seq ?? 0) + 1, reading: Boolean(msg.reading) }));
             break;
@@ -313,6 +323,23 @@ export function useRevisionSession() {
     ws.send(JSON.stringify({ type: "student_audio", audio }));
   }, []);
 
+  // Transcription en direct : l'enregistrement commence, ses blocs PCM (binaires) suivent, ou il est abandonné.
+  const startAudio = useCallback(() => {
+    const ws = wsRef.current;
+    if (ws?.readyState !== WebSocket.OPEN) return;
+    setExchange(null);
+    setLiveText("");
+    ws.send(JSON.stringify({ type: "audio_start" }));
+  }, []);
+  const sendAudioChunk = useCallback((pcm) => {
+    const ws = wsRef.current;
+    if (ws?.readyState === WebSocket.OPEN) ws.send(pcm);
+  }, []);
+  const cancelAudio = useCallback(() => {
+    const ws = wsRef.current;
+    if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: "audio_cancel" }));
+  }, []);
+
   // Lecture : le prof lit l'extrait (le haut-parleur) ; nombre de phrases par lecture.
   const listen = useCallback(() => {
     const ws = wsRef.current;
@@ -345,7 +372,8 @@ export function useRevisionSession() {
 
   return {
     status, phase, seconds, teacher, extract, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
-    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, exchange,
+    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, liveText, exchange,
     start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading, sendText, sendAudio,
+    startAudio, sendAudioChunk, cancelAudio,
   };
 }

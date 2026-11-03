@@ -39,6 +39,7 @@ export function revisionAgentWebSocketUrl({
   ttsModel,
   phoneticModel,
   pronunciationModel,
+  triage = true,
 }) {
   const wsBase = API_URL.replace(/^http/, "ws");
   const identity = getIdentity();
@@ -57,6 +58,7 @@ export function revisionAgentWebSocketUrl({
     ...(ttsModel ? { tts_model: ttsModel } : {}),
     ...(phoneticModel ? { phonetic_model: phoneticModel } : {}),
     ...(pronunciationModel ? { pronunciation_model: pronunciationModel } : {}),
+    ...(triage ? {} : { triage: "false" }),
   });
   return `${wsBase}/api/revision-agent/ws?${params}`;
 }

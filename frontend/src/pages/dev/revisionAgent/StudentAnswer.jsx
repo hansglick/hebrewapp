@@ -6,6 +6,7 @@ import FlapLabel from "./FlapLabel";
 import { graphemes, withoutNikkud } from "./hebrew";
 import RecordSlider from "./RecordSlider";
 import { SPEECH_STEP_MS } from "./TeacherSpeech";
+import CleanReading from "./CleanReading";
 import "../../../components/ConfigModal.css";
 
 // Page sans Gemini Live (cf. demande explicite du user) : la réponse de
@@ -49,7 +50,8 @@ const LABELS = { evaluation: "Évaluation", conversation: "Conversation" };
 const MAX_LEVELS = 32;
 
 // Lecture : le texte lu commence à s'écrire ce temps-là après l'envoi, à la vitesse habituelle (cf. Answer), pour que
-// ses mots fautifs se surlignent peu après qu'il est écrit (cf. demande explicite du user).
+// ses mots fautifs se surlignent peu après qu'il est écrit (cf. demande explicite du user). Avec le tri lecture /
+// question (readingDelay faux, cf. RevisionAgentScreen), il s'écrit dès qu'il est jugé une lecture, sans attendre.
 const READING_DELAY_MS = 1000;
 
 // Après une réponse sans faute : soulignement et coche (cf. Answer), 4 s
@@ -92,6 +94,12 @@ export default function StudentAnswer({
   taskEvaluation,
   showPhonetic = false,
   readingText = null,
+  readingDelay = true,
+  liveTranscription = false,
+  liveText = "",
+  onAudioStart,
+  onAudioChunk,
+  onAudioCancel,
 }) {
   // Dernière réponse envoyée : {id, kind: "text", text} ou {id, kind: "audio", url, afterSeq} (sa transcription est
   // la première arrivée après afterSeq).
@@ -116,6 +124,26 @@ export default function StudentAnswer({
   // Correction à la main de la réponse affichée : {id : la réponse corrigée, draft : le texte du champ}.
   const [editing, setEditing] = useState(null);
 
+  // Transcription en direct (lecture avec le tri, cf. live_transcribe.py, demande explicite du user) : la fenêtre
+  // s'ouvre dès le début de l'enregistrement sur sa transcription, qui s'écrit pendant que l'élève parle (sent.live,
+  // son enregistrement, url, arrive à l'envoi) ; abandonné, la réponse d'avant revient (previous).
+  const previousRef = useRef(null);
+  const openLive = () => {
+    previousRef.current = sent;
+    setSent({
+      reading: readingText,
+      kind: "audio",
+      url: null,
+      live: true,
+      afterSeq: transcript?.seq ?? 0,
+      id: (sent?.id ?? 0) + 1,
+      before: taskEvaluation,
+      afterIntent: intent?.seq ?? 0,
+    });
+  };
+  // Lecture : le verbatim s'est nettoyé en la phrase à lire (cf. CleanReading), l'id de la réponse.
+  const [cleaned, setCleaned] = useState(null);
+
   // Le volume de chaque bloc capté depuis le début de l'enregistrement (cf. Recorder) : le premier dit que le micro
   // capte vraiment, l'onde de la piste les suit (cf. RecordSlider).
   const [levels, setLevels] = useState([]);
@@ -125,17 +153,25 @@ export default function StudentAnswer({
     // Le même micro pour toute la séance, ouvert au premier enregistrement (cf. Recorder).
     recorderRef.current ??= new Recorder();
     let first = true;
+    // Le serveur prépare la transcription en direct avant les premiers blocs.
+    const live = liveTranscription && !disabled;
+    if (live) onAudioStart();
     try {
-      await recorderRef.current.start((value) => {
-        // Le micro capte : une petite vibration, sur Android (iOS ne le permet pas aux pages web).
-        if (first) navigator.vibrate?.(30);
-        first = false;
-        setLevels((previous) => [...previous, value].slice(-MAX_LEVELS));
-      });
+      await recorderRef.current.start(
+        (value) => {
+          // Le micro capte : une petite vibration, sur Android (iOS ne le permet pas aux pages web).
+          if (first) navigator.vibrate?.(30);
+          first = false;
+          setLevels((previous) => [...previous, value].slice(-MAX_LEVELS));
+        },
+        live ? onAudioChunk : null,
+      );
     } catch {
+      if (live) onAudioCancel();
       setMicError("Micro inaccessible : autorise l’accès au micro.");
       return;
     }
+    if (live) openLive();
     setRecording(true);
   };
 
@@ -144,6 +180,12 @@ export default function StudentAnswer({
     setRecording(false);
     setLevels([]);
     return blob;
+  };
+  const cancelRecording = async () => {
+    await stopRecording();
+    if (!sent?.live || sent.url) return;
+    onAudioCancel();
+    setSent(previousRef.current);
   };
 
   // Fin de la séance, ou départ de la page : le micro se ferme, le témoin du téléphone s'éteint.
@@ -155,6 +197,19 @@ export default function StudentAnswer({
   useEffect(() => () => recorderRef.current?.close(), []);
 
   const sendAudio = async (blob) => {
+    if (sent?.live && !sent.url) {
+      // Transcription en direct : la réponse, déjà ouverte, reçoit son enregistrement.
+      if (disabled) {
+        onAudioCancel();
+        setSent(previousRef.current);
+        return;
+      }
+      onSendAudio(await base64(blob));
+      if (previousRef.current?.url) URL.revokeObjectURL(previousRef.current.url);
+      const url = URL.createObjectURL(blob);
+      setSent((current) => ({ ...current, url }));
+      return;
+    }
     if (disabled) return;
     onSendAudio(await base64(blob));
     replaceSent({ kind: "audio", url: URL.createObjectURL(blob), afterSeq: transcript?.seq ?? 0 });
@@ -194,7 +249,10 @@ export default function StudentAnswer({
   const answer = reading ? sent.reading : said;
   // Double route voyelle, case « Phonétique » : la prononciation entendue de la réponse enregistrée, sous sa
   // transcription ; pas pour une réponse corrigée à la main.
-  const phonetic = showPhonetic && heard ? transcript.phonetic : null;
+  const phonetic = showPhonetic && heard ? transcript.phonetic || null : null;
+  // Transcription en direct : jugée une lecture, le verbatim se nettoie d'abord en la phrase à lire (cleaning) ; la
+  // réponse, déjà écrite, ne se réécrit pas.
+  const cleaning = Boolean(sent?.live) && reading && cleaned !== sent.id;
   const ownEvaluation = taskEvaluation !== undefined;
   const evaluated = ownEvaluation && Boolean(sent) && Boolean(taskEvaluation) && taskEvaluation !== sent.before;
   const exchanged = ownEvaluation ? null : exchange;
@@ -294,6 +352,14 @@ export default function StudentAnswer({
                         Envoyer
                       </button>
                     </div>
+                  ) : sent.live && heard === null ? (
+                    // Ce que l'élève dit, transcrit pendant qu'il parle.
+                    <p className="ra-answer ra-answer-live" dir="rtl" lang="he">
+                      {liveText}
+                      <span className="ra-caret" aria-hidden="true" />
+                    </p>
+                  ) : cleaning ? (
+                    <CleanReading key={sent.id} from={said} to={sent.reading} onDone={() => setCleaned(sent.id)} />
                   ) : answer === null ? (
                     <p className="muted">Transcription…</p>
                   ) : answer ? (
@@ -301,8 +367,9 @@ export default function StudentAnswer({
                     <Answer
                       key={sent.id}
                       evaluation={{ answer, errors: evaluation?.errors ?? [] }}
-                      delayMs={reading ? READING_DELAY_MS : 0}
+                      delayMs={reading && readingDelay ? READING_DELAY_MS : 0}
                       waiting={reading && !evaluation}
+                      instant={Boolean(sent.live)}
                       perfect={perfect}
                       below={phonetic && <p className="ra-exchange-phonetic">{phonetic}</p>}
                     />
@@ -345,7 +412,7 @@ export default function StudentAnswer({
           recording={recording}
           onStart={startRecording}
           onSend={async () => sendAudio(await stopRecording())}
-          onCancel={stopRecording}
+          onCancel={cancelRecording}
           levels={levels}
           disabled={disabled}
         />

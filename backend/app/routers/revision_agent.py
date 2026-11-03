@@ -86,7 +86,7 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
                             current: bool = True, previous: bool = False, per_reading: int = 1,
                             mode: str = "voix", teacher_model: str = TEXT_TEACHER_MODEL,
                             tts_model: str | None = None, phonetic_model: str | None = None,
-                            pronunciation_model: str | None = None):
+                            pronunciation_model: str | None = None, triage: bool = True):
     await websocket.accept()
 
     async def refuse(text: str, code: int = 1008) -> None:
@@ -176,6 +176,11 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Sa prononciation est alors jugée à part, par ce modèle, en même temps que le reste (cf.
         # judges.mispronounced).
         session.pronunciation_model = pronunciation_model or PRONUNCIATION_MODELS[0]
+        # Lecture, configuration « SHARP wo assistance » (cf. demande explicite du user) : sans le tri lecture /
+        # question au prof (cf. reading.to_teacher), tout envoi est une lecture.
+        session.reading_triage = triage
+        # Avec le tri, la réponse enregistrée est transcrite en direct (cf. live_transcribe.py).
+        session.live_transcription = triage and task == "lecture"
         # L'accueil enregistré de la tâche, dans le mode de langue de départ, joué tout de suite (cf. intros.py).
         if welcome := intro(task, getattr(session, "language", None), tts_model, voice):
             session.live.intro = welcome

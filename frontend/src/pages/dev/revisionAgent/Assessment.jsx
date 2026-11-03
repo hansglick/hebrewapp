@@ -133,7 +133,8 @@ function prefixEnd(chars, skip) {
 // delayMs, elle commence à s'écrire après ce temps-là ; ses mots fautifs se
 // surlignent une fois qu'elle est écrite, au plus tôt (cf. demande explicite
 // du user) ; waiting, écrite, le curseur clignote encore, tant que son
-// évaluation n'est pas arrivée.
+// évaluation n'est pas arrivée. instant : déjà affichée (la transcription en
+// direct, cf. StudentAnswer), elle ne se réécrit pas.
 export function Answer({
   evaluation,
   legend = true,
@@ -141,6 +142,7 @@ export function Answer({
   below = null,
   delayMs = 0,
   waiting = false,
+  instant = false,
 }) {
   if (!evaluation.answer) return <p className="muted">(pas de réponse)</p>;
   return (
@@ -152,11 +154,12 @@ export function Answer({
       below={below}
       delayMs={delayMs}
       waiting={waiting}
+      instant={instant}
     />
   );
 }
 
-function StreamedAnswer({ evaluation, legend, perfect, below, delayMs, waiting }) {
+function StreamedAnswer({ evaluation, legend, perfect, below, delayMs, waiting, instant }) {
   const words = useMemo(
     () =>
       withoutNikkud(evaluation.answer)
@@ -170,7 +173,7 @@ function StreamedAnswer({ evaluation, legend, perfect, below, delayMs, waiting }
     [],
   );
   const total = starts[words.length - 1] + words[words.length - 1].length;
-  const [shown, setShown] = useState(0);
+  const [shown, setShown] = useState(instant ? total : 0);
   const done = shown >= total;
   const [marked, setMarked] = useState(false);
   useEffect(() => {
