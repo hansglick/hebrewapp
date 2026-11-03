@@ -56,18 +56,68 @@ export class AudioLink {
   }
 }
 
+// Avant le début d'un enregistrement, ce que le micro, déjà ouvert, a entendu
+// et qui lui est ajouté : 5 blocs de 100 ms (cf. revision-pcm-capture.js),
+// pour ne pas couper l'élève qui parle un peu trop tôt.
+const PREROLL_CHUNKS = 5;
+
+// Volume d'un bloc PCM16, de 0 à 1 (racine de la moyenne des carrés).
+function level(pcm) {
+  const samples = new Int16Array(pcm);
+  let sum = 0;
+  for (let i = 0; i < samples.length; i++) sum += samples[i] * samples[i];
+  return samples.length ? Math.sqrt(sum / samples.length) / 0x8000 : 0;
+}
+
 // Mode texte : la réponse enregistrée de l'élève, en WAV (PCM16 mono 24 kHz),
-// envoyée au serveur pour transcription et rejouable telle quelle.
+// envoyée au serveur pour transcription et rejouable telle quelle. Le micro
+// s'ouvre au premier enregistrement et reste ouvert jusqu'à close (la fin de
+// la séance) : sur mobile, l'ouvrir prend jusqu'à une seconde, les
+// enregistrements suivants démarrent donc tout de suite (cf. demande
+// explicite du user). onLevel : le volume de chaque bloc capté pendant
+// l'enregistrement ; le premier dit que le micro capte vraiment.
 export class Recorder {
-  async start() {
-    this.chunks = [];
-    this.link = new AudioLink();
-    await this.link.startMicrophone((pcm) => this.chunks.push(pcm));
+  constructor() {
+    this.link = null;
+    this.opening = null;
+    this.recent = []; // les derniers blocs, hors enregistrement
+    this.chunks = null; // les blocs de l'enregistrement en cours
+    this.onLevel = null;
   }
 
-  async stop() {
-    await this.link.close();
-    const size = this.chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
+  async open() {
+    if (!this.opening) {
+      this.link = new AudioLink();
+      this.opening = this.link.startMicrophone((pcm) => this.capture(pcm)).catch((error) => {
+        this.link.close().catch(() => {});
+        this.link = this.opening = null;
+        throw error;
+      });
+    }
+    await this.opening;
+  }
+
+  capture(pcm) {
+    if (!this.chunks) {
+      this.recent = [...this.recent, pcm].slice(-PREROLL_CHUNKS);
+      return;
+    }
+    this.chunks.push(pcm);
+    this.onLevel?.(level(pcm));
+  }
+
+  async start(onLevel) {
+    await this.open();
+    this.chunks = this.recent;
+    this.recent = [];
+    this.onLevel = onLevel;
+  }
+
+  // Fin de l'enregistrement, le micro reste ouvert.
+  stop() {
+    const chunks = this.chunks ?? [];
+    this.chunks = this.onLevel = null;
+    const size = chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
     const header = new DataView(new ArrayBuffer(44));
     const text = (offset, value) => [...value].forEach((c, i) => header.setUint8(offset + i, c.charCodeAt(0)));
     text(0, "RIFF");
@@ -83,6 +133,14 @@ export class Recorder {
     header.setUint16(34, 16, true);
     text(36, "data");
     header.setUint32(40, size, true);
-    return new Blob([header, ...this.chunks], { type: "audio/wav" });
+    return new Blob([header, ...chunks], { type: "audio/wav" });
+  }
+
+  // Le micro se ferme : le témoin du téléphone s'éteint.
+  async close() {
+    const link = this.link;
+    this.chunks = this.onLevel = this.link = this.opening = null;
+    this.recent = [];
+    await link?.close();
   }
 }

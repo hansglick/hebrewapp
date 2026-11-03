@@ -3443,23 +3443,50 @@
   overflow: hidden;
 }
 
+/* Chaque barre, à la hauteur d'un volume capté (--level, cf. RecordSlider). */
 .ra-wave span {
   width: 4px;
   height: 100%;
   border-radius: 2px;
   background: #b5502e;
-  transform: scaleY(0.25);
-  animation: ra-wave 0.9s ease-in-out infinite;
-  animation-delay: var(--wave-delay);
+  transform: scaleY(var(--level, 0.12));
+  transition: transform 0.1s linear;
 }
 
-@keyframes ra-wave {
-  0%,
-  100% {
-    transform: scaleY(0.25);
+/* Le micro s'ouvre, il ne capte encore rien : un point qui pulse, et « micro… ». */
+.ra-slider-waiting {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9em;
+  color: var(--ochre);
+  white-space: nowrap;
+}
+
+.ra-slider-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ochre);
+  animation: ra-slider-dot 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes ra-slider-dot {
+  from {
+    opacity: 0.25;
+    transform: scale(0.8);
   }
-  50% {
-    transform: scaleY(1);
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-slider-dot {
+    animation: none;
   }
 }
 

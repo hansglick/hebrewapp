@@ -7,6 +7,10 @@ import { useEffect, useRef, useState } from "react";
 // il s'envole, des traits de vitesse filant dans la piste, puis le loquet revient au départ. À
 // droite, la corbeille, grisée hors enregistrement, l'arrête et l'annule.
 // Lâché avant le bout, le loquet revient au départ.
+// Le micro met parfois du temps à s'ouvrir, sur mobile : tant qu'il ne capte
+// rien, la piste attend (« micro… ») ; l'onde et la durée ne partent qu'au
+// premier son capté, et l'onde suit alors la voix (levels, les volumes captés,
+// cf. demande explicite du user).
 
 const KNOB = 48; // diamètre du loquet (cf. .ra-slider-knob)
 const PAD = 4; // marge entre le loquet et le bord de la piste
@@ -40,7 +44,11 @@ function TrashIcon() {
   );
 }
 
-export default function RecordSlider({ recording, onStart, onSend, onCancel, disabled }) {
+// Hauteur d'une barre de l'onde, d'un volume (0 à 1) : la voix parlée reste
+// loin de 1, d'où la racine.
+const barHeight = (level) => Math.min(1, 0.12 + Math.sqrt(level) * 2);
+
+export default function RecordSlider({ recording, onStart, onSend, onCancel, disabled, levels = [] }) {
   const trackRef = useRef(null);
   const [drag, setDrag] = useState(null); // {startX, max} pendant qu'on pousse le loquet
   const [offset, setOffset] = useState(0);
@@ -48,11 +56,13 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
   const [flying, setFlying] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
+  // Le micro capte : la durée part.
+  const live = recording && levels.length > 0;
   useEffect(() => {
-    if (!recording) return undefined;
+    if (!live) return undefined;
     const timer = setInterval(() => setSeconds((s) => s + 1), 1000);
     return () => clearInterval(timer);
-  }, [recording]);
+  }, [live]);
 
   const idle = !recording && !armed && !flying;
   const atEnd = recording || armed || flying;
@@ -110,11 +120,18 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
               <span className="ra-slider-chevrons">›››</span>
             </span>
           )}
-          {recording && (
+          {(armed || (recording && !live)) && (
+            <span className="ra-slider-waiting" role="status">
+              <span className="ra-slider-dot" aria-hidden="true" />
+              micro…
+            </span>
+          )}
+          {live && (
             <span className="ra-slider-live">
+              {/* Les derniers volumes, le plus récent à droite. */}
               <span className="ra-wave" aria-hidden="true">
                 {Array.from({ length: WAVE_BARS }, (_, i) => (
-                  <span key={i} style={{ "--wave-delay": `${(i % 4) * 0.12}s` }} />
+                  <span key={i} style={{ "--level": barHeight(levels[levels.length - WAVE_BARS + i] ?? 0) }} />
                 ))}
               </span>
               <span className="ra-slider-time">

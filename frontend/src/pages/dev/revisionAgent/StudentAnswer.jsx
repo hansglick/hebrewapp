@@ -45,6 +45,9 @@ const finalized = (text) => text.replace(/[כמנפצ](?=[\s.,!?;:]|$)/g, (lette
 
 const LABELS = { evaluation: "Évaluation", conversation: "Conversation" };
 
+// Volumes gardés pour l'onde de la piste (cf. RecordSlider, WAVE_BARS), un par bloc de 100 ms.
+const MAX_LEVELS = 32;
+
 // Lecture : le texte lu commence à s'écrire ce temps-là après l'envoi, à la vitesse habituelle (cf. Answer), pour que
 // ses mots fautifs se surlignent peu après qu'il est écrit (cf. demande explicite du user).
 const READING_DELAY_MS = 1000;
@@ -106,25 +109,43 @@ export default function StudentAnswer({
   // Correction à la main de la réponse affichée : {id : la réponse corrigée, draft : le texte du champ}.
   const [editing, setEditing] = useState(null);
 
+  // Le volume de chaque bloc capté depuis le début de l'enregistrement (cf. Recorder) : le premier dit que le micro
+  // capte vraiment, l'onde de la piste les suit (cf. RecordSlider).
+  const [levels, setLevels] = useState([]);
   const startRecording = async () => {
     setMicError(null);
-    const recorder = new Recorder();
+    setLevels([]);
+    // Le même micro pour toute la séance, ouvert au premier enregistrement (cf. Recorder).
+    recorderRef.current ??= new Recorder();
+    let first = true;
     try {
-      await recorder.start();
+      await recorderRef.current.start((value) => {
+        // Le micro capte : une petite vibration, sur Android (iOS ne le permet pas aux pages web).
+        if (first) navigator.vibrate?.(30);
+        first = false;
+        setLevels((previous) => [...previous, value].slice(-MAX_LEVELS));
+      });
     } catch {
       setMicError("Micro inaccessible : autorise l’accès au micro.");
       return;
     }
-    recorderRef.current = recorder;
     setRecording(true);
   };
 
   const stopRecording = async () => {
-    const blob = await recorderRef.current.stop();
-    recorderRef.current = null;
+    const blob = recorderRef.current.stop();
     setRecording(false);
+    setLevels([]);
     return blob;
   };
+
+  // Fin de la séance, ou départ de la page : le micro se ferme, le témoin du téléphone s'éteint.
+  useEffect(() => {
+    if (!disabled || recording) return;
+    recorderRef.current?.close();
+    recorderRef.current = null;
+  }, [disabled, recording]);
+  useEffect(() => () => recorderRef.current?.close(), []);
 
   const sendAudio = async (blob) => {
     if (disabled) return;
@@ -316,6 +337,7 @@ export default function StudentAnswer({
           onStart={startRecording}
           onSend={async () => sendAudio(await stopRecording())}
           onCancel={stopRecording}
+          levels={levels}
           disabled={disabled}
         />
         {WRITTEN && (
