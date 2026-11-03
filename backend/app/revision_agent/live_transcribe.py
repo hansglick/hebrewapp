@@ -65,8 +65,9 @@ class LiveTranscriber:
     """Un enregistrement de l'élève : feed reçoit ses blocs (le pré-enregistrement compris, cf. audio.Recorder) dès le
     début, finish rend sa transcription ; vide si la Live API a échoué."""
 
-    def __init__(self, on_text):
+    def __init__(self, on_text, on_ready=None):
         self.on_text = on_text
+        self.on_ready = on_ready  # la connexion est prête (ou a échoué) : l'élève peut parler (cf. RecordButton)
         self.queue: asyncio.Queue[bytes | None] = asyncio.Queue()
         self.done = ""  # les segments finis
         self.pending = ""  # le segment en cours, transcription partielle
@@ -104,6 +105,7 @@ class LiveTranscriber:
         _client = _client or genai.Client(api_key=GEMINI_API_KEY)
         try:
             async with _client.aio.live.connect(model=LIVE_TRANSCRIBE_MODEL, config=CONFIG) as session:
+                await self.ready()
                 receiver = asyncio.create_task(self.receive(session))
                 try:
                     while (pcm := await self.queue.get()) is not None:
@@ -124,10 +126,20 @@ class LiveTranscriber:
         except Exception:
             log.exception("transcription en direct impossible")
             self.failed = True
+            # L'audio est quand même gardé, et transcrit d'un bloc (cf. TeacherSession.heard_live).
+            await self.ready()
         finally:
             # L'audio envoyé est facturé, même d'un enregistrement abandonné.
             if self.sent and (counts := usage()) is not None:
                 counts["input"] += round(self.sent / BYTES_PER_SECOND * AUDIO_TOKENS_PER_SECOND)
+
+    async def ready(self) -> None:
+        if self.on_ready:
+            on_ready, self.on_ready = self.on_ready, None
+            try:
+                await on_ready()
+            except Exception:
+                log.warning("connexion prête, non signalée", exc_info=True)
 
     async def receive(self, session) -> None:
         # receive() s'arrête à chaque fin de tour : on l'écoute tant que la session dure.

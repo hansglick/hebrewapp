@@ -85,6 +85,8 @@ export function useRevisionSession() {
   const [intent, setIntent] = useState(null);
   // Lecture avec le tri : la transcription en direct de l'enregistrement en cours (cf. live_transcribe.py).
   const [liveText, setLiveText] = useState("");
+  // … et sa connexion est prête (cf. RecordButton, « Parlez »).
+  const [liveReady, setLiveReady] = useState(false);
   const [exchange, setExchange] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
@@ -244,6 +246,9 @@ export function useRevisionSession() {
           case "bill":
             setBill(msg.bill);
             break;
+          case "live_ready":
+            setLiveReady(true);
+            break;
           case "live_transcript":
             setLiveText(msg.text ?? "");
             break;
@@ -329,6 +334,7 @@ export function useRevisionSession() {
     if (ws?.readyState !== WebSocket.OPEN) return;
     setExchange(null);
     setLiveText("");
+    setLiveReady(false);
     ws.send(JSON.stringify({ type: "audio_start" }));
   }, []);
   const sendAudioChunk = useCallback((pcm) => {
@@ -372,7 +378,7 @@ export function useRevisionSession() {
 
   return {
     status, phase, seconds, teacher, extract, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
-    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, liveText, exchange,
+    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, liveText, liveReady, exchange,
     start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading, sendText, sendAudio,
     startAudio, sendAudioChunk, cancelAudio,
   };

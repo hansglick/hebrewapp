@@ -228,7 +228,10 @@ class TeacherSession:
                     if data["type"] == "audio_start" and self.live_transcription:
                         async def show(text: str) -> None:
                             await self.to_browser({"type": "live_transcript", "text": text})
-                        self.transcriber = LiveTranscriber(show)
+
+                        async def ready() -> None:
+                            await self.to_browser({"type": "live_ready"})
+                        self.transcriber = LiveTranscriber(show, ready)
                     continue
                 if data.get("type") == "student_audio":
                     # Mode texte : la réponse enregistrée, transcrite puis traitée comme une réponse écrite.

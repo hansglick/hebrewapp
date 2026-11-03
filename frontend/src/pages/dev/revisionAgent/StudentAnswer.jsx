@@ -4,7 +4,7 @@ import { Answer, Evaluation } from "./Assessment";
 import { Recorder } from "./audio";
 import FlapLabel from "./FlapLabel";
 import { graphemes, withoutNikkud } from "./hebrew";
-import RecordSlider from "./RecordSlider";
+import RecordButton from "./RecordButton";
 import { SPEECH_STEP_MS } from "./TeacherSpeech";
 import CleanReading from "./CleanReading";
 import "../../../components/ConfigModal.css";
@@ -12,8 +12,8 @@ import "../../../components/ConfigModal.css";
 // Page sans Gemini Live (cf. demande explicite du user) : la réponse de
 // l'élève, sous les fenêtres de l'exercice, et ce que le prof en fait, dans
 // une seule fenêtre. En bas, centrés : l'ampoule de l'antisèche (lamp, cf.
-// ExpressionBoard), la piste d'enregistrement (cf. RecordSlider : on pousse
-// le loquet pour enregistrer, l'avion en papier envoie, la corbeille annule).
+// ExpressionBoard), le bouton d'enregistrement (cf. RecordButton : on le
+// touche pour parler, on touche son carré pour arrêter, la corbeille annule).
 // Le serveur transcrit la réponse envoyée (transcript) et la donne au prof.
 // À la première réponse envoyée, la fenêtre s'agrandit vers le bas : un trait
 // se trace de gauche à droite au-dessus de la piste, et la réponse s'écrit
@@ -46,8 +46,9 @@ const finalized = (text) => text.replace(/[כמנפצ](?=[\s.,!?;:]|$)/g, (lette
 
 const LABELS = { evaluation: "Évaluation", conversation: "Conversation" };
 
-// Volumes gardés pour l'onde de la piste (cf. RecordSlider, WAVE_BARS), un par bloc de 100 ms.
-const MAX_LEVELS = 32;
+// Transcription en direct : si sa connexion ne se dit pas prête (live_ready) dans ce délai, l'élève parle quand même
+// (son audio est gardé par le serveur, et transcrit d'un bloc si le direct échoue).
+const LIVE_READY_TIMEOUT_MS = 4000;
 
 // Lecture : le texte lu commence à s'écrire ce temps-là après l'envoi, à la vitesse habituelle (cf. Answer), pour que
 // ses mots fautifs se surlignent peu après qu'il est écrit (cf. demande explicite du user). Avec le tri lecture /
@@ -70,7 +71,9 @@ const FADE_STEPS = [
 function RuleShape({ className }) {
   return (
     <svg className={className} viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M1 9C1 4.5 3 2 8 2H92C97 2 99 4.5 99 9" vectorEffect="non-scaling-stroke" />
+      {/* Un Z couché, en escalier (cf. demande explicite du user) : à gauche, un petit trait descend vers la piste ;
+          le trait horizontal, de sa largeur ; à droite, un trait de même longueur monte. */}
+      <path d="M1 10V5H99V0" vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }
@@ -97,6 +100,7 @@ export default function StudentAnswer({
   readingDelay = true,
   liveTranscription = false,
   liveText = "",
+  liveReady = false,
   onAudioStart,
   onAudioChunk,
   onAudioCancel,
@@ -144,25 +148,35 @@ export default function StudentAnswer({
   // Lecture : le verbatim s'est nettoyé en la phrase à lire (cf. CleanReading), l'id de la réponse.
   const [cleaned, setCleaned] = useState(null);
 
-  // Le volume de chaque bloc capté depuis le début de l'enregistrement (cf. Recorder) : le premier dit que le micro
-  // capte vraiment, l'onde de la piste les suit (cf. RecordSlider).
-  const [levels, setLevels] = useState([]);
+  // Le micro capte vraiment (son premier bloc, cf. Recorder) ; en transcription en direct, il faut aussi sa
+  // connexion (liveReady), ou ne plus l'attendre (stalled) : l'élève peut parler (ready, cf. RecordButton).
+  const [capturing, setCapturing] = useState(false);
+  const [stalled, setStalled] = useState(false);
+  useEffect(() => {
+    if (!recording || !capturing || !liveTranscription || liveReady) return undefined;
+    const timer = setTimeout(() => setStalled(true), LIVE_READY_TIMEOUT_MS);
+    return () => clearTimeout(timer);
+  }, [recording, capturing, liveTranscription, liveReady]);
+  const ready = recording && capturing && (!liveTranscription || liveReady || stalled);
+
   const startRecording = async () => {
     setMicError(null);
-    setLevels([]);
-    // Le même micro pour toute la séance, ouvert au premier enregistrement (cf. Recorder).
-    recorderRef.current ??= new Recorder();
+    setCapturing(false);
+    setStalled(false);
+    // Un micro par enregistrement, fermé à sa fin (cf. Recorder).
+    recorderRef.current = new Recorder();
     let first = true;
     // Le serveur prépare la transcription en direct avant les premiers blocs.
     const live = liveTranscription && !disabled;
     if (live) onAudioStart();
     try {
       await recorderRef.current.start(
-        (value) => {
+        () => {
+          if (!first) return;
           // Le micro capte : une petite vibration, sur Android (iOS ne le permet pas aux pages web).
-          if (first) navigator.vibrate?.(30);
+          navigator.vibrate?.(30);
           first = false;
-          setLevels((previous) => [...previous, value].slice(-MAX_LEVELS));
+          setCapturing(true);
         },
         live ? onAudioChunk : null,
       );
@@ -177,8 +191,9 @@ export default function StudentAnswer({
 
   const stopRecording = async () => {
     const blob = recorderRef.current.stop();
+    recorderRef.current = null;
     setRecording(false);
-    setLevels([]);
+    setCapturing(false);
     return blob;
   };
   const cancelRecording = async () => {
@@ -188,12 +203,7 @@ export default function StudentAnswer({
     setSent(previousRef.current);
   };
 
-  // Fin de la séance, ou départ de la page : le micro se ferme, le témoin du téléphone s'éteint.
-  useEffect(() => {
-    if (!disabled || recording) return;
-    recorderRef.current?.close();
-    recorderRef.current = null;
-  }, [disabled, recording]);
+  // Départ de la page pendant un enregistrement : le micro se ferme.
   useEffect(() => () => recorderRef.current?.close(), []);
 
   const sendAudio = async (blob) => {
@@ -408,14 +418,13 @@ export default function StudentAnswer({
       </div>
       <div className="ra-composer-actions">
         {lamp}
-        <RecordSlider
+        <RecordButton
           recording={recording}
+          ready={ready}
           onStart={startRecording}
-          onSend={async () => sendAudio(await stopRecording())}
+          onStop={async () => sendAudio(await stopRecording())}
           onCancel={cancelRecording}
-          levels={levels}
           disabled={disabled}
-          streaming={liveTranscription}
         />
         {WRITTEN && (
           <label className="ra-composer-writing">

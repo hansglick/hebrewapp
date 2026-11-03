@@ -1363,22 +1363,21 @@
     row-gap: 0;
   }
 
-  /* L'ampoule, la piste et la corbeille sur une seule ligne : la piste prend la place qui reste. */
+  /* L'ampoule, le bouton et la corbeille sur une seule ligne : le message prend la place qui reste. */
   .ra-composer-actions {
     flex-wrap: nowrap;
     gap: 10px;
   }
 
-  .ra-composer-actions .ra-slider-row {
+  .ra-composer-actions .ra-record-row {
     flex: 1;
     min-width: 0;
     gap: 8px;
   }
 
-  .ra-composer-actions .ra-slider {
+  /* Le message prend la place qui reste, la corbeille à droite. */
+  .ra-composer-actions .ra-record-status {
     flex: 1;
-    width: auto;
-    min-width: 0;
   }
 
   /* Antisèche ouverte : le glissement vers le bas qui la referme (cf. TaskLayout) ne recharge pas la page. */
@@ -2763,7 +2762,7 @@
 
 /* Page sans Gemini Live (cf. StudentAnswer) : la réponse de l'élève sous
    l'exercice — sa dernière réponse (enregistrée : sa transcription et ▶ pour la
-   réécouter), la piste d'enregistrement (cf. .ra-slider) et, à droite,
+   réécouter), le bouton d'enregistrement (cf. .ra-record) et, à droite,
    l'interrupteur « Répondre par écrit », qui affiche le champ (toute la
    largeur) et « Envoyer ». */
 .ra-composer {
@@ -2905,21 +2904,22 @@
 /* Le trait : moitié de la largeur, centré, de la couleur de la bordure ;
    autant d'espace au-dessus que dessous (28 px : sous lui, 20 px de marge et
    les 8 px d'écart jusqu'à la piste). */
-/* Le trait, épais, de la couleur du mode, ses bouts arqués vers le bas (cf. StudentAnswer, RuleShape, et demande
-   explicite du user). Le mode change : sa couleur balaie le trait de gauche à droite (.ra-exchange-rule-sweep, rejoué
-   à chaque changement), par-dessus l'ancienne, que le trait garde le temps du balayage (--rule-old, déclarée pour que
-   sa transition, retardée, la change d'un coup à la fin). Le trait se trace, se retire et se balaie par un cache
-   (clip-path), qui ne déforme pas ses bouts. */
+/* Le trait, de la couleur du mode, en Z couché : un petit trait descend à gauche, un autre monte à droite (cf.
+   StudentAnswer, RuleShape, et demande explicite du user). Le mode change : sa couleur balaie le trait de gauche à
+   droite (.ra-exchange-rule-sweep, rejoué à chaque changement), par-dessus l'ancienne, que le trait garde le temps du
+   balayage (--rule-old, déclarée pour que sa transition, retardée, la change d'un coup à la fin). Le trait se trace,
+   se retire et se balaie par un cache (clip-path), qui ne déforme pas ses bouts. */
 @property --rule-old {
   syntax: "<color>";
   inherits: false;
   initial-value: transparent;
 }
 
-/* Pour le moment, de la couleur de la bordure de la piste (.ra-slider), quel que soit le mode (cf. demande explicite
-   du user) : --rule-color ; pour que le trait reprenne la couleur du mode, var(--mode-color, var(--textPrimary)). */
+/* Pour le moment, l'ocre du bouton d'enregistrement (.ra-record), un peu adouci, quel que soit le mode (cf.
+   demande explicite du user) : --rule-color ; pour que le trait reprenne la couleur du mode,
+   var(--mode-color, var(--textPrimary)). */
 .ra-exchange-rule {
-  --rule-color: color-mix(in srgb, #b5502e 35%, transparent);
+  --rule-color: color-mix(in srgb, #b5502e 75%, transparent);
   --rule-old: var(--rule-color);
   position: relative;
   width: 25%;
@@ -2936,9 +2936,9 @@
   height: 100%;
   overflow: visible;
   fill: none;
-  stroke-width: 2.1px;
+  stroke-width: 1.6px;
   stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke-linejoin: miter;
 }
 
 .ra-exchange-rule-base {
@@ -3143,138 +3143,21 @@
   align-self: flex-end;
 }
 
-/* Réponse à voix haute (cf. RecordSlider) : une piste à pousser comme pour
-   déverrouiller un téléphone, en rouge ocre (cf. demande explicite du user) ;
-   le loquet glisse vers la droite, devient un avion en papier qui s'envole à
-   l'envoi, des traits de vitesse filant dans la piste ; la corbeille, à droite, n'est active que
-   pendant l'enregistrement. */
-.ra-slider-row {
+/* Réponse à voix haute (cf. RecordButton, demande explicite du user) : un bouton rond, ocre, comme l'était le loquet
+   de l'ancienne piste ; à sa droite, ce qu'il attend de l'élève, puis la corbeille, active pendant l'enregistrement. */
+.ra-record-row {
   --ochre: #b5502e;
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Les trois quarts de sa largeur d'origine (cf. demande explicite du user) : « Glisse ››› », sans « pour répondre »
-   (cf. .ra-slider-label-more). */
-.ra-slider {
+.ra-record {
   position: relative;
-  width: 210px;
-  max-width: 100%;
+  isolation: isolate;
+  width: 56px;
   height: 56px;
-  border-radius: 28px;
-  background: color-mix(in srgb, var(--ochre) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ochre) 35%, transparent);
-  touch-action: none;
-  user-select: none;
-}
-
-.ra-slider-disabled {
-  opacity: 0.45;
-}
-
-.ra-slider-inside {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  padding: 0 64px 0 64px;
-}
-
-.ra-slider-recording .ra-slider-inside {
-  padding: 0 64px 0 20px;
-}
-
-/* Piste de la réponse, étroite (cf. .ra-slider) : comme sur mobile, au repos, le loquet est à gauche, le texte n'a
-   besoin de place que de ce côté ; pendant l'enregistrement, l'onde garde la sienne (cf. .ra-slider-recording). */
-.ra-composer-actions .ra-slider:not(.ra-slider-recording) .ra-slider-inside {
-  padding: 0 10px 0 56px;
-}
-
-.ra-slider-label {
-  width: 100%;
-  text-align: center;
-  font-size: 0.9em;
-  color: var(--ochre);
-  white-space: nowrap;
-}
-
-.ra-composer-actions .ra-slider-label-more {
-  display: none;
-}
-
-.ra-slider-chevrons {
-  display: inline-block;
-  letter-spacing: -2px;
-  animation: ra-chevrons 1.6s ease-in-out infinite;
-}
-
-@keyframes ra-chevrons {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translateX(5px);
-    opacity: 1;
-  }
-}
-
-.ra-slider-live {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-
-/* Streaming : la consigne d'arrêt, à côté du loquet devenu « stop » (cf. RecordSlider). */
-.ra-slider-stop-hint {
-  width: 100%;
-  text-align: center;
-  font-size: 0.8em;
-  color: var(--ochre);
-  white-space: nowrap;
-  animation: ra-stop-hint 1.6s ease-in-out infinite alternate;
-}
-
-/* La consigne respire doucement : l'enregistrement est en cours. */
-@keyframes ra-stop-hint {
-  from {
-    opacity: 0.55;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ra-slider-stop-hint {
-    animation: none;
-  }
-}
-
-/* Le carré « stop », plein, sans contour arrondi du trait. */
-.ra-slider-knob svg.ra-stop {
-  width: 20px;
-  height: 20px;
-  stroke: none;
-}
-
-.ra-slider-time {
-  font-variant-numeric: tabular-nums;
-  font-size: 0.9em;
-  color: var(--ochre);
-}
-
-.ra-slider-knob {
-  position: absolute;
-  top: 3px;
-  left: 4px;
-  width: 48px;
-  height: 48px;
+  flex: none;
   border-radius: 50%;
   border: none;
   padding: 0;
@@ -3284,29 +3167,25 @@
   background: var(--ochre);
   color: #fff;
   box-shadow: 0 3px 10px rgba(181, 80, 46, 0.35);
-  cursor: grab;
-  transition:
-    left 0.3s ease,
-    transform 0.3s ease;
-  z-index: 1;
-}
-
-/* Pendant qu'on le pousse, le loquet suit le doigt, sans retard. */
-.ra-slider-knob-drag {
-  cursor: grabbing;
-  transition: none;
-}
-
-.ra-slider-knob-end {
-  left: calc(100% - 48px - 4px);
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
-.ra-slider-knob:disabled {
+.ra-record:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.ra-record:disabled {
+  cursor: default;
+}
+
+/* Hors séance : grisé. Pendant l'attente, il reste ocre (cf. .ra-record-waiting). */
+.ra-record:disabled:not(.ra-record-waiting) {
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-.ra-slider-knob svg {
+.ra-record svg {
   width: 24px;
   height: 24px;
   fill: currentColor;
@@ -3316,128 +3195,70 @@
   stroke-linejoin: round;
 }
 
-.ra-slider-recording .ra-slider-knob .ra-plane {
-  animation: ra-plane-ready 1.4s ease-in-out infinite;
+/* Le carré « stop », plein. */
+.ra-record svg.ra-stop {
+  width: 22px;
+  height: 22px;
+  stroke: none;
 }
 
-/* L'avion prêt à partir : il se balance doucement. */
-@keyframes ra-plane-ready {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate(1px, -2px) rotate(-6deg);
+/* Le micro s'ouvre, la connexion s'établit : un anneau tourne autour du bouton. */
+.ra-record-waiting::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--ochre) 20%, transparent);
+  border-top-color: var(--ochre);
+  animation: ra-record-spin 0.9s linear infinite;
+}
+
+@keyframes ra-record-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* L'envoi : l'avion recule un peu, puis file en haut à droite et disparaît. */
-.ra-plane-flight {
-  animation: ra-plane-flight 1.3s cubic-bezier(0.5, 0, 0.6, 1) forwards;
+/* Prêt : deux ondes partent du bouton, l'une après l'autre, tant que l'élève parle. */
+.ra-record-live::before,
+.ra-record-live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--ochre);
+  animation: ra-record-pulse 1.6s ease-out infinite;
 }
 
-@keyframes ra-plane-flight {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-    opacity: 1;
+.ra-record-live::after {
+  animation-delay: 0.8s;
+}
+
+@keyframes ra-record-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.5;
   }
-  20% {
-    transform: translate(-6px, 4px) rotate(8deg) scale(1);
-  }
-  60% {
-    transform: translate(60px, -40px) rotate(-12deg) scale(0.85);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(150px, -110px) rotate(-20deg) scale(0.5);
+  to {
+    transform: scale(1.75);
     opacity: 0;
   }
 }
 
-/* L'avion en vol : blanc tant qu'il est sur la pastille, rouge ocre dès qu'il
-   en sort (cf. demande explicite du user). Deux avions au même vol, l'un coupé
-   au cercle de la pastille, l'autre masqué par ce même cercle ; le second,
-   centré lui aussi sur la pastille, s'étend assez loin pour tout le vol. */
-.ra-plane-inside,
-.ra-plane-outside {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.ra-plane-inside {
-  inset: 0;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.ra-plane-outside {
-  inset: -200px;
+.ra-record-status {
+  min-width: 0;
+  font-size: 0.9em;
   color: var(--ochre);
-  -webkit-mask-image: radial-gradient(circle at center, transparent 24px, #000 24.5px);
-  mask-image: radial-gradient(circle at center, transparent 24px, #000 24.5px);
 }
 
-/* Pendant le vol, des traits de vitesse filent dans la piste, de droite à
-   gauche (cf. demande explicite du user). */
-.ra-slider-sky {
-  position: absolute;
-  inset: 0;
+/* « Parlez » : bien visible. */
+.ra-record-status-live {
+  font-size: 1.05em;
+  font-weight: 700;
 }
 
-.ra-streak {
-  position: absolute;
-  left: 100%;
-  height: 2px;
-  border-radius: 1px;
-  background: color-mix(in srgb, var(--ochre) 45%, transparent);
-  animation: ra-streak 0.5s linear 2 backwards;
-}
-
-.ra-streak-1 {
-  top: 12px;
-  width: 44px;
-}
-
-.ra-streak-2 {
-  top: 34px;
-  width: 30px;
-  animation-delay: 0.12s;
-}
-
-.ra-streak-3 {
-  top: 22px;
-  width: 56px;
-  animation-delay: 0.22s;
-}
-
-.ra-streak-4 {
-  top: 42px;
-  width: 38px;
-  animation-delay: 0.32s;
-}
-
-.ra-streak-5 {
-  top: 16px;
-  width: 26px;
-  animation-delay: 0.42s;
-}
-
-.ra-streak-6 {
-  top: 29px;
-  width: 48px;
-  animation-delay: 0.08s;
-}
-
-@keyframes ra-streak {
-  to {
-    transform: translateX(-360px);
-  }
-}
-
-.ra-slider-trash {
+.ra-record-trash {
   width: 44px;
   height: 44px;
   flex: none;
@@ -3455,82 +3276,31 @@
     background-color 0.2s ease;
 }
 
-.ra-slider-trash:hover:not(:disabled) {
+.ra-record-trash:hover:not(:disabled) {
   background: color-mix(in srgb, var(--ochre) 12%, transparent);
 }
 
-.ra-slider-trash:disabled {
+.ra-record-trash:disabled {
   border-color: var(--cardBorder);
   color: var(--textSecondary);
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.ra-slider-trash svg {
-  width: 22px;
-  height: 22px;
+.ra-record-trash svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
   stroke: currentColor;
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-/* Onde sonore pendant l'enregistrement : des barres ocre qui montent et
-   descendent, décalées, réparties sur toute la longueur de la piste. */
-.ra-wave {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 4px;
-  height: 36px;
-  overflow: hidden;
-}
-
-/* Chaque barre, à la hauteur d'un volume capté (--level, cf. RecordSlider). */
-.ra-wave span {
-  width: 4px;
-  height: 100%;
-  border-radius: 2px;
-  background: #b5502e;
-  transform: scaleY(var(--level, 0.12));
-  transition: transform 0.1s linear;
-}
-
-/* Le micro s'ouvre, il ne capte encore rien : un point qui pulse, et « patientez… ». */
-.ra-slider-waiting {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 0.9em;
-  color: var(--ochre);
-  white-space: nowrap;
-}
-
-.ra-slider-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--ochre);
-  animation: ra-slider-dot 0.8s ease-in-out infinite alternate;
-}
-
-@keyframes ra-slider-dot {
-  from {
-    opacity: 0.25;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1.15);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .ra-slider-dot {
+  .ra-record-waiting::after,
+  .ra-record-live::before,
+  .ra-record-live::after {
     animation: none;
   }
 }
