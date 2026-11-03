@@ -764,69 +764,11 @@
   color: var(--textSecondary, var(--textPrimary));
 }
 
-/* Lecture : le verbatim se nettoie en la phrase à lire (cf. CleanReading, CLEAN_MS = 750 ms) ; ses mots absents du
-   texte s'effacent en se resserrant, puis ceux qui manquent apparaissent. */
-.ra-answer-cleaning > span {
-  display: inline-block;
-  vertical-align: bottom;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 12em;
-  margin-inline-end: 0.27em;
-}
-
-.ra-clean-drop {
-  animation: ra-clean-drop 0.35s ease-in forwards;
-}
-
-.ra-clean-add {
-  max-width: 0;
-  margin-inline-end: 0;
-  opacity: 0;
-  animation: ra-clean-add 0.35s ease-out 0.35s forwards;
-}
-
-@keyframes ra-clean-drop {
-  0% {
-    opacity: 1;
-    filter: blur(0);
-  }
-  60% {
-    opacity: 0;
-    filter: blur(3px);
-    max-width: 12em;
-    margin-inline-end: 0.27em;
-  }
-  100% {
-    opacity: 0;
-    max-width: 0;
-    margin-inline-end: 0;
-  }
-}
-
-@keyframes ra-clean-add {
-  0% {
-    opacity: 0;
-    max-width: 0;
-    margin-inline-end: 0;
-  }
-  40% {
-    max-width: 12em;
-    margin-inline-end: 0.27em;
-  }
-  100% {
-    opacity: 1;
-    max-width: 12em;
-    margin-inline-end: 0.27em;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ra-clean-drop,
-  .ra-clean-add {
-    animation-duration: 0.01s;
-    animation-delay: 0s;
-  }
+/* Lecture : le verbatim se nettoie en la phrase à lire, comme le titre de la fenêtre change (cf. CleanReading,
+   .ra-flap-cell, .ra-flap-letter) : chaque mot, une rangée de cases qui basculent. */
+.ra-clean-word {
+  display: inline-flex;
+  white-space: pre;
 }
 
 .ra-answer-error {
