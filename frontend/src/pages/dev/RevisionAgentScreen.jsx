@@ -315,6 +315,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
         onSend={session.sendText}
         onSendAudio={session.sendAudio}
         transcript={session.transcript}
+        intent={session.intent}
         exchange={session.exchange}
         disabled={!live || session.phase === "done"}
         lamp={lamp}

@@ -80,6 +80,9 @@ export function useRevisionSession() {
   // Facture de la séance (tokens et prix de chaque modèle, durée), envoyée à la fin de la conversation (cf. Bill).
   const [bill, setBill] = useState(null);
   const [transcript, setTranscript] = useState(null);
+  // Lecture : la dernière réponse est-elle une lecture ({seq, reading}), ou une phrase pour le prof (cf. reading.py,
+  // to_teacher) ; envoyé avant sa transcription.
+  const [intent, setIntent] = useState(null);
   const [exchange, setExchange] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
@@ -133,6 +136,7 @@ export function useRevisionSession() {
       setAnswerFrame(false);
       setBill(null);
       setTranscript(null);
+      setIntent(null);
       setExchange(null);
       setStatus("connecting");
 
@@ -237,6 +241,9 @@ export function useRevisionSession() {
           case "bill":
             setBill(msg.bill);
             break;
+          case "intent":
+            setIntent((previous) => ({ seq: (previous?.seq ?? 0) + 1, reading: Boolean(msg.reading) }));
+            break;
           case "transcript":
             setTranscript((previous) => ({
               seq: (previous?.seq ?? 0) + 1,
@@ -338,7 +345,7 @@ export function useRevisionSession() {
 
   return {
     status, phase, seconds, teacher, extract, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
-    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, exchange,
+    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, exchange,
     start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading, sendText, sendAudio,
   };
 }

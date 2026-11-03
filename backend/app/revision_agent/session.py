@@ -263,6 +263,17 @@ class TeacherSession:
         compréhension) ; en lecture, pour la comparaison (cf. ReadingSession)."""
         return self.phonetic_model is not None
 
+    def reading_intent(self, text: str) -> bool | None:
+        """Lecture, mode texte : la réponse est-elle une lecture (cf. ReadingSession.reading_intent) ; None
+        ailleurs."""
+        return None
+
+    async def tell_intent(self, text: str) -> None:
+        """Lecture, mode texte : ce que la réponse est, pour StudentAnswer, qui affiche le texte à lire pour une
+        lecture, la réponse telle quelle sinon (conversation)."""
+        if (reading := self.reading_intent(text)) is not None:
+            await self.to_browser({"type": "intent", "reading": reading})
+
     def spelling_context(self) -> str:
         """Ce que le prof vient de dire : le contexte qui aide à orthographier la réponse transcrite (cf.
         transcribe.respelled)."""
@@ -291,6 +302,9 @@ class TeacherSession:
         log.info("transcription en %.1f s : %s%s", time.monotonic() - started, text,
                  f" · {self.audio_phonetic}" if phonetic else "")
         # Double route voyelle : la prononciation entendue s'affiche sous la transcription si l'élève coche « Phonétique ».
+        # Avant la transcription : StudentAnswer sait, à son arrivée, quoi afficher.
+        if text:
+            await self.tell_intent(text)
         await self.to_browser({"type": "transcript", "text": text, "phonetic": self.audio_phonetic})
         if text:
             await self.on_student_text(text, spoken=True)

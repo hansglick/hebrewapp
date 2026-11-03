@@ -29,6 +29,7 @@ import json
 import logging
 import re
 import time
+from difflib import SequenceMatcher
 
 from fastapi import WebSocket
 
@@ -154,6 +155,43 @@ def spoken(phrase: str) -> str:
 
 def words(text: str) -> list[str]:
     return [w for w in (letters(token) for token in text.split()) if w]
+
+
+# Mode texte, pendant qu'une lecture est attendue : l'envoi de l'élève est une lecture, sauf s'il compte assez de mots
+# absents du texte à lire (cf. demande explicite du user : un programme simple, un seuil haut, dans le doute une
+# lecture) ; c'est alors une phrase adressée au prof (une question…), une conversation.
+QUESTION_MIN_WORDS = 3  # au moins tant de mots absents du texte
+QUESTION_SHARE = 0.6  # et cette part, au moins, des mots dits
+NEAR_WORD = 0.7  # un mot mal lu reste un mot du texte, à cette ressemblance près (cf. SequenceMatcher)
+PREFIXES = "והבלמשכ"
+
+
+def word_forms(word: str) -> set[str]:
+    """Le mot, et sans sa lettre préfixe (ו, ה, ב…), mal lue ou oubliée."""
+    return {word, word[1:]} if len(word) > 2 and word[0] in PREFIXES else {word}
+
+
+def foreign_words(text: str, expected: list[str]) -> list[str]:
+    """Les mots dits absents du texte à lire, à une lecture approximative près ; un mot en lettres latines (l'élève
+    parle français) l'est toujours."""
+    target = [form for word in words(" ".join(expected)) for form in word_forms(word)]
+    foreign = []
+    for token in text.split():
+        word = letters(token)
+        if word:
+            if not any(SequenceMatcher(None, form, other).ratio() >= NEAR_WORD
+                       for form in word_forms(word) for other in target):
+                foreign.append(word)
+        elif re.search(r"[A-Za-zÀ-ÿ]", token):
+            foreign.append(token)
+    return foreign
+
+
+def to_teacher(text: str, expected: list[str]) -> bool:
+    """L'envoi de l'élève est adressé au prof, pas une lecture (cf. QUESTION_MIN_WORDS)."""
+    foreign = foreign_words(text, expected)
+    said = sum(1 for token in text.split() if letters(token) or re.search(r"[A-Za-zÀ-ÿ]", token))
+    return len(foreign) >= QUESTION_MIN_WORDS and len(foreign) >= QUESTION_SHARE * said
 
 
 def compare_request(expected: list[str], expected_phonetic: str, heard: str, phonetic: str,
@@ -365,6 +403,17 @@ class ReadingSession(TeacherSession):
             return
         if not text or self.started_at is None:
             return
+        # Une réponse écrite ou corrigée : StudentAnswer apprend ici ce qu'elle est (cf. on_student_audio).
+        if not spoken or corrected:
+            await self.tell_intent(text)
+        if not self.reading_intent(text):
+            # Une phrase adressée au prof (cf. to_teacher) : il y répond, en conversation, et la lecture reste
+            # attendue ; sa prononciation n'est pas jugée.
+            log.info("pas une lecture, pour le prof (mots hors du texte : %s) : %s",
+                     foreign_words(text, self.expected()), text)
+            self.audio_phonetic = ""
+            await super().on_student_text(text, spoken, corrected)
+            return
         log.info("lecture enregistrée : %s", text)
         if self.journal:
             self.journal.write("student", text=text)
@@ -380,6 +429,11 @@ class ReadingSession(TeacherSession):
 
     def phonetic_wanted(self) -> bool:
         return self.phonetic_model is not None and self.reading and not self.evaluating
+
+    def reading_intent(self, text: str) -> bool | None:
+        if not isinstance(self.live, TextTeacher) or not self.reading or self.evaluating:
+            return None
+        return not to_teacher(text, self.expected())
 
     async def on_user_text(self, text: str) -> None:
         # Recueillie jusqu’au départ de la comparaison : elle arrive souvent après le silence qui clôt la lecture.

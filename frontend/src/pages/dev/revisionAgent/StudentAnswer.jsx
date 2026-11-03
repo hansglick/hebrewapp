@@ -85,6 +85,7 @@ export default function StudentAnswer({
   onSend,
   onSendAudio,
   transcript,
+  intent,
   exchange,
   disabled,
   lamp,
@@ -104,7 +105,13 @@ export default function StudentAnswer({
   // reading : en lecture, le texte lu, retenu à l'envoi (l'extrait suivant se surligne dès la lecture réussie).
   const replaceSent = (message) => {
     if (sent?.url && sent.url !== message.url) URL.revokeObjectURL(sent.url);
-    setSent({ reading: readingText, ...message, id: (sent?.id ?? 0) + 1, before: taskEvaluation });
+    setSent({
+      reading: readingText,
+      ...message,
+      id: (sent?.id ?? 0) + 1,
+      before: taskEvaluation,
+      afterIntent: intent?.seq ?? 0,
+    });
   };
   // Correction à la main de la réponse affichée : {id : la réponse corrigée, draft : le texte du champ}.
   const [editing, setEditing] = useState(null);
@@ -180,7 +187,10 @@ export default function StudentAnswer({
   // En lecture, le texte lu s'écrit dès l'envoi, sans attendre la transcription ; ses mots mal lus se surlignent à
   // l'arrivée de l'évaluation, sans qu'il se réécrive (cf. demande explicite du user). Rien entendu : « (rien
   // entendu) », comme ailleurs.
-  const reading = Boolean(sent?.reading) && said !== "";
+  // Une lecture, seulement si le serveur l'a jugée telle (intent) : une question au prof s'écrit telle quelle, en
+  // conversation (cf. demande explicite du user).
+  const readingIntent = sent && intent && intent.seq > sent.afterIntent ? intent.reading : null;
+  const reading = Boolean(sent?.reading) && said !== "" && readingIntent === true;
   const answer = reading ? sent.reading : said;
   // Double route voyelle, case « Phonétique » : la prononciation entendue de la réponse enregistrée, sous sa
   // transcription ; pas pour une réponse corrigée à la main.
