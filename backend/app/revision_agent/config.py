@@ -14,7 +14,8 @@ LIVE_PRICES = {"input": {"TEXT": 0.75, "AUDIO": 3.00, "IMAGE": 1.00, "VIDEO": 1.
 # Modèles TTS (page des tarifs) : entrée texte, sortie audio ; ceux en 3.8 au tarif valable jusqu'à fin 2026, doublé
 # ensuite.
 FLASH_PRICES = {"gemini-3.5-flash-lite": (0.30, 2.50), "gemini-3.5-flash": (1.50, 9.00), "gemini-3.8-flash": (0.75, 3.75),
-                "gemini-3.5-transcribe": (2.00, 12.00), "gemini-3.8-flash-tts": (0.50, 9.00),
+                "gemini-3.5-transcribe": (2.00, 12.00), "gemini-3.5-transcribe-live": (3.50, 21.00),
+                "gemini-3.8-flash-tts": (0.50, 9.00),
                 "gemini-3.8-flash-lite-tts": (0.50, 6.00), "gemini-3.1-flash-tts-preview": (1.00, 20.00)}
 # Page « mode texte » (cf. demande explicite du user) : le prof est ce modèle texte, sans voix, appelé à chaque prise
 # de parole (cf. text_teacher.py), choisi sur la page parmi ceux-ci (cf. demande explicite du user). Tarif en dollars

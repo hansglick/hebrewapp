@@ -296,6 +296,10 @@ class TeacherSession:
         if (reading := self.reading_intent(text)) is not None:
             await self.to_browser({"type": "intent", "reading": reading})
 
+    async def follow_language(self, text: str) -> None:
+        """Transcription en direct : le mode de langue suit la langue de la réponse (cf.
+        ReadingSession.follow_language) ; rien ailleurs."""
+
     def spelling_context(self) -> str:
         """Ce que le prof vient de dire : le contexte qui aide à orthographier la réponse transcrite (cf.
         transcribe.respelled)."""
@@ -351,11 +355,14 @@ class TeacherSession:
                 text = await transcribe(wav)
             except Exception:
                 log.exception("Transcription impossible")
+        # La langue de la réponse se lit sur son alphabet, avant que ses mots ne soient réécrits en lettres hébraïques.
+        said = text
         text = await in_hebrew_letters(text) if text else ""
         log.info("transcription en direct, finie %.1f s après l'envoi : %s", time.monotonic() - started, text)
         if text:
             await self.tell_intent(text)
             self.audio_intent = self.reading_intent(text)
+            await self.follow_language(said)
         await self.to_browser({"type": "transcript", "text": text, "phonetic": ""})
 
         async def spelled() -> str:

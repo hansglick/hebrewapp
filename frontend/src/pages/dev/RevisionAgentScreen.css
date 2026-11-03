@@ -3288,6 +3288,39 @@
   width: 100%;
 }
 
+/* Streaming : la consigne d'arrêt, à côté du loquet devenu « stop » (cf. RecordSlider). */
+.ra-slider-stop-hint {
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+  color: var(--ochre);
+  white-space: nowrap;
+  animation: ra-stop-hint 1.6s ease-in-out infinite alternate;
+}
+
+/* La consigne respire doucement : l'enregistrement est en cours. */
+@keyframes ra-stop-hint {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-slider-stop-hint {
+    animation: none;
+  }
+}
+
+/* Le carré « stop », plein, sans contour arrondi du trait. */
+.ra-slider-knob svg.ra-stop {
+  width: 20px;
+  height: 20px;
+  stroke: none;
+}
+
 .ra-slider-time {
   font-variant-numeric: tabular-nums;
   font-size: 0.9em;

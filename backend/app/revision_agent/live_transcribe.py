@@ -9,23 +9,48 @@ celle du segment en cours."""
 
 import asyncio
 import logging
+from collections import Counter
 
 import numpy as np
 from google import genai
 from google.genai import types
 
 from app.config import GEMINI_API_KEY
-from app.revision_agent.config import LIVE_TRANSCRIBE_MODEL
+from app.revision_agent.config import LIVE_TRANSCRIBE_MODEL, SPELLING_MODEL
+from app.revision_agent.translate import FLASH_USAGE
 
 log = logging.getLogger("revision_agent.live_transcribe")
 
 FINAL_TIMEOUT_SECONDS = 3.0  # attente de la transcription finale, une fois l'enregistrement fini
 CONFIG = types.LiveConnectConfig(
     response_modalities=["TEXT"],
-    input_audio_transcription=types.AudioTranscriptionConfig(language_codes=["he-IL"]),
+    # L'hébreu (les lectures) et le français, que l'élève peut parler au prof (cf. demande explicite du user).
+    input_audio_transcription=types.AudioTranscriptionConfig(language_codes=["he-IL", "fr-FR"]),
 )
 
+# La facture (cf. translate.flash_bill, demande explicite du user) : la Live API ne dit pas ce que la transcription
+# consomme (pas d'usage_metadata, vérifié). L'entrée se compte sur la durée de l'audio envoyé, au taux mesuré sur
+# Gemini Transcribe (25 jetons par seconde d'audio : 204 pour 8,1 s, 288 pour 11,5 s) ; la sortie, sur la
+# transcription, par le compteur de jetons de l'API (le modèle en
+# direct le refuse, vérifié : celui de SPELLING_MODEL, de la même famille).
+AUDIO_TOKENS_PER_SECOND = 25
+BYTES_PER_SECOND = 24000 * 2  # PCM16 mono 24 kHz, reçu du navigateur
+
 _client: genai.Client | None = None
+
+
+def usage() -> Counter | None:
+    """Ce que la séance a consommé de ce modèle, None hors séance (cf. translate.FLASH_USAGE)."""
+    counts = FLASH_USAGE.get()
+    return None if counts is None else counts.setdefault(LIVE_TRANSCRIBE_MODEL, Counter())
+
+
+async def count_output(text: str, counts: Counter) -> None:
+    try:
+        response = await _client.aio.models.count_tokens(model=SPELLING_MODEL, contents=text)
+        counts["output"] += response.total_tokens or 0
+    except Exception:
+        log.warning("jetons de la transcription en direct non comptés", exc_info=True)
 
 
 def to_16k(pcm: bytes) -> bytes:
@@ -48,6 +73,7 @@ class LiveTranscriber:
         self.ended = False  # l'enregistrement est fini
         self.final = asyncio.Event()  # la transcription finale du dernier segment est arrivée
         self.failed = False
+        self.sent = 0  # octets d'audio envoyés au modèle
         self.task = asyncio.create_task(self.run())
 
     @property
@@ -63,7 +89,11 @@ class LiveTranscriber:
         self.ended = True
         self.queue.put_nowait(None)
         await self.task
-        return "" if self.failed else self.text
+        text = "" if self.failed else self.text
+        # Compté à côté, sans retarder la transcription (la facture n'est faite qu'à la fin de la séance).
+        if text and (counts := usage()) is not None:
+            asyncio.create_task(count_output(text, counts))
+        return text
 
     def cancel(self) -> None:
         self.ended = True
@@ -79,6 +109,7 @@ class LiveTranscriber:
                     while (pcm := await self.queue.get()) is not None:
                         await session.send_realtime_input(
                             audio=types.Blob(data=to_16k(pcm), mime_type="audio/pcm;rate=16000"))
+                        self.sent += len(pcm)
                     await session.send_realtime_input(audio_stream_end=True)
                     # Plus rien en cours (l'élève s'est tu avant de lâcher) : rien à attendre.
                     if self.pending:
@@ -93,6 +124,10 @@ class LiveTranscriber:
         except Exception:
             log.exception("transcription en direct impossible")
             self.failed = True
+        finally:
+            # L'audio envoyé est facturé, même d'un enregistrement abandonné.
+            if self.sent and (counts := usage()) is not None:
+                counts["input"] += round(self.sent / BYTES_PER_SECOND * AUDIO_TOKENS_PER_SECOND)
 
     async def receive(self, session) -> None:
         # receive() s'arrête à chaque fin de tour : on l'écoute tant que la session dure.

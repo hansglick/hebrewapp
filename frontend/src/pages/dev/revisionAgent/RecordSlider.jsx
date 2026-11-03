@@ -11,6 +11,10 @@ import { useEffect, useRef, useState } from "react";
 // rien, la piste attend (« patientez… ») ; l'onde et la durée ne partent qu'au
 // premier son capté, et l'onde suit alors la voix (levels, les volumes captés,
 // cf. demande explicite du user).
+// streaming (transcription en direct, cf. live_transcribe.py) : la réponse
+// part pendant qu'elle est dite, il n'y a rien à « envoyer » : le loquet
+// devient un carré blanc « stop », la piste dit de le toucher pour arrêter, et
+// l'arrêt se fait sans avion ni vol (cf. demande explicite du user).
 
 const KNOB = 48; // diamètre du loquet (cf. .ra-slider-knob)
 const PAD = 4; // marge entre le loquet et le bord de la piste
@@ -36,6 +40,14 @@ function PlaneIcon({ className }) {
   );
 }
 
+function StopIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="ra-stop" aria-hidden="true">
+      <rect x="6" y="6" width="12" height="12" rx="2.5" />
+    </svg>
+  );
+}
+
 function TrashIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -48,7 +60,15 @@ function TrashIcon() {
 // loin de 1, d'où la racine.
 const barHeight = (level) => Math.min(1, 0.12 + Math.sqrt(level) * 2);
 
-export default function RecordSlider({ recording, onStart, onSend, onCancel, disabled, levels = [] }) {
+export default function RecordSlider({
+  recording,
+  onStart,
+  onSend,
+  onCancel,
+  disabled,
+  levels = [],
+  streaming = false,
+}) {
   const trackRef = useRef(null);
   const [drag, setDrag] = useState(null); // {startX, max} pendant qu'on pousse le loquet
   const [offset, setOffset] = useState(0);
@@ -94,6 +114,10 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
 
   const onKnobClick = () => {
     if (!recording) return;
+    if (streaming) {
+      onSend();
+      return;
+    }
     setFlying(true);
     onSend();
     setTimeout(() => setFlying(false), FLIGHT_MS);
@@ -106,6 +130,7 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
     }
   };
 
+  const stopLabel = streaming ? "Arrêter ma réponse" : "Envoyer ma réponse";
   return (
     <div className="ra-slider-row">
       <div
@@ -129,14 +154,24 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
           {live && (
             <span className="ra-slider-live">
               {/* Les derniers volumes, le plus récent à droite. */}
-              <span className="ra-wave" aria-hidden="true">
-                {Array.from({ length: WAVE_BARS }, (_, i) => (
-                  <span key={i} style={{ "--level": barHeight(levels[levels.length - WAVE_BARS + i] ?? 0) }} />
-                ))}
-              </span>
-              <span className="ra-slider-time">
-                {Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, "0")}
-              </span>
+              {streaming ? (
+                // La piste est étroite : l'onde et la durée laissent la place au geste attendu, toucher le carré pour
+                // arrêter ; le verbatim qui s'écrit en direct montre que le micro capte.
+                <span className="ra-slider-stop-hint">
+                  Touche pour arrêter <span className="ra-slider-chevrons">›</span>
+                </span>
+              ) : (
+                <>
+                  <span className="ra-wave" aria-hidden="true">
+                    {Array.from({ length: WAVE_BARS }, (_, i) => (
+                      <span key={i} style={{ "--level": barHeight(levels[levels.length - WAVE_BARS + i] ?? 0) }} />
+                    ))}
+                  </span>
+                  <span className="ra-slider-time">
+                    {Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, "0")}
+                  </span>
+                </>
+              )}
             </span>
           )}
           {flying && (
@@ -158,8 +193,8 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
           onClick={onKnobClick}
           onKeyDown={onKnobKey}
           disabled={disabled && !recording}
-          aria-label={recording ? "Envoyer ma réponse" : "Glisser pour enregistrer ma réponse"}
-          title={recording ? "Envoyer ma réponse" : undefined}
+          aria-label={recording ? stopLabel : "Glisser pour enregistrer ma réponse"}
+          title={recording ? stopLabel : undefined}
         >
           {flying ? (
             // Blanc dans la pastille, ocre hors d'elle (cf. demande explicite du user) : deux avions au même vol.
@@ -171,6 +206,8 @@ export default function RecordSlider({ recording, onStart, onSend, onCancel, dis
                 <PlaneIcon className="ra-plane-flight" />
               </span>
             </>
+          ) : recording && streaming ? (
+            <StopIcon />
           ) : recording ? (
             <PlaneIcon className="ra-plane" />
           ) : (

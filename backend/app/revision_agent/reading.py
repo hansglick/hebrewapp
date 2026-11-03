@@ -36,7 +36,7 @@ from fastapi import WebSocket
 from app.revision_agent import prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
 from app.revision_agent.config import DEFAULT_LANGUAGES, READING_MODEL, READING_SILENCE_SECONDS
-from app.revision_agent.evaluation import HEBREW_LETTER, letters
+from app.revision_agent.evaluation import HEBREW_LETTER, LATIN_LETTER, letters
 from app.revision_agent.expression import CLOSING_SECONDS, TEACHER_IDLE_TIMEOUT
 from app.revision_agent.gemini_live import GeminiLive
 from app.revision_agent.passages import EXTRACTS_PER_SESSION, MAX_PHRASES_PER_READING, sample_reading
@@ -377,8 +377,10 @@ class ReadingSession(TeacherSession):
     # --- micro de l'élève ---------------------------------------------------
 
     async def on_microphone(self, pcm: bytes) -> None:
-        # Le prof entend toujours l'élève : c'est sa transcription qui sert de verbatim.
-        if self.reading and not self.evaluating:
+        # Le prof entend toujours l'élève : c'est sa transcription qui sert de verbatim. Sans Gemini Live, le micro ne
+        # sert qu'à la transcription en direct d'un enregistrement (cf. live_transcribe.py) : la fin de la lecture est
+        # son envoi, pas un silence (qui lançait l'évaluation avant son arrivée, « lis plus fort »).
+        if self.reading and not self.evaluating and not isinstance(self.live, TextTeacher):
             now = time.monotonic()
             if now > self.teacher_until and rms(pcm) > VOICE_RMS:
                 if not self.voice_started:
@@ -754,6 +756,18 @@ class ReadingSession(TeacherSession):
         await self.cut_teacher()
         self.await_reading()  # une fois l'extrait lu, le prof se tait et la lecture de l'élève est guettée
         await self.live.app_message(self.in_mode(prompts.reading_listen(self.expected())))
+
+    async def follow_language(self, text: str) -> None:
+        # Une phrase pour le prof, pas une lecture (toujours en hébreu) : le mode de langue suit la langue dans laquelle
+        # l'élève l'a dite, lue sur son alphabet (le modèle transcrit le français en lettres latines, vérifié), comme
+        # s'il l'avait changé lui-même (cf. on_browser_message ; demande explicite du user).
+        if self.audio_intent:
+            return
+        language = "fr" if len(LATIN_LETTER.findall(text)) > len(HEBREW_LETTER.findall(text)) else "he"
+        if language != self.language:
+            log.info("l'élève parle %s : changement du mode de langue", language)
+            await self.set_language(language)
+            await self.live.note(prompts.language_switched(language))
 
     async def set_language(self, language: str) -> None:
         log.info("mode de langue : %s", language)

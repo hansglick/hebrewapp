@@ -415,6 +415,7 @@ export default function StudentAnswer({
           onCancel={cancelRecording}
           levels={levels}
           disabled={disabled}
+          streaming={liveTranscription}
         />
         {WRITTEN && (
           <label className="ra-composer-writing">
