@@ -13,6 +13,7 @@ import ReadingBoard from "./revisionAgent/ReadingBoard";
 import { extractText } from "./revisionAgent/readingText";
 import WordBoard from "./revisionAgent/WordBoard";
 import SessionClock from "./revisionAgent/SessionClock";
+import { Recorder } from "./revisionAgent/audio";
 import StudentAnswer from "./revisionAgent/StudentAnswer";
 import { useRevisionSession } from "./revisionAgent/useRevisionSession";
 import "../screens.css";
@@ -80,9 +81,17 @@ const TTS_MODELS = [
 // config.PHONETIC_MODELS) et celui du juge de la prononciation, qui compare la phonétique au mot transcrit ou au texte
 // lu (cf. config.PRONUNCIATION_MODELS), choisis ensemble (cf. demande explicite du user) : rapide, ou précis, par
 // défaut. « wo assistance » (lecture seulement) : sans le tri lecture / question au prof (cf. reading.to_teacher),
-// tout envoi est une lecture, sa phrase cible affichée (cf. demande explicite du user).
+// tout envoi est une lecture, sa phrase cible affichée (cf. demande explicite du user). « wo prononciation »
+// (compréhension seulement) : ni phonétique ni juge de la prononciation, le prof ne juge que la langue et le sens (cf.
+// prompts.text_mode, demande explicite du user). tasks : les seules tâches de la config ; except : celles sans elle.
 const MODEL_CONFIGS = [
-  { id: "fast", label: "FAST", phonetic: "gemini-3.5-flash", pronunciation: "gemini-3.5-flash-lite" },
+  {
+    id: "fast",
+    label: "FAST",
+    phonetic: "gemini-3.5-flash",
+    pronunciation: "gemini-3.5-flash-lite",
+    except: ["comprehension"],
+  },
   { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
   {
     id: "precise_wo_assistance",
@@ -90,7 +99,10 @@ const MODEL_CONFIGS = [
     phonetic: "gemini-3.8-flash",
     pronunciation: "gemini-3.5-flash",
     noTriage: true,
+    tasks: ["lecture"],
   },
+  { id: "precise_wo_pronunciation", label: "SHARP wo prononciation", phonetic: null, pronunciation: null,
+    tasks: ["comprehension"] },
 ];
 
 // Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
@@ -158,7 +170,12 @@ export default function RevisionAgentScreen({ textMode = false }) {
   // explicite du user) ; case cochée par défaut.
   const [showPhonetic, setShowPhonetic] = useState(true);
   const [modelConfig, setModelConfig] = useState("precise");
-  const models = MODEL_CONFIGS.find((config) => config.id === modelConfig);
+  const availableModels = MODEL_CONFIGS.filter(
+    (config) => (!config.tasks || config.tasks.includes(task)) && !config.except?.includes(task),
+  );
+  const models =
+    availableModels.find((config) => config.id === modelConfig) ??
+    MODEL_CONFIGS.find((config) => config.id === "precise");
   // Lecture : nombre de répliques à lire par tour (cf. passages.MAX_PHRASES_PER_READING), réglable pendant la séance.
   const [perReading, setPerReading] = useState(1);
   const changePerReading = (count) => {
@@ -194,6 +211,15 @@ export default function RevisionAgentScreen({ textMode = false }) {
     return () => clearTimeout(timer);
   }, [session.bill, closeBill]);
   useEffect(() => () => clearTimeout(billTimer.current), []);
+
+  // Mode texte : le micro de l'élève, ouvert dès le lancement de la séance, pendant l'accueil du prof (cf. demande
+  // explicite du user) : le bouton d'enregistrement capte aussitôt (cf. StudentAnswer, Recorder). Fermé à la fin de
+  // la séance.
+  const [mic, setMic] = useState(null);
+  useEffect(() => {
+    if (!active) mic?.close();
+  }, [active, mic]);
+  useEffect(() => () => mic?.close(), [mic]);
   const billOpen = Boolean(session.bill) && billPhase !== "closed";
   const controlsHidden = (live && !showControls) || billOpen;
   // Compréhension, expression libre, déclinaison et question : pendant la séance, le bouton « Arrêter » et le chrono
@@ -296,10 +322,16 @@ export default function RevisionAgentScreen({ textMode = false }) {
         mode: textMode ? "texte" : "voix",
         teacherModel: textMode ? teacherModel : undefined,
         ttsModel: textMode ? ttsModel : undefined,
-        phoneticModel: textMode && vowelRoute ? models.phonetic : undefined,
-        pronunciationModel: textMode && vowelRoute ? models.pronunciation : undefined,
+        phoneticModel: textMode && vowelRoute ? (models.phonetic ?? undefined) : undefined,
+        pronunciationModel: textMode && vowelRoute ? (models.pronunciation ?? undefined) : undefined,
         triage: !(textMode && vowelRoute && task === "lecture" && models.noTriage),
       });
+      // Après session.start, qui déclare la page en lecture (iPhone, cf. AudioLink.unlock) ; pendant le clic.
+      if (textMode) {
+        const recorder = new Recorder();
+        recorder.open().catch(() => {}); // refusé : redemandé au premier enregistrement (cf. StudentAnswer)
+        setMic(recorder);
+      }
     }
   };
 
@@ -332,8 +364,9 @@ export default function RevisionAgentScreen({ textMode = false }) {
         showPhonetic={showPhonetic}
         readingText={readingText}
         readingDelay={Boolean(models.noTriage)}
+        recorder={mic}
         respelled={session.respelled}
-        onRespell={task === "lecture" ? session.respell : undefined}
+        onRespell={["lecture", "comprehension"].includes(task) ? session.respell : undefined}
         liveText={session.liveText}
         liveReady={session.liveReady}
         onAudioStart={session.startAudio}
@@ -434,17 +467,21 @@ export default function RevisionAgentScreen({ textMode = false }) {
                   <div className="revision-agent-field" role="radiogroup" aria-label="Modèles de la prononciation">
                     Modèles de la prononciation
                     <div className="revision-agent-scope">
-                      {MODEL_CONFIGS.filter((config) => !config.noTriage || task === "lecture").map((config) => (
+                      {availableModels.map((config) => (
                         <label
                           key={config.id}
-                          title={`Phonétique : ${config.phonetic} · juge : ${config.pronunciation}${
-                            config.noTriage ? " · sans tri lecture / question" : ""
-                          }`}
+                          title={
+                            config.phonetic
+                              ? `Phonétique : ${config.phonetic} · juge : ${config.pronunciation}${
+                                  config.noTriage ? " · sans tri lecture / question" : ""
+                                }`
+                              : "Sans phonétique ni juge de prononciation"
+                          }
                         >
                           <input
                             type="radio"
                             name="revision-agent-model-config"
-                            checked={modelConfig === config.id}
+                            checked={models.id === config.id}
                             onChange={() => setModelConfig(config.id)}
                           />
                           {config.label}

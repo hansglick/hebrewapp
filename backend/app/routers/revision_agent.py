@@ -11,6 +11,7 @@ from app.revision_agent.passages import lessons_with_text
 from app.revision_agent.completion import CompletionSession, availability, qualified_concepts
 from app.revision_agent.completion import draw_items as completion_items
 from app.revision_agent.comprehension import ComprehensionSession
+from app.revision_agent.comprehension import schema as comprehension_schema
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
@@ -35,7 +36,9 @@ log = logging.getLogger("revision_agent")
 SCHEMAS = {"lecture": ("Lecture · SHARP", reading_schema),
            "lecture_fast": ("Lecture · FAST", lambda: reading_schema("fast")),
            "lecture_sans_assistance": ("Lecture · SHARP wo assistance", lambda: reading_schema("sharp_wo_assistance")),
-           "comprehension": ("Compréhension", None),
+           "comprehension": ("Compréhension · SHARP", comprehension_schema),
+           "comprehension_sans_prononciation": ("Compréhension · SHARP wo prononciation",
+                                                lambda: comprehension_schema("sharp_wo_pronunciation")),
            "expression": ("Expression libre", None), "declinaison": ("Déclinaison", None),
            "completion": ("Complétion", None), "mot": ("Mot", None), "question": ("Question", None)}
 
@@ -172,7 +175,10 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Page « mode texte », toutes les tâches (cf. demande explicite du user) : le prof écrit, sans Gemini Live (cf.
         # text_teacher.py), et l'élève enregistre ses réponses ; avec tts_model, le prof dit aussi chaque prise de
         # parole (cf. tts.py).
-        session.live = TextTeacher.replacing(session.live, teacher_model, tts_model)
+        # Compréhension sans phonétique (config « SHARP wo prononciation », cf. demande explicite du user) : le prof ne
+        # reçoit que la transcription, et ne juge pas la prononciation (cf. prompts.text_mode).
+        without_phonetic = task == "comprehension" and phonetic_model is None
+        session.live = TextTeacher.replacing(session.live, teacher_model, tts_model, phonetic=not without_phonetic)
         # Case « Double route voyelle » cochée : la réponse enregistrée est aussi transcrite en lettres latines,
         # voyelles comprises, par ce modèle (cf. transcribe.heard_phonetic).
         session.phonetic_model = phonetic_model if task in VOWEL_ROUTE_TASKS else None

@@ -126,6 +126,9 @@ class TeacherSession:
         # La transcription d'une réponse orale est relue d'après le contexte (cf. transcribe.respelled) ; en lecture,
         # seulement à la demande de l'élève (cf. respell, demande explicite du user).
         self.respell_spoken = True
+        # La réponse relue à la demande part au prof comme une transcription corrigée (elle remplace la précédente,
+        # cf. prompts.TEXT_MODE) ; en lecture, comme une nouvelle lecture (cf. ReadingSession).
+        self.respell_as_correction = True
         # Lecture avec le tri (cf. routeur) : la réponse enregistrée, transcrite pendant que l'élève parle (cf.
         # live_transcribe.py) ; transcriber, celle de l'enregistrement en cours.
         self.live_transcription = False
@@ -227,6 +230,8 @@ class TeacherSession:
                     # Mode texte (cf. text_teacher.py) : la réponse écrite de l'élève, traitée comme sa transcription ;
                     # corrected : la transcription de sa dernière réponse orale, corrigée à la main (cf. StudentAnswer).
                     corrected = bool(data.get("corrected"))
+                    if corrected:
+                        self.audio_phonetic = ""  # corrigée à la main : sa prononciation n'est plus celle entendue
                     await self.on_student_text(str(data.get("text") or "").strip(), corrected, corrected)
                     continue
                 if data.get("type") == "respell":
@@ -273,8 +278,9 @@ class TeacherSession:
         if text and self.started_at is not None:
             await self.on_event(LiveEvent("user_text", f"{text} "))
             self.exchange_open, self.exchange_evaluated = True, False
-            # Double route voyelle : la prononciation entendue, pas pour une réponse corrigée à la main.
-            phonetic = self.audio_phonetic if spoken and not corrected else ""
+            # Double route voyelle : la prononciation entendue (vide pour une réponse corrigée à la main, cf.
+            # student_text ; gardée pour une relecture de l'orthographe, cf. respell).
+            phonetic = self.audio_phonetic if spoken else ""
             self.audio_phonetic = ""
             # Ses fautes de prononciation sont relevées à part, pendant que le prof l'évalue (cf. pronunciation_errors).
             self.pronunciation = (asyncio.create_task(mispronounced(text, phonetic, self.pronunciation_model))
@@ -424,7 +430,7 @@ class TeacherSession:
         log.info("orthographe relue à la demande : %s → %s", text, spelled)
         await self.tell_intent(spelled)
         self.audio_phonetic, self.audio_intent = self.last_phonetic, None
-        await self.on_student_text(spelled, spoken=True)
+        await self.on_student_text(spelled, spoken=True, corrected=self.respell_as_correction)
 
     def track_voice(self, pcm: bytes) -> None:
         """Diagnostic : garde les dernières secondes du micro et journalise chaque segment de voix de l'élève."""

@@ -71,11 +71,12 @@ class TextTeacher:
         self.ended = False
 
     @classmethod
-    def replacing(cls, live, model: str, tts_model: str | None = None) -> "TextTeacher":
-        """Le prof texte à la place du prof Live d'une tâche : mêmes instructions, plus celles de l'échange écrit, et
-        même voix, avec un modèle TTS."""
+    def replacing(cls, live, model: str, tts_model: str | None = None, phonetic: bool = True) -> "TextTeacher":
+        """Le prof texte à la place du prof Live d'une tâche : mêmes instructions, plus celles de l'échange écrit (sans
+        la prononciation entendue si phonetic est faux, cf. prompts.text_mode), et même voix, avec un modèle TTS."""
         from app.revision_agent import prompts
-        return cls(model, live.instructions + prompts.TEXT_MODE, live.start_message, live.tools, tts_model, live.voice)
+        return cls(model, live.instructions + prompts.text_mode(phonetic), live.start_message, live.tools, tts_model,
+                   live.voice)
 
     async def connect(self) -> None:
         self.client = genai.Client(api_key=GEMINI_API_KEY)

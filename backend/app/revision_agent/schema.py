@@ -167,13 +167,15 @@ def teacher_voice(said: str, french: str, french_said: str, french_shown: dict) 
     ]
 
 
-def teacher(instructions: str, start_message: str, text: str, task: str = "", language: str = "") -> dict:
-    """Le prof en mode texte (cf. TextTeacher.replacing) : les instructions de la tâche et de l'échange écrit, et sa
-    première réplique, l'accueil enregistré de la tâche s'il y en a un (cf. TextTeacher._play_intro) ; ses réponses aux
-    messages de l'application : cf. le verdict de chaque tâche."""
+def teacher(instructions: str, start_message: str, text: str, task: str = "", language: str = "",
+            phonetic: bool = True) -> dict:
+    """Le prof en mode texte (cf. TextTeacher.replacing) : les instructions de la tâche et de l'échange écrit (sans la
+    prononciation entendue si phonetic est faux, cf. prompts.text_mode), et sa première réplique, l'accueil enregistré
+    de la tâche s'il y en a un (cf. TextTeacher._play_intro) ; ses réponses aux messages de l'application : cf. le
+    verdict de chaque tâche."""
     entry = intros().get(task, {}).get(language)
     return step("model", "Le prof", model=TEXT_TEACHER_MODEL, model_note="mode texte, défaut, avec une voix TTS",
-                source="text_teacher.TextTeacher", text=text, system=instructions + prompts.TEXT_MODE,
+                source="text_teacher.TextTeacher", text=text, system=instructions + prompts.text_mode(phonetic),
                 message=start_message,
                 output=f"{entry['text']}\n\n(l'accueil enregistré, joué à sa place comme sa première réplique)"
                 if entry else None)

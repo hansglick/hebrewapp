@@ -610,6 +610,22 @@ def expression_instructions() -> str:
 
 EXPRESSION_START = "Commence la séance : étape 1 (accueil)."  # suivi du mode de langue de départ (cf. in_mode)
 
+# La double route voyelle dans l'échange écrit : la prononciation entendue, jointe à chaque réponse orale (cf.
+# TextTeacher.student_text) ; retirée sans phonétique (cf. text_mode).
+TEXT_MODE_PHONETIC = """\
+- « (Prononciation entendue : …) », sous une réponse orale : ce que l'élève a prononcé, en lettres latines, voyelles
+  comprises, écouté par un autre modèle. La transcription n'a pas de voyelles (« lamad » et « lomed » s'écrivent
+  pareil) : sers-t'en pour savoir quelle forme il a dite ; une forme fausse (temps, personne, genre, nombre) est une
+  faute de langue. Ne relève pas les mots mal prononcés : l'application les relève à part et te les signale. Ne la
+  recopie jamais dans reponse_eleve.
+"""
+# Compréhension, config « SHARP wo prononciation » (cf. demande explicite du user) : ni phonétique jointe aux réponses,
+# ni prononciation jugée ; seules la langue et le sens comptent.
+NO_PRONUNCIATION = """\
+- La prononciation n'est pas jugée dans cet exercice : tu ne reçois que la transcription de la réponse orale. Ne
+  relève jamais un mot mal prononcé ; juge seulement la langue (grammaire, forme des mots) et le sens.
+"""
+
 # Page sans Gemini Live (cf. demande explicite du user, text_teacher.py) : ajouté aux instructions de la tâche.
 TEXT_MODE = """
 # Échange par messages (prime sur tout ce qui précède)
@@ -626,11 +642,7 @@ de débit ou de prononciation : la voix de synthèse s'en charge.
 - Évaluation d'une réponse orale : reponse_eleve recopie la transcription, sans « (Réponse orale) ». Son orthographe
   est celle de la transcription, pas celle de l'élève : n'y relève jamais de faute d'orthographe, seulement les fautes
   qu'il a dites (mot, forme, accord, préposition…).
-- « (Prononciation entendue : …) », sous une réponse orale : ce que l'élève a prononcé, en lettres latines, voyelles
-  comprises, écouté par un autre modèle. La transcription n'a pas de voyelles (« lamad » et « lomed » s'écrivent
-  pareil) : sers-t'en pour savoir quelle forme il a dite ; une forme fausse (temps, personne, genre, nombre) est une
-  faute de langue. Ne relève pas les mots mal prononcés : l'application les relève à part et te les signale. Ne la
-  recopie jamais dans reponse_eleve.
+""" + TEXT_MODE_PHONETIC + """\
 - « (Réponse orale, transcription corrigée par l'élève) » : il a corrigé à la main la transcription de sa dernière
   réponse, mal transcrite. Elle remplace cette réponse : oublie la précédente et ce que tu en as dit, et évalue
   celle-ci comme une réponse orale, sans t'excuser ni commenter la correction.
@@ -638,6 +650,11 @@ de débit ou de prononciation : la voix de synthèse s'en charge.
   faute d'orthographe (lettre erronée, manquante ou en trop) est une faute de langue ; l'absence de voyelles
   (nikkoud), la ponctuation et les majuscules ne sont jamais des fautes.
 """
+
+
+def text_mode(phonetic: bool = True) -> str:
+    """Les instructions de l'échange écrit (cf. TEXT_MODE) ; sans phonétique, sans la prononciation entendue."""
+    return TEXT_MODE if phonetic else TEXT_MODE.replace(TEXT_MODE_PHONETIC, NO_PRONUNCIATION)
 
 
 # Tâche « Déclinaison » seule (cf. demande explicite du user) : la déclinaison de l'expression libre, sur des phrases

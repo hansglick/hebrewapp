@@ -291,10 +291,10 @@ def schema(config: str = "sharp") -> dict:
         question = "est-ce que je dois lire les deux phrases ?"
         start = [
             [[step("student", "1 · L'élève", title="Lit à voix haute les phrases surlignées, ou parle au prof",
-                   text="Touche le bouton rond : « Patientez quelques instants… » le temps que le micro s'ouvre, puis "
-                        "« Parlez ». Touche le carré pour envoyer.",
-                   hint="Le micro s'ouvre à la première prise de parole (la permission n'est demandée qu'une fois) "
-                        "et reste ouvert jusqu'à la fin de la séance ; entre deux réponses, rien n'est enregistré.")]],
+                   text="Touche le bouton rond : « Parlez », presque aussitôt. Touche le carré pour envoyer.",
+                   hint="Le micro s'ouvre au lancement de la séance, pendant l'accueil du prof (la permission y est "
+                        "demandée, une fois), et reste ouvert jusqu'à la fin ; entre deux réponses, rien n'est "
+                        "enregistré.")]],
             transcription(raw, heard, phonetic, text, TEXT_CONTEXT, phonetic_model=phonetic_model, model_note=note,
                           respell=False),
             [[step("code", "3 · Tri : lecture ou question ?", source="reading.to_teacher",
@@ -329,7 +329,7 @@ def schema(config: str = "sharp") -> dict:
         start = [
             [[step("student", "1 · L'élève", title="Lit à voix haute les phrases surlignées",
                    text="Touche le bouton rond, puis, à « Parlez », lit ; touche le carré pour envoyer. Le micro "
-                        "reste ouvert de la première prise de parole à la fin de la séance.",
+                        "reste ouvert du lancement de la séance à sa fin.",
                    hint="Une seconde après l'arrivée de la transcription, la phrase cible s'écrit dans « Réponse » "
                         "(« Transcription… » jusque-là) ; les erreurs y sont surlignées au verdict.")]],
             transcription(raw, heard, phonetic, text, TEXT_CONTEXT, phonetic_model=phonetic_model, model_note=note,
@@ -412,6 +412,7 @@ class ReadingSession(TeacherSession):
         self.teacher_muted = False
         self.reading_triage = True  # le tri lecture / question au prof (cf. to_teacher, reading_intent)
         self.respell_spoken = False  # la relecture de l'orthographe, à la demande seulement (cf. TeacherSession.respell)
+        self.respell_as_correction = False  # la lecture relue est jugée de nouveau, avec sa phonétique
         self.voice_started = False  # l'élève a commencé à lire
         self.last_voice = 0.0
         self.heard = ""  # transcription de la lecture en cours

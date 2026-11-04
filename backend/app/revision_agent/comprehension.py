@@ -49,11 +49,15 @@ from fastapi import WebSocket
 
 from app.data_loader import get_dataset
 from app.revision_agent import prompts
-from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGES
-from app.revision_agent.evaluation import QUESTION_FALLBACK_SECONDS, align_error_words, hebrew_answer
+from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGES, FRENCH_SPEECH_MODEL, TEXT_TEACHER_MODEL
+from app.revision_agent.evaluation import (FRENCH_TEXTS_PROMPT, QUESTION_FALLBACK_SECONDS, align_error_words,
+                                           hebrew_answer)
 from app.revision_agent.gemini_live import GeminiLive
 from app.revision_agent.judges import error_list, no_fault, teacher_errors
+from app.revision_agent.schema import (app_message, as_json, farewell, pronunciation_judge, respell_button, step,
+                                       teacher, teacher_voice, transcription, welcome)
 from app.revision_agent.session import TeacherSession
+from app.revision_agent.transcribe import TEACHER_CONTEXT
 
 log = logging.getLogger("revision_agent.comprehension")
 
@@ -190,6 +194,161 @@ def find_excerpts(phrases: list[str], excerpts: list[str]) -> list[list[int]]:
     return spans
 
 
+SCHEMA_LESSON = "0.05"  # l'exemple du schéma : une leçon du périmètre, avec son texte et ses questions
+
+
+def schema(config: str = "sharp") -> dict:
+    """Le schéma de la tâche (cf. schema.py), en mode texte, config SHARP (« sharp ») ou SHARP wo prononciation
+    (« sharp_wo_pronunciation » : ni phonétique ni juge de prononciation, cf. prompts.text_mode), sur un exemple : la
+    leçon SCHEMA_LESSON, la question « מה שלמה עושה בדירה ? », et une réponse avec une faute de langue (לומדת) et une
+    faute de compréhension (la télévision)."""
+    pronunciation = config != "sharp_wo_pronunciation"
+    text = get_dataset("text")[SCHEMA_LESSON]
+    phrases = [phrase["hebrew"] for phrase in text["phrases"]]
+    question = "מה שלמה עושה בדירה ?"
+    raw = "שלמה לומדת בדירה ורואה טלביזיה"
+    heard = "שלמה לומדת בדירה ורואה טלוויזיה"
+    phonetic = "shlomo lomedet ba-dira ve-roe televizia"
+    language = DEFAULT_LANGUAGES["comprehension"]
+    instructions = prompts.comprehension_instructions(phrases, oral=True, auto_retry=AUTO_RETRY)
+    start = f"{prompts.COMPREHENSION_START} {prompts.language_mode(language)}"
+    tool = evaluation_tool(AUTO_RETRY)
+    gender = "Le verbe s'accorde avec שלמה, au masculin : לומד."
+    tv = "Le texte ne dit pas que Shlomo regarde la télévision."
+    call = {**({"reponse_a_la_question": "oui"} if AUTO_RETRY else {}), "reponse_eleve": heard,
+            "fautes_langue": [{"mot": "לומדת", "commentaire": gender}],
+            "fautes_texte": [{"mot": "טלוויזיה", "commentaire": tv}],
+            "phrases_solution": [6], "extraits_solution": ["לומד בדירה, קורא ספר ושומע מוסיקה"]}
+    words = [{"mot": mot, "correct": correct, "entendu": entendu, "faute": False, "remarque": False}
+             for mot, correct, entendu in [("שלמה", "shlomo", "shlomo"), ("לומדת", "lomedet", "lomedet"),
+                                          ("בדירה", "ba-dira", "ba-dira"), ("ורואה", "ve-roe", "ve-roe"),
+                                          ("טלוויזיה", "televizia", "televizia")]]
+    comment = "תִּקְרָא שׁוּב אֶת הַמִּשְׁפָּט הַשִּׁשִּׁי: מָה שְׁלֹמֹה עוֹשֶׂה בַּדִּירָה?"
+
+    def in_mode(message: str) -> str:
+        return f"{message} {prompts.language_mode(language)}"
+
+    # La réponse orale en texte, sans relecture automatique (bouton « orthographe », cf. respell_spoken) ; sans
+    # prononciation, la transcription hébraïque seule (pas de 4b).
+    spoken = transcription(raw, heard, phonetic, question, TEACHER_CONTEXT, role="4", respell=False)
+    if not pronunciation:
+        spoken = spoken[:1]
+    if pronunciation:
+        intro = ("De la réponse orale de l'élève à son évaluation, en mode texte, config SHARP. Le prof fait afficher "
+                 "le texte, pose les questions que l'application lui donne et évalue lui-même chaque réponse (langue "
+                 "et compréhension) ; seule la prononciation est jugée à part.")
+    else:
+        intro = ("De la réponse orale de l'élève à son évaluation, en mode texte, config SHARP wo prononciation : ni "
+                 "transcription phonétique ni juge de prononciation. Le prof fait afficher le texte, pose les "
+                 "questions que l'application lui donne et évalue chaque réponse sur la seule transcription : la "
+                 "langue (grammaire, forme des mots) et la compréhension du texte.")
+    return {
+        "title": "Compréhension de texte · SHARP" + ("" if pronunciation else " wo prononciation"),
+        "intro": f"{intro} Pas de note : des fautes commentées, sans jamais donner la solution. {QUESTIONS_PER_ROUND} "
+                 "questions par séance.",
+        "flow": [
+            *([[[recorded]]] if (recorded := welcome("comprehension", language)) else []),
+            [[step("code", "1 · Le texte s'affiche", source="ComprehensionSession · afficher_texte",
+                   title="Le prof fait afficher le texte, puis donne la consigne",
+                   text="Quand l'élève est prêt, le prof appelle afficher_texte : le texte de la leçon s'affiche, "
+                        "puis il lui dit de le lire et de lui dire quand il a fini.",
+                   hint=f"Sans demande du prof au bout de {TEXT_FALLBACK_SECONDS} s, le texte s'affiche de lui-même.",
+                   parts=(("Réponse de l'application au prof", in_mode(prompts.TEXT_DISPLAYED)),))]],
+            [[step("code", "2 · La question", source="ComprehensionSession.serve_question",
+                   title="L'application tire la question, le prof la pose",
+                   text=f"{QUESTIONS_PER_ROUND} questions du texte, tirées au hasard en début de séance, posées dans "
+                        "l'ordre du texte. La première, le prof la demande (question_suivante) ; les suivantes "
+                        "viennent de l'élève (bouton « Question suivante ») ou du prof, après une réponse juste. Elle "
+                        "s'affiche dans « Exercice », en hébreu, sans traduction, quand le prof commence à la poser.",
+                   hint=f"S'il tarde, elle s'affiche d'elle-même au bout de {QUESTION_FALLBACK_SECONDS} s. Le prof "
+                        "ne choisit jamais une question.",
+                   parts=(("Réponse de l'application au prof (exemple)", as_json({"question": question})),
+                          ("Question suivante, par le bouton", prompts.next_question_message(question))))]],
+            [[step("student", "3 · L'élève", title="Répond à voix haute, ou parle au prof",
+                   text="Touche le bouton rond, puis, à « Parlez », répond ; touche le carré pour envoyer. Il peut "
+                        "aussi écrire sa réponse.",
+                   hint="Le micro est ouvert du lancement de la séance à sa fin.")]],
+            spoken,
+            [[step("model", "5a · Le prof évalue", model=TEXT_TEACHER_MODEL, model_note="mode texte, défaut",
+                   source="TextTeacher · evaluer_reponse",
+                   text=("Reçoit la transcription et sa phonétique." if pronunciation else
+                         "Reçoit la transcription seule, sans phonétique.") + " Une réponse à la question : il "
+                        "appelle evaluer_reponse, sans rien dire. Sinon (une question, une remarque), il répond, et "
+                        "la fenêtre de la réponse devient « Conversation ».",
+                   items=("fautes_langue : juge l'hébreu comme si la réponse était vraie (accords, prépositions, "
+                          "formes)",
+                          "fautes_texte : ce que la réponse dit de faux d'après le texte, sans donner la bonne réponse",
+                          "phrases_solution, extraits_solution : où se trouve la solution dans le texte"),
+                   hint="Pas de faute d'orthographe sur une réponse orale (c'est la transcription), ni de "
+                        "prononciation " + ("(jugée à part, 5b)." if pronunciation else "(pas jugée dans cette "
+                                            "config : la consigne de l'échange écrit le lui dit)."),
+                   system=instructions + prompts.text_mode(pronunciation),
+                   message=f"(Réponse orale) {raw}" + (f"\n(Prononciation entendue : {phonetic})"
+                                                       if pronunciation else ""),
+                   output=as_json(call), parts=(("La fonction evaluer_reponse", as_json(tool)),)),
+              step("model", "puis · commentaires en français", model=FRENCH_SPEECH_MODEL,
+                   source="evaluation.french_texts",
+                   when="Chaque commentaire du prof, mis en français s'il ne l'est pas, l'hébreu cité en lettres "
+                        "hébraïques.", system=FRENCH_TEXTS_PROMPT, message=as_json([gender, tv]),
+                   output=as_json({"textes": [gender, tv]}), small=True)],
+             *([[pronunciation_judge("5b · Juge de prononciation", heard, phonetic, words,
+                                     what="Les mots de la réponse sont-ils bien prononcés ? Compare, mot par mot, la "
+                                          "phonétique entendue à la prononciation correcte de la transcription. Lancé "
+                                          "en même temps que le prof.")]] if pronunciation else [])],
+            [[step("code", "6 · L'évaluation s'affiche", source="ComprehensionSession.evaluate",
+                   title=("Réunit les fautes du prof et du juge de prononciation" if pronunciation else
+                          "Les fautes du prof"),
+                   items=(("fenêtre « Évaluation » : la réponse, ses mots fautifs surlignés (langue, compréhension, "
+                           "prononciation, chacune sa couleur) et commentés",
+                           "dans le texte : les phrases de la solution surlignées, et l'extrait exact qui y répond",
+                           "les fautes de prononciation sont signalées au prof, pour qu'il puisse en parler")
+                          if pronunciation else
+                          ("fenêtre « Évaluation » : la réponse, ses mots fautifs surlignés (langue, compréhension, "
+                           "chacune sa couleur) et commentés",
+                           "dans le texte : les phrases de la solution surlignées, et l'extrait exact qui y répond"))
+                         + ("suivi de la séance : réponse juste (aucune faute"
+                            + (", les remarques vertes ne comptent pas" if pronunciation else "") + ") ou fausse",))]],
+            [[step("bad", "7a · Réponse fausse", source="prompts.EVALUATION_SHOWN_CONVERSATION",
+                   text="Prof : décrit l'erreur principale en une ou deux phrases, sans compliment avant et sans "
+                        "jamais donner la solution, puis se tait. C'est la conversation : l'élève redonne une réponse, "
+                        "lui pose une question, ou passe à la suite.",
+                   hint="Une nouvelle phrase en hébreu qui répond à la question est évaluée comme un nouvel essai "
+                        "(reponse_a_la_question), ou l'élève demande à retenter (nouvel_essai) ; le bouton « Question "
+                        "suivante » passe à la suite.",
+                   message=app_message(in_mode(prompts.EVALUATION_SHOWN_CONVERSATION)), output=comment)],
+             [step("good", "7b · Réponse juste", source="prompts.PERFECT_ANSWER_COMPREHENSION",
+                   text="Écran : seule la réponse s'affiche, soulignée en vert, cochée. Prof : le dit en quelques "
+                        "mots, puis enchaîne de lui-même sur la question suivante.", hint="Retour à l'étape 2.",
+                   message=app_message(in_mode(prompts.PERFECT_ANSWER_COMPREHENSION)),
+                   output="נָכוֹן מְאוֹד! [puis question_suivante, et la question suivante]")]],
+            [[farewell(f"8 · Au revoir (après la question {QUESTIONS_PER_ROUND})", language)]],
+        ],
+        "notes": [
+            respell_button(raw, heard, question, TEACHER_CONTEXT),
+            teacher(instructions, start,
+                    "Mène la séance : accueil, consigne, questions, évaluation (5a) et conversation. Il ne choisit ni "
+                    "les questions ni le moment de les poser, et ne juge pas la prononciation.", "comprehension",
+                    language, phonetic=pronunciation),
+            *teacher_voice(comment, "Relis la sixième phrase : que fait Shlomo dans l'appartement ?",
+                           "Relis la sixième phrase : que fait שלמה dans l'appartement ?",
+                           {"francais": "Relis la sixième phrase : que fait שלמה dans l'appartement ?",
+                            "hebreu": "תקרא שוב את המשפט השישי: מה שלמה עושה בדירה?"}),
+            "Mode de langue : hébreu au départ ; l'élève le change avec le bouton de son écran ou à la voix "
+            "(changer_langue). Le prof parle alors uniquement cette langue, sauf l'énoncé des questions, toujours en "
+            "hébreu. Les commentaires écrits de l'évaluation restent en français.",
+            *(["Exception : sans transcription phonétique (l'élève a corrigé sa transcription au crayon, ou écrit sa "
+               "réponse), le juge de prononciation ne tourne pas ; le prof juge alors la réponse telle qu'écrite."]
+              if pronunciation else []),
+            "Pas de relecture automatique de l'orthographe : le prof reçoit la transcription telle quelle. La "
+            "relecture se fait à la demande de l'élève (bouton « orthographe ») ; la réponse relue repart au prof "
+            "comme une transcription corrigée" + (", avec sa phonétique." if pronunciation else "."),
+            f"Les messages affichés sont ceux d'un exemple : la leçon {SCHEMA_LESSON} (« {text.get('title', '')} »), "
+            f"la question « {question} », et la réponse « {heard} ». Les instructions système sont celles du code "
+            "actuel.",
+        ],
+    }
+
+
 class ComprehensionSession(TeacherSession):
     def __init__(self, browser: WebSocket, voice: str, lesson: str, oral: bool = True):
         text = get_dataset("text")[lesson]
@@ -228,6 +387,8 @@ class ComprehensionSession(TeacherSession):
         # Suivi de la séance (cf. expression.py) : réponses justes et fausses.
         self.score = {"comprehension": {"ok": 0, "ko": 0}}
         self.score_events = 0
+        # La relecture de l'orthographe, à la demande seulement (bouton « orthographe », cf. TeacherSession.respell).
+        self.respell_spoken = False
 
     async def on_started(self) -> None:
         log.info("Séance de compréhension lancée · voix %s · leçon %s · %d questions", self.live.voice, self.lesson,

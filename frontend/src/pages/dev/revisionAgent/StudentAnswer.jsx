@@ -102,6 +102,7 @@ export default function StudentAnswer({
   readingText = null,
   readingDelay = true,
   liveTranscription = false,
+  recorder = null,
   respelled = null,
   onRespell,
   liveText = "",
@@ -198,8 +199,9 @@ export default function StudentAnswer({
     setMicError(null);
     setCapturing(false);
     setStalled(false);
-    // Le même micro pour toute la séance, ouvert au premier enregistrement (cf. Recorder).
-    recorderRef.current ??= new Recorder();
+    // Le même micro pour toute la séance : celui ouvert au lancement (recorder, cf. RevisionAgentScreen), sinon un
+    // micro ouvert à ce premier enregistrement (cf. Recorder).
+    recorderRef.current ??= recorder ?? new Recorder();
     let first = true;
     // Le serveur prépare la transcription en direct avant les premiers blocs.
     const live = liveTranscription && !disabled;

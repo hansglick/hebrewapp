@@ -88,8 +88,8 @@ function level(pcm) {
 
 // Mode texte : la réponse enregistrée de l'élève, en WAV (PCM16 mono 24 kHz),
 // envoyée au serveur pour transcription et rejouable telle quelle. Le micro
-// s'ouvre au premier enregistrement et reste ouvert jusqu'à la fin de la séance
-// (close) : la permission n'est demandée qu'une fois, et les réponses suivantes
+// s'ouvre au lancement de la séance (cf. open), et reste ouvert jusqu'à sa fin
+// (close) : la permission n'est demandée qu'une fois, et les réponses
 // démarrent sans attendre (cf. demande explicite du user). Entre deux
 // enregistrements, ses blocs sont ignorés. onLevel : le volume de chaque bloc
 // capté, le premier dit que le micro capte vraiment ; onChunk : chaque bloc
@@ -97,23 +97,32 @@ function level(pcm) {
 export class Recorder {
   constructor() {
     this.link = null;
+    this.opening = null; // l'ouverture du micro (cf. open)
     this.chunks = null; // les blocs de l'enregistrement en cours
     this.onLevel = null;
     this.onChunk = null;
   }
 
-  async start(onLevel, onChunk = null) {
-    if (!this.link) {
+  // Ouvre le micro, une fois : au lancement de la séance, pendant l'accueil du prof (cf. RevisionAgentScreen, demande
+  // explicite du user), pour qu'un enregistrement commence aussitôt ; sinon au premier enregistrement. À appeler
+  // pendant un clic (iPhone : le contexte audio ne démarre qu'ainsi). Refusé, le micro pourra être redemandé.
+  open() {
+    if (!this.opening) {
       // iPhone : la page déclarée en lecture (cf. AudioLink.unlock) ne pourrait pas enregistrer.
       setAudioSession("play-and-record");
-      this.link = new AudioLink();
-      try {
-        await this.link.startMicrophone((pcm) => this.capture(pcm));
-      } catch (error) {
-        this.close();
+      const link = new AudioLink();
+      this.link = link;
+      this.opening = link.startMicrophone((pcm) => this.capture(pcm)).catch((error) => {
+        // Seulement s'il n'a pas été fermé entre-temps, puis rouvert.
+        if (this.link === link) this.close();
         throw error;
-      }
+      });
     }
+    return this.opening;
+  }
+
+  async start(onLevel, onChunk = null) {
+    await this.open();
     this.chunks = [];
     this.onLevel = onLevel;
     this.onChunk = onChunk;
@@ -153,7 +162,7 @@ export class Recorder {
   // setAudioSession).
   close() {
     const link = this.link;
-    this.chunks = this.onLevel = this.onChunk = this.link = null;
+    this.chunks = this.onLevel = this.onChunk = this.link = this.opening = null;
     Promise.resolve(link?.close())
       .catch(() => {})
       .finally(() => setAudioSession("playback"));
