@@ -122,7 +122,7 @@ class GeminiLive:
 
     def bill(self) -> dict:
         """Tokens consommés en entrée et en sortie, et leur prix en dollars (cf. config.LIVE_PRICES)."""
-        result = {"model": LIVE_MODEL}
+        result = {"item": "Le prof", "model": LIVE_MODEL}
         for side, counts in self.usage.items():
             prices = LIVE_PRICES[side]
             result[f"{side}_tokens"] = sum(counts.values())

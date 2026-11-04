@@ -3,13 +3,12 @@ modèle TTS (cf. config.TTS_MODELS), en streaming : PCM16 mono 24 kHz, joué par
 
 import base64
 import logging
-from collections import Counter
 from typing import AsyncIterator
 
 from google import genai
 
 from app.config import GEMINI_API_KEY
-from app.revision_agent.translate import FLASH_USAGE
+from app.revision_agent.translate import usage_of
 
 log = logging.getLogger("revision_agent.tts")
 
@@ -46,8 +45,7 @@ async def speak(text: str, model: str, voice: str) -> AsyncIterator[bytes]:
 
 
 def count_usage(model: str, usage) -> None:
-    if (counts := FLASH_USAGE.get()) is None:
+    if (model_counts := usage_of("Voix du prof", model)) is None:
         return
-    model_counts = counts.setdefault(model, Counter())
     model_counts["input"] += sum(m.tokens or 0 for m in usage.input_tokens_by_modality or [])
     model_counts["output"] += sum(m.tokens or 0 for m in usage.output_tokens_by_modality or [])

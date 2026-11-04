@@ -115,7 +115,7 @@ async def judge_sentence(exercise: str, inputs: dict, sentence: str, criteria: d
                                  criteria="\n".join(f"- {name} : {rule}" for name, rule in criteria.items()))
     request = json.dumps({**inputs, "phrase_eleve": sentence}, ensure_ascii=False)
     try:
-        result = json.loads(await translate(request, prompt, schema, JUDGE_MODEL))
+        result = json.loads(await translate(request, prompt, schema, JUDGE_MODEL, "Juge de la phrase"))
     except Exception:
         log.exception("Jugement impossible : %s", sentence)
         return {**{name: {"ok": True, "texte": ""} for name in criteria}, "problemes": []}
@@ -243,7 +243,8 @@ async def mispronounced(text: str, phonetic: str, model: str, expected_phonetic:
     lu et expected_phonetic sa prononciation correcte. Aucun si l'appel échoue."""
     prompt, contents = pronunciation_request(text, phonetic, expected_phonetic)
     try:
-        words = [w for w in json.loads(await translate(contents, prompt, PRONUNCIATION_SCHEMA, model) or "[]")
+        words = [w for w in json.loads(await translate(contents, prompt, PRONUNCIATION_SCHEMA, model,
+                                                     "Juge de prononciation") or "[]")
                  if isinstance(w, dict)]
     except Exception:
         log.exception("contrôle de la prononciation impossible : %s · %s", text, phonetic)

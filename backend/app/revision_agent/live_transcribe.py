@@ -17,7 +17,7 @@ from google.genai import types
 
 from app.config import GEMINI_API_KEY
 from app.revision_agent.config import LIVE_TRANSCRIBE_MODEL, SPELLING_MODEL
-from app.revision_agent.translate import FLASH_USAGE
+from app.revision_agent.translate import usage_of
 
 log = logging.getLogger("revision_agent.live_transcribe")
 
@@ -41,8 +41,7 @@ _client: genai.Client | None = None
 
 def usage() -> Counter | None:
     """Ce que la séance a consommé de ce modèle, None hors séance (cf. translate.FLASH_USAGE)."""
-    counts = FLASH_USAGE.get()
-    return None if counts is None else counts.setdefault(LIVE_TRANSCRIBE_MODEL, Counter())
+    return usage_of("Transcription en direct", LIVE_TRANSCRIBE_MODEL)
 
 
 async def count_output(text: str, counts: Counter) -> None:

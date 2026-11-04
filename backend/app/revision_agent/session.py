@@ -8,8 +8,9 @@ Navigateur → backend : trames binaires = micro, PCM16 mono 24 kHz ; JSON {"typ
   {"type": "student_audio", "audio": str} (mode texte : sa réponse enregistrée, WAV en base64, cf. transcribe.py).
 Backend → navigateur : trames binaires = voix du prof, PCM16 mono 24 kHz ; JSON :
   {"type": "status", "state": "live" | "ended"}
-  {"type": "bill", "bill": {"seconds", "models": [{"model", "input_tokens", "output_tokens", "input_cost",
-                                                   "output_cost"}]}}   (fin de séance)
+  {"type": "bill", "bill": {"seconds", "models": [{"item", "model", "input_tokens", "output_tokens", "input_cost",
+                                                   "output_cost"}]}}   (fin de séance ; item : le poste, cf.
+                                                                         translate.BILL_ITEMS)
   {"type": "teacher", "id": int, "seq": int, "hebrew": str, "french": str}
         (prise de parole du prof, complétée sur place tant que id ne change pas ; seq ordonne les envois)
   {"type": "interrupt"}                                 (jeter l'audio du prof en attente)
@@ -38,7 +39,7 @@ from pathlib import Path
 
 from fastapi import WebSocket, WebSocketDisconnect
 
-from app.revision_agent.config import DEBUG_STUDENT_AUDIO, SAMPLE_RATE
+from app.revision_agent.config import DEBUG_STUDENT_AUDIO, FRENCH_SPEECH_MODEL, SAMPLE_RATE
 from app.revision_agent.gemini_live import GeminiLive, LiveEvent
 from app.revision_agent.journal import SKIPPED_BROWSER_MESSAGES, SessionJournal
 from app.revision_agent.judges import faults, judged_note, mispronounced
@@ -306,6 +307,10 @@ class TeacherSession:
         """La réponse enregistrée est aussi transcrite en lettres latines, pour le prof (expression libre,
         compréhension) ; en lecture, pour la comparaison (cf. ReadingSession)."""
         return self.phonetic_model is not None
+
+    def french_speech_model(self) -> str:
+        """Le modèle qui réécrit une phrase dite en français par le prof (cf. translate.french_speech)."""
+        return FRENCH_SPEECH_MODEL
 
     def reading_intent(self, text: str) -> bool | None:
         """Lecture, mode texte : la réponse est-elle une lecture (cf. ReadingSession.reading_intent) ; None
@@ -602,7 +607,8 @@ class TeacherSession:
         if len(LATIN_LETTER.findall(segment["he"])) >= len(HEBREW_LETTER.findall(segment["he"])):
             segment["spoken_french"] = True
             try:
-                french, segment["he_translation"] = await french_speech(segment["he"].strip())
+                french, segment["he_translation"] = await french_speech(segment["he"].strip(),
+                                                                         self.french_speech_model())
             except Exception:
                 log.exception("Traduction en hébreu impossible")
                 french, segment["he_translation"] = segment["he"].strip(), ""

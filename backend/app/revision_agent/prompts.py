@@ -417,6 +417,21 @@ NO_MORE_QUESTIONS = ("Il n'y a plus de question : la séance est terminée. Fél
                      "et dis-lui au revoir.")
 
 
+# Mode texte : le tri de l'application, réponse à la question ou réplique adressée au prof (cf.
+# ComprehensionSession.triage, demande explicite du user), dit au prof juste avant la réplique de l'élève.
+def triage_note(answer: bool, auto_retry: bool) -> str:
+    if answer:
+        return ("Tri de l'application : la réplique suivante de l'élève est une réponse à la question affichée. "
+                "Évalue-la avec evaluer_reponse, sans rien dire avant"
+                + (" (reponse_a_la_question = oui)." if auto_retry else "."))
+    return ("Tri de l'application : la réplique suivante de l'élève t'est adressée (une question, une remarque) ; ce "
+            "n'est pas une réponse à évaluer. Réponds-lui dans la conversation, sans appeler evaluer_reponse.")
+
+
+NOT_AN_ANSWER = ("Refusé : d'après le tri de l'application, ce que dit l'élève t'est adressé, ce n'est pas une "
+                 "réponse à la question. Réponds-lui dans la conversation.")
+
+
 def next_question_message(question: str) -> str:
     return f"L'élève est prêt. Question suivante, à poser telle quelle, sans rien ajouter avant ni après : {question}"
 

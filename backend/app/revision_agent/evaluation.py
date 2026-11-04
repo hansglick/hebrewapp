@@ -46,7 +46,8 @@ async def french_texts(texts: list[str]) -> list[str]:
         return texts
     try:
         request = json.dumps([texts[i] for i in indexes], ensure_ascii=False)
-        result = json.loads(await translate(request, FRENCH_TEXTS_PROMPT, FRENCH_TEXTS_SCHEMA, FRENCH_SPEECH_MODEL))
+        result = json.loads(await translate(request, FRENCH_TEXTS_PROMPT, FRENCH_TEXTS_SCHEMA, FRENCH_SPEECH_MODEL,
+                                            "Commentaires en français"))
         rewritten = [str(text).strip() for text in result.get("textes") or []]
     except Exception:
         log.exception("Réécriture impossible : %s", texts)

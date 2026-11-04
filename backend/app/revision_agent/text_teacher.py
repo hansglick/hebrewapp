@@ -213,7 +213,7 @@ class TextTeacher:
         """Tokens consommés en entrée (dont ceux lus en cache) et en sortie, et leur prix (cf. TEXT_TEACHER_MODELS)."""
         prices = TEXT_TEACHER_MODELS[self.model]
         fresh = self.usage["input"] - self.usage["cached"]
-        return {"model": self.model, "role": "prof", "input_tokens": self.usage["input"],
+        return {"item": "Le prof", "model": self.model, "input_tokens": self.usage["input"],
                 "cached_tokens": self.usage["cached"],
                 "input_cost": (fresh * prices["input"] + self.usage["cached"] * prices["cached"]) / 1e6,
                 "output_tokens": self.usage["output"], "output_cost": self.usage["output"] * prices["output"] / 1e6}

@@ -1,10 +1,11 @@
 // Facture de la séance (cf. demande explicite du user), envoyée par le
-// serveur à la fin de la conversation : la durée, puis un bloc par modèle (le
-// prof, Gemini Live 3.8, puis les modèles Flash de la traduction et des
-// jugements), séparés par un trait pointillé. Chaque bloc commence par le nom
-// du modèle, puis l'entrée et la sortie (tokens arrondis et prix au tarif de
-// la documentation ; en mode texte, l'entrée lue en cache à part) et, sous
-// un filet de la colonne des prix, leur somme ; enfin le total. Elle se
+// serveur à la fin de la conversation : la durée, puis un bloc par poste (le
+// prof, puis chaque étape du schéma de la tâche : transcriptions, juges,
+// traductions, voix), séparés par un trait pointillé. Chaque bloc (cf. demande
+// explicite du user) : le nom du poste, en gras ; son modèle, dessous ; puis
+// l'entrée et la sortie (tokens arrondis et prix au tarif de la documentation ;
+// en mode texte, l'entrée lue en cache à part) et leur sous-total, sous un
+// filet de la colonne des prix ; enfin le total. Elle se
 // déroule ligne après ligne, chacune de gauche à droite (cf. .ra-bill-row).
 // Fournie par RevisionAgentScreen à toutes les tâches (cf. billContext),
 // affichée sous le suivi (cf. TaskLayout).
@@ -58,16 +59,12 @@ export default function Bill({ bill }) {
           <span className="ra-bill-price">{duration(bill.seconds)}</span>
         </>,
       )}
-      {/* role : en mode texte, le prof, qui peut être le même modèle que celui des traductions. */}
+      {/* item : le poste (une étape du schéma, cf. translate.BILL_ITEMS), en gras ; dessous, son modèle, puis
+          l'entrée, la sortie et leur sous-total (tokens et coût). */}
       {bill.models.map((model) => (
-        <div className="ra-bill-block" key={`${model.role ?? ""}-${model.model}`}>
-          {row(
-            "ra-bill-model",
-            <span>
-              {MODEL_NAMES[model.model] ?? model.model}
-              {model.role && ` (${model.role})`}
-            </span>,
-          )}
+        <div className="ra-bill-block" key={`${model.item ?? ""}-${model.model}`}>
+          {row("ra-bill-model", <span>{model.item ?? MODEL_NAMES[model.model] ?? model.model}</span>)}
+          {row("ra-bill-model-name", <span>{MODEL_NAMES[model.model] ?? model.model}</span>)}
           {row(
             "",
             <>
@@ -92,8 +89,8 @@ export default function Bill({ bill }) {
           {row(
             "ra-bill-sum",
             <>
-              <span />
-              <span />
+              <span>Sous-total</span>
+              <span className="ra-bill-tokens">{tokens(model.input_tokens + model.output_tokens)}</span>
               <span className="ra-bill-price">{dollars(cost(model))}</span>
             </>,
           )}

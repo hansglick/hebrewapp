@@ -210,7 +210,7 @@ async def compare_reading(expected: list[str], expected_phonetic: str, heard: st
     note) : ni affichée ni dite au prof, pas une faute importante, elle ne fait pas rater la lecture (cf. demande explicite
     du user). sounds faux : les mots seulement, la prononciation étant jugée à part (WORDS_ONLY)."""
     prompt, request = compare_request(expected, expected_phonetic, heard, phonetic, sounds)
-    result = json.loads(await translate(request, prompt, COMPARE_SCHEMA, READING_MODEL))
+    result = json.loads(await translate(request, prompt, COMPARE_SCHEMA, READING_MODEL, "Juge des mots"))
     log.info("comparaison : %s", result)
     errors = []
     for e in result.get("erreurs") or []:

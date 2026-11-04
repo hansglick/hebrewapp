@@ -1992,6 +1992,12 @@
   color: var(--textPrimary);
 }
 
+/* Le modèle du poste, sous son nom, en maigre. */
+.ra-bill-model-name > span {
+  grid-column: 1 / -1;
+  color: var(--textPrimary);
+}
+
 .ra-bill-sum .ra-bill-price {
   padding-top: 4px;
   border-top: 1px solid var(--textSecondary);

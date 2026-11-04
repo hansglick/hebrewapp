@@ -50,28 +50,51 @@ FRENCH_SPEECH_SCHEMA = {
 }
 
 _client: genai.Client | None = None
-# Tokens des appels de la séance en cours, par modèle (Counter « input », « output ») : la séance pose le sien au
-# démarrage (cf. session.TeacherSession.run), ses tâches en héritent.
-FLASH_USAGE: ContextVar[dict[str, Counter] | None] = ContextVar("flash_usage", default=None)
+# Tokens des appels de la séance en cours, par poste et modèle (Counter « input », « output ») : la séance pose le sien
+# au démarrage (cf. session.TeacherSession.run), ses tâches en héritent.
+FLASH_USAGE: ContextVar[dict[tuple[str, str], Counter] | None] = ContextVar("flash_usage", default=None)
+
+# Les postes de la facture, dans l'ordre où elle les liste : les étapes des schémas (cf. demande explicite du user).
+BILL_ITEMS = ("Transcription en direct", "Transcription hébraïque", "Lettres hébraïques", "Relecture de l'orthographe",
+              "Transcription phonétique", "Juge des mots", "Juge de prononciation", "Juge de la phrase",
+              "Juge de la déclinaison", "Commentaires en français", "Traduction du prof", "Le prof parle français",
+              "Voix du prof")
 
 
-def flash_bill(usage: dict[str, Counter]) -> list[dict]:
-    """Tokens et prix en dollars de chaque modèle Flash appelé (cf. config.FLASH_PRICES)."""
-    return [{"model": model, "input_tokens": counts["input"], "output_tokens": counts["output"],
+def usage_of(item: str, model: str) -> Counter | None:
+    """Les tokens de la séance pour ce poste et ce modèle, None hors séance."""
+    usage = FLASH_USAGE.get()
+    return None if usage is None else usage.setdefault((item, model), Counter())
+
+
+def count_response(item: str, model: str, response, thoughts: bool = True) -> None:
+    """Ajoute à la facture les tokens d'une réponse generate_content (thoughts : la réflexion comptée en sortie)."""
+    if (counts := usage_of(item, model)) is not None and (meta := response.usage_metadata):
+        counts["input"] += meta.prompt_token_count or 0
+        counts["output"] += (meta.candidates_token_count or 0) + ((meta.thoughts_token_count or 0) if thoughts else 0)
+
+
+def flash_bill(usage: dict[tuple[str, str], Counter]) -> list[dict]:
+    """Tokens et prix en dollars de chaque poste, avec son modèle (cf. config.FLASH_PRICES), dans l'ordre de
+    BILL_ITEMS."""
+    rank = {item: i for i, item in enumerate(BILL_ITEMS)}
+    return [{"item": item, "model": model, "input_tokens": counts["input"], "output_tokens": counts["output"],
              "input_cost": counts["input"] * FLASH_PRICES[model][0] / 1e6,
              "output_cost": counts["output"] * FLASH_PRICES[model][1] / 1e6}
-            for model, counts in usage.items()]
+            for (item, model), counts in sorted(usage.items(), key=lambda entry: rank.get(entry[0][0], len(rank)))]
 
 
 async def translate_to_french(hebrew: str) -> str:
-    return await translate(hebrew, TRANSLATION_PROMPT)
+    return await translate(hebrew, TRANSLATION_PROMPT, item="Traduction du prof")
 
 
-async def french_speech(french: str) -> tuple[str, str]:
-    """Ce que le prof a dit en français : le texte, ses mots hébreux réécrits en hébreu, et sa traduction en hébreu."""
+async def french_speech(french: str, model: str = FRENCH_SPEECH_MODEL) -> tuple[str, str]:
+    """Ce que le prof a dit en français : le texte, ses mots hébreux réécrits en hébreu, et sa traduction en hébreu (par
+    model, celui de la tâche, cf. TeacherSession.french_speech_model)."""
     request = french
     for attempt in range(LATIN_RETRIES + 1):
-        result = json.loads(await translate(request, FRENCH_SPEECH_PROMPT, FRENCH_SPEECH_SCHEMA, FRENCH_SPEECH_MODEL))
+        result = json.loads(await translate(request, FRENCH_SPEECH_PROMPT, FRENCH_SPEECH_SCHEMA, model,
+                                            "Le prof parle français"))
         hebrew = str(result.get("hebreu") or "").strip()
         if not LATIN_WORD.search(hebrew):
             break
@@ -83,7 +106,9 @@ async def french_speech(french: str) -> tuple[str, str]:
     return str(result.get("francais") or french).strip(), hebrew
 
 
-async def translate(text: str, prompt: str, schema: dict | None = None, model: str = TRANSLATION_MODEL) -> str:
+async def translate(text: str, prompt: str, schema: dict | None = None, model: str = TRANSLATION_MODEL,
+                    item: str = "Traduction du prof") -> str:
+    """Un appel au modèle, compté dans la facture au poste item (cf. BILL_ITEMS)."""
     global _client
     _client = _client or genai.Client(api_key=GEMINI_API_KEY)  # un seul client : la connexion reste ouverte entre deux traductions
     json_output = {"response_mime_type": "application/json", "response_schema": schema} if schema else {}
@@ -96,8 +121,5 @@ async def translate(text: str, prompt: str, schema: dict | None = None, model: s
             thinking_config=types.ThinkingConfig(thinking_level="minimal"), **json_output,
         ),
     )
-    if (usage := FLASH_USAGE.get()) is not None and (meta := response.usage_metadata):
-        counts = usage.setdefault(model, Counter())
-        counts["input"] += meta.prompt_token_count or 0
-        counts["output"] += (meta.candidates_token_count or 0) + (meta.thoughts_token_count or 0)
+    count_response(item, model, response)
     return (response.text or "").strip()

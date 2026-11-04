@@ -181,7 +181,7 @@ async def propose(sentence: str, preferred: str, element: Element | None = None,
         request += (f"\nÉlément imposé (n'en choisis pas d'autre) : {element.word}, de type {kind}, à la personne "
                     f"{element.person} ({PERSONS[element.person]}).")
     try:
-        result = json.loads(await translate(request, PROMPT, SCHEMA, DECLENSION_MODEL))
+        result = json.loads(await translate(request, PROMPT, SCHEMA, DECLENSION_MODEL, "Juge de la déclinaison"))
     except Exception:
         log.exception("Déclinaison impossible : %s", sentence)
         return None

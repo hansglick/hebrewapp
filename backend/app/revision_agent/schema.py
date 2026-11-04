@@ -146,7 +146,8 @@ def pronunciation_judge(role: str, text: str, phonetic: str, words: list[dict], 
                      "l'a oubliée.")
 
 
-def teacher_voice(said: str, french: str, french_said: str, french_shown: dict) -> list[dict]:
+def teacher_voice(said: str, french: str, french_said: str, french_shown: dict,
+                  french_speech_model: str = FRENCH_SPEECH_MODEL) -> list[dict]:
     """Ce qui suit chaque prise de parole du prof, en parallèle (cf. TextTeacher._speak, TeacherSession.
     translate_segment) : sa voix, et la traduction de chacune de ses phrases, affichée sous elle. said, french : une
     phrase du prof en hébreu et sa traduction ; french_said, french_shown : une phrase dite en français et ce qui en
@@ -160,7 +161,7 @@ def teacher_voice(said: str, french: str, french_said: str, french_shown: dict) 
         step("model", "La traduction du prof", model=TRANSLATION_MODEL, source="translate.translate_to_french",
              text="Chaque phrase du prof, traduite en français et affichée sous elle.",
              hint="Sauf l'accueil enregistré, déjà traduit.", system=TRANSLATION_PROMPT, message=said, output=french),
-        step("model", "puis · le prof parle français", model=FRENCH_SPEECH_MODEL, source="translate.french_speech",
+        step("model", "puis · le prof parle français", model=french_speech_model, source="translate.french_speech",
              when="Seulement si sa phrase est surtout en lettres latines : ses mots hébreux réécrits en hébreu, et sa "
                   "traduction en hébreu.", system=FRENCH_SPEECH_PROMPT, message=french_said,
              output=as_json(french_shown), small=True),
@@ -168,13 +169,13 @@ def teacher_voice(said: str, french: str, french_said: str, french_shown: dict) 
 
 
 def teacher(instructions: str, start_message: str, text: str, task: str = "", language: str = "",
-            phonetic: bool = True) -> dict:
+            phonetic: bool = True, model: str = TEXT_TEACHER_MODEL, model_note: str = "mode texte, défaut") -> dict:
     """Le prof en mode texte (cf. TextTeacher.replacing) : les instructions de la tâche et de l'échange écrit (sans la
     prononciation entendue si phonetic est faux, cf. prompts.text_mode), et sa première réplique, l'accueil enregistré
     de la tâche s'il y en a un (cf. TextTeacher._play_intro) ; ses réponses aux messages de l'application : cf. le
     verdict de chaque tâche."""
     entry = intros().get(task, {}).get(language)
-    return step("model", "Le prof", model=TEXT_TEACHER_MODEL, model_note="mode texte, défaut, avec une voix TTS",
+    return step("model", "Le prof", model=model, model_note=f"{model_note}, avec une voix TTS",
                 source="text_teacher.TextTeacher", text=text, system=instructions + prompts.text_mode(phonetic),
                 message=start_message,
                 output=f"{entry['text']}\n\n(l'accueil enregistré, joué à sa place comme sa première réplique)"

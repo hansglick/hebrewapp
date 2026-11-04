@@ -94,7 +94,14 @@ const MODEL_CONFIGS = [
     pronunciation: "gemini-3.5-flash-lite",
     except: ["comprehension"],
   },
-  { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
+  // teachers : le modèle du prof, par tâche, à la place du défaut (cf. demande explicite du user).
+  {
+    id: "precise",
+    label: "SHARP",
+    phonetic: "gemini-3.8-flash",
+    pronunciation: "gemini-3.5-flash",
+    teachers: { comprehension: "gemini-3.5-flash" },
+  },
   {
     id: "precise_wo_assistance",
     label: "SHARP wo assistance",
@@ -104,7 +111,7 @@ const MODEL_CONFIGS = [
     tasks: ["lecture"],
   },
   { id: "precise_wo_pronunciation", label: "SHARP wo prononciation", phonetic: null, pronunciation: null,
-    tasks: ["comprehension"] },
+    teachers: { comprehension: "gemini-3.5-flash" }, tasks: ["comprehension"] },
 ];
 
 // Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
@@ -326,7 +333,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
         previous: !lessonOnly && previousLessons,
         perReading,
         mode: textMode ? "texte" : "voix",
-        teacherModel: textMode ? teacherModel : undefined,
+        teacherModel: textMode ? ((vowelRoute ? models.teachers?.[task] : undefined) ?? teacherModel) : undefined,
         ttsModel: textMode ? ttsModel : undefined,
         phoneticModel: textMode && vowelRoute ? (models.phonetic ?? undefined) : undefined,
         pronunciationModel: textMode && vowelRoute ? (models.pronunciation ?? undefined) : undefined,

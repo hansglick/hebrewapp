@@ -3,7 +3,6 @@ user) avant d'aller au prof comme une réponse écrite."""
 
 import logging
 import re
-from collections import Counter
 
 from google import genai
 from google.genai import types
@@ -11,7 +10,7 @@ from google.genai import types
 from app.config import GEMINI_API_KEY
 from app.revision_agent.config import SPELLING_MODEL, TRANSCRIBE_MODEL
 from app.revision_agent.phonetics import PHONETIC_CONVENTION
-from app.revision_agent.translate import FLASH_USAGE
+from app.revision_agent.translate import count_response
 
 log = logging.getLogger("revision_agent.transcribe")
 
@@ -37,7 +36,8 @@ FINAL_FORMS = {"כ": "ך", "מ": "ם", "נ": "ן", "פ": "ף", "צ": "ץ"}
 # sécurité : un mot corrigé n'est gardé que s'il se prononce comme celui de la transcription (même clé sonore, cf.
 # sound_key) ; sinon, le mot transcrit reste. Les fautes de l'élève (accord, mot, forme) restent ainsi pour le prof.
 SPELLING_PROMPT = """Voici la transcription automatique de la réponse orale d'un élève débutant en hébreu, et ce que
-son professeur venait de lui dire (« Le professeur ») ou le texte qu'il devait lire à voix haute (« Texte à lire »).
+son professeur venait de lui dire (« Le professeur »), le texte qu'il devait lire à voix haute (« Texte à lire ») ou le
+passage du texte qui contient la réponse à la question qu'on lui a posée (« Extrait du texte »).
 La prononciation transcrite est juste, mais l'orthographe est parfois fausse : une lettre remplacée par une autre qui
 se prononce pareil (ט/ת, כ/ח/ק, ס/שׂ, א/ע/ה, ב/ו), ou une lettre muette en trop ou en moins (א, ה, ע, ו, י).
 Corrige uniquement ces fautes d'orthographe, en t'aidant du contexte pour reconnaître le mot que l'élève a prononcé
@@ -119,6 +119,7 @@ def same_sound(heard: str, spelled: str) -> str:
 # lecture, le texte que l'élève lit (cf. demande explicite du user).
 TEACHER_CONTEXT = "Le professeur"
 TEXT_CONTEXT = "Texte à lire"
+EXCERPT_CONTEXT = "Extrait du texte"  # compréhension : le passage qui contient la réponse (cf. ComprehensionSession)
 
 
 def spelling_request(text: str, context: str, label: str = TEACHER_CONTEXT) -> str:
@@ -142,10 +143,7 @@ async def respelled(text: str, context: str, label: str = TEACHER_CONTEXT) -> st
     except Exception:
         log.exception("relecture de l'orthographe impossible : %s", text)
         return text
-    if (usage := FLASH_USAGE.get()) is not None and (meta := response.usage_metadata):
-        counts = usage.setdefault(SPELLING_MODEL, Counter())
-        counts["input"] += meta.prompt_token_count or 0
-        counts["output"] += (meta.candidates_token_count or 0) + (meta.thoughts_token_count or 0)
+    count_response("Relecture de l'orthographe", SPELLING_MODEL, response)
     spelled = hebraized((response.text or "").strip())
     if not spelled:
         return text
@@ -175,10 +173,7 @@ async def in_hebrew_letters(text: str) -> str:
     except Exception:
         log.exception("réécriture en lettres hébraïques impossible : %s", text)
         return text
-    if (usage := FLASH_USAGE.get()) is not None and (meta := response.usage_metadata):
-        counts = usage.setdefault(SPELLING_MODEL, Counter())
-        counts["input"] += meta.prompt_token_count or 0
-        counts["output"] += (meta.candidates_token_count or 0) + (meta.thoughts_token_count or 0)
+    count_response("Lettres hébraïques", SPELLING_MODEL, response)
     written = hebraized((response.text or "").strip())
     if written and written != text:
         log.info("transcription en lettres latines : %s → %s", text, written)
@@ -201,10 +196,7 @@ async def heard_phonetic(wav: bytes, model: str) -> str:
     except Exception:
         log.exception("transcription phonétique impossible")
         return ""
-    if (usage := FLASH_USAGE.get()) is not None and (meta := response.usage_metadata):
-        counts = usage.setdefault(model, Counter())
-        counts["input"] += meta.prompt_token_count or 0
-        counts["output"] += (meta.candidates_token_count or 0) + (meta.thoughts_token_count or 0)
+    count_response("Transcription phonétique", model, response)
     return (response.text or "").strip()
 
 
@@ -213,10 +205,7 @@ async def transcribe(wav: bytes) -> str:
     _client = _client or genai.Client(api_key=GEMINI_API_KEY)
     response = await _client.aio.models.generate_content(
         model=TRANSCRIBE_MODEL, contents=[types.Part.from_bytes(data=wav, mime_type="audio/wav")], config=CONFIG)
-    if (usage := FLASH_USAGE.get()) is not None and (meta := response.usage_metadata):
-        counts = usage.setdefault(TRANSCRIBE_MODEL, Counter())
-        counts["input"] += meta.prompt_token_count or 0
-        counts["output"] += meta.candidates_token_count or 0
+    count_response("Transcription hébraïque", TRANSCRIBE_MODEL, response, thoughts=False)
     parts = response.candidates[0].content.parts if response.candidates and response.candidates[0].content else []
     return hebraized(" ".join(part.audio_transcription.text.strip() for part in parts or []
                               if part.audio_transcription and part.audio_transcription.text).strip())
