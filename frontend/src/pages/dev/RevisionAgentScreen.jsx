@@ -108,8 +108,9 @@ const MODEL_CONFIGS = [
 ];
 
 // Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
-// (cf. demande explicite du user) ; les retirer d'ici pour qu'elles reviennent.
-const HIDDEN_VOWEL_BOXES = ["lecture"];
+// (cf. demande explicite du user) ; les retirer d'ici pour qu'elles reviennent. En compréhension, la config choisit :
+// SHARP avec la double route, SHARP wo prononciation sans phonétique (cf. MODEL_CONFIGS).
+const HIDDEN_VOWEL_BOXES = ["lecture", "comprehension"];
 
 // Tâches où la case « Double route voyelle » s'affiche (cf. config.VOWEL_ROUTE_TASKS), et si elle est cochée par
 // défaut : toujours (cf. demande explicite du user).
@@ -167,10 +168,12 @@ export default function RevisionAgentScreen({ textMode = false }) {
   // latines, voyelles comprises, par phoneticModel (cf. transcribe.heard_phonetic), seulement si la case de la tâche
   // est cochée, ce qu'elle est par défaut (cf. demande explicite du user).
   const [vowelRoutes, setVowelRoutes] = useState(VOWEL_ROUTE_DEFAULTS);
-  const vowelRoute = vowelRoutes[task] ?? false;
+  const vowelBoxesHidden = HIDDEN_VOWEL_BOXES.includes(task); // masquées : toujours cochées
+  const vowelRoute = vowelBoxesHidden || (vowelRoutes[task] ?? false);
   // Double route voyelle : la prononciation entendue s'affiche sous la réponse de l'élève (cf. StudentAnswer, demande
   // explicite du user) ; case cochée par défaut.
-  const [showPhonetic, setShowPhonetic] = useState(true);
+  const [phoneticShown, setShowPhonetic] = useState(true);
+  const showPhonetic = vowelBoxesHidden || phoneticShown;
   const [modelConfig, setModelConfig] = useState("precise");
   const availableModels = MODEL_CONFIGS.filter(
     (config) => (!config.tasks || config.tasks.includes(task)) && !config.except?.includes(task),
