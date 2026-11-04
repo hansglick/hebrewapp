@@ -332,7 +332,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
         showPhonetic={showPhonetic}
         readingText={readingText}
         readingDelay={Boolean(models.noTriage)}
-        liveTranscription={task === "lecture" && vowelRoute && !models.noTriage}
+        respelled={session.respelled}
+        onRespell={task === "lecture" ? session.respell : undefined}
         liveText={session.liveText}
         liveReady={session.liveReady}
         onAudioStart={session.startAudio}

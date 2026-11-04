@@ -14,7 +14,7 @@ from app.revision_agent.comprehension import ComprehensionSession
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
-from app.revision_agent.intros import intro
+from app.revision_agent.intros import farewells, intro
 from app.revision_agent.journal import SessionJournal
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
@@ -32,7 +32,10 @@ router = APIRouter(prefix="/api/revision-agent", tags=["revision-agent"])
 log = logging.getLogger("revision_agent")
 
 # Les tâches et leur schéma (cf. revision_agent.schema), None tant qu'il n'est pas décrit.
-SCHEMAS = {"lecture": ("Lecture", reading_schema), "comprehension": ("Compréhension", None),
+SCHEMAS = {"lecture": ("Lecture · SHARP", reading_schema),
+           "lecture_fast": ("Lecture · FAST", lambda: reading_schema("fast")),
+           "lecture_sans_assistance": ("Lecture · SHARP wo assistance", lambda: reading_schema("sharp_wo_assistance")),
+           "comprehension": ("Compréhension", None),
            "expression": ("Expression libre", None), "declinaison": ("Déclinaison", None),
            "completion": ("Complétion", None), "mot": ("Mot", None), "question": ("Question", None)}
 
@@ -179,12 +182,18 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Lecture, configuration « SHARP wo assistance » (cf. demande explicite du user) : sans le tri lecture /
         # question au prof (cf. reading.to_teacher), tout envoi est une lecture.
         session.reading_triage = triage
-        # Avec le tri, la réponse enregistrée est transcrite en direct (cf. live_transcribe.py).
-        session.live_transcription = triage and task == "lecture"
+        # La transcription en direct (cf. live_transcribe.py) n'est plus utilisée : Gemini Transcribe, d'un bloc, pour
+        # toutes les configs de la lecture, moins cher pour un résultat proche (cf. demande explicite du user).
+        session.live_transcription = False
         # L'accueil enregistré de la tâche, dans le mode de langue de départ, joué tout de suite (cf. intros.py).
         if welcome := intro(task, getattr(session, "language", None), tts_model, voice):
             session.live.intro = welcome
             session.known_translations[welcome["text"]] = welcome
+        # L'au revoir fixe, commun à toutes les tâches (cf. TextTeacher.end), et ses traductions toutes faites.
+        if isinstance(session.live, TextTeacher):
+            session.live.farewells = farewells(tts_model, voice)
+            for entry in session.live.farewells.values():
+                session.known_translations[entry["text"]] = entry
 
     # Journal de la séance sur le disque persistant : déroulé et durée, par compte (cf. app.revision_agent.journal).
     journal = SessionJournal(get_user_id(pseudo, pin), pseudo, task, lesson, voice=voice, current=current,

@@ -15,6 +15,17 @@ INTROS_FILE = INTROS_DIR / "intros.json"  # {tâche: {mode: {"text", "french", "
 INTRO_TTS_MODEL = "gemini-3.8-flash-lite-tts"  # la voix par défaut de la page (cf. config.TTS_MODELS)
 INTRO_VOICE = "Enceladus"  # la voix fixe de la page (cf. RevisionAgentScreen.VOICE)
 
+# L'au revoir du prof, le même pour toutes les tâches (cf. demande explicite du user) : un texte fixe par mode de
+# langue, enregistré avec les accueils (sous cette clé d'intros.json), joué à la fin de la séance à la place de sa
+# dernière prise de parole (cf. TextTeacher.end). Une seule phrase : un seul segment (cf. session.translate_segment).
+FAREWELL = "au_revoir"
+FAREWELL_HEBREW = "טוֹב, אָז נִרְאֶה לִי שֶׁעָבַרְנוּ עַל הַכֹּל לְהַיּוֹם, תִּשְׁמֹר עַל עַצְמְךָ וְנִתְרָאֶה בְּקָרוֹב!"
+FAREWELL_FRENCH = "Bon, eh bien, je crois qu'on a fait le tour pour aujourd'hui, porte-toi bien et à très vite !"
+FAREWELL_TEXTS = {
+    "he": {"text": FAREWELL_HEBREW, "french": FAREWELL_FRENCH, "hebrew": FAREWELL_HEBREW, "spoken": "he"},
+    "fr": {"text": FAREWELL_FRENCH, "french": FAREWELL_FRENCH, "hebrew": FAREWELL_HEBREW, "spoken": "fr"},
+}
+
 
 @cache
 def intros() -> dict:
@@ -38,3 +49,13 @@ def intro(task: str, language: str, tts_model: str | None, voice: str) -> dict |
         return None
     same_voice = tts_model == INTRO_TTS_MODEL and voice == INTRO_VOICE
     return {**entry, "pcm": recording(entry["audio"]) if same_voice else None}
+
+
+def farewells(tts_model: str | None, voice: str) -> dict:
+    """L'au revoir de chaque mode de langue ({mode: {"text", "french", "hebrew", "spoken", "pcm"}}, cf. intro) : sa voix
+    enregistrée si elle l'a été avec ce modèle et cette voix, sinon dite à la volée."""
+    recorded = intros().get(FAREWELL, {})
+    same_voice = tts_model == INTRO_TTS_MODEL and voice == INTRO_VOICE
+    return {mode: {**entry, "pcm": recording(recorded[mode]["audio"])
+                   if same_voice and mode in recorded and recorded[mode]["text"] == entry["text"] else None}
+            for mode, entry in FAREWELL_TEXTS.items()}

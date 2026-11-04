@@ -11,8 +11,12 @@ forme alors un seul segment, cf. session.translate_segment).
 Écrit dans data/revision_intros/ : intros.json ({tâche: {mode: {"text", "french", "hebrew", "spoken", "audio"}}}) et
 un fichier WAV par accueil (PCM16 mono 24 kHz).
 
+L'au revoir fixe, commun à toutes les tâches (intros.FAREWELL_TEXTS, écrit à la main), y est enregistré aussi, sous
+la clé intros.FAREWELL.
+
 Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_intros [tâche…]
-Seulement les tâches données (toutes par défaut) : les autres sont gardées.
+Seulement les tâches données (toutes par défaut, au revoir compris ; « au_revoir » pour lui seul) : les autres sont
+gardées.
 """
 
 import asyncio
@@ -30,7 +34,7 @@ from app.revision_agent.config import DEFAULT_LANGUAGES, SAMPLE_RATE
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
-from app.revision_agent.intros import INTRO_TTS_MODEL, INTRO_VOICE, INTROS_DIR, INTROS_FILE
+from app.revision_agent.intros import FAREWELL, FAREWELL_TEXTS, INTRO_TTS_MODEL, INTRO_VOICE, INTROS_DIR, INTROS_FILE
 from app.revision_agent.question import QuestionSession
 from app.revision_agent.question import draw_items as question_items
 from app.revision_agent.reading import ReadingSession
@@ -90,7 +94,13 @@ async def record(text: str, path) -> None:
 async def main(tasks: list[str]) -> None:
     INTROS_DIR.mkdir(parents=True, exist_ok=True)
     intros = json.loads(INTROS_FILE.read_text(encoding="utf-8")) if INTROS_FILE.exists() else {}
-    for task in tasks:
+    if FAREWELL in tasks:
+        for language, entry in FAREWELL_TEXTS.items():
+            audio = f"{FAREWELL}-{language}.wav"
+            await record(entry["text"], INTROS_DIR / audio)
+            intros.setdefault(FAREWELL, {})[language] = {**entry, "audio": audio}
+            print(f"{FAREWELL} / {language} : {entry['text']}")
+    for task in (task for task in tasks if task != FAREWELL):
         for language in ("he", "fr"):
             text = await welcome(task, language)
             # Comme en séance (cf. session.translate_segment) : en français, ses mots hébreux réécrits en hébreu et sa
@@ -109,4 +119,4 @@ async def main(tasks: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main(sys.argv[1:] or list(DEFAULT_LANGUAGES)))
+    asyncio.run(main(sys.argv[1:] or [*DEFAULT_LANGUAGES, FAREWELL]))

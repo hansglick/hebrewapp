@@ -3,7 +3,7 @@ export const SAMPLE_RATE = 24000;
 
 // iPhone : l'audio Web (la voix du prof) est coupé quand le téléphone est en silencieux, sauf si la page se déclare
 // en lecture, comme une vidéo (navigator.audioSession, iOS 16.4 et plus ; rien ailleurs). Le micro demande
-// « play-and-record » le temps d'un enregistrement (cf. Recorder), puis la page revient en lecture.
+// « play-and-record » tant qu'il est ouvert (cf. Recorder), puis la page revient en lecture.
 export function setAudioSession(type) {
   try {
     if (navigator.audioSession) navigator.audioSession.type = type;
@@ -88,11 +88,12 @@ function level(pcm) {
 
 // Mode texte : la réponse enregistrée de l'élève, en WAV (PCM16 mono 24 kHz),
 // envoyée au serveur pour transcription et rejouable telle quelle. Le micro
-// s'ouvre à chaque enregistrement et se ferme à sa fin : le témoin du
-// téléphone ne reste pas allumé (cf. demande explicite du user ; l'ouvrir prend
-// jusqu'à une seconde sur mobile, l'élève attend « Patientez… », cf.
-// RecordButton). onLevel : le volume de chaque bloc capté, le premier dit que
-// le micro capte vraiment ; onChunk : chaque bloc (transcription en direct).
+// s'ouvre au premier enregistrement et reste ouvert jusqu'à la fin de la séance
+// (close) : la permission n'est demandée qu'une fois, et les réponses suivantes
+// démarrent sans attendre (cf. demande explicite du user). Entre deux
+// enregistrements, ses blocs sont ignorés. onLevel : le volume de chaque bloc
+// capté, le premier dit que le micro capte vraiment ; onChunk : chaque bloc
+// (transcription en direct).
 export class Recorder {
   constructor() {
     this.link = null;
@@ -102,18 +103,20 @@ export class Recorder {
   }
 
   async start(onLevel, onChunk = null) {
+    if (!this.link) {
+      // iPhone : la page déclarée en lecture (cf. AudioLink.unlock) ne pourrait pas enregistrer.
+      setAudioSession("play-and-record");
+      this.link = new AudioLink();
+      try {
+        await this.link.startMicrophone((pcm) => this.capture(pcm));
+      } catch (error) {
+        this.close();
+        throw error;
+      }
+    }
     this.chunks = [];
     this.onLevel = onLevel;
     this.onChunk = onChunk;
-    // iPhone : la page déclarée en lecture (cf. AudioLink.unlock) ne pourrait pas enregistrer.
-    setAudioSession("play-and-record");
-    this.link = new AudioLink();
-    try {
-      await this.link.startMicrophone((pcm) => this.capture(pcm));
-    } catch (error) {
-      this.close();
-      throw error;
-    }
   }
 
   capture(pcm) {
@@ -123,10 +126,10 @@ export class Recorder {
     this.onChunk?.(pcm);
   }
 
-  // Fin de l'enregistrement : le micro se ferme.
+  // Fin de l'enregistrement : le micro reste ouvert, ses blocs ignorés jusqu'au suivant.
   stop() {
     const chunks = this.chunks ?? [];
-    this.close();
+    this.chunks = this.onLevel = this.onChunk = null;
     const size = chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
     const header = new DataView(new ArrayBuffer(44));
     const text = (offset, value) => [...value].forEach((c, i) => header.setUint8(offset + i, c.charCodeAt(0)));
@@ -146,7 +149,8 @@ export class Recorder {
     return new Blob([header, ...chunks], { type: "audio/wav" });
   }
 
-  // Le micro se ferme : le témoin du téléphone s'éteint, et la page revient en lecture (cf. setAudioSession).
+  // Fin de la séance : le micro se ferme, le témoin du téléphone s'éteint, et la page revient en lecture (cf.
+  // setAudioSession).
   close() {
     const link = this.link;
     this.chunks = this.onLevel = this.onChunk = this.link = null;

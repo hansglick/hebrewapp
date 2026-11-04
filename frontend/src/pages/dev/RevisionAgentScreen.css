@@ -3396,6 +3396,46 @@
   stroke-linejoin: round;
 }
 
+/* Le bouton « orthographe », sous le crayon (cf. StudentAnswer) : « abc » et une coche. */
+.ra-composer-respell svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ra-composer-respell svg text {
+  fill: currentColor;
+  stroke: none;
+  font: 700 9px system-ui, sans-serif;
+}
+
+/* La relecture est en cours : le bouton pulse. */
+.ra-composer-respell-busy {
+  cursor: progress;
+  animation: ra-respell-busy 1s ease-in-out infinite alternate;
+}
+
+@keyframes ra-respell-busy {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.35;
+  }
+}
+
+.ra-respell-note {
+  margin: 4px 0 0;
+  font-size: 0.8em;
+  color: var(--textSecondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-composer-respell-busy {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
 /* Case « Phonétique » : la prononciation entendue, sous la phrase hébraïque (alignée à sa droite), en plus petit. */
 /* La phonétique se dévoile d'un balayage de gauche à droite, à son arrivée, sous un cache au bord adouci (cf.
    demande explicite du user) : le masque, 2,5 fois plus large que la ligne, opaque sur ses 40 % de gauche, glisse

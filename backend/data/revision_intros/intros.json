@@ -94,5 +94,21 @@
       "spoken": "fr",
       "audio": "question-fr.wav"
     }
+  },
+  "au_revoir": {
+    "he": {
+      "text": "טוֹב, אָז נִרְאֶה לִי שֶׁעָבַרְנוּ עַל הַכֹּל לְהַיּוֹם, תִּשְׁמֹר עַל עַצְמְךָ וְנִתְרָאֶה בְּקָרוֹב!",
+      "french": "Bon, eh bien, je crois qu'on a fait le tour pour aujourd'hui, porte-toi bien et à très vite !",
+      "hebrew": "טוֹב, אָז נִרְאֶה לִי שֶׁעָבַרְנוּ עַל הַכֹּל לְהַיּוֹם, תִּשְׁמֹר עַל עַצְמְךָ וְנִתְרָאֶה בְּקָרוֹב!",
+      "spoken": "he",
+      "audio": "au_revoir-he.wav"
+    },
+    "fr": {
+      "text": "Bon, eh bien, je crois qu'on a fait le tour pour aujourd'hui, porte-toi bien et à très vite !",
+      "french": "Bon, eh bien, je crois qu'on a fait le tour pour aujourd'hui, porte-toi bien et à très vite !",
+      "hebrew": "טוֹב, אָז נִרְאֶה לִי שֶׁעָבַרְנוּ עַל הַכֹּל לְהַיּוֹם, תִּשְׁמֹר עַל עַצְמְךָ וְנִתְרָאֶה בְּקָרוֹב!",
+      "spoken": "fr",
+      "audio": "au_revoir-fr.wav"
+    }
   }
 }

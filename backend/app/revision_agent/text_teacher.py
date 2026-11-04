@@ -65,6 +65,10 @@ class TextTeacher:
         self.usage = Counter()  # tokens de la séance : « input » (cache compris), « cached », « output »
         # L'accueil enregistré de la tâche (cf. intros.py), joué au lancement à la place de la première prise de parole.
         self.intro: dict | None = None
+        # L'au revoir fixe, par mode de langue (cf. intros.farewells), et celui à dire : la tâche est finie (cf. end).
+        self.farewells: dict | None = None
+        self.farewell: dict | None = None
+        self.ended = False
 
     @classmethod
     def replacing(cls, live, model: str, tts_model: str | None = None) -> "TextTeacher":
@@ -102,9 +106,21 @@ class TextTeacher:
         while True:
             await self.wake.wait()
             self.wake.clear()
-            while self.wanted and not self.awaiting:
+            while self.wanted and not self.awaiting and not self.ended:
                 self.wanted = False
-                await self._generate()
+                if self.farewell:
+                    # La dernière prise de parole : l'au revoir fixe, pas une réplique générée.
+                    self.ended = True
+                    parts, self.responses, self.parts = self.responses + self.parts, [], []
+                    await self._play_recorded(self.farewell, parts, "au revoir")
+                else:
+                    await self._generate()
+
+    def end(self, language: str) -> None:
+        """La tâche est finie (cf. TeacherSession.to_browser, phase « done ») : la prochaine prise de parole du prof,
+        son au revoir, est l'au revoir fixe de ce mode de langue (cf. demande explicite du user)."""
+        if self.farewells and not self.farewell:
+            self.farewell = self.farewells.get(language) or self.farewells["he"]
 
     async def _generate(self) -> None:
         parts, self.responses, self.parts = self.responses + self.parts, [], []
@@ -152,15 +168,21 @@ class TextTeacher:
         await self.queue.put(LiveEvent("turn_complete"))
 
     async def _play_intro(self) -> None:
-        """L'accueil enregistré, comme si le prof venait de l'écrire en réponse au message de départ : son texte, puis
-        sa voix enregistrée (dite à la volée, enregistrée avec un autre modèle de voix)."""
-        text = self.intro["text"]
-        log.info("accueil enregistré%s", "" if self.intro["pcm"] else ", voix dite à la volée")
-        self.history += [types.Content(role="user", parts=[types.Part(text=self.start_message)]),
-                         types.Content(role="model", parts=[types.Part(text=text)])]
+        await self._play_recorded(self.intro, [types.Part(text=self.start_message)], "accueil")
+
+    async def _play_recorded(self, entry: dict, parts: list[types.Part], label: str) -> None:
+        """Une réplique enregistrée (l'accueil, l'au revoir), comme si le prof venait de l'écrire en réponse à parts :
+        son texte, puis sa voix enregistrée (dite à la volée, enregistrée avec un autre modèle de voix)."""
+        text = entry["text"]
+        log.info("%s enregistré%s", label, "" if entry["pcm"] else ", voix dite à la volée")
+        if self.history and self.history[-1].role == "user":
+            self.history[-1].parts.extend(parts)
+        else:
+            self.history.append(types.Content(role="user", parts=parts))
+        self.history.append(types.Content(role="model", parts=[types.Part(text=text)]))
         await self.queue.put(LiveEvent("agent_text", text))
-        if self.speaks and self.intro["pcm"]:
-            pcm = self.intro["pcm"]
+        if self.speaks and entry["pcm"]:
+            pcm = entry["pcm"]
             for start in range(0, len(pcm), INTRO_CHUNK_BYTES):
                 await self.queue.put(LiveEvent("audio", pcm[start:start + INTRO_CHUNK_BYTES]))
         elif self.speaks:

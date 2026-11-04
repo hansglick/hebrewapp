@@ -87,6 +87,8 @@ export function useRevisionSession() {
   const [liveText, setLiveText] = useState("");
   // … et sa connexion est prête (cf. RecordButton, « Parlez »).
   const [liveReady, setLiveReady] = useState(false);
+  // La dernière relecture demandée de l'orthographe ({seq, text, changed}, cf. respell).
+  const [respelled, setRespelled] = useState(null);
   const [exchange, setExchange] = useState(null);
   const wsRef = useRef(null);
   const audioRef = useRef(null);
@@ -257,6 +259,15 @@ export function useRevisionSession() {
           case "phonetic":
             setTranscript((previous) => previous && { ...previous, phonetic: msg.phonetic ?? "" });
             break;
+          case "respelled":
+            // La relecture demandée (cf. respell) : changée, la réponse relue repart au prof.
+            if (msg.changed) setExchange(null);
+            setRespelled((previous) => ({
+              seq: (previous?.seq ?? 0) + 1,
+              text: msg.text,
+              changed: Boolean(msg.changed),
+            }));
+            break;
           case "intent":
             setIntent((previous) => ({ seq: (previous?.seq ?? 0) + 1, reading: Boolean(msg.reading) }));
             break;
@@ -338,6 +349,12 @@ export function useRevisionSession() {
     setLiveReady(false);
     ws.send(JSON.stringify({ type: "audio_start" }));
   }, []);
+  // Bouton « orthographe » (cf. StudentAnswer) : la transcription affichée, à relire ; la réponse arrive en
+  // « respelled ».
+  const respell = useCallback((text) => {
+    const ws = wsRef.current;
+    if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: "respell", text }));
+  }, []);
   const sendAudioChunk = useCallback((pcm) => {
     const ws = wsRef.current;
     if (ws?.readyState === WebSocket.OPEN) ws.send(pcm);
@@ -379,8 +396,8 @@ export function useRevisionSession() {
 
   return {
     status, phase, seconds, teacher, extract, text, highlight, excerpts, answer, exercise, solution, notice, paused, answering, language, firstTurnDone,
-    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, liveText, liveReady, exchange,
+    question, evaluation, topics, hints, declension, declensionEvaluation, closing, score, hint, answerFrame, bill, transcript, intent, respelled, liveText, liveReady, exchange,
     start, stop, next, retry, requestHint, switchLanguage, listen, setPerReading, sendText, sendAudio,
-    startAudio, sendAudioChunk, cancelAudio,
+    startAudio, sendAudioChunk, cancelAudio, respell,
   };
 }

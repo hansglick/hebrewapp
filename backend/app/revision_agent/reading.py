@@ -44,8 +44,8 @@ from app.revision_agent.phonetics import PHONETIC_CONVENTION, reference
 from app.revision_agent.session import TeacherSession, rms
 from app.revision_agent.text_teacher import TextTeacher
 from app.revision_agent.judges import mispronounced
-from app.revision_agent.schema import (app_message, as_json, pronunciation_judge, step, teacher, teacher_voice,
-                                       transcription, welcome)
+from app.revision_agent.schema import (app_message, as_json, farewell, pronunciation_judge, respell_button, step,
+                                       teacher, teacher_voice, transcription, welcome)
 from app.revision_agent.transcribe import TEXT_CONTEXT
 from app.revision_agent.translate import translate
 
@@ -239,9 +239,21 @@ async def compare_reading(expected: list[str], expected_phonetic: str, heard: st
     return reading, errors
 
 
-def schema() -> dict:
-    """Le schéma de la tâche (cf. schema.py), sur un exemple : une phrase lue « shlosha » et « ivrat », et
-    transcrite « אברית », relu « עברית »."""
+# Les trois configs de la lecture, en mode texte (cf. MODEL_CONFIGS de RevisionAgentScreen, demande explicite du
+# user) : leurs modèles de la double route voyelle, et l'assistance (le tri lecture / question et la transcription en
+# direct, cf. paramètre triage du routeur).
+SCHEMA_CONFIGS = {
+    "fast": ("FAST", "gemini-3.5-flash", "gemini-3.5-flash-lite", True),
+    "sharp": ("SHARP", "gemini-3.8-flash", "gemini-3.5-flash", True),
+    "sharp_wo_assistance": ("SHARP wo assistance", "gemini-3.8-flash", "gemini-3.5-flash", False),
+}
+
+
+def schema(config: str = "sharp") -> dict:
+    """Le schéma de la tâche (cf. schema.py) dans une config (cf. SCHEMA_CONFIGS), sur un exemple : une phrase lue
+    « shlosha » et « ivrat », et transcrite « אברית », relu « עברית »."""
+    name, phonetic_model, pronunciation_model, assistance = SCHEMA_CONFIGS[config]
+    note = f"config {name}"
     text = "יש לי שלוש בנות ושני בנים וגם הם לומדים עברית."
     expected_phonetic = "yesh li shalosh banot u-shnei vanim ve-gam hem lomdim ivrit"
     raw = "יש לי שלושה בנות ושני בנים וגם הם לומדים אברית."
@@ -262,32 +274,87 @@ def schema() -> dict:
                  ("לומדים", "lomdim", "lomdim", False, False, ""), ("עברית", "ivrit", "ivrat", True, False, ivrat)]]
     errors = [{"word": word, "kind": "pronunciation", "comment": comment, "expected": word, "sound": sound,
                "type": "deforme"} for word, sound, comment in [("שלוש", "shlosha", shlosha), ("עברית", "ivrat", ivrat)]]
-    words_system, words_message = compare_request([text], expected_phonetic, heard, phonetic, sounds=False)
+    # Sans relecture automatique : les juges reçoivent la transcription telle quelle (cf. respell_spoken).
+    words_system, words_message = compare_request([text], expected_phonetic, raw, phonetic, sounds=False)
     retry_reply = "אָמַרְתָּ \"shlosha\", אוֹמְרִים שָׁלוֹשׁ. קְרָא שׁוּב אֶת הַמִּשְׁפָּטִים."
 
     def in_mode(message: str) -> str:
         return f"{message} {prompts.language_mode(DEFAULT_LANGUAGES['lecture'])}"
 
+    models = (f"phonétique {phonetic_model.removeprefix('gemini-')}, juge de prononciation "
+              f"{pronunciation_model.removeprefix('gemini-')}")
+    if assistance:
+        intro = (f"De la voix de l'élève au verdict, en mode texte, config {name} ({models}), avec assistance : la "
+                 "réponse est transcrite à l'envoi (Gemini Transcribe), puis le code décide si c'est une lecture ou "
+                 "une question au prof. Pour une lecture, deux juges travaillent en parallèle ; le verdict est "
+                 "tranché par le code de l'application, le prof ne fait que le dire.")
+        question = "est-ce que je dois lire les deux phrases ?"
+        start = [
+            [[step("student", "1 · L'élève", title="Lit à voix haute les phrases surlignées, ou parle au prof",
+                   text="Touche le bouton rond : « Patientez quelques instants… » le temps que le micro s'ouvre, puis "
+                        "« Parlez ». Touche le carré pour envoyer.",
+                   hint="Le micro s'ouvre à la première prise de parole (la permission n'est demandée qu'une fois) "
+                        "et reste ouvert jusqu'à la fin de la séance ; entre deux réponses, rien n'est enregistré.")]],
+            transcription(raw, heard, phonetic, text, TEXT_CONTEXT, phonetic_model=phonetic_model, model_note=note,
+                          respell=False),
+            [[step("code", "3 · Tri : lecture ou question ?", source="reading.to_teacher",
+                   title="Compte les mots dits absents du texte à lire",
+                   text="Sur la transcription, dès qu'elle arrive, sans attendre la phonétique. Dans le doute, "
+                        "c'est une lecture.",
+                   items=(f"question au prof : au moins {QUESTION_MIN_WORDS} mots absents du texte, et au moins "
+                          f"{QUESTION_SHARE:.0%} des mots dits",
+                          f"un mot mal lu reste un mot du texte (ressemblance d'au moins {NEAR_WORD:.0%}), avec ou "
+                          "sans sa lettre préfixe (ו, ה, ב, ל, מ, ש, כ)",
+                          "un mot en lettres latines (du français) est toujours absent du texte"),
+                   hint="La décision part tout de suite au navigateur (message « intent »).")]],
+            [[step("code", "4a · Lecture", source="StudentAnswer",
+                   title="La phrase cible s'écrit dans « Réponse »",
+                   text="Dès que la réponse est jugée une lecture, sans délai ni attendre la phonétique. Les "
+                        "erreurs y seront surlignées au verdict.",
+                   hint="Étapes 5 à 7.")],
+             [step("code", "4b · Question au prof", source="reading.follow_language · TeacherSession.on_student_text",
+                   title="La transcription reste telle quelle ; la fenêtre devient « Conversation »",
+                   text=f"Par exemple « {question} ». Le mode de langue suit la langue de la question, lue sur son "
+                        "alphabet (lettres latines : français). La réponse transcrite part au prof, qui y répond ; sa "
+                        "prononciation n'est pas jugée.",
+                   hint="La lecture reste attendue : retour à l'étape 1.",
+                   parts=(("Note au prof, s'il faut changer de langue (exemple : le français)",
+                           prompts.language_switched("fr")),))]],
+        ]
+        retry_hint, steps = "Retour à l'étape 1.", ("5a", "5b", "6", "7a", "7b", "8")
+    else:
+        intro = (f"De la voix de l'élève au verdict, en mode texte, config {name} ({models}), sans assistance : tout "
+                 "envoi est une lecture, sans tri lecture / question. Deux juges travaillent en parallèle ; le "
+                 "verdict est tranché par le code de l'application, le prof ne fait que le dire.")
+        start = [
+            [[step("student", "1 · L'élève", title="Lit à voix haute les phrases surlignées",
+                   text="Touche le bouton rond, puis, à « Parlez », lit ; touche le carré pour envoyer. Le micro "
+                        "reste ouvert de la première prise de parole à la fin de la séance.",
+                   hint="Une seconde après l'arrivée de la transcription, la phrase cible s'écrit dans « Réponse » "
+                        "(« Transcription… » jusque-là) ; les erreurs y sont surlignées au verdict.")]],
+            transcription(raw, heard, phonetic, text, TEXT_CONTEXT, phonetic_model=phonetic_model, model_note=note,
+                          respell=False),
+        ]
+        retry_hint, steps = "Retour à l'étape 1.", ("3a", "3b", "4", "5a", "5b", "6")
+    words_judge, judge, aggregator, failed, passed, last = steps
+
     return {
-        "title": "Lecture",
-        "intro": "De la voix de l'élève au verdict, en mode texte, avec les modèles par défaut. Deux juges travaillent "
-                 "en parallèle ; le verdict est tranché par le code de l'application, le prof ne fait que le dire.",
+        "title": f"Lecture · {name}",
+        "intro": intro,
         "flow": [
             *([[[recorded]]] if (recorded := welcome("lecture", DEFAULT_LANGUAGES["lecture"])) else []),
-            [[step("student", "1 · L'élève", title="Lit à voix haute les phrases surlignées",
-                   hint=f"{READING_SILENCE_SECONDS} secondes de silence marquent la fin de sa lecture.")]],
-            transcription(raw, heard, phonetic, text, TEXT_CONTEXT),
-            [[step("model", "3a · Juge des mots", model=READING_MODEL, model_note="fixe",
+            *start,
+            [[step("model", f"{words_judge} · Juge des mots", model=READING_MODEL, model_note="fixe",
                    source="reading.compare_reading",
                    text="A-t-il lu les bons mots ? Compare le texte attendu aux deux transcriptions.",
                    items=("mot sauté", "mot ajouté", "mot remplacé par un autre"),
                    hint="Ne juge pas les sons (consigne WORDS_ONLY).", system=words_system, message=words_message,
                    output=as_json({"lecture": [reading], "erreurs": []}))],
-             [pronunciation_judge("3b · Juge de prononciation", text, phonetic, words, expected_phonetic,
+             [pronunciation_judge(f"{judge} · Juge de prononciation", text, phonetic, words, expected_phonetic,
                                   "Les mots lus sont-ils bien prononcés ? Compare, mot par mot, la phonétique "
                                   "entendue à la prononciation de référence (préparée à l'avance, cf. "
-                                  "phonetics.py).")]],
-            [[step("code", "4 · Agrégateur", source="reading.py · evaluate()",
+                                  "phonetics.py).", pronunciation_model, note)]],
+            [[step("code", f"{aggregator} · Agrégateur", source="reading.py · evaluate()",
                    title="Réunit les fautes des deux juges et tranche",
                    items=("un mot relevé par les deux juges : le juge de prononciation l'emporte sur « remplacé » (il "
                           "dit ce qui a été prononcé, « u », pas ce que la transcription en a fait, « hi ») ; un mot "
@@ -295,23 +362,25 @@ def schema() -> dict:
                           "les remarques vertes sont écartées : ni affichées, ni dites au prof, sans effet sur le "
                           "verdict",
                           "au moins une faute → ratée ; aucune → réussie"))]],
-            [[step("bad", "5a · Lecture ratée", source="prompts.reading_retry",
+            [[step("bad", f"{failed} · Lecture ratée", source="prompts.reading_retry",
                    text="Écran : le texte à lire, mots mal lus ou sautés surlignés et commentés, sa phonétique "
                         "dessous. Prof : explique l'erreur, puis "
-                        "demande de relire.", hint="Retour à l'étape 1.",
+                        "demande de relire.", hint=retry_hint,
                    message=app_message(in_mode(prompts.reading_retry([text], reading, errors))),
                    output=retry_reply)],
-             [step("good", "5b · Lecture réussie", source="prompts.reading_done",
+             [step("good", f"{passed} · Lecture réussie", source="prompts.reading_done",
                    text="Écran : la phrase soulignée en vert, puis cochée. Prof : un mot pour féliciter, puis relit "
-                        "lui-même la phrase.", hint="Phrases suivantes.",
+                        "lui-même la phrase.", hint="Phrases suivantes ; après les dernières, l'au revoir.",
                    message=app_message(in_mode(prompts.reading_done([text]))),
                    output="מְצֻיָּן! יֵשׁ לִי שָׁלוֹשׁ בָּנוֹת וּשְׁנֵי בָנִים וְגַם הֵם לוֹמְדִים עִבְרִית.")]],
+            [[farewell(f"{last} · Au revoir", DEFAULT_LANGUAGES["lecture"])]],
         ],
         "notes": [
+            respell_button(raw, heard, text, TEXT_CONTEXT),
             teacher(prompts.reading_instructions(EXTRACTS_PER_SESSION),
                     f"{prompts.READING_START} {prompts.language_mode(DEFAULT_LANGUAGES['lecture'])}",
-                    "Ne juge rien : il reçoit le verdict déjà tranché (5a ou 5b) et le met en mots. Il ne peut pas le "
-                    "changer.", "lecture", DEFAULT_LANGUAGES["lecture"]),
+                    "Ne juge rien : il reçoit le verdict déjà tranché (lecture ratée ou réussie) et le met en mots. "
+                    "Il ne peut pas le changer.", "lecture", DEFAULT_LANGUAGES["lecture"]),
             *teacher_voice(retry_reply, "Tu as dit « shlosha », on dit שָׁלוֹשׁ. Relis les phrases.",
                            "Tu as dit shlosha, on dit shalosh.",
                            {"francais": "Tu as dit שלושה, on dit שלוש.", "hebreu": "אמרת שלושה, אומרים שלוש."}),
@@ -342,6 +411,7 @@ class ReadingSession(TeacherSession):
         self.requested_at = 0.0  # moment où la lecture a été demandée
         self.teacher_muted = False
         self.reading_triage = True  # le tri lecture / question au prof (cf. to_teacher, reading_intent)
+        self.respell_spoken = False  # la relecture de l'orthographe, à la demande seulement (cf. TeacherSession.respell)
         self.voice_started = False  # l'élève a commencé à lire
         self.last_voice = 0.0
         self.heard = ""  # transcription de la lecture en cours

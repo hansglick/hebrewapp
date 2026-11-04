@@ -50,6 +50,9 @@ const LABELS = { evaluation: "Évaluation", conversation: "Conversation" };
 // (son audio est gardé par le serveur, et transcrit d'un bloc si le direct échoue).
 const LIVE_READY_TIMEOUT_MS = 4000;
 
+// « Orthographe déjà correcte » (cf. respellNote) : le temps de le lire.
+const RESPELL_NOTE_MS = 2500;
+
 // Lecture : le texte lu commence à s'écrire ce temps-là après l'envoi, à la vitesse habituelle (cf. Answer), pour que
 // ses mots fautifs se surlignent peu après qu'il est écrit (cf. demande explicite du user). Avec le tri lecture /
 // question (readingDelay faux, cf. RevisionAgentScreen), il s'écrit dès qu'il est jugé une lecture, sans attendre.
@@ -99,6 +102,8 @@ export default function StudentAnswer({
   readingText = null,
   readingDelay = true,
   liveTranscription = false,
+  respelled = null,
+  onRespell,
   liveText = "",
   liveReady = false,
   onAudioStart,
@@ -122,11 +127,41 @@ export default function StudentAnswer({
       ...message,
       id: (sent?.id ?? 0) + 1,
       before: taskEvaluation,
-      afterIntent: intent?.seq ?? 0,
+      afterIntent: message.afterIntent ?? intent?.seq ?? 0,
     });
   };
   // Correction à la main de la réponse affichée : {id : la réponse corrigée, draft : le texte du champ}.
   const [editing, setEditing] = useState(null);
+
+  // Bouton « orthographe » (lecture, cf. demande explicite du user) : la transcription affichée est relue d'après le
+  // contexte, et la réponse relue repart au prof (cf. TeacherSession.respell). respelling : la demande en cours
+  // ({id : la réponse, seq : la dernière relecture reçue, intentSeq : la dernière intention reçue}) ; respellNote : la
+  // réponse que la relecture a laissée telle quelle (« Orthographe déjà correcte », un instant).
+  const [respelling, setRespelling] = useState(null);
+  const [respellNote, setRespellNote] = useState(null);
+  if (respelling && respelled && respelled.seq > respelling.seq) {
+    // La relecture est arrivée : traitée pendant le rendu, comme un état dérivé d'une prop.
+    setRespelling(null);
+    if (respelling.id === sent?.id) {
+      if (respelled.changed) {
+        // Comme une correction à la main (cf. sendCorrection) ; son intention est celle qui suit la demande.
+        replaceSent({
+          kind: "text",
+          text: respelled.text,
+          url: sent.url,
+          reading: sent.reading,
+          afterIntent: respelling.intentSeq,
+        });
+      } else {
+        setRespellNote(sent.id);
+      }
+    }
+  }
+  useEffect(() => {
+    if (respellNote === null) return undefined;
+    const timer = setTimeout(() => setRespellNote(null), RESPELL_NOTE_MS);
+    return () => clearTimeout(timer);
+  }, [respellNote]);
 
   // Transcription en direct (lecture avec le tri, cf. live_transcribe.py, demande explicite du user) : la fenêtre
   // s'ouvre dès le début de l'enregistrement sur sa transcription, qui s'écrit pendant que l'élève parle (sent.live,
@@ -163,8 +198,8 @@ export default function StudentAnswer({
     setMicError(null);
     setCapturing(false);
     setStalled(false);
-    // Un micro par enregistrement, fermé à sa fin (cf. Recorder).
-    recorderRef.current = new Recorder();
+    // Le même micro pour toute la séance, ouvert au premier enregistrement (cf. Recorder).
+    recorderRef.current ??= new Recorder();
     let first = true;
     // Le serveur prépare la transcription en direct avant les premiers blocs.
     const live = liveTranscription && !disabled;
@@ -191,7 +226,6 @@ export default function StudentAnswer({
 
   const stopRecording = async () => {
     const blob = recorderRef.current.stop();
-    recorderRef.current = null;
     setRecording(false);
     setCapturing(false);
     return blob;
@@ -203,7 +237,12 @@ export default function StudentAnswer({
     setSent(previousRef.current);
   };
 
-  // Départ de la page pendant un enregistrement : le micro se ferme.
+  // Fin de la séance, ou départ de la page : le micro se ferme, le témoin du téléphone s'éteint.
+  useEffect(() => {
+    if (!disabled || recording) return;
+    recorderRef.current?.close();
+    recorderRef.current = null;
+  }, [disabled, recording]);
   useEffect(() => () => recorderRef.current?.close(), []);
 
   const sendAudio = async (blob) => {
@@ -285,6 +324,11 @@ export default function StudentAnswer({
   const shown = stage === "gone" ? null : sent;
   const correcting = editing && editing.id === sent?.id;
   const canCorrect = Boolean(said) && !disabled && !stage && !correcting;
+  const askRespell = () => {
+    setRespellNote(null);
+    setRespelling({ id: sent.id, seq: respelled?.seq ?? 0, intentSeq: intent?.seq ?? 0 });
+    onRespell(said);
+  };
   // Un chiffre dans la transcription : une fois la réponse écrite (cf. Answer, un caractère par SPEECH_STEP_MS), le
   // crayon explose deux fois, comme la coche du suivi, l'élève peut l'écrire en lettres à la main (cf. demande
   // explicite du user, .ra-composer-correct-digits) ; key : il réexplose à chaque nouvelle transcription.
@@ -332,6 +376,26 @@ export default function StudentAnswer({
                       >
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4" />
+                        </svg>
+                      </button>
+                    )}
+                    {/* Le bouton « orthographe », sous le crayon : « abc » et une coche. */}
+                    {canCorrect && onRespell && (
+                      <button
+                        type="button"
+                        className={`ra-composer-play ra-composer-correct ra-composer-respell ${
+                          respelling ? "ra-composer-respell-busy" : ""
+                        }`}
+                        onClick={askRespell}
+                        disabled={Boolean(respelling)}
+                        aria-label="Corriger l’orthographe de ma réponse"
+                        title="Corriger l’orthographe de ma réponse"
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <text x="12" y="10" textAnchor="middle">
+                            abc
+                          </text>
+                          <path d="M7 16.5l3.5 3.5L17.5 13" />
                         </svg>
                       </button>
                     )}
@@ -385,6 +449,11 @@ export default function StudentAnswer({
                     />
                   ) : (
                     <p className="muted">(rien entendu)</p>
+                  )}
+                  {respellNote === sent.id && !correcting && (
+                    <p className="ra-respell-note" role="status">
+                      Orthographe déjà correcte
+                    </p>
                   )}
                 </div>
               </div>
