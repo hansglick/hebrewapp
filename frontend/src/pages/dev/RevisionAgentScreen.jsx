@@ -42,6 +42,8 @@ const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une l
 // Seule tâche accessible pour le moment, et celle par défaut : les autres sont grisées dans le menu (cf. demande
 // explicite du user ; pour les rouvrir, les ajouter ici).
 const ENABLED_TASKS = ["lecture"];
+// En plus, sur la page texte seulement (/dev/revision-agent-texte, cf. demande explicite du user).
+const TEXT_MODE_ENABLED_TASKS = ["comprehension"];
 const DEFAULT_TASK = "lecture";
 // « Lecture » en premier (cf. demande explicite du user).
 const TASKS = [
@@ -275,6 +277,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
 
   // Lecture et compréhension n'ont pas de sens pour une leçon sans texte (cf. demande explicite du user).
   const hasText = texts?.includes(lessonCode) ?? false;
+  const taskEnabled = (id) => ENABLED_TASKS.includes(id) || (textMode && TEXT_MODE_ENABLED_TASKS.includes(id));
   const needsText = (id) => TEXT_TASKS.includes(id) && !hasText;
   const needsQuestions = (id) => id === "comprehension" && TEXT_WITHOUT_QUESTIONS.includes(lessonCode);
   // Toutes les leçons ont des phrases d'exercice (cf. les deux pools de app.revision_agent.utterances) : seule
@@ -293,7 +296,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
     !((currentLesson && completionsOf(lessonCode).current) || (previousLessons && completionsOf(lessonCode).previous));
   const taskAvailable = (id) =>
     LIVE_TASKS.includes(id) &&
-    ENABLED_TASKS.includes(id) &&
+    taskEnabled(id) &&
     !needsText(id) &&
     !needsQuestions(id) &&
     !needsPhrases(id) &&
@@ -410,7 +413,7 @@ export default function RevisionAgentScreen({ textMode = false }) {
                   <option
                     key={t.id}
                     value={t.id}
-                    disabled={!ENABLED_TASKS.includes(t.id) || needsText(t.id) || needsQuestions(t.id)}
+                    disabled={!taskEnabled(t.id) || needsText(t.id) || needsQuestions(t.id)}
                   >
                     {t.label}
                     {needsText(t.id) ? " (pas de texte dans cette leçon)" : ""}
