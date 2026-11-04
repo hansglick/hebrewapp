@@ -49,7 +49,7 @@ from fastapi import WebSocket
 
 from app.data_loader import get_dataset
 from app.revision_agent import prompts
-from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGES, FRENCH_SPEECH_MODEL
+from app.revision_agent.config import AUTO_RETRY, DEFAULT_LANGUAGES, FRENCH_SPEECH_MODEL, TEXT_TEACHER_MODEL
 from app.revision_agent.evaluation import (FRENCH_TEXTS_PROMPT, QUESTION_FALLBACK_SECONDS, align_error_words,
                                            hebrew_answer)
 from app.revision_agent.gemini_live import GeminiLive
@@ -69,10 +69,6 @@ NIKKUD = re.compile(r"[\u0591-\u05c7]")
 # Les deux listes de fautes, remplies en deux temps (d'abord la langue, puis le texte) → type affiché, chacun dans sa
 # couleur ; un même mot peut figurer dans les deux (cf. demande explicite du user).
 ERROR_KINDS = {"fautes_langue": "language", "fautes_texte": "truth"}
-COMPREHENSION_SHARP_TEACHER = "gemini-3.5-flash"  # le prof des configs SHARP (cf. schema ; choisi par la page)
-# Config SHARP seule : la phrase dite en français par le prof, réécrite par ce modèle (cf. french_speech_model, demande
-# explicite du user).
-COMPREHENSION_SHARP_FRENCH_SPEECH = "gemini-3.8-flash"
 
 # Les mots de la question qui ne disent rien de l'endroit où se trouve la réponse (cf. solution_phrases).
 QUESTION_WORDS = {"מה", "מי", "איפה", "מתי", "למה", "איך", "כמה", "האם", "יש", "אין", "את", "של", "עם", "על", "אל"}
@@ -222,9 +218,6 @@ def schema(config: str = "sharp") -> dict:
     leçon SCHEMA_LESSON, la question « מה שלמה עושה בדירה ? », et une réponse avec une faute de langue (לומדת) et une
     faute de compréhension (la télévision)."""
     pronunciation = config != "sharp_wo_pronunciation"
-    # Les deux configs : le prof en 3.5 Flash (cf. MODEL_CONFIGS de RevisionAgentScreen, demande explicite du user).
-    teacher_model, teacher_note = COMPREHENSION_SHARP_TEACHER, "config " + (
-        "SHARP" if pronunciation else "SHARP wo prononciation")
     text = get_dataset("text")[SCHEMA_LESSON]
     phrases = [phrase["hebrew"] for phrase in text["phrases"]]
     question = "מה שלמה עושה בדירה ?"
@@ -258,12 +251,14 @@ def schema(config: str = "sharp") -> dict:
     if pronunciation:
         intro = ("De la réponse orale de l'élève à son évaluation, en mode texte, config SHARP. Le prof fait afficher "
                  "le texte, pose les questions que l'application lui donne et évalue lui-même chaque réponse (langue "
-                 "et compréhension) ; seule la prononciation est jugée à part.")
+                 "et compréhension) ; seule la prononciation est jugée à part. Le code trie d'abord chaque réplique "
+                 "de l'élève : réponse à la question, ou question au prof.")
     else:
         intro = ("De la réponse orale de l'élève à son évaluation, en mode texte, config SHARP wo prononciation : ni "
                  "transcription phonétique ni juge de prononciation. Le prof fait afficher le texte, pose les "
                  "questions que l'application lui donne et évalue chaque réponse sur la seule transcription : la "
-                 "langue (grammaire, forme des mots) et la compréhension du texte.")
+                 "langue (grammaire, forme des mots) et la compréhension du texte. Le code trie d'abord chaque "
+                 "réplique de l'élève : réponse à la question, ou question au prof.")
     return {
         "title": "Compréhension de texte · SHARP" + ("" if pronunciation else " wo prononciation"),
         "intro": f"{intro} Pas de note : des fautes commentées, sans jamais donner la solution. {QUESTIONS_PER_ROUND} "
@@ -306,7 +301,7 @@ def schema(config: str = "sharp") -> dict:
                    parts=(("Note au prof : une réponse", prompts.triage_note(True, AUTO_RETRY)),
                           ("Note au prof : adressée au prof", prompts.triage_note(False, AUTO_RETRY)),
                           ("Refus de l'évaluation, adressée au prof", prompts.NOT_AN_ANSWER)))]],
-            [[step("model", "6a · Le prof évalue", model=teacher_model, model_note=teacher_note,
+            [[step("model", "6a · Le prof évalue", model=TEXT_TEACHER_MODEL, model_note="mode texte, défaut",
                    source="TextTeacher · evaluer_reponse",
                    text=("Reçoit la transcription et sa phonétique." if pronunciation else
                          "Reçoit la transcription seule, sans phonétique.") + " Triée réponse : il appelle "
@@ -360,16 +355,18 @@ def schema(config: str = "sharp") -> dict:
         ],
         "notes": [
             respell_button(raw, heard, *((" ".join(phrases[i] for i in solution_phrases(phrases, question)),
-                                          EXCERPT_CONTEXT) if pronunciation else (question, TEACHER_CONTEXT))),
+                                          EXCERPT_CONTEXT) if pronunciation else (question, TEACHER_CONTEXT)),
+                           then="repart au prof comme une transcription corrigée, qui remplace la précédente"
+                                + (", avec la même phonétique" if pronunciation else "")
+                                + " ; elle est triée de nouveau (5), et une réponse est évaluée de nouveau."),
             teacher(instructions, start,
                     "Mène la séance : accueil, consigne, questions, évaluation (6a) et conversation. Il ne choisit ni "
                     "les questions ni le moment de les poser, et ne juge pas la prononciation.", "comprehension",
-                    language, phonetic=pronunciation, model=teacher_model, model_note=teacher_note),
+                    language, phonetic=pronunciation),
             *teacher_voice(comment, "Relis la sixième phrase : que fait Shlomo dans l'appartement ?",
                            "Relis la sixième phrase : que fait שלמה dans l'appartement ?",
                            {"francais": "Relis la sixième phrase : que fait שלמה dans l'appartement ?",
-                            "hebreu": "תקרא שוב את המשפט השישי: מה שלמה עושה בדירה?"},
-                           COMPREHENSION_SHARP_FRENCH_SPEECH if pronunciation else FRENCH_SPEECH_MODEL),
+                            "hebreu": "תקרא שוב את המשפט השישי: מה שלמה עושה בדירה?"}),
             "Mode de langue : hébreu au départ ; l'élève le change avec le bouton de son écran ou à la voix "
             "(changer_langue). Le prof parle alors uniquement cette langue, sauf l'énoncé des questions, toujours en "
             "hébreu. Les commentaires écrits de l'évaluation restent en français.",
@@ -633,10 +630,6 @@ class ComprehensionSession(TeacherSession):
                 await self.reopen_answer()
             await self.live.note(prompts.triage_note(self.triaged, self.auto_retry))
         await super().on_student_text(text, spoken, corrected)
-
-    def french_speech_model(self) -> str:
-        # Config SHARP (avec phonétique) : 3.8 Flash (cf. COMPREHENSION_SHARP_FRENCH_SPEECH).
-        return COMPREHENSION_SHARP_FRENCH_SPEECH if self.phonetic_model is not None else super().french_speech_model()
 
     def spelling_context(self) -> str:
         # Config SHARP (avec prononciation, cf. demande explicite du user) : le bouton « orthographe » relit la réponse

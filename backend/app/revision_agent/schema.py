@@ -108,14 +108,17 @@ def transcription(raw: str, heard: str, phonetic: str, context: str, label: str 
     ]
 
 
-def respell_button(raw: str, heard: str, context: str, label: str = TEACHER_CONTEXT) -> dict:
+RESPELL_THEN = ("repart comme une nouvelle réponse, avec la même phonétique : une lecture est jugée de nouveau, une "
+                "question repart au prof.")
+
+
+def respell_button(raw: str, heard: str, context: str, label: str = TEACHER_CONTEXT, then: str = RESPELL_THEN) -> dict:
     """Le bouton « orthographe » de la réponse (cf. StudentAnswer, TeacherSession.respell) : la relecture de
-    l'orthographe, à la demande de l'élève, au lieu d'être automatique."""
+    l'orthographe, à la demande de l'élève, au lieu d'être automatique ; then : ce que devient la réponse relue."""
     return step("model", "Bouton « orthographe » (abc ✓)", model=SPELLING_MODEL, source="TeacherSession.respell",
                 title="À la demande de l'élève : relit l'orthographe de sa transcription",
-                text="Sous le crayon. La transcription affichée est relue d'après le contexte, puis la réponse relue "
-                     "repart comme une nouvelle réponse, avec la même phonétique : une lecture est jugée de nouveau, "
-                     "une question repart au prof. Rien à corriger : « Orthographe déjà correcte ».",
+                text=f"Sous le crayon. La transcription affichée est relue d'après le contexte, puis la réponse relue "
+                     f"{then} Rien à corriger : « Orthographe déjà correcte ».",
                 hint="La relecture est écartée si elle change la prononciation (même règle qu'avant).",
                 system=SPELLING_PROMPT, message=spelling_request(raw, context, label), output=heard)
 
