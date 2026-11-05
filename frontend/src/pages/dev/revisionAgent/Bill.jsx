@@ -30,7 +30,8 @@ function rounded(n) {
   if (n >= 1e6) return `${Number((n / 1e6).toFixed(1))} M`;
   return n < 1e4 ? `${Number((n / 1000).toFixed(1))} K` : `${Math.round(n / 1000)} K`;
 }
-const tokens = (n) => `${rounded(n)} ${n > 1 ? "tokens" : "token"}`;
+// Le nombre seul : la colonne est nommée une fois, en tête (cf. demande explicite du user).
+const tokens = (n) => rounded(n);
 const dollars = (amount) =>
   `${amount.toLocaleString("fr-FR", { minimumFractionDigits: 4, maximumFractionDigits: 4 })} $`;
 const cost = (model) => model.input_cost + model.output_cost;
@@ -57,6 +58,14 @@ export default function Bill({ bill }) {
           <span>Durée de la conversation</span>
           <span />
           <span className="ra-bill-price">{duration(bill.seconds)}</span>
+        </>,
+      )}
+      {row(
+        "ra-bill-head",
+        <>
+          <span />
+          <span className="ra-bill-tokens">Tokens</span>
+          <span className="ra-bill-price">Coût</span>
         </>,
       )}
       {/* item : le poste (une étape du schéma, cf. translate.BILL_ITEMS), en gras ; dessous, son modèle, puis

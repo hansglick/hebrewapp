@@ -130,6 +130,9 @@ class TeacherSession:
         # La réponse relue à la demande part au prof comme une transcription corrigée (elle remplace la précédente,
         # cf. prompts.TEXT_MODE) ; en lecture, comme une nouvelle lecture (cf. ReadingSession).
         self.respell_as_correction = True
+        # Le mode de langue (bouton, changer_langue) ; faux sur la page texte, en lecture et en compréhension : le prof
+        # répond en français aux répliques de l'élève, en hébreu au reste (cf. prompts.TEXT_LANGUAGE, routeur).
+        self.language_modes = True
         # Lecture avec le tri (cf. routeur) : la réponse enregistrée, transcrite pendant que l'élève parle (cf.
         # live_transcribe.py) ; transcriber, celle de l'enregistrement en cours.
         self.live_transcription = False
@@ -609,6 +612,10 @@ class TeacherSession:
             try:
                 french, segment["he_translation"] = await french_speech(segment["he"].strip(),
                                                                          self.french_speech_model())
+                if not self.language_modes:
+                    # Sans mode de langue, la phrase dite en français n'a pas de traduction hébraïque à afficher (cf.
+                    # demande explicite du user) : seuls ses mots hébreux réécrits en hébreu comptent.
+                    segment["he_translation"] = ""
             except Exception:
                 log.exception("Traduction en hébreu impossible")
                 french, segment["he_translation"] = segment["he"].strip(), ""

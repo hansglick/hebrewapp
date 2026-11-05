@@ -279,7 +279,7 @@ def schema(config: str = "sharp") -> dict:
     retry_reply = "אָמַרְתָּ \"shlosha\", אוֹמְרִים שָׁלוֹשׁ. קְרָא שׁוּב אֶת הַמִּשְׁפָּטִים."
 
     def in_mode(message: str) -> str:
-        return f"{message} {prompts.language_mode(DEFAULT_LANGUAGES['lecture'])}"
+        return message  # sans mode de langue, page texte (cf. prompts.TEXT_LANGUAGE)
 
     models = (f"phonétique {phonetic_model.removeprefix('gemini-')}, juge de prononciation "
               f"{pronunciation_model.removeprefix('gemini-')}")
@@ -312,14 +312,11 @@ def schema(config: str = "sharp") -> dict:
                    text="Dès que la réponse est jugée une lecture, sans délai ni attendre la phonétique. Les "
                         "erreurs y seront surlignées au verdict.",
                    hint="Étapes 5 à 7.")],
-             [step("code", "4b · Question au prof", source="reading.follow_language · TeacherSession.on_student_text",
+             [step("code", "4b · Question au prof", source="TeacherSession.on_student_text",
                    title="La transcription reste telle quelle ; la fenêtre devient « Conversation »",
-                   text=f"Par exemple « {question} ». Le mode de langue suit la langue de la question, lue sur son "
-                        "alphabet (lettres latines : français). La réponse transcrite part au prof, qui y répond ; sa "
-                        "prononciation n'est pas jugée.",
-                   hint="La lecture reste attendue : retour à l'étape 1.",
-                   parts=(("Note au prof, s'il faut changer de langue (exemple : le français)",
-                           prompts.language_switched("fr")),))]],
+                   text=f"Par exemple « {question} ». La réponse transcrite part au prof, qui y répond en français, "
+                        "les mots hébreux cités en lettres hébraïques ; sa prononciation n'est pas jugée.",
+                   hint="La lecture reste attendue : retour à l'étape 1.")]],
         ]
         retry_hint, steps = "Retour à l'étape 1.", ("5a", "5b", "6", "7a", "7b", "8")
     else:
@@ -377,13 +374,17 @@ def schema(config: str = "sharp") -> dict:
         ],
         "notes": [
             respell_button(raw, heard, text, TEXT_CONTEXT),
-            teacher(prompts.reading_instructions(EXTRACTS_PER_SESSION),
-                    f"{prompts.READING_START} {prompts.language_mode(DEFAULT_LANGUAGES['lecture'])}",
+            teacher(prompts.reading_instructions(EXTRACTS_PER_SESSION), prompts.READING_START,
                     "Ne juge rien : il reçoit le verdict déjà tranché (lecture ratée ou réussie) et le met en mots. "
                     "Il ne peut pas le changer.", "lecture", DEFAULT_LANGUAGES["lecture"]),
             *teacher_voice(retry_reply, "Tu as dit « shlosha », on dit שָׁלוֹשׁ. Relis les phrases.",
                            "Tu as dit shlosha, on dit shalosh.",
                            {"francais": "Tu as dit שלושה, on dit שלוש.", "hebreu": "אמרת שלושה, אומרים שלוש."}),
+            "Langue (page texte, sans mode de langue) : le prof répond en français à une réplique que l'élève lui "
+            "adresse, les mots hébreux cités en lettres hébraïques ; en hébreu, sans lettres latines ni chiffres, à une "
+            "réponse à l'exercice et à tout le reste (accueil, consignes, au revoir). Sous chaque réplique en hébreu, "
+            "sa traduction française : affichée d'office sur ordinateur, à la place de l'hébreu avec le bouton « אA » "
+            "sur mobile ; une réplique en français n'a pas de traduction.",
             "Exception : sans transcription phonétique (par exemple si l'élève a corrigé sa transcription à la main), "
             "le juge de prononciation ne tourne pas ; le juge des mots juge alors tout, sons compris.",
             f"Les messages affichés sont ceux d'un exemple : la phrase « {text} », lue « shlosha » et « ivrat ». Les "
@@ -443,7 +444,8 @@ class ReadingSession(TeacherSession):
     async def on_started(self) -> None:
         log.info("Séance de lecture lancée · voix %s · leçon %s · à partir de la réplique %d", self.live.voice,
                  self.lesson, self.start)
-        await self.to_browser({"type": "language", "language": self.language})
+        if self.language_modes:
+            await self.to_browser({"type": "language", "language": self.language})
 
     # --- micro de l'élève ---------------------------------------------------
 
@@ -564,7 +566,7 @@ class ReadingSession(TeacherSession):
                 await self.live.tool_response(call["id"], name, {"consigne": self.in_mode(prompts.TEXT_ALREADY_SHOWN)})
                 return
             await self.show_text()
-            await self.live.tool_response(call["id"], name, {"consigne": self.in_mode(prompts.READING_TEXT_SHOWN)})
+            await self.live.tool_response(call["id"], name, {"consigne": self.in_mode(self.text_shown())})
         elif name == HEARD_TOOL["name"]:
             text = str(args.get("phonetique") or "").strip()
             if self.collecting and text:
@@ -653,7 +655,7 @@ class ReadingSession(TeacherSession):
         if not self.shown and now - self.started_at > TEXT_FALLBACK_SECONDS:
             log.info("pas de demande de texte : affichage d'office")
             await self.show_text()
-            await self.live.app_message(self.in_mode(prompts.READING_TEXT_SHOWN))
+            await self.live.app_message(self.in_mode(self.text_shown()))
         elif (self.reading and self.voice_started and not self.evaluating
               and now - self.last_voice >= READING_SILENCE_SECONDS):
             self.evaluating = True
@@ -780,7 +782,8 @@ class ReadingSession(TeacherSession):
     # --- navigateur -------------------------------------------------------------
 
     async def on_browser_message(self, data: dict) -> None:
-        if data.get("type") == "language" and data.get("language") in prompts.LANGUAGE_NAMES:
+        if (data.get("type") == "language" and data.get("language") in prompts.LANGUAGE_NAMES
+                and self.language_modes):
             if data["language"] != self.language:
                 await self.set_language(data["language"])
                 speaking = not self.teacher_muted and await self.cut_teacher()
@@ -828,11 +831,15 @@ class ReadingSession(TeacherSession):
         self.await_reading()  # une fois l'extrait lu, le prof se tait et la lecture de l'élève est guettée
         await self.live.app_message(self.in_mode(prompts.reading_listen(self.expected())))
 
+    def text_shown(self) -> str:
+        """La consigne de lecture, dans la langue du mode, ou en hébreu sans mode (cf. language_modes)."""
+        return prompts.READING_TEXT_SHOWN if self.language_modes else prompts.READING_TEXT_SHOWN_HEBREW
+
     async def follow_language(self, text: str) -> None:
         # Une phrase pour le prof, pas une lecture (toujours en hébreu) : le mode de langue suit la langue dans laquelle
         # l'élève l'a dite, lue sur son alphabet (le modèle transcrit le français en lettres latines, vérifié), comme
         # s'il l'avait changé lui-même (cf. on_browser_message ; demande explicite du user).
-        if self.audio_intent:
+        if self.audio_intent or not self.language_modes:
             return
         language = "fr" if len(LATIN_LETTER.findall(text)) > len(HEBREW_LETTER.findall(text)) else "he"
         if language != self.language:
@@ -846,4 +853,5 @@ class ReadingSession(TeacherSession):
         await self.to_browser({"type": "language", "language": language})
 
     def in_mode(self, message: str) -> str:
-        return f"{message} {prompts.language_mode(self.language)}"
+        # Sans mode de langue (page texte, cf. language_modes) : le message seul.
+        return f"{message} {prompts.language_mode(self.language)}" if self.language_modes else message

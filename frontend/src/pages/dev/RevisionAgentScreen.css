@@ -1982,6 +1982,13 @@
   text-align: right;
 }
 
+/* Les noms des colonnes, une seule fois, au-dessus des postes. */
+.ra-bill-head {
+  padding-top: 8px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
 .ra-bill-cached {
   font-size: 0.9em;
 }

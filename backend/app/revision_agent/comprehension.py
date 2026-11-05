@@ -226,7 +226,7 @@ def schema(config: str = "sharp") -> dict:
     phonetic = "shlomo lomedet ba-dira ve-roe televizia"
     language = DEFAULT_LANGUAGES["comprehension"]
     instructions = prompts.comprehension_instructions(phrases, oral=True, auto_retry=AUTO_RETRY)
-    start = f"{prompts.COMPREHENSION_START} {prompts.language_mode(language)}"
+    start = prompts.COMPREHENSION_START  # sans mode de langue, page texte (cf. prompts.TEXT_LANGUAGE)
     tool = evaluation_tool(AUTO_RETRY)
     gender = "Le verbe s'accorde avec שלמה, au masculin : לומד."
     tv = "Le texte ne dit pas que Shlomo regarde la télévision."
@@ -241,7 +241,7 @@ def schema(config: str = "sharp") -> dict:
     comment = "תִּקְרָא שׁוּב אֶת הַמִּשְׁפָּט הַשִּׁשִּׁי: מָה שְׁלֹמֹה עוֹשֶׂה בַּדִּירָה?"
 
     def in_mode(message: str) -> str:
-        return f"{message} {prompts.language_mode(language)}"
+        return message  # sans mode de langue, page texte (cf. prompts.TEXT_LANGUAGE)
 
     # La réponse orale en texte, sans relecture automatique (bouton « orthographe », cf. respell_spoken) ; sans
     # prononciation, la transcription hébraïque seule (pas de 4b).
@@ -313,7 +313,7 @@ def schema(config: str = "sharp") -> dict:
                    hint="Pas de faute d'orthographe sur une réponse orale (c'est la transcription), ni de "
                         "prononciation " + ("(jugée à part, 6b)." if pronunciation else "(pas jugée dans cette "
                                             "config : la consigne de l'échange écrit le lui dit)."),
-                   system=instructions + prompts.text_mode(pronunciation),
+                   system=prompts.without_language_mode(instructions + prompts.text_mode(pronunciation)),
                    message=f"{app_message(prompts.triage_note(True, AUTO_RETRY))}\n(Réponse orale) {raw}"
                            + (f"\n(Prononciation entendue : {phonetic})" if pronunciation else ""),
                    output=as_json(call), parts=(("La fonction evaluer_reponse", as_json(tool)),)),
@@ -332,20 +332,25 @@ def schema(config: str = "sharp") -> dict:
                    items=(("fenêtre « Évaluation » : la réponse, ses mots fautifs surlignés (langue, compréhension, "
                            "prononciation, chacune sa couleur) et commentés",
                            "dans le texte : les phrases de la solution surlignées, et l'extrait exact qui y répond",
-                           "les fautes de prononciation sont signalées au prof, pour qu'il puisse en parler")
+                           "réponse juste seulement sans faute de langue, de texte ni de prononciation (comme en "
+                           "lecture, le verdict est celui de l'application)")
                           if pronunciation else
                           ("fenêtre « Évaluation » : la réponse, ses mots fautifs surlignés (langue, compréhension, "
                            "chacune sa couleur) et commentés",
-                           "dans le texte : les phrases de la solution surlignées, et l'extrait exact qui y répond"))
+                           "dans le texte : les phrases de la solution surlignées, et l'extrait exact qui y répond",
+                           "réponse juste seulement sans faute de langue ni de texte"))
                          + ("suivi de la séance : réponse juste (aucune faute"
                             + (", les remarques vertes ne comptent pas" if pronunciation else "") + ") ou fausse",))]],
-            [[step("bad", "8a · Réponse fausse", source="prompts.EVALUATION_SHOWN_CONVERSATION",
-                   text="Prof : décrit l'erreur principale en une ou deux phrases, sans compliment avant et sans "
+            [[step("bad", "8a · Réponse fausse", source="prompts.comprehension_failed",
+                   text="L'application lui dit « Réponse fausse », avec toutes les fautes. Prof : ne félicite pas, "
+                        "décrit l'erreur principale en une ou deux phrases, sans compliment avant et sans "
                         "jamais donner la solution, puis se tait. C'est la conversation : l'élève redonne une réponse, "
                         "lui pose une question, ou passe à la suite.",
                    hint="Une nouvelle réplique triée réponse (5) est un nouvel essai ; l'élève peut aussi demander à "
                         "retenter (nouvel_essai). Le bouton « Question suivante » passe à la suite.",
-                   message=app_message(in_mode(prompts.EVALUATION_SHOWN_CONVERSATION)), output=comment)],
+                   message=app_message(in_mode(prompts.comprehension_failed(
+                       [{"kind": "language", "word": "לומדת", "comment": gender},
+                        {"kind": "truth", "word": "טלוויזיה", "comment": tv}]))), output=comment)],
              [step("good", "8b · Réponse juste", source="prompts.PERFECT_ANSWER_COMPREHENSION",
                    text="Écran : seule la réponse s'affiche, soulignée en vert, cochée. Prof : le dit en quelques "
                         "mots, puis enchaîne de lui-même sur la question suivante.", hint="Retour à l'étape 2.",
@@ -367,9 +372,12 @@ def schema(config: str = "sharp") -> dict:
                            "Relis la sixième phrase : que fait שלמה dans l'appartement ?",
                            {"francais": "Relis la sixième phrase : que fait שלמה dans l'appartement ?",
                             "hebreu": "תקרא שוב את המשפט השישי: מה שלמה עושה בדירה?"}),
-            "Mode de langue : hébreu au départ ; l'élève le change avec le bouton de son écran ou à la voix "
-            "(changer_langue). Le prof parle alors uniquement cette langue, sauf l'énoncé des questions, toujours en "
-            "hébreu. Les commentaires écrits de l'évaluation restent en français.",
+            "Langue (page texte, sans mode de langue) : le prof répond en français à une réplique que l'élève lui "
+            "adresse, les mots hébreux cités en lettres hébraïques ; en hébreu, sans lettres latines ni chiffres, à "
+            "une réponse à l'exercice et à tout le reste (accueil, consignes, au revoir) ; l'énoncé des questions, "
+            "toujours en hébreu. Sous chaque réplique en hébreu, sa traduction française : affichée d'office sur ordinateur, à "
+            "la place de l'hébreu avec le bouton « אA » sur mobile ; une réplique en français n'a pas de traduction. "
+            "Les commentaires écrits de l'évaluation restent en français, mots hébreux en lettres hébraïques.",
             *(["Exception : sans transcription phonétique (l'élève a corrigé sa transcription au crayon, ou écrit sa "
                "réponse), le juge de prononciation ne tourne pas ; le prof juge alors la réponse telle qu'écrite."]
               if pronunciation else []),
@@ -433,11 +441,13 @@ class ComprehensionSession(TeacherSession):
         # Mode texte : la dernière réplique de l'élève, réponse à la question (vrai) ou adressée au prof (faux), d'après
         # le tri (cf. triage) ; None sans tri.
         self.triaged: bool | None = None
+        self.last_errors: list[dict] = []  # les fautes de la dernière réponse évaluée (cf. evaluate)
 
     async def on_started(self) -> None:
         log.info("Séance de compréhension lancée · voix %s · leçon %s · %d questions", self.live.voice, self.lesson,
                  len(self.questions))
-        await self.to_browser({"type": "language", "language": self.language})
+        if self.language_modes:
+            await self.to_browser({"type": "language", "language": self.language})
         await self.to_browser({"type": "score", "score": self.score, "event": None})
 
     async def record(self, ok: bool) -> None:
@@ -545,7 +555,9 @@ class ComprehensionSession(TeacherSession):
             # Évaluation orale : le prof ne la commente qu'une fois affichée (evaluate l'a envoyée avant de répondre),
             # dès qu'il a fini de parler ; réponse juste, il enchaîne sur la question suivante.
             if self.oral:
-                shown = prompts.PERFECT_ANSWER_COMPREHENSION if succeeded else prompts.EVALUATION_SHOWN_CONVERSATION
+                # Le verdict de l'application, avec toutes les fautes (cf. prompts.comprehension_failed).
+                shown = (prompts.PERFECT_ANSWER_COMPREHENSION if succeeded
+                         else prompts.comprehension_failed(self.last_errors))
                 await self.live.tool_response(call["id"], call["name"], {"resultat": self.in_mode(shown)},
                                               when_idle=True)
             else:
@@ -555,7 +567,8 @@ class ComprehensionSession(TeacherSession):
             await super().on_tool_call(call)
 
     async def on_browser_message(self, data: dict) -> None:
-        if data.get("type") == "language" and data.get("language") in prompts.LANGUAGE_NAMES:
+        if (data.get("type") == "language" and data.get("language") in prompts.LANGUAGE_NAMES
+                and self.language_modes):
             if data["language"] != self.language:
                 await self.set_language(data["language"])
                 # S'il parlait, le prof est coupé et reprend dans la nouvelle langue ; sinon, il le saura pour la suite.
@@ -601,8 +614,9 @@ class ComprehensionSession(TeacherSession):
         await self.to_browser({"type": "language", "language": language})
 
     def in_mode(self, message: str) -> str:
-        """Message de l'application au prof, avec le rappel du mode de langue en cours."""
-        return f"{message} {prompts.language_mode(self.language)}"
+        """Message de l'application au prof, avec le rappel du mode de langue en cours (le message seul sans mode
+        de langue, cf. language_modes)."""
+        return f"{message} {prompts.language_mode(self.language)}" if self.language_modes else message
 
     async def set_answering(self, answering: bool) -> None:
         self.answering = answering
@@ -650,8 +664,10 @@ class ComprehensionSession(TeacherSession):
         """Affiche l'évaluation ; vrai si la réponse est juste (aucune faute)."""
         # Langue et vérité, du prof ; double route voyelle, la prononciation, jugée à part (cf. judges.py).
         teacher, pronunciation = await asyncio.gather(teacher_errors(args, ERROR_KINDS), self.pronunciation_errors())
-        errors = teacher + pronunciation
-        await self.tell_judged(errors)
+        errors = self.last_errors = teacher + pronunciation
+        if not self.oral:
+            # Évaluation orale : toutes les fautes sont dites au prof avec le verdict (cf. on_tool_call).
+            await self.tell_judged(errors)
         # Chaque mot fautif écrit comme dans son commentaire (homophones, cf. evaluation.align_error_words).
         answer = align_error_words(hebrew_answer(args.get("reponse_eleve"), self.heard), errors)
         evaluation = {"answer": answer, "errors": errors}

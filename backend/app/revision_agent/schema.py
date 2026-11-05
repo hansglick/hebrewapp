@@ -76,7 +76,7 @@ def farewell(role: str, language: str) -> dict:
     return step("code", role, source="intros.py · TextTeacher.end", title="Le prof dit au revoir",
                 text=f"« {FAREWELL_TEXTS[language]['french']} »",
                 hint=f"Toujours le même, pour toutes les tâches : joué tel quel à la fin de la séance, à la place de "
-                     f"la dernière prise de parole du prof, dans le mode de langue du moment ; voix "
+                     f"la dernière prise de parole du prof, en hébreu (page texte, sans mode de langue) ; voix "
                      f"{'enregistrée' if recorded else 'dite à la volée'} ({INTRO_VOICE}, {INTRO_TTS_MODEL}). Puis la "
                      "séance se ferme. Mode texte seulement.",
                 parts=tuple((f"Mode {LANGUAGE_NAMES.get(mode, mode)}", FAREWELL_TEXTS[mode]["text"])
@@ -165,21 +165,26 @@ def teacher_voice(said: str, french: str, french_said: str, french_shown: dict,
              text="Chaque phrase du prof, traduite en français et affichée sous elle.",
              hint="Sauf l'accueil enregistré, déjà traduit.", system=TRANSLATION_PROMPT, message=said, output=french),
         step("model", "puis · le prof parle français", model=french_speech_model, source="translate.french_speech",
-             when="Seulement si sa phrase est surtout en lettres latines : ses mots hébreux réécrits en hébreu, et sa "
-                  "traduction en hébreu.", system=FRENCH_SPEECH_PROMPT, message=french_said,
-             output=as_json(french_shown), small=True),
+             when="Seulement si sa phrase est surtout en lettres latines : ses mots hébreux réécrits en hébreu ; sa "
+                  "traduction en hébreu n'est pas affichée (page texte, sans mode de langue).",
+             system=FRENCH_SPEECH_PROMPT, message=french_said, output=as_json(french_shown), small=True),
     ]
 
 
 def teacher(instructions: str, start_message: str, text: str, task: str = "", language: str = "",
             phonetic: bool = True, model: str = TEXT_TEACHER_MODEL, model_note: str = "mode texte, défaut") -> dict:
     """Le prof en mode texte (cf. TextTeacher.replacing) : les instructions de la tâche et de l'échange écrit (sans la
-    prononciation entendue si phonetic est faux, cf. prompts.text_mode), et sa première réplique, l'accueil enregistré
+    prononciation entendue si phonetic est faux, cf. prompts.text_mode), sans mode de langue (cf.
+    prompts.without_language_mode), et sa première réplique, l'accueil enregistré
     de la tâche s'il y en a un (cf. TextTeacher._play_intro) ; ses réponses aux messages de l'application : cf. le
     verdict de chaque tâche."""
     entry = intros().get(task, {}).get(language)
     return step("model", "Le prof", model=model, model_note=f"{model_note}, avec une voix TTS",
-                source="text_teacher.TextTeacher", text=text, system=instructions + prompts.text_mode(phonetic),
+                source="text_teacher.TextTeacher", text=text,
+                system=prompts.without_language_mode(instructions + prompts.text_mode(phonetic)),
+                hint="Chaque réplique est nettoyée avant d'être affichée, dite et gardée dans son historique : la ligne "
+                     "parasite d'un seul mot latin retirée, et tout caractère arabe retiré (filet de sécurité, le cas "
+                     "noté dans le log).",
                 message=start_message,
                 output=f"{entry['text']}\n\n(l'accueil enregistré, joué à sa place comme sa première réplique)"
                 if entry else None)

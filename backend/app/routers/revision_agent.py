@@ -20,6 +20,7 @@ from app.revision_agent.journal import SessionJournal
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
 from app.revision_agent.reading import schema as reading_schema
+from app.revision_agent import prompts
 from app.revision_agent.text_teacher import TextTeacher
 from app.revision_agent.passages import lesson_number
 from app.revision_agent.question import QuestionSession
@@ -31,6 +32,9 @@ from app.revision_agent.word import exercises_for as word_exercises
 
 router = APIRouter(prefix="/api/revision-agent", tags=["revision-agent"])
 log = logging.getLogger("revision_agent")
+
+# Page texte : les tâches sans mode de langue (cf. prompts.TEXT_LANGUAGE), et leur premier message au prof.
+WITHOUT_LANGUAGE_MODE = {"lecture": prompts.READING_START, "comprehension": prompts.COMPREHENSION_START}
 
 # Les tâches et leur schéma (cf. revision_agent.schema), None tant qu'il n'est pas décrit.
 SCHEMAS = {"lecture": ("Lecture · SHARP", reading_schema),
@@ -178,6 +182,14 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Compréhension sans phonétique (config « SHARP wo prononciation », cf. demande explicite du user) : le prof ne
         # reçoit que la transcription, et ne juge pas la prononciation (cf. prompts.text_mode).
         without_phonetic = task == "comprehension" and phonetic_model is None
+        if task in WITHOUT_LANGUAGE_MODE:
+            # Lecture et compréhension (cf. demande explicite du user) : plus de mode de langue ; le prof répond en
+            # français aux répliques de l'élève, en hébreu au reste (cf. prompts.TEXT_LANGUAGE). Ni bouton, ni
+            # changer_langue, ni rappel du mode dans les messages ; l'accueil et l'au revoir, en hébreu.
+            session.language_modes, session.language = False, "he"
+            session.live.instructions = prompts.without_language_mode(session.live.instructions)
+            session.live.start_message = WITHOUT_LANGUAGE_MODE[task]
+            session.live.tools = [tool for tool in session.live.tools if tool["name"] != "changer_langue"]
         session.live = TextTeacher.replacing(session.live, teacher_model, tts_model, phonetic=not without_phonetic)
         # Case « Double route voyelle » cochée : la réponse enregistrée est aussi transcrite en lettres latines,
         # voyelles comprises, par ce modèle (cf. transcribe.heard_phonetic).

@@ -33,6 +33,10 @@ INTRO_CHUNK_BYTES = 9600  # accueil enregistré : envoyé au navigateur par morc
 # Flash-Lite écrit parfois une ligne parasite, un seul mot latin collé, en minuscules et sans ponctuation, avant sa
 # réplique (« opaquetext », vérifié) : jamais une vraie réplique, elle est retirée avant d'être affichée et dite.
 STRAY_LINE = re.compile(r"^[ \t]*[a-z_]+[ \t]*(\r?\n|$)", re.MULTILINE)
+# Flash-Lite glisse parfois un mot arabe dans une réplique hébraïque (« هُمَا » pour הֵם, vérifié) : filet de sécurité
+# (cf. demande explicite du user), les caractères arabes sont retirés avant d'être affichés et dits, et le cas noté.
+ARABIC = re.compile(r"[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]+")
+SPACES = re.compile(r"[ \t]{2,}")
 
 
 class TextTeacher:
@@ -153,6 +157,9 @@ class TextTeacher:
             if part.text and not part.thought and STRAY_LINE.search(part.text):
                 log.warning("ligne parasite retirée : %r", part.text)
                 part.text = STRAY_LINE.sub("", part.text).strip()
+            if part.text and not part.thought and ARABIC.search(part.text):
+                log.warning("caractères arabes retirés : %r", part.text)
+                part.text = SPACES.sub(" ", ARABIC.sub("", part.text)).replace(" ,", ",").strip()
         self.history.append(content)
         if self.speaks and (said := " ".join(p.text.strip() for p in content.parts if p.text and not p.thought)):
             self.to_say += 1

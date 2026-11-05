@@ -149,6 +149,11 @@ READING_TEXT_SHOWN = ("Le texte est affiché à l'écran de l'élève, le premie
                       "les phrases surlignées. » ; mode hébreu : « קְרָא בְּקוֹל רָם אֶת הַמִּשְׁפָּטִים "
                       "הַמְּסֻמָּנִים. »), puis tais-toi : il va lire.")
 
+# Sans mode de langue (cf. TEXT_LANGUAGE) : la consigne, toujours en hébreu.
+READING_TEXT_SHOWN_HEBREW = ("Le texte est affiché à l'écran de l'élève, le premier extrait surligné. Dis-lui "
+                             "seulement, en hébreu, de lire à voix haute les phrases surlignées (« קְרָא בְּקוֹל רָם "
+                             "אֶת הַמִּשְׁפָּטִים הַמְּסֻמָּנִים. »), puis tais-toi : il va lire.")
+
 HEARD_NOTED = "Noté. Ne dis rien : attends le résultat de l'application."
 
 TEXT_ALREADY_SHOWN = "Le texte est déjà affiché à l'écran de l'élève : ne rappelle pas cette fonction."
@@ -235,6 +240,8 @@ l'écran de l'élève, tu ne la commentes jamais.
    Si l'élève te parle entre-temps (une question sur le texte, un mot, sa faute), réponds-lui brièvement, sans poser
    de question, puis tais-toi.
    Quand l'application t'indique qu'il n'y a plus de question, félicite-le en une phrase courte et dis-lui au revoir.
+   Seule l'application met fin à la séance : tant qu'elle ne te l'a pas indiqué, ne dis jamais que la séance,
+   l'exercice ou le test est fini, et ne dis pas au revoir, même après la réponse à la dernière question.
 
 # Évaluation
 Tu évalues la réponse telle que tu l'as entendue, sans la corriger dans ta tête, en deux temps, sur deux dimensions
@@ -306,6 +313,52 @@ Les commentaires écrits de l'évaluation restent toujours en français, quel qu
 et tout mot ou lettre hébreu qu'ils citent s'écrit en caractères hébreux, jamais en lettres latines.
 """
 
+# Page texte, lecture et compréhension (cf. demande explicite du user) : plus de mode de langue. Le prof répond en
+# français à une réplique que l'élève lui adresse, en hébreu à tout le reste (cf. without_language_mode).
+TEXT_LANGUAGE = """
+# Langue de tes réponses (remplace toute autre règle sur la langue)
+Il n'y a pas de mode de langue : l'élève ne peut pas en changer, et tu n'as aucune fonction pour cela.
+- Quand l'élève t'adresse une réplique (une question, une remarque, une demande), réponds toujours en français,
+  simple et naturel. Les mots et les phrases hébreux que tu cites s'écrivent toujours en lettres hébraïques, avec
+  leurs nikkoud, jamais en lettres latines.
+- Quand il répond à l'exercice (sa lecture, sa réponse à la question), tout ce que tu lui dis ensuite, ta réaction à
+  son résultat comprise, est uniquement en hébreu : aucun mot en lettres latines, aucun chiffre (écris les nombres
+  en toutes lettres : « הַמִּשְׁפָּט הַשִּׁשִּׁי », jamais « 6 »).
+- Tout le reste (accueil, consignes, questions, félicitations, au revoir) : uniquement en hébreu, sans lettres
+  latines ni chiffres.
+- L'énoncé d'une question de l'exercice se dit toujours en hébreu, tel quel.
+Les commentaires écrits de l'évaluation restent toujours en français, et tout mot ou lettre hébreu qu'ils citent
+s'écrit en caractères hébreux, jamais en lettres latines.
+"""
+
+# Ce que devient chaque passage des instructions qui parle du mode de langue (cf. without_language_mode).
+WITHOUT_LANGUAGE_MODE = [
+    ("à un débit qui dépend du mode de langue (voir", "à un débit qui dépend de la langue (voir"),
+    ("(mode hébreu, ou mot et phrase hébreux cités en mode français)",
+     "(et les mots et phrases hébreux cités en français)"),
+    ("- En mode français : parle", "- En français : parle"),
+    ("- Tu parles uniquement en hébreu, du début à la fin de la séance. Tu ne dis jamais un seul mot de français, ni "
+     "d'anglais.",
+     "- Tu parles hébreu, sauf pour répondre à une réplique de l'élève (voir « Langue de tes réponses »). Tu ne dis "
+     "jamais un mot d'anglais."),
+    ("comprends les deux, mais réponds toujours en hébreu.", "comprends les deux."),
+    ("en hébreu quel que soit\nle mode de langue, lentement", "en hébreu,\nlentement"),
+    ("réponds brièvement,\ndans la langue du mode, puis tais-toi.",
+     "réponds brièvement,\nen français (voir « Langue de tes réponses »), puis tais-toi."),
+    ("réagis à voix haute, dans la langue du mode, comme un", "réagis à voix haute, en hébreu, comme un"),
+    ("réponds-lui dans la langue du mode, brièvement", "réponds-lui en français, brièvement"),
+]
+
+
+def without_language_mode(instructions: str) -> str:
+    """Les instructions d'une tâche sans mode de langue (cf. TEXT_LANGUAGE) : la section du mode remplacée, et chaque
+    passage qui y renvoie récrit (s'il y figure)."""
+    text = instructions.replace(LANGUAGE_MODE, TEXT_LANGUAGE)
+    for old, new in WITHOUT_LANGUAGE_MODE:
+        text = text.replace(old, new)
+    return text
+
+
 ORAL_CONVERSATION = """
 # Évaluation orale et conversation (remplace l'étape 6 du déroulé)
 
@@ -364,11 +417,23 @@ CONVERSATION_RULE_AUTO_RETRY = """- Dès que tu l'as évaluée, c'est la convers
   - Dans le doute, évalue. Si c'est vraiment impossible à dire, demande-lui simplement si c'est sa nouvelle réponse.
   Une phrase en français seule n'est jamais une réponse à évaluer."""
 
-EVALUATION_SHOWN_CONVERSATION = ("Évaluation affichée à l'écran de l'élève. Réagis maintenant à voix haute, "
-                                 "brièvement : ta première phrase décrit directement l'erreur commise, sans "
-                                 "compliment ni encouragement avant, sans donner la solution, puis mène "
-                                 "la conversation (voir "
-                                 "« Évaluation orale et conversation ») : c'est maintenant la phase de conversation.")
+# Réponse fausse : le verdict est tranché par l'application, comme en lecture (cf. reading_retry, demande explicite du
+# user) : juste seulement sans faute de langue, de texte ni de prononciation ; le prof le dit, il ne le juge pas.
+COMPREHENSION_FAULT_KINDS = {"language": "langue", "truth": "texte", "pronunciation": "prononciation"}
+
+
+def comprehension_failed(errors: list[dict]) -> str:
+    """Le verdict d'une réponse fausse, et toutes ses fautes (les remarques, kind « note », ne comptant pas)."""
+    faults = " ; ".join(f"{COMPREHENSION_FAULT_KINDS.get(e['kind'], e['kind'])}"
+                        f"{f' sur « {e['word']} »' if e.get('word') else ''} : {str(e.get('comment', '')).rstrip('.')}"
+                        for e in errors if e["kind"] != "note")
+    return ("Réponse fausse (l'évaluation s'affiche à l'écran de l'élève) : une réponse n'est juste que sans aucune "
+            f"faute de langue, de texte ni de prononciation. Fautes relevées : {faults}. Ne le félicite pas et ne dis "
+            "jamais que sa réponse est juste ou bonne, même en partie. Réagis maintenant à voix haute, brièvement : "
+            "ta première phrase décrit directement l'erreur principale, sans compliment ni encouragement avant, sans "
+            "donner la solution, puis mène la conversation (voir « Évaluation orale et conversation ») : c'est "
+            "maintenant la phase de conversation. La séance n'est pas finie, même si c'était la dernière question : "
+            "l'élève va redonner sa réponse ou passer à la suite. Ne dis pas que c'est terminé, ni au revoir.")
 
 # Réponse juste : le prof enchaîne de lui-même sur la question suivante, sans demander l'avis de l'élève (cf. demande
 # explicite du user).
