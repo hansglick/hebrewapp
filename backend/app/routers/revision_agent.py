@@ -40,7 +40,6 @@ WITHOUT_LANGUAGE_MODE = {"lecture": prompts.READING_START, "comprehension": prom
 
 # Les tâches et leur schéma (cf. revision_agent.schema), None tant qu'il n'est pas décrit.
 SCHEMAS = {"lecture": ("Lecture · SHARP", reading_schema),
-           "lecture_fast": ("Lecture · FAST", lambda: reading_schema("fast")),
            "lecture_sans_assistance": ("Lecture · SHARP wo assistance", lambda: reading_schema("sharp_wo_assistance")),
            "comprehension": ("Compréhension · SHARP", comprehension_schema),
            "comprehension_sans_prononciation": ("Compréhension · SHARP wo prononciation",

@@ -69,6 +69,9 @@ const FADE_STEPS = [
   ["folding", 400],
   ["gone", 500],
 ];
+// Une question au prof, une fois qu'il y a répondu (exchange « conversation ») : elle s'efface de même (cf. demande
+// explicite du user), sans soulignement ni coche, après le temps de la relire.
+const CONVERSATION_FADE_STEPS = [["erasing", 4000], ...FADE_STEPS.slice(1)];
 
 // Le trait au-dessus de la piste : droit, ses deux bouts arqués vers le bas, comme des cornes à l'envers (cf. demande
 // explicite du user) ; épaisseur fixe, quelle que soit sa largeur.
@@ -323,19 +326,22 @@ export default function StudentAnswer({
   const exchanged = ownEvaluation ? null : exchange;
   const evaluation = exchanged?.kind === "evaluation" ? exchanged.evaluation : null;
   const perfect = Boolean(evaluation) && evaluation.errors.length === 0;
+  // Le prof a répondu à ce que l'élève lui disait (une question) : cf. CONVERSATION_FADE_STEPS.
+  const answered = exchanged?.kind === "conversation";
 
-  // Étape de la disparition d'une réponse sans faute ({id, stage}, id : la réponse concernée).
+  // Étape de la disparition d'une réponse sans faute, ou d'une question à laquelle le prof a répondu ({id, stage},
+  // id : la réponse concernée).
   const [fade, setFade] = useState(null);
   const sentId = sent?.id;
   useEffect(() => {
-    if (!perfect || sentId === undefined) return undefined;
+    if ((!perfect && !answered) || sentId === undefined) return undefined;
     let at = 0;
-    const timers = FADE_STEPS.map(([stage, delay]) => {
+    const timers = (perfect ? FADE_STEPS : CONVERSATION_FADE_STEPS).map(([stage, delay]) => {
       at += delay;
       return setTimeout(() => setFade({ id: sentId, stage }), at);
     });
     return () => timers.forEach(clearTimeout);
-  }, [perfect, sentId]);
+  }, [perfect, answered, sentId]);
   const stage = fade && fade.id === sentId ? fade.stage : null;
   const shown = stage === "gone" ? null : sent;
   const correcting = editing && editing.id === sent?.id;

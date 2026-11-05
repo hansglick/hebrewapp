@@ -92,9 +92,9 @@ const MODEL_CONFIGS = [
     label: "FAST",
     phonetic: "gemini-3.5-flash",
     pronunciation: "gemini-3.5-flash-lite",
-    // Déclinaison : ni phonétique ni prononciation, FAST et SHARP y seraient identiques (SHARP seul). Complétion :
-    // SHARP et SHARP wo prononciation seulement (cf. demande explicite du user).
-    except: ["comprehension", "declinaison", "completion"],
+    // Déclinaison : ni phonétique ni prononciation, FAST et SHARP y seraient identiques (SHARP seul). Lecture et
+    // complétion : plus de FAST (cf. demande explicite du user).
+    except: ["lecture", "comprehension", "declinaison", "completion"],
   },
   { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
   {

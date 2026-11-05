@@ -1895,6 +1895,16 @@
   animation-name: ra-erase-rtl;
 }
 
+/* Complétion : l'énoncé est une liste (début de phrase, contrainte) ; il s'efface de même, ligne par ligne, chacune
+   dans son sens de lecture (cf. demande explicite du user). */
+.ra-slate.ra-slate-erased .ra-completion-items > li {
+  animation: ra-erase-ltr 0.6s ease-in both;
+}
+
+.ra-slate.ra-slate-erased .ra-completion-items > li[dir="rtl"] {
+  animation-name: ra-erase-rtl;
+}
+
 @keyframes ra-write-ltr {
   from {
     clip-path: inset(-1.5em 100% -1.5em 0);

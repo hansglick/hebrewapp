@@ -239,11 +239,10 @@ async def compare_reading(expected: list[str], expected_phonetic: str, heard: st
     return reading, errors
 
 
-# Les trois configs de la lecture, en mode texte (cf. MODEL_CONFIGS de RevisionAgentScreen, demande explicite du
-# user) : leurs modèles de la double route voyelle, et l'assistance (le tri lecture / question et la transcription en
-# direct, cf. paramètre triage du routeur).
+# Les deux configs de la lecture, en mode texte (cf. MODEL_CONFIGS de RevisionAgentScreen, demande explicite du
+# user ; FAST retirée de la lecture) : leurs modèles de la double route voyelle, et l'assistance (le tri lecture /
+# question et la transcription en direct, cf. paramètre triage du routeur).
 SCHEMA_CONFIGS = {
-    "fast": ("FAST", "gemini-3.5-flash", "gemini-3.5-flash-lite", True),
     "sharp": ("SHARP", "gemini-3.8-flash", "gemini-3.5-flash", True),
     "sharp_wo_assistance": ("SHARP wo assistance", "gemini-3.8-flash", "gemini-3.5-flash", False),
 }
