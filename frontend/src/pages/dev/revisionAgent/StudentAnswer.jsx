@@ -280,6 +280,12 @@ export default function StudentAnswer({
       sendText();
     }
   };
+  // Le champ du crayon prend la hauteur de son texte.
+  const growField = (field) => {
+    if (!field) return;
+    field.style.height = "auto";
+    field.style.height = `${field.scrollHeight}px`;
+  };
   // La réponse corrigée remplace l'affichée (son enregistrement reste à réécouter).
   const sendCorrection = () => {
     const message = editing?.draft.trim();
@@ -414,14 +420,24 @@ export default function StudentAnswer({
                 <div className="ra-exchange-text">
                   {correcting ? (
                     <div className="ra-exchange-edit">
-                      <input
-                        type="text"
+                      {/* Toute la phrase, à la ligne s'il le faut (cf. demande explicite du user) : le champ
+                          grandit avec son texte (cf. growField). Entrée envoie, Maj+Entrée va à la ligne. */}
+                      <textarea
+                        ref={growField}
+                        rows={1}
                         dir="auto"
                         lang="he"
                         value={editing.draft}
-                        onChange={(e) => setEditing({ ...editing, draft: e.target.value })}
+                        onChange={(e) => {
+                          setEditing({ ...editing, draft: e.target.value });
+                          growField(e.target);
+                        }}
                         onKeyDown={(e) => {
-                          if (e.key === "Enter") sendCorrection();
+                          e.stopPropagation(); // pas l'envoi du champ principal (cf. onKeyDown)
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            sendCorrection();
+                          }
                           if (e.key === "Escape") setEditing(null);
                         }}
                         aria-label="Ma réponse corrigée"
@@ -476,7 +492,7 @@ export default function StudentAnswer({
                       <hr className="ra-assessment-rule" />
                       <Evaluation evaluation={evaluation} />
                       {/* Complétion : les puces de l'évaluation (contrainte, grammaire, plausibilité, prononciation). */}
-                      {evaluation.dimensions?.length > 0 && (
+                      {evaluation.dimensions?.some((d) => !d.ok) && (
                         <>
                           <hr className="ra-assessment-rule" />
                           <Dimensions dimensions={evaluation.dimensions} />

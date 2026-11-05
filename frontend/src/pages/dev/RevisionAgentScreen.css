@@ -1133,7 +1133,8 @@
 }
 
 /* Mot qui porte les deux fautes : violet (texte), souligné en rouge (langue). */
-.ra-answer-error.ra-error-both {
+.ra-answer-error.ra-error-both,
+.ra-legend-swatch.ra-error-both {
   background: rgba(124, 77, 255, 0.16);
   color: #6a3fe0;
   box-shadow: inset 0 -3px 0 #d92d2d;
@@ -3493,12 +3494,15 @@
 .ra-exchange-edit {
   display: flex;
   gap: 8px;
-  align-items: center;
+  align-items: flex-end;
 }
 
-.ra-exchange-edit input {
+.ra-exchange-edit textarea {
   flex: 1;
   min-width: 0;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.5;
   padding: 8px 10px;
   border: 1px solid var(--cardBorder);
   border-radius: 8px;

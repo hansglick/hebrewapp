@@ -29,8 +29,9 @@ phrase hébraïque (debut) et une contrainte de grammaire en français (contrain
 complète la phrase à voix haute, librement : toute suite qui respecte la contrainte et a du sens est juste, il n'y a
 pas de phrase à deviner. action_reference est l'action de la phrase d'origine, une simple référence : l'élève n'est
 pas tenu de la suivre. phrase_eleve est sa phrase entière, début compris, transcrite de l'oral (ou écrite) : n'en juge
-ni l'orthographe (une transcription : ת et ט, כ et ח, א et ע, ו et ב, ס et ש se valent quand le mot se prononce
-pareil), ni la ponctuation."""
+JAMAIS l'orthographe, c'est une transcription (ת et ט, כ et ח, ק et כ, א et ע, ו et ב, ס, ש et צ se valent : סריך est
+צריך), ni la ponctuation ; lis chaque mot comme le mot qu'il veut visiblement dire. Chaque juge ne juge que son axe :
+une faute d'un autre axe ne compte pas ici."""
 
 COMMENT = """en français, court et factuel, tout mot hébreu cité écrit en lettres hébraïques ; il ne donne JAMAIS la
 forme correcte, ni une suite possible."""
@@ -44,8 +45,11 @@ SUMMARY = """- resume : ce que le prof dit ensuite à l'élève, à voix haute, 
 CONSTRAINT_PROMPT = EXERCISE + """
 Juge SEULEMENT la contrainte : la phrase emploie-t-elle l'outil de grammaire demandé, de la façon demandée ? « exprime
 une absence avec אין + ל » : une possession avec יש est fausse ; « utilise la préposition de direction ל » : une
-destination sans ל, ou avec ב, est fausse. Une forme de cet outil mal accordée ou mal déclinée est une faute de
-grammaire, jugée par un autre juge : ici, la contrainte est respectée. Ni la grammaire, ni le sens ne comptent ici.
+destination sans ל, ou avec ב, est fausse. Cherche d'abord, dans phrase_eleve, les mots qui emploient l'outil demandé
+(début compris) : s'ils y sont, la contrainte est respectée. Une forme de cet outil mal accordée ou mal déclinée, une
+faute de grammaire ailleurs dans la phrase (un accord, une préposition, את), un mot répété ou en trop, ou une phrase
+sans grand sens ne comptent pas ici : d'autres juges s'en chargent.
+- passage : les mots de phrase_eleve qui emploient l'outil demandé, recopiés tels quels ; vide s'il n'y en a pas ;
 - ok : vrai si la contrainte est respectée ;
 - commentaire : si elle ne l'est pas, ce qui manque, """ + COMMENT + """ Vide si ok est vrai.
 """ + SUMMARY
@@ -77,6 +81,12 @@ VERDICT_SCHEMA = {"type": "OBJECT",
                   "properties": {"ok": {"type": "BOOLEAN"}, "commentaire": {"type": "STRING"},
                                  "resume": {"type": "STRING"}},
                   "required": ["ok", "commentaire", "resume"]}
+# La contrainte : d'abord les mots qui emploient l'outil (passage), puis le verdict (cf. CONSTRAINT_PROMPT) : le
+# modèle cherche avant de juger.
+CONSTRAINT_SCHEMA = {"type": "OBJECT",
+                     "properties": {"passage": {"type": "STRING"}, **VERDICT_SCHEMA["properties"]},
+                     "required": ["passage", *VERDICT_SCHEMA["required"]],
+                     "propertyOrdering": ["passage", "ok", "commentaire", "resume"]}
 GRAMMAR_SCHEMA = {"type": "OBJECT",
                   "properties": {"ok": {"type": "BOOLEAN"},
                                  "fautes": {"type": "ARRAY", "items": {
@@ -88,7 +98,7 @@ GRAMMAR_SCHEMA = {"type": "OBJECT",
 
 # Les trois juges écrits ici : leur instruction, leur sortie, leur modèle et leur poste de la facture.
 JUDGES = {
-    "contrainte": (CONSTRAINT_PROMPT, VERDICT_SCHEMA, COMPLETION_CONSTRAINT_MODEL, "Juge de la contrainte"),
+    "contrainte": (CONSTRAINT_PROMPT, CONSTRAINT_SCHEMA, COMPLETION_CONSTRAINT_MODEL, "Juge de la contrainte"),
     "plausibilite": (PLAUSIBILITY_PROMPT, VERDICT_SCHEMA, COMPLETION_PLAUSIBILITY_MODEL, "Juge de la plausibilité"),
     "grammaire": (GRAMMAR_PROMPT, GRAMMAR_SCHEMA, COMPLETION_GRAMMAR_MODEL, "Juge de la grammaire"),
 }

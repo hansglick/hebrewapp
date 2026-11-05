@@ -28,32 +28,17 @@ function Prefix({ prefix, longer }) {
   );
 }
 
-// Pouce levé (dimension validée) ou baissé, blanc sur un rond bleu, de la
-// couleur de la bande de la fenêtre « Réponse ».
-function ThumbIcon({ up }) {
-  return (
-    <svg viewBox="0 0 40 40" className="ra-thumb-icon" aria-hidden="true">
-      <circle cx="20" cy="20" r="19" />
-      <g transform={`${up ? "" : "rotate(180 20 20) "}translate(9.5 9.5) scale(0.875)`}>
-        <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
-      </g>
-    </svg>
-  );
-}
-
-// Les trois puces de l'évaluation : contrainte, plausibilité, grammaire, le nom
-// de chacune, « : », le pouce levé ou baissé, puis sa remarque, en italique.
+// Les puces de l'évaluation : seulement les axes en faute (cf. demande
+// explicite du user), le nom de chacun, « : », puis sa remarque, en italique ;
+// rien si tous sont bons.
 export function Dimensions({ dimensions }) {
+  const failed = dimensions.filter((d) => !d.ok);
+  if (failed.length === 0) return null;
   return (
     <ul className="ra-completion-dimensions">
-      {dimensions.map((d) => (
+      {failed.map((d) => (
         <li key={d.name}>
-          <strong className="ra-dimension-name">
-            {d.name} :
-            <span title={d.ok ? "Validé" : "Non validé"}>
-              <ThumbIcon up={d.ok} />
-            </span>
-          </strong>
+          <strong className="ra-dimension-name">{d.name} :</strong>
           <em className="ra-dimension-text">{d.text}</em>
         </li>
       ))}
@@ -228,7 +213,8 @@ export default function CompletionBoard({
       exercisePersistent
       // Sans Gemini Live, l'évaluation s'affiche dans la fenêtre de la réponse (cf. StudentAnswer).
       answer={(!composer && assessment) || null}
-      answerBlind={Boolean(answerFrame)}
+      // Sans Gemini Live, pas de fenêtre « Réponse » : la réponse et son évaluation sont dans celle de l'élève.
+      answerBlind={!composer && Boolean(answerFrame)}
       closing={closing}
       clock={controls || null}
       material={

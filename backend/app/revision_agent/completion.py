@@ -223,10 +223,11 @@ def availability(lesson: str) -> dict[str, int]:
 
 def complete(answer: str, prefix: str) -> str:
     """La phrase entière : l'élève peut ne dire que la suite (cf. demande explicite du user), le début est alors
-    recollé devant."""
+    recollé devant ; pas s'il commence par le premier mot du début (le début redit, mal transcrit : « הוא לו » pour
+    « הוא לא »), qui serait en double."""
     said = [w for w in (letters(word) for word in answer.split()) if w]
     start = [w for w in (letters(word) for word in prefix.split()) if w]
-    if not said or said[:len(start)] == start:
+    if not said or said[:len(start)] == start or (start and said[0] == start[0]):
         return answer
     return f"{prefix} {answer}"
 
@@ -413,7 +414,8 @@ def schema(config: str = "sharp") -> dict:
                         f"{order}.",
                    items=aggregation + (
                        "fenêtre de la réponse : la phrase de l'élève, déjà écrite, ses mots fautifs surlignés et "
-                       "commentés, et les puces (" + ", ".join(d["name"] for d in shown["dimensions"]) + ")",
+                       "commentés, et une puce par axe en faute (" + ", ".join(d["name"] for d in shown["dimensions"])
+                       + "), sans pouce ; pas de fenêtre « Réponse » à part",
                        "suivi de la séance : phrase réussie ou ratée"),
                    parts=verdicts)]],
             [[step("bad", "8a · Phrase ratée", source="CompletionSession · TextTeacher.say",

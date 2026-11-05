@@ -197,6 +197,8 @@ function StreamedAnswer({ evaluation, legend, perfect, below, delayMs, waiting, 
   const present = Object.keys(ERROR_KINDS).filter((kind) =>
     kinds.some((k) => k.includes(kind)),
   );
+  // Un mot qui porte plusieurs fautes, en violet (cf. ErrorWord) : sa couleur a aussi sa légende.
+  const several = kinds.some((k) => k.length > 1);
   let strokes = 0;
   return (
     <>
@@ -240,6 +242,12 @@ function StreamedAnswer({ evaluation, legend, perfect, below, delayMs, waiting, 
               {ERROR_KINDS[kind]}
             </span>
           ))}
+          {several && (
+            <span>
+              <span className="ra-legend-swatch ra-error-both" />
+              plusieurs fautes sur le même mot
+            </span>
+          )}
         </p>
       )}
     </>

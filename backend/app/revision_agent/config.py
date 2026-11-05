@@ -69,7 +69,9 @@ DECLENSION_JUDGE_MODEL = "gemini-3.5-flash"
 JUDGE_MODEL = "gemini-3.5-flash"
 # Tâche « Complétion », mode texte : trois juges en parallèle, un par axe (cf. completion_judges, demande explicite du
 # user) ; la prononciation, comme en lecture (PHONETIC_MODELS, PRONUNCIATION_MODELS).
-COMPLETION_CONSTRAINT_MODEL = "gemini-3.5-flash-lite"
+# 3.5 Flash plutôt que Flash-Lite (cf. demande explicite du user) : Flash-Lite rejetait la contrainte pour une faute
+# d'un autre axe ; sans attente de plus, le juge de la grammaire (3.5 Flash) tourne en même temps.
+COMPLETION_CONSTRAINT_MODEL = "gemini-3.5-flash"
 COMPLETION_PLAUSIBILITY_MODEL = "gemini-3.5-flash-lite"
 COMPLETION_GRAMMAR_MODEL = "gemini-3.5-flash"
 READING_MODEL = "gemini-3.5-flash"  # tâche « Lecture » : la transcription de la lecture comparée au texte
