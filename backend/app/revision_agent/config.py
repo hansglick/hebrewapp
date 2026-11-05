@@ -62,6 +62,9 @@ AUTO_RETRY = True
 # écrit la phrase attendue (1 à 2 s, pendant que le prof félicite l'élève). gemini-3.8-flash : même qualité sur nos
 # tests, mais deux fois plus lent.
 DECLENSION_MODEL = "gemini-3.5-flash"
+# Tâche « Déclinaison », mode texte : la phrase redite, différente de la phrase attendue, est jugée par ce modèle, qui
+# écrit aussi la réplique du prof (cf. sentence_declension.judge, demande explicite du user).
+DECLENSION_JUDGE_MODEL = "gemini-3.5-flash"
 # Contrainte et plausibilité de la phrase de l'élève (complétion, question, expression libre), cf. judges.judge_sentence.
 JUDGE_MODEL = "gemini-3.5-flash"
 READING_MODEL = "gemini-3.5-flash"  # tâche « Lecture » : la transcription de la lecture comparée au texte

@@ -69,14 +69,17 @@ def welcome(task: str, language: str) -> dict | None:
                              said(entries[mode])) for mode in modes))
 
 
-def farewell(role: str, language: str) -> dict:
-    """L'au revoir fixe du prof, commun à toutes les tâches (cf. intros.FAREWELL_TEXTS, TextTeacher.end)."""
+def farewell(role: str, language: str, language_modes: bool = False) -> dict:
+    """L'au revoir fixe du prof, commun à toutes les tâches (cf. intros.FAREWELL_TEXTS, TextTeacher.end) ;
+    language_modes : la tâche garde le mode de langue (au revoir dans le mode du moment)."""
     recorded = intros().get(FAREWELL, {})
     modes = [language] + [mode for mode in FAREWELL_TEXTS if mode != language]
+    spoken = ("dans le mode de langue du moment" if language_modes
+              else "en hébreu (page texte, sans mode de langue)")
     return step("code", role, source="intros.py · TextTeacher.end", title="Le prof dit au revoir",
                 text=f"« {FAREWELL_TEXTS[language]['french']} »",
                 hint=f"Toujours le même, pour toutes les tâches : joué tel quel à la fin de la séance, à la place de "
-                     f"la dernière prise de parole du prof, en hébreu (page texte, sans mode de langue) ; voix "
+                     f"la dernière prise de parole du prof, {spoken} ; voix "
                      f"{'enregistrée' if recorded else 'dite à la volée'} ({INTRO_VOICE}, {INTRO_TTS_MODEL}). Puis la "
                      "séance se ferme. Mode texte seulement.",
                 parts=tuple((f"Mode {LANGUAGE_NAMES.get(mode, mode)}", FAREWELL_TEXTS[mode]["text"])
@@ -107,6 +110,11 @@ def transcription(raw: str, heard: str, phonetic: str, context: str, label: str 
                        "Lancée en même temps que la transcription hébraïque.")],
     ]
 
+
+# Plus de relecture de l'orthographe, ni automatique ni par le bouton (cf. demande explicite du user).
+NO_RESPELL = ("Pas de relecture de l'orthographe : le bouton « orthographe » est retiré. Le prof et les juges "
+              "reçoivent la transcription telle quelle ; s'il y voit une erreur, l'élève la corrige à la main (le "
+              "crayon) et renvoie sa réponse.")
 
 RESPELL_THEN = ("repart comme une nouvelle réponse, avec la même phonétique : une lecture est jugée de nouveau, une "
                 "question repart au prof.")
@@ -150,11 +158,14 @@ def pronunciation_judge(role: str, text: str, phonetic: str, words: list[dict], 
 
 
 def teacher_voice(said: str, french: str, french_said: str, french_shown: dict,
-                  french_speech_model: str = FRENCH_SPEECH_MODEL) -> list[dict]:
+                  french_speech_model: str = FRENCH_SPEECH_MODEL, language_modes: bool = False) -> list[dict]:
     """Ce qui suit chaque prise de parole du prof, en parallèle (cf. TextTeacher._speak, TeacherSession.
     translate_segment) : sa voix, et la traduction de chacune de ses phrases, affichée sous elle. said, french : une
     phrase du prof en hébreu et sa traduction ; french_said, french_shown : une phrase dite en français et ce qui en
-    est affiché."""
+    est affiché ; language_modes : la tâche garde le mode de langue (la traduction en hébreu s'affiche alors)."""
+    shown = ("ses mots hébreux réécrits en hébreu, et sa traduction en hébreu, affichée sous elle." if language_modes
+             else "ses mots hébreux réécrits en hébreu ; sa traduction en hébreu n'est pas affichée (page texte, sans "
+                  "mode de langue).")
     return [
         step("model", "La voix du prof", model=TTS_MODELS[0], model_note="menu, défaut", source="tts.speak",
              text="Chaque prise de parole écrite du prof, dite à voix haute, en streaming : l'audio suit le texte.",
@@ -165,25 +176,26 @@ def teacher_voice(said: str, french: str, french_said: str, french_shown: dict,
              text="Chaque phrase du prof, traduite en français et affichée sous elle.",
              hint="Sauf l'accueil enregistré, déjà traduit.", system=TRANSLATION_PROMPT, message=said, output=french),
         step("model", "puis · le prof parle français", model=french_speech_model, source="translate.french_speech",
-             when="Seulement si sa phrase est surtout en lettres latines : ses mots hébreux réécrits en hébreu ; sa "
-                  "traduction en hébreu n'est pas affichée (page texte, sans mode de langue).",
+             when=f"Seulement si sa phrase est surtout en lettres latines : {shown}",
              system=FRENCH_SPEECH_PROMPT, message=french_said, output=as_json(french_shown), small=True),
     ]
 
 
 def teacher(instructions: str, start_message: str, text: str, task: str = "", language: str = "",
-            phonetic: bool = True, model: str = TEXT_TEACHER_MODEL, model_note: str = "mode texte, défaut") -> dict:
+            phonetic: bool = True, model: str = TEXT_TEACHER_MODEL, model_note: str = "mode texte, défaut",
+            language_modes: bool = False) -> dict:
     """Le prof en mode texte (cf. TextTeacher.replacing) : les instructions de la tâche et de l'échange écrit (sans la
     prononciation entendue si phonetic est faux, cf. prompts.text_mode), sans mode de langue (cf.
-    prompts.without_language_mode), et sa première réplique, l'accueil enregistré
+    prompts.without_language_mode ; language_modes : la tâche le garde), et sa première réplique, l'accueil enregistré
     de la tâche s'il y en a un (cf. TextTeacher._play_intro) ; ses réponses aux messages de l'application : cf. le
     verdict de chaque tâche."""
     entry = intros().get(task, {}).get(language)
     return step("model", "Le prof", model=model, model_note=f"{model_note}, avec une voix TTS",
                 source="text_teacher.TextTeacher", text=text,
-                system=prompts.without_language_mode(instructions + prompts.text_mode(phonetic)),
-                hint="Chaque réplique est nettoyée avant d'être affichée, dite et gardée dans son historique : la ligne "
-                     "parasite d'un seul mot latin retirée, et tout caractère arabe retiré (filet de sécurité, le cas "
+                system=(instructions + prompts.text_mode(phonetic) if language_modes
+                        else prompts.without_language_mode(instructions + prompts.text_mode(phonetic))),
+                hint="Chaque réplique est nettoyée avant d'être affichée, dite et gardée dans son historique : la "
+                     "ligne parasite d'un seul mot latin retirée, et tout caractère arabe retiré (filet de sécurité, le cas "
                      "noté dans le log).",
                 message=start_message,
                 output=f"{entry['text']}\n\n(l'accueil enregistré, joué à sa place comme sa première réplique)"

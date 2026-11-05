@@ -73,6 +73,9 @@ class TextTeacher:
         self.farewells: dict | None = None
         self.farewell: dict | None = None
         self.ended = False
+        # Répliques écrites par l'application, à dire à la place d'une prise de parole générée (cf. say), avec ce qui
+        # attend qu'elles soient dites.
+        self.scripted: list[tuple[dict, asyncio.Future]] = []
 
     @classmethod
     def replacing(cls, live, model: str, tts_model: str | None = None, phonetic: bool = True) -> "TextTeacher":
@@ -113,13 +116,33 @@ class TextTeacher:
             self.wake.clear()
             while self.wanted and not self.awaiting and not self.ended:
                 self.wanted = False
-                if self.farewell:
+                if self.scripted:
+                    # Une réplique de l'application (cf. say) : jouée comme une réplique enregistrée.
+                    entry, done = self.scripted.pop(0)
+                    parts, self.responses, self.parts = self.responses + self.parts, [], []
+                    # Jamais un tour vide dans l'historique : la réplique répond toujours à quelque chose.
+                    parts = parts or [types.Part(text=APP_PREFIX + "Réplique de l'application.")]
+                    await self._play_recorded(entry, parts, "réplique de l'application")
+                    done.set_result(None)
+                    self.wanted = self.wanted or bool(self.scripted)
+                elif self.farewell:
                     # La dernière prise de parole : l'au revoir fixe, pas une réplique générée.
                     self.ended = True
                     parts, self.responses, self.parts = self.responses + self.parts, [], []
                     await self._play_recorded(self.farewell, parts, "au revoir")
                 else:
                     await self._generate()
+
+    async def say(self, entry: dict) -> None:
+        """Une réplique écrite par l'application ({"text", "pcm"} : son texte, sa voix enregistrée ou None pour la dire
+        à la volée), dite à la place d'une prise de parole générée et gardée dans l'historique du prof comme la sienne
+        (cf. demande explicite du user : la déclinaison, sans le prof pour féliciter ni commenter) ; rend la main
+        quand elle est partie."""
+        done = asyncio.get_running_loop().create_future()
+        self.scripted.append((entry, done))
+        self.wanted = True
+        self.wake.set()
+        await done
 
     def end(self, language: str) -> None:
         """La tâche est finie (cf. TeacherSession.to_browser, phase « done ») : la prochaine prise de parole du prof,
@@ -225,14 +248,16 @@ class TextTeacher:
                 "input_cost": (fresh * prices["input"] + self.usage["cached"] * prices["cached"]) / 1e6,
                 "output_tokens": self.usage["output"], "output_cost": self.usage["output"] * prices["output"] / 1e6}
 
-    async def student_text(self, text: str, spoken: bool = False, corrected: bool = False, phonetic: str = "") -> None:
+    async def student_text(self, text: str, spoken: bool = False, corrected: bool = False, phonetic: str = "",
+                           respond: bool = True) -> None:
         """La réponse de l'élève, écrite, ou spoken : la transcription de sa réponse orale ; corrected : cette
         transcription corrigée à la main par l'élève ; phonetic : sa prononciation entendue, voyelles comprises (double
-        route voyelle, cf. prompts.TEXT_MODE)."""
+        route voyelle, cf. prompts.TEXT_MODE) ; respond faux : gardée dans l'historique sans que le prof réponde
+        (l'application y répond elle-même, cf. say)."""
         prefix = ("(Réponse orale, transcription corrigée par l'élève) " if corrected
                   else "(Réponse orale) " if spoken else "")
         heard = f"\n(Prononciation entendue : {phonetic})" if phonetic else ""
-        self._add(types.Part(text=prefix + text + heard), respond=True)
+        self._add(types.Part(text=prefix + text + heard), respond=respond)
 
     async def send_audio(self, pcm: bytes) -> None:
         pass  # pas de micro en mode texte

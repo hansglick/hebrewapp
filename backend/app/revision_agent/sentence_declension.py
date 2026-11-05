@@ -19,7 +19,7 @@ import random
 import re
 from dataclasses import dataclass
 
-from app.revision_agent.config import DECLENSION_MODEL
+from app.revision_agent.config import DECLENSION_JUDGE_MODEL, DECLENSION_MODEL
 from app.revision_agent.translate import translate
 
 log = logging.getLogger("revision_agent.sentence_declension")
@@ -49,6 +49,14 @@ REPLACEMENTS = {
         "1mp": "nous (m.)", "1fp": "nous (f.)", "2mp": "vous (m. pl.)", "2fp": "vous (f. pl.)", "3mp": "eux",
         "3fp": "elles",
     },
+}
+
+# La personne visée, en hébreu (pronom personnel, avec le genre quand le pronom ne le dit pas) : ce que le prof dit dans
+# sa consigne, sans mode de langue (cf. demande explicite du user : en hébreu, sans lettres latines), sans jamais donner
+# la forme déclinée attendue.
+PERSONS_HE = {
+    "1ms": "אֲנִי (זָכָר)", "1fs": "אֲנִי (נְקֵבָה)", "2ms": "אַתָּה", "2fs": "אַתְּ", "3ms": "הוּא", "3fs": "הִיא",
+    "1mp": "אֲנַחְנוּ (זָכָר)", "1fp": "אֲנַחְנוּ (נְקֵבָה)", "2mp": "אַתֶּם", "2fp": "אַתֶּן", "3mp": "הֵם", "3fp": "הֵן",
 }
 
 PROMPT = """Tu prépares un exercice de déclinaison pour un élève débutant en hébreu, à partir d'une phrase correcte
@@ -148,15 +156,16 @@ def verbs_changed(declension: Declension, verbs: list[str]) -> bool:
 
 
 async def prepare(sentence: str, preferred: str, element: Element | None = None,
-                  avoid: set[str] = frozenset()) -> Declension | None:
+                  avoid: set[str] = frozenset(), target: str | None = None) -> Declension | None:
     """L'exercice de déclinaison de la phrase (preferred : "subject" | "preposition"), ou None s'il n'y en a pas.
     Un sujet remplacé doit entraîner au moins un accord (cf. demande explicite du user), sinon on recommence ;
-    element : l'élément imposé, dont les verbes doivent en plus avoir changé."""
+    element : l'élément imposé, dont les verbes doivent en plus avoir changé ; target : la personne cible, imposée
+    elle aussi (tâche « Déclinaison », cf. declension.choose_targets)."""
     sentence = NIKKUD.sub("", sentence).strip()
     if not re.search(r"[א-ת]", sentence):
         return None
     for attempt in range(DECLENSION_ATTEMPTS):
-        declension = await propose(sentence, preferred, element, avoid)
+        declension = await propose(sentence, preferred, element, avoid, target)
         if declension is None or declension.kind != "subject" or (
                 agreement_changed(declension) and verbs_changed(declension, element.verbs if element else [])):
             return declension
@@ -164,8 +173,19 @@ async def prepare(sentence: str, preferred: str, element: Element | None = None,
     return None
 
 
+def declension_request(sentence: str, preferred: str, element: Element | None, targets: list[str]) -> str:
+    """La demande au modèle (cf. propose ; aussi pour le schéma de la tâche, cf. declension.schema)."""
+    kind = next(k for k, v in KINDS.items() if v == (element.kind if element else preferred))
+    request = (f"Phrase : {sentence}\nType préféré : {kind}\nPersonnes cibles, dans l'ordre : "
+               + ", ".join(f"{code} ({PERSONS[code]})" for code in targets))
+    if element:
+        request += (f"\nÉlément imposé (n'en choisis pas d'autre) : {element.word}, de type {kind}, à la personne "
+                    f"{element.person} ({PERSONS[element.person]}).")
+    return request
+
+
 async def propose(sentence: str, preferred: str, element: Element | None = None,
-                  avoid: set[str] = frozenset()) -> Declension | None:
+                  avoid: set[str] = frozenset(), target: str | None = None) -> Declension | None:
     # Les personnes cibles, dans un ordre tiré au hasard : le modèle prend la première qui oblige à un accord. Pour un
     # élément imposé, seulement celles qui y obligent à coup sûr.
     # avoid : les personnes déjà demandées dans la séance, reléguées en fin de liste pour varier (cf. demande explicite
@@ -174,14 +194,13 @@ async def propose(sentence: str, preferred: str, element: Element | None = None,
     fresh = [code for code in allowed if code not in avoid]
     used = [code for code in allowed if code in avoid]
     targets = random.sample(fresh, len(fresh)) + random.sample(used, len(used))
-    kind = next(k for k, v in KINDS.items() if v == (element.kind if element else preferred))
-    request = (f"Phrase : {sentence}\nType préféré : {kind}\nPersonnes cibles, dans l'ordre : "
-               + ", ".join(f"{code} ({PERSONS[code]})" for code in targets))
-    if element:
-        request += (f"\nÉlément imposé (n'en choisis pas d'autre) : {element.word}, de type {kind}, à la personne "
-                    f"{element.person} ({PERSONS[element.person]}).")
+    if target in allowed:
+        # La cible choisie d'avance par l'application (tâche « Déclinaison », cf. declension.choose_targets).
+        allowed = targets = [target]
+    request = declension_request(sentence, preferred, element, targets)
     try:
-        result = json.loads(await translate(request, PROMPT, SCHEMA, DECLENSION_MODEL, "Juge de la déclinaison"))
+        result = json.loads(await translate(request, PROMPT, SCHEMA, DECLENSION_MODEL,
+                                            "Préparation de la déclinaison"))
     except Exception:
         log.exception("Déclinaison impossible : %s", sentence)
         return None
@@ -205,3 +224,64 @@ async def propose(sentence: str, preferred: str, element: Element | None = None,
         return None
     kind = KINDS[result["type"]]
     return Declension(sentence, kind, word, span, source, target, REPLACEMENTS[kind][target], expected)
+
+
+# --- le juge de la déclinaison (tâche « Déclinaison », mode texte) ------------------------------------------
+
+# Phrase redite différente de la phrase attendue (cf. demande explicite du user) : un seul appel juge les mots déclinés
+# et écrit ce que le prof dit ; rien sur la prononciation, ni sur l'orthographe.
+JUDGE_PROMPT = """Tu es professeur d'hébreu. Ton élève, débutant, fait un exercice de déclinaison : dans une phrase,
+il remplace un élément (un sujet, ou une préposition déclinée comme לי, לו, שלי) par une autre personne, et accorde
+tout ce qui en dépend. Tu reçois, en JSON :
+- phrase : la phrase de départ ; element : l'élément à remplacer ; personne : la personne qu'il doit devenir ;
+- phrase_attendue : une solution correcte, qui n'est qu'une référence ;
+- reponse_eleve : la phrase que l'élève a dite, transcrite de l'oral (ou écrite).
+Juge seulement la déclinaison : le remplacement de l'élément par la bonne personne, et les accords qu'il entraîne
+(verbes, adjectifs, possessifs). Tout le reste ne compte pas : ni l'orthographe (une transcription : ת et ט, כ et ח, א
+et ע, ו et ב se valent quand le mot se prononce pareil), ni la ponctuation, ni un autre mot de la phrase oublié ou
+changé s'il ne dépend pas de l'élément. Accepte toute autre formulation correcte que la phrase attendue (un prénom au
+lieu d'un pronom, par exemple).
+- fautes : pour chaque mot décliné faux, l'élément non remplacé ou remplacé par une autre personne, le mot de la
+  réponse de l'élève recopié exactement, et un commentaire en français, court et factuel, qui dit ce qui ne va pas
+  sans JAMAIS donner la bonne forme (« ce verbe ne s'accorde pas avec le nouveau sujet », « il faut le féminin
+  pluriel ») ; tout mot hébreu cité s'écrit en lettres hébraïques. [] si la déclinaison est juste.
+- reponse_prof : ce que le prof dit ensuite à l'élève, à voix haute, uniquement en hébreu, avec les nikkoud, sans
+  aucune lettre latine ni aucun chiffre, une ou deux phrases courtes, familières. S'il y a des fautes : la première
+  phrase décrit directement l'erreur principale, sans compliment ni encouragement avant, sans jamais donner la
+  solution (ni la forme correcte, ni la phrase corrigée), en le mettant sur la voie ; ne lui propose pas de
+  recommencer. Sans faute : une félicitation courte."""
+
+JUDGE_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "fautes": {"type": "ARRAY", "items": {"type": "OBJECT", "properties": {
+            "mot": {"type": "STRING"}, "commentaire": {"type": "STRING"}}, "required": ["mot", "commentaire"]}},
+        "reponse_prof": {"type": "STRING"},
+    },
+    "required": ["fautes", "reponse_prof"],
+}
+
+
+def judge_request(declension: Declension, answer: str) -> str:
+    """La demande au juge (cf. judge ; aussi pour le schéma de la tâche)."""
+    return json.dumps({"phrase": declension.sentence, "element": declension.word,
+                       "personne": PERSONS[declension.target], "phrase_attendue": declension.expected,
+                       "reponse_eleve": answer}, ensure_ascii=False)
+
+
+async def judge(declension: Declension, answer: str) -> dict:
+    """Les fautes de la phrase redite ({"mot", "commentaire"}) et la réplique du prof, en hébreu (cf. JUDGE_PROMPT)."""
+    result = json.loads(await translate(judge_request(declension, answer), JUDGE_PROMPT, JUDGE_SCHEMA,
+                                        DECLENSION_JUDGE_MODEL, "Juge de la déclinaison"))
+    log.info("déclinaison jugée : %s", result)
+    return {"fautes": result.get("fautes") or [], "reponse_prof": str(result.get("reponse_prof") or "").strip()}
+
+
+def letters_only(text: str) -> str:
+    """La phrase réduite à ses lettres hébraïques, mot à mot (ni nikkoud, ni ponctuation) : la comparaison exacte."""
+    return " ".join(HEBREW_WORD.findall(NIKKUD.sub("", text)))
+
+
+def same_sentence(answer: str, expected: str) -> bool:
+    """La phrase redite est la phrase attendue, aux nikkoud, à la ponctuation et aux espaces près."""
+    return bool(letters_only(answer)) and letters_only(answer) == letters_only(expected)

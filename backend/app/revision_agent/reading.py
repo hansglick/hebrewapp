@@ -44,7 +44,7 @@ from app.revision_agent.phonetics import PHONETIC_CONVENTION, reference
 from app.revision_agent.session import TeacherSession, rms
 from app.revision_agent.text_teacher import TextTeacher
 from app.revision_agent.judges import mispronounced
-from app.revision_agent.schema import (app_message, as_json, farewell, pronunciation_judge, respell_button, step,
+from app.revision_agent.schema import (NO_RESPELL, app_message, as_json, farewell, pronunciation_judge, step,
                                        teacher, teacher_voice, transcription, welcome)
 from app.revision_agent.transcribe import TEXT_CONTEXT
 from app.revision_agent.translate import translate
@@ -373,7 +373,7 @@ def schema(config: str = "sharp") -> dict:
             [[farewell(f"{last} · Au revoir", DEFAULT_LANGUAGES["lecture"])]],
         ],
         "notes": [
-            respell_button(raw, heard, text, TEXT_CONTEXT),
+            NO_RESPELL,
             teacher(prompts.reading_instructions(EXTRACTS_PER_SESSION), prompts.READING_START,
                     "Ne juge rien : il reçoit le verdict déjà tranché (lecture ratée ou réussie) et le met en mots. "
                     "Il ne peut pas le changer.", "lecture", DEFAULT_LANGUAGES["lecture"]),

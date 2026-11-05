@@ -54,7 +54,7 @@ from app.revision_agent.evaluation import (FRENCH_TEXTS_PROMPT, QUESTION_FALLBAC
                                            hebrew_answer)
 from app.revision_agent.gemini_live import GeminiLive
 from app.revision_agent.judges import error_list, no_fault, teacher_errors
-from app.revision_agent.schema import (app_message, as_json, farewell, pronunciation_judge, respell_button, step,
+from app.revision_agent.schema import (NO_RESPELL, app_message, as_json, farewell, pronunciation_judge, step,
                                        teacher, teacher_voice, transcription, welcome)
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.text_teacher import TextTeacher
@@ -297,7 +297,7 @@ def schema(config: str = "sharp") -> dict:
                           "adressée au prof : il y répond, la fenêtre de la réponse devient « Conversation » ; s'il "
                           "appelle quand même evaluer_reponse, l'application refuse"),
                    hint="Le tri est dit au prof juste avant la réplique de l'élève. Aussi pour une réponse écrite, "
-                        "corrigée au crayon ou relue (bouton « orthographe »).",
+                        "ou corrigée au crayon.",
                    parts=(("Note au prof : une réponse", prompts.triage_note(True, AUTO_RETRY)),
                           ("Note au prof : adressée au prof", prompts.triage_note(False, AUTO_RETRY)),
                           ("Refus de l'évaluation, adressée au prof", prompts.NOT_AN_ANSWER)))]],
@@ -359,11 +359,7 @@ def schema(config: str = "sharp") -> dict:
             [[farewell(f"9 · Au revoir (après la question {QUESTIONS_PER_ROUND})", language)]],
         ],
         "notes": [
-            respell_button(raw, heard, *((" ".join(phrases[i] for i in solution_phrases(phrases, question)),
-                                          EXCERPT_CONTEXT) if pronunciation else (question, TEACHER_CONTEXT)),
-                           then="repart au prof comme une transcription corrigée, qui remplace la précédente"
-                                + (", avec la même phonétique" if pronunciation else "")
-                                + " ; elle est triée de nouveau (5), et une réponse est évaluée de nouveau."),
+            NO_RESPELL,
             teacher(instructions, start,
                     "Mène la séance : accueil, consigne, questions, évaluation (6a) et conversation. Il ne choisit ni "
                     "les questions ni le moment de les poser, et ne juge pas la prononciation.", "comprehension",
@@ -381,13 +377,6 @@ def schema(config: str = "sharp") -> dict:
             *(["Exception : sans transcription phonétique (l'élève a corrigé sa transcription au crayon, ou écrit sa "
                "réponse), le juge de prononciation ne tourne pas ; le prof juge alors la réponse telle qu'écrite."]
               if pronunciation else []),
-            "Pas de relecture automatique de l'orthographe : le prof reçoit la transcription telle quelle. La "
-            "relecture se fait à la demande de l'élève (bouton « orthographe ») ; la réponse relue repart au prof "
-            "comme une transcription corrigée" + (
-                ", avec sa phonétique. Son contexte : le passage du texte où se trouve la réponse à la question, les "
-                "phrases qui reprennent le plus de ses mots (sans les mots interrogatifs) ; une fois la réponse "
-                "évaluée, celles de la solution d'après le prof." if pronunciation else
-                ". Son contexte : ce que le prof vient de dire."),
             f"Les messages affichés sont ceux d'un exemple : la leçon {SCHEMA_LESSON} (« {text.get('title', '')} »), "
             f"la question « {question} », et la réponse « {heard} ». Les instructions système sont celles du code "
             "actuel.",

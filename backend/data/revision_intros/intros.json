@@ -110,5 +110,49 @@
       "spoken": "fr",
       "audio": "au_revoir-fr.wav"
     }
-  }
+  },
+  "felicitations": [
+    {
+      "text": "כָּל הַכָּבוֹד!",
+      "french": "Bravo !",
+      "hebrew": "כָּל הַכָּבוֹד!",
+      "spoken": "he",
+      "audio": "felicitations-1.wav"
+    },
+    {
+      "text": "מְצֻיָּן!",
+      "french": "Excellent !",
+      "hebrew": "מְצֻיָּן!",
+      "spoken": "he",
+      "audio": "felicitations-2.wav"
+    },
+    {
+      "text": "יוֹפִי, בְּדִיּוּק!",
+      "french": "Super, c'est exactement ça !",
+      "hebrew": "יוֹפִי, בְּדִיּוּק!",
+      "spoken": "he",
+      "audio": "felicitations-3.wav"
+    },
+    {
+      "text": "נָכוֹן מְאוֹד!",
+      "french": "Très juste !",
+      "hebrew": "נָכוֹן מְאוֹד!",
+      "spoken": "he",
+      "audio": "felicitations-4.wav"
+    },
+    {
+      "text": "מֻשְׁלָם!",
+      "french": "Parfait !",
+      "hebrew": "מֻשְׁלָם!",
+      "spoken": "he",
+      "audio": "felicitations-5.wav"
+    },
+    {
+      "text": "יָפֶה מְאוֹד!",
+      "french": "Très bien !",
+      "hebrew": "יָפֶה מְאוֹד!",
+      "spoken": "he",
+      "audio": "felicitations-6.wav"
+    }
+  ]
 }

@@ -12,11 +12,12 @@ forme alors un seul segment, cf. session.translate_segment).
 un fichier WAV par accueil (PCM16 mono 24 kHz).
 
 L'au revoir fixe, commun à toutes les tâches (intros.FAREWELL_TEXTS, écrit à la main), y est enregistré aussi, sous
-la clé intros.FAREWELL.
+la clé intros.FAREWELL ; de même les félicitations de la déclinaison (intros.CONGRATULATIONS_TEXTS, écrites à la main,
+avec leur traduction), sous la clé intros.CONGRATULATIONS (« felicitations »), une liste.
 
 Usage (depuis backend/) : .venv/Scripts/python.exe -m scripts.build_revision_intros [tâche…]
-Seulement les tâches données (toutes par défaut, au revoir compris ; « au_revoir » pour lui seul) : les autres sont
-gardées.
+Seulement les tâches données (toutes par défaut, au revoir et félicitations compris ; « au_revoir » ou
+« felicitations » pour eux seuls) : les autres sont gardées.
 """
 
 import asyncio
@@ -34,7 +35,8 @@ from app.revision_agent.config import DEFAULT_LANGUAGES, SAMPLE_RATE
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
 from app.revision_agent.expression import ExpressionSession
-from app.revision_agent.intros import FAREWELL, FAREWELL_TEXTS, INTRO_TTS_MODEL, INTRO_VOICE, INTROS_DIR, INTROS_FILE
+from app.revision_agent.intros import (CONGRATULATIONS, CONGRATULATIONS_TEXTS, FAREWELL, FAREWELL_TEXTS,
+                                       INTRO_TTS_MODEL, INTRO_VOICE, INTROS_DIR, INTROS_FILE)
 from app.revision_agent.question import QuestionSession
 from app.revision_agent.question import draw_items as question_items
 from app.revision_agent.reading import ReadingSession
@@ -100,7 +102,14 @@ async def main(tasks: list[str]) -> None:
             await record(entry["text"], INTROS_DIR / audio)
             intros.setdefault(FAREWELL, {})[language] = {**entry, "audio": audio}
             print(f"{FAREWELL} / {language} : {entry['text']}")
-    for task in (task for task in tasks if task != FAREWELL):
+    if CONGRATULATIONS in tasks:
+        intros[CONGRATULATIONS] = []
+        for number, entry in enumerate(CONGRATULATIONS_TEXTS, 1):
+            audio = f"{CONGRATULATIONS}-{number}.wav"
+            await record(entry["text"], INTROS_DIR / audio)
+            intros[CONGRATULATIONS].append({**entry, "audio": audio})
+            print(f"{CONGRATULATIONS} / {number} : {entry['text']} → {entry['french']}")
+    for task in (task for task in tasks if task not in (FAREWELL, CONGRATULATIONS)):
         for language in ("he", "fr"):
             text = await welcome(task, language)
             # Comme en séance (cf. session.translate_segment) : en français, ses mots hébreux réécrits en hébreu et sa
@@ -119,4 +128,4 @@ async def main(tasks: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main(sys.argv[1:] or [*DEFAULT_LANGUAGES, FAREWELL]))
+    asyncio.run(main(sys.argv[1:] or [*DEFAULT_LANGUAGES, FAREWELL, CONGRATULATIONS]))

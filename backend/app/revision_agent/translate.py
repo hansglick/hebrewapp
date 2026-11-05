@@ -57,8 +57,8 @@ FLASH_USAGE: ContextVar[dict[tuple[str, str], Counter] | None] = ContextVar("fla
 # Les postes de la facture, dans l'ordre où elle les liste : les étapes des schémas (cf. demande explicite du user).
 BILL_ITEMS = ("Transcription en direct", "Transcription hébraïque", "Lettres hébraïques", "Relecture de l'orthographe",
               "Transcription phonétique", "Juge des mots", "Juge de prononciation", "Juge de la phrase",
-              "Juge de la déclinaison", "Commentaires en français", "Traduction du prof", "Le prof parle français",
-              "Voix du prof")
+              "Préparation de la déclinaison", "Juge de la déclinaison", "Commentaires en français",
+              "Traduction du prof", "Le prof parle français", "Voix du prof")
 
 
 def usage_of(item: str, model: str) -> Counter | None:

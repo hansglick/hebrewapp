@@ -14,8 +14,9 @@ from app.revision_agent.comprehension import ComprehensionSession
 from app.revision_agent.comprehension import schema as comprehension_schema
 from app.revision_agent.declension import DeclensionSession
 from app.revision_agent.declension import draw_items as declension_items
+from app.revision_agent.declension import schema as declension_schema
 from app.revision_agent.expression import ExpressionSession
-from app.revision_agent.intros import farewells, intro
+from app.revision_agent.intros import congratulations, farewells, intro
 from app.revision_agent.journal import SessionJournal
 from app.revision_agent.material import vocabulary
 from app.revision_agent.reading import ReadingSession
@@ -43,7 +44,7 @@ SCHEMAS = {"lecture": ("Lecture · SHARP", reading_schema),
            "comprehension": ("Compréhension · SHARP", comprehension_schema),
            "comprehension_sans_prononciation": ("Compréhension · SHARP wo prononciation",
                                                 lambda: comprehension_schema("sharp_wo_pronunciation")),
-           "expression": ("Expression libre", None), "declinaison": ("Déclinaison", None),
+           "expression": ("Expression libre", None), "declinaison": ("Déclinaison", declension_schema),
            "completion": ("Complétion", None), "mot": ("Mot", None), "question": ("Question", None)}
 
 
@@ -182,7 +183,13 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
         # Compréhension sans phonétique (config « SHARP wo prononciation », cf. demande explicite du user) : le prof ne
         # reçoit que la transcription, et ne juge pas la prononciation (cf. prompts.text_mode).
         without_phonetic = task == "comprehension" and phonetic_model is None
-        if task in WITHOUT_LANGUAGE_MODE:
+        if task == "declinaison":
+            # Déclinaison (cf. demande explicite du user) : l'application juge les phrases redites et y répond ; le prof
+            # donne les consignes et converse, sans mode de langue ni prononciation entendue (cf. judge_by_app).
+            session.judge_by_app(prompts.without_language_mode(prompts.declension_text_instructions(
+                len(session.items))))
+            without_phonetic = True
+        elif task in WITHOUT_LANGUAGE_MODE:
             # Lecture et compréhension (cf. demande explicite du user) : plus de mode de langue ; le prof répond en
             # français aux répliques de l'élève, en hébreu au reste (cf. prompts.TEXT_LANGUAGE). Ni bouton, ni
             # changer_langue, ni rappel du mode dans les messages ; l'accueil et l'au revoir, en hébreu.
@@ -212,6 +219,9 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
             session.live.farewells = farewells(tts_model, voice)
             for entry in session.live.farewells.values():
                 session.known_translations[entry["text"]] = entry
+        # Déclinaison : les félicitations enregistrées (cf. intros.congratulations).
+        if task == "declinaison" and session.app_judges:
+            session.congratulations = congratulations(tts_model, voice)
 
     # Journal de la séance sur le disque persistant : déroulé et durée, par compte (cf. app.revision_agent.journal).
     journal = SessionJournal(get_user_id(pseudo, pin), pseudo, task, lesson, voice=voice, current=current,

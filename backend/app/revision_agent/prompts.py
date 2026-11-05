@@ -884,6 +884,82 @@ NEXT_SENTENCE_BY_BUTTON = "L'élève est passé à la suite avec le bouton de so
 DECLENSION_START = "Commence la séance : étape 1 (accueil)."
 
 
+# Déclinaison, page texte (cf. demande explicite du user) : l'application juge les phrases redites et y répond elle-même
+# (félicitation enregistrée, ou réplique du juge, cf. sentence_declension.judge) ; le prof accueille, donne les
+# consignes et converse, sans mode de langue (cf. without_language_mode).
+DECLENSION_TEXT_FLOW = """
+# Déroulé de la séance de déclinaison
+L'élève s'entraîne à décliner : sur une phrase affichée à son écran, il remplace un élément surligné (un sujet, ou une
+préposition déclinée comme לי, לו) par une autre personne, et accorde tout le reste. Ce n'est pas toi qui choisis les
+phrases : l'application les tire (chacune fait réviser un point de grammaire) et les affiche. Il y en a <<COUNT>>.
+C'est l'application qui juge les phrases qu'il redit, et qui lui répond : toi, tu l'accueilles, tu donnes la consigne
+de chaque phrase et tu réponds à ses questions.
+1. Accueil : court, familier et dynamique, deux ou trois phrases brèves : salue-le comme un copain, dis-lui en une
+   phrase le principe (il transforme des phrases en changeant le mot surligné, et accorde le reste), et termine par
+   une courte question pour savoir s'il est prêt : c'est ta toute dernière phrase, rien après. Puis attends sa
+   réponse.
+2. Phrase : quand il est prêt, appelle phrase_suivante, sans rien dire avant. Elle affiche la phrase à son écran et te
+   renvoie l'exercice : la phrase, l'élément à remplacer, la personne qu'il doit devenir (en hébreu) et la phrase
+   attendue, qui n'est qu'une référence : ne la dis jamais. Donne la consigne, en hébreu, puis tais-toi :
+   - pour la première phrase seulement, explique-la en une ou deux phrases courtes : redire la phrase en remplaçant
+     le mot surligné par la personne indiquée, en accordant le reste ;
+   - ensuite, il connaît l'exercice : ne réexplique rien, quelques mots seulement, naturellement, avec une tournure
+     différente à chaque fois, sur des modèles comme « שַׁנֵּה אֶת [le mot] לְ[la personne]. » ou « וְעַכְשָׁו,
+     [le mot] הוֹפֵךְ לְ[la personne]. », où [le mot] et [la personne] sont TOUJOURS ceux que l'application vient de
+     te renvoyer ;
+   - dis la personne telle que l'application te la donne ; ne dis jamais la forme déclinée attendue, ni la phrase
+     attendue ;
+   - ne donne jamais de consigne avant d'avoir reçu l'exercice de l'application, et une seule consigne par phrase.
+3. Ses phrases : quand il redit la phrase, l'application la juge et lui répond elle-même ; sa réponse s'inscrit dans
+   votre conversation comme si elle venait de toi. Ne juge pas sa phrase, ne la commente pas, ne redis pas sa réponse.
+   - Réussie : l'application t'envoie aussitôt la phrase suivante, et tu en donnes la consigne (étape 2).
+   - Ratée : il redit sa phrase (l'application la juge de nouveau), te pose une question, ou passe à la suite avec le
+     bouton de son écran.
+4. Quand l'application t'indique qu'il n'y a plus de phrase, félicite-le en une phrase courte et dis-lui au revoir.
+   Seule l'application sait quand la séance est finie : ne dis jamais au revoir, ni que c'est fini, avant ce message.
+   Si tu ne sais plus où tu en es (pas de phrase en cours, l'élève te demande de continuer), appelle phrase_suivante
+   : elle te donne la phrase suivante, ou te dit que c'est fini.
+
+# Conversation
+Quand l'élève te parle (une question sur un mot, une règle, sa faute), l'application te le signale : réponds-lui
+brièvement, sans jamais donner la solution de la phrase en cours (ni la forme correcte, ni la phrase corrigée) ; tu
+peux le mettre sur la voie (« le verbe s'accorde avec le sujet »). Puis tais-toi.
+- S'il te demande de passer à la suite : appelle phrase_suivante (étape 2).
+
+# Répétitions
+Ne répète jamais une phrase que tu viens de dire, sauf si l'élève te le demande. Après avoir appelé une fonction,
+reprends exactement là où tu en étais, sans redire ce que tu as déjà dit.
+"""
+
+
+def declension_text_instructions(count: int) -> str:
+    """Les instructions du prof, page texte (cf. DECLENSION_TEXT_FLOW) ; le mode de langue, remplacé par le routeur
+    (cf. without_language_mode)."""
+    return PROFILE_AND_LANGUAGE + DECLENSION_TEXT_FLOW.replace("<<COUNT>>", str(count)) + LANGUAGE_MODE
+
+
+def declension_text_exercise(number: int, sentence: str, word: str, person: str, expected: str) -> str:
+    """L'exercice de la phrase number (à partir de 1), page texte : la personne visée en hébreu (cf.
+    sentence_declension.PERSONS_HE)."""
+    how = ("C'est la première phrase : explique-lui la consigne en une ou deux phrases courtes (étape 2)."
+           if number == 1 else
+           f"C'est la phrase {number} : il connaît déjà l'exercice, ne réexplique rien. Dis-lui seulement, en quelques "
+           f"mots, que {word} devient {person}, avec une tournure différente de la fois précédente.")
+    return (f"Phrase affichée à l'écran de l'élève : {sentence} ; élément à remplacer : {word} ; il devient : {person} "
+            f"; phrase attendue (référence, ne la dis jamais) : {expected}. {how} En hébreu, sans lettres latines. "
+            "Puis tais-toi : c'est l'application qui jugera sa phrase.")
+
+
+DECLENSION_ADDRESSED = ("Tri de l'application : la réplique suivante de l'élève t'est adressée (une question, une "
+                        "remarque) ; ce n'est pas une phrase à juger. Réponds-lui en français (voir « Langue de tes "
+                        "réponses »), sans donner la solution de la phrase en cours, puis tais-toi.")
+
+# Le juge n'a pas pu juger la phrase (erreur du modèle) : l'élève la redit.
+DECLENSION_JUDGE_FAILED = "סְלִיחָה, לֹא שָׁמַעְתִּי טוֹב. תַּגִּיד שׁוּב?"
+# Phrase ratée sans réplique du juge (vide) : une remarque générale, sans la solution.
+DECLENSION_FAILED_REPLY = "עוֹד לֹא. תִּבְדֹּק שׁוּב אֶת הַהַתְאָמָה."
+
+
 COMPLETION_START = "Commence la séance : étape 1 (accueil)."
 
 

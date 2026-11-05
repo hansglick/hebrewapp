@@ -26,6 +26,20 @@ FAREWELL_TEXTS = {
     "fr": {"text": FAREWELL_FRENCH, "french": FAREWELL_FRENCH, "hebrew": FAREWELL_HEBREW, "spoken": "fr"},
 }
 
+# Les félicitations du prof après une phrase réussie (tâche « Déclinaison », page texte, cf. demande explicite du user) :
+# en hébreu, écrites à la main avec leur traduction (affichées comme une réplique du prof), enregistrées avec les
+# accueils (sous cette clé d'intros.json, une liste) ; l'une d'elles, tirée au hasard, est jouée à la place du prof (cf.
+# DeclensionSession.judge). Chacune, une seule phrase : un seul segment (cf. session.translate_segment).
+CONGRATULATIONS = "felicitations"
+CONGRATULATIONS_TEXTS = [{"text": hebrew, "french": french, "hebrew": hebrew, "spoken": "he"} for hebrew, french in (
+    ("כָּל הַכָּבוֹד!", "Bravo !"),
+    ("מְצֻיָּן!", "Excellent !"),
+    ("יוֹפִי, בְּדִיּוּק!", "Super, c'est exactement ça !"),
+    ("נָכוֹן מְאוֹד!", "Très juste !"),
+    ("מֻשְׁלָם!", "Parfait !"),
+    ("יָפֶה מְאוֹד!", "Très bien !"),
+)]
+
 
 @cache
 def intros() -> dict:
@@ -49,6 +63,15 @@ def intro(task: str, language: str, tts_model: str | None, voice: str) -> dict |
         return None
     same_voice = tts_model == INTRO_TTS_MODEL and voice == INTRO_VOICE
     return {**entry, "pcm": recording(entry["audio"]) if same_voice else None}
+
+
+def congratulations(tts_model: str | None, voice: str) -> list[dict]:
+    """Les félicitations ({"text", "french", "hebrew", "spoken", "pcm"}, cf. intro) : leur voix enregistrée si elle
+    l'a été avec ce modèle et cette voix, sinon dites à la volée."""
+    recorded = {entry["text"]: entry for entry in intros().get(CONGRATULATIONS, [])}
+    same_voice = tts_model == INTRO_TTS_MODEL and voice == INTRO_VOICE
+    return [{**entry, "pcm": recording(recorded[entry["text"]]["audio"])
+             if same_voice and entry["text"] in recorded else None} for entry in CONGRATULATIONS_TEXTS]
 
 
 def farewells(tts_model: str | None, voice: str) -> dict:

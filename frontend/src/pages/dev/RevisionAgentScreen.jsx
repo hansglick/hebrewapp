@@ -43,7 +43,7 @@ const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une l
 // explicite du user ; pour les rouvrir, les ajouter ici).
 const ENABLED_TASKS = ["lecture"];
 // En plus, sur la page texte seulement (/dev/revision-agent-texte, cf. demande explicite du user).
-const TEXT_MODE_ENABLED_TASKS = ["comprehension"];
+const TEXT_MODE_ENABLED_TASKS = ["comprehension", "declinaison"];
 const DEFAULT_TASK = "lecture";
 // « Lecture » en premier (cf. demande explicite du user).
 const TASKS = [
@@ -92,7 +92,8 @@ const MODEL_CONFIGS = [
     label: "FAST",
     phonetic: "gemini-3.5-flash",
     pronunciation: "gemini-3.5-flash-lite",
-    except: ["comprehension"],
+    // Déclinaison : ni phonétique ni prononciation, FAST et SHARP y seraient identiques (SHARP seul).
+    except: ["comprehension", "declinaison"],
   },
   { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
   {
@@ -372,7 +373,9 @@ export default function RevisionAgentScreen({ textMode = false }) {
         readingDelay={Boolean(models.noTriage)}
         recorder={mic}
         respelled={session.respelled}
-        onRespell={["lecture", "comprehension"].includes(task) ? session.respell : undefined}
+        // Bouton « orthographe » retiré de toutes les tâches (cf. demande explicite du user) : l'élève corrige sa
+        // réponse à la main (crayon) et la renvoie. Pour le remettre, lui repasser session.respell.
+        onRespell={undefined}
         liveText={session.liveText}
         liveReady={session.liveReady}
         onAudioStart={session.startAudio}

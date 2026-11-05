@@ -31,13 +31,18 @@ from fastapi import WebSocket
 from app.config import DATA_DIR
 from app.revision_agent import prompts, sentence_declension
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
-from app.revision_agent.config import DEFAULT_LANGUAGES, SHOW_DECLENSION_EXPECTED
+from app.revision_agent.config import (DECLENSION_JUDGE_MODEL, DECLENSION_MODEL, DEFAULT_LANGUAGES,
+                                      SHOW_DECLENSION_EXPECTED)
 from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, hebrew_answer
 from app.revision_agent.expression import (CLOSING_SECONDS, DECLENSION_EVALUATION_TOOL, RETRY_TOOL,
                                           TEACHER_IDLE_TIMEOUT)
-from app.revision_agent.gemini_live import GeminiLive
-from app.revision_agent.judges import teacher_errors
+from app.revision_agent.gemini_live import GeminiLive, LiveEvent
+from app.revision_agent.intros import CONGRATULATIONS_TEXTS
+from app.revision_agent.judges import faults, teacher_errors
 from app.revision_agent.passages import is_previous, lesson_number
+from app.revision_agent.schema import (NO_RESPELL, app_message, as_json, farewell, step, teacher, teacher_voice,
+                                       transcription, welcome)
+from app.revision_agent.transcribe import TEACHER_CONTEXT
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.utterances import sentence_key, word_span
 
@@ -171,12 +176,193 @@ def draw_items(lesson: str, current: bool, previous: bool) -> list[Item]:
     return session + rest
 
 
+def pick_target(item: Item, used: list[str]) -> str:
+    """La personne cible d'une phrase (cf. demande explicite du user : la liste mélangée, puis la première qui change
+    l'accord au présent) : tirée au hasard parmi celles qui obligent à un accord au présent (cf. Element.targets),
+    celles déjà demandées dans la séance en dernier recours."""
+    allowed = item.element.targets()
+    fresh = [code for code in allowed if code not in used]
+    return random.choice(fresh or allowed)
+
+
+def choose_targets(items: list[Item]) -> list[str]:
+    """La personne cible de chaque phrase de la séance, choisie d'avance par l'application : les déclinaisons se
+    préparent toutes en même temps (cf. DeclensionSession.on_started), sans se voir l'une l'autre."""
+    targets: list[str] = []
+    for item in items:
+        targets.append(pick_target(item, targets))
+    return targets
+
+
+def schema() -> dict:
+    """Le schéma de la tâche (cf. schema.py), en mode texte (cf. DeclensionSession.judge_by_app), sur un exemple : la
+    phrase « חנה ולאה קוראות עיתון וכותבות מכתב. » (leçon 0.02), son sujet חנה ולאה à mettre à « il » (הוּא), et une
+    réponse qui oublie d'accorder le second verbe (וכותבת)."""
+    language = "he"  # sans mode de langue
+    sentence = "חנה ולאה קוראות עיתון וכותבות מכתב."
+    element = sentence_declension.Element("subject", "חנה ולאה", "3fp", ["קוראות", "וכותבות"])
+    expected = "הוא קורא עיתון וכותב מכתב."
+    declension = sentence_declension.Declension(sentence, "subject", element.word, (0, len(element.word)), "3fp",
+                                                "3ms", sentence_declension.REPLACEMENTS["subject"]["3ms"], expected)
+    person = sentence_declension.PERSONS_HE["3ms"]
+    proposed = {"trouve": True, "type": "sujet", "mot": element.word, "origine": element.person, "cible": "3ms",
+                "phrase_declinee": expected}
+    heard = "הוא קורא עיתון וכותבת מכתב"
+    instruction = ("בּוֹא נַתְחִיל! תַּגִּיד שׁוּב אֶת הַמִּשְׁפָּט, אֲבָל בִּמְקוֹם חנה ולאה תַּגִּיד הוּא, וְתַתְאִים אֶת "
+                   "כָּל הַשְּׁאָר.")
+    judged = {"fautes": [{"mot": "וכותבת", "commentaire": "Ce verbe ne s'accorde pas avec le nouveau sujet, הוא."}],
+              "reponse_prof": "שִׂים לֵב לַפֹּעַל הַשֵּׁנִי, הוּא עוֹד לֹא מַתְאִים לְהוּא."}
+    instructions = prompts.without_language_mode(prompts.declension_text_instructions(SENTENCES_PER_ROUND))
+    exercise = prompts.declension_text_exercise(1, sentence, element.word, person, expected)
+    second = prompts.declension_text_exercise(2, "אני גרה בתל אביב.", "אני", sentence_declension.PERSONS_HE["3mp"],
+                                              "הם גרים בתל אביב.")
+    congratulations = "\n".join(f"{entry['text']} · {entry['french']}" for entry in CONGRATULATIONS_TEXTS)
+    # La réponse orale en texte, sans relecture de l'orthographe ni phonétique : la transcription hébraïque seule.
+    spoken = transcription(heard, heard, "", instruction, TEACHER_CONTEXT, role="4", respell=False)[:1]
+    return {
+        "title": "Déclinaison",
+        "intro": "Sur des phrases du cours, l'élève remplace un élément surligné (un sujet, ou une préposition "
+                 "déclinée comme לי, לו) par une autre personne, et accorde tout le reste. Mode texte, "
+                 f"{SENTENCES_PER_ROUND} phrases par séance. L'application tire les phrases et leurs personnes, "
+                 "prépare les déclinaisons en arrière-plan pendant l'accueil, puis juge elle-même chaque phrase redite : "
+                 "identique à la phrase attendue, réussie sans modèle ; sinon, un juge relève les fautes et écrit la "
+                 "réplique du prof. Le prof donne les consignes et répond aux questions. Seuls les mots déclinés "
+                 "comptent : ni prononciation, ni orthographe.",
+        "flow": [
+            *([[[recorded]]] if (recorded := welcome("declinaison", language)) else []),
+            [[step("code", "1 · Les phrases et leurs personnes", source="declension.draw_items · choose_targets",
+                   title="L'application tire les phrases, et la personne cible de chacune",
+                   text=f"{SENTENCES_PER_ROUND} phrases, dans les sujets de déclinaison du niveau choisi (conjugaisons "
+                        "et ל décliné), chacune avec son élément connu d'avance (sujet ou préposition déclinée, cf. "
+                        "revision_course.json).",
+                   items=("seulement les leçons cochées : la leçon en cours, les leçons antérieures, ou les deux "
+                          f"(alors {CURRENT_LESSON_SENTENCES} phrases de la leçon en cours)",
+                          "les sujets en alternance, jamais deux fois la même phrase ni une simple variante",
+                          "la personne cible : tirée au hasard parmi celles qui changent l'accord au présent (cf. la "
+                          "note « Choix de la personne cible »), une autre que celles des phrases précédentes",
+                          "les phrases suivantes du tirage en réserve, pour remplacer une phrase sans déclinaison"),
+                   hint="À droite : le programme de la séance (un sujet par tuile, avec son petit cours) et le suivi."),
+              step("model", "puis · les déclinaisons, en parallèle", model=DECLENSION_MODEL,
+                   source="DeclensionSession.on_started · sentence_declension.prepare",
+                   title="Écrit la phrase attendue de chaque phrase",
+                   text=f"Dès le lancement, pendant l'accueil : {SENTENCES_PER_ROUND} appels en même temps, un par "
+                        "phrase, l'élément et la personne imposés. Le modèle n'écrit que la phrase déclinée.",
+                   items=("l'application vérifie : élément et cible imposés, phrase attendue en hébreu et différente, "
+                          "au moins un accord hors de l'élément, et ses verbes changés",
+                          f"sinon un second appel ({sentence_declension.DECLENSION_ATTEMPTS} au plus), puis la phrase "
+                          "est remplacée par une de la réserve, avec sa propre personne"),
+                   hint="Prêtes en 2 à 3 s, bien avant la première consigne.",
+                   system=sentence_declension.PROMPT,
+                   message=sentence_declension.declension_request(sentence, "subject", element, ["3ms"]),
+                   output=as_json(proposed), small=True)]],
+            [[step("code", "2 · La phrase s'affiche", source="DeclensionSession.next_sentence · phrase_suivante",
+                   title="La phrase au tableau, le prof donne la consigne",
+                   text="Fenêtre « Déclinaison » : la phrase, l'élément surligné et, dessous, en français, ce qu'il "
+                        "devient (genre compris). La première, le prof la demande (phrase_suivante) ; les suivantes "
+                        "viennent de l'application après une réussite, ou du bouton « Question suivante ».",
+                   items=("consigne en hébreu, la personne dite en hébreu (הוּא, אֲנִי (נְקֵבָה)…), jamais la forme "
+                          "déclinée",
+                          "première phrase : le prof explique la consigne en une ou deux phrases",
+                          "les suivantes : quelques mots seulement, sans réexpliquer, une tournure différente"),
+                   hint="La phrase attendue est envoyée au prof comme référence : il ne la dit jamais.",
+                   parts=(("La fonction phrase_suivante", as_json(NEXT_SENTENCE_TOOL)),
+                          ("Réponse de l'application au prof (première phrase)", as_json({"consigne": exercise})),
+                          ("Phrase suivante, après une réussite (exemple)",
+                           app_message(f"{prompts.NEXT_SENTENCE_AFTER_SUCCESS} {second}")),
+                          ("Phrase suivante, par le bouton (exemple)",
+                           app_message(f"{prompts.NEXT_SENTENCE_BY_BUTTON} {second}")),
+                          ("Consigne du prof (exemple)", instruction)))]],
+            [[step("student", "3 · L'élève", title="Redit la phrase déclinée, ou parle au prof",
+                   text="Touche le bouton rond, puis, à « Parlez », redit toute la phrase ; touche le carré pour "
+                        "envoyer. Il peut aussi l'écrire, ou corriger la transcription au crayon et la renvoyer.",
+                   hint="Le micro est ouvert du lancement de la séance à sa fin.")]],
+            spoken,
+            [[step("code", "5 · Tri : phrase redite ou question au prof ?", source="DeclensionSession.triage",
+                   title="Le code décide",
+                   text="Le même tri qu'en lecture et en compréhension : la réplique est adressée au prof si elle "
+                        "compte au moins 3 mots absents de la phrase et de la phrase attendue, et qu'ils font au moins "
+                        "60 % des mots dits, ou si elle n'a aucun mot hébreu. Dans le doute, c'est la phrase redite.",
+                   items=("phrase redite : l'application la juge (6), le prof ne la voit que dans l'historique",
+                          "adressée au prof : il y répond, en français, sans donner la solution"),
+                   hint="Avant la première phrase, tout va au prof (« on y va ? »).",
+                   parts=(("Note au prof : adressée au prof", prompts.DECLENSION_ADDRESSED),))]],
+            [[step("code", "6a · Identique à la phrase attendue ?", source="sentence_declension.same_sentence",
+                   title="Sans modèle",
+                   text="Comparées lettre à lettre, sans les nikkoud, la ponctuation ni les espaces. Identique : "
+                        "réussie (8b), sans appeler le juge.")],
+             [step("model", "6b · Juge de la déclinaison", model=DECLENSION_JUDGE_MODEL,
+                   source="sentence_declension.judge",
+                   when="Seulement si la phrase redite diffère de la phrase attendue.",
+                   text="Juge les seuls mots déclinés (le remplacement, les accords qu'il entraîne) et écrit la "
+                        "réplique du prof, en hébreu.",
+                   items=("fautes : le mot de l'élève et un commentaire en français, l'hébreu en lettres hébraïques, "
+                          "sans jamais la bonne forme",
+                          "ni orthographe (une transcription), ni ponctuation, ni autre mot de la phrase",
+                          "toute autre formulation correcte acceptée"),
+                   system=sentence_declension.JUDGE_PROMPT,
+                   message=sentence_declension.judge_request(declension, heard), output=as_json(judged))]],
+            [[step("code", "7 · L'évaluation s'affiche", source="DeclensionSession.judge",
+                   title="Le verdict de l'application",
+                   items=("fenêtre de la réponse : la phrase de l'élève, ses mots fautifs surlignés et commentés ; "
+                          "réussie, soulignée en vert",
+                          "réussie seulement sans aucune faute",
+                          "suivi de la séance : phrase réussie ou ratée"))]],
+            [[step("bad", "8a · Phrase ratée", source="DeclensionSession.judge · TextTeacher.say",
+                   text="La réplique du juge est dite à la place du prof, et gardée dans son historique. C'est la "
+                        "conversation : l'élève redit sa phrase (de nouveau triée, puis jugée : l'évaluation "
+                        "précédente disparaît), pose une question au prof, ou passe à la suite.",
+                   hint="Le bouton « Question suivante », ou la demande au prof (phrase_suivante), passe à la phrase "
+                        "suivante.",
+                   output=judged["reponse_prof"])],
+             [step("good", "8b · Phrase réussie", source="intros.CONGRATULATIONS_TEXTS · advance",
+                   text="Une félicitation en hébreu, tirée au hasard, jouée à la place du prof : sa voix enregistrée "
+                        "d'avance, son verbatim et sa traduction affichés ; puis, la félicitation dite (au plus "
+                        f"{TEACHER_IDLE_TIMEOUT} s), l'application envoie la phrase suivante au prof.",
+                   hint="Retour à l'étape 2. Après la dernière phrase, l'au revoir.",
+                   parts=(("Les félicitations", congratulations),))]],
+            [[farewell(f"9 · Au revoir (après la phrase {SENTENCES_PER_ROUND})", language)]],
+        ],
+        "notes": [
+            "Choix de la personne cible (choose_targets, Element.targets) : 1. la phrase et son élément viennent des "
+            "données (sujet ou préposition déclinée, avec sa personne, son genre et son nombre ; aucun repérage par un "
+            "modèle) ; 2. les personnes possibles : pour un sujet, celles d'un autre genre ou d'un autre nombre, règle "
+            "du présent (au présent, le verbe ne s'accorde pas en personne : אני מתרחץ, הוא מתרחץ) ; pour une "
+            "préposition déclinée, toutes les autres ; 3. l'application en tire une au hasard pour chaque phrase, dès "
+            "le lancement, une autre que celles des phrases précédentes tant qu'il en reste ; 4. le modèle n'écrit que "
+            "la phrase déclinée, pour cette personne. Le passé et le futur, où le verbe change aussi avec la personne "
+            "(il → je), ne sont pas encore pris en compte : leurs cibles de même genre et nombre sont écartées.",
+            NO_RESPELL,
+            teacher(instructions, prompts.DECLENSION_START,
+                    "Accueil, consigne de chaque phrase, et réponses aux questions de l'élève. Il ne juge aucune "
+                    "phrase, ne choisit ni les phrases ni les personnes ; seule fonction : phrase_suivante.",
+                    "declinaison", language, phonetic=False),
+            *teacher_voice("כָּל הַכָּבוֹד!", "Bravo !", "Ici, כותב s'accorde avec הוא : masculin singulier.",
+                           {"francais": "Ici, כותב s'accorde avec הוא : masculin singulier.",
+                            "hebreu": "כָּאן כּוֹתֵב מַתְאִים לְהוּא: זָכָר יָחִיד."}),
+            "Langue (page texte, sans mode de langue) : le prof répond en français à une réplique que l'élève lui "
+            "adresse, les mots hébreux cités en lettres hébraïques ; en hébreu, sans lettres latines ni chiffres, à "
+            "tout le reste (accueil, consignes, au revoir), comme les répliques de l'application (félicitations, "
+            "réplique du juge). Sous chaque réplique en hébreu, sa traduction française : affichée d'office sur "
+            "ordinateur, à la place de l'hébreu avec le bouton « אA » sur mobile. Les commentaires écrits des fautes, "
+            "en français, mots hébreux en lettres hébraïques.",
+            "Ni transcription phonétique ni juge de prononciation : seuls les mots déclinés comptent. Une seule "
+            "config, SHARP.",
+            "Les félicitations sont enregistrées une fois pour toutes, avec la voix du prof (scripts/"
+            "build_revision_intros.py felicitations) ; avec un autre modèle de voix, leur texte est dit à la volée.",
+            f"Les messages affichés sont ceux d'un exemple : la phrase « {sentence} » (leçon 0.02), son sujet "
+            f"{element.word} à mettre à « il », et la réponse « {heard} ». Les instructions système sont celles du "
+            "code actuel.",
+        ],
+    }
+
 class DeclensionSession(TeacherSession):
     def __init__(self, browser: WebSocket, voice: str, lesson: str, items: list[Item]):
         self.lesson = lesson
         # La séance, puis les phrases de réserve (cf. draw_items).
         self.items = items[:SENTENCES_PER_ROUND]
         self.reserve = items[SENTENCES_PER_ROUND:]
+        # La personne cible de chaque phrase, choisie d'avance (cf. choose_targets).
+        self.targets = choose_targets(self.items)
         tools = [NEXT_SENTENCE_TOOL, DECLENSION_EVALUATION_TOOL, RETRY_TOOL, LANGUAGE_TOOL]
         super().__init__(browser, GeminiLive(voice, prompts.declension_instructions(len(self.items)),
                                              f"{prompts.DECLENSION_START} {prompts.language_mode(DEFAULT_LANGUAGES["declinaison"])}",
@@ -208,6 +394,12 @@ class DeclensionSession(TeacherSession):
         self.attempt_at: float | None = None
         self.turn_started_at = 0.0
         self.nudged = 0
+        # Page texte (cf. demande explicite du user, judge_by_app) : l'application juge elle-même les phrases redites
+        # et y répond (félicitation, ou réplique du juge) ; le prof donne les consignes et converse.
+        self.app_judges = False
+        # Ses félicitations, voix comprise (cf. intros.congratulations), données par le routeur ; dites à la volée sinon.
+        self.congratulations: list[dict] = [{**entry, "pcm": None} for entry in CONGRATULATIONS_TEXTS]
+        self.judging = False  # une phrase redite en cours de jugement
 
     @property
     def current(self) -> Item | None:
@@ -216,8 +408,12 @@ class DeclensionSession(TeacherSession):
     async def on_started(self) -> None:
         log.info("Séance de déclinaison lancée · voix %s · leçon %s · %s", self.live.voice, self.lesson,
                  [(i.topic["id"], i.sentence) for i in self.items])
-        self.prepare(0)
-        await self.to_browser({"type": "language", "language": self.language})
+        # Les phrases de la séance, préparées toutes en même temps dès le lancement, pendant l'accueil (cf. demande
+        # explicite du user).
+        for index in range(len(self.items)):
+            self.prepare(index)
+        if self.language_modes:
+            await self.to_browser({"type": "language", "language": self.language})
         await self.send_topics()
         await self.to_browser({"type": "score", "score": self.score, "event": None})
 
@@ -235,7 +431,7 @@ class DeclensionSession(TeacherSession):
 
     async def check_evaluated(self) -> None:
         """Le prof vient de répondre à une phrase en hébreu de l'élève sans l'évaluer : on le relance, une fois."""
-        if (self.answering and not self.evaluated and self.attempt_at is not None
+        if (not self.app_judges and self.answering and not self.evaluated and self.attempt_at is not None
                 and self.turn_started_at > self.attempt_at and self.nudged != self.asked and not self.finished):
             self.nudged = self.asked
             log.info("phrase de l'élève non évaluée : relance du prof")
@@ -252,11 +448,9 @@ class DeclensionSession(TeacherSession):
     def prepare(self, index: int) -> None:
         if index < len(self.items) and index not in self.prepared:
             item = self.items[index]
-            # Personnes déjà demandées (déclinaisons prêtes) : les autres d'abord, pour varier.
-            used = {task.result().target for task in self.prepared.values()
-                    if task.done() and not task.cancelled() and not task.exception() and task.result()}
+            # La personne cible, choisie d'avance (cf. choose_targets).
             task = asyncio.create_task(sentence_declension.prepare(item.sentence, item.element.kind, item.element,
-                                                                   used))
+                                                                   target=self.targets[index]))
             self.prepared[index] = task
             self.background.append(task)
 
@@ -277,6 +471,7 @@ class DeclensionSession(TeacherSession):
             same = lambda item: ((lesson_number(item.lesson) == level)  # noqa: E731
                                  == (lesson_number(self.items[index].lesson) == level))
             self.items[index] = self.reserve.pop(next((i for i, item in enumerate(self.reserve) if same(item)), 0))
+            self.targets[index] = pick_target(self.items[index], self.targets[:index] + self.targets[index + 1:])
             del self.prepared[index]
 
     # --- programme et suivi ----------------------------------------------------
@@ -413,6 +608,10 @@ class DeclensionSession(TeacherSession):
         else:
             await self.show(message)
         await self.set_answering(True)
+        if self.app_judges:
+            return prompts.declension_text_exercise(self.asked, declension.sentence, declension.word,
+                                                    sentence_declension.PERSONS_HE[declension.target],
+                                                    declension.expected)
         return prompts.declension_exercise(self.asked, declension.sentence, declension.word, declension.replacement,
                                            declension.expected)
 
@@ -447,7 +646,7 @@ class DeclensionSession(TeacherSession):
 
     async def on_browser_message(self, data: dict) -> None:
         if data.get("type") == "language" and data.get("language") in prompts.LANGUAGE_NAMES:
-            if data["language"] != self.language:
+            if data["language"] != self.language and self.language_modes:
                 await self.set_language(data["language"])
                 speaking = await self.cut_teacher()
                 await (self.live.app_message if speaking else self.live.note)(prompts.language_switched(self.language))
@@ -466,7 +665,88 @@ class DeclensionSession(TeacherSession):
         await self.to_browser({"type": "language", "language": language})
 
     def in_mode(self, message: str) -> str:
-        return f"{message} {prompts.language_mode(self.language)}"
+        # Sans mode de langue (page texte, cf. language_modes) : le message seul.
+        return f"{message} {prompts.language_mode(self.language)}" if self.language_modes else message
+
+    # --- page texte : l'application juge les phrases redites (cf. judge_by_app) -----------------------------
+
+    def judge_by_app(self, instructions: str) -> None:
+        """Page texte (cf. demande explicite du user) : plus de mode de langue, ni de relecture de l'orthographe ;
+        l'application trie chaque réplique de l'élève (phrase redite, ou adressée au prof) et juge elle-même les
+        phrases redites ; le prof (instructions, sans mode de langue) n'évalue plus rien."""
+        self.app_judges, self.language_modes, self.language = True, False, "he"
+        self.respell_spoken = False
+        self.live.instructions = instructions
+        self.live.start_message = prompts.DECLENSION_START
+        self.live.tools = [NEXT_SENTENCE_TOOL]
+
+    def triage(self, text: str) -> bool:
+        """La réplique est-elle la phrase redite (vrai), ou adressée au prof ? Le même tri qu'en lecture et en
+        compréhension (cf. reading.to_teacher) : adressée au prof si elle compte assez de mots absents de la phrase et
+        de la phrase attendue, ou si elle n'a aucun mot hébreu ; dans le doute, la phrase redite."""
+        from app.revision_agent.reading import to_teacher, words  # reading.py importe schema.py, comme ce module
+        return bool(words(text)) and not to_teacher(text, [self.declension.sentence, self.declension.expected])
+
+    async def on_student_text(self, text: str, spoken: bool = False, corrected: bool = False) -> None:
+        if (not self.app_judges or not text or self.started_at is None or self.declension is None or self.finished
+                or self.closing or self.judging):
+            await super().on_student_text(text, spoken, corrected)
+            return
+        answer = self.triage(text)
+        log.info("tri : %s", "phrase redite" if answer else "adressée au prof")
+        if not answer:
+            await self.live.note(prompts.DECLENSION_ADDRESSED)
+            await super().on_student_text(text, spoken, corrected)
+            return
+        self.judging = True
+        try:
+            await self.judge(text, spoken, corrected)
+        finally:
+            self.judging = False
+
+    async def judge(self, text: str, spoken: bool, corrected: bool) -> None:
+        """La phrase redite : identique à la phrase attendue, réussie sans modèle ; sinon jugée par le juge de la
+        déclinaison (cf. sentence_declension.judge), qui écrit aussi la réplique du prof. Réussie : une félicitation
+        enregistrée, puis la phrase suivante ; ratée : la réplique du juge, puis la conversation."""
+        await self.on_event(LiveEvent("user_text", f"{text} "))
+        await self.live.student_text(text, spoken, corrected, respond=False)
+        self.cancel_advance()
+        if self.evaluated:
+            # Un nouvel essai : l'évaluation précédente disparaît.
+            await self.to_browser({"type": "declension_evaluation", "evaluation": None})
+        declension, reply = self.declension, ""
+        if sentence_declension.same_sentence(text, declension.expected):
+            log.info("phrase redite identique à la phrase attendue")
+            errors = []
+        else:
+            try:
+                judged = await sentence_declension.judge(declension, text)
+            except Exception:
+                log.exception("Jugement de la déclinaison impossible")
+                await self.say({"text": prompts.DECLENSION_JUDGE_FAILED})
+                return
+            errors, reply = faults(judged["fautes"], "language"), judged["reponse_prof"]
+        self.evaluated = True
+        await self.to_browser({"type": "declension_evaluation",
+                               "evaluation": {"answer": align_error_words(text.strip(), errors), "errors": errors}})
+        succeeded = not errors
+        await self.record(succeeded)
+        await self.set_answering(False)
+        if succeeded:
+            await self.say(random.choice(self.congratulations))
+            # La phrase suivante, dès la félicitation dite (cf. advance).
+            self.advance_task = asyncio.create_task(self.advance())
+            self.background.append(self.advance_task)
+        else:
+            await self.say({"text": reply or prompts.DECLENSION_FAILED_REPLY})
+
+    async def say(self, entry: dict) -> None:
+        """Une réplique de l'application ({"text"}, et pour une félicitation « french », « hebrew », « spoken »,
+        « pcm » : sa traduction connue d'avance et sa voix enregistrée), dite à la place du prof et gardée dans son
+        historique (cf. TextTeacher.say)."""
+        if entry.get("french"):
+            self.known_translations[entry["text"]] = entry
+        await self.live.say({"text": entry["text"], "pcm": entry.get("pcm")})
 
     async def set_answering(self, answering: bool) -> None:
         self.answering = answering
