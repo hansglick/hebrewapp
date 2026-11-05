@@ -13,6 +13,7 @@ imposé au modèle, qui ne choisit plus que la cible parmi celles qui obligent �
 plus que les verbes de l'élément ont changé.
 """
 
+import difflib
 import json
 import logging
 import random
@@ -235,13 +236,14 @@ il remplace un élément (un sujet, ou une préposition déclinée comme לי, �
 tout ce qui en dépend. Tu reçois, en JSON :
 - phrase : la phrase de départ ; element : l'élément à remplacer ; personne : la personne qu'il doit devenir ;
 - phrase_attendue : une solution correcte, qui n'est qu'une référence ;
+- mots_declines : les mots que la déclinaison change, de la phrase de départ (avant) à la phrase attendue (apres) :
+  l'élément remplacé et chaque accord qu'il entraîne ;
 - reponse_eleve : la phrase que l'élève a dite, transcrite de l'oral (ou écrite).
-Juge seulement la déclinaison : le remplacement de l'élément par la bonne personne, et les accords qu'il entraîne
-(verbes, adjectifs, possessifs). Tout le reste ne compte pas : ni l'orthographe (une transcription : ת et ט, כ et ח, א
-et ע, ו et ב se valent quand le mot se prononce pareil), ni la ponctuation, ni un autre mot de la phrase oublié ou
-changé s'il ne dépend pas de l'élément. Accepte toute autre formulation correcte que la phrase attendue (un prénom au
-lieu d'un pronom, par exemple).
-- fautes : pour chaque mot décliné faux, l'élément non remplacé ou remplacé par une autre personne, le mot de la
+Juge seulement les mots de mots_declines : pour chacun, la réponse de l'élève doit avoir, à sa place, la forme de
+apres, ou une autre forme correcte pour la même personne (un prénom au lieu d'un pronom, par exemple). Tous les autres
+mots ne comptent pas, même oubliés ou changés. Ni l'orthographe (une transcription : ת et ט, כ et ח, א et ע, ו et ב se
+valent quand le mot se prononce pareil), ni la ponctuation ne comptent.
+- fautes : pour chaque mot de mots_declines faux ou laissé tel quel (comme dans avant), le mot de la
   réponse de l'élève recopié exactement, et un commentaire en français, court et factuel, qui dit ce qui ne va pas
   sans JAMAIS donner la bonne forme (« ce verbe ne s'accorde pas avec le nouveau sujet », « il faut le féminin
   pluriel ») ; tout mot hébreu cité s'écrit en lettres hébraïques. [] si la déclinaison est juste.
@@ -262,11 +264,29 @@ JUDGE_SCHEMA = {
 }
 
 
+def changed_words(declension: Declension) -> list[dict]:
+    """Les mots que la déclinaison change ({"avant", "apres"}) : la phrase de départ et la phrase attendue, sans
+    nikkoud, alignées mot à mot (difflib, un nombre de mots qui change compris, « חנה ולאה » → « הוא ») ; chaque
+    passage différent, mot par mot quand il garde son nombre de mots. Le juge ne juge qu'eux (cf. JUDGE_PROMPT,
+    demande explicite du user)."""
+    before = HEBREW_WORD.findall(NIKKUD.sub("", declension.sentence))
+    after = HEBREW_WORD.findall(NIKKUD.sub("", declension.expected))
+    changed = []
+    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, before, after, autojunk=False).get_opcodes():
+        if tag == "equal":
+            continue
+        if i2 - i1 == j2 - j1:
+            changed += [{"avant": old, "apres": new} for old, new in zip(before[i1:i2], after[j1:j2])]
+        else:
+            changed.append({"avant": " ".join(before[i1:i2]), "apres": " ".join(after[j1:j2])})
+    return changed
+
+
 def judge_request(declension: Declension, answer: str) -> str:
     """La demande au juge (cf. judge ; aussi pour le schéma de la tâche)."""
     return json.dumps({"phrase": declension.sentence, "element": declension.word,
                        "personne": PERSONS[declension.target], "phrase_attendue": declension.expected,
-                       "reponse_eleve": answer}, ensure_ascii=False)
+                       "mots_declines": changed_words(declension), "reponse_eleve": answer}, ensure_ascii=False)
 
 
 async def judge(declension: Declension, answer: str) -> dict:

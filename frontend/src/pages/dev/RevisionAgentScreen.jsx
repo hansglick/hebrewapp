@@ -726,7 +726,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
               onNext={session.next}
               clock={sessionControls || null}
               keepOnDone={textMode}
-              composer={composer(session.declensionEvaluation)}
+              // Sans Gemini Live, comme en compréhension : l'évaluation s'affiche dans la fenêtre de la réponse.
+              composer={composer()}
             />
           ) : (
             <ReadingBoard

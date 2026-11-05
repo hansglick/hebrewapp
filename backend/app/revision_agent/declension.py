@@ -293,24 +293,25 @@ def schema() -> dict:
              [step("model", "6b · Juge de la déclinaison", model=DECLENSION_JUDGE_MODEL,
                    source="sentence_declension.judge",
                    when="Seulement si la phrase redite diffère de la phrase attendue.",
-                   text="Juge les seuls mots déclinés (le remplacement, les accords qu'il entraîne) et écrit la "
-                        "réplique du prof, en hébreu.",
+                   text="Juge les seuls mots déclinés et écrit la réplique du prof, en hébreu. Ces mots, le code "
+                        "les trouve (sentence_declension.changed_words) : la phrase de départ et la phrase attendue "
+                        "alignées mot à mot, chaque passage qui change (l'élément, ses accords).",
                    items=("fautes : le mot de l'élève et un commentaire en français, l'hébreu en lettres hébraïques, "
                           "sans jamais la bonne forme",
-                          "ni orthographe (une transcription), ni ponctuation, ni autre mot de la phrase",
+                          "ni orthographe (une transcription), ni ponctuation, ni aucun mot hors de mots_declines",
                           "toute autre formulation correcte acceptée"),
                    system=sentence_declension.JUDGE_PROMPT,
                    message=sentence_declension.judge_request(declension, heard), output=as_json(judged))]],
             [[step("code", "7 · L'évaluation s'affiche", source="DeclensionSession.judge",
                    title="Le verdict de l'application",
-                   items=("fenêtre de la réponse : la phrase de l'élève, ses mots fautifs surlignés et commentés ; "
-                          "réussie, soulignée en vert",
+                   items=("fenêtre de la réponse : la phrase de l'élève, déjà écrite, ses mots fautifs surlignés et "
+                          "commentés ; réussie, soulignée en vert, cochée puis effacée (pas d'autre fenêtre)",
                           "réussie seulement sans aucune faute",
                           "suivi de la séance : phrase réussie ou ratée"))]],
             [[step("bad", "8a · Phrase ratée", source="DeclensionSession.judge · TextTeacher.say",
                    text="La réplique du juge est dite à la place du prof, et gardée dans son historique. C'est la "
-                        "conversation : l'élève redit sa phrase (de nouveau triée, puis jugée : l'évaluation "
-                        "précédente disparaît), pose une question au prof, ou passe à la suite.",
+                        "conversation : l'élève redit sa phrase (de nouveau triée, puis jugée : sa nouvelle réponse "
+                        "remplace la précédente), pose une question au prof, ou passe à la suite.",
                    hint="Le bouton « Question suivante », ou la demande au prof (phrase_suivante), passe à la phrase "
                         "suivante.",
                    output=judged["reponse_prof"])],
@@ -711,9 +712,6 @@ class DeclensionSession(TeacherSession):
         await self.on_event(LiveEvent("user_text", f"{text} "))
         await self.live.student_text(text, spoken, corrected, respond=False)
         self.cancel_advance()
-        if self.evaluated:
-            # Un nouvel essai : l'évaluation précédente disparaît.
-            await self.to_browser({"type": "declension_evaluation", "evaluation": None})
         declension, reply = self.declension, ""
         if sentence_declension.same_sentence(text, declension.expected):
             log.info("phrase redite identique à la phrase attendue")
@@ -727,7 +725,10 @@ class DeclensionSession(TeacherSession):
                 return
             errors, reply = faults(judged["fautes"], "language"), judged["reponse_prof"]
         self.evaluated = True
-        await self.to_browser({"type": "declension_evaluation",
+        # Comme en compréhension (cf. demande explicite du user) : l'évaluation s'affiche dans la fenêtre de la réponse,
+        # sur le verbatim déjà écrit (fautes surlignées ou, réussie, soulignée en vert puis effacée, cf. StudentAnswer),
+        # sans le réécrire dans une autre fenêtre.
+        await self.to_browser({"type": "exchange", "kind": "evaluation",
                                "evaluation": {"answer": align_error_words(text.strip(), errors), "errors": errors}})
         succeeded = not errors
         await self.record(succeeded)

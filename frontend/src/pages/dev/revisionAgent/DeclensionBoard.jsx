@@ -155,7 +155,8 @@ export default function DeclensionBoard({
       exerciseKey="board"
       exerciseLabel="Déclinaison"
       exercisePersistent
-      answer={assessment || null}
+      // Sans Gemini Live, l'évaluation s'affiche dans la fenêtre de la réponse (cf. StudentAnswer).
+      answer={(!composer && assessment) || null}
       closing={closing}
       clock={controls || null}
       material={material}

@@ -305,7 +305,14 @@ export default function StudentAnswer({
   // réponse, déjà écrite, ne se réécrit pas.
   const cleaning = Boolean(sent?.live) && reading && cleaned !== sent.id;
   const ownEvaluation = taskEvaluation !== undefined;
-  const evaluated = ownEvaluation && Boolean(sent) && Boolean(taskEvaluation) && taskEvaluation !== sent.before;
+  const judged = ownEvaluation && Boolean(sent) && Boolean(taskEvaluation) && taskEvaluation !== sent.before;
+  // Une fois évaluée, la réponse ne revient plus, même quand son évaluation s'efface avec l'exercice suivant (cf.
+  // demande explicite du user : comme les autres tâches, le verbatim s'efface en passant à la suite).
+  const [evaluatedId, setEvaluatedId] = useState(null);
+  useEffect(() => {
+    if (judged) setEvaluatedId(sent.id);
+  }, [judged, sent?.id]);
+  const evaluated = judged || (Boolean(sent) && evaluatedId === sent.id);
   const exchanged = ownEvaluation ? null : exchange;
   const evaluation = exchanged?.kind === "evaluation" ? exchanged.evaluation : null;
   const perfect = Boolean(evaluation) && evaluation.errors.length === 0;
