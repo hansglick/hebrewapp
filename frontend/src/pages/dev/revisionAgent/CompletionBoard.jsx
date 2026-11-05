@@ -43,7 +43,7 @@ function ThumbIcon({ up }) {
 
 // Les trois puces de l'évaluation : contrainte, plausibilité, grammaire, le nom
 // de chacune, « : », le pouce levé ou baissé, puis sa remarque, en italique.
-function Dimensions({ dimensions }) {
+export function Dimensions({ dimensions }) {
   return (
     <ul className="ra-completion-dimensions">
       {dimensions.map((d) => (
@@ -226,7 +226,8 @@ export default function CompletionBoard({
       exerciseKey="board"
       exerciseLabel="Complète la phrase"
       exercisePersistent
-      answer={assessment || null}
+      // Sans Gemini Live, l'évaluation s'affiche dans la fenêtre de la réponse (cf. StudentAnswer).
+      answer={(!composer && assessment) || null}
       answerBlind={Boolean(answerFrame)}
       closing={closing}
       clock={controls || null}

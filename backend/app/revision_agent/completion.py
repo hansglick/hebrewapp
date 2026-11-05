@@ -33,6 +33,7 @@ import asyncio
 import json
 import logging
 import random
+import re
 import time
 from dataclasses import dataclass
 from functools import lru_cache
@@ -40,14 +41,19 @@ from functools import lru_cache
 from fastapi import WebSocket
 
 from app.config import DATA_DIR
-from app.revision_agent import prompts
+from app.revision_agent import completion_judges, prompts
 from app.revision_agent.comprehension import LANGUAGE_TOOL, LANGUAGES
 from app.revision_agent.config import DEFAULT_LANGUAGES
 from app.revision_agent.evaluation import HEBREW_LETTER, align_error_words, hebrew_answer, letters
 from app.revision_agent.expression import ANSWER, CLOSING_SECONDS, RETRY_TOOL, RETRY_VERDICT, TEACHER_IDLE_TIMEOUT
-from app.revision_agent.gemini_live import GeminiLive
-from app.revision_agent.judges import error_list, judge_sentence, no_fault, plausibility, sense_errors, teacher_errors
+from app.revision_agent.gemini_live import GeminiLive, LiveEvent
+from app.revision_agent.intros import CONGRATULATIONS_TEXTS
+from app.revision_agent.judges import (error_list, judge_sentence, mispronounced, no_fault, plausibility, sense_errors,
+                                       teacher_errors)
 from app.revision_agent.passages import is_previous, lesson_number
+from app.revision_agent.schema import (NO_RESPELL, app_message, as_json, farewell, pronunciation_judge, step, teacher,
+                                       teacher_voice, transcription, welcome)
+from app.revision_agent.transcribe import TEACHER_CONTEXT
 from app.revision_agent.session import TeacherSession
 from app.revision_agent.utterances import lesson_utterances, sentence_key
 
@@ -252,6 +258,205 @@ def dimensions(judged: dict, language: list[dict]) -> list[dict]:
     ]
 
 
+# Tri de la page texte (cf. demande explicite du user) : la suite est libre, ses mots ne sont dans aucune phrase de
+# référence (le tri des autres tâches, cf. reading.to_teacher, la prendrait pour une question). Une réplique est donc
+# un essai, sauf si elle n'a aucun mot hébreu, si elle a au moins autant de mots en lettres latines (du français) que
+# de mots hébreux, au moins QUESTION_LATIN_WORDS, ou si c'est une question en hébreu (QUESTION_WORDS en tête, « ? » à
+# la fin) qui ne reprend pas le début affiché. Dans le doute, un essai.
+QUESTION_LATIN_WORDS = 2
+QUESTION_WORDS = ("מה", "למה", "איך", "מי", "איפה", "מתי", "האם", "כמה", "מאיפה", "לאן")
+LATIN_WORD = re.compile(r"[A-Za-zÀ-ÿ]{2,}")
+
+
+def hebrew_words(text: str) -> list[str]:
+    return [w for w in (letters(token) for token in text.split()) if w]
+
+
+def is_attempt(text: str, prefix: str) -> bool:
+    """La réplique est-elle une phrase de l'élève (un essai), ou adressée au prof ? (cf. QUESTION_LATIN_WORDS)"""
+    said, start = hebrew_words(text), hebrew_words(prefix)
+    if not said:
+        return False
+    if start and said[:len(start)] == start:
+        return True
+    latin = LATIN_WORD.findall(text)
+    if len(latin) >= QUESTION_LATIN_WORDS and len(latin) >= len(said):
+        return False
+    return not (said[0] in QUESTION_WORDS and text.strip().endswith("?"))
+
+
+def schema(config: str = "sharp") -> dict:
+    """Le schéma de la tâche (cf. schema.py), page texte, config SHARP (« sharp ») ou SHARP wo prononciation
+    (« sharp_wo_pronunciation » : ni phonétique ni juge de prononciation), sur un exemple : le début « אנחנו נוסעות »
+    (leçon 0.04), la contrainte de la préposition de direction ל, et une phrase avec une faute de grammaire (אוכל) et,
+    en SHARP, une faute de prononciation (חיפה)."""
+    pronunciation = config != "sharp_wo_pronunciation"
+    language = "he"  # sans mode de langue
+    item = Item("0.04", "0.07", "אנחנו נוסעות לפריז.", "אנחנו נוסעות", "אנחנו נוסעות ל",
+                "utilise la préposition de direction ל", "se rendre quelque part",
+                "La préposition de direction ל après un verbe de mouvement")
+    inputs = {"debut": item.prefix, "contrainte": item.constraint, "concept": item.definition,
+              "action_reference": item.action}
+    heard = "אנחנו נוסעות לחיפה ואנחנו אוכל שם"
+    phonetic = "anakhnu nos'ot le-hifa ve-anakhnu okhel sham"
+    instruction = "יאללה, נתחיל! הנה התחלה של משפט: אנחנו נוסעות... תשלים איך שאתה רוצה, לפי ההוראה."
+    instructions = prompts.without_language_mode(prompts.completion_text_instructions(SENTENCES_PER_ROUND))
+    exercise = prompts.completion_text_exercise(1, item.prefix, item.constraint)
+    second = prompts.completion_text_exercise(2, "יש לי", "ajoute un complément d'objet direct défini précédé de את")
+    ok = {"ok": True, "commentaire": "", "resume": ""}
+    grammar = {"ok": False, "fautes": [{"mot": "אוכל", "commentaire": "Ce verbe ne s'accorde pas avec אנחנו, au "
+                                                                     "féminin pluriel."}],
+               "resume": "שים לב לפועל השני, הוא לא מתאים לאנחנו."}
+    words = [{"mot": mot, "correct": correct, "entendu": entendu, "faute": faute, "remarque": False,
+              **({"commentaire": "Le ח se prononce kh, pas h."} if faute else {})}
+             for mot, correct, entendu, faute in [
+                 ("אנחנו", "anakhnu", "anakhnu", False), ("נוסעות", "nos'ot", "nos'ot", False),
+                 ("לחיפה", "le-kheifa", "le-hifa", True), ("ואנחנו", "ve-anakhnu", "ve-anakhnu", False),
+                 ("אוכל", "okhel", "okhel", False), ("שם", "sham", "sham", False)]]
+    found = [w for w in words if w["faute"]]
+    first = {"contrainte": ok, "plausibilite": ok, "grammaire": {**grammar, "commentaire": ""}}
+    early = completion_judges.aggregate(first)
+    full = completion_judges.aggregate({**first, "prononciation": completion_judges.pronunciation_verdict(found)})
+    shown = full if pronunciation else early
+    congratulations = "\n".join(f"{entry['text']} · {entry['french']}" for entry in CONGRATULATIONS_TEXTS)
+    # La réponse orale en texte, sans relecture de l'orthographe ; sans prononciation, la transcription seule (pas de
+    # 4b).
+    spoken = transcription(heard, heard, phonetic, instruction, TEACHER_CONTEXT, role="4", respell=False)
+    if not pronunciation:
+        spoken = spoken[:1]
+
+    def judge_step(name: str, role: str, title: str, output: dict) -> dict:
+        prompt, _, model, _ = completion_judges.JUDGES[name]
+        return step("model", role, model=model, source="completion_judges.judge", title=title,
+                    system=prompt, message=completion_judges.judge_request(inputs, heard), output=as_json(output))
+
+    judges = [
+        [judge_step("contrainte", "6a · Juge de la contrainte", "La contrainte est-elle respectée ?", ok)],
+        [judge_step("grammaire", "6b · Juge de la grammaire", "Fautes de langue, mot par mot", grammar)],
+        [judge_step("plausibilite", "6c · Juge de la plausibilité", "La phrase a-t-elle un sens ?", ok)],
+    ]
+    if pronunciation:
+        judges.append([pronunciation_judge("6d · Juge de prononciation", heard, phonetic, words,
+                                           what="Les mots sont-ils bien prononcés ? Compare la phonétique entendue (4b) "
+                                                "à la prononciation correcte de la transcription. Seules les fautes "
+                                                "comptent : les remarques vertes ne s'affichent pas.")])
+    if pronunciation:
+        aggregation = ("affichage en deux temps : si la contrainte, la grammaire ou la plausibilité est fausse, "
+                       "l'évaluation s'affiche et le prof parle sans attendre la prononciation, dont les fautes "
+                       "s'ajoutent à l'écran à leur arrivée (le prof n'en parle pas) ; les trois bonnes, on l'attend",
+                       "prononciation en faute : la réplique est un modèle du code, avec le premier mot fautif : "
+                       f"« {completion_judges.PRONUNCIATION_SUMMARY} »")
+        verdicts = (("Les trois premiers verdicts réunis (exemple)", as_json(early)),
+                    ("Puis, la prononciation arrivée (exemple)", as_json(full)))
+    else:
+        aggregation = ()
+        verdicts = (("Les verdicts réunis (exemple)", as_json(early)),)
+    order = "contrainte, grammaire, plausibilité" + (", prononciation" if pronunciation else "")
+    return {
+        "title": "Complétion · SHARP" + ("" if pronunciation else " wo prononciation"),
+        "intro": "L'élève voit le début d'une phrase hébraïque et une contrainte de grammaire, en français, et complète "
+                 "la phrase comme il veut : toute suite qui respecte la contrainte et a du sens est juste. Mode texte, "
+                 f"{SENTENCES_PER_ROUND} phrases par séance. L'application tire les phrases, trie chaque réplique de "
+                 f"l'élève, et juge elle-même chaque phrase : {len(judges)} juges en parallèle ({order}), réunis par "
+                 "le code, qui choisit la réplique du prof. Le prof accueille, donne les consignes et répond aux "
+                 "questions." + ("" if pronunciation else " Ni transcription phonétique ni juge de prononciation."),
+        "flow": [
+            *([[[recorded]]] if (recorded := welcome("completion", language)) else []),
+            [[step("code", "1 · Les phrases", source="completion.draw_items · rotate",
+                   title="L'application tire les phrases",
+                   text=f"{SENTENCES_PER_ROUND} phrases des leçons déjà vues, chacune avec un concept déjà vu au "
+                        "niveau choisi, son début à afficher et sa contrainte (préparés d'avance, cf. "
+                        "scripts/build_revision_completion_constraints.py).",
+                   items=("les concepts en alternance : un concept après l'autre, en tournant, pour la variété",
+                          "jamais deux fois la même phrase, ni une simple variante",
+                          "seulement les leçons cochées : la leçon en cours, les leçons antérieures, ou les deux "
+                          f"(alors {CURRENT_LESSON_SENTENCES} phrases du concept de la leçon en cours)",
+                          "la phrase d'origine n'est jamais affichée : elle ne sert qu'aux indices"),
+                   hint="À droite : le programme de la séance (un concept par tuile, avec son petit cours) et le "
+                        "suivi.")]],
+            [[step("code", "2 · La phrase s'affiche", source="CompletionSession.next_sentence · phrase_suivante",
+                   title="Le début et la contrainte au tableau, le prof donne la consigne",
+                   text="La première, le prof la demande (phrase_suivante) ; les suivantes viennent de l'application "
+                        "après une réussite, ou du bouton « Complétion suivante ».",
+                   items=("consigne en hébreu, sans jamais proposer de suite",
+                          "première phrase : le prof explique la consigne en une ou deux phrases",
+                          "les suivantes : quelques mots seulement, sans réexpliquer, une tournure différente",
+                          "indices, à la demande : l'action de la phrase, puis le début prolongé ; la pastille les "
+                          f"offre après une phrase ratée, ou {HESITATION_SECONDS} s de silence"),
+                   parts=(("La fonction phrase_suivante", as_json(NEXT_SENTENCE_TOOL)),
+                          ("Réponse de l'application au prof (première phrase)", as_json({"consigne": exercise})),
+                          ("Phrase suivante, après une réussite (exemple)",
+                           app_message(f"{prompts.NEXT_SENTENCE_AFTER_SUCCESS} {second}")),
+                          ("Consigne du prof (exemple)", instruction)))]],
+            [[step("student", "3 · L'élève", title="Complète la phrase, ou parle au prof",
+                   text="Touche le bouton rond, puis, à « Parlez », dit sa phrase (toute la phrase, ou seulement la "
+                        "suite : le code recolle le début) ; touche le carré pour envoyer. Il peut aussi l'écrire, ou "
+                        "corriger la transcription au crayon et la renvoyer.")]],
+            spoken,
+            [[step("code", "5 · Tri : une phrase, ou une question au prof ?", source="completion.is_attempt",
+                   title="Le code décide",
+                   text="La suite est libre : ses mots ne sont dans aucune phrase de référence, le tri des autres "
+                        "tâches ne s'applique pas. La réplique est une phrase de l'élève, sauf :",
+                   items=("aucun mot hébreu",
+                          f"au moins {QUESTION_LATIN_WORDS} mots en lettres latines (du français), et au moins autant "
+                          "que de mots hébreux",
+                          "une question en hébreu (מה, למה, איך… en tête, « ? » à la fin), qui ne reprend pas le "
+                          "début affiché"),
+                   hint="Elle reprend le début affiché : toujours une phrase. Dans le doute, une phrase. Adressée au "
+                        "prof : il y répond en français, sans donner de suite.",
+                   parts=(("Note au prof : adressée au prof", prompts.COMPLETION_ADDRESSED),))]],
+            judges,
+            [[step("code", "7 · Le code réunit les verdicts", source="completion_judges.aggregate",
+                   title="Le verdict de l'application, et la réplique du prof",
+                   text="Réussie seulement si tous les juges sont bons. Sinon, toutes les fautes s'affichent, et la "
+                        "réplique du prof est la phrase de résumé du premier juge en faute, dans cet ordre : "
+                        f"{order}.",
+                   items=aggregation + (
+                       "fenêtre de la réponse : la phrase de l'élève, déjà écrite, ses mots fautifs surlignés et "
+                       "commentés, et les puces (" + ", ".join(d["name"] for d in shown["dimensions"]) + ")",
+                       "suivi de la séance : phrase réussie ou ratée"),
+                   parts=verdicts)]],
+            [[step("bad", "8a · Phrase ratée", source="CompletionSession · TextTeacher.say",
+                   text="La phrase de résumé du juge choisi est dite à la place du prof, et gardée dans son "
+                        "historique. C'est la conversation : l'élève redonne sa phrase (de nouveau triée, puis "
+                        "jugée), pose une question au prof, demande un indice, ou passe à la suite.",
+                   hint="Le bouton « Complétion suivante », ou la demande au prof (phrase_suivante), passe à la "
+                        "phrase suivante.",
+                   output=shown["summary"])],
+             [step("good", "8b · Phrase réussie", source="intros.CONGRATULATIONS_TEXTS · advance",
+                   text="Une félicitation en hébreu, tirée au hasard, jouée à la place du prof : sa voix enregistrée "
+                        "d'avance, son verbatim et sa traduction affichés ; la phrase de l'élève, soulignée en vert et "
+                        "cochée, s'efface ; puis l'application envoie la phrase suivante au prof.",
+                   hint="Retour à l'étape 2. Après la dernière phrase, l'au revoir.",
+                   parts=(("Les félicitations (les mêmes qu'en déclinaison)", congratulations),))]],
+            [[farewell(f"9 · Au revoir (après la phrase {SENTENCES_PER_ROUND})", language)]],
+        ],
+        "notes": [
+            NO_RESPELL,
+            teacher(instructions, prompts.COMPLETION_START,
+                    "Accueil, consigne de chaque phrase, et réponses aux questions de l'élève. Il ne juge aucune "
+                    "phrase et ne choisit pas les phrases ; seule fonction : phrase_suivante.",
+                    "completion", language, phonetic=False),
+            *teacher_voice("שים לב לפועל השני, הוא לא מתאים לאנחנו.",
+                           "Attention au second verbe, il ne va pas avec « nous ».",
+                           "Ici, la préposition ל indique où l'on va.",
+                           {"francais": "Ici, la préposition ל indique où l'on va.",
+                            "hebreu": "כאן מילת היחס ל מראה לאן הולכים."}),
+            "Langue (page texte, sans mode de langue) : le prof répond en français à une réplique que l'élève lui "
+            "adresse, les mots hébreux cités en lettres hébraïques, sans traduction en hébreu à l'affichage ; en "
+            "hébreu à tout le reste (accueil, consignes, au revoir), comme les répliques de l'application "
+            "(félicitations, phrases de résumé des juges, sans nikkoud). Sous chaque réplique en hébreu, sa "
+            "traduction française. Les commentaires écrits des fautes, en français, mots hébreux en lettres "
+            "hébraïques.",
+            "Deux configs : SHARP (avec la prononciation : phonétique 4b et juge 6d, comme en lecture) et SHARP wo "
+            "prononciation (sans eux).",
+            f"Les messages affichés sont ceux d'un exemple : le début « {item.prefix} » (leçon {item.lesson}), la "
+            f"contrainte « {item.constraint} », et la phrase « {heard} ». Les instructions système sont celles du "
+            "code actuel.",
+        ],
+    }
+
+
 class CompletionSession(TeacherSession):
     def __init__(self, browser: WebSocket, voice: str, lesson: str, items: list[Item], concepts: list[str]):
         self.lesson = lesson
@@ -285,6 +490,13 @@ class CompletionSession(TeacherSession):
         self.hint_at = 0.0  # dernier indice affiché
         self.hint = {"offered": False, "action": None, "prefix": None}
         self.answer_frame = False  # la fenêtre « Réponse » est apparue
+        # Page texte (cf. judge_by_app) : l'application trie et juge les phrases de l'élève, et y répond.
+        self.app_judges = False
+        self.language_modes = True
+        self.judging = False
+        self.attempts = 0  # phrases jugées : la prononciation arrivée en retard ne vaut que pour la dernière
+        # Ses félicitations, voix comprise (cf. intros.congratulations), données par le routeur ; dites à la volée sinon.
+        self.congratulations: list[dict] = [{**entry, "pcm": None} for entry in CONGRATULATIONS_TEXTS]
 
     @property
     def current(self) -> Item | None:
@@ -293,7 +505,8 @@ class CompletionSession(TeacherSession):
     async def on_started(self) -> None:
         log.info("Séance « complétion » lancée · voix %s · leçon %s · %s", self.live.voice, self.lesson,
                  [(i.prefix, i.constraint, i.sentence) for i in self.items])
-        await self.to_browser({"type": "language", "language": self.language})
+        if self.language_modes:
+            await self.to_browser({"type": "language", "language": self.language})
         await self.to_browser({"type": "score", "score": self.score, "event": None})
         await self.send_topics()
 
@@ -306,7 +519,7 @@ class CompletionSession(TeacherSession):
         if event.kind == "agent_text" and not self.turn.open:
             self.turn_started_at = time.monotonic()
         await super().on_event(event)
-        if event.kind == "turn_complete":
+        if event.kind == "turn_complete" and not self.app_judges:
             await self.check_evaluated()
 
     async def tick(self, now: float) -> None:
@@ -505,6 +718,8 @@ class CompletionSession(TeacherSession):
             for message in messages:
                 await self.to_browser(message)
         await self.set_answering(True)
+        if self.app_judges:
+            return prompts.completion_text_exercise(self.asked, item.prefix, item.constraint)
         return prompts.completion_exercise(self.asked, item.prefix, item.constraint)
 
     async def finish(self) -> None:
@@ -537,7 +752,7 @@ class CompletionSession(TeacherSession):
 
     async def on_browser_message(self, data: dict) -> None:
         if data.get("type") == "language" and data.get("language") in prompts.LANGUAGE_NAMES:
-            if data["language"] != self.language:
+            if data["language"] != self.language and self.language_modes:
                 await self.set_language(data["language"])
                 speaking = await self.cut_teacher()
                 await (self.live.app_message if speaking else self.live.note)(prompts.language_switched(self.language))
@@ -559,7 +774,110 @@ class CompletionSession(TeacherSession):
         await self.to_browser({"type": "language", "language": language})
 
     def in_mode(self, message: str) -> str:
-        return f"{message} {prompts.language_mode(self.language)}"
+        # Sans mode de langue (page texte, cf. language_modes) : le message seul.
+        return f"{message} {prompts.language_mode(self.language)}" if self.language_modes else message
+
+    # --- page texte : l'application trie, juge et répond -----------------------
+
+    def judge_by_app(self, instructions: str) -> None:
+        """Page texte (cf. demande explicite du user) : plus de mode de langue, ni de relecture de l'orthographe ;
+        l'application trie chaque réplique de l'élève (phrase, ou adressée au prof, cf. is_attempt) et juge elle-même
+        les phrases (cf. completion_judges) ; le prof (instructions, sans mode de langue) n'évalue plus rien."""
+        self.app_judges, self.language_modes, self.language = True, False, "he"
+        self.respell_spoken = False
+        self.live.instructions = instructions
+        self.live.start_message = prompts.COMPLETION_START
+        self.live.tools = [NEXT_SENTENCE_TOOL]
+
+    async def on_student_text(self, text: str, spoken: bool = False, corrected: bool = False) -> None:
+        if (not self.app_judges or not text or self.started_at is None or self.current is None or self.finished
+                or self.closing or self.judging):
+            await super().on_student_text(text, spoken, corrected)
+            return
+        attempt = is_attempt(text, self.current.prefix)
+        log.info("tri : %s", "phrase de l'élève" if attempt else "adressée au prof")
+        if not attempt:
+            self.audio_phonetic = ""  # une question : sa prononciation n'est pas jugée
+            await self.live.note(prompts.COMPLETION_ADDRESSED)
+            await super().on_student_text(text, spoken, corrected)
+            return
+        self.judging = True
+        try:
+            await self.judge(text, spoken, corrected)
+        finally:
+            self.judging = False
+
+    async def judge(self, text: str, spoken: bool, corrected: bool) -> None:
+        """La phrase de l'élève jugée par les quatre juges en parallèle, réunis par le code (cf. completion_judges) :
+        réussie, une félicitation enregistrée, puis la phrase suivante ; ratée, la phrase de résumé du juge le plus
+        prioritaire, puis la conversation. La prononciation n'est attendue que si les trois autres juges sont bons ;
+        sinon ses fautes s'ajoutent à l'écran à leur arrivée (cf. late_pronunciation)."""
+        await self.on_event(LiveEvent("user_text", f"{text} "))
+        phonetic = self.audio_phonetic if spoken else ""
+        self.audio_phonetic = ""
+        await self.live.student_text(text, spoken, corrected, respond=False)
+        self.cancel_advance()
+        self.attempts += 1
+        item, attempt = self.current, self.attempts
+        sentence = complete(text, item.prefix)
+        inputs = {"debut": item.prefix, "contrainte": item.constraint, "concept": item.definition,
+                  "action_reference": item.action}
+        names = ("contrainte", "grammaire", "plausibilite")
+        pronunciation = (asyncio.create_task(mispronounced(text, phonetic, self.pronunciation_model))
+                         if phonetic and self.pronunciation_model else None)
+        if pronunciation:
+            self.background.append(pronunciation)
+        verdicts = dict(zip(names, await asyncio.gather(*(completion_judges.judge(name, inputs, sentence)
+                                                          for name in names))))
+        if pronunciation and completion_judges.aggregate(verdicts)["ok"]:
+            verdicts["prononciation"] = completion_judges.pronunciation_verdict(await pronunciation)
+            pronunciation = None
+        result = completion_judges.aggregate(verdicts)
+        self.evaluated = True
+        await self.show_evaluation(text, result)
+        succeeded = result["ok"]
+        await self.record(succeeded)
+        await self.set_answering(False)
+        if succeeded:
+            self.solved = True
+            self.hint = {**self.hint, "offered": False}
+            await self.to_browser({"type": "hint", "hint": self.hint})
+            await self.say(random.choice(self.congratulations))
+            # La phrase suivante, dès la félicitation dite (cf. advance).
+            self.advance_task = asyncio.create_task(self.advance())
+            self.background.append(self.advance_task)
+            return
+        await self.offer_hint()
+        if pronunciation:
+            self.background.append(asyncio.create_task(self.late_pronunciation(pronunciation, verdicts, text,
+                                                                               attempt)))
+        await self.say({"text": result["summary"] or prompts.COMPLETION_FAILED_REPLY})
+
+    async def late_pronunciation(self, pronunciation: asyncio.Task, verdicts: dict, text: str, attempt: int) -> None:
+        """Affichage en deux temps (cf. demande explicite du user) : les fautes de prononciation, arrivées après le
+        verdict, s'ajoutent à l'évaluation affichée ; le prof n'en parle pas. Rien si l'élève est passé à une autre
+        phrase ou à un autre essai entre-temps."""
+        found = await pronunciation
+        if attempt != self.attempts or self.closing or self.finished:
+            return
+        result = completion_judges.aggregate({**verdicts,
+                                              "prononciation": completion_judges.pronunciation_verdict(found)})
+        log.info("prononciation arrivée après le verdict : %s", result["dimensions"][-1])
+        await self.show_evaluation(text, result)
+
+    async def show_evaluation(self, text: str, result: dict) -> None:
+        """L'évaluation dans la fenêtre de la réponse, sur le verbatim déjà écrit (cf. StudentAnswer), comme en
+        compréhension et en déclinaison : fautes surlignées et commentées, puis les puces."""
+        await self.to_browser({"type": "exchange", "kind": "evaluation", "evaluation": {
+            "answer": align_error_words(text.strip(), result["errors"]), "errors": result["errors"],
+            "dimensions": result["dimensions"]}})
+
+    async def say(self, entry: dict) -> None:
+        """Une réplique de l'application ({"text"}, et pour une félicitation sa traduction et sa voix enregistrée),
+        dite à la place du prof et gardée dans son historique (cf. TextTeacher.say)."""
+        if entry.get("french"):
+            self.known_translations[entry["text"]] = entry
+        await self.live.say({"text": entry["text"], "pcm": entry.get("pcm")})
 
     async def set_answering(self, answering: bool) -> None:
         self.answering = answering

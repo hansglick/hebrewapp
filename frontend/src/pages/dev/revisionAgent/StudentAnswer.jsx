@@ -7,6 +7,7 @@ import { graphemes, withoutNikkud } from "./hebrew";
 import RecordButton from "./RecordButton";
 import { SPEECH_STEP_MS } from "./TeacherSpeech";
 import CleanReading from "./CleanReading";
+import { Dimensions } from "./CompletionBoard";
 import "../../../components/ConfigModal.css";
 
 // Page sans Gemini Live (cf. demande explicite du user) : la réponse de
@@ -474,6 +475,13 @@ export default function StudentAnswer({
                     <>
                       <hr className="ra-assessment-rule" />
                       <Evaluation evaluation={evaluation} />
+                      {/* Complétion : les puces de l'évaluation (contrainte, grammaire, plausibilité, prononciation). */}
+                      {evaluation.dimensions?.length > 0 && (
+                        <>
+                          <hr className="ra-assessment-rule" />
+                          <Dimensions dimensions={evaluation.dimensions} />
+                        </>
+                      )}
                     </>
                   )
                 ))}

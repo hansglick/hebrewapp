@@ -43,7 +43,7 @@ const TEXT_TASKS = ["lecture", "comprehension"]; // n'ont de sens que pour une l
 // explicite du user ; pour les rouvrir, les ajouter ici).
 const ENABLED_TASKS = ["lecture"];
 // En plus, sur la page texte seulement (/dev/revision-agent-texte, cf. demande explicite du user).
-const TEXT_MODE_ENABLED_TASKS = ["comprehension", "declinaison"];
+const TEXT_MODE_ENABLED_TASKS = ["comprehension", "declinaison", "completion"];
 const DEFAULT_TASK = "lecture";
 // « Lecture » en premier (cf. demande explicite du user).
 const TASKS = [
@@ -92,8 +92,9 @@ const MODEL_CONFIGS = [
     label: "FAST",
     phonetic: "gemini-3.5-flash",
     pronunciation: "gemini-3.5-flash-lite",
-    // Déclinaison : ni phonétique ni prononciation, FAST et SHARP y seraient identiques (SHARP seul).
-    except: ["comprehension", "declinaison"],
+    // Déclinaison : ni phonétique ni prononciation, FAST et SHARP y seraient identiques (SHARP seul). Complétion :
+    // SHARP et SHARP wo prononciation seulement (cf. demande explicite du user).
+    except: ["comprehension", "declinaison", "completion"],
   },
   { id: "precise", label: "SHARP", phonetic: "gemini-3.8-flash", pronunciation: "gemini-3.5-flash" },
   {
@@ -105,17 +106,17 @@ const MODEL_CONFIGS = [
     tasks: ["lecture"],
   },
   { id: "precise_wo_pronunciation", label: "SHARP wo prononciation", phonetic: null, pronunciation: null,
-    tasks: ["comprehension"] },
+    tasks: ["comprehension", "completion"] },
 ];
 
 // Tâches où les cases « Double route voyelle » et « Phonétique » sont masquées, cochées, part entière de l'application
 // (cf. demande explicite du user) ; les retirer d'ici pour qu'elles reviennent. En compréhension, la config choisit :
 // SHARP avec la double route, SHARP wo prononciation sans phonétique (cf. MODEL_CONFIGS).
-const HIDDEN_VOWEL_BOXES = ["lecture", "comprehension"];
+const HIDDEN_VOWEL_BOXES = ["lecture", "comprehension", "completion"];
 
 // Tâches où la case « Double route voyelle » s'affiche (cf. config.VOWEL_ROUTE_TASKS), et si elle est cochée par
 // défaut : toujours (cf. demande explicite du user).
-const VOWEL_ROUTE_DEFAULTS = { lecture: true, expression: true, comprehension: true };
+const VOWEL_ROUTE_DEFAULTS = { lecture: true, expression: true, comprehension: true, completion: true };
 
 // Voix du prof, fixée (cf. demande explicite du user) : une des voix prédéfinies de Gemini Live.
 const VOICE = "Enceladus";
@@ -705,7 +706,8 @@ export default function RevisionAgentScreen({ textMode = false }) {
               onNext={session.next}
               clock={sessionControls || null}
               keepOnDone={textMode}
-              composer={composer(session.evaluation)}
+              // Sans Gemini Live, comme en compréhension : l'évaluation s'affiche dans la fenêtre de la réponse.
+              composer={composer()}
             />
           ) : sessionTask === "declinaison" ? (
             <DeclensionBoard

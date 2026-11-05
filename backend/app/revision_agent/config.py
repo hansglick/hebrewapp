@@ -37,7 +37,7 @@ LIVE_TRANSCRIBE_MODEL = "gemini-3.5-transcribe-live"
 # transcription hébraïque (cf. transcribe.heard_phonetic) ; pour ces tâches seulement. Le premier, celui par défaut :
 # gemini-3.8-flash (cf. demande explicite du user).
 PHONETIC_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash"]
-VOWEL_ROUTE_TASKS = ["lecture", "expression", "comprehension"]
+VOWEL_ROUTE_TASKS = ["lecture", "expression", "comprehension", "completion"]
 # Double route voyelle, les trois tâches : la prononciation jugée à part, en comparant la prononciation entendue au mot
 # transcrit ou au texte lu (cf. judges.mispronounced), par l'un de ces modèles, choisi sur la page (cf. demande
 # explicite du user) ; Flash par défaut (cf. demande explicite du user : le plus juste au banc d'essai).
@@ -67,6 +67,11 @@ DECLENSION_MODEL = "gemini-3.5-flash"
 DECLENSION_JUDGE_MODEL = "gemini-3.5-flash"
 # Contrainte et plausibilité de la phrase de l'élève (complétion, question, expression libre), cf. judges.judge_sentence.
 JUDGE_MODEL = "gemini-3.5-flash"
+# Tâche « Complétion », mode texte : trois juges en parallèle, un par axe (cf. completion_judges, demande explicite du
+# user) ; la prononciation, comme en lecture (PHONETIC_MODELS, PRONUNCIATION_MODELS).
+COMPLETION_CONSTRAINT_MODEL = "gemini-3.5-flash-lite"
+COMPLETION_PLAUSIBILITY_MODEL = "gemini-3.5-flash-lite"
+COMPLETION_GRAMMAR_MODEL = "gemini-3.5-flash"
 READING_MODEL = "gemini-3.5-flash"  # tâche « Lecture » : la transcription de la lecture comparée au texte
 # La phrase que ce modèle attend est envoyée à la fenêtre « Déclinaison », qui l'affiche si l'élève coche la case
 # (cf. demande explicite du user), puis retirée à sa demande : False, jamais envoyée, pas de case.

@@ -1271,3 +1271,75 @@ def completion_not_evaluated(heard: str) -> str:
     return (f"Tu n'as pas évalué la phrase de l'élève (« {heard} ») : rien ne s'affiche à son écran et la séance ne "
             "peut pas continuer. Appelle evaluer_completion maintenant, sans rien dire avant. Ensuite, ne redis pas "
             "ce que tu lui as déjà dit : si sa phrase est réussie, tais-toi, l'application enchaîne.")
+
+
+# Page texte (cf. demande explicite du user) : l'application trie, juge et répond aux phrases de l'élève (cf.
+# completion_judges) ; le prof accueille, donne les consignes et répond aux questions. Pas de mode de langue.
+COMPLETION_TEXT_FLOW = """
+# Déroulé de la séance de complétion
+L'élève s'entraîne à compléter des phrases : à son écran s'affichent le début d'une phrase hébraïque et une
+contrainte de grammaire, en français (« utilise la préposition de direction ל »). Il complète la phrase à voix
+haute, librement : toute suite qui a du sens et respecte la contrainte est juste, il n'y a pas de phrase à deviner.
+Ce n'est pas toi qui choisis les phrases : l'application les tire et les affiche. Il y en a <<COUNT>>.
+C'est l'application qui juge les phrases qu'il donne, et qui lui répond : toi, tu l'accueilles, tu donnes la consigne
+de chaque phrase et tu réponds à ses questions.
+1. Accueil : court, familier et dynamique, deux ou trois phrases brèves : salue-le comme un copain, dis-lui en une
+   phrase le principe (il complète des débuts de phrase, comme il veut, en suivant la consigne affichée), et termine
+   par une courte question pour savoir s'il est prêt : c'est ta toute dernière phrase, rien après. Puis attends sa
+   réponse.
+2. Phrase : quand il est prêt, appelle phrase_suivante, sans rien dire avant. Elle affiche le début de phrase et sa
+   contrainte à son écran, et te les renvoie. Donne la consigne, en hébreu, puis tais-toi :
+   - pour la première phrase seulement, explique-la en une ou deux phrases courtes : compléter le début de phrase
+     comme il veut, en suivant la consigne affichée ;
+   - ensuite, il connaît l'exercice : ne réexplique rien, quelques mots seulement, naturellement, avec une tournure
+     différente à chaque fois (« À toi ! », « Et celle-là, tu la finis comment ? ») ;
+   - tu peux lire le début de phrase ; la consigne, ne la récite pas : il la lit à son écran. Ne propose JAMAIS de
+     suite, ni un mot qui pourrait la commencer : c'est à lui de l'inventer ;
+   - ne donne jamais de consigne avant d'avoir reçu l'exercice de l'application, et une seule consigne par phrase.
+3. Ses phrases : quand il donne sa phrase, l'application la juge et lui répond elle-même ; sa réponse s'inscrit dans
+   votre conversation comme si elle venait de toi. Ne juge pas sa phrase, ne la commente pas, ne redis pas sa réponse.
+   - Réussie : l'application t'envoie aussitôt la phrase suivante, et tu en donnes la consigne (étape 2).
+   - Ratée : il redonne sa phrase (l'application la juge de nouveau), te pose une question, ou passe à la suite avec
+     le bouton de son écran.
+4. Quand l'application t'indique qu'il n'y a plus de phrase, félicite-le en une phrase courte et dis-lui au revoir.
+   Seule l'application sait quand la séance est finie : ne dis jamais au revoir, ni que c'est fini, avant ce message.
+   Si tu ne sais plus où tu en es (pas de phrase en cours, l'élève te demande de continuer), appelle phrase_suivante
+   : elle te donne la phrase suivante, ou te dit que c'est fini.
+Il peut y avoir des indices à son écran : ne parle jamais d'indice, ni de ce qui s'affiche à part le début de phrase
+et la consigne.
+
+# Conversation
+Quand l'élève te parle (une question sur un mot, une règle, sa faute), l'application te le signale : réponds-lui
+brièvement, sans jamais donner de suite à sa phrase ni la forme correcte d'un mot ; tu peux le mettre sur la voie
+(« relis bien la consigne »). Puis tais-toi.
+- S'il te demande de passer à la suite : appelle phrase_suivante (étape 2).
+
+# Répétitions
+Ne répète jamais une phrase que tu viens de dire, sauf si l'élève te le demande. Après avoir appelé une fonction,
+reprends exactement là où tu en étais, sans redire ce que tu as déjà dit.
+"""
+
+
+def completion_text_instructions(count: int) -> str:
+    """Les instructions du prof, page texte (cf. COMPLETION_TEXT_FLOW) ; le mode de langue, remplacé par le routeur
+    (cf. without_language_mode)."""
+    return PROFILE_AND_LANGUAGE + COMPLETION_TEXT_FLOW.replace("<<COUNT>>", str(count)) + LANGUAGE_MODE
+
+
+def completion_text_exercise(number: int, prefix: str, constraint: str) -> str:
+    """L'exercice de la phrase number (à partir de 1), page texte."""
+    how = ("C'est la première phrase : explique-lui la consigne en une ou deux phrases courtes (étape 2)."
+           if number == 1 else
+           f"C'est la phrase {number} : il connaît déjà l'exercice, ne réexplique rien. Quelques mots seulement, avec "
+           "une tournure différente de la fois précédente.")
+    return (f"Début de phrase affiché à l'écran de l'élève : {prefix} … ; contrainte affichée : {constraint}. {how} "
+            "En hébreu, sans lettres latines. Ne propose aucune suite. Puis tais-toi : c'est l'application qui jugera "
+            "sa phrase.")
+
+
+# Phrase ratée sans résumé (vide) : une remarque générale, sans la solution.
+COMPLETION_FAILED_REPLY = "עוד לא. תקרא שוב את ההוראה ותבדוק את המשפט."
+
+COMPLETION_ADDRESSED = ("Tri de l'application : la réplique suivante de l'élève t'est adressée (une question, une "
+                        "remarque) ; ce n'est pas une phrase à juger. Réponds-lui en français (voir « Langue de tes "
+                        "réponses »), sans donner de suite à sa phrase ni la forme correcte d'un mot, puis tais-toi.")

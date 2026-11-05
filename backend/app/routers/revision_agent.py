@@ -9,6 +9,7 @@ from app.revision_agent.config import (LAST_LESSON, LESSON_CHAPTER, PHONETIC_MOD
                                       TEXT_TEACHER_MODEL, TEXT_TEACHER_MODELS, TTS_MODELS, VOICES, VOWEL_ROUTE_TASKS)
 from app.revision_agent.passages import lessons_with_text
 from app.revision_agent.completion import CompletionSession, availability, qualified_concepts
+from app.revision_agent.completion import schema as completion_schema
 from app.revision_agent.completion import draw_items as completion_items
 from app.revision_agent.comprehension import ComprehensionSession
 from app.revision_agent.comprehension import schema as comprehension_schema
@@ -45,7 +46,10 @@ SCHEMAS = {"lecture": ("Lecture · SHARP", reading_schema),
            "comprehension_sans_prononciation": ("Compréhension · SHARP wo prononciation",
                                                 lambda: comprehension_schema("sharp_wo_pronunciation")),
            "expression": ("Expression libre", None), "declinaison": ("Déclinaison", declension_schema),
-           "completion": ("Complétion", None), "mot": ("Mot", None), "question": ("Question", None)}
+           "completion": ("Complétion · SHARP", completion_schema),
+           "completion_sans_prononciation": ("Complétion · SHARP wo prononciation",
+                                             lambda: completion_schema("sharp_wo_pronunciation")),
+           "mot": ("Mot", None), "question": ("Question", None)}
 
 
 @router.get("/texts")
@@ -189,6 +193,13 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
             session.judge_by_app(prompts.without_language_mode(prompts.declension_text_instructions(
                 len(session.items))))
             without_phonetic = True
+        elif task == "completion":
+            # Complétion (cf. demande explicite du user) : l'application trie, juge les phrases (quatre juges, cf.
+            # completion_judges) et y répond ; le prof donne les consignes et converse, sans mode de langue ni
+            # prononciation entendue (la prononciation a son propre juge).
+            session.judge_by_app(prompts.without_language_mode(prompts.completion_text_instructions(
+                len(session.items))))
+            without_phonetic = True
         elif task in WITHOUT_LANGUAGE_MODE:
             # Lecture et compréhension (cf. demande explicite du user) : plus de mode de langue ; le prof répond en
             # français aux répliques de l'élève, en hébreu au reste (cf. prompts.TEXT_LANGUAGE). Ni bouton, ni
@@ -220,7 +231,7 @@ async def revision_agent_ws(websocket: WebSocket, pseudo: str, pin: str, lesson:
             for entry in session.live.farewells.values():
                 session.known_translations[entry["text"]] = entry
         # Déclinaison : les félicitations enregistrées (cf. intros.congratulations).
-        if task == "declinaison" and session.app_judges:
+        if task in ("declinaison", "completion") and session.app_judges:
             session.congratulations = congratulations(tts_model, voice)
 
     # Journal de la séance sur le disque persistant : déroulé et durée, par compte (cf. app.revision_agent.journal).
